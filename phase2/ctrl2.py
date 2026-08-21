@@ -140,7 +140,8 @@ def mu_tdc(plant, ss_mu, kpd, kdd):
 # ---------------------------------------------------------------------------
 # 4. PROPOSED - position-scheduled active control
 # ---------------------------------------------------------------------------
-def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21):
+def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
+          sched_K=True, sched_L=True, name=None):
     """u(t) = -K(x_P) xhat(t),  xhat from an observer also built at x_P.
 
     Design model at position x:
@@ -157,18 +158,30 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21):
     Q = np.diag(np.concatenate([q_pos * np.ones(n), q_vel * np.ones(n)]))
     xs = np.linspace(0.0, plant.plate.lp, n_grid)
 
+    Wbar = _mean_process_noise(plant)
+
     def build(x_pos, eta=0.0):
         x = 0.5 * plant.plate.lp if x_pos is None else float(x_pos)
         x = float(np.clip(x, xs[0], xs[-1]))
         e = float(eta) if schedule_eta else 0.0
         A, _, B, E, Cy = plant.matrices(x_pos=x, eta=e)
-        K = _lqr_gain(A, B, Q, r)
-        L = _kalman_gain(A, Cy, ratio * (E @ E.T) + 1e-12 * np.eye(2 * n), 1.0)
-        return _rolloff(_observer_ctrl(A, B, Cy, K, L)), None
+        A0, B0, _ = plant.structure_only(e)
+        # state feedback: on the cutting-loaded model only if sched_K
+        Ak = A if sched_K else A0
+        K = _lqr_gain(Ak, B, Q, r)
+        # observer: the cutting force enters through E(x_P), so a scheduled
+        # filter knows the disturbance DIRECTION at the current position while a
+        # fixed one has to average over the whole edge
+        W = (E @ E.T) if sched_L else Wbar
+        L = _kalman_gain(A0, Cy, ratio * W + 1e-12 * np.eye(2 * n), 1.0)
+        # the controller state matrix must use the model the observer runs on
+        Aobs = Ak if sched_K else A0
+        return _rolloff(_observer_ctrl(Aobs, B, Cy, K, L)), None
 
-    name = 'PS_AC+eta' if schedule_eta else 'PS_AC'
+    if name is None:
+        name = 'PS_AC' + ('+eta' if schedule_eta else '')
     return Ctrl(name, 5 if schedule_eta else 4, builder=build, scheduled=True,
-                meta=dict(grid=xs))
+                meta=dict(grid=xs, sched_K=sched_K, sched_L=sched_L))
 
 
 # ---------------------------------------------------------------------------
@@ -182,8 +195,19 @@ def build(kind, plant, u, ss_mu=None):
                    10 ** u['log_r'], 10 ** u['log_ratio'])
     if kind == 'mu_tdc':
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'])
-    if kind in ('ps_ac', 'ps_ac_eta'):
+    if kind in ('ps_ac', 'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full'):
+        # 'ps_ac' is the law the plan writes, u = -K(x_P) x: the GAIN is
+        # scheduled and nothing else.  The two diagnostics that also schedule
+        # the observer are kept because they show why that restriction matters:
+        # a position-scheduled Kalman filter is tuned to the disturbance
+        # direction at the current position, and against the NO-CUTTING plant --
+        # which is what the modulus margin is measured on, and what the tool
+        # actually sees at entry and exit -- that pushes Ms past the constraint.
         return ps_ac(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
                      10 ** u['log_r'], 10 ** u['log_ratio'],
-                     schedule_eta=(kind == 'ps_ac_eta'))
+                     schedule_eta=(kind == 'ps_ac_eta'),
+                     sched_K=(kind != 'ps_ac_obs'),
+                     sched_L=(kind in ('ps_ac_obs', 'ps_ac_full')),
+                     name={'ps_ac_obs': 'PS_AC(observer only)',
+                           'ps_ac_full': 'PS_AC(K and observer)'}.get(kind))
     raise ValueError(kind)

@@ -23,7 +23,8 @@ from eval2 import evaluate
 
 OUT = C.RESULTS
 LOG = open(os.path.join(OUT, 'log_stage3.txt'), 'w')
-KINDS = ('fopid', 'lqg', 'mu_tdc', 'ps_ac', 'ps_ac_eta')
+KINDS = ('fopid', 'lqg', 'mu_tdc', 'ps_ac', 'ps_ac_eta',
+         'ps_ac_obs', 'ps_ac_full')
 
 
 def log(*a):
@@ -65,7 +66,9 @@ def main(kinds=KINDS):
         f'seeds {C.OPT["seeds"]} -- identical for every structure')
     log(f'  mu-synthesis controller loaded: {ss_mu is not None}')
 
-    store = {}
+    p_store = os.path.join(OUT, 'stage3_controllers.pkl')
+    store = (pickle.load(open(p_store, 'rb'))
+             if os.path.exists(p_store) else {})
     for kind in kinds:
         if kind == 'mu_tdc' and ss_mu is None:
             log(f'\n--- {kind.upper()}: skipped, no mu controller on disk')
@@ -87,7 +90,7 @@ def main(kinds=KINDS):
                            n_params=r['n_params'], order=r['order'],
                            Ms=info['Ms'], V=info['V'])
 
-    with open(os.path.join(OUT, 'stage3_controllers.pkl'), 'wb') as f:
+    with open(p_store, 'wb') as f:
         pickle.dump(store, f)
     log(f'\ntotal {time.time()-t0:.0f}s -> results/stage3_controllers.pkl')
 

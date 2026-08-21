@@ -9,14 +9,24 @@ STAGES 3-4 - CONTROLLER DESIGN UNDER ONE PROTOCOL
   optimiser  : PSO 20x20, seeds (1, 2, 3) -- identical for every structure
   mu-synthesis controller loaded: True
 
---- FOPID ---------------------------------------------------------------
-  J = +0.05733   order 16   5 parameters   fixed   [291s]
-  Ms = 1.990   effort = 240.4 V/N   slowest nominal pole = -11.7 1/s
-  parameters: log_Kp=3.776, log_Ki=3.678, log_Kd=3.498, lam=0.2479, mu=0.9983
+--- PS_AC ---------------------------------------------------------------
+  J = +0.12532   order 6   4 parameters   SCHEDULED   [235s]
+  Ms = 1.990   effort = 271.6 V/N   slowest nominal pole = -98.8 1/s
+  parameters: log_q_pos=18.8, log_q_vel=4.405, log_r=-10.01, log_ratio=10.47
 
---- LQG -----------------------------------------------------------------
-  J = +0.11888   order 6   4 parameters   fixed   [228s]
-  Ms = 1.990   effort = 275.0 V/N   slowest nominal pole = -99.5 1/s
-  parameters: log_q_pos=19.76, log_q_vel=0.513, log_r=-10.76, log_ratio=10.49
+--- PS_AC_ETA -----------------------------------------------------------
+  J = +0.12532   order 6   5 parameters   SCHEDULED   [234s]
+  Ms = 1.990   effort = 271.6 V/N   slowest nominal pole = -98.8 1/s
+  parameters: log_q_pos=18.8, log_q_vel=4.405, log_r=-10.01, log_ratio=10.47
 
---- MU_TDC --------------------------------------------------------------
+--- PS_AC_OBS -----------------------------------------------------------
+  J = -0.03805   order 6   4 parameters   SCHEDULED   [234s]
+  Ms = 2.000   effort = 251.1 V/N   slowest nominal pole = -13.3 1/s
+  parameters: log_q_pos=19.82, log_q_vel=5.621, log_r=-11.21, log_ratio=10.25
+
+--- PS_AC_FULL ----------------------------------------------------------
+  J = -0.01576   order 6   4 parameters   SCHEDULED   [231s]
+  Ms = 1.999   effort = 251.1 V/N   slowest nominal pole = -13.1 1/s
+  parameters: log_q_pos=19.82, log_q_vel=5.621, log_r=-11.21, log_ratio=10.25
+
+total 934s -> results/stage3_controllers.pkl

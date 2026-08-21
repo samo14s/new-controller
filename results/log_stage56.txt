@@ -1,0 +1,17 @@
+==============================================================================
+STAGES 5-6 - STABILITY OVER THE POSITION DOMAIN, AND MARGINS
+==============================================================================
+  position domain : x_P in [0, 100] mm, 9 points
+  uncertainty     : alpha4 in [0.3, 2.9] abar4, eta in [0, 0.0755], zeta x [0.8, 1.2], xi in {0.5, 1}
+  tau_0           = 4.0816 ms at 4900 rpm
+
+  peak      sup_omega rho((j omega I - A_cl)^-1 A_d,cl) over the family;
+            below 1 the loop is stable for EVERY delay
+  tau_max   first delay at which a characteristic root reaches the
+            imaginary axis; inf when peak < 1
+  a_p^inf   largest depth at which peak < 1 everywhere
+  delta_max largest inflation of the uncertainty set keeping peak < 1
+  LK        common-P Lyapunov-Krasovskii feasibility at a_p^inf:
+            also covers arbitrarily fast motion of x_P, eta, alpha4
+
+controller      peak  tau_max/tau0  a_p^inf mm  delta_max    LK

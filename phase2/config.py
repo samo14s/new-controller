@@ -135,4 +135,8 @@ BOUNDS2 = dict(
                log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
     ps_ac_eta=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
                    log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
+    ps_ac_obs=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
+                   log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
+    ps_ac_full=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
+                    log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
 )
