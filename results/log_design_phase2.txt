@@ -1,0 +1,32 @@
+==========================================================================
+PHASE 6 + 8 - CONTROLLER DESIGN, ONE PROTOCOL FOR ALL
+==========================================================================
+  plate      : patch right, sensor upper corner, sign +1
+  design pt  : 4900 rpm, a_e = 0.1 mm, probe depths [0.3, 0.6, 1.0] mm
+  evaluation : Floquet on the 5-mode model, positions (0.0, 0.5, 1.0)
+  constraints: Ms <= 2.0, effort <= 450.0 V/N, nominal poles <= -1 1/s
+  optimiser  : PSO 20x20, seeds (1, 2, 3), identical for every structure
+  alpha40    : -18021.3 N/m
+
+--- PID -----------------------------------------------------------------
+  J = -0.25291   order 4   4 parameters   [480s]
+  Ms = 1.953   effort = 149.1 V/N   slowest nominal pole = -1.1 1/s
+  parameters: log_Kp=4.279, log_Ki=7.301, log_Kd=3.104, log_Nd=4.98
+
+--- LQR -----------------------------------------------------------------
+  J = +0.01456   order 6   5 parameters   [634s]
+  Ms = 1.877   effort = 150.8 V/N   slowest nominal pole = -44.3 1/s
+  parameters: log_q_pos=3.529, log_q_vel=3.476, log_r=-5.272, log_qo=-2.966, log_ro=-8.122
+
+--- SMC -----------------------------------------------------------------
+  J = -0.05425   order 6   5 parameters   [221s]
+  Ms = 1.552   effort = 145.0 V/N   slowest nominal pole = -46.5 1/s
+  parameters: log_lam=1.751, log_k=0.2144, log_phi=-5.521, log_qo=-3.208, log_ro=-7.536
+
+--- PROPOSED ------------------------------------------------------------
+  J = +0.01445   order 6   7 parameters   [345s]
+  Ms = 1.926   effort = 153.1 V/N   slowest nominal pole = -44.3 1/s
+  parameters: log_q_pos=-1.301, log_q_vel=2.824, log_r=-6.429, log_qo=-3.641, log_ro=-8.271, kpd=0.6528, kdd=-0.03927
+  delayed PD : K_Pp = -3.874e+05 V/m, K_Pd = 6.869 V s/m
+
+total 1680s -> results/controllers_phase2.npz
