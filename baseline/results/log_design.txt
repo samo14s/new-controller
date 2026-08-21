@@ -1,0 +1,31 @@
+==========================================================================
+ ETAPE 1 — SYNTHESE (Section 3 du papier)
+==========================================================================
+  pastille : coin right;  produits modaux D_obs*H = [-0.3798 -0.6051 -0.0744 -1.3325 -2.0778]
+  somme = -4.470  (meme signe = paire actionneur/capteur duale)
+
+  --- iteration D-K, Eq. (29) ---
+  convention de couplage : SIGN_SIM = -1 (celle des figures de la Section 4 — voir config.py)
+   [D-K 0] gamma =  14.5029   mu_peak =   8.8563   ordre K = 10
+   [D-K 1] gamma =   9.2401   mu_peak =   7.6955   ordre K = 33
+   [D-K 2] gamma =  10.1547   mu_peak =   7.8078   ordre K = 33
+  mu = 7.695 ; correcteur reduit a 12 etats
+  boucle fermee nominale :
+       703.8 Hz   zeta =  34.35 %
+       844.6 Hz   zeta =  11.95 %
+      1202.4 Hz   zeta =  12.12 %
+      1694.4 Hz   zeta =  39.70 %
+     (amortissements en boucle ouverte : [0.31 0.17] %)
+
+  --- commande a retard, Eqs. (30)-(31) ---
+  Eq. (31), annulation complete : K_Pp = 1.607e+06 V/m  (85.4 % de la regeneration modale)
+  (lecture Frobenius sur la matrice entiere : 2.473e+04 V/m, soit 1.5 % — a eviter)
+  couplage retarde PARASITE hors diagonale, par volt : -0.577 / -0.399
+     a K_Pp = 1.61e+06 : -926511 et -640248  contre une regeneration croisee de seulement -815438
+  -> K_Pp REALISABLE ('designed suitably') = 9e+05 V/m  (54.1 % d'annulation ; pire taux du retard seul +5.0 s^-1)
+  K_Pd = 0 V/(m/s)  (libre : l'Eq. 31 ne fixe que K_Pp)
+  limite robuste      : [1.639 3.    1.044 2.982 1.382] mm   min = 1.044 mm
+  limite combine      : [1.756 3.    1.067 3.    1.546] mm   min = 1.067 mm
+  limite retard seul  : [0. 0. 0. 0. 0.] mm   min = 0.000 mm
+
+  -> results/controllers.npz   (22 s)

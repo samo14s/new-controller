@@ -1,0 +1,125 @@
+==============================================================================
+PHYSICS-BASED MODAL PERTURBATION UNDER MATERIAL REMOVAL
+==============================================================================
+
+  consistency check, eta = 0: [ 520.95 1068.98 2723.83 3324.08 4129.03]
+  class assembly            : [ 520.95 1068.98 2723.83 3324.08 4129.03]
+  max deviation             : 1.32e-06 %
+
+------------------------------------------------------------------------------
+(T1)+(T2)  one-sidedness and monotonicity of the removal perturbation
+------------------------------------------------------------------------------
+
+   eta      dh(mm)    f1(Hz)   f2(Hz) |  f1/f10  f2/f20 |  dM11/M11  dM22/M22 |  dK11/K11  dK22/K22
+  0.0000    0.000     521.0   1069.0 |  1.0000  1.0000 |   +0.0000   +0.0000 |  +0.00000  +0.00000
+  0.0050    0.400     526.2   1076.0 |  1.0101  1.0065 |   -0.0200   -0.0162 |  -0.00002  -0.00327
+  0.0100    0.800     531.6   1083.0 |  1.0204  1.0132 |   -0.0397   -0.0322 |  -0.00005  -0.00650
+  0.0200    1.600     542.5   1097.5 |  1.0415  1.0267 |   -0.0783   -0.0638 |  -0.00010  -0.01291
+  0.0300    2.400     553.9   1112.3 |  1.0632  1.0405 |   -0.1158   -0.0948 |  -0.00014  -0.01926
+  0.0400    3.200     565.5   1127.4 |  1.0855  1.0547 |   -0.1523   -0.1251 |  -0.00019  -0.02556
+  0.0500    4.000     577.5   1143.0 |  1.1086  1.0692 |   -0.1876   -0.1548 |  -0.00024  -0.03184
+  0.0600    4.800     590.0   1159.0 |  1.1325  1.0842 |   -0.2220   -0.1839 |  -0.00029  -0.03811
+  0.0700    5.600     602.8   1175.4 |  1.1571  1.0995 |   -0.2553   -0.2123 |  -0.00035  -0.04441
+  0.0755    6.040     610.0   1184.6 |  1.1710  1.1082 |   -0.2732   -0.2277 |  -0.00038  -0.04788
+  0.0800    6.400     616.0   1192.2 |  1.1825  1.1153 |   -0.2876   -0.2402 |  -0.00040  -0.05073
+  0.1000    8.000     643.9   1227.4 |  1.2359  1.1482 |   -0.3492   -0.2942 |  -0.00052  -0.06352
+
+  Loewner-order check (eigenvalues of the symmetric parts):
+    eta = 0.0050 : max eig(dM) = -2.665e-05   max eig(dK)/K11 = -4.473e-07   dM<=0 and dK<=0 : True
+    eta = 0.0100 : max eig(dM) = -5.560e-05   max eig(dK)/K11 = -6.557e-07   dM<=0 and dK<=0 : True
+    eta = 0.0200 : max eig(dM) = -1.270e-04   max eig(dK)/K11 = -9.916e-07   dM<=0 and dK<=0 : True
+    eta = 0.0300 : max eig(dM) = -2.285e-04   max eig(dK)/K11 = -1.420e-06   dM<=0 and dK<=0 : True
+    eta = 0.0400 : max eig(dM) = -3.759e-04   max eig(dK)/K11 = -2.055e-06   dM<=0 and dK<=0 : True
+    eta = 0.0500 : max eig(dM) = -5.868e-04   max eig(dK)/K11 = -3.128e-06   dM<=0 and dK<=0 : True
+    eta = 0.0600 : max eig(dM) = -8.808e-04   max eig(dK)/K11 = -4.931e-06   dM<=0 and dK<=0 : True
+    eta = 0.0700 : max eig(dM) = -1.279e-03   max eig(dK)/K11 = -7.733e-06   dM<=0 and dK<=0 : True
+    eta = 0.0755 : max eig(dM) = -1.551e-03   max eig(dK)/K11 = -9.767e-06   dM<=0 and dK<=0 : True
+    eta = 0.0800 : max eig(dM) = -1.806e-03   max eig(dK)/K11 = -1.170e-05   dM<=0 and dK<=0 : True
+    eta = 0.1000 : max eig(dM) = -3.345e-03   max eig(dK)/K11 = -2.307e-05   dM<=0 and dK<=0 : True
+
+  (T1) verified for every eta tested : True
+  (T2) dM11 monotone non-increasing in eta : True
+
+  Second removal family (single-pass radial engagement a_e over a top
+  band of 0.8 mm, thickness 4 mm -> 3.9 mm):
+    max eig(dM) = -1.390e-06   max eig(dK)/K11 = -4.796e-08
+    -> one-sided as well.  (T1) does not depend on the removal geometry.
+
+  Third family: removal completed only up to x = xi * l_P (the state
+  in the middle of a pass).  This breaks the x-symmetry of the plate,
+  so it COUPLES the symmetric mode 1 to the antisymmetric mode 2:
+
+    xi     dM11/M11   dM22/M22   dM12 (normalised)   dK12 (normalised)
+    0.25     -0.0673    -0.0980        +0.0799             +0.0004
+    0.50     -0.1366    -0.1139        +0.1086             +0.0007
+    0.75     -0.2059    -0.1297        +0.0799             +0.0004
+    1.00     -0.2732    -0.2277        -0.0000             -0.0000
+    Eq. (22) makes Delta_PrM and Delta_PrK DIAGONAL, so this coupling
+    has no representation in the paper's uncertainty set at all.
+
+------------------------------------------------------------------------------
+(T3)  the +/-10 % box of Section 3.2 does not contain the reachable set
+------------------------------------------------------------------------------
+
+  ARGUMENT A - uses only Table 4 and Section 5 of the paper.
+  With M = M0(1+dm), K = K0(1+dk), |dm| <= 0.10, |dk| <= 0.10, the
+  attainable frequency ratio obeys
+      (f/f0)^2 = (1+dk)/(1+dm)  in  [0.9/1.1, 1.1/0.9] = [0.818, 1.222]
+      => f/f0 in [0.9045, 1.1055]  i.e. at most 10.55 % frequency rise.
+      mode 1: 540 -> 632 Hz, ratio 1.1704, (f/f0)^2 = 1.3698   OUTSIDE the box   (needs a symmetric bound of at least 15.6 %)
+      mode 2: 1068 -> 1162 Hz, ratio 1.0880, (f/f0)^2 = 1.1838   inside  the box   (needs a symmetric bound of at least 8.4 %)
+
+  The paper's own experiment therefore leaves the uncertainty set it
+  was designed for.  Nothing in the mu-synthesis certificate applies to
+  the machine state at the end of the test campaign.
+
+  ARGUMENT B - the Ritz model says where the perturbation actually goes.
+    the eta reproducing the measured +17 % on mode 1 is eta = 0.0755
+    (a top strip of 6.04 mm, 7.55 % of the volume);
+    it predicts +10.8 % on mode 2, measured +8.8 %.
+
+    at that eta, in the nominal modal basis:
+      dM11/M11 = -0.2732   -> mode-1 modal MASS moves 27.3 %, box allows 10 %
+      dM22/M22 = -0.2277   -> mode-2 modal MASS moves 22.8 %, box allows 10 %
+      dK11/K11 = -0.00038  -> mode-1 modal STIFFNESS moves 0.038 %, box allows 10 %
+      dK22/K22 = -0.04788  -> mode-2 modal STIFFNESS moves 4.79 %, box allows 10 %
+
+    The box is UNDERSIZED on mass by 2.7x and OVERSIZED on the mode-1
+    stiffness by 266x.  Same nominal +/-10 %, opposite errors.
+    Removing material at a free edge is almost pure mass loss: the edge
+    carries the modal displacement (kinetic energy) but almost no
+    curvature (strain energy).
+
+  CROSS-CHECK, independent of the Ritz model.  If dK = 0 exactly, the
+  measured +17 % requires 1/(1+dm) = 1.17^2, i.e.
+      dm = -0.2699  (-27.0 %)
+  the Ritz model gives dM11/M11 = -0.2732  (-27.3 %).
+  Two independent routes, the same number: the mechanism is confirmed.
+
+------------------------------------------------------------------------------
+Consequence for the damping matrix
+------------------------------------------------------------------------------
+  C_Pr0 = diag(2 zeta_i omega_i).  Even at constant zeta, omega moves with
+  eta, so C moves with it:
+    mode 1: omega x 1.1710 -> C x 1.1710 at constant zeta  (+17.1 %)
+    mode 2: omega x 1.1082 -> C x 1.1082 at constant zeta  (+10.8 %)
+  The paper's +/-20 % on C is meant for the uncertainty on zeta itself.
+  Once the eta-induced part is included, mode 1 needs 41 % - also outside the box.
+
+------------------------------------------------------------------------------
+Bounds to be used in place of the flat 10 % / 20 %
+------------------------------------------------------------------------------
+  for eta in [0, 0.1] (top strip up to 8.0 mm),
+  worst case over the interval, in the nominal modal basis:
+    |Delta M11| / M11 <=  34.92 %      (paper: 10 %)   -> UNDER by 3.5x
+    |Delta M22| / M22 <=  29.42 %      (paper: 10 %)   -> UNDER by 2.9x
+    |Delta K11| / K11 <=  0.052 %      (paper: 10 %)   -> OVER  by 192x
+    |Delta K22| / K22 <=   6.35 %      (paper: 10 %)   -> OVER  by 1.6x
+    off-diagonal, full-length removal: |dM12| <= 0.0000,  |dK12| <= 0.0000  (zero by symmetry)
+    but partial-length removal (mid-pass) breaks that symmetry - see the
+    third family above - and Eq. (22) keeps Delta_PrM, Delta_PrK diagonal,
+    so that coupling has no representation at any magnitude.
+
+    Delta M <= 0 and Delta K <= 0 for every eta in the interval (T1),
+    and both are monotone in eta (T2): the set is a ONE-SIDED CURVE with
+    a single free parameter, not a 4-scalar symmetric box.

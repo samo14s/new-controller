@@ -1,0 +1,20 @@
+==========================================================================
+ ETAPE 2 — COMPARAISON EQUITABLE : FOPID contre ADRC-FOPID
+==========================================================================
+  lobes boucle ouverte : moyenne 0.255 mm, min 0.065 mm  (68 s)
+  lobes fopid          : moyenne 2.106 mm, min 1.078 mm  (115 s)
+  lobes adrc           : moyenne 3.421 mm, min 2.262 mm  (158 s)
+  positions boucle ouverte : [0.224 0.622 1.198 0.559 0.232] mm   min = 0.224
+  positions fopid          : [3.201 4.    1.487 4.    4.   ] mm   min = 1.487
+  positions adrc           : [4.    2.96  3.466 4.    3.84 ] mm   min = 2.960
+  temporel boucle ouverte (a_p = 0.60 mm) : DIVERGE a 0.175 s   |y|max =  5039.58 um   |u|max =    0.0 V   moy|u| =  0.00 V
+  temporel fopid          (a_p = 0.60 mm) : stable   |y|max =     4.07 um   |u|max =   40.1 V   moy|u| =  6.79 V
+  temporel adrc           (a_p = 0.60 mm) : stable   |y|max =     3.80 um   |u|max =   17.8 V   moy|u| =  4.88 V
+  robustesse [synthese 2 modes  ] (n_modes=2) : boucle ouverte = 0.158 mm  fopid = 3.727 mm  adrc = 1.997 mm
+  robustesse [verif 5 modes     ] (n_modes=5) : boucle ouverte = 0.220 mm  fopid = 1.483 mm  adrc = 2.964 mm
+  robustesse [derive +17/+9 %   ] (n_modes=2) : boucle ouverte = 0.049 mm  fopid = 3.977 mm  adrc = 3.384 mm
+  robustesse [amortissement x0.8] (n_modes=2) : boucle ouverte = 0.127 mm  fopid = 3.712 mm  adrc = 1.982 mm
+  frequentiel fopid    : Ms = 1.997   effort = 392 V/N   max Re(pole) = -7.9
+  frequentiel adrc     : Ms = 1.881   effort = 160 V/N   max Re(pole) = -21.3
+
+  -> results/compare.npz   (370 s)

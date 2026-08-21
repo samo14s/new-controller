@@ -1,0 +1,71 @@
+==============================================================================
+AUDIT OF Eqs. (22)-(25) - UNCERTAINTY DESCRIPTION
+==============================================================================
+
+operating point S: 4900 rpm, a_p = 0.3 mm, a_e = 0.1 mm
+abar4 = -11263.3 N/m,  alpha40 = -18021.3,  L_Palpha = -14642.3
+DD0  = [[3.7049, 0.0], [0.0, 1.675]]
+L_DD = [[0.1012, 3.4746], [3.4746, 1.675]]
+
+------------------------------------------------------------------------------
+RESULT 1 - Eq. (25) drops the cross terms of an interval product
+------------------------------------------------------------------------------
+
+  nominal alpha40 * DD0 : [[-66766.8, -0.0], [-0.0, -30185.6]]
+  Eq. (25)  L_PD        : [[1481.1, 50875.3], [50875.3, 24525.8]]
+  exact formula         : [[57552.1, 113491.1], [113491.1, 79237.2]]
+  sampled over the edge : [[57552.1, 113491.1], [113491.1, 79237.2]]
+  formula vs sampled, max relative difference : 0.0000 %
+
+  UNDER-BOUNDING FACTOR (exact / Eq. 25) :
+      element (1,1) :    38.86 x
+      element (1,2) :     2.23 x
+      element (2,1) :     2.23 x
+      element (2,2) :     3.23 x
+
+  Term-by-term for element (1,1), the worst one:
+      |alpha40| * L_DD1        =       1822.9   (dropped)
+      |DD0_11|  * L_Palpha     =      54248.0   (dropped)
+      L_Palpha  * L_DD1        =       1481.1   (kept - Eq. 25)
+      exact envelope           =      57552.1
+
+  The (1,1) entry is the one the paper singles out as nearly constant
+  ('Except for the first element ... other elements all vary largely').
+  Its perturbation is small because L_DD1 is small - but alpha4(t) still
+  multiplies the LARGE nominal DD0_11, and that term is missing from
+  Eq. (25).  The regenerative stiffness of mode 1 is therefore left
+  39 times under-covered.
+
+------------------------------------------------------------------------------
+RESULT 2 - the box is 4-dimensional, the reachable set is 2-dimensional
+------------------------------------------------------------------------------
+
+  max |det(D^T D)| over 201 positions = 3.252e-15   (entry scale 3.806)
+  -> D^T D is an outer product: rank 1, symmetric, positive semidefinite,
+     for every milling position.  One free parameter (x), plus one for
+     alpha4.  The reachable set of alpha4 * D^T D is a 2-D surface.
+
+  Eq. (24) instead uses four independent reals delta_DD1..delta_DD4:
+     * symmetry broken  : delta_DD2 and delta_DD3 are independent, so
+       the box contains non-symmetric 'stiffness' matrices;
+     * rank broken      : det is generically non-zero in the box;
+     * sign broken      : see the corner scan below.
+
+  16 corners of the Eq.(25) box: eigenvalues span [-112803.2, 23494.3]
+  indefinite corners present : True
+  reachable set eigenvalues  : one is exactly 0, the other lies in [-125315.0, 0.0]
+  -> every reachable matrix is semidefinite of ONE sign; the box spends
+     part of its volume on matrices of the opposite sign, which no
+     milling position can produce.  That volume is pure conservatism,
+     and it is paid for in mu.
+
+------------------------------------------------------------------------------
+CONSEQUENCE
+------------------------------------------------------------------------------
+  The set used for synthesis is simultaneously
+     TOO SMALL  in the direction that matters (Result 1: the
+                regenerative stiffness of mode 1 is 39x under-covered),
+     TOO LARGE  in directions the physics cannot reach (Result 2).
+  Enlarging the box uniformly fixes the first and worsens the second.
+  The fix is structural: parameterise the set by the physical variables
+  (position x, coefficient alpha4) instead of by four free scalars.

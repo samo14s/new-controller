@@ -1,0 +1,11 @@
+==========================================================================
+ ETAPE 1 — OPTIMISATION PSO : FOPID contre ADRC-FOPID
+==========================================================================
+  pastille right ; D_obs.H = -0.985 -> sign_loop = +1
+  contraintes : Ms <= 2.0, effort <= 450 V/N
+  notation sur 5 modes (le correcteur n'en connait que 2)
+  objectif : marge de Floquet aux profondeurs ['0.5', '1.0', '2.0'] mm, positions (0.0, 0.5, 1.0)
+  PSO : 24 particules x 24 iterations, graines (1, 2, 3)
+
+  --- FOPID : 5 parametres, 16 etats ---
+    graine 1 : J = +0.1471  (600 evaluations, 94 s)

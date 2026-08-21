@@ -1,0 +1,20 @@
+==========================================================================
+ ETAPE 2 — SIMULATIONS TEMPORELLES (Section 4)
+==========================================================================
+  convention de couplage : SIGN_SIM = -1 (Section 4 du papier)
+  modele de la Section 4 : 2 modes (celui du papier, Eq. 12 simplifiee)
+  S/sans    : DIVERGE a 0.449 s   max|y| =  5145.10 um   moy|u| =   0.00 V   max|u| =    0.0 V   (0 s)
+  S/retard  : stable   max|y| =    15.64 um   moy|u| =   0.87 V   max|u| =   13.6 V   (17 s)
+  S/robuste : stable   max|y| =     2.19 um   moy|u| =   5.10 V   max|u| =   27.8 V   (18 s)
+  S/combine : stable   max|y| =     2.19 um   moy|u| =   5.00 V   max|u| =   27.8 V   (18 s)
+  S/sans 0.35mm : DIVERGE a 0.224 s   max|y| =   604.03 um
+  S/retard 0.40mm : instable (bouts) des 0.46 s   max|y| =   300.62 um
+  -> tension combinee / robuste : -2.0 %   vibration : +0.1 %   (papier : -22 % en simulation)
+  P/sans    : DIVERGE a 0.413 s   max|y| =  5068.50 um   moy|u| =   0.00 V   (0 s)
+  P/combine : stable   max|y| =     2.19 um   moy|u| =   5.02 V   (18 s)
+  T2/sans   : DIVERGE a 0.108 s   max|y| =  5114.62 um   moy|u| =   0.00 V   (0 s)
+  T2/robuste: stable   max|y| =     3.07 um   moy|u| =   8.40 V   (15 s)
+  T2/combine: stable   max|y| =     3.09 um   moy|u| =   8.21 V   (18 s)
+  -> tension combinee / robuste (T2) : -2.2 %   (papier : -11 % en experience)
+
+  -> results/time_domain.npz   (106 s)

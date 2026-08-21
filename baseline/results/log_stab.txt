@@ -1,0 +1,51 @@
+==========================================================================
+ ETAPE 3 — CARTES DE STABILITE (Figs. 6, 13, 18)
+==========================================================================
+  Fig.6 start    termine (24 s)
+  Fig.6 quarter  termine (46 s)
+  Fig.6 half     termine (68 s)
+  Fig.13 position   0.0 mm (73 s)
+  Fig.13 position  10.0 mm (78 s)
+  Fig.13 position  20.0 mm (84 s)
+  Fig.13 position  30.0 mm (89 s)
+  Fig.13 position  40.0 mm (95 s)
+  Fig.13 position  50.0 mm (100 s)
+  Fig.13 position  60.0 mm (106 s)
+  Fig.13 position  70.0 mm (110 s)
+  Fig.13 position  80.0 mm (114 s)
+  Fig.13 position  90.0 mm (118 s)
+  Fig.13 position 100.0 mm (122 s)
+  Fig.18 sans     4300 tr/min : 0.205 mm (123 s)
+  Fig.18 sans     4900 tr/min : 0.158 mm (124 s)
+  Fig.18 sans     5500 tr/min : 0.147 mm (124 s)
+  Fig.18 sans     6100 tr/min : 0.041 mm (125 s)
+  Fig.18 sans     6700 tr/min : 0.062 mm (125 s)
+  Fig.18 sans_exp 4300 tr/min : 0.065 mm (126 s)
+  Fig.18 sans_exp 4900 tr/min : 0.041 mm (127 s)
+  Fig.18 sans_exp 5500 tr/min : 0.474 mm (127 s)
+  Fig.18 sans_exp 6100 tr/min : 0.164 mm (128 s)
+  Fig.18 sans_exp 6700 tr/min : 0.044 mm (128 s)
+  Fig.18 robuste  4300 tr/min : 1.406 mm (131 s)
+  Fig.18 robuste  4900 tr/min : 1.046 mm (134 s)
+  Fig.18 robuste  5500 tr/min : 0.774 mm (137 s)
+  Fig.18 robuste  6100 tr/min : 2.500 mm (138 s)
+  Fig.18 robuste  6700 tr/min : 0.812 mm (141 s)
+  Fig.18 combine  4300 tr/min : 1.834 mm (143 s)
+  Fig.18 combine  4900 tr/min : 1.065 mm (145 s)
+  Fig.18 combine  5500 tr/min : 0.881 mm (147 s)
+  Fig.18 combine  6100 tr/min : 2.500 mm (148 s)
+  Fig.18 combine  6700 tr/min : 1.124 mm (151 s)
+  Fig.18 retard   4300 tr/min : 0.000 mm (151 s)
+  Fig.18 retard   4900 tr/min : 0.000 mm (151 s)
+  Fig.18 retard   5500 tr/min : 0.978 mm (152 s)
+  Fig.18 retard   6100 tr/min : 0.326 mm (155 s)
+  Fig.18 retard   6700 tr/min : 0.000 mm (157 s)
+  moyennes : sans = 0.12 mm  sans_exp = 0.16 mm  robuste = 1.31 mm  combine = 1.48 mm  retard = 0.26 mm
+  broutement sans     (ap=0.35 mm) : [ 590. 1080.] Hz
+  broutement retard   (ap=0.70 mm) : [ 578. 1068.] Hz
+  broutement robuste  (ap=1.00 mm) : [ 598. 1088.] Hz
+  broutement combine  (ap=1.50 mm) : [ 594. 1084.] Hz
+  derive modale [origine     ] f1=540 f2=1068 : limite combinee min = 1.279 mm
+  derive modale [apres essais] f1=632 f2=1162 : limite combinee min = 1.279 mm
+
+  -> results/stability.npz   (163 s)
