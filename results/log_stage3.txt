@@ -1,0 +1,17 @@
+==========================================================================
+STAGES 3-4 - CONTROLLER DESIGN UNDER ONE PROTOCOL
+==========================================================================
+  plant      : Du 2024, patch right, sensor upper corner, sign +1
+  operating  : 4900 rpm, a_e = 0.1 mm, f_z = 0.02 mm/tooth, down milling
+  probes     : a_p = [0.3, 0.6, 1.0] mm, positions (0.0, 0.5, 1.0)
+  evaluation : Floquet on the 5-mode model
+  constraints: Ms <= 2.0, effort <= 450.0 V/N, nominal poles <= -1 1/s
+  optimiser  : PSO 20x20, seeds (1, 2, 3) -- identical for every structure
+  mu-synthesis controller loaded: True
+
+--- FOPID ---------------------------------------------------------------
+  J = +0.05733   order 16   5 parameters   fixed   [291s]
+  Ms = 1.990   effort = 240.4 V/N   slowest nominal pole = -11.7 1/s
+  parameters: log_Kp=3.776, log_Ki=3.678, log_Kd=3.498, lam=0.2479, mu=0.9983
+
+--- LQG -----------------------------------------------------------------

@@ -117,3 +117,22 @@ BOUNDS = dict(
                   log_qo=(-4.0, 8.0), log_ro=(-14.0, -4.0),
                   kpd=(-1.0, 1.0), kdd=(-1.0, 1.0)),
 )
+
+
+# ------------------------------------------- Stage 3-4 search bounds
+# FOPID and LQG/PS-AC are given the plage physically useful for THEIR OWN
+# parameters; the intervals have comparable relative extent (5-10 decades).
+# PS-AC deliberately gets the SAME four parameters as LQG: the comparison is
+# then between two designs with identical tuning freedom, differing only in the
+# model each is designed on.
+BOUNDS2 = dict(
+    fopid=dict(log_Kp=(2.0, 8.0), log_Ki=(2.0, 9.0), log_Kd=(0.0, 5.0),
+               lam=(0.05, 1.0), mu=(0.05, 1.0)),
+    lqg=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
+             log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
+    mu_tdc=dict(kpd=(-1.5, 1.5), kdd=(-1.5, 1.5)),
+    ps_ac=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
+               log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
+    ps_ac_eta=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
+                   log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
+)
