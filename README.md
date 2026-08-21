@@ -40,6 +40,11 @@
 > وبإتقان — هو Du 2024 نفسه. الأدلة في
 > [`docs/02_ASSUMPTIONS_VS_DU2024.md §0`](docs/02_ASSUMPTIONS_VS_DU2024.md).
 
+## التقرير الشامل
+
+صفحة واحدة تجمع كل النتائج: [`report/results_report.html`](report/results_report.html)
+— منشورة أيضًا كـ Artifact قابل للمشاركة.
+
 ## الوثائق
 
 | الملف | المحتوى |

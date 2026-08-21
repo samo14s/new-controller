@@ -1,0 +1,954 @@
+<title>نتائج قمع اهتزاز الفرز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+
+<style>
+:root{
+  --ground:#EFF2F3; --surface:#FFFFFF; --surface-2:#F6F8F9;
+  --ink:#0F1719; --ink-2:#31434A; --muted:#57666C;
+  --rule:#D8DEE0; --rule-soft:#E7ECED;
+  --accent:#0E7490; --accent-soft:#E2F1F5;
+  --good:#15803D; --good-soft:#E6F4EA;
+  --warn:#B45309; --warn-soft:#FAF0E2;
+  --bad:#9F1239;  --bad-soft:#FBE9EE;
+  --s1:#0891B2; --s2:#C2410C; --s3:#7C3AED;
+  --shadow:0 1px 2px rgba(15,23,25,.05), 0 8px 24px -16px rgba(15,23,25,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+    --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+    --rule:#243033; --rule-soft:#1C2629;
+    --accent:#22A7C4; --accent-soft:#10303A;
+    --good:#4ADE80; --good-soft:#0F2A1B;
+    --warn:#F59E0B; --warn-soft:#2E2107;
+    --bad:#FB7185;  --bad-soft:#33111C;
+    --s1:#0891B2; --s2:#EA580C; --s3:#8B5CF6;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+  --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+  --rule:#243033; --rule-soft:#1C2629;
+  --accent:#22A7C4; --accent-soft:#10303A;
+  --good:#4ADE80; --good-soft:#0F2A1B;
+  --warn:#F59E0B; --warn-soft:#2E2107;
+  --bad:#FB7185;  --bad-soft:#33111C;
+  --s1:#0891B2; --s2:#EA580C; --s3:#8B5CF6;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; direction:rtl;
+  background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  font-size:16px; line-height:1.75; font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px 96px}
+.col{max-width:72ch}
+
+/* ---------- masthead ---------- */
+header.mast{
+  padding:64px 0 40px; border-bottom:1px solid var(--rule);
+  margin-bottom:56px;
+}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12px; color:var(--accent); margin:0 0 18px; font-weight:600;
+}
+h1{
+  font-family:Amiri,"Times New Roman",serif;
+  font-size:clamp(38px,6.2vw,64px); line-height:1.12; font-weight:700;
+  margin:0 0 20px; text-wrap:balance; letter-spacing:0;
+}
+.dek{font-size:clamp(17px,2.1vw,20px); color:var(--ink-2); max-width:62ch; margin:0 0 30px; font-weight:300}
+.meta{display:flex; flex-wrap:wrap; gap:8px 10px; font-family:"IBM Plex Mono",monospace; font-size:12px}
+.meta span{
+  border:1px solid var(--rule); border-radius:2px; padding:4px 10px;
+  color:var(--muted); background:var(--surface);
+}
+
+/* ---------- sections ---------- */
+section{margin:0 0 76px; scroll-margin-top:24px}
+h2{
+  font-family:Amiri,"Times New Roman",serif;
+  font-size:clamp(27px,3.6vw,36px); font-weight:700; line-height:1.25;
+  margin:0 0 8px; text-wrap:balance;
+  display:flex; align-items:baseline; gap:14px;
+}
+h2 .num{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:500;
+  color:var(--accent); letter-spacing:.05em; flex:none;
+  padding-top:2px;
+}
+.sub{color:var(--muted); font-size:14.5px; margin:0 0 30px; padding-inline-start:44px}
+h3{
+  font-family:"IBM Plex Sans Arabic",sans-serif;
+  font-size:18px; font-weight:600; margin:38px 0 12px; letter-spacing:-.005em;
+}
+h4{font-size:14.5px; font-weight:600; margin:26px 0 8px; color:var(--ink-2)}
+p{margin:0 0 16px}
+.col p, .col ul{max-width:72ch}
+a{color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+strong{font-weight:600}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.9em; font-variant-numeric:tabular-nums}
+code{background:var(--surface-2); border:1px solid var(--rule-soft); border-radius:3px; padding:1px 5px; direction:ltr; display:inline-block}
+ul{margin:0 0 16px; padding-inline-start:22px}
+li{margin:0 0 8px}
+
+/* ---------- stat row ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:4px; overflow:hidden; margin:0 0 34px}
+.stat{background:var(--surface); padding:20px 22px 18px}
+.stat .k{font-size:12px; color:var(--muted); margin:0 0 10px; font-weight:500}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-size:30px; font-weight:600; line-height:1; letter-spacing:-.02em; font-variant-numeric:tabular-nums; direction:ltr; text-align:right}
+.stat .v em{font-style:normal; font-size:15px; color:var(--muted); font-weight:400}
+.stat .d{font-size:12.5px; color:var(--muted); margin:9px 0 0; line-height:1.5}
+.stat.hero .v{color:var(--accent)}
+
+/* ---------- verdict ---------- */
+.verdict{
+  background:var(--surface); border:1px solid var(--rule);
+  border-inline-start:3px solid var(--accent);
+  border-radius:4px; padding:24px 26px; margin:0 0 34px; box-shadow:var(--shadow);
+}
+.verdict p:last-child{margin-bottom:0}
+.verdict .lede{font-size:18px; font-weight:500; line-height:1.6}
+
+/* ---------- callout ---------- */
+.note{border:1px solid var(--rule); border-radius:4px; padding:18px 20px; margin:0 0 22px; background:var(--surface)}
+.note.warn{border-inline-start:3px solid var(--warn); background:var(--warn-soft)}
+.note.bad{border-inline-start:3px solid var(--bad); background:var(--bad-soft)}
+.note.good{border-inline-start:3px solid var(--good); background:var(--good-soft)}
+.note .lbl{font-size:12.5px; font-weight:600; margin:0 0 9px}
+.note.warn .lbl{color:var(--warn)} .note.bad .lbl{color:var(--bad)} .note.good .lbl{color:var(--good)}
+.note p:last-child{margin-bottom:0}
+
+/* ---------- findings ---------- */
+.finds{display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:16px; margin:0 0 26px}
+.find{background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:20px 21px}
+.find .tag{font-size:12px; font-weight:600; color:var(--bad); margin:0 0 10px}
+.find.thm .tag{color:var(--good)}
+.find h4{margin:0 0 8px; font-size:15.5px; color:var(--ink)}
+.find p{font-size:14px; color:var(--ink-2); margin:0 0 10px; line-height:1.65}
+.find .fig{font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:600; color:var(--bad); direction:ltr; text-align:right; letter-spacing:-.02em}
+.find.thm .fig{color:var(--good)}
+.find p:last-child{margin-bottom:0}
+
+/* ---------- tables ---------- */
+.tblwrap{
+  overflow-x:auto; border:1px solid var(--rule); border-radius:4px;
+  background:var(--surface); margin:0 0 12px; box-shadow:var(--shadow);
+}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:560px}
+caption{
+  caption-side:top; text-align:start; padding:14px 18px 0;
+  font-size:13px; color:var(--muted); font-weight:500;
+}
+th,td{padding:9px 14px; text-align:start; border-bottom:1px solid var(--rule-soft); white-space:nowrap}
+thead th{
+  font-size:12px; font-weight:600; color:var(--muted);
+  border-bottom:1px solid var(--rule); background:var(--surface-2);
+  position:sticky; top:0;
+}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:end; direction:ltr}
+td.name{font-weight:500}
+tr.hi td{background:var(--accent-soft)}
+tr.hi td.name{font-weight:600}
+tr.ref td{color:var(--muted)}
+.best{color:var(--accent); font-weight:600}
+.fail{color:var(--bad); font-weight:600}
+.tnote{font-size:12.5px; color:var(--muted); margin:0 0 30px; padding-inline-start:2px}
+
+.chip{
+  display:inline-block; font-size:11.5px;
+  font-weight:600; padding:2px 8px; border-radius:2px;
+  border:1px solid currentColor; line-height:1.5;
+}
+.chip.ok{color:var(--good)} .chip.no{color:var(--bad)} .chip.mid{color:var(--warn)}
+
+/* ---------- chart ---------- */
+figure{margin:0 0 12px}
+.chartbox{
+  background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+  padding:20px 18px 12px; box-shadow:var(--shadow); overflow-x:auto;
+}
+.plot{position:relative}
+.tip{
+  position:absolute; pointer-events:none; opacity:0; transform:translate(-50%,-100%);
+  background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+  box-shadow:var(--shadow); padding:8px 11px; font-size:12px; line-height:1.6;
+  white-space:nowrap; z-index:2; min-width:132px;
+}
+.tip.on{opacity:1}
+.tip .hd{font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--muted); margin-bottom:5px}
+.tip .row{display:flex; align-items:center; gap:8px; justify-content:space-between}
+.tip .row i{display:inline-block; width:10px; height:3px; border-radius:2px; flex:none}
+.tip .row b{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-weight:600; direction:ltr}
+@media (prefers-reduced-motion:no-preference){ .tip{transition:opacity .12s ease} }
+.chart-title{font-size:15px; font-weight:600; margin:0 0 2px}
+.chart-sub{font-size:12.5px; color:var(--muted); margin:0 0 14px}
+.legend{display:flex; flex-wrap:wrap; gap:6px 20px; margin:12px 0 0; font-size:12.5px; direction:rtl}
+.legend i{display:inline-block; width:16px; height:3px; border-radius:2px; vertical-align:middle; margin-inline-end:7px}
+figcaption{font-size:12.5px; color:var(--muted); margin-top:10px; max-width:72ch}
+svg text{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- index rail ---------- */
+.rail{display:none}
+@media (min-width:1240px){
+  .rail{
+    display:block; position:fixed; inset-block-start:96px; inset-inline-end:24px;
+    width:180px; font-size:12.5px; line-height:1.5;
+  }
+  .rail ol{list-style:none; margin:0; padding:0; border-inline-end:1px solid var(--rule)}
+  .rail li{margin:0}
+  .rail a{
+    display:block; padding:5px 14px 5px 0; color:var(--muted);
+    text-decoration:none; border-inline-end:2px solid transparent; margin-inline-end:-1px;
+  }
+  .rail a:hover{color:var(--ink)}
+  .rail a .n{font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--accent); margin-inline-start:8px; letter-spacing:.04em}
+  .wrap{padding-inline-end:224px}
+}
+
+footer{border-top:1px solid var(--rule); padding-top:26px; color:var(--muted); font-size:13px}
+footer code{font-size:12px}
+@media (prefers-reduced-motion:no-preference){
+  a,.rail a{transition:color .15s ease}
+}
+</style>
+
+<nav class="rail" aria-label="فهرس التقرير">
+  <ol>
+    <li><a href="#s0"><span class="n">00</span> الخلاصة</a></li>
+    <li><a href="#s1"><span class="n">01</span> النموذج والتحقّق</a></li>
+    <li><a href="#s2"><span class="n">02</span> تدقيق عدم اليقين</a></li>
+    <li><a href="#s3"><span class="n">03</span> المسار A</a></li>
+    <li><a href="#s4"><span class="n">04</span> المسار B</a></li>
+    <li><a href="#s5"><span class="n">05</span> الشهادات والهوامش</a></li>
+    <li><a href="#s6"><span class="n">06</span> النتائج السلبية</a></li>
+    <li><a href="#s7"><span class="n">07</span> الحدود والتالي</a></li>
+  </ol>
+</nav>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">تقرير النتائج الشامل</p>
+  <h1>قمع اهتزاز الفرز في الجدران الرقيقة</h1>
+  <p class="dek">
+    تسعة متحكّمات، مساران بحثيّان، نموذج واحد مُصادَق. كل رقم في هذه الصفحة مولَّد من
+    الشيفرة في المستودع وقابل لإعادة التوليد بأمر واحد.
+  </p>
+  <div class="meta">
+    <span>Du, Liu, Dai &amp; Long · IJMS 274 (2024) 109257</span>
+    <span>AL6061 · 100×80×4 mm</span>
+    <span>4900 rpm · a<sub>e</sub> = 0.1 mm</span>
+    <span dir="ltr">claude/milling-vibration-active-control-cuqilo</span>
+  </div>
+</header>
+
+<!-- ==================== 0 ==================== -->
+<section id="s0">
+  <h2><span class="num">00</span>الخلاصة</h2>
+  <p class="sub">ما تقوله الأرقام قبل التفصيل.</p>
+
+  <div class="verdict">
+    <p class="lede">
+      النموذج المرجعي مُعاد إنتاجه على أربعة مستويات مستقلّة. وصف عدم اليقين المنشور
+      <strong>غير سليم وشديد التحفّظ في آن واحد</strong>، بثلاثة إخفاقات مقيسة. وأفضل متحكّم
+      يرفع حدّ القطع من <span class="mono">0.0503</span> إلى <span class="mono">0.8517</span> mm
+      — أي <strong>16.9 ضعفًا</strong> — بأربعة بارامترات فقط وبجهد لا يتجاوز 38 V.
+    </p>
+    <p>
+      وثلاث نتائج سلبية لا تقلّ أهمّية: تصحيح <em>مقاس</em> صندوق عدم اليقين مع إبقاء
+      <em>بنيته</em> يجعل المتحكّم أسوأ؛ وجدولة مُرشِّح كالمان على الموضع تبدو الأفضل ثم تنهار
+      إلى الصفر عند انحراف تواتري بـ9.5 %؛ ودالة الهدف نفسها رتّبت النسخ بالعكس.
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat hero">
+      <p class="k">حدّ القطع المستقرّ، أدنى قيمة على المواضع</p>
+      <p class="v">0.852 <em>mm</em></p>
+      <p class="d">مقابل 0.0503 mm بلا تحكّم — ×16.9</p>
+    </div>
+    <div class="stat">
+      <p class="k">ذروة الاهتزاز عند الحسّاس</p>
+      <p class="v">2.00 <em>μm</em></p>
+      <p class="d">الحلقة المفتوحة تتباعد في 0.107 s</p>
+    </div>
+    <div class="stat">
+      <p class="k">زمن استقرار الاستجابة الحرّة</p>
+      <p class="v">5.4 <em>ms</em></p>
+      <p class="d">مقابل 174.2 ms بلا تحكّم — ×32</p>
+    </div>
+    <div class="stat">
+      <p class="k">أكبر هامش عدم يقين مُصادَق</p>
+      <p class="v">1.88 <em>×</em></p>
+      <p class="d">‏1.88 ضعف المجموعة الفيزيائية (PB-RAC مجدوَل)</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>مساران، نموذج واحد</h3>
+    <p>
+      العمل نُفِّذ على مخطّطين متتاليين يتشاركان النموذج نفسه ونقطة التشغيل نفسها، ويختلفان في
+      مجموعة المتحكّمات وفي المتغيّر الذي تُبنى عليه المساهمة:
+    </p>
+    <ul>
+      <li>
+        <strong>المسار A</strong> (المراحل 0–16) — تدقيق عدم اليقين، ثم PID / LQR / SMC /
+        μ-synthesis مقابل متحكّم مجدوَل على <strong>إزالة المادة</strong> <code>η</code>.
+      </li>
+      <li>
+        <strong>المسار B</strong> (المراحل 0–9) — FOPID / LQG / μ-TDC مقابل متحكّم مجدوَل على
+        <strong>موضع الفرز</strong> <code>x_P</code>. هذا هو المخطّط الأحدث، ونتائجه هي الأساس.
+      </li>
+    </ul>
+    <p>
+      المتغيّران كلاهما <strong>معروف للمكنة</strong> — الموضع من أمر التغذية، وإزالة المادة من
+      جدول الممرّات — وهذا ما يجعل جدولتهما مشروعة حيث لا تكون جدولة متغيّر غير مقيس كذلك.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 1 ==================== -->
+<section id="s1">
+  <h2><span class="num">01</span>النموذج والتحقّق</h2>
+  <p class="sub">هل يعيد التنفيذ إنتاج المرجع؟ نعم على أربعة مستويات مستقلّة — وخلل واحد.</p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>مستويات التحقّق الأربعة، كلّ منها يصادق شيئًا مختلفًا</caption>
+      <thead>
+        <tr><th>المستوى</th><th>ما يصادقه</th><th class="n">التنفيذ</th><th class="n">المرجع</th><th class="n">الفارق</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">التواترات الذاتية</td><td>الكتلة والصلابة</td><td class="n">521.0 / 1069.0 / 2723.8</td><td class="n">537 / 1101 / 2805</td><td class="n">−2.99 … −2.89 %</td></tr>
+        <tr><td class="name">اللارنينات</td><td>أشكال الأنماط، بمعزل عن المعايرة</td><td class="n">731.2 / 2123.7 / 3008.3</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td class="name">الشكل 7 — ‏D<sup>T</sup>D</td><td>الاعتماد المكاني كاملًا</td><td class="n">3.7049 / 0.1012 / 3.4746</td><td class="n">3.705 / 0.105 / 3.45</td><td class="n">&lt; 0.7 %</td></tr>
+        <tr><td class="name">دور السنّ والممرّ</td><td>قانون القطع والتغذية</td><td class="n">245.0 Hz · 20.408 s</td><td class="n">245 Hz · 20.4 s</td><td class="n">&lt; 0.1 %</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    خطأ التواترات <strong>منتظم الإشارة والمقدار على الأنماط الخمسة</strong> — إزاحة صلابة عامّة
+    (الحدّ <code>K_λ</code> المحذوف)، لا خطأ في أشكال الأنماط. واللارنينات تصادق الأشكال
+    بمعزل تامّ عن أي معايرة.
+  </p>
+
+  <div class="note bad">
+    <p class="lbl">خلل مكتشَف — اصطلاح الإشارة</p>
+    <p>
+      الحزمة كانت تستعمل <code>SIGN = −1</code>، وهو الاصطلاح الذي يجعل الحلقة المفتوحة
+      <strong>مستقرّة</strong> عند نقطة التشغيل المرجعية للمرجع نفسه. الفارق ليس تجميليًّا:
+    </p>
+    <div class="tblwrap" style="margin-top:14px">
+      <table>
+        <thead><tr><th>الاصطلاح</th><th class="n">حدّ الاستقرار (mm)</th><th class="n">ρ عند a<sub>p</sub>=0.3 mm</th><th class="n">زمن التباعد</th><th>يطابق المرجع؟</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td class="name">+1 (المعادلة 13 كما نُشرت)</td><td class="n">0.0393 – 0.0451</td><td class="n">1.23 – 1.40</td><td class="n">0.107 s</td><td><span class="chip ok">نعم</span></td></tr>
+          <tr><td class="name">−1</td><td class="n">0.330 – 1.350</td><td class="n">0.85 – 0.95</td><td class="n">لا يتباعد</td><td><span class="chip no">لا</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px">
+      المرجع يقول صراحةً إن القطع عند نقطة التشغيل يتباعد وإن الحدّ التجريبي ≈ 0.1 mm.
+      كل النتائج الجديدة تستعمل <code>+1</code>.
+    </p>
+  </div>
+
+  <div class="col">
+    <h3>وقيدان لا مفرّ منهما</h3>
+    <p>
+      المرجع <strong>لا ينشر</strong> أوزان التركيب <code>W_Pf, W_Pu, W_Pn</code> ولا مكسبَي
+      المعادلة (30) <code>K_Pp, K_Pd</code>. فأي رقم يخصّ متحكّم μ هنا هو رقم
+      <strong>إعادة بناء</strong> لا استنساخ — بُحث عن الأوزان على شبكة من 60 تجربة بنفس دالة
+      الهدف، والعدد مذكور في كل جدول.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 2 ==================== -->
+<section id="s2">
+  <h2><span class="num">02</span>تدقيق وصف عدم اليقين</h2>
+  <p class="sub">ثلاثة إخفاقات مبرهَنة في المعادلات (22)–(25)، كلّها من أرقام المرجع نفسه.</p>
+
+  <div class="finds">
+    <div class="find">
+      <p class="tag">F1 — جبر</p>
+      <h4>المعادلة (25) تُسقط الحدود المتقاطعة</h4>
+      <p>
+        مغلّف جداء مجالين هو <code>|a₀|L_d + |d₀|L_a + L_aL_d</code>. المرجع يحتفظ بالحدّ
+        الثالث — أصغرها — ويُسقط الأوّلَين.
+      </p>
+      <p class="fig">38.9×</p>
+      <p>تحت-تغطية على صلابة تجدّد النمط الأول. الصيغة المضبوطة تطابق المسح العددي إلى 0.0000 %.</p>
+    </div>
+    <div class="find">
+      <p class="tag">F2 — بنية</p>
+      <h4>صندوق رباعي حول مجموعة ثنائية</h4>
+      <p>
+        <code>DᵀD</code> جداء خارجي: من الرتبة 1 دائمًا. المرجع يعطي عناصره الأربعة معاملات
+        <strong>مستقلّة</strong>، فيَنتج صندوق يحوي مصفوفات غير متناظرة ومن الرتبة 2 وغير
+        معرَّفة الإشارة.
+      </p>
+      <p class="fig">3×10⁻¹⁵</p>
+      <p>أقصى محدِّد على 201 موضعًا، مقابل سلّم عناصر 3.806 — صفر إلى دقّة الآلة.</p>
+    </div>
+    <div class="find">
+      <p class="tag">F3 — فيزياء</p>
+      <h4>تجربة المرجع تخرج من صندوق المرجع</h4>
+      <p>
+        صندوق الـ10 % يسمح بارتفاع تواتري أقصاه <strong>10.55 %</strong>. والقسم 5 من الورقة
+        يقيس <strong>+17 %</strong> (‏540 → 632 Hz).
+      </p>
+      <p class="fig">15.6 %</p>
+      <p>أدنى حدّ متناظر لازم لاحتواء ما قاسه المرجع بنفسه.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <h3>ومن أين تأتي هذه الأرقام: ثلاث مبرهنات</h3>
+  </div>
+
+  <div class="finds">
+    <div class="find thm">
+      <p class="tag">T1 — مضبوطة</p>
+      <h4>أحادية الجانب</h4>
+      <p>
+        لأي مجال إزالة، <code>ΔM ⪯ 0</code> و<code>ΔK ⪯ 0</code> بترتيب لوينر. البرهان:
+        تكاملات ريتز جَمعية على المجال، والمطروح مصفوفة غرام. <strong>ليست تقريبًا من الرتبة
+        الأولى.</strong>
+      </p>
+      <p>⇒ نصف أي صندوق متناظر غير قابل للبلوغ فيزيائيًّا.</p>
+    </div>
+    <div class="find thm">
+      <p class="tag">T2 — رتابة</p>
+      <h4>المجموعة منحنى لا صندوق</h4>
+      <p>
+        لمجالات إزالة متداخلة <code>M(η₂) ⪯ M(η₁) ⪯ M(0)</code>. المجموعة القابلة للبلوغ
+        موسومة بمقدار قياسي <strong>واحد</strong>، لا بأربعة معاملات مستقلّة.
+      </p>
+    </div>
+    <div class="find thm">
+      <p class="tag">T4 — اقتران</p>
+      <h4>ما لا تمثّله المعادلة (22) إطلاقًا</h4>
+      <p>
+        الإزالة الجزئية أثناء الممرّ تكسر تناظر اللوحة فتولّد <code>ΔM₁₂ = 0.109</code> عند
+        منتصف الممرّ — من رتبة الحدود القطرية نفسها. و<code>Δ_PrM</code> في المرجع
+        <strong>قطرية</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <p class="lbl">الآليّة الفيزيائية، مؤكَّدة بطريقين مستقلّين</p>
+    <p>
+      إزالة المادة عند حافّة <strong>حرّة</strong> هي فقدان كتلة شبه خالص: الحافّة تحمل الإزاحة
+      النمطية ولا تحمل تقريبًا أي انحناء. عند <code>η = 0.0755</code> (شريط 6.04 mm):
+      الكتلة النمطية للنمط الأول تتغيّر <strong>−27.3 %</strong> بينما صلابته تتغيّر
+      <strong>−0.038 %</strong> فقط. والاستنتاج العكسي من التواتر المقاس (+17 %) بافتراض
+      <code>ΔK = 0</code> يعطي <strong>−27.0 %</strong>. طريقان مستقلّان، فارق 0.3 نقطة.
+    </p>
+    <p style="margin-top:12px">
+      ⇒ الصندوق <strong>أصغر 2.7×</strong> ممّا يلزم على الكتلة، و<strong>أكبر 266×</strong>
+      ممّا يلزم على صلابة النمط الأول — بالنسبة نفسها «10 %».
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 3 ==================== -->
+<section id="s3">
+  <h2><span class="num">03</span>المسار A — الجدولة على إزالة المادة</h2>
+  <p class="sub">PID · LQR · SMC · μ-synthesis · PB-RAC. الرقعة يمين، الحسّاس يمين، الإشارة +1.</p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>السيناريو الاسمي — 4900 rpm، ‏a<sub>p</sub> = 0.3 mm. المحاكاة الزمنية بتشبّع ±450 V.</caption>
+      <thead>
+        <tr>
+          <th>المتحكّم</th><th class="n">par</th><th class="n">a<sub>p,lim</sub> أدنى</th>
+          <th class="n">متوسط</th><th class="n">A<sub>max</sub> μm</th><th class="n">E<sub>u</sub> V²s</th><th class="n">u<sub>max</sub> V</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0</td><td class="n">0.0503</td><td class="n">0.0614</td><td class="n">يتباعد</td><td class="n">0</td><td class="n">0</td></tr>
+        <tr><td class="name">PID</td><td class="n">4</td><td class="n">0.4072</td><td class="n">0.6353</td><td class="n fail">يتباعد</td><td class="n">1.9×10⁴</td><td class="n">450 مُشبَع</td></tr>
+        <tr><td class="name">SMC</td><td class="n">5</td><td class="n">0.6411</td><td class="n">0.9442</td><td class="n">3.120</td><td class="n best">371</td><td class="n best">17.9</td></tr>
+        <tr><td class="name">μ — مجموعة مصحَّحة</td><td class="n">4</td><td class="n">0.5183</td><td class="n">0.7909</td><td class="n best">3.030</td><td class="n">379</td><td class="n">23.1</td></tr>
+        <tr><td class="name">LQR</td><td class="n">5</td><td class="n">0.6616</td><td class="n">0.9921</td><td class="n">3.077</td><td class="n">565</td><td class="n">25.4</td></tr>
+        <tr><td class="name">μ — مجموعة المرجع</td><td class="n">4</td><td class="n best">0.6645</td><td class="n">0.9576</td><td class="n">3.105</td><td class="n">580</td><td class="n">24.2</td></tr>
+        <tr class="hi"><td class="name">PB-RAC (مقترح)</td><td class="n">7</td><td class="n">0.6558</td><td class="n best">1.0231</td><td class="n">3.075</td><td class="n">597</td><td class="n">25.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    PID يبلغ 0.407 mm بفلوكيه لكنّه <strong>يتباعد فعليًّا</strong> لأنه يشبع عند 450 V — حدّ
+    فلوكيه يُحسَب بلا تشبّع، والفرق بين الرقمين هو ما يخفيه التحليل الخطّي.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>تحت إزالة المادة — أدنى حدّ على المواضع، عند خمس قيم لـ η. العمود الأخير هو الأسوأ على المجال كلّه.</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">η = 0</th><th class="n">0.019</th><th class="n">0.038</th><th class="n">0.057</th><th class="n">0.075</th><th class="n">الأسوأ</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0.0503</td><td class="n">0.0503</td><td class="n">0.0620</td><td class="n">0.1205</td><td class="n">0.1235</td><td class="n">0.0503</td></tr>
+        <tr><td class="name">SMC</td><td class="n">0.6411</td><td class="n">0.4540</td><td class="n">0.4101</td><td class="n">0.4423</td><td class="n">0.2580</td><td class="n fail">0.2580</td></tr>
+        <tr><td class="name">PID</td><td class="n">0.4072</td><td class="n">0.3779</td><td class="n">0.4042</td><td class="n">0.5095</td><td class="n">0.3106</td><td class="n">0.3106</td></tr>
+        <tr><td class="name">μ — مجموعة مصحَّحة</td><td class="n">0.5183</td><td class="n">0.5183</td><td class="n">0.5622</td><td class="n">0.3574</td><td class="n">0.3253</td><td class="n">0.3253</td></tr>
+        <tr><td class="name">μ — مجموعة المرجع</td><td class="n">0.6645</td><td class="n">0.5973</td><td class="n">0.5856</td><td class="n">0.5973</td><td class="n">0.4686</td><td class="n">0.4686</td></tr>
+        <tr><td class="name">PB-RAC ثابت</td><td class="n">0.6558</td><td class="n">0.6324</td><td class="n">0.6060</td><td class="n">0.5622</td><td class="n">0.6909</td><td class="n">0.5622</td></tr>
+        <tr><td class="name">LQR</td><td class="n">0.6616</td><td class="n">0.6353</td><td class="n">0.6060</td><td class="n">0.5797</td><td class="n">0.6675</td><td class="n">0.5797</td></tr>
+        <tr class="hi"><td class="name">PB-RAC مجدوَل على η</td><td class="n">0.6558</td><td class="n">0.6353</td><td class="n">0.6236</td><td class="n">0.6441</td><td class="n best">0.7055</td><td class="n best">0.6236</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    SMC ينهار: <strong>−60 %</strong> من حدّه الاسمي بمجرّد أن تُزال المادة. سطحه المنزلق مضبوط
+    على تواترات لم تعد قائمة. والجدولة على η ترفع الأسوأ من 0.5622 إلى 0.6236 mm.
+  </p>
+</section>
+
+<!-- ==================== 4 ==================== -->
+<section id="s4">
+  <h2><span class="num">04</span>المسار B — الجدولة على الموضع</h2>
+  <p class="sub">FOPID · LQG · μ-TDC · PS-AC. نفس البروتوكول، ومتحكّم مقترح بأربعة بارامترات فقط.</p>
+
+  <div class="col">
+    <p>
+      الفجوة البحثية هنا هي <strong>F2</strong> نفسه، منظورًا إليه من جهة التحكّم: المرجع يضع
+      تغيّر <code>D(x_P)</code> في صندوق عدم يقين. لكنّ <code>x_P</code> ليس مجهولًا — المكنة
+      تأمر التغذية. فبدل وضعه في صندوق، <strong>يُجدوَل عليه</strong>:
+    </p>
+    <p style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:15px; direction:ltr; background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:16px; margin:0 0 18px">
+      u(t) = −K(x<sub>P</sub>) x̂(t)
+    </p>
+    <p>
+      و<code>K(x)</code> مصمَّم عند كل موضع على <code>A(x)</code> <strong>متضمّنةً</strong> صلابة
+      القطع الاسمية هناك. النتيجة: نفس بنية LQG، ونفس <strong>الأربعة</strong> بارامترات، ولا
+      حرّية ضبط إضافية — الفرق سطر واحد في نموذج التصميم.
+    </p>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <caption>السيناريو الاسمي — نفس النموذج ونفس الشروط لكل صفّ.</caption>
+      <thead>
+        <tr>
+          <th>المتحكّم</th><th class="n">par</th><th class="n">a<sub>p,lim</sub> أدنى</th>
+          <th class="n">A<sub>max</sub> μm</th><th class="n">A<sub>RMS</sub> μm</th>
+          <th class="n">T<sub>s</sub> ms</th><th class="n">E<sub>u</sub> V²s</th><th class="n">u<sub>max</sub> V</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0</td><td class="n">0.0503</td><td class="n">يتباعد</td><td class="n">634.5</td><td class="n">174.2</td><td class="n">0</td><td class="n">0</td></tr>
+        <tr><td class="name">μ-TDC (المرجع)</td><td class="n">6</td><td class="n">0.6821</td><td class="n">3.084</td><td class="n">0.656</td><td class="n fail">90.3</td><td class="n">673.7</td><td class="n best">24.6</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">5</td><td class="n">0.7581</td><td class="n">2.093</td><td class="n">0.399</td><td class="n">5.4</td><td class="n best">524.4</td><td class="n">35.1</td></tr>
+        <tr><td class="name">LQG</td><td class="n">4</td><td class="n">0.8459</td><td class="n best">1.996</td><td class="n best">0.360</td><td class="n">5.4</td><td class="n">635.5</td><td class="n">37.9</td></tr>
+        <tr class="hi"><td class="name">PS-AC (مقترح)</td><td class="n">4</td><td class="n best">0.8517</td><td class="n">1.999</td><td class="n">0.361</td><td class="n">5.4</td><td class="n">626.8</td><td class="n">38.0</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    ‏μ-TDC — متحكّم المرجع — هو الأقلّ جهدًا لكنّه الأبطأ استقرارًا بـ<strong>17 ضعفًا</strong>
+    والأعلى اهتزازًا بـ54 %.
+  </p>
+
+  <figure>
+    <div class="chartbox">
+      <p class="chart-title">حدّ القطع على طول الحافّة العليا</p>
+      <p class="chart-sub">‏a<sub>p,lim</sub> بالمليمتر مقابل موضع الأداة — 4900 rpm، تقييم فلوكيه على نموذج الخمسة أنماط</p>
+      <div class="plot">
+      <div class="tip" id="tip" role="status" aria-live="polite"></div>
+      <svg viewBox="0 0 720 300" width="100%" height="300" role="img" dir="ltr" id="sweepsvg"
+           aria-label="منحنى حدّ القطع مقابل الموضع لثلاثة متحكّمات: LQG وμ-TDC وPS-AC">
+        <g stroke="var(--rule-soft)" stroke-width="1">
+          <line x1="46" y1="230.3" x2="634" y2="230.3"/>
+          <line x1="46" y1="194.6" x2="634" y2="194.6"/>
+          <line x1="46" y1="158.9" x2="634" y2="158.9"/>
+          <line x1="46" y1="123.1" x2="634" y2="123.1"/>
+          <line x1="46" y1="87.4"  x2="634" y2="87.4"/>
+          <line x1="46" y1="51.7"  x2="634" y2="51.7"/>
+          <line x1="46" y1="16.0"  x2="634" y2="16.0"/>
+        </g>
+        <g fill="var(--muted)" font-size="10.5" text-anchor="end">
+          <text x="40" y="233.8">0.8</text><text x="40" y="198.1">1.0</text>
+          <text x="40" y="162.4">1.2</text><text x="40" y="126.6">1.4</text>
+          <text x="40" y="90.9">1.6</text><text x="40" y="55.2">1.8</text>
+          <text x="40" y="19.5">2.0</text>
+        </g>
+        <line x1="46" y1="266" x2="634" y2="266" stroke="var(--rule)" stroke-width="1"/>
+        <g fill="var(--muted)" font-size="10.5" text-anchor="middle">
+          <text x="46" y="281">0</text><text x="163.6" y="281">20</text>
+          <text x="281.2" y="281">40</text><text x="398.8" y="281">60</text>
+          <text x="516.4" y="281">80</text><text x="634" y="281">100</text>
+        </g>
+        <text x="340" y="296" fill="var(--muted)" font-size="11" text-anchor="middle" style="font-family:'IBM Plex Sans Arabic',sans-serif">موضع الأداة (mm)</text>
+
+        <polyline fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          points="46.0,251.4 104.8,156.4 163.6,130.1 222.4,107.8 281.2,205.8 340.0,239.4 398.8,209.0 457.6,140.6 516.4,165.6 575.2,190.3 634.0,207.4"/>
+        <polyline fill="none" stroke="var(--s3)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"
+          points="46.0,222.1 104.8,187.6 163.6,139.6 222.4,107.8 281.2,97.3 340.0,117.6 398.8,93.1 457.6,24.2 516.4,32.4 575.2,91.0 634.0,149.9"/>
+        <polyline fill="none" stroke="var(--s1)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"
+          points="46.0,221.0 104.8,183.5 163.6,138.5 222.4,108.7 281.2,100.5 340.0,118.7 398.8,105.1 457.6,42.4 516.4,57.1 575.2,108.7 634.0,161.5"/>
+
+        <g fill="var(--s2)" stroke="var(--surface)" stroke-width="2">
+          <circle cx="46" cy="251.4" r="4"/><circle cx="281.2" cy="205.8" r="4"/><circle cx="340" cy="239.4" r="4"/><circle cx="634" cy="207.4" r="4"/>
+        </g>
+        <g fill="var(--s3)" stroke="var(--surface)" stroke-width="2">
+          <circle cx="46" cy="222.1" r="4"/><circle cx="457.6" cy="24.2" r="4"/><circle cx="634" cy="149.9" r="4"/>
+        </g>
+        <g fill="var(--s1)" stroke="var(--surface)" stroke-width="2">
+          <circle cx="46" cy="221" r="4.5"/><circle cx="340" cy="118.7" r="4.5"/><circle cx="457.6" cy="42.4" r="4.5"/><circle cx="634" cy="161.5" r="4.5"/>
+        </g>
+
+        <g font-size="11.5" font-weight="600" paint-order="stroke"
+           stroke="var(--surface)" stroke-width="3.5" stroke-linejoin="round">
+          <text x="646" y="145" fill="var(--s3)">LQG</text>
+          <text x="646" y="171" fill="var(--s1)">PS-AC</text>
+          <text x="646" y="212" fill="var(--s2)">μ-TDC</text>
+        </g>
+        <g font-size="10" fill="var(--muted)">
+          <text class="ar" class="ar" x="344" y="255" text-anchor="middle" font-size="10.5" font-size="10.5">عقدة نمط 2</text>
+        </g>
+        <line x1="340" y1="255" x2="340" y2="264" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 2"/>
+
+        <line id="cross" x1="46" y1="10" x2="46" y2="266" stroke="var(--muted)" stroke-width="1" opacity="0"/>
+        <g id="hot" opacity="0">
+          <circle id="h1" r="5.5" fill="var(--s1)" stroke="var(--surface)" stroke-width="2"/>
+          <circle id="h2" r="5"   fill="var(--s3)" stroke="var(--surface)" stroke-width="2"/>
+          <circle id="h3" r="5"   fill="var(--s2)" stroke="var(--surface)" stroke-width="2"/>
+        </g>
+        <rect id="hit" x="46" y="10" width="588" height="256" fill="transparent" style="cursor:crosshair"/>
+      </svg>
+      </div>
+      <div class="legend">
+        <span><i style="background:var(--s1)"></i>PS-AC (مقترح) — أدنى 0.852، مدى 1.000</span>
+        <span><i style="background:var(--s3)"></i>LQG — أدنى 0.846، مدى 1.109</span>
+        <span><i style="background:var(--s2)"></i>μ-TDC — أدنى 0.682، مدى 0.804</span>
+      </div>
+    </div>
+    <figcaption>
+      الاعتماد المكاني يدخل من باب واحد: الشعاع <code>D(x_P)</code>. النمط الثاني يمرّ
+      <strong>بعقدة</strong> عند منتصف الحافّة، فيتغيّر الحدّ التجديدي 3.2 أضعاف على الطول.
+      المتحكّم الثابت يهدر عدوانه في المنتصف ويعوزه عند الطرفين؛ المجدوَل يعيد توزيعه — ولهذا
+      يرتفع الأدنى وينخفض المدى معًا. القيم الكاملة في الجدول التالي.
+    </figcaption>
+  </figure>
+
+  <div class="tblwrap">
+    <table>
+      <caption>مسح الموضع الكامل — ‏a<sub>p,lim</sub> (mm) عند 11 موضعًا</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">0</th><th class="n">20</th><th class="n">40</th><th class="n">60</th><th class="n">80</th><th class="n">100</th><th class="n">أدنى</th><th class="n">المدى</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0.053</td><td class="n">0.091</td><td class="n">0.062</td><td class="n">0.053</td><td class="n">0.053</td><td class="n">0.056</td><td class="n">0.0503</td><td class="n">0.041</td></tr>
+        <tr><td class="name">μ-TDC (المرجع)</td><td class="n">0.682</td><td class="n">1.361</td><td class="n">0.937</td><td class="n">0.919</td><td class="n">1.162</td><td class="n">0.928</td><td class="n">0.6821</td><td class="n best">0.804</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">0.758</td><td class="n">1.083</td><td class="n">1.405</td><td class="n">1.580</td><td class="n">1.875</td><td class="n">1.431</td><td class="n">0.7581</td><td class="n">1.117</td></tr>
+        <tr><td class="name">LQG</td><td class="n">0.846</td><td class="n">1.308</td><td class="n">1.545</td><td class="n">1.568</td><td class="n">1.908</td><td class="n">1.250</td><td class="n">0.8459</td><td class="n">1.109</td></tr>
+        <tr class="hi"><td class="name">PS-AC (مقترح)</td><td class="n">0.852</td><td class="n">1.314</td><td class="n">1.527</td><td class="n">1.501</td><td class="n">1.770</td><td class="n">1.185</td><td class="n best">0.8517</td><td class="n">1.000</td></tr>
+        <tr><td class="name">PS-AC + جدولة المُراقِب</td><td class="n">0.893</td><td class="n">1.252</td><td class="n">1.554</td><td class="n">1.551</td><td class="n">1.346</td><td class="n">1.033</td><td class="n">0.8927</td><td class="n">0.661</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    الصفّ الأخير يبدو الأفضل هنا — <strong>وينهار إلى الصفر</strong> في السيناريو التالي. انظر
+    القسم 06.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>اختبارات الإجهاد — أسوأ حدّ على كل سيناريو</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">تغيّر المعاملات النمطية</th><th class="n">زيادة التأخير</th><th class="n">الاسمي</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0.0474</td><td class="n">0.0416</td><td class="n">0.0503</td></tr>
+        <tr><td class="name">μ-TDC (المرجع)</td><td class="n">0.4423</td><td class="n">0.5037</td><td class="n">0.6821</td></tr>
+        <tr><td class="name">PS-AC + η</td><td class="n">0.4891</td><td class="n">0.6850</td><td class="n">0.8517</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">0.5856</td><td class="n">0.5563</td><td class="n">0.7581</td></tr>
+        <tr><td class="name">LQG</td><td class="n">0.6441</td><td class="n best">0.6850</td><td class="n">0.8459</td></tr>
+        <tr class="hi"><td class="name">PS-AC (مقترح)</td><td class="n best">0.6528</td><td class="n best">0.6850</td><td class="n best">0.8517</td></tr>
+        <tr><td class="name">PS-AC + جدولة المُراقِب</td><td class="n fail">0.0000</td><td class="n">0.6411</td><td class="n">0.8927</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note good">
+    <p class="lbl">المقارنة الحاسمة — PS-AC مقابل LQG</p>
+    <p>
+      نفس البنية، نفس <strong>الأربعة</strong> بارامترات، نفس الحدود، نفس المُحسِّن، نفس البذور،
+      نفس القيود. الفرق الوحيد أن مكسب PS-AC دالّة في الموضع المعروف:
+      <strong>+0.7 %</strong> على الحدّ الأدنى، <strong>−9.8 %</strong> على المدى عبر الحافّة،
+      <strong>+1.4 %</strong> تحت تغيّر المعاملات، <strong>−1.4 %</strong> جهدًا.
+    </p>
+    <p style="margin-top:12px">
+      <strong>المكسب صغير ومتّسق، لا مذهل.</strong> وأكبره في تجانس الأداء — وهو المفيد
+      هندسيًّا، لأن الإنتاج يحدّه أسوأ موضع لا متوسّطها. ومقابل متحكّم المرجع المنشور الفروق
+      كبيرة: <strong>+25 %</strong> على الحدّ الاسمي، <strong>+48 %</strong> تحت انحراف
+      المعاملات، <strong>+36 %</strong> تحت زيادة التأخير، <strong>−35 %</strong> على ذروة
+      الاهتزاز.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 5 ==================== -->
+<section id="s5">
+  <h2><span class="num">05</span>الشهادات والهوامش</h2>
+  <p class="sub">ما هو مبرهَن، لا ما هو مُلاحَظ. المرجع لا يحتوي أي شرط استقرار مع التأخير.</p>
+
+  <div class="col">
+    <p>
+      المعادلة (16) في المرجع تدفن الحدّ المتأخّر داخل الدخل، فشرط μ في المعادلة (28) هو شرط
+      لنظام <strong>بلا تأخير</strong>. لا يوجد في الورقة كلّها <code>τ_max</code>. البديل هنا
+      اختبار عبور <strong>ضروري وكافٍ</strong>:
+    </p>
+    <p style="text-align:center; font-family:'IBM Plex Mono',monospace; font-size:14px; direction:ltr; background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:16px; margin:0 0 18px; line-height:1.9">
+      sup<sub>ω</sub> ρ( (jωI − A<sub>cl</sub>)<sup>−1</sup> A<sub>d,cl</sub> ) &lt; 1 &nbsp;⟹&nbsp; τ<sub>max</sub> = ∞<br>
+      وإلاّ &nbsp; τ<sub>max</sub> = min<sub>ω,k</sub> arg λ<sub>k</sub>(ω) / ω
+    </p>
+    <p>
+      لأن <code>e^(−jωτ)</code> يمسح دائرة الوحدة كاملةً عندما يتغيّر <code>τ</code>. بلا أي
+      تحفّظ ليابونوفي. ومنه <code>a_p^∞</code>: أكبر عمق لا تستطيع عنده <strong>أي</strong> سرعة
+      مغزل — أي لوب — زعزعة الحلقة على كامل مجموعة عدم اليقين.
+    </p>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <caption>المسار B — الشهادة على مجال المواضع كاملًا</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">sup ρ</th><th class="n">τ<sub>max</sub></th><th class="n">a<sub>p</sub><sup>∞</sup> mm</th><th class="n">Δ<sub>max</sub></th><th>شهادة LK</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">33.226</td><td class="n">0.003 τ₀</td><td class="n">0.0108</td><td class="n">0.00</td><td><span class="chip no">لا</span></td></tr>
+        <tr><td class="name">FOPID</td><td class="n">0.746</td><td class="n">∞</td><td class="n">0.3700</td><td class="n">1.48</td><td><span class="chip no">لا</span></td></tr>
+        <tr><td class="name">PS-AC + η</td><td class="n">0.760</td><td class="n">∞</td><td class="n">0.3661</td><td class="n">1.34</td><td><span class="chip ok">نعم</span></td></tr>
+        <tr><td class="name">LQG</td><td class="n">0.726</td><td class="n">∞</td><td class="n">0.3817</td><td class="n">1.41</td><td><span class="chip ok">نعم</span></td></tr>
+        <tr class="hi"><td class="name">PS-AC (مقترح)</td><td class="n">0.727</td><td class="n">∞</td><td class="n">0.3836</td><td class="n">1.40</td><td><span class="chip no">لا</span></td></tr>
+        <tr><td class="name">μ-TDC (المرجع)</td><td class="n best">0.603</td><td class="n">∞</td><td class="n best">0.4364</td><td class="n best">1.54</td><td><span class="chip no">لا</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    ⚠️ <strong>‏μ-TDC يتفوّق في الهامشين المُصادَقين</strong> — العمق المضمون لكل تأخير وهامش
+    عدم اليقين. هذه مقايضة التحكّم المتين الكلاسيكية بعينها: μ-synthesis يشتري <em>ضمانًا</em>
+    بثمن <em>أداء</em>. المساهمة في الأداء المُحقَّق وفي أسوأ الحالات تحت الإجهاد، <strong>لا</strong>
+    في الهامش المُصادَق.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>المسار A — الشهادة على مجموعة الإزالة الفيزيائية</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">a<sub>p</sub><sup>DI</sup> mm</th><th class="n">Δ<sub>max</sub></th><th class="n">مدى τ/τ₀</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">SMC</td><td class="n">0.2255</td><td class="n fail">0.75</td><td class="n">[0.20, 3.82]</td></tr>
+        <tr><td class="name">PID</td><td class="n">0.2314</td><td class="n fail">0.48</td><td class="n">[0.20, 2.00]</td></tr>
+        <tr><td class="name">μ — مجموعة مصحَّحة</td><td class="n">0.3075</td><td class="n">1.03</td><td class="n">[0.26, 3.82]</td></tr>
+        <tr><td class="name">PB-RAC ثابت</td><td class="n">0.3622</td><td class="n">1.29</td><td class="n">[0.20, 3.82]</td></tr>
+        <tr><td class="name">LQR</td><td class="n">0.3700</td><td class="n">1.32</td><td class="n">[0.20, 3.82]</td></tr>
+        <tr><td class="name">μ — مجموعة المرجع</td><td class="n">0.4129</td><td class="n">1.50</td><td class="n">[0.20, 3.82]</td></tr>
+        <tr class="hi"><td class="name">PB-RAC مجدوَل على η</td><td class="n best">0.4188</td><td class="n best">1.88</td><td class="n">[0.20, 3.82]</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    <code>Δ_max &lt; 1</code> عند PID وSMC يعني أنهما <strong>غير مُصادَقين حتى على المجموعة
+    الفيزيائية نفسها</strong>. والمتحكّم المجدوَل عائلة لا متحكّمًا واحدًا، فيُصادَق كل عضو
+    مقابل مجاله الجزئي من η والقيمة المُبلَّغة هي الأسوأ على المجالات الجزئية.
+  </p>
+
+  <div class="note">
+    <p class="lbl">لماذا لا شرط معتمِد على التأخير</p>
+    <p>
+      معايير ينسن تشترط الاستقرار لكل <code>τ ∈ [0, τ̄]</code>، وهذا <strong>خاطئ فيزيائيًّا في
+      الفرز</strong>: لوبات الاستقرار تعني وجود تأخيرات مزعزِعة داخل أي مجال، فالشرط يفشل
+      لأسباب صحيحة. وعدديًّا <code>τ·ω₂ ≈ 27</code>، أي أبعد بعشرين ضعفًا عن مدى صلاحية تلك
+      المعايير. الشرط المستقلّ عن التأخير هو الأداة الصحيحة هنا، لا الأضعف. وشهادة
+      ليابونوف–كراسوفسكي بـ<code>P</code> مشتركة تُضاف لأنها وحدها تغطّي تغيّرًا زمنيًّا
+      <strong>سريعًا كيفما كان</strong> — وهو ما يفعله <code>α₄(t)</code> بنسبة ذروة/متوسط 12.4.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 6 ==================== -->
+<section id="s6">
+  <h2><span class="num">06</span>النتائج السلبية</h2>
+  <p class="sub">خمس نتائج لم تكن مقصودة، وهي من أهمّ ما خرج من العمل.</p>
+
+  <div class="note bad">
+    <p class="lbl">01 — تصحيح مقاس الصندوق وحده يجعل المتحكّم أسوأ</p>
+    <p>
+      ‏μ-synthesis مُصمَّمًا على المجموعة <strong>المصحَّحة</strong> (المعادلة 25 بحدودها
+      المتقاطعة + الحدود الفيزيائية) أسوأ من μ على مجموعة المرجع في <strong>كل</strong> مقياس:
+      الحدّ الاسمي 0.5183 مقابل 0.6645، والأسوأ تحت الإزالة 0.3253 مقابل 0.4686،
+      و<code>Δ_max</code> 1.03 مقابل 1.50.
+    </p>
+    <p style="margin-top:12px">
+      ليس تناقضًا مع F1 بل <strong>تأكيدًا لـF2</strong>: الصندوق الأكبر يبقى صندوقًا، والحجم
+      المضاف يقع كلّه في اتجاهات لا تبلغها الفيزياء. المكسب يأتي من <strong>إعادة التشكيل</strong>
+      لا من <strong>التكبير</strong> — الجدولة على η ترفع <code>Δ_max</code> من 1.29 إلى 1.88.
+    </p>
+  </div>
+
+  <div class="note bad">
+    <p class="lbl">02 — جدولة المُراقِب تُغري ثم تنهار</p>
+    <p>
+      تعطي أفضل حدّ اسمي (0.8927) وأدنى تشتّت (0.6610) وأكبر <code>Δ_max</code> (1.68)، ثم
+      <strong>صفر</strong> عند انخفاض التواترات 9.5 %. العطل ليس في استقرار القطع بل في
+      <strong>استقرار الحلقة الاسمية نفسها</strong>: الأقطاب تعبر إلى <code>+8.47 s⁻¹</code>
+      بلا قطع إطلاقًا.
+    </p>
+    <p style="margin-top:12px">
+      والسبب مكانيّ: عند منتصف الحافّة يمرّ النمط الثاني بعقدة، فيصير الاضطراب المفترَض
+      <code>E(x) ≈ [0; D₁, 0]</code> — بلا أي معلومة عن النمط الثاني. فيعطيه المُرشِّح المجدوَل
+      مكسب تقدير شبه معدوم، وخطأ تواتري بـ9.5 % يكفي لزعزعة حلقة التقدير. لهذا القانون
+      المُنفَّذ هو ما يكتبه المخطّط حرفيًّا: جدولة المكسب وحده.
+    </p>
+  </div>
+
+  <div class="note warn">
+    <p class="lbl">03 — دالة الهدف رتّبت النسخ بالعكس</p>
+    <p>
+      ‏<code>J</code> وسيط رتيب يُقاس عند أعماق سبر <code>{0.3, 0.6, 1.0}</code> mm، وهي
+      مُعايَرة على مدى حدود متوقَّع أدنى بكثير من المُحقَّق فعلًا (0.85–1.9 mm). فوق ذلك يفقد
+      الوسيط قدرته على التمييز. <strong>الحدّ الحقيقي من تنصيف فلوكيه هو الحكم، لا J.</strong>
+      ولم تُغيَّر دالة الهدف بعد رؤية النتائج — ذلك بالضبط ما تمنعه قاعدة «لا تضبط متحكّمًا
+      بمحاباة».
+    </p>
+  </div>
+
+  <div class="note warn">
+    <p class="lbl">04 — خطآن عدديّان كادا يقلبان الاستنتاجات</p>
+    <p>
+      <strong>شبكة التواترات اللوغاريتمية كانت تقفز فوق الرنينات.</strong> عند
+      <code>ζ ≈ 0.003</code> يبلغ عرض النمط 10 rad/s بينما تباعد شبكة بـ400 نقطة حتى
+      <code>3×10⁴</code> rad/s هو 100 rad/s. فعاد نصف القطر الطيفي أصغر بكثير من الحقيقة
+      وبدت الحلقة المفتوحة مستقرّةً عند أعماق يقول فلوكيه إنها ليست كذلك.
+    </p>
+    <p style="margin-top:12px">
+      <strong>وخطوة الزمن.</strong> كل المتحكّمات كانت تتباعد زمنيًّا عند
+      <code>n_sub = 164</code> (‏40 kHz) لأن أقطاب Oustaloup تصل إلى 100 kHz فتنطوي. عند 656
+      تختفي المشكلة تمامًا: 2.0 μm و38 V بلا أي تباعد.
+    </p>
+  </div>
+
+  <div class="note">
+    <p class="lbl">05 — الجدولة على η لا تضيف على مقياس الممرّ الواحد</p>
+    <p>
+      ‏<code>PS-AC + η</code> مطابق لـ<code>PS-AC</code> عند التصميم وأسوأ تحت الإجهاد
+      (0.4891 مقابل 0.6528). المتغيّران يعملان على مقياسين زمنيّين مختلفين: الموضع على مقياس
+      الممرّ (20.4 s)، وη على مقياس حملة الممرّات (ساعات). خلطهما في تصميم واحد لا يفيد.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 7 ==================== -->
+<section id="s7">
+  <h2><span class="num">07</span>الحدود والخطوات التالية</h2>
+  <p class="sub">ما هو مبرهَن، وما هو عدديّ، وما لم يُفعل.</p>
+
+  <div class="col">
+    <h3>ما هو مبرهَن</h3>
+    <ul>
+      <li><strong>T1</strong> أحادية الجانب: <code>ΔM ⪯ 0</code>، <code>ΔK ⪯ 0</code> — مضبوطة لا تقريبية، لأن تكاملات ريتز جَمعية والمطروح مصفوفة غرام.</li>
+      <li><strong>اختبار العبور</strong> شرط ضروري وكافٍ للاستقرار المستقلّ عن التأخير عند كل رأس؛ <code>τ_max</code> منه مضبوط.</li>
+      <li><strong>شهادة LK</strong> بـ<code>P</code> مشتركة كافية، وتغطّي تغيّرًا زمنيًّا سريعًا كيفما كان.</li>
+    </ul>
+
+    <h3>ما هو عدديّ لا مبرهَن</h3>
+    <ul>
+      <li>حدود <code>a_p,lim</code> من تنصيف فلوكيه: دقيقة للنظام الدوريّ المُنمذَج، لكنّها <strong>دليل لا برهان</strong>.</li>
+      <li>تحليل العبور يُجرى على <code>α₄</code> مجمَّدة عند طرفَي مجالها؛ النظام الحقيقي دوريّ بنسبة ذروة/متوسط 12.4. شهادة LK وحدها تغطّي ذلك.</li>
+    </ul>
+
+    <h3>ما هو إعادة بناء لا استنساخ</h3>
+    <ul>
+      <li>‏μ-TDC: المرجع لا ينشر أوزان التركيب ولا مكسبَي المعادلة (30). أي رقم يخصّه هو رقم إعادة بناء بـ60 تجربة أوزان + PSO على مكسبين.</li>
+    </ul>
+
+    <h3>ما لم يُفعل</h3>
+    <ul>
+      <li><strong>لا تجارب.</strong> كل شيء عدديّ على نموذج مُصادَق على أربعة مستويات.</li>
+      <li>الجدولة تفترض <code>x_P</code> معلومًا بدقّة — صحيح للمكنة، لكن أثر خطأ تقدير الموضع لم يُدرَس.</li>
+      <li>اصطلاح الإشارة <code>+1</code> مبرَّر، لكنّ المرجع نفسه متناقض؛ كل النتائج مشروطة به.</li>
+      <li>تعدّد التأخيرات: المرجع يُقرّ بأن الفرز نظام متعدّد التأخير ويستعمل تأخيرًا واحدًا للتبسيط. لم يُعالَج هنا.</li>
+    </ul>
+
+    <h3>الخطوة التالية المقترحة</h3>
+    <p>
+      <strong>إعادة تصميم μ-synthesis على المجموعة المُوَسَّمة فيزيائيًّا</strong> — لا على صندوق
+      موسَّع بل على المجموعة المُعاد تشكيلها (رتبة 1، أحادية الجانب، بمعامل واحد). نفس طريقة
+      المرجع، وصف عدم يقين صحيح، ونتيجة أفضل. هذه وحدها ورقة قابلة للنشر ولا تحتاج اختراع
+      متحكّم جديد.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>
+    كل الأرقام مولَّدة من <code>phase2/</code> و<code>analysis/</code> في المستودع، ومحفوظة في
+    <code>results/</code>. لإعادة التوليد:
+    <code>python run_stage3.py &amp;&amp; python run_stage56.py &amp;&amp; python run_stage78.py</code>.
+    الوثائق التفصيلية في <code>docs/00</code> … <code>docs/07</code>.
+  </p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var svg=document.getElementById('sweepsvg'); if(!svg) return;
+  var tip=document.getElementById('tip'), cross=document.getElementById('cross'),
+      hot=document.getElementById('hot'), hit=document.getElementById('hit'),
+      h=[document.getElementById('h1'),document.getElementById('h2'),document.getElementById('h3')];
+  var xs=[46,104.8,163.6,222.4,281.2,340,398.8,457.6,516.4,575.2,634];
+  var pos=[0,10,20,30,40,50,60,70,80,90,100];
+  var S=[
+    {n:'PS-AC', c:'var(--s1)', v:[0.852,1.062,1.314,1.481,1.527,1.425,1.501,1.852,1.770,1.481,1.185],
+     y:[221.0,183.5,138.5,108.7,100.5,118.7,105.1,42.4,57.1,108.7,161.5]},
+    {n:'LQG',   c:'var(--s3)', v:[0.846,1.039,1.308,1.486,1.545,1.431,1.568,1.954,1.908,1.580,1.250],
+     y:[222.1,187.6,139.6,107.8,97.3,117.6,93.1,24.2,32.4,91.0,149.9]},
+    {n:'\u03bc-TDC', c:'var(--s2)', v:[0.682,1.214,1.361,1.486,0.937,0.749,0.919,1.302,1.162,1.024,0.928],
+     y:[251.4,156.4,130.1,107.8,205.8,239.4,209.0,140.6,165.6,190.3,207.4]}
+  ];
+  function show(i){
+    cross.setAttribute('x1',xs[i]); cross.setAttribute('x2',xs[i]);
+    cross.setAttribute('opacity','0.5'); hot.setAttribute('opacity','1');
+    for(var k=0;k<3;k++){ h[k].setAttribute('cx',xs[i]); h[k].setAttribute('cy',S[k].y[i]); }
+    var html='<div class="hd">x = '+pos[i]+' mm</div>';
+    for(var k=0;k<3;k++){
+      html+='<div class="row"><span><i style="background:'+S[k].c+'"></i>'+S[k].n+'</span><b>'+S[k].v[i].toFixed(3)+'</b></div>';
+    }
+    tip.innerHTML=html;
+    var r=svg.getBoundingClientRect(), sc=r.width/720;
+    var lo=Math.min(S[0].y[i],S[1].y[i],S[2].y[i])*sc,
+        hi=Math.max(S[0].y[i],S[1].y[i],S[2].y[i])*sc;
+    tip.style.left=Math.min(Math.max(xs[i]*sc,78),r.width-78)+'px';
+    if(lo<96){ tip.style.transform='translate(-50%,0)'; tip.style.top=(hi+16)+'px'; }
+    else     { tip.style.transform='translate(-50%,-100%)'; tip.style.top=(lo-12)+'px'; }
+    tip.classList.add('on');
+  }
+  function hide(){ cross.setAttribute('opacity','0'); hot.setAttribute('opacity','0'); tip.classList.remove('on'); }
+  function nearest(ev){
+    var r=svg.getBoundingClientRect(), x=(ev.clientX-r.left)/(r.width/720), best=0, bd=1e9;
+    for(var i=0;i<xs.length;i++){ var d=Math.abs(xs[i]-x); if(d<bd){bd=d;best=i;} }
+    return best;
+  }
+  hit.addEventListener('pointermove',function(e){ show(nearest(e)); });
+  hit.addEventListener('pointerleave',hide);
+  hit.addEventListener('pointerdown',function(e){ show(nearest(e)); });
+})();
+</script>
