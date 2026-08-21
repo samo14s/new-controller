@@ -15,3 +15,8 @@ STAGES 3-4 - CONTROLLER DESIGN UNDER ONE PROTOCOL
   parameters: log_Kp=3.776, log_Ki=3.678, log_Kd=3.498, lam=0.2479, mu=0.9983
 
 --- LQG -----------------------------------------------------------------
+  J = +0.11888   order 6   4 parameters   fixed   [228s]
+  Ms = 1.990   effort = 275.0 V/N   slowest nominal pole = -99.5 1/s
+  parameters: log_q_pos=19.76, log_q_vel=0.513, log_r=-10.76, log_ratio=10.49
+
+--- MU_TDC --------------------------------------------------------------
