@@ -16,3 +16,12 @@ STAGES 5-6 - STABILITY OVER THE POSITION DOMAIN, AND MARGINS
 
 controller      peak  tau_max/tau0  a_p^inf mm  delta_max    LK
 open          33.226          0.00      0.0108       0.00    no   [14s]
+fopid          0.746           inf      0.3700       1.48    no   [1193s]
+lqg            0.726           inf      0.3817       1.41   yes   [278s]
+mu_tdc         0.603           inf      0.4364       1.54    no   [177s]
+ps_ac          0.727           inf      0.3836       1.40    no   [121s]
+ps_ac_eta      0.760           inf      0.3661       1.34   yes   [274s]
+ps_ac_obs      0.631           inf      0.4149       1.66    no   [302s]
+ps_ac_full     0.618           inf      0.4246       1.68   yes   [269s]
+
+total 2627s -> results/stage56.pkl
