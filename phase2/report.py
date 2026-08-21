@@ -75,21 +75,26 @@ def main():
     print(table(d, 'S4_', 'السيناريو 4 — التأخير',
                 ['τ₀', '1.25τ₀', '1.5τ₀', '1.75τ₀', '2τ₀']))
 
-    ks = [k for k in ORDER if f'S4_{k}_ratio' in d.files]
-    if ks:
-        print('\n### مجال التأخير المستقرّ عند العمق الاسمي\n')
+    c0 = load('certify_phase2.npz')
+    if c0 is not None:
+        print('\n### مجال التأخير المستقرّ عند العمق الاسمي '
+              '(مسح المغزل 700–24000 rpm)\n')
         print('| المتحكّم | $\\tau/\\tau_0$ الأدنى | الأعلى | العرض |')
         print('|---|---|---|---|')
-        for k in ks:
-            lo, hi = np.asarray(d[f'S4_{k}_ratio'], float)
+        for k in ORDER:
+            if f'{k}_ratio_lo' not in c0.files:
+                continue
+            lo = float(c0[f'{k}_ratio_lo'])
+            hi = float(c0[f'{k}_ratio_hi'])
             w = hi - lo if np.isfinite(hi) and np.isfinite(lo) else np.nan
             print(f'| {NAMES.get(k,k)} | {lo:.2f} | {hi:.2f} | '
                   f'**{w:.2f}** |')
 
+    sched = load('certify_sched.npz')
     c = load('certify_phase2.npz')
     if c is not None:
         print('\n---\n\n## المراحل 9–11 — الشهادة والهوامش\n')
-        print('| المتحكّم | مُصادَق عند $a_p=0.3$ mm | $a_p^{LK}$ (mm) | '
+        print('| المتحكّم | مُصادَق عند $a_p=0.3$ mm | $a_p^{DI}$ (mm) | '
               '$\\delta_{\\max}$ | $\\tau/\\tau_0$ |')
         print('|---|---|---|---|---|')
         for k in ORDER:
@@ -101,6 +106,22 @@ def main():
                   f'{float(c[f"{k}_delta_max"]):.2f} | '
                   f'[{float(c[f"{k}_ratio_lo"]):.2f}, '
                   f'{float(c[f"{k}_ratio_hi"]):.2f}] |')
+        if sched is not None:
+            print(f'| **PB-RAC مجدوَل** | نعم | '
+                  f'**{float(sched["ap_min"])*1e3:.4f}** | '
+                  f'**{float(sched["delta_min"]):.2f}** | [0.20, 3.82] |')
+            print('\n> المتحكّم المجدوَل عائلة لا متحكّمًا واحدًا، فيُصادَق على '
+                  'كل عضو مقابل **مجاله الجزئي** من $\\eta$، والقيمة المُبلَّغة '
+                  'هي الأسوأ على المجالات الجزئية — أي ضمانٌ على مجال الإزالة '
+                  'كلّه. التفصيل في `results/log_certify_sched.txt`:\n')
+            ed = np.asarray(sched['edges'], float)
+            print('| مجال $\\eta$ | $\\hat\\eta$ | $a_p^{DI}$ (mm) | '
+                  '$\\delta_{\\max}$ |')
+            print('|---|---|---|---|')
+            for i, (a, dm) in enumerate(zip(np.asarray(sched['ap'], float),
+                                            np.asarray(sched['delta'], float))):
+                print(f'| [{ed[i]:.4f}, {ed[i+1]:.4f}] | '
+                      f'{0.5*(ed[i]+ed[i+1]):.4f} | {a*1e3:.4f} | {dm:.2f} |')
 
 
 if __name__ == '__main__':

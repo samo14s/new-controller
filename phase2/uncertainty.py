@@ -214,18 +214,23 @@ class UncertaintySet:
                 a_nom + (self.a_grid[[0, -1]] - a_nom) * scale,
                 1.0 + (self.z_grid[[0, -1]] - 1.0) * scale)
 
-    def removal_states(self, scale=1.0, n_eta=3):
+    def removal_states(self, scale=1.0, n_eta=3, eta_range=None):
         """Sampled removal geometries (eta, xi).
 
         eta and xi jointly describe one rectangle of removed material, so they
         are sampled together.  xi < 1 is the mid-pass state, which is what
         creates the modal coupling Eq. (22) cannot represent (T4).
         """
-        eta_max = self.eta_grid[-1] * scale
-        out = [(0.0, 1.0)]
-        for eta in np.linspace(eta_max / (n_eta - 1), eta_max, n_eta - 1):
-            for xi in (0.0, 1.0):
-                out.append((float(eta), xi))
+        if eta_range is None:
+            lo, hi = 0.0, self.eta_grid[-1] * scale
+        else:
+            lo, hi = float(eta_range[0]), float(eta_range[1])
+        out = []
+        for eta in np.linspace(lo, hi, n_eta):
+            if eta <= 0.0:
+                out.append((0.0, 1.0))
+            else:
+                out.extend([(float(eta), 0.0), (float(eta), 1.0)])
         return out
 
     def W_hull(self, scale=1.0, n_x=101):
@@ -276,10 +281,11 @@ class UncertaintySet:
         Cy = np.concatenate([self.D_obs, np.zeros(n)])[None, :]
         return A, Ad, B, Cy
 
-    def vertices_scaled(self, scale=1.0, n_eta=3, n_x=9):
-        return [self.scale(*v) for v in self.vertices(scale, n_eta, n_x)]
+    def vertices_scaled(self, scale=1.0, n_eta=3, n_x=9, eta_range=None):
+        return [self.scale(*v)
+                for v in self.vertices(scale, n_eta, n_x, eta_range)]
 
-    def vertices(self, scale=1.0, n_eta=3, n_x=9):
+    def vertices(self, scale=1.0, n_eta=3, n_x=9, eta_range=None):
         """(A, A_d, B, Cy) at every (removal state) x (W hull vertex).
 
         The damping multiplier z is not given vertices: 2 zeta omega is of order
@@ -288,7 +294,7 @@ class UncertaintySet:
         """
         Wv = self.W_hull(scale, n_x=n_x)
         return [self._ss_from(eta, xi, W)
-                for (eta, xi) in self.removal_states(scale, n_eta)
+                for (eta, xi) in self.removal_states(scale, n_eta, eta_range)
                 for W in Wv]
 
     def gap_bound(self, verts, scale=1.0, n_eta=9, n_xi=5, n_x=41, n_a=3,

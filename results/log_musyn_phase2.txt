@@ -122,3 +122,13 @@ CONTROLLER 4 - MU-SYNTHESIS (D-K iteration, Eqs. 26-29)
     k_f=3e+06 k_u=0.017 fc=3000 -> mu=24.514 order=35 J=-1168.43826 Ms=nan V=nan maxRe=168.4 constraint violated
     k_f=3e+06 k_u=0.06 fc=800 -> mu=20.835 order=35 J=-1304.31422 Ms=nan V=nan maxRe=304.3 constraint violated
     k_f=3e+06 k_u=0.06 fc=1500 -> mu=23.957 order=35 J=-1236.96839 Ms=nan V=nan maxRe=237.0 constraint violated
+    k_f=3e+06 k_u=0.06 fc=3000 -> mu=26.198 order=35 J=-1119.05616 Ms=nan V=nan maxRe=119.1 constraint violated
+    k_f=3e+06 k_u=0.2 fc=800 -> mu=113.520 order=35 J=-102.51248 Ms=2.502 V=245 maxRe=-15.1 constraint violated
+    k_f=3e+06 k_u=0.2 fc=1500 -> mu=41.991 order=35 J=-1000.35626 Ms=nan V=nan maxRe=0.4 constraint violated
+    k_f=3e+06 k_u=0.2 fc=3000 -> mu=51.499 order=12 J=-2045.27923 Ms=nan V=nan maxRe=1045.3 constraint violated
+
+  mu_paper: J = -0.05515, mu = 9.924, order 12, weights k_f=3e+05 k_u=0.06, 60 trials, constraints met
+
+  mu_exact: J = -0.22318, mu = 10.205, order 12, weights k_f=1e+05 k_u=0.06, 60 trials, constraints met
+
+total 1301s -> results/musyn_phase2.npz

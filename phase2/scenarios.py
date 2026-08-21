@@ -175,7 +175,7 @@ def _perturbed(plate, mode_scale=None, zeta_scale=1.0):
 
 
 # ---------------------------------------------------------------------------
-def delay_margin(plate, ss, pd, ap, rpm_lo=1500, rpm_hi=9000, n=31, m=None):
+def delay_margin(plate, ss, pd, ap, rpm_lo=700, rpm_hi=24000, n=41, m=None):
     """Spindle-speed sweep at fixed depth: which delays keep the loop stable.
 
     tau = 60 / (N_T rpm), so a low spindle speed is a long delay.  Reported as

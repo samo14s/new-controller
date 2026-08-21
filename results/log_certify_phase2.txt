@@ -1,0 +1,25 @@
+==========================================================================
+PHASES 9-11 - DELAY-EXPLICIT CERTIFICATE AND MARGINS
+==========================================================================
+  uncertainty set : eta in [0, 0.0755], xi in [0, 1], x in [0, l_P], alpha4 in [0.3, 2.9] abar4, zeta x [0.8, 1.2]
+  polytope        : 90 vertices
+
+  a_p^DI     largest depth at which EVERY vertex is stable for EVERY
+             delay (exact frequency test) - the lobe minimum as a theorem
+  delta_max  largest inflation of the set still delay-independently
+             stable at the nominal depth
+  tau range  widest connected tau/tau_0 interval around the design
+             point keeping the EXACT (Floquet) limit stable at a_p
+  LK         quadratic Lyapunov-Krasovskii certificate at a_p^LK: it
+             also covers arbitrarily fast parameter variation, at the
+             price of quadratic conservatism
+
+controller    a_p^DI mm  delta_max     tau/tau_0 range  peak rho
+pid              0.2314       0.48        [0.20, 2.00]     1.037   [44s]
+lqr              0.3700       1.32        [0.20, 3.82]     0.765   [57s]
+smc              0.2255       0.75        [0.20, 3.82]     1.009   [54s]
+proposed         0.3622       1.29        [0.20, 3.82]     0.782   [60s]
+mu_paper         0.4129       1.50        [0.20, 3.82]     0.653   [61s]
+mu_exact         0.3075       1.03        [0.26, 3.82]     0.972   [65s]
+
+-> results/certify_phase2.npz

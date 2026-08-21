@@ -56,14 +56,14 @@ def _augment(A, Ad, B, Cy, ss, pd, n):
 
 
 def closed_loop_vertices(uset, ss=None, pd=None, scale=1.0, n_eta=3, n_x=9,
-                         balance=True):
+                         balance=True, eta_range=None):
     """[(A_cl, A_d,cl)] in scaled coordinates, plus n_plant."""
     n = uset.n
     ws = uset.ws
     out = []
     npl_s = None
     Tc = None
-    for (A, Ad, B, Cy) in uset.vertices(scale, n_eta, n_x):
+    for (A, Ad, B, Cy) in uset.vertices(scale, n_eta, n_x, eta_range):
         Acl, Adcl, npl = _augment(A, Ad, B, Cy, ss, pd, n)
         S = np.diag(np.concatenate([ws * np.ones(n), np.ones(n),
                                     np.ones(Acl.shape[0] - npl)]))
@@ -72,12 +72,19 @@ def closed_loop_vertices(uset, ss=None, pd=None, scale=1.0, n_eta=3, n_x=9,
         Adcl = S @ Adcl @ Si / ws
         if balance and Acl.shape[0] > npl:
             if Tc is None:
-                _, T = matrix_balance(Acl[npl:, npl:])
-                d = np.concatenate([np.ones(npl), np.diag(T)])
+                try:
+                    _, T = matrix_balance(Acl[npl:, npl:])
+                    d = np.concatenate([np.ones(npl), np.abs(np.diag(T))])
+                except Exception:
+                    d = np.ones(Acl.shape[0])
+                if not np.all(np.isfinite(d)) or np.min(d) <= 0:
+                    d = np.ones(Acl.shape[0])
                 Tc = np.diag(d)
                 Tci = np.diag(1.0 / d)
-            Acl = Tci @ Acl @ Tc
-            Adcl = Tci @ Adcl @ Tc
+            Ab = Tci @ Acl @ Tc
+            Adb = Tci @ Adcl @ Tc
+            if np.all(np.isfinite(Ab)) and np.all(np.isfinite(Adb)):
+                Acl, Adcl = Ab, Adb
         out.append((Acl, Adcl))
         npl_s = npl
     return out, npl_s
@@ -168,7 +175,12 @@ def di_stable_exact(Acl, Adcl, w=None, tol=1.0):
     LK certificate is kept alongside because it buys something this test does
     not: it also covers ARBITRARILY FAST variation of the parameters.
     """
-    ev = np.linalg.eigvals(Acl)
+    if not (np.all(np.isfinite(Acl)) and np.all(np.isfinite(Adcl))):
+        return False, np.inf
+    try:
+        ev = np.linalg.eigvals(Acl)
+    except np.linalg.LinAlgError:
+        return False, np.inf
     if float(np.max(ev.real)) >= 0.0:
         return False, np.inf
     w = _wgrid(Acl) if w is None else w
@@ -186,9 +198,11 @@ def di_stable_exact(Acl, Adcl, w=None, tol=1.0):
     return peak < tol, peak
 
 
-def di_stable_set(uset, ss=None, pd=None, scale=1.0, n_eta=3, n_x=9):
+def di_stable_set(uset, ss=None, pd=None, scale=1.0, n_eta=3, n_x=9,
+                  eta_range=None):
     """Exact delay-independent stability at every vertex of the set."""
-    V, npl = closed_loop_vertices(uset, ss, pd, scale, n_eta, n_x)
+    V, npl = closed_loop_vertices(uset, ss, pd, scale, n_eta, n_x,
+                                  eta_range=eta_range)
     peak = 0.0
     for (A, Ad) in V:
         ok, p = di_stable_exact(A, Ad)

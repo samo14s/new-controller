@@ -1,0 +1,14 @@
+==========================================================================
+SCHEDULED CERTIFICATE - PB-RAC over eta sub-intervals
+==========================================================================
+  eta split into 3 sub-intervals: [0.0000, 0.0252], [0.0252, 0.0503], [0.0503, 0.0755]
+sub-interval              eta_hat  a_p^DI mm  delta_max
+[0.0000, 0.0252]             0.0126     0.4188       1.88   [41s]
+[0.0252, 0.0503]             0.0377     0.4305       1.97   [56s]
+[0.0503, 0.0755]             0.0629     0.4403       2.05   [44s]
+
+  guaranteed over the whole removal range (worst sub-interval):
+    a_p^DI    = 0.4188 mm
+    delta_max = 1.88
+
+-> results/certify_sched.npz
