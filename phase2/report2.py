@@ -15,7 +15,9 @@ from stage_common import LABEL, ORDER, n_params
 
 AR = dict(open='بلا تحكّم', fopid='FOPID', lqg='LQG',
           mu_tdc='μ-TDC (المرجع)', ps_ac='**PS-AC (مقترح)**',
-          ps_ac_eta='**PS-AC + η**')
+          ps_ac_eta='PS-AC + η',
+          ps_ac_obs='PS-AC — مُراقِب فقط ⚠️',
+          ps_ac_full='PS-AC — $K$+مُراقِب ⚠️')
 
 
 def load(name):
