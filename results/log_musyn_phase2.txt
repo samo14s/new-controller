@@ -1,0 +1,124 @@
+==========================================================================
+CONTROLLER 4 - MU-SYNTHESIS (D-K iteration, Eqs. 26-29)
+==========================================================================
+  weight grid: 60 trials per variant, scored by the same objective as the other controllers
+
+  [A] uncertainty set exactly as published
+    k_f=1e+05 k_u=0.0017 fc=800 -> mu=2.341 order=35 J=-101.13893 Ms=2.228 V=193 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.0017 fc=1500 -> mu=2.470 order=35 J=-101.94118 Ms=2.388 V=195 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.0017 fc=3000 -> mu=2.542 order=35 J=-101.94577 Ms=2.389 V=192 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.005 fc=800 -> mu=2.462 order=35 J=-101.26210 Ms=2.252 V=190 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.005 fc=1500 -> mu=2.571 order=35 J=-102.09652 Ms=2.419 V=193 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.005 fc=3000 -> mu=2.618 order=35 J=-101.67230 Ms=2.334 V=186 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=800 -> mu=3.325 order=35 J=-100.89384 Ms=2.179 V=185 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=1500 -> mu=3.408 order=35 J=-100.89692 Ms=2.179 V=182 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=3000 -> mu=3.458 order=35 J=-100.92354 Ms=2.185 V=181 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.06 fc=800 -> mu=7.488 order=35 J=-0.18027 Ms=1.949 V=165 maxRe=-12.0 OK
+    k_f=1e+05 k_u=0.06 fc=1500 -> mu=22.727 order=12 J=-117.61006 Ms=2.662 V=1093 maxRe=-5.1 constraint violated
+    k_f=1e+05 k_u=0.06 fc=3000 -> mu=20.812 order=12 J=-108.23553 Ms=2.141 V=789 maxRe=-4.3 constraint violated
+    k_f=1e+05 k_u=0.2 fc=800 -> mu=43.071 order=35 J=-114.48657 Ms=4.825 V=466 maxRe=-15.1 constraint violated
+    k_f=1e+05 k_u=0.2 fc=1500 -> mu=21.054 order=35 J=-1275.10500 Ms=nan V=nan maxRe=275.1 constraint violated
+    k_f=1e+05 k_u=0.2 fc=3000 -> mu=17.631 order=12 J=-0.86083 Ms=1.173 V=119 maxRe=-10.8 OK
+    k_f=3e+05 k_u=0.0017 fc=800 -> mu=3.469 order=35 J=-101.60228 Ms=2.320 V=198 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.0017 fc=1500 -> mu=3.695 order=35 J=-102.33028 Ms=2.466 V=195 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.0017 fc=3000 -> mu=3.825 order=35 J=-102.99569 Ms=2.599 V=195 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=800 -> mu=3.512 order=35 J=-101.50931 Ms=2.302 V=198 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=1500 -> mu=3.687 order=35 J=-102.63541 Ms=2.527 V=196 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=3000 -> mu=3.848 order=35 J=-103.01279 Ms=2.603 V=195 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=800 -> mu=3.991 order=35 J=-101.27738 Ms=2.255 V=186 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=1500 -> mu=4.316 order=35 J=-101.90829 Ms=2.382 V=187 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=3000 -> mu=4.452 order=35 J=-102.27636 Ms=2.455 V=187 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.06 fc=800 -> mu=15.958 order=12 J=-1.06552 Ms=1.649 V=84 maxRe=-2.3 OK
+    k_f=3e+05 k_u=0.06 fc=1500 -> mu=9.415 order=12 J=-0.29743 Ms=1.661 V=156 maxRe=-11.9 OK
+    k_f=3e+05 k_u=0.06 fc=3000 -> mu=9.924 order=12 J=-0.05515 Ms=1.922 V=151 maxRe=-46.6 OK
+    k_f=3e+05 k_u=0.2 fc=800 -> mu=20.884 order=35 J=-1092.71018 Ms=nan V=nan maxRe=92.7 constraint violated
+    k_f=3e+05 k_u=0.2 fc=1500 -> mu=40.130 order=35 J=-110.38049 Ms=3.820 V=508 maxRe=-15.1 constraint violated
+    k_f=3e+05 k_u=0.2 fc=3000 -> mu=25.500 order=35 J=-0.97601 Ms=1.090 V=31 maxRe=-9.3 OK
+    k_f=1e+06 k_u=0.0017 fc=800 -> mu=6.518 order=35 J=-1153.79893 Ms=nan V=nan maxRe=153.8 constraint violated
+    k_f=1e+06 k_u=0.0017 fc=1500 -> mu=7.889 order=35 J=-104.27127 Ms=2.854 V=231 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.0017 fc=3000 -> mu=8.341 order=35 J=-105.25720 Ms=3.051 V=263 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.005 fc=800 -> mu=6.526 order=35 J=-1153.23936 Ms=nan V=nan maxRe=153.2 constraint violated
+    k_f=1e+06 k_u=0.005 fc=1500 -> mu=7.516 order=35 J=-1115.16004 Ms=nan V=nan maxRe=115.2 constraint violated
+    k_f=1e+06 k_u=0.005 fc=3000 -> mu=8.171 order=35 J=-1144.61375 Ms=nan V=nan maxRe=144.6 constraint violated
+    k_f=1e+06 k_u=0.017 fc=800 -> mu=6.832 order=35 J=-1149.94192 Ms=nan V=nan maxRe=149.9 constraint violated
+    k_f=1e+06 k_u=0.017 fc=1500 -> mu=8.158 order=35 J=-104.30129 Ms=2.860 V=228 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.017 fc=3000 -> mu=7.898 order=35 J=-1132.41851 Ms=nan V=nan maxRe=132.4 constraint violated
+    k_f=1e+06 k_u=0.06 fc=800 -> mu=9.237 order=35 J=-1078.43303 Ms=nan V=nan maxRe=78.4 constraint violated
+    k_f=1e+06 k_u=0.06 fc=1500 -> mu=9.712 order=35 J=-1047.59786 Ms=nan V=nan maxRe=47.6 constraint violated
+    k_f=1e+06 k_u=0.06 fc=3000 -> mu=9.955 order=35 J=-1012.88464 Ms=nan V=nan maxRe=12.9 constraint violated
+    k_f=1e+06 k_u=0.2 fc=800 -> mu=26.003 order=12 J=-0.41009 Ms=1.384 V=142 maxRe=-12.6 OK
+    k_f=1e+06 k_u=0.2 fc=1500 -> mu=81.783 order=12 J=-1001.69160 Ms=nan V=nan maxRe=1.7 constraint violated
+    k_f=1e+06 k_u=0.2 fc=3000 -> mu=73.841 order=35 J=-100.31879 Ms=2.064 V=204 maxRe=-15.1 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=800 -> mu=15.958 order=35 J=-1283.01200 Ms=nan V=nan maxRe=283.0 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=1500 -> mu=18.793 order=35 J=-1168.23480 Ms=nan V=nan maxRe=168.2 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=3000 -> mu=20.260 order=12 J=-1245.56477 Ms=nan V=nan maxRe=245.6 constraint violated
+    k_f=3e+06 k_u=0.005 fc=800 -> mu=16.005 order=12 J=-1302.10316 Ms=nan V=nan maxRe=302.1 constraint violated
+    k_f=3e+06 k_u=0.005 fc=1500 -> mu=19.046 order=12 J=-1230.71331 Ms=nan V=nan maxRe=230.7 constraint violated
+    k_f=3e+06 k_u=0.005 fc=3000 -> mu=20.161 order=12 J=-1314.30891 Ms=nan V=nan maxRe=314.3 constraint violated
+    k_f=3e+06 k_u=0.017 fc=800 -> mu=16.098 order=12 J=-1368.64477 Ms=nan V=nan maxRe=368.6 constraint violated
+    k_f=3e+06 k_u=0.017 fc=1500 -> mu=19.546 order=35 J=-1283.56585 Ms=nan V=nan maxRe=283.6 constraint violated
+    k_f=3e+06 k_u=0.017 fc=3000 -> mu=21.622 order=35 J=-1024.96439 Ms=nan V=nan maxRe=25.0 constraint violated
+    k_f=3e+06 k_u=0.06 fc=800 -> mu=18.003 order=12 J=-1541.97809 Ms=nan V=nan maxRe=542.0 constraint violated
+    k_f=3e+06 k_u=0.06 fc=1500 -> mu=20.320 order=12 J=-1585.66578 Ms=nan V=nan maxRe=585.7 constraint violated
+    k_f=3e+06 k_u=0.06 fc=3000 -> mu=21.658 order=35 J=-1155.37381 Ms=nan V=nan maxRe=155.4 constraint violated
+    k_f=3e+06 k_u=0.2 fc=800 -> mu=111.214 order=12 J=-1058.79068 Ms=nan V=nan maxRe=58.8 constraint violated
+    k_f=3e+06 k_u=0.2 fc=1500 -> mu=28.722 order=35 J=-106.28998 Ms=3.258 V=236 maxRe=-15.1 constraint violated
+    k_f=3e+06 k_u=0.2 fc=3000 -> mu=29.609 order=35 J=-105.80269 Ms=3.161 V=237 maxRe=-15.1 constraint violated
+
+  [B] same method, corrected envelope + physics-based bounds
+    k_f=1e+05 k_u=0.0017 fc=800 -> mu=3.387 order=35 J=-105.16441 Ms=3.033 V=223 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.0017 fc=1500 -> mu=3.508 order=35 J=-109.50228 Ms=3.900 V=318 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.0017 fc=3000 -> mu=4.069 order=35 J=-1022.12609 Ms=nan V=nan maxRe=22.1 constraint violated
+    k_f=1e+05 k_u=0.005 fc=800 -> mu=4.074 order=35 J=-108.69842 Ms=3.740 V=301 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.005 fc=1500 -> mu=8.587 order=35 J=-114.15826 Ms=4.763 V=465 maxRe=-15.1 constraint violated
+    k_f=1e+05 k_u=0.005 fc=3000 -> mu=3.621 order=35 J=-106.71403 Ms=3.343 V=257 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=800 -> mu=4.327 order=35 J=-106.39309 Ms=3.279 V=250 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=1500 -> mu=4.494 order=35 J=-105.49965 Ms=3.100 V=231 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.017 fc=3000 -> mu=4.489 order=35 J=-106.23947 Ms=3.248 V=247 maxRe=-12.0 constraint violated
+    k_f=1e+05 k_u=0.06 fc=800 -> mu=10.205 order=12 J=-0.22318 Ms=1.707 V=157 maxRe=-12.2 OK
+    k_f=1e+05 k_u=0.06 fc=1500 -> mu=21.851 order=12 J=-0.59314 Ms=1.192 V=168 maxRe=-40.5 OK
+    k_f=1e+05 k_u=0.06 fc=3000 -> mu=8.380 order=12 J=-1035.50076 Ms=nan V=nan maxRe=35.5 constraint violated
+    k_f=1e+05 k_u=0.2 fc=800 -> mu=24.114 order=35 J=-144.16214 Ms=10.273 V=576 maxRe=-15.1 constraint violated
+    k_f=1e+05 k_u=0.2 fc=1500 -> mu=23.821 order=35 J=-120.47790 Ms=6.096 V=363 maxRe=-15.1 constraint violated
+    k_f=1e+05 k_u=0.2 fc=3000 -> mu=22.573 order=12 J=-0.88243 Ms=1.027 V=47 maxRe=-16.2 OK
+    k_f=3e+05 k_u=0.0017 fc=800 -> mu=4.098 order=35 J=-105.90058 Ms=3.180 V=239 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.0017 fc=1500 -> mu=4.291 order=35 J=-106.15238 Ms=3.230 V=247 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.0017 fc=3000 -> mu=4.703 order=35 J=-106.33124 Ms=3.266 V=249 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=800 -> mu=4.173 order=35 J=-106.54179 Ms=3.308 V=253 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=1500 -> mu=4.506 order=35 J=-106.00544 Ms=3.201 V=242 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.005 fc=3000 -> mu=4.768 order=35 J=-106.33041 Ms=3.266 V=249 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=800 -> mu=4.901 order=35 J=-104.80703 Ms=2.961 V=215 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=1500 -> mu=5.002 order=35 J=-105.16330 Ms=3.033 V=223 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.017 fc=3000 -> mu=5.175 order=35 J=-104.63233 Ms=2.926 V=214 maxRe=-12.0 constraint violated
+    k_f=3e+05 k_u=0.06 fc=800 -> mu=12.152 order=12 J=-1278.79791 Ms=nan V=nan maxRe=278.8 constraint violated
+    k_f=3e+05 k_u=0.06 fc=1500 -> mu=9.812 order=12 J=-1174.22426 Ms=nan V=nan maxRe=174.2 constraint violated
+    k_f=3e+05 k_u=0.06 fc=3000 -> mu=8.817 order=35 J=-1168.14651 Ms=nan V=nan maxRe=168.1 constraint violated
+    k_f=3e+05 k_u=0.2 fc=800 -> mu=29.144 order=12 J=-0.83768 Ms=1.050 V=62 maxRe=-21.2 OK
+    k_f=3e+05 k_u=0.2 fc=1500 -> mu=24.003 order=35 J=-121.11951 Ms=6.224 V=376 maxRe=-15.1 constraint violated
+    k_f=3e+05 k_u=0.2 fc=3000 -> mu=35.351 order=35 J=-0.96722 Ms=1.061 V=23 maxRe=-11.0 OK
+    k_f=1e+06 k_u=0.0017 fc=800 -> mu=8.240 order=35 J=-102.76117 Ms=2.552 V=351 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.0017 fc=1500 -> mu=8.027 order=35 J=-1170.84286 Ms=nan V=nan maxRe=170.8 constraint violated
+    k_f=1e+06 k_u=0.0017 fc=3000 -> mu=11.600 order=12 J=-1326.38809 Ms=nan V=nan maxRe=326.4 constraint violated
+    k_f=1e+06 k_u=0.005 fc=800 -> mu=8.073 order=12 J=-1170.95763 Ms=nan V=nan maxRe=171.0 constraint violated
+    k_f=1e+06 k_u=0.005 fc=1500 -> mu=9.052 order=35 J=-104.53626 Ms=2.626 V=513 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.005 fc=3000 -> mu=8.707 order=35 J=-1098.47807 Ms=nan V=nan maxRe=98.5 constraint violated
+    k_f=1e+06 k_u=0.017 fc=800 -> mu=7.507 order=35 J=-1187.15440 Ms=nan V=nan maxRe=187.2 constraint violated
+    k_f=1e+06 k_u=0.017 fc=1500 -> mu=9.547 order=35 J=-104.68977 Ms=2.596 V=527 maxRe=-15.1 constraint violated
+    k_f=1e+06 k_u=0.017 fc=3000 -> mu=8.780 order=35 J=-1166.02988 Ms=nan V=nan maxRe=166.0 constraint violated
+    k_f=1e+06 k_u=0.06 fc=800 -> mu=10.997 order=35 J=-1095.06649 Ms=nan V=nan maxRe=95.1 constraint violated
+    k_f=1e+06 k_u=0.06 fc=1500 -> mu=11.543 order=35 J=-1074.63738 Ms=nan V=nan maxRe=74.6 constraint violated
+    k_f=1e+06 k_u=0.06 fc=3000 -> mu=13.520 order=12 J=-1383.56974 Ms=nan V=nan maxRe=383.6 constraint violated
+    k_f=1e+06 k_u=0.2 fc=800 -> mu=69.337 order=35 J=-1.04783 Ms=1.661 V=85 maxRe=-2.4 OK
+    k_f=1e+06 k_u=0.2 fc=1500 -> mu=71.155 order=12 J=-1.03051 Ms=1.310 V=56 maxRe=-6.4 OK
+    k_f=1e+06 k_u=0.2 fc=3000 -> mu=84.236 order=35 J=-129.95599 Ms=6.748 V=730 maxRe=-6.4 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=800 -> mu=19.868 order=35 J=-1384.28679 Ms=nan V=nan maxRe=384.3 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=1500 -> mu=22.278 order=35 J=-1318.62517 Ms=nan V=nan maxRe=318.6 constraint violated
+    k_f=3e+06 k_u=0.0017 fc=3000 -> mu=25.385 order=35 J=-103.97257 Ms=2.795 V=252 maxRe=-6.0 constraint violated
+    k_f=3e+06 k_u=0.005 fc=800 -> mu=20.010 order=35 J=-1385.19950 Ms=nan V=nan maxRe=385.2 constraint violated
+    k_f=3e+06 k_u=0.005 fc=1500 -> mu=23.832 order=35 J=-1319.75640 Ms=nan V=nan maxRe=319.8 constraint violated
+    k_f=3e+06 k_u=0.005 fc=3000 -> mu=25.213 order=35 J=-1193.03308 Ms=nan V=nan maxRe=193.0 constraint violated
+    k_f=3e+06 k_u=0.017 fc=800 -> mu=18.799 order=35 J=-1363.50803 Ms=nan V=nan maxRe=363.5 constraint violated
+    k_f=3e+06 k_u=0.017 fc=1500 -> mu=22.518 order=35 J=-1312.02623 Ms=nan V=nan maxRe=312.0 constraint violated
+    k_f=3e+06 k_u=0.017 fc=3000 -> mu=24.514 order=35 J=-1168.43826 Ms=nan V=nan maxRe=168.4 constraint violated
+    k_f=3e+06 k_u=0.06 fc=800 -> mu=20.835 order=35 J=-1304.31422 Ms=nan V=nan maxRe=304.3 constraint violated
+    k_f=3e+06 k_u=0.06 fc=1500 -> mu=23.957 order=35 J=-1236.96839 Ms=nan V=nan maxRe=237.0 constraint violated

@@ -48,34 +48,45 @@ def log(*a):
 
 def search(plate, tag, alpha_coupling, perts, grid):
     best = dict(J=-np.inf)
+    best_feas = dict(J=-np.inf)
     n_try = 0
-    for kf, ku in grid:
+    for kf, ku, fcf in grid:
         n_try += 1
         try:
             import weights as W
-            W.W_PF_DEF = dict(k=kf, fc_hz=1500.0, M=250.0)
+            W.W_PF_DEF = dict(k=kf, fc_hz=fcf, M=250.0)
             W.W_PU_DEF = dict(k=ku, fc_hz=2500.0, M=60.0)
             r = musyn.design(plate, alpha_coupling=alpha_coupling, n_iter=2,
                              reduce_to=None, verbose=False, **perts)
             J, info = evaluate(plate, r['ss'], detail=True)
         except Exception as e:                                # noqa: BLE001
-            log(f'    k_f={kf:.3g} k_u={ku:.3g} -> failed ({type(e).__name__})')
+            log(f'    k_f={kf:.3g} k_u={ku:.3g} fc={fcf:.0f} -> failed '
+                f'({type(e).__name__})')
             continue
-        log(f'    k_f={kf:.3g} k_u={ku:.3g} -> mu={r["mu"]:.3f} '
+        feas = bool(info['feasible'])
+        log(f'    k_f={kf:.3g} k_u={ku:.3g} fc={fcf:.0f} -> mu={r["mu"]:.3f} '
             f'order={r["order"]:2d} J={J:+.5f} Ms={info["Ms"]:.3f} '
-            f'V={info["V"]:.0f} maxRe={info["max_re"]:.1f}')
+            f'V={info["V"]:.0f} maxRe={info["max_re"]:.1f} '
+            f'{"OK" if feas else "constraint violated"}')
+        cand = dict(J=J, ss=r['ss'], mu=r['mu'], gamma=r['gamma'],
+                    order=r['order'], kf=kf, ku=ku, info=info, feasible=feas)
         if J > best['J']:
-            best = dict(J=J, ss=r['ss'], mu=r['mu'], gamma=r['gamma'],
-                        order=r['order'], kf=kf, ku=ku, info=info)
-    best['n_try'] = n_try
-    best['tag'] = tag
-    return best
+            best = dict(cand)
+        if feas and J > best_feas['J']:
+            best_feas = dict(cand)
+    pick = best_feas if 'ss' in best_feas else best
+    pick['n_try'] = n_try
+    pick['tag'] = tag
+    pick['any_feasible'] = 'ss' in best_feas
+    return pick
 
 
 def main():
     t0 = time.time()
     plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
-    grid = list(itertools.product([3e5, 1e6, 3e6], [5e-3, 1.7e-2, 6e-2]))
+    grid = list(itertools.product([1e5, 3e5, 1e6, 3e6],
+                                  [1.7e-3, 5e-3, 1.7e-2, 6e-2, 2e-1],
+                                  [800.0, 1500.0, 3000.0]))
     log('=' * 74)
     log('CONTROLLER 4 - MU-SYNTHESIS (D-K iteration, Eqs. 26-29)')
     log('=' * 74)
@@ -96,7 +107,8 @@ def main():
             continue
         log(f'\n  {r["tag"]}: J = {r["J"]:+.5f}, mu = {r["mu"]:.3f}, '
             f'order {r["order"]}, weights k_f={r["kf"]:.3g} k_u={r["ku"]:.3g}, '
-            f'{r["n_try"]} trials')
+            f'{r["n_try"]} trials, constraints '
+            f'{"met" if r.get("any_feasible") else "NEVER met"}')
         out.update({f'{r["tag"]}_ss{i}': np.asarray(r['ss'][i], float)
                     for i in range(4)})
         out[f'{r["tag"]}_mu'] = r['mu']

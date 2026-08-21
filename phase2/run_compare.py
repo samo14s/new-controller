@@ -100,7 +100,9 @@ def scenario2(plate, ctrls, store):
            (0.10, -0.10)]
     log('  (a) physics-based: eta = ' + ', '.join(f'{e:.4f}' for e in etas))
     log(f'{"controller":<12}' + ''.join(f'{f"eta={e:.3f}":>12}' for e in etas))
-    items = list(ctrls.items()) + [('proposed*', None)]
+    items = list(ctrls.items())
+    if 'proposed' in ctrls:
+        items = items + [('proposed*', None)]
     for k, c in items:
         row = []
         for e in etas:
@@ -155,10 +157,12 @@ def scenario4(plate, ctrls, store):
         store[f'S4_{k}_ratio'] = np.array([dm['ratio_lo'], dm['ratio_hi']])
 
 
-def main(which=(1, 2, 3, 4)):
+def main(which=(1, 2, 3, 4), only=None):
     t0 = time.time()
     plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
     ctrls = controllers(plate)
+    if only:
+        ctrls = {k: v for k, v in ctrls.items() if k in only}
     store = {}
     log('\n' + '#' * 74)
     log(f'# PHASES 12-14   controllers: {list(ctrls)}')
@@ -174,5 +178,11 @@ def main(which=(1, 2, 3, 4)):
 
 
 if __name__ == '__main__':
-    args = [int(a) for a in sys.argv[1:]] or [1, 2, 3, 4]
-    main(args)
+    argv = sys.argv[1:]
+    only = None
+    if '--only' in argv:
+        i = argv.index('--only')
+        only = argv[i + 1].split(',')
+        argv = argv[:i]
+    args = [int(a) for a in argv] or [1, 2, 3, 4]
+    main(args, only)

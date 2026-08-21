@@ -143,3 +143,99 @@ def uncertainty_margin(uset, ss=None, pd=None, lo=0.0, hi=4.0, tol=2e-2,
         if hi - lo < tol:
             break
     return 0.5 * (lo + hi)
+
+
+# ---------------------------------------------------------------------------
+# Exact delay-independent test (frequency domain)
+# ---------------------------------------------------------------------------
+def _wgrid(A, n=400):
+    r = np.abs(np.linalg.eigvals(A))
+    hi = 5.0 * max(float(r.max()), 1.0)
+    return np.concatenate([[0.0], np.logspace(-3, np.log10(hi), n)])
+
+
+def di_stable_exact(Acl, Adcl, w=None, tol=1.0):
+    """Exact delay-independent stability of  xdot = A x + A_d x(t-tau).
+
+    The characteristic function det(sI - A - A_d e^{-s tau}) has no root in the
+    closed right half plane for EVERY tau >= 0 if and only if A is Hurwitz and
+
+        sup_omega  rho( (j omega I - A)^{-1} A_d )  <  1,
+
+    because e^{-j omega tau} sweeps the whole unit circle as tau varies.  This
+    is exact -- no Lyapunov conservatism -- and costs one eigenvalue problem per
+    frequency, so it is what the depth and margin bisections use.  The quadratic
+    LK certificate is kept alongside because it buys something this test does
+    not: it also covers ARBITRARILY FAST variation of the parameters.
+    """
+    ev = np.linalg.eigvals(Acl)
+    if float(np.max(ev.real)) >= 0.0:
+        return False, np.inf
+    w = _wgrid(Acl) if w is None else w
+    n = Acl.shape[0]
+    I = np.eye(n)
+    peak = 0.0
+    for wk in w:
+        try:
+            R = np.linalg.solve(1j * wk * I - Acl, Adcl)
+        except np.linalg.LinAlgError:
+            return False, np.inf
+        peak = max(peak, float(np.max(np.abs(np.linalg.eigvals(R)))))
+        if peak >= tol:
+            return False, peak
+    return peak < tol, peak
+
+
+def di_stable_set(uset, ss=None, pd=None, scale=1.0, n_eta=3, n_x=9):
+    """Exact delay-independent stability at every vertex of the set."""
+    V, npl = closed_loop_vertices(uset, ss, pd, scale, n_eta, n_x)
+    peak = 0.0
+    for (A, Ad) in V:
+        ok, p = di_stable_exact(A, Ad)
+        peak = max(peak, p)
+        if not ok:
+            return False, peak
+    return True, peak
+
+
+def di_depth(uset_of, ss=None, pd=None, lo=2e-6, hi=4e-3, tol=2e-6,
+             n_iter=24, **kw):
+    """Largest depth for which every vertex is delay-independently stable."""
+    def ok(ap):
+        return di_stable_set(uset_of(ap), ss, pd, **kw)[0]
+
+    if not ok(lo):
+        return 0.0
+    if ok(hi):
+        return hi
+    for _ in range(n_iter):
+        mid = 0.5 * (lo + hi)
+        if ok(mid):
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    return 0.5 * (lo + hi)
+
+
+def di_margin(uset, ss=None, pd=None, lo=0.0, hi=8.0, tol=1e-2, n_iter=20,
+              **kw):
+    """Largest inflation of the physics set that stays delay-independently
+    stable at the nominal depth (Phase 10)."""
+    def ok(sc):
+        return di_stable_set(uset, ss, pd, scale=sc, **kw)[0]
+
+    if not ok(max(lo, 1e-3)):
+        return 0.0
+    if ok(hi):
+        return hi
+    for _ in range(n_iter):
+        mid = 0.5 * (lo + hi)
+        if ok(mid):
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < tol:
+            break
+    return 0.5 * (lo + hi)
