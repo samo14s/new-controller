@@ -15,3 +15,4 @@ STAGES 5-6 - STABILITY OVER THE POSITION DOMAIN, AND MARGINS
             also covers arbitrarily fast motion of x_P, eta, alpha4
 
 controller      peak  tau_max/tau0  a_p^inf mm  delta_max    LK
+open          33.226          0.00      0.0108       0.00    no   [14s]

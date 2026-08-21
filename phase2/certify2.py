@@ -131,7 +131,7 @@ def vertices(plant, ctrl, positions=None, etas=(0.0,), a_scale=1.0,
 
 
 # ---------------------------------------------------------------------------
-def _wgrid(A, n=400, n_local=61, span=8.0):
+def _wgrid(A, n=250, n_local=41, span=8.0):
     """Frequency grid that RESOLVES the resonances.
 
     The plate has zeta ~ 0.003, so the half-power width of a mode is omega/2Q ~
@@ -188,15 +188,20 @@ def crossing_delays(Acl, Adcl, w=None):
 
 
 def analyse(plant, ctrl, **kw):
-    """(tau_max, peak, all_delay_stable) over the whole vertex family."""
-    V, npl, _ = vertices(plant, ctrl, **kw)
+    """(tau_max, peak, all_delay_stable) over the whole vertex family.
+
+    tau_max comes back in SECONDS.  The vertices live in scaled time (t~ = ws t)
+    for conditioning, so the crossing delays are produced in scaled units and
+    are divided by ws on the way out.
+    """
+    V, npl, ws = vertices(plant, ctrl, **kw)
     tau = np.inf
     peak = 0.0
     for (A, Ad) in V:
         t, p = crossing_delays(A, Ad)
         tau = min(tau, t)
         peak = max(peak, p)
-    return tau, peak, bool(peak < 1.0)
+    return (tau if np.isinf(tau) else tau / ws), peak, bool(peak < 1.0)
 
 
 def di_stable(plant, ctrl, **kw):

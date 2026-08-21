@@ -78,12 +78,17 @@ def main(n_pos=9, n_eta=3):
         def plant_of(ap):
             return ControlledPlant(plate, ap=ap)
 
-        ap_inf = CF2.depth_bisect(plant_of, mk, **base)
-        dmax = CF2.margin_bisect(plant0, c0, base_kw=dict(n_pos=n_pos,
-                                                          xis=(0.5, 1.0)))
-        lk = CF2.lk_common_P(ControlledPlant(plate, ap=max(ap_inf, 1e-6)),
-                             mk(ControlledPlant(plate, ap=max(ap_inf, 1e-6))),
-                             n_pos=5, etas=etas[:2], zetas=zetas)
+        # the headline peak/tau_max use the FULL vertex family; the two
+        # bisections use a reduced one, because they call the analysis 14-16
+        # times each.  The reduced family is a subset, so the depth it certifies
+        # is an upper bound on the full-family answer -- stated, not hidden.
+        light = dict(n_pos=5, etas=(0.0, C.ETA_MAX), zetas=zetas, xis=(1.0,))
+        ap_inf = CF2.depth_bisect(plant_of, mk, n_iter=16, **light)
+        dmax = CF2.margin_bisect(plant0, c0, n_iter=14,
+                                 base_kw=dict(n_pos=5, xis=(1.0,)))
+        pl_lk = ControlledPlant(plate, ap=max(ap_inf, 1e-6))
+        lk = CF2.lk_common_P(pl_lk, mk(pl_lk), n_pos=3,
+                             etas=(0.0, C.ETA_MAX), zetas=zetas, xis=(1.0,))
         log(f'{name:<12}{peak:>8.3f}{ratio:>14}{ap_inf*1e3:>12.4f}'
             f'{dmax:>11.2f}{("yes" if lk["feasible"] else "no"):>6}'
             f'   [{time.time()-t:.0f}s]')

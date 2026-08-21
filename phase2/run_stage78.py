@@ -44,8 +44,12 @@ def log(*a):
 def time_run(plate, plant, ctrl, ap=None, mode_scale=None, zeta_scale=1.0,
              T=None, moving=True):
     ap = C.AP_S if ap is None else ap
+    # n_sub = 656, not 164.  The FOPID realisation carries Oustaloup poles up to
+    # 100 kHz; at 164 sub-steps the sampling is 40 kHz, those poles alias, and the
+    # integration diverges while every frequency-domain metric still looks good.
+    # The sampling rate has to clear w_h/2pi several times over.
     sim = MillingSimulation(plate, C.RPM_S, ap, ae=C.AE, fz=C.FZ, sign=C.SIGN,
-                            n_modes=C.N_MODES, n_sub=C.N_SUB_TIME,
+                            n_modes=C.N_MODES, n_sub=C.N_SUB,
                             mode_scale=mode_scale, zeta_scale=zeta_scale)
     ss, _ = ctrl.at(0.0)
     if ss is None:
@@ -69,8 +73,7 @@ def settling(plate, plant, ctrl, y0_um=10.0, T=0.4, band=0.05):
     continuously, so the settling time of the cut is not a controller property.
     """
     sim = MillingSimulation(plate, C.RPM_S, 1e-9, ae=C.AE, fz=0.0,
-                            sign=C.SIGN, n_modes=C.N_MODES,
-                            n_sub=C.N_SUB_TIME)
+                            sign=C.SIGN, n_modes=C.N_MODES, n_sub=C.N_SUB)
     ss, _ = ctrl.at(0.0)
     c = None if ss is None else ScheduledLTI(ctrl, sim.dt, plate.lp,
                                              tau=sim.tau, moving=False)
