@@ -447,3 +447,11 @@ python phase2/figures_scenarios.py       # أشكال السيناريوهات
 ```bash
 python phase2/paper/verify_numbers.py    # يفحص كل رقم مقتبَس، ويخرج بخطأ إن تحرّك واحد
 ```
+
+ولإخراج هذه الورقة بصيغة PDF (‏A4، رياضيات مُحوَّلة إلى SVG، خطوط مُضمَّنة):
+
+```bash
+npm install mathjax-full @fontsource/amiri @fontsource/ibm-plex-sans-arabic @fontsource/ibm-plex-mono
+node   phase2/paper/build_pdf.mjs paper_ar.html    # ماركداون -> صفحة للطباعة
+python phase2/paper/print_pdf.py  paper_ar.html paper_ar.pdf
+```
