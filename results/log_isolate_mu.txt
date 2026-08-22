@@ -8,3 +8,14 @@ HOW MUCH OF THE CERTIFIED MARGIN BELONGS TO THE DELAYED PD?
       mu_paper          yes    0.603       0.4285      1.543   [51s]
       mu_paper           no    0.655       0.4129      1.480   [53s]
        mu_phys          yes    0.762       0.3739      1.348   [172s]
+       mu_phys           no    0.819       0.3563      1.309   [167s]
+
+  mu_paper: the delayed PD is worth +0.0156 mm of certified depth (+4 %) and +0.062 of delta_max
+  mu_phys: the delayed PD is worth +0.0176 mm of certified depth (+5 %) and +0.039 of delta_max
+
+  WITHOUT the delayed PD -- what the uncertainty description is
+  worth on its own:
+      paper set   a_p^inf 0.4129 mm, delta_max 1.480
+      physics set a_p^inf 0.3563 mm, delta_max 1.309
+
+total 444s -> results/isolate_mu.npz
