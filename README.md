@@ -36,6 +36,17 @@
 | 7–8 المقارنة وأربعة سيناريوهات | ✅ `phase2/run_stage78.py` |
 | 9 صياغة المساهمة | ✅ [`docs/07_STAGE_EXECUTION.md`](docs/07_STAGE_EXECUTION.md) |
 
+### إعادة تصميم μ-synthesis على المجموعة الفيزيائية
+
+| العنصر | الحالة |
+|---|---|
+| منظومة LFT مبنيّة على المتغيّرات الفيزيائية | ✅ `phase2/uncertain_phys.py` |
+| برهان الاحتواء بشاهد صريح | ✅ `phase2/test_phys_lft.py` |
+| نفس تكرار D-K ونفس شبكة الأوزان | ✅ `phase2/run_musyn_phys.py` |
+| هندسة المجموعات (فجوة التغطية / النصف القطر الزائف) | ✅ `phase2/compare_sets.py` |
+| كل متحكّم على كل مجموعة | ✅ `phase2/cross_mu.py` |
+| النتائج | ✅ [`docs/08_PHYSICS_MU_SYNTHESIS.md`](docs/08_PHYSICS_MU_SYNTHESIS.md) |
+
 > ⚠️ **تصحيح نَسَب:** لا يوجد نموذج Zhang 2019 في هذه الحزمة. ما هو مُحقَّق —
 > وبإتقان — هو Du 2024 نفسه. الأدلة في
 > [`docs/02_ASSUMPTIONS_VS_DU2024.md §0`](docs/02_ASSUMPTIONS_VS_DU2024.md).
@@ -57,6 +68,7 @@
 | [`docs/05_COMPARISON.md`](docs/05_COMPARISON.md) | المراحل 12–14: أربعة سيناريوهات، ستّة مقاييس، كل الأرقام |
 | [`docs/06_CONTRIBUTIONS.md`](docs/06_CONTRIBUTIONS.md) | المراحل 15–16: النتيجة المستهدَفة والمساهمات الثلاث، وما **ليس** مساهمة |
 | [`docs/07_STAGE_EXECUTION.md`](docs/07_STAGE_EXECUTION.md) | **تنفيذ المخطّط المرفوع**: المراحل 0→9، المتحكّم المعتمِد على الموضع، وكل الجداول |
+| [`docs/08_PHYSICS_MU_SYNTHESIS.md`](docs/08_PHYSICS_MU_SYNTHESIS.md) | **إعادة تصميم μ-synthesis على المجموعة الفيزيائية**: نفس الطريقة، وصف عدم يقين صحيح، وقياس مصدر الكسب باستئصال منفصل لكل حقيقة بنيوية |
 
 ## البنية
 
