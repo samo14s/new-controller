@@ -12,3 +12,15 @@ DOES THE LFT NOMINAL EXPLAIN THE NEGATIVE RESULT?
       0.15   -9.516e+05   10.585 -104.62659  2.925   211   0.748      0.3505      1.340   [174s]
       0.30   -3.324e+05   17.306 -102.53800  2.508   314     inf      0.0000      0.000   [34s]
       0.50       -96.15    8.358   -0.27498  1.708   141   1.148      0.2685      0.770   [183s]
+      0.70   -3.383e+05    9.156   -0.19298  1.472   138   1.006      0.2978      0.996   [185s]
+      0.85   -9.042e+05   11.288   -0.08740  1.528   147   0.962      0.3095      1.035   [217s]
+      1.00   -1.596e+06   13.751   -0.21602  1.607   152   1.027      0.2919      0.980   [181s]
+
+  for comparison, the PAPER set at the same weights, mu controller alone:
+     paper                50.230-1001.76206                  inf      0.0000      0.000
+
+  best certified depth at x_nom/l_P = 0.15:  a_p^inf 0.3505 mm, delta_max 1.340
+  against the natural centre:      a_p^inf 0.2743 mm, delta_max 0.816   (+27.8 % and +64.1 %)
+  against the paper set:           a_p^inf 0.0000 mm, delta_max 0.000
+
+total 1224s -> results/nominal_experiment.npz

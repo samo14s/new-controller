@@ -1,0 +1,9 @@
+============================================================================================
+THE NOMINAL SWEEP, WITH THE WEIGHTS RE-SEARCHED AT EVERY NOMINAL
+============================================================================================
+  18 weight trials per nominal; the design kept is the best
+  FEASIBLE one, the same rule used everywhere else in the study.
+  mu controller alone -- no delayed PD -- so only the uncertainty
+  description differs between rows.
+
+ x_nom/l_P     W_c(2,2)       mu          J     Ms     V     k_f     k_u    peak  a_p^inf mm  delta_max
