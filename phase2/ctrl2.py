@@ -147,7 +147,7 @@ def mu_tdc(plant, ss_mu, kpd, kdd, name='MU_TDC'):
 # 4. PROPOSED - position-scheduled active control
 # ---------------------------------------------------------------------------
 def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
-          sched_K=True, sched_L=True, name=None):
+          sched_K=True, sched_L=True, name=None, a4_mult=1.0):
     """u(t) = -K(x_P) xhat(t),  xhat from an observer also built at x_P.
 
     Design model at position x:
@@ -170,7 +170,13 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
         x = 0.5 * plant.plate.lp if x_pos is None else float(x_pos)
         x = float(np.clip(x, xs[0], xs[-1]))
         e = float(eta) if schedule_eta else 0.0
-        A, _, B, E, Cy = plant.matrices(x_pos=x, eta=e)
+        # a4_mult scales the milling coefficient the DESIGN model carries:
+        # 1.0 is the nominal alpha_40 = 1.6 abar4 of Eq. (23); the certified
+        # family reaches 2.9 abar4, i.e. mult 1.81.  PS_AC_R makes this a
+        # fifth tuned parameter so the optimiser chooses how conservative the
+        # design point is, instead of inheriting the nominal.
+        A, _, B, E, Cy = plant.matrices(x_pos=x, eta=e,
+                                        a4=a4_mult * plant.a40)
         A0, B0, _ = plant.structure_only(e)
         # state feedback: on the cutting-loaded model only if sched_K
         Ak = A if sched_K else A0
@@ -187,7 +193,8 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
     if name is None:
         name = 'PS_AC' + ('+eta' if schedule_eta else '')
     return Ctrl(name, 5 if schedule_eta else 4, builder=build, scheduled=True,
-                meta=dict(grid=xs, sched_K=sched_K, sched_L=sched_L))
+                meta=dict(grid=xs, sched_K=sched_K, sched_L=sched_L,
+                          a4_mult=a4_mult))
 
 
 # ---------------------------------------------------------------------------
@@ -212,7 +219,8 @@ def ps_tdc(plant, base, kpd, kdd):
     # scheduled variants lose the nominal loop under the reference's box)
     inner = ps_ac(plant, 10 ** base['log_q_pos'], 10 ** base['log_q_vel'],
                   10 ** base['log_r'], 10 ** base['log_ratio'],
-                  sched_K=True, sched_L=False)
+                  sched_K=True, sched_L=False,
+                  a4_mult=float(base.get('a4_mult', 1.0)))
     k0 = cancellation_gain(plant)
     pd = (kpd * k0, kdd * k0 / plant.omega0[0])
     return Ctrl('PS_TDC', 6, builder=lambda x, e: (inner.at(x, e)[0], pd),
@@ -233,9 +241,25 @@ def build(kind, plant, u, ss_mu=None):
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'])
     if kind == 'mu_phys_tdc':
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'], name='MU_PHYS_TDC')
+    if kind == 'ps_ac_r':
+        # the robustness-scheduled variant: the gain-only law of ps_ac with
+        # the design coefficient as a fifth tuned parameter
+        c = ps_ac(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
+                  10 ** u['log_r'], 10 ** u['log_ratio'],
+                  sched_K=True, sched_L=False, a4_mult=u['a4_mult'],
+                  name='PS_AC_R')
+        c.n_params = 5
+        return c
     if kind == 'ps_tdc':
         # ss_mu carries the stored ps_ac parameter dict here
         return ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])
+    if kind == 'ps_tdc_r':
+        # the pair on the LK-carrying envelope-design base: 5 + 2 = 7 tuned
+        # parameters, one more than mu-TDC's six -- reported as exactly that
+        c = ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])
+        c.name = 'PS_TDC_R'
+        c.n_params = 7
+        return c
     if kind == 'ps_tdc_j':
         # joint search: the scheduled base and the delayed pair tuned TOGETHER,
         # six parameters -- the same tuning freedom the tables grant mu_tdc.

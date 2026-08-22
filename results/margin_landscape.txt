@@ -1,0 +1,14 @@
+==============================================================================
+CAN ANY DELAYED PAIR ON THE PS-AC BASE REACH MU-TDC'S DEPTH?
+==============================================================================
+  grid    : kpd in [-6.0, 2.0] x kdd in [-1.5, 3.0], 33x19 = 627 points
+  screen  : the protocol constraints (poles, Ms, effort)
+  test    : delay-independence of the light family at 0.4364 mm
+
+  feasible points          : 89
+  of them above the target : 0
+
+  NO feasible pair reaches the target depth: the bound is
+  not what stops the frozen-base search -- the constraint
+  set is.  On this base the delayed term cannot buy
+  mu-TDC's certified depth at any gain.

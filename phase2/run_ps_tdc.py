@@ -58,7 +58,7 @@ from stage_common import LABEL, load_controllers
 OUT = C.RESULTS
 LOG = open(os.path.join(OUT, 'log_ps_tdc.txt'), 'a')
 
-KINDS = ('ps_tdc', 'ps_tdc_j')
+KINDS = ('ps_tdc', 'ps_tdc_j', 'ps_ac_r', 'ps_tdc_r')
 TARGET = dict(ap_inf=0.4364e-3, dmax=1.54, floor=0.8459e-3, worst=0.6528)
 
 
@@ -82,24 +82,27 @@ def upd(fname, patch):
 def design(kind, plate, plant):
     with open(os.path.join(OUT, 'stage3_controllers.pkl'), 'rb') as f:
         st3 = pickle.load(f)
-    base = dict(st3['ps_ac']['params']) if kind == 'ps_tdc' else None
-    log(f'\n--- DESIGN {kind}: '
-        + ('PSO on (kpd, kdd), base = stored PS-AC gains'
-           if kind == 'ps_tdc' else 'joint PSO on all six parameters')
-        + ' ' + '-' * 8)
+    base = (dict(st3['ps_ac']['params']) if kind == 'ps_tdc'
+            else dict(st3['ps_ac_r']['params']) if kind == 'ps_tdc_r'
+            else None)
+    what = dict(ps_tdc='PSO on (kpd, kdd), base = stored PS-AC gains',
+                ps_tdc_j='joint PSO on all six parameters',
+                ps_ac_r='PSO on the four gains + the design coefficient',
+                ps_tdc_r='PSO on (kpd, kdd), base = stored PS-AC-R gains')
+    log(f'\n--- DESIGN {kind}: ' + what.get(kind, kind) + ' ' + '-' * 8)
     d = Design2(kind, plant, plate, base)
     t = time.time()
     r = optimise(d)
     J, info = evaluate(plate, r['ctrl'], detail=True)
-    log(f'  J = {r["J"]:+.5f}   order {r["order"]}   6 parameters   '
-        f'[{time.time()-t:.0f}s]')
+    log(f'  J = {r["J"]:+.5f}   order {r["order"]}   '
+        f'{r["n_params"]} parameters   [{time.time()-t:.0f}s]')
     log(f'  Ms = {info["Ms"]:.3f}   effort = {info["V"]:.1f} V/N   '
         f'slowest nominal pole = {info["max_re"]:.1f} 1/s')
     log('  parameters: ' + ', '.join(f'{k}={v:.4g}'
                                      for k, v in r['params'].items()))
     upd('stage3_controllers.pkl',
         {kind: dict(x=r['x'], J=r['J'], params=r['params'],
-                    n_params=6, order=r['order'],
+                    n_params=r['n_params'], order=r['order'],
                     Ms=info['Ms'], V=info['V'])})
     log('  -> stage3_controllers.pkl')
 
