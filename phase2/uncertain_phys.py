@@ -110,18 +110,28 @@ def removal_fit(fam, eta_max, d_eta, n_grid=21):
     return out, rep
 
 
-def direction_rectangle(plate, n=2, n_x=201):
+def direction_rectangle(plate, n=2, n_x=201, x_nom=None):
     """d_c, l_1, l_2 such that  { D(x) : x in [0, l_P] }  is inside the rectangle
     d_c + [-1,1] l_1 + [-1,1] l_2, with l_1 the principal direction of the locus.
 
     Every point of the rectangle gives a rank-one, symmetric  W = a d d^T, which
     is what Eq. (25) -- four free entries of a 2x2 matrix -- does not.
+
+    `x_nom` moves the CENTRE onto a chosen tool position instead of the middle
+    of the locus, and widens the half-widths so the rectangle still covers every
+    position.  The set therefore still contains the physics; only the nominal --
+    the point the synthesis designs AT -- has moved.  That is the experiment
+    that tests whether the nominal, not the shape, is what costs the margins:
+    the natural centre happens to sit on the node of mode 2, where the nominal
+    cutting stiffness on that mode is nearly zero.
     """
     xs = np.linspace(0.0, plate.lp, n_x)
     D = np.array([plate.D_row(x, plate.hp)[:n] for x in xs])
-    dc = 0.5 * (D.max(0) + D.min(0))
+    dc = (0.5 * (D.max(0) + D.min(0)) if x_nom is None
+          else plate.D_row(float(x_nom), plate.hp)[:n])
     Y = D - dc
-    _, sv, Vt = np.linalg.svd(Y, full_matrices=False)
+    _, sv, Vt = np.linalg.svd(D - 0.5 * (D.max(0) + D.min(0)),
+                              full_matrices=False)
     t1, t2 = Y @ Vt[0], Y @ Vt[1]
     l1 = Vt[0] * np.abs(t1).max()
     l2 = Vt[1] * np.abs(t2).max()
@@ -145,7 +155,7 @@ class PhysUncertainSystem:
     def __init__(self, plate, rpm, ap, ae=AE_NOM, n_modes=2, one_sided=True,
                  eta_max=None, zeta_pert=0.20, wpf=None, wpu=None, wpn=None,
                  x_obs=None, z_obs=None, sign=1.0, correlated=True,
-                 unc_force=True):
+                 unc_force=True, x_nom=None):
         self.plate, self.rpm, self.ap, self.ae = plate, rpm, ap, ae
         self.n = n = n_modes
         self.sign = float(sign)
@@ -176,7 +186,8 @@ class PhysUncertainSystem:
         self.abar4 = alpha4_average(rpm, ap, plate.hp, ae)
         self.a0 = self.sign * 1.6 * self.abar4                    # Eq. (23)
         self.La = self.sign * 1.3 * self.abar4                    # Eq. (23)
-        dc, l1, l2, ginfo = direction_rectangle(plate, n)
+        self.x_nom = x_nom
+        dc, l1, l2, ginfo = direction_rectangle(plate, n, x_nom=x_nom)
         self.d_c, self.l1, self.l2, self.geom = dc, l1, l2, ginfo
 
         # ---- actuator / sensor, identical to the paper's reproduction

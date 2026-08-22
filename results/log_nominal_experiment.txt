@@ -1,0 +1,9 @@
+======================================================================================
+DOES THE LFT NOMINAL EXPLAIN THE NEGATIVE RESULT?
+======================================================================================
+  weights fixed at the PAPER set's winner: k_f=3e+05 k_u=0.06 fc=3000
+  the set still covers every tool position at every nominal; only the
+  design point moves.  mu controller alone, no delayed PD, so nothing
+  but the uncertainty description differs between rows.
+
+ x_nom/l_P     W_c(2,2)       mu          J     Ms     V    peak  a_p^inf mm  delta_max
