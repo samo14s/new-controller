@@ -1,0 +1,8 @@
+====================================================================================
+HOW MUCH OF THE CERTIFIED MARGIN BELONGS TO THE DELAYED PD?
+====================================================================================
+  the STORED winning designs, certified under the identical protocol,
+  with the Eq. (30) delayed PD in the loop and with it removed.
+
+        design   delayed PD     peak   a_p^inf mm  delta_max
+      mu_paper          yes    0.603       0.4285      1.543   [51s]
