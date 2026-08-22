@@ -243,8 +243,8 @@ footer code{font-size:12px}
   <p class="eyebrow">تقرير النتائج الشامل</p>
   <h1>قمع اهتزاز الفرز في الجدران الرقيقة</h1>
   <p class="dek">
-    تسعة متحكّمات، مساران بحثيّان، نموذج واحد مُصادَق. كل رقم في هذه الصفحة مولَّد من
-    الشيفرة في المستودع وقابل لإعادة التوليد بأمر واحد.
+    عشرة متحكّمات، مساران بحثيّان، ثلاثة أوصاف لعدم اليقين، نموذج واحد مُصادَق. كل رقم في
+    هذه الصفحة مولَّد من الشيفرة في المستودع وقابل لإعادة التوليد بأمر واحد.
   </p>
   <div class="meta">
     <span>Du, Liu, Dai &amp; Long · IJMS 274 (2024) 109257</span>
@@ -856,6 +856,243 @@ footer code{font-size:12px}
   </div>
 </section>
 
+<!-- ==================== 7 ==================== -->
+<section id="s7">
+  <h2><span class="num">07</span>‏μ على المجموعة الفيزيائية</h2>
+  <p class="sub">نفس طريقة المرجع، وصف عدم يقين صحيح، وقياس مصدر الكسب حقيقةً بحقيقة.</p>
+
+  <p>
+    التقرير أعلاه انتهى إلى توصية واحدة: <strong>لا تُصلِح الصندوق، أعِد تشكيل المجموعة</strong>.
+    هذا القسم ينفّذها. تغيّر <strong>شيء واحد فقط</strong> — الكتلة (22)–(25) والجملة الختامية
+    للقسم 3.2. بقي حرفيًّا: اللوح والپيزو والحسّاس والإشارة ونقطة التشغيل وأوزان (18)–(19)
+    وشبكة الأوزان الستّين والإزاحة الطيفية 12 rad/s وشبكة التردّد ورتب D ودالة الهدف والقيود.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>ثلاث حقائق بنيوية في المنظومة، يهملها الوصف المنشور تمامًا</caption>
+      <thead>
+        <tr><th>البند</th><th>المعادلات (22)–(25)</th><th>المجموعة الفيزيائية</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">معاملات حقيقية حرّة</td><td class="n">10 مستقلّة</td><td class="n">7</td></tr>
+        <tr><td class="name">قنوات عدم اليقين</td><td class="n">10</td><td class="n">15</td></tr>
+        <tr><td class="name">كتل مكرَّرة</td><td class="n">لا شيء</td><td class="n">δ<sub>η</sub>×4، δ<sub>ξ</sub>×2، δ<sub>D</sub>×3، δ<sub>r</sub>×3</td></tr>
+        <tr class="hi"><td class="name">ΔM، ΔC، ΔK</td><td class="n">مستقلّة</td><td class="n">من معامل واحد (η)</td></tr>
+        <tr class="hi"><td class="name">مجال η</td><td class="n">متناظر ضمنًا</td><td class="n">[0, η<sub>max</sub>] أحادي الجانب</td></tr>
+        <tr class="hi"><td class="name">‏W المضطربة</td><td class="n">4 مُدخلات حرّة</td><td class="n">رتبة 1، متناظرة، محدّدة الإشارة</td></tr>
+        <tr><td class="name">اتجاه قوة القطع</td><td class="n">ثابت عند متوسّط لا يبلغه أي موضع</td><td class="n">يتحرّك مع معاملَي الموضع نفسيهما</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">
+    عدد القنوات يزيد بينما عدد <strong>الدرجات الحرّة</strong> ينقص — وهذا بالضبط معنى فرض بنية.
+    عدد حقيقي مكرَّر <code>k</code> مرّة يمثّل كثيرَ حدود من الدرجة <code>k</code> تمثيلًا
+    <strong>مضبوطًا</strong>، فلا تقريب في أيّ من الحقائق الثلاث. الملاءمة التربيعية لتكاملات
+    ريتز تترك بواقيَ <code>0.016 % / 0.074 % / 0.141 %</code> من سعة الاضطراب، وموضع
+    <code>D(x)</code> في المستوى له قيمتان منفردتان <code>83.44</code> و<code>1.94</code>
+    (الاتجاه الثاني 2.3 % فقط، ومع ذلك احتُفظ به).
+  </p>
+
+  <div class="note">
+    <p class="lbl">الاحتواء مُبرهَن بشاهد صريح، لا مُفترَض</p>
+    <p>
+      لكل نقطة فيزيائية <code>(η, ξ, x, a, z)</code> يُبنى شاهد <code>δ</code> بعكس كل بارامترية
+      على حدة. النتيجة على <strong>1701 نقطة</strong>: كل الشواهد داخل صندوق الوحدة، و
+      <code>max‖δ‖<sub>∞</sub> = 1.0000</code> بالضبط عند الأطراف — أي أنّ المجموعة
+      <strong>مضبوطة عند الحدود ولا تُهدر نصف قطر</strong>. اتجاه الاضطراب يُستعاد بخطأ
+      <code>6.7×10⁻⁵</code>.
+    </p>
+    <p style="margin-top:12px">
+      ورقم واحد يلخّص خطأ الوصف المنشور: <strong>صلابة النمط الأول تتغيّر 0.02 % مع إزالة
+      المادة كاملةً، لا 10 %</strong>؛ وكتلته تتغيّر 27 % لا 10 %. الوصف المنشور يعطي الاثنين
+      نفس نصف القطر.
+    </p>
+  </div>
+
+  <h3>هندسة المجموعات — القياس قبل التصميم</h3>
+  <p>
+    مقياسان متعاكسان بنفس المعيار، على 5265 نقطة فيزيائية:
+    <strong>فجوة التغطية</strong> = أكبر مسافة من نقطة تشغيل إلى المجموعة (قيمة غير صفرية
+    تُبطِل الضمان)؛ <strong>المحتوى الزائف</strong> = أكبر مسافة من المجموعة إلى الفيزياء
+    (قيمة كبيرة تعني دفع ثمن اضطرابات لا تُنتَج).
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>‏‖ΔA‖<sub>F</sub> ⁄ ‖A₀‖<sub>F</sub> على مصفوفة حالة نموذج التصميم ذي النمطين</caption>
+      <thead>
+        <tr><th>المجموعة</th><th class="n">معاملات</th><th class="n">فجوة التغطية</th><th class="n">المحتوى الزائف</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">‏paper — المعادلات (22)–(25)</td><td class="n">10</td><td class="n fail">4.550 %</td><td class="n">15.984 %</td></tr>
+        <tr><td class="name">‏exact — مصحَّح + حدود فيزيائية</td><td class="n">10</td><td class="n">0.164 %</td><td class="n fail">47.314 %</td></tr>
+        <tr class="hi"><td class="name">‏phys — الحقائق الثلاث</td><td class="n">15</td><td class="n">0.374 %</td><td class="n">15.107 %</td></tr>
+        <tr><td class="name">‏phys_sym — بلا أحادية جانب</td><td class="n">15</td><td class="n">0.374 %</td><td class="n">21.283 %</td></tr>
+        <tr><td class="name">‏phys_ind — بلا ارتباط</td><td class="n">17</td><td class="n">0.373 %</td><td class="n">19.564 %</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <p class="lbl">مجموعة المرجع لا تحتوي نقاط التشغيل الفيزيائية</p>
+    <p>
+      فجوة <code>4.550 %</code> من ‖A‖ تعني أنّ التصميم متين تجاه أشياء، وليس تجاه ما تفعله
+      العملية. وتبدو المجموعة محكمة (15.98 % زائف) <strong>لسبب خاطئ</strong>: هي محكمة لأنها
+      أصغر من اللازم.
+    </p>
+    <p style="margin-top:12px">
+      والتصحيح بتكبير الصندوق يغطّي الفيزياء (0.164 %) لكنه <strong>ينفخ الزائف 3.1 مرّة</strong>
+      — <code>47.3 %</code> مقابل <code>15.1 %</code>. هذا وحده يفسّر النتيجة السلبية 01 أعلاه
+      تفسيرًا كاملًا: الانتفاخ يُترجَم مباشرةً إلى مكسبٍ مخنوق.
+    </p>
+  </div>
+
+  <h3>المقارنة عند أوزان متطابقة</h3>
+  <p>
+    مقارنة <strong>أفضل</strong> تصميم على كل مجموعة تخلط أثرين: المجموعة، وأيّ ركن من شبكة
+    الأوزان صادف أن نجح. تزويج الستّين ثلاثيّة واحدةً بواحدة يزيل الخلط.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>الستّون ثلاثيّة نفسها على كل وصف — نفس دالة الهدف ونفس القيود</caption>
+      <thead>
+        <tr><th>الوصف</th><th class="n">مُجدية</th><th class="n">النسبة</th><th class="n">أفضل J</th>
+        <th class="n">‏M<sub>s</sub> وسيط</th><th class="n">V وسيط</th><th class="n">‏μ</th><th class="n">رتبة</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">‏mu_paper</td><td class="n">7 / 60</td><td class="n">12 %</td><td class="n">−0.0552</td><td class="n">1.649</td><td class="n">142</td><td class="n">9.924</td><td class="n">35</td></tr>
+        <tr><td class="name">‏mu_exact</td><td class="n">7 / 60</td><td class="n">12 %</td><td class="n fail">−0.2232</td><td class="n">1.192</td><td class="n fail">62</td><td class="n">10.205</td><td class="n">35</td></tr>
+        <tr class="hi"><td class="name">‏mu_phys</td><td class="n">25 / 60</td><td class="n">42 %</td><td class="n">−0.0841</td><td class="n">1.722</td><td class="n">137</td><td class="n">3.963</td><td class="n">45</td></tr>
+        <tr><td class="name">‏mu_phys_sym</td><td class="n">17 / 60</td><td class="n">28 %</td><td class="n">−0.1326</td><td class="n">1.750</td><td class="n">154</td><td class="n">4.552</td><td class="n">45</td></tr>
+        <tr><td class="name">‏mu_phys_ind</td><td class="n">36 / 60</td><td class="n">60 %</td><td class="n">−0.0397</td><td class="n">1.724</td><td class="n">146</td><td class="n">8.185</td><td class="n">49</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">
+    <strong>19 ثلاثيّة تنجح على المجموعة الفيزيائية ولا تنجح على مجموعة المرجع، وواحدة فقط
+    بالعكس.</strong> وعلى السّتّ التي ينجح فيها الاثنان، <code>J</code> تعادلٌ 3–3. فالمكسب
+    ليس «متحكّمًا أفضل عند وزنٍ معيّن» بل أنّ <strong>مساحة الأوزان القابلة للاستعمال تتّسع
+    3.5×</strong> — وهذا يهمّ لأنّ المرجع <strong>لا ينشر أوزانه</strong>، فمن يعيد التصميم
+    مضطرّ إلى تخمينها.
+  </p>
+  <p>
+    والاتّساع <strong>ليس ثمنه تحفّظ</strong>: كل متغيّرات الفيزياء تستقرّ عند
+    <code>M<sub>s</sub> ≈ 1.72</code> و<code>≈ 140 V/N</code>، أي نفس سلطة التحكّم التي
+    لمجموعة المرجع. الوصف الوحيد المُجبَر على التحفّظ هو الصندوق المصحَّح —
+    <code>1.19</code> عند <code>62 V/N</code>، نصف السلطة — وهذا سبب أسوأ <code>J</code> بين
+    الخمسة. <strong>الثمن المُقاس للمجموعة الفيزيائية: الرتبة 35 → 45.</strong>
+  </p>
+
+  <h3>‏μ لكل متحكّم على كل وصف</h3>
+  <p>
+    ‏μ خاصّية <strong>زوج</strong> (متحكّم، مجموعة)، فمقارنة μ لتصميمٍ على مجموعته بـμ لآخر
+    على مجموعته لا تثبت شيئًا. <code>μ<sub>RS</sub></code> (الاستقرار المتين وحده) لا يعتمد
+    على أوزان الأداء إطلاقًا، فهو المقارنة النظيفة عبر الصفوف؛ و<code>μ<sub>RP</sub></code>
+    مقيسٌ هنا بمواصفة أداء <strong>مشتركة</strong> للجميع.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>‏μ<sub>RS</sub> / μ<sub>RP</sub>؛ القطر هو كل تصميم على مجموعته، وما خارجه هو التحقّق المتقاطع</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">‏paper</th><th class="n">‏exact</th><th class="n">‏physics</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">‏mu_paper</td><td class="n">2.249 / 13.467</td><td class="n">4.467 / 14.979</td><td class="n">1.479 / 13.933</td></tr>
+        <tr><td class="name">‏mu_exact</td><td class="n">2.104 / 12.876</td><td class="n">4.190 / 14.339</td><td class="n">1.808 / 12.341</td></tr>
+        <tr class="hi"><td class="name">‏mu_phys</td><td class="n">2.588 / 15.603</td><td class="n">5.250 / 18.231</td><td class="n">1.851 / 10.504</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <p class="lbl">لا أحد يبلغ μ<sub>RS</sub> &lt; 1</p>
+    <p>
+      لا أحد من الثلاثة يضمن الاستقرار المتين على المجموعة الفيزيائية. <code>mu_phys</code>
+      أفضل بـ<strong>25 %</strong> في الأداء المتين (10.50 مقابل 13.93) وأسوأ قليلًا في
+      الاستقرار المتين (1.851 مقابل 1.479) — لأنّ أوزانه الفائزة أخفّ في عقوبة الجهد
+      (<code>1.7×10⁻³</code> مقابل <code>6×10⁻²</code>) فخرج أكثر عدوانية.
+    </p>
+    <p style="margin-top:12px">
+      و<code>mu_paper</code> يبلغ <code>2.249</code> على مجموعته و<code>1.479</code> على
+      الفيزيائية: <strong>مجموعته تبالغ في تقدير الخطر باتجاهات وتغفله باتجاهات أخرى</strong>
+      — وهو بالضبط ما تقوله فجوة التغطية.
+    </p>
+  </div>
+
+  <h3>الاستئصال — النتيجة ليست أحادية الاتجاه</h3>
+
+  <div class="tblwrap">
+    <table>
+      <caption>ثمن كل حقيقة بنيوية على حدة، بإطفائها وحدها وإعادة البحث كاملًا</caption>
+      <thead>
+        <tr><th>الحقيقة</th><th class="n">المحتوى الزائف</th><th class="n">‏μ</th><th class="n">نسبة الإجداء</th><th class="n">أفضل J</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hi"><td class="name">أحادية الجانب</td><td class="n">21.28 → 15.11 %</td><td class="n">4.552 → 3.963</td><td class="n">28 → 42 %</td><td class="n">−0.1326 → −0.0841</td></tr>
+        <tr><td class="name">الارتباط</td><td class="n">19.56 → 15.11 %</td><td class="n">8.185 → 3.963</td><td class="n fail">60 → 42 %</td><td class="n fail">−0.0397 → −0.0841</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">
+    <strong>أحادية الجانب تكسب في كل شيء.</strong> أمّا <strong>الارتباط</strong> فيقسم
+    <code>μ</code> إلى النصف تقريبًا لكنّه يكلّف في الهدف الاسمي وفي نسبة الإجداء. تعارضٌ
+    حقيقي بين مقياسين، ولم يُحسَم بالتفسير: الحَكَم هو المقارنة الزمنية والشهادات.
+  </p>
+
+  <h3>المتحكّم الناتج في صفّ المقارنة</h3>
+
+  <div class="tblwrap">
+    <table>
+      <caption>السيناريو الاسمي — 4900 rpm، ‏a<sub>p</sub> = 0.3 mm، بروتوكول التقييم نفسه</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">par</th><th class="n">a<sub>p,lim</sub> أدنى</th><th class="n">متوسط</th>
+        <th class="n">A<sub>rms</sub> μm</th><th class="n">E<sub>u</sub> V²s</th><th class="n">u<sub>max</sub> V</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0</td><td class="n">0.0503</td><td class="n">0.0614</td><td class="n fail">634.5</td><td class="n">0</td><td class="n">0</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">5</td><td class="n">0.7581</td><td class="n">1.3209</td><td class="n">0.399</td><td class="n">524.4</td><td class="n">35.09</td></tr>
+        <tr><td class="name">LQG</td><td class="n">4</td><td class="n">0.8459</td><td class="n">1.3811</td><td class="n">0.360</td><td class="n">635.5</td><td class="n">37.86</td></tr>
+        <tr><td class="name">‏μ-TDC (المرجع)</td><td class="n">6</td><td class="n">0.6821</td><td class="n">1.0056</td><td class="n">0.656</td><td class="n">673.7</td><td class="n">24.59</td></tr>
+        <tr class="hi"><td class="name">‏μ-TDC على المجموعة الفيزيائية</td><td class="n">6</td><td class="n">0.6499</td><td class="n">1.1898</td><td class="n">0.602</td><td class="n">572.2</td><td class="n">23.60</td></tr>
+        <tr><td class="name">‏PS-AC (مقترح)</td><td class="n">4</td><td class="n">0.8517</td><td class="n">1.3425</td><td class="n">0.361</td><td class="n">626.8</td><td class="n">38.04</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:16px">
+    بنفس <code>M<sub>s</sub> = 2.000</code> ونفس الجهد تقريبًا (151 مقابل 152 V/N) ونفس
+    المعاملَين المضبوطَين بـPSO: الحدّ الأسوأ أدنى <strong>4.7 %</strong>، لكنّ
+    <strong>المتوسّط على المواضع أعلى 18 %</strong> (1.1898 مقابل 1.0056)، والاهتزاز أقلّ
+    <strong>8 %</strong>، وطاقة التحكّم أقلّ <strong>15 %</strong>. أي أنّ المجموعة الصحيحة
+    تشتري اتّساقًا عبر المواضع واقتصادًا في الجهد، لا قفزةً في الحدّ الأسوأ.
+  </p>
+
+  <div class="note">
+    <p class="lbl">حدّان يجب ذكرهما</p>
+    <p>
+      <strong>١ — الحدّ العلوي لـμ على الكتل المكرَّرة.</strong> تكرار D-K المجمَّد يمنح كل كتلة
+      عاملَ D <em>قياسيًّا</em> واحدًا: مضبوط للكتل 1×1 (وهي كل كتل المرجع) ومتحفِّظ لكتلة
+      مكرَّرة <code>δI<sub>k</sub></code>، إذ إنّ مبدِّلاتها كل مصفوفة قلوبة لا مضاعفات الوحدة.
+      فـμ المُبلَّغ أثناء التركيب <strong>يعاقب المجموعة الفيزيائية على بنيتها</strong>. لذلك
+      أُعيد حساب الذروة بمصفوفات D كاملة في <code>phase2/mu_tight.py</code>، وتُحقِّق أنّها
+      تُعيد قيم الشيفرة المجمَّدة <strong>بالضبط</strong> حين لا تتكرّر كتلة.
+    </p>
+    <p style="margin-top:12px">
+      <strong>٢ — النقطة الاسمية تُزاح.</strong> أحادية الجانب تنقل <code>δ = 0</code> إلى لوح
+      منتصف الإزالة، أي <code>581.1 / 1120.4 Hz</code> بدل <code>540 / 1068</code>. مدى التصميم
+      يصير <code>[540, 630] Hz</code> بدل <code>[488, 597]</code> — <strong>أضيق (90 مقابل
+      109 Hz) وموضوع في مكانه الصحيح</strong> — لكنّ اللوح غير المُشغَّل، وهو ما تقيس عليه دالة
+      الهدف الاسمية، صار <strong>رأسًا لا مركزًا</strong>. هذا يفسّر جزءًا من فرق <code>J</code>.
+    </p>
+  </div>
+</section>
+
 <!-- ==================== 8 ==================== -->
 <section id="s8">
   <h2><span class="num">08</span>الحدود والخطوات التالية</h2>
@@ -888,12 +1125,18 @@ footer code{font-size:12px}
       <li>تعدّد التأخيرات: المرجع يُقرّ بأن الفرز نظام متعدّد التأخير ويستعمل تأخيرًا واحدًا للتبسيط. لم يُعالَج هنا.</li>
     </ul>
 
-    <h3>الخطوة التالية المقترحة</h3>
+    <h3>الخطوة التالية المقترحة — نُفِّذت</h3>
     <p>
-      <strong>إعادة تصميم μ-synthesis على المجموعة المُوَسَّمة فيزيائيًّا</strong> — لا على صندوق
-      موسَّع بل على المجموعة المُعاد تشكيلها (رتبة 1، أحادية الجانب، بمعامل واحد). نفس طريقة
-      المرجع، وصف عدم يقين صحيح، ونتيجة أفضل. هذه وحدها ورقة قابلة للنشر ولا تحتاج اختراع
-      متحكّم جديد.
+      كانت التوصية <strong>إعادة تصميم μ-synthesis على المجموعة المُعاد تشكيلها</strong> لا على
+      صندوق موسَّع. نُفِّذت في القسم <a href="#s7">07</a>، وأعطت ما هو أدقّ من «نتيجة أفضل»:
+      المجموعة المنشورة <strong>لا تحتوي نقاط التشغيل الفيزيائية</strong> (فجوة 4.55 %)،
+      والصندوق المصحَّح يغطّيها بمحتوًى زائف <strong>3.1×</strong>، والمجموعة المُعاد تشكيلها
+      تجمع التغطية والإحكام وتوسّع مساحة الأوزان القابلة للاستعمال <strong>3.5×</strong>.
+    </p>
+    <p>
+      وما بقي مفتوحًا بعدها: لا أحد من التصاميم الثلاثة يبلغ <code>μ<sub>RS</sub> &lt; 1</code>،
+      أي أنّ ضمانًا حقيقيًّا للاستقرار المتين على المجموعة الفيزيائية <strong>لم يُنَل بعد</strong>
+      بهذه البنية من المتحكّمات. وهذا — لا اختراع متحكّم جديد — هو السؤال التالي.
     </p>
   </div>
 </section>
