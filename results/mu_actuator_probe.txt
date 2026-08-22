@@ -1,0 +1,24 @@
+==============================================================================
+WHAT DRIVES mu_RS AT MID-SPAN -- THE ACTUATOR CHANNEL, ALONE
+==============================================================================
+  member: ps_ac_r at x = 50 mm; position channels dropped
+
+  all blocks, actuator included : mu =  85.791 at  4000 Hz
+  parametric physics only       : mu =   0.577 at   639 Hz
+
+  each parametric block ALONE (actuator kept):
+    d_eta  : mu =  85.790 at  4000 Hz
+    d_xi   : mu =  85.764 at  4000 Hz
+    d_a    : mu =  85.763 at  4000 Hz
+    d_z1   : mu =  85.763 at  4000 Hz
+    d_z2   : mu =  85.763 at  4000 Hz
+  -> every one reproduces the peak: the actuator block is
+     the sole driver.
+
+  extra rolloff on the same member (actuator block kept):
+    order 1 at 3000 Hz : mu =  52.216 at  3540 Hz
+    order 1 at 2000 Hz : mu =  38.398 at  3540 Hz
+    order 1 at 1500 Hz : mu =  29.762 at  3540 Hz
+    order 2 at 2000 Hz : mu =  21.756 at  3540 Hz
+  -> filtering does not cure the channel; a mu-shaped
+     high-frequency profile is what it takes.

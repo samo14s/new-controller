@@ -446,7 +446,7 @@ chk_bool('PS-AC has the best worst case of the four',
          worst_all('ps_ac') == max(worst_all(k) for k in FOUR), True)
 
 # --- 8.1  the size of the gain ----------------------------------------------
-section('8.1  PS-AC against LQG, and against the published controller')
+section('9.1  PS-AC against LQG, and against the published controller')
 
 
 def pc(a, b):
@@ -471,7 +471,7 @@ chk('against mu-TDC, peak vibration (%)',
     pc(st78['S1_ps_ac']['A_max'], st78['S1_mu_tdc']['A_max']), -35, 0)
 
 # --- 8.3  what did not work -------------------------------------------------
-section('8.3  what did not work')
+section('9.3  what did not work')
 chk('PS-AC + eta, worst under modal variation (mm)',
     s('ps_ac_eta', 3).min(), 0.4891, 4)
 chk('PS-AC alone, worst under modal variation (mm)',
@@ -485,7 +485,7 @@ chk('pass duration, the scale position lives on (s)',
     gnum(p1, r'full pass = ([0-9.]+) s', 'pass duration'), 20.4, 1)
 
 # --- 8.4  the uncertainty descriptions, as geometry -------------------------
-section('8.4  the uncertainty descriptions, as geometry')
+section('9.4  the uncertainty descriptions, as geometry')
 chk('published set: coverage gap (%)', 100 * float(geo['paper_cov']), 4.55, 2)
 chk('physics set: coverage gap (%)', 100 * float(geo['phys_cov']), 0.37, 2)
 chk('corrected box: spurious content (%)', 100 * float(geo['exact_spu']),
@@ -507,6 +507,128 @@ chk_bool('and yet the physics set gives the weaker design',
          and (st56['mu_phys_tdc']['delta_max']
               < st56['mu_tdc']['delta_max']), True)
 
+# --- 8  the failure-map campaign --------------------------------------------
+section('8.1  the hybrids')
+tdc = st3['ps_tdc']
+chk('frozen base: kpd', tdc['params']['kpd'], -1.499, 3)
+chk('frozen base: kdd', tdc['params']['kdd'], 0.464, 3)
+chk('frozen base: J', tdc['J'], 0.158, 3)
+chk('frozen base: tuned parameters', tdc['n_params'], 6, 0)
+tdj = st3['ps_tdc_j']
+chk('joint: kpd', tdj['params']['kpd'], 1.014, 3)
+chk('joint: kdd', tdj['params']['kdd'], 1.489, 3)
+chk('joint: J', tdj['J'], 0.156, 3)
+for key, ap, dm in (('ps_tdc', 0.3934, 1.45), ('ps_tdc_j', 0.3973, 1.46)):
+    chk(f'{key}: a_p^inf (mm)', st56[key]['ap_inf'] * MM, ap, 4)
+    chk(f'{key}: delta_max', st56[key]['delta_max'], dm, 2)
+chk('frozen base: floor (mm)', s(  # noqa: E501
+    'ps_tdc', 2).min() * MM, 0.9132, 4)
+chk('joint: floor (mm)', s('ps_tdc_j', 2).min() * MM, 0.9073, 4)
+chk('frozen base: worst-of-4 (mm)', worst_all('ps_tdc'), 0.6733, 4)
+chk('joint: worst-of-4 (mm)', worst_all('ps_tdc_j'), 0.6353, 4)
+chk('frozen base: floor gain over PS-AC (%)',
+    pc(s1('ps_tdc').min(), s1('ps_ac').min()), 7.2, 1)
+chk('frozen base: worst-of-4 gain over PS-AC (%)',
+    pc(worst_all('ps_tdc'), worst_all('ps_ac')), 3.1, 1)
+chk_bool('frozen base dominates PS-AC on floor, worst-of-4 and both margins',
+         s1('ps_tdc').min() > s1('ps_ac').min()
+         and worst_all('ps_tdc') > worst_all('ps_ac')
+         and st56['ps_tdc']['ap_inf'] > st56['ps_ac']['ap_inf']
+         and st56['ps_tdc']['delta_max'] > st56['ps_ac']['delta_max'], True)
+chk_bool('joint falls below PS-AC on worst-of-4',
+         worst_all('ps_tdc_j') < worst_all('ps_ac'), True)
+
+
+def score(key):
+    r = st56[key]
+    return sum([r['ap_inf'] > st56['mu_tdc']['ap_inf'],
+                r['delta_max'] >= st56['mu_tdc']['delta_max'],
+                s1(key).min() >= s1('lqg').min() - 5e-8,
+                worst_all(key) >= worst_all('ps_ac') - 1e-9,
+                min(s(key, 3).min(), s(key, 4).min()) > 0.05])
+
+
+chk('frozen base: criteria met (of 5)', score('ps_tdc'), 3, 0)
+chk('joint: criteria met (of 5)', score('ps_tdc_j'), 2, 0)
+
+section('8.2  the margin landscape')
+land = np.load(os.path.join(RES, 'margin_landscape.npz'), allow_pickle=True)
+chk('grid points', land['kpd'].size * land['kdd'].size, 627, 0)
+chk('grid shape: kpd values', land['kpd'].size, 33, 0)
+chk('grid shape: kdd values', land['kdd'].size, 19, 0)
+chk('kpd reach vs the search bound, times',
+    abs(land['kpd'][0]) / 1.5, 4, 0)
+chk('feasible pairs', int(land['feas'].sum()), 89, 0)
+chk('pairs reaching mu-TDC depth', int(land['hits'].sum()), 0, 0)
+chk('the target depth tested (mm)', float(land['target_ap']) * MM, 0.4364, 4)
+
+section('8.3  the envelope base PS-AC-R')
+acr = st3['ps_ac_r']
+chk('a4_mult chosen by the PSO', acr['params']['a4_mult'], 1.564, 3)
+chk('the design coefficient in abar4 units', acr['params']['a4_mult'] * 1.6,
+    2.5, 1)
+chk('J', acr['J'], 0.145, 3)
+chk('tuned parameters', acr['n_params'], 5, 0)
+chk('a_p^inf (mm)', st56['ps_ac_r']['ap_inf'] * MM, 0.3817, 4)
+chk('delta_max', st56['ps_ac_r']['delta_max'], 1.39, 2)
+chk_bool('the crossing margins do not improve over PS-AC',
+         st56['ps_ac_r']['ap_inf'] <= st56['ps_ac']['ap_inf'], True)
+chk_bool('common-P LK feasible', st56['ps_ac_r']['lk'], True)
+chk('floor (mm)', s1('ps_ac_r').min() * MM, 0.8459, 4)
+chk('worst-of-4 (mm)', worst_all('ps_ac_r'), 0.6616, 4)
+
+section('8.4  PS-TDC-R')
+tdr = st3['ps_tdc_r']
+chk('kpd', tdr['params']['kpd'], -1.495, 3)
+chk('kdd', tdr['params']['kdd'], 0.546, 3)
+chk('J, the highest of the study', tdr['J'], 0.174, 3)
+chk_bool('J above every other design',
+         tdr['J'] > max(st3[k]['J'] for k in st3 if k != 'ps_tdc_r'), True)
+chk('tuned parameters', tdr['n_params'], 7, 0)
+chk('a_p^inf (mm)', st56['ps_tdc_r']['ap_inf'] * MM, 0.3954, 4)
+chk('delta_max', st56['ps_tdc_r']['delta_max'], 1.43, 2)
+chk_bool('common-P LK feasible', st56['ps_tdc_r']['lk'], True)
+chk('floor, best of the study (mm)', s1('ps_tdc_r').min() * MM, 0.9307, 4)
+chk_bool('floor above every other controller',
+         s1('ps_tdc_r').min() > max(s1(k).min() for k in
+                                    ('fopid', 'lqg', 'mu_tdc', 'ps_ac',
+                                     'ps_tdc', 'ps_ac_r')), True)
+chk('floor gain over PS-AC (%)', pc(s1('ps_tdc_r').min(), s1('ps_ac').min()),
+    9.3, 1)
+chk('floor gain over mu-TDC (%)', pc(s1('ps_tdc_r').min(), s1('mu_tdc').min()),
+    36, 0)
+chk('worst-of-4 (mm)', worst_all('ps_tdc_r'), 0.6704, 4)
+chk('the +10 % box case (mm)', s('ps_tdc_r', 3)[i_box], 0.8547, 4)
+chk('criteria met (of 5)', score('ps_tdc_r'), 3, 0)
+
+section('8.5  the mu_RS split')
+mus = np.load(os.path.join(RES, 'mu_scheduled.npz'))
+chk('parametric point test, ps_ac_r, sup over 21 nodes',
+    float(mus['ps_ac_r_point'].max()), 0.717, 3)
+chk('nodes in the sweep', mus['ps_ac_r_point'].size, 21, 0)
+chk('parametric + grid cell, ps_ac_r, sup', float(mus['ps_ac_r_cell'].max()),
+    0.736, 3)
+chk('fixed LQG passes the frozen test too (point)',
+    float(mus['lqg_point'].max()), 0.724, 3)
+chk('fixed LQG, cell', float(mus['lqg_cell'].max()), 0.743, 3)
+chk('mu_paper under the scheduled full test', float(mus['mu_paper_full'].max()),
+    1.205, 3)
+chk('mu_phys under the scheduled full test', float(mus['mu_phys_full'].max()),
+    1.640, 3)
+chk('mu_phys fails even parametrically', float(mus['mu_phys_point'].max()),
+    1.175, 3)
+chk_bool('first mu_RS < 1 of the study (cell included, every node)',
+         bool(mus['ps_ac_r_cell'].max() < 1.0)
+         and bool(mus['ps_ac_r_point'].max() < 1.0), True)
+probe = np.load(os.path.join(RES, 'mu_actuator_probe.npz'))
+chk('mid-span, actuator included', float(probe['m_all']), 85.8, 1)
+chk('mid-span, parametric only', float(probe['m_par']), 0.577, 3)
+chk('the peak frequency (Hz)', float(probe['f_all']), 4000, 0)
+chk_bool('every parametric block alone reproduces the peak',
+         bool(np.min(probe['singles']) > 0.99 * float(probe['m_all'])), True)
+chk('second-order rolloff at 2 kHz still leaves',
+    float(probe['rolloff'][3]), 21.8, 1)
+
 # --- the figures -----------------------------------------------------------
 section('figures the draft embeds')
 with open(os.path.join(HERE, 'paper_ar.md'), encoding='utf-8') as fh:
@@ -520,7 +642,7 @@ for cap, rel in refs:
              os.path.exists(os.path.normpath(os.path.join(HERE, rel))), True)
 
 # --- 9.2  what is numerical, not proved -------------------------------------
-section('9.2  the limits of the certificate')
+section('10.2  the limits of the certificate')
 chk_bool('common-P LK infeasible for PS-AC', st56['ps_ac']['lk'], False)
 chk_bool('common-P LK attempted for PS-AC', st56['ps_ac']['lk_attempted'],
          True)

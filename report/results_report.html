@@ -268,8 +268,9 @@ footer code{font-size:12px}
     <li><a href="#s5"><span class="n">05</span> الشهادات والهوامش</a></li>
     <li><a href="#s6"><span class="n">06</span> النتائج السلبية</a></li>
     <li><a href="#s7"><span class="n">07</span> μ الفيزيائية</a></li>
-    <li><a href="#s8"><span class="n">08</span> الورقة والمدقّق</a></li>
-    <li><a href="#s9"><span class="n">09</span> الحدود والتالي</a></li>
+    <li><a href="#s8"><span class="n">08</span> البحث المُوجَّه</a></li>
+    <li><a href="#s9"><span class="n">09</span> الورقة والمدقّق</a></li>
+    <li><a href="#s10"><span class="n">10</span> الحدود والتالي</a></li>
   </ol>
 </nav>
 
@@ -279,8 +280,8 @@ footer code{font-size:12px}
   <p class="eyebrow">تقرير النتائج الشامل</p>
   <h1>قمع اهتزاز الفرز في الجدران الرقيقة</h1>
   <p class="dek">
-    عشرة متحكّمات، مساران بحثيّان، ثلاثة أوصاف لعدم اليقين، نموذج واحد مُصادَق. كل رقم في
-    هذه الصفحة مولَّد من الشيفرة في المستودع وقابل لإعادة التوليد بأمر واحد.
+    ثلاثة عشر متحكّمًا، مساران بحثيّان وحملةٌ مُوجَّهة، ثلاثة أوصاف لعدم اليقين، نموذج واحد
+    مُصادَق. كل رقم في هذه الصفحة مولَّد من الشيفرة في المستودع وقابل لإعادة التوليد بأمر واحد.
   </p>
   <div class="meta">
     <span>Du, Liu, Dai &amp; Long · IJMS 274 (2024) 109257</span>
@@ -309,6 +310,13 @@ footer code{font-size:12px}
       بناء مجموعة عدم اليقين على الفيزياء</strong> — وهي الأصحّ وصفًا بلا نزاع، وتوسّع مساحة
       الأوزان المُجدية 3.5× — تُعطي مع ذلك متحكّمًا <strong>أدنى بـ27 % في الهوامش
       المُصادَقة</strong> عند الأوزان نفسها. الوصف الأصحّ ليس بالضرورة نموذج التصميم الأفضل.
+    </p>
+    <p>
+      ثم أغلقت حملةٌ مُوجَّهة بخريطة الإخفاق (القسم <a href="#s8">08</a>) الدائرة:
+      <strong>PS-TDC-R</strong> يجمع أفضل أرضية في الدراسة (<span class="mono">0.9307</span> mm)
+      مع شهادة LK و<strong>أول μ<sub>RS</sub> &lt; 1</strong> على الفيزياء البارامترية،
+      ويبقى هامشا العبور للمتحكّم المنشور <em>بدليل استحالة</em> لا بعجز بحث — والحاجب
+      الوحيد عن الشهادة الكاملة كتلة المشغِّل عند 4 kHz.
     </p>
   </div>
 
@@ -1439,14 +1447,145 @@ footer code{font-size:12px}
 
 <!-- ==================== 8 ==================== -->
 <section id="s8">
-  <h2><span class="num">08</span>الورقة ومدقّق أرقامها</h2>
-  <p class="sub">مسوّدة عربية بالمتحكّم المجدوَل على الموضع عمودًا لها، و‏225 فحصًا تعيد قراءة <code>results/</code> وتؤكّد كل رقم تقتبسه.</p>
+  <h2><span class="num">08</span>البحث المُوجَّه بخريطة الإخفاق</h2>
+  <p class="sub">أربعة متحكّمات جديدة ونتيجتا استحالة وتشريحُ μ — بخمسة معايير أُعلنت قبل أي تشغيل.</p>
+
+  <div class="stats">
+    <div class="stat hero">
+      <p class="k">أفضل أرضية في الدراسة</p>
+      <p class="v">0.9307<em> mm</em></p>
+      <p class="d">‏PS-TDC-R: ‏+9.3 % على PS-AC و+36 % على μ-TDC.</p>
+    </div>
+    <div class="stat hero">
+      <p class="k">أول μ_RS &lt; 1</p>
+      <p class="v">0.736</p>
+      <p class="d">على الفيزياء البارامترية، عند كل العقد الـ21، شاملًا خطأ الاستيفاء.</p>
+    </div>
+    <div class="stat">
+      <p class="k">نقاط خريطة الهامش</p>
+      <p class="v">627</p>
+      <p class="d">‏89 مُجدية، <b>صفر</b> يبلغ عمق μ-TDC — استحالة بنيوية.</p>
+    </div>
+    <div class="stat">
+      <p class="k">القناة الحاجبة للجميع</p>
+      <p class="v">4<em> kHz</em></p>
+      <p class="d">كتلة المشغِّل وحدها ترفع μ من 0.577 إلى 85.8.</p>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <p class="lede">
+      خريطة الإخفاق بعد المراحل 5–8 متكاملة الأطراف: ‏μ-TDC يحمل الهامشين المُصادَقين
+      وأسوأ أداء، وPS-AC العكس. فجرى بحثٌ مُوجَّه بها بخمسة معايير مُسبقة، وانتهى إلى
+      <strong>PS-TDC-R</strong>: أفضل أرضية في الدراسة مع <strong>شهادة LK</strong>
+      و<strong>أول μ<sub>RS</sub> &lt; 1</strong> — وبقي هامشا العبور لـμ-TDC
+      <strong>بدليل استحالة لا بعجز بحث</strong>.
+    </p>
+  </div>
+
+  <h3>المسار: أربع خطوات، كل واحدة تسمّي سبب التالية</h3>
+  <div class="tblwrap">
+    <table>
+      <caption>المعايير الخمسة المُسبقة: تجاوز هامشَي μ-TDC (‏C1، C2)، حفظ أرضية LQG (‏C3)، حفظ أسوأ حالة PS-AC (‏C4)، لا انهيار (‏C5).</caption>
+      <thead>
+        <tr><th>الخطوة</th><th>الفكرة الآلية</th><th>النتيجة</th><th>ما علّمتنا</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">PS-TDC (قاعدة مجمّدة)</td>
+          <td class="wrapcell">زوج المعادلة (30) المتأخّر — حامل ‎+5.7 %‎ من هامش μ — فوق قانون PS-AC</td>
+          <td class="wrapcell"><span class="chip mid">3/5</span> أرضية 0.9132، أسوأ-4 ‏0.6733؛ الهامشان 0.3934/1.45</td>
+          <td class="wrapcell">يهيمن على PS-AC بكل ما قيس؛ المُحسِّن يختار <b>إشارة إلغاء التجديد</b> (‏kpd&nbsp;&lt;&nbsp;0، عكس μ-TDC) ويلتصق بحدّ المجال</td>
+        </tr>
+        <tr>
+          <td class="name">خريطة الهامش</td>
+          <td class="wrapcell">مسح مستوى (kpd،&nbsp;kdd) كاملًا — 4× مجال البحث — واختبار عمق μ-TDC لكل نقطة مُجدية</td>
+          <td class="wrapcell"><span class="chip no">‏0 / 89</span> من 627 نقطة</td>
+          <td class="wrapcell">‏C1 <b>مستحيل على هذه القاعدة</b>: الهامش يسكن في قاعدة D-K نفسها لا في حدّها المتأخّر</td>
+        </tr>
+        <tr>
+          <td class="name">PS-AC-R (الغلاف)</td>
+          <td class="wrapcell">معامل قطع نموذج التصميم بارامترًا خامسًا — اختار PSO ‏1.564 (تصميم عند ‎2.5ᾱ₄‎)</td>
+          <td class="wrapcell"><span class="chip mid">هوامش ثابتة</span> 0.3817/1.39 — لكن <span class="chip ok">LK مُجدية</span></td>
+          <td class="wrapcell">هامش العبور <b>غير حسّاس</b> لمعامل التصميم؛ وأول مجدوَل يحمل شهادة LK بلا انهيار — الفجوة التي أعلنتها الورقة في §9.2</td>
+        </tr>
+        <tr class="hi">
+          <td class="name">PS-TDC-R (التركيب)</td>
+          <td class="wrapcell">الزوج المتأخّر فوق القاعدة الغلافية — 7 بارامترات، مُبلَّغة كذلك</td>
+          <td class="wrapcell"><span class="chip ok">‏3/5 + LK</span> أرضية <b>0.9307</b>، أسوأ-4 ‏0.6704، صندوق ‎+10 %‎: ‏0.8547</td>
+          <td class="wrapcell">‏J = ‏+0.174 الأقصى في الدراسة؛ والزوج <b>لم يكسر</b> شهادة LK خلافًا لنمط متحكّمات μ كلّها</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>الترتيب النهائي</h3>
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">بار.</th><th class="n">a_p^∞ mm</th><th class="n">δ_max</th><th class="n">الأرضية mm</th><th class="n">أسوأ-4 mm</th><th>LK</th><th class="n">μ بارامتري</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">μ-TDC [1]</td><td class="n">6</td><td class="n"><span class="best">0.4364</span></td><td class="n"><span class="best">1.54</span></td><td class="n">0.6821</td><td class="n">0.442</td><td><span class="chip no">لا</span></td><td class="n">0.904*</td></tr>
+        <tr class="ref"><td class="name">PS-AC</td><td class="n">4</td><td class="n">0.3836</td><td class="n">1.40</td><td class="n">0.8517</td><td class="n">0.6528</td><td><span class="chip no">لا</span></td><td class="n">0.721</td></tr>
+        <tr><td class="name">PS-TDC (مجمّد)</td><td class="n">6</td><td class="n">0.3934</td><td class="n">1.45</td><td class="n">0.9132</td><td class="n"><span class="best">0.6733</span></td><td><span class="chip no">لا</span></td><td class="n">—</td></tr>
+        <tr><td class="name">PS-AC-R</td><td class="n">5</td><td class="n">0.3817</td><td class="n">1.39</td><td class="n">0.8459</td><td class="n">0.6616</td><td><span class="chip ok">نعم</span></td><td class="n"><span class="best">0.717</span></td></tr>
+        <tr class="hi"><td class="name">PS-TDC-R</td><td class="n">7</td><td class="n">0.3954</td><td class="n">1.43</td><td class="n"><span class="best">0.9307</span></td><td class="n">0.6704</td><td><span class="chip ok">نعم</span></td><td class="n">0.717</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    *صفّ μ البارامتري لقاعدة D-K وحدها بالاختبار المجدوَل؛ ‏mu_phys يفشل حتى فيه (‏1.175).
+    والنسخة المشتركة (بحث الستّة معًا) حقّقت 2/5 — أسوأ حالتها 0.6353 دون PS-AC — وتُبلَّغ كذلك.
+  </p>
+
+  <h3>تشريح μ<sub>RS</sub>: الجواب المنقسم</h3>
+  <div class="finds">
+    <div class="find thm">
+      <p class="tag">نعم — بارامتريًّا</p>
+      <h4>أول شهادة μ في الدراسة</h4>
+      <p>على الإزالة وحالة منتصف الممرّ وسعة القوّة والتخميدين، والموضعُ جدولةً: عند كل
+      عقدة من الـ21، وبخلية الاستيفاء داخل المجموعة.</p>
+      <p class="fig">sup μ = 0.736 &lt; 1</p>
+    </div>
+    <div class="find">
+      <p class="tag">لا — بالكتلة الكاملة</p>
+      <h4>المشغِّل عند 4 kHz يحجب الجميع</h4>
+      <p>كل كتلة بارامترية منفردة تعيد إنتاج 85.8؛ بلا كتلة المشغِّل: 0.577. وترشيح
+      رتبة 2 عند 2 kHz يُبقي 21.8 — العلاج تشكيل μ لا ترشيح.</p>
+      <p class="fig">85.8 → 0.577</p>
+    </div>
+    <div class="find">
+      <p class="tag">إسناد أمين</p>
+      <h4>التجميد يشتري الشهادة، والجدولة تشتري الأداء</h4>
+      <p>مكسب LQG المثبّت يعبر الاختبار المجمّد أيضًا (‏0.724 / 0.743). فالشهادة
+      البارامترية ثمن اعتبار الموضع معلومًا، وفضل الجدولة في الأداء فوقها.</p>
+      <p class="fig">LQG: 0.743</p>
+    </div>
+  </div>
+
+  <div class="note warn">
+    <p class="lbl">ما بقي لـμ-TDC — بدليل مُسمًّى</p>
+    <p>
+      هامشا العبور المُصادَقان (‏0.4364 mm و1.54) يبقيان له: خريطة الهامش أثبتت أن لا زوج
+      متأخّر فوق القاعدة المجدوَلة يبلغهما، ورافعة الغلاف لا تحرّكهما. وأقرب من يملك مفاتيح
+      الكتلة الكاملة تصاميم D-K نفسها (‏1.205 بالاختبار المجدوَل) — ومن هنا يبدأ
+      <b>مشروع الورقة التالية</b>: تركيب D-K مجدوَل على الموضع فوق المجموعة الفيزيائية
+      منزوعةَ كتلتَي الموضع.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== 9 ==================== -->
+<section id="s9">
+  <h2><span class="num">09</span>الورقة ومدقّق أرقامها</h2>
+  <p class="sub">مسوّدة عربية بالمتحكّم المجدوَل على الموضع عمودًا لها، و‏303 فحوص تعيد قراءة <code>results/</code> وتؤكّد كل رقم تقتبسه.</p>
 
   <div class="stats">
     <div class="stat hero">
       <p class="k">فحوص المدقّق</p>
-      <p class="v">225</p>
-      <p class="d">كلّها تمرّ، على 19 قسمًا من المسوّدة، بترتيبها فيها.</p>
+      <p class="v">303</p>
+      <p class="d">كلّها تمرّ، على 25 قسمًا من المسوّدة، بترتيبها فيها.</p>
     </div>
     <div class="stat">
       <p class="k">أرقام وعبارات صُحِّحت</p>
@@ -1602,7 +1741,7 @@ footer code{font-size:12px}
   <h3>التغطية</h3>
   <div class="tblwrap">
     <table>
-      <caption>‏225 فحصًا على 19 قسمًا، بترتيب المسوّدة نفسه.</caption>
+      <caption>‏303 فحوص على 25 قسمًا، بترتيب المسوّدة نفسه — ومنها أقسام الحملة الخمسة والأشكال.</caption>
       <thead>
         <tr><th>قسم المسوّدة</th><th class="n">فحوص</th><th>المصدر</th></tr>
       </thead>
@@ -1622,10 +1761,16 @@ footer code{font-size:12px}
         <tr class="hi"><td class="name">§7.1 السيناريو الاسمي</td><td class="n">44</td><td><code>stage78</code> + <code>stage3</code></td></tr>
         <tr><td class="name">§7.2 مسح الموضع</td><td class="n">9</td><td><code>stage78.pkl</code></td></tr>
         <tr><td class="name">§7.3 اختبارات الإجهاد</td><td class="n">13</td><td><code>stage78.pkl</code></td></tr>
-        <tr><td class="name">§8.1 حجم المكسب</td><td class="n">8</td><td><code>stage78.pkl</code></td></tr>
-        <tr><td class="name">§8.3 ما لم ينجح</td><td class="n">5</td><td><code>stage78</code> + <code>stage56</code></td></tr>
-        <tr><td class="name">§8.4 هندسة المجموعات</td><td class="n">10</td><td><code>set_geometry.npz</code> + <code>log_musyn</code></td></tr>
-        <tr><td class="name">§9.2 حدود الشهادة</td><td class="n">4</td><td><code>stage56.pkl</code></td></tr>
+        <tr><td class="name">§9.1 حجم المكسب</td><td class="n">8</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§9.3 ما لم ينجح</td><td class="n">5</td><td><code>stage78</code> + <code>stage56</code></td></tr>
+        <tr><td class="name">§9.4 هندسة المجموعات</td><td class="n">10</td><td><code>set_geometry.npz</code> + <code>log_musyn</code></td></tr>
+        <tr class="hi"><td class="name">§8.1 الهجائن (حملة)</td><td class="n">21</td><td><code>stage3</code> + <code>stage56</code> + <code>stage78</code></td></tr>
+        <tr><td class="name">§8.2 خريطة الهامش</td><td class="n">7</td><td><code>margin_landscape.npz</code></td></tr>
+        <tr><td class="name">§8.3 القاعدة الغلافية</td><td class="n">10</td><td><code>stage3</code> + <code>stage56</code></td></tr>
+        <tr><td class="name">§8.4 PS-TDC-R</td><td class="n">15</td><td><code>stage3/56/78</code></td></tr>
+        <tr><td class="name">§8.5 تشريح μ</td><td class="n">14</td><td><code>mu_scheduled</code> + <code>mu_actuator_probe</code></td></tr>
+        <tr><td class="name">الأشكال المضمّنة</td><td class="n">11</td><td>ملفّات <code>results/figures_*</code></td></tr>
+        <tr><td class="name">§10.2 حدود الشهادة</td><td class="n">4</td><td><code>stage56.pkl</code></td></tr>
       </tbody>
     </table>
   </div>
@@ -1670,12 +1815,16 @@ footer code{font-size:12px}
     44  7.1  nominal scenario
      9  7.2  position sweep
     13  7.3  stress tests
-     8  8.1  PS-AC against LQG, and the published controller
-     5  8.3  what did not work
-    10  8.4  the uncertainty descriptions, as geometry
-     4  9.2  the limits of the certificate
+     8  9.1  PS-AC against LQG, and the published controller
+    21  8.1  the hybrids
+     7  8.2  the margin landscape
+    10  8.3  the envelope base PS-AC-R
+    15  8.4  PS-TDC-R
+    14  8.5  the mu_RS split
+    11  figures the draft embeds
+     4  10.2  the limits of the certificate
 <span class="dim">========================================================</span>
-<span class="ok">ALL 225 PAPER NUMBERS VERIFIED</span></pre>
+<span class="ok">ALL 303 PAPER NUMBERS VERIFIED</span></pre>
   </div>
   <p class="tnote">وحين يسقط فحص، يطبع السطر <code>BAD</code> ورقمَي الطرفين، ويخرج بحالة غير صفرية.</p>
 
@@ -1683,15 +1832,15 @@ footer code{font-size:12px}
     <p class="lbl">ما يعنيه هذا عمليًّا</p>
     <p>
       المسوّدة لم تعد تُصدَّق على الثقة. إعادة تشغيل أي مرحلة ثم <code>verify_numbers.py</code>
-      تكفي للحكم: إمّا أن تمرّ الـ225 كلّها، أو يُسمّى بالضبط أيُّ رقم تحرّك وإلى أين.
+      تكفي للحكم: إمّا أن تمرّ الـ303 كلّها، أو يُسمّى بالضبط أيُّ رقم تحرّك وإلى أين.
       والأحد عشر تصحيحًا أعلاه هي ما ردّه هذا الإجراء — وكلّها كانت ستُنشَر لولاه.
     </p>
   </div>
 </section>
 
 
-<section id="s9">
-  <h2><span class="num">09</span>الحدود والخطوات التالية</h2>
+<section id="s10">
+  <h2><span class="num">10</span>الحدود والخطوات التالية</h2>
   <p class="sub">ما هو مبرهَن، وما هو عدديّ، وما لم يُفعل.</p>
 
   <div class="col">
@@ -1730,9 +1879,18 @@ footer code{font-size:12px}
       تجمع التغطية والإحكام وتوسّع مساحة الأوزان القابلة للاستعمال <strong>3.5×</strong>.
     </p>
     <p>
-      وما بقي مفتوحًا بعدها: لا أحد من التصاميم الثلاثة يبلغ <code>μ<sub>RS</sub> &lt; 1</code>،
-      أي أنّ ضمانًا حقيقيًّا للاستقرار المتين على المجموعة الفيزيائية <strong>لم يُنَل بعد</strong>
-      بهذه البنية من المتحكّمات. وهذا — لا اختراع متحكّم جديد — هو السؤال التالي.
+      وما كان مفتوحًا بعدها — «لا أحد يبلغ <code>μ<sub>RS</sub> &lt; 1</code>» — أُجيب في
+      القسم <a href="#s8">08</a> بجوابٍ منقسم: <strong>نعم</strong> على الفيزياء البارامترية
+      والموضعُ جدولةً (‏0.736 عند كل العقد، بخلية الاستيفاء)، و<strong>لا</strong> بالكتلة
+      الكاملة — والحاجب الوحيد كتلة المشغِّل عند 4 kHz، وهي قناة لا يمسّها اختبار العبور
+      ولا عائلة رؤوسه أيضًا.
+    </p>
+    <p>
+      <strong>مشروع الورقة التالية، مسمًّى بمكوّناته:</strong> تركيب D-K مجدوَل على الموضع
+      فوق المجموعة الفيزيائية منزوعةَ كتلتَي الموضع — يجمع تشكيل قناة المشغِّل (فجوة أفضل
+      تصميم 1.205 في القراءة المجدوَلة) مع الشهادة البارامترية (‏0.736) وأداء الجدولة
+      (أرضية 0.93). البنية التحتية جاهزة: المجموعة الفيزيائية بخيار <code>x_nom</code>،
+      وإسقاط القنوات في <code>mu_scheduled.py</code>، وسلسلة D-K في <code>musyn.py</code>.
     </p>
   </div>
 </section>
