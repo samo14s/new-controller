@@ -16,9 +16,10 @@ STRICTEMENT MONOTONE de la meme quantite : la marge logarithmique de Floquet
 
 rho <= 1 signifie stable ; J > 0 signifie donc "stable a toutes les
 profondeurs sondes et a toutes les positions", et J croit avec la marge. Les
-profondeurs sondes (0.5, 1.0, 2.0 mm) encadrent la zone utile, la limite en
-boucle ouverte etant ~0.15 mm. Les a_p,lim VRAIS sont ensuite calcules par
-bissection, a pleine resolution, pour les seuls correcteurs retenus.
+profondeurs sondes sont C.AP_PROBE = (0.3, 0.6, 1.0) mm : elles encadrent la
+zone utile, la limite en boucle ouverte etant ~0.05 mm. Les a_p,lim VRAIS sont
+ensuite calcules par bissection, a pleine resolution, pour les seuls
+correcteurs retenus.
 
 CONTRAINTES (penalisees, identiques des deux cotes) :
   1. stabilite nominale sans coupe : max Re(lambda) <= -1 s^-1 ;

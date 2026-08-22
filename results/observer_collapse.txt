@@ -1,0 +1,23 @@
+==============================================================================
+SECTION 5.2 - WHY THE OBSERVER IS NOT SCHEDULED
+==============================================================================
+  perturbation : the reference's +10 % mass / -10 % stiffness box
+                 -> the natural frequencies drop by 9.5 %
+  evaluated at : x_P = 50.0 mm (mid-edge, the node of
+                 the second mode), NO CUTTING
+
+  controller                             max Re(poles) 1/s
+  --------------------------------------------------------
+  LQG (fixed)                                       -93.62
+  K(x_P) only  -- the proposed law                  -93.37
+  L(x_P) only                                         2.99   <-- unstable
+  K and L together                                    8.47   <-- unstable
+
+  The two variants that schedule the observer are the ones that
+  lose the nominal loop.  Scheduling the gain alone stays where
+  the fixed design is, to within a fraction of a percent.
+
+  mode shape at mid-edge (design model):
+    D(l_P/2) = [6.6518 0.073 ]   -> |D_2|/|D_1| = 1.10e-02
+    so E(l_P/2) ~ [0; D_1; 0]: the assumed disturbance carries
+    no second-mode content for the scheduled filter to use.

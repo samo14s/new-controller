@@ -50,7 +50,8 @@ ZETA_LO, ZETA_HI = 0.8, 1.2          # +/-20 % on the damping ratio (Section 3.2
 # ------------------------------------------------------- fairness protocol [!]
 # Every controller sees: the same plate, patch, sensor and sign; the same
 # operating point; the same evaluation (Floquet m = 120 on the five-mode model,
-# Newmark n_sub = 164); the same constraints; the same optimiser and seeds.
+# Newmark n_sub = N_SUB = 656 -- 164 aliases the Oustaloup poles, see
+# run_stage78.time_run); the same constraints; the same optimiser and seeds.
 # Only the controller STRUCTURE differs, and its parameter count is reported.
 MS_MAX = 2.0                         # modulus margin  max |S| <= 2
 V_MAX_PER_N = 450.0                  # effort  max |K S P_f| <= 450 V/N
