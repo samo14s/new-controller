@@ -7,3 +7,8 @@ DOES THE LFT NOMINAL EXPLAIN THE NEGATIVE RESULT?
   but the uncertainty description differs between rows.
 
  x_nom/l_P     W_c(2,2)       mu          J     Ms     V    peak  a_p^inf mm  delta_max
+    centre        -1045    8.088   -0.27928  1.764   143   1.121      0.2743      0.816   [190s]
+      0.00   -1.764e+06   15.555-1000.13046    nan   nan   1.262      0.2450      0.762   [51s]
+      0.15   -9.516e+05   10.585 -104.62659  2.925   211   0.748      0.3505      1.340   [174s]
+      0.30   -3.324e+05   17.306 -102.53800  2.508   314     inf      0.0000      0.000   [34s]
+      0.50       -96.15    8.358   -0.27498  1.708   141   1.148      0.2685      0.770   [183s]
