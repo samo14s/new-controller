@@ -82,3 +82,26 @@ PS-TDC - THE HYBRIDS: SCHEDULED GAIN + EQ. (30) DELAYED PD
 ==========================================================================
 
 --- DESIGN ps_tdc_r: PSO on (kpd, kdd), base = stored PS-AC-R gains --------
+  J = +0.17360   order 6   7 parameters   [314s]
+  Ms = 2.000   effort = 278.4 V/N   slowest nominal pole = -97.2 1/s
+  parameters: kpd=-1.495, kdd=0.5455
+  -> stage3_controllers.pkl
+
+--- CERTIFY ps_tdc_r: same vertex family and bisections as stage 5-6 ------
+  peak = 0.689   tau_max/tau0 = inf   [7s]
+  a_p^inf = 0.3954 mm   (mu-TDC: 0.4364)   [17s]
+  delta_max = 1.43   (mu-TDC: 1.54)   [22s]
+  common-P LK at a_p^inf: yes
+  -> stage56.pkl
+  -> stage78.pkl
+
+--- VERDICT PS-TDC-R (envelope + pair) against the pre-declared criteria ------------
+  FAIL  C1  a_p^inf  > 0.4364 mm  (mu-TDC)     0.3954
+  FAIL  C2  delta_max >= 1.54     (mu-TDC)     1.43
+  PASS  C3  S1 floor >= 0.8459 mm (LQG)        0.9307
+  PASS  C4  worst-of-4 >= 0.6528  (PS-AC)      0.6704
+  PASS  C5  no scenario collapses to 0         0.6704
+  3/5 criteria met -- reported as exactly that
+  (LK common-P: yes)
+
+total 952s
