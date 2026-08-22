@@ -4,3 +4,12 @@ THE PHYSICS SET AT THE PAPER SET'S OWN WINNING WEIGHTS
   weights k_f=3e+05 k_u=0.06 fc=3000 -- the triple that won variant A
 
   mu controller alone: mu = 8.088, order 45, J = -0.27928, Ms = 1.764, V = 143, feasible = True
+  + delayed PD (same PSO, same seeds): J = -0.24164, Ms = 1.923, V = 151, kpd = 1.4963, kdd = 0.4272
+
+  certified: peak = 0.924, tau_max/tau0 = inf, a_p^inf = 0.3192 mm, delta_max = 1.12
+
+  for comparison, at each design's OWN winning weights:
+    mu_tdc      (paper set)   a_p^inf 0.4364 mm  delta_max 1.54  peak 0.603
+    mu_phys_tdc (physics set) a_p^inf 0.3778 mm  delta_max 1.35  peak 0.762
+
+total 641s
