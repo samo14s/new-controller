@@ -164,6 +164,7 @@ tr.ref td{color:var(--muted)}
 .best{color:var(--accent); font-weight:600}
 .fail{color:var(--bad); font-weight:600}
 .tnote{font-size:12.5px; color:var(--muted); margin:0 0 30px; padding-inline-start:2px}
+td.wrapcell{white-space:normal; max-width:250px; line-height:1.55}
 
 .chip{
   display:inline-block; font-size:11.5px;
@@ -239,6 +240,22 @@ footer code{font-size:12px}
   font-weight:600; margin-inline-end:8px;
 }
 
+
+/* ---------- verifier terminal ---------- */
+.term{
+  background:var(--surface-2); border:1px solid var(--rule); border-radius:4px;
+  padding:16px 18px; margin:0 0 12px; overflow-x:auto; direction:ltr;
+  box-shadow:var(--shadow);
+}
+.term pre{
+  margin:0; font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:12.5px; line-height:1.65; color:var(--ink-2);
+  font-variant-numeric:tabular-nums; white-space:pre; min-width:520px;
+}
+.term .ok{color:var(--good); font-weight:600}
+.term .no{color:var(--bad); font-weight:600}
+.term .dim{color:var(--muted)}
+.term .hd{color:var(--accent); font-weight:600}
 </style>
 
 <nav class="rail" aria-label="فهرس التقرير">
@@ -251,7 +268,8 @@ footer code{font-size:12px}
     <li><a href="#s5"><span class="n">05</span> الشهادات والهوامش</a></li>
     <li><a href="#s6"><span class="n">06</span> النتائج السلبية</a></li>
     <li><a href="#s7"><span class="n">07</span> μ الفيزيائية</a></li>
-    <li><a href="#s8"><span class="n">08</span> الحدود والتالي</a></li>
+    <li><a href="#s8"><span class="n">08</span> الورقة والمدقّق</a></li>
+    <li><a href="#s9"><span class="n">09</span> الحدود والتالي</a></li>
   </ol>
 </nav>
 
@@ -1421,7 +1439,167 @@ footer code{font-size:12px}
 
 <!-- ==================== 8 ==================== -->
 <section id="s8">
-  <h2><span class="num">08</span>الحدود والخطوات التالية</h2>
+  <h2><span class="num">08</span>الورقة ومدقّق أرقامها</h2>
+  <p class="sub">مسوّدة عربية بالمتحكّم المجدوَل على الموضع عمودًا لها، و‏137 فحصًا تعيد قراءة <code>results/</code> وتؤكّد كل رقم تقتبسه.</p>
+
+  <div class="stats">
+    <div class="stat hero">
+      <p class="k">فحوص المدقّق</p>
+      <p class="v">137</p>
+      <p class="d">كلّها تمرّ الآن، على 13 قسمًا من المسوّدة.</p>
+    </div>
+    <div class="stat">
+      <p class="k">أرقام صُحِّحت في المسوّدة</p>
+      <p class="v">4</p>
+      <p class="d">ثلاثة انكشفت أثناء بناء المدقّق، ورابع عند أوّل تشغيل.</p>
+    </div>
+    <div class="stat">
+      <p class="k">ملفّات النتائج المقروءة</p>
+      <p class="v">4</p>
+      <p class="d"><code>stage3</code>، <code>stage56</code>، <code>stage78</code>، <code>phase1</code>.</p>
+    </div>
+    <div class="stat">
+      <p class="k">أحكام تغيّرت بالتصحيح</p>
+      <p class="v">0</p>
+      <p class="d">الأربعة كلّها في العبارة لا في النتيجة.</p>
+    </div>
+  </div>
+
+  <div class="col">
+    <p>
+      المسوّدة في <code>phase2/paper/paper_ar.md</code> مكتوبة يدويًّا، وأرقامها كلّها من
+      <code>results/</code>. فإذا أُعيد تشغيل مرحلة وتحرّك رقم، <strong>تَبْلى المسوّدة بصمت</strong>
+      ولا شيء يُنبِّه. و<code>phase2/paper/verify_numbers.py</code> يغلق هذه الفجوة.
+    </p>
+    <p>
+      والقاعدة المُعتمَدة فيه هي <strong>المساواة بعد التقريب لا هامش التسامح</strong>: المسوّدة
+      حين تطبع <code>0.8517</code> فهي تدّعي أربع مراتب، فيُقارَن الرقم المخزون بعد تقريبه إلى
+      أربع مراتب بالضبط. أي أنّ <strong>دقّة الطباعة نفسها هي المواصفة</strong> — وقيمةٌ تتحرّك
+      في المرتبة الرابعة تسقط بدل أن تمرّ تحت هامش سخيّ.
+    </p>
+  </div>
+
+  <h3>ما أمسكه — أربعة، كلّها في المسوّدة</h3>
+  <div class="tblwrap">
+    <table>
+      <caption>لا واحد منها يغيّر حكمًا؛ ثلاثة أرقام وعبارتان غير دقيقتين.</caption>
+      <thead>
+        <tr>
+          <th>الموضع</th><th>ما كانت تقوله المسوّدة</th>
+          <th>ما تعطيه <code>results/</code></th><th>هل تغيّر الحكم؟</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">§4.2 البروتوكول</td>
+          <td>حدّ الجهد مستعمَل <span class="fail">11–61 %</span></td>
+          <td class="n"><span class="best">34–61 %</span></td>
+          <td class="wrapcell">لا — القيد المُلزِم ما زال هامش المقياس وحده</td>
+        </tr>
+        <tr>
+          <td class="name">الملخّص و§8.1</td>
+          <td>التشتّت أفضل بـ<span class="fail">−9.8 %</span></td>
+          <td class="n"><span class="best">−9.5 %</span></td>
+          <td class="wrapcell">لا — جدول §7.2 كان يطبع المدَيين صحيحين</td>
+        </tr>
+        <tr>
+          <td class="name">§5.2 جدولة المُراقِب</td>
+          <td class="wrapcell"><code>0.8927</code> و<code>0.661</code> لنسخة <span class="fail">المُراقِب وحده</span></td>
+          <td class="wrapcell">هما لنسخة <span class="best">K و L معًا</span></td>
+          <td class="wrapcell">لا — النسختان تنهاران معًا إلى الصفر</td>
+        </tr>
+        <tr>
+          <td class="name">§7.1 السيناريو الاسمي</td>
+          <td class="wrapcell">‏μ-TDC هو <span class="fail">الأقلّ جهدًا</span></td>
+          <td class="wrapcell">الأدنى <span class="best">ذروةً</span>: 24.6 V — والأدنى طاقةً هو FOPID</td>
+          <td class="wrapcell">لا — الجدول كان يُبرز كلًّا في عموده</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    الثلاثة الأولى انكشفت أثناء بناء المدقّق، بمقارنة كل رقم بمصدره قبل كتابة الفحص.
+    والرابع سقط في أوّل تشغيل. وسقط في التشغيل ذاته فحصٌ خامس كان <strong>خطأً في المدقّق
+    نفسه</strong> — طلب <code>634.535</code> بثلاث مراتب حيث تطبع المسوّدة <code>634.5</code> بواحدة —
+    فصُحِّحت مواصفة الدقّة في تلك الخانة، لا المسوّدة.
+  </p>
+
+  <h3>التغطية</h3>
+  <div class="tblwrap">
+    <table>
+      <caption>‏137 فحصًا موزّعة على أقسام المسوّدة، وكلّها مقروءة من ملفّات النتائج المخزونة.</caption>
+      <thead>
+        <tr><th>قسم المسوّدة</th><th class="n">فحوص</th><th>المصدر</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="name">§2.2 التحقّق من النموذج</td><td class="n">8</td><td><code>phase1_reproduction.txt</code></td></tr>
+        <tr><td class="name">§2.3 اصطلاح الإشارة</td><td class="n">5</td><td><code>phase1_reproduction.txt</code></td></tr>
+        <tr><td class="name">§4.2 البروتوكول</td><td class="n">7</td><td><code>stage3</code> + <code>phase1</code></td></tr>
+        <tr><td class="name">§5.2 جدولة المُراقِب</td><td class="n">6</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§5.3 بارامترات PS-AC</td><td class="n">9</td><td><code>stage3_controllers.pkl</code></td></tr>
+        <tr><td class="name">§6.2 عائلة الرؤوس</td><td class="n">1</td><td>حسابيّ (9×3×2×2×2)</td></tr>
+        <tr><td class="name">§6.4 الهوامش المُصادَقة</td><td class="n">20</td><td><code>stage56.pkl</code></td></tr>
+        <tr class="hi"><td class="name">§7.1 السيناريو الاسمي</td><td class="n">43</td><td><code>stage78</code> + <code>stage3</code></td></tr>
+        <tr><td class="name">§7.2 مسح الموضع</td><td class="n">9</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§7.3 اختبارات الإجهاد</td><td class="n">13</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§8.1 حجم المكسب</td><td class="n">8</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§8.3 ما لم ينجح</td><td class="n">4</td><td><code>stage78</code> + <code>stage56</code></td></tr>
+        <tr><td class="name">§9.2 حدود الشهادة</td><td class="n">4</td><td><code>stage56.pkl</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    ‏§7.1 وحده يحمل 43 فحصًا لأنه جدول ستّة مقاييس × خمسة متحكّمات، زائد النِّسَب المشتقّة
+    منه (‏17 ضعفًا في زمن الاستقرار، 54 % في ذروة الاهتزاز).
+  </p>
+
+  <h3>مُخرَج التشغيل</h3>
+  <div class="term">
+<pre><span class="dim">$ python phase2/paper/verify_numbers.py</span>
+
+<span class="hd">6.4  certified margins</span>
+<span class="dim">----------------------</span>
+  <span class="ok">ok </span>  mu_tdc: a_p^inf (mm)                        0.4364
+  <span class="ok">ok </span>  ps_ac: a_p^inf (mm)                         0.3836
+  <span class="ok">ok </span>  ps_ac: delay-independent (rho_peak &lt; 1)       True
+  <span class="dim">...</span>
+<span class="hd">9.2  the limits of the certificate</span>
+<span class="dim">----------------------------------</span>
+  <span class="ok">ok </span>  common-P LK infeasible for PS-AC             False
+  <span class="ok">ok </span>  common-P LK feasible for LQG                  True
+
+<span class="dim">========================================================</span>
+     8  2.2  model verification
+     5  2.3  sign convention
+     7  4.2  protocol
+     6  5.2  the variant that also schedules the observer
+     9  5.3  PS-AC parameters
+     1  6.2  the vertex family
+    20  6.4  certified margins
+    43  7.1  nominal scenario
+     9  7.2  position sweep
+    13  7.3  stress tests
+     8  8.1  PS-AC against LQG, and against the published controller
+     4  8.3  what did not work
+     4  9.2  the limits of the certificate
+<span class="dim">========================================================</span>
+<span class="ok">ALL 137 PAPER NUMBERS VERIFIED</span></pre>
+  </div>
+  <p class="tnote">وحين يسقط فحص، يطبع السطر <code>BAD</code> ورقمَي الطرفين، ويخرج بحالة غير صفرية.</p>
+
+  <div class="note good">
+    <p class="lbl">ما يعنيه هذا عمليًّا</p>
+    <p>
+      المسوّدة لم تعد تُصدَّق على الثقة. إعادة تشغيل أي مرحلة ثم <code>verify_numbers.py</code>
+      تكفي للحكم: إمّا أن يمرّ الـ137 كلّها، أو يُسمّى بالضبط أيُّ رقم تحرّك وإلى أين.
+      والتصحيحات الأربعة أعلاه هي أوّل ما ردّه هذا الإجراء — وكلّها كانت ستُنشَر لولاه.
+    </p>
+  </div>
+</section>
+
+
+<section id="s9">
+  <h2><span class="num">09</span>الحدود والخطوات التالية</h2>
   <p class="sub">ما هو مبرهَن، وما هو عدديّ، وما لم يُفعل.</p>
 
   <div class="col">
@@ -1472,7 +1650,9 @@ footer code{font-size:12px}
     كل الأرقام مولَّدة من <code>phase2/</code> و<code>analysis/</code> في المستودع، ومحفوظة في
     <code>results/</code>. لإعادة التوليد:
     <code>python run_stage3.py &amp;&amp; python run_stage56.py &amp;&amp; python run_stage78.py</code>.
-    الوثائق التفصيلية في <code>docs/00</code> … <code>docs/08</code>.
+    الوثائق التفصيلية في <code>docs/00</code> … <code>docs/08</code>، ومسوّدة الورقة في
+    <code>phase2/paper/paper_ar.md</code>. وللتحقّق من أنّ أرقام المسوّدة ما زالت مطابقة
+    للنتائج المخزونة: <code>python phase2/paper/verify_numbers.py</code>.
   </p>
 </footer>
 

@@ -24,10 +24,12 @@ RES = os.path.join(ROOT, 'results')
 FAILS = []
 N_CHECKS = 0
 _SECTION = ['']
+_TALLY = []
 
 
 def section(title):
     _SECTION[0] = title
+    _TALLY.append([title, 0])
     print()
     print(title)
     print('-' * len(title))
@@ -39,6 +41,7 @@ def chk(what, got, want, nd):
     draft's own precision is the specification."""
     global N_CHECKS
     N_CHECKS += 1
+    _TALLY[-1][1] += 1
     got = float(got)
     r = round(got, nd)
     ok = r == round(float(want), nd)
@@ -51,6 +54,7 @@ def chk(what, got, want, nd):
 def chk_bool(what, got, want):
     global N_CHECKS
     N_CHECKS += 1
+    _TALLY[-1][1] += 1
     ok = bool(got) is bool(want)
     print(f"  {'ok ' if ok else 'BAD'}  {what:<52s} {str(bool(got)):>12s}"
           + ('' if ok else f'   draft says {want}'))
@@ -312,6 +316,9 @@ chk_bool('common-P LK feasible for LQG', st56['lqg']['lk'], True)
 
 # ---------------------------------------------------------------------------
 print()
+print('=' * 72)
+for title, n in _TALLY:
+    print(f'  {n:>4d}  {title}')
 print('=' * 72)
 if FAILS:
     print(f'{len(FAILS)} of {N_CHECKS} checks FAILED - the draft is stale:')
