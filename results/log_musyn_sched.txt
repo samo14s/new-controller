@@ -1,0 +1,30 @@
+==============================================================================
+M0 - FEASIBILITY GATE OF THE SCHEDULED D-K PROJECT (docs/09, G1)
+==============================================================================
+  question: is mu_RS < 1, ACTUATOR INCLUDED, attainable at a node?
+  nodes (0, 50, 100) % of l_P, 3 weight triples, D-K chain unchanged
+
+  x=  0% kf=3e+05 ku=2e-03 fc=800 -> mu_RP= 10.636  RS(point)=  5.164  RS(cell)=  5.201  order 14  [128s]
+  x=  0% kf=1e+06 ku=2e-02 fc=1500 -> mu_RP= 12.276  RS(point)=  6.523  RS(cell)=  6.523  order 12  [104s]
+  x=  0% kf=3e+05 ku=2e-02 fc=1500 -> mu_RP=  4.778  RS(point)=  2.663  RS(cell)=  2.669  order 14  [108s]
+  x= 50% kf=3e+05 ku=2e-03 fc=800 -> mu_RP=  3.462  RS(point)=  2.067  RS(cell)=  2.073  order 14  [136s]
+  x= 50% kf=1e+06 ku=2e-02 fc=1500 -> mu_RP=  7.221  RS(point)=  5.852  RS(cell)=  5.852  order 14  [97s]
+  x= 50% kf=3e+05 ku=2e-02 fc=1500 -> mu_RP=  4.218  RS(point)=  1.799  RS(cell)=  1.805  order 14  [140s]
+  x=100% kf=3e+05 ku=2e-03 fc=800 -> mu_RP=  4.670  RS(point)=  3.483  RS(cell)=  3.483  order 14  [114s]
+  x=100% kf=1e+06 ku=2e-02 fc=1500 -> mu_RP=  8.362  RS(point)=  7.578  RS(cell)=  7.578  order 14  [96s]
+  x=100% kf=3e+05 ku=2e-02 fc=1500 -> mu_RP=  5.995  RS(point)=  3.636  RS(cell)=  3.636  order 14  [116s]
+
+  GATE NOT open on this grid: best mu_RS(point) = 1.799.  Reported as exactly that; a wider weight
+  search is the next probe, not a conclusion.
+
+total 1040s -> results/musyn_sched_probe.*
+
+M0b - RS-ORIENTED WEIGHTS AT MID-SPAN (performance weight shrunk so
+      the D-K objective mu_RP approaches the gate quantity mu_RS)
+  kf=1e+04 ku=2e-02 fc=1500 -> mu_RP=  2.759  RS(point)=  1.978  order 14  [31s]
+  kf=1e+04 ku=6e-02 fc=1500 -> mu_RP=  6.976  RS(point)=  1.806  order 14  [30s]
+  kf=3e+04 ku=2e-02 fc=1500 -> mu_RP=  2.726  RS(point)=  1.910  order 14  [31s]
+  kf=3e+04 ku=6e-02 fc=1500 -> mu_RP=  7.005  RS(point)=  6.378  order 14  [32s]
+  kf=1e+05 ku=2e-02 fc=1500 -> mu_RP=  2.932  RS(point)=  1.986  order 14  [29s]
+  kf=1e+05 ku=6e-02 fc=1500 -> mu_RP=  7.185  RS(point)=  1.983  order 14  [29s]
+  M0b best: RS(point) = 1.806 at kf=1e+04 ku=6e-02 fc=1500  (fixed mu_paper witness: 1.205)
