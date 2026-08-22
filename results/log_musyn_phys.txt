@@ -110,3 +110,8 @@ MU-SYNTHESIS ON THE PHYSICS-BASED UNCERTAINTY SET
     k_f=1e+06 k_u=0.06 fc=800 -> mu=10.392 order=45 J=-1260.13816 Ms=nan V=nan maxRe=260.1 [10s] constraint violated
     k_f=1e+06 k_u=0.06 fc=1500 -> mu=11.822 order=45 J=-100.15167 Ms=2.030 V=176 maxRe=-12.2 [10s] constraint violated
     k_f=1e+06 k_u=0.06 fc=3000 -> mu=35.260 order=12 J=-161.69151 Ms=9.459 V=1548 maxRe=-16.1 [10s] constraint violated
+    k_f=1e+06 k_u=0.2 fc=800 -> mu=22.185 order=45 J=-1617.03571 Ms=nan V=nan maxRe=617.0 [290s] constraint violated
+    k_f=1e+06 k_u=0.2 fc=1500 -> mu=38.397 order=45 J=-1.06055 Ms=1.444 V=62 maxRe=-5.2 [47s] OK
+    k_f=1e+06 k_u=0.2 fc=3000 -> mu=35.988 order=45 J=-1.08695 Ms=1.750 V=96 maxRe=-3.6 [12s] OK
+    k_f=3e+06 k_u=0.0017 fc=800 -> mu=17.508 order=45 J=-1029.92747 Ms=nan V=nan maxRe=29.9 [11s] constraint violated
+    k_f=3e+06 k_u=0.0017 fc=1500 -> mu=19.523 order=45 J=-1033.99481 Ms=nan V=nan maxRe=34.0 [10s] constraint violated
