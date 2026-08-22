@@ -267,9 +267,11 @@ footer code{font-size:12px}
       — أي <strong>16.9 ضعفًا</strong> — بأربعة بارامترات فقط وبجهد لا يتجاوز 38 V.
     </p>
     <p>
-      وثلاث نتائج سلبية لا تقلّ أهمّية: تصحيح <em>مقاس</em> صندوق عدم اليقين مع إبقاء
+      وأربع نتائج سلبية لا تقلّ أهمّية: تصحيح <em>مقاس</em> صندوق عدم اليقين مع إبقاء
       <em>بنيته</em> يجعل المتحكّم أسوأ؛ وجدولة مُرشِّح كالمان على الموضع تبدو الأفضل ثم تنهار
-      إلى الصفر عند انحراف تواتري بـ9.5 %؛ ودالة الهدف نفسها رتّبت النسخ بالعكس.
+      إلى الصفر عند انحراف تواتري بـ9.5 %؛ ودالة الهدف نفسها رتّبت النسخ بالعكس؛ و<strong>إعادة
+      بناء المجموعة على الفيزياء</strong> — وهي الأصحّ وصفًا بلا نزاع — تُعطي متحكّمًا
+      <strong>أدنى في الهوامش المُصادَقة</strong>، لأن اتّساع الجدوى قاد البحث إلى ركنٍ عدواني.
     </p>
   </div>
 
@@ -1072,6 +1074,79 @@ footer code{font-size:12px}
     <strong>8 %</strong>، وطاقة التحكّم أقلّ <strong>15 %</strong>. أي أنّ المجموعة الصحيحة
     تشتري اتّساقًا عبر المواضع واقتصادًا في الجهد، لا قفزةً في الحدّ الأسوأ.
   </p>
+
+  <h3>الشهادات واختبارات الإجهاد</h3>
+  <p>
+    وهنا تنقلب النتيجة، وأُبلّغها كما هي.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>الشهادات — اختبار العبور الطيفي المضبوط على عائلة الرؤوس، بنفس البروتوكول لكل صفّ</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">peak</th><th class="n">τ<sub>max</sub>/τ₀</th>
+        <th class="n">a<sub>p</sub><sup>∞</sup> mm</th><th class="n">Δ<sub>max</sub></th><th class="n">LK</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">33.226</td><td class="n">0.00</td><td class="n">0.0108</td><td class="n">0.00</td><td class="n">لا</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">0.739</td><td class="n">∞</td><td class="n">0.3700</td><td class="n">1.48</td><td class="n">نعم</td></tr>
+        <tr><td class="name">LQG</td><td class="n">0.723</td><td class="n">∞</td><td class="n">0.3817</td><td class="n">1.41</td><td class="n">نعم</td></tr>
+        <tr><td class="name">‏μ-TDC (المرجع)</td><td class="n">0.603</td><td class="n">∞</td><td class="n best">0.4364</td><td class="n">1.54</td><td class="n">لا</td></tr>
+        <tr class="hi"><td class="name">‏μ-TDC على المجموعة الفيزيائية</td><td class="n">0.762</td><td class="n">∞</td><td class="n fail">0.3778</td><td class="n fail">1.35</td><td class="n">غير مُحاوَلة</td></tr>
+        <tr><td class="name">‏PS-AC (مقترح)</td><td class="n">0.723</td><td class="n">∞</td><td class="n">0.3836</td><td class="n">1.40</td><td class="n">لا</td></tr>
+        <tr><td class="name">‏PS-AC + η</td><td class="n">0.750</td><td class="n">∞</td><td class="n">0.3661</td><td class="n">1.34</td><td class="n">نعم</td></tr>
+        <tr><td class="name">‏PS-AC — مُراقِب فقط</td><td class="n">0.626</td><td class="n">∞</td><td class="n">0.4149</td><td class="n">1.66</td><td class="n">نعم</td></tr>
+        <tr><td class="name">‏PS-AC — K+مُراقِب</td><td class="n">0.613</td><td class="n">∞</td><td class="n">0.4246</td><td class="n best">1.68</td><td class="n">نعم</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">
+    عمود LK يقرأ <strong>«غير مُحاوَلة» لا «لا»</strong>: عند 49 حالة لا تتّسع مصفوفة
+    <code>P</code> المشتركة في الذاكرة (‏18.3 GB)، فلم تُحاوَل. و«غير مُجدية» و«لم تُحاوَل»
+    ادّعاءان مختلفان لا يجوز أن يتقاسما قيمة عمود واحد. أمّا النتائج المستقلّة عن التأخير فلا
+    تستعمل الـSDP إطلاقًا.
+  </p>
+
+  <div class="tblwrap">
+    <table>
+      <caption>اختبارات الإجهاد — أسوأ <code>a<sub>p,lim</sub></code> على كل سيناريو (mm)</caption>
+      <thead>
+        <tr><th>المتحكّم</th><th class="n">تغيّر المعاملات النمطية</th><th class="n">زيادة التأخير</th>
+        <th class="n">الاسمي (أدنى)</th><th class="n">الاسمي (متوسّط)</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ref"><td class="name">بلا تحكّم</td><td class="n">0.0474</td><td class="n">0.0416</td><td class="n">0.0503</td><td class="n">0.0614</td></tr>
+        <tr><td class="name">‏μ-TDC (المرجع)</td><td class="n best">0.4423</td><td class="n">0.5037</td><td class="n">0.6821</td><td class="n">1.0056</td></tr>
+        <tr class="hi"><td class="name">‏μ-TDC على المجموعة الفيزيائية</td><td class="n fail">0.3808</td><td class="n best">0.6119</td><td class="n">0.6499</td><td class="n best">1.1898</td></tr>
+        <tr><td class="name">FOPID</td><td class="n">0.5856</td><td class="n">0.5563</td><td class="n">0.7581</td><td class="n">1.3209</td></tr>
+        <tr><td class="name">LQG</td><td class="n">0.6441</td><td class="n">0.6850</td><td class="n">0.8459</td><td class="n">1.3811</td></tr>
+        <tr><td class="name">‏PS-AC (مقترح)</td><td class="n">0.6528</td><td class="n">0.6850</td><td class="n">0.8517</td><td class="n">1.3425</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note bad">
+    <p class="lbl">النتيجة مختلطة، والجانب السلبي منها هو الأهمّ</p>
+    <p>
+      المتحكّم المُصمَّم على المجموعة الفيزيائية <strong>أسوأ في المقاييس المُصادَقة</strong>:
+      العمق المضمون <code>0.3778</code> مقابل <code>0.4364</code> mm (−13 %)، وهامش عدم اليقين
+      <code>1.35</code> مقابل <code>1.54</code> (−12 %)، وأسوأ حالة تحت تغيّر المعاملات
+      <code>0.3808</code> مقابل <code>0.4423</code> (−14 %).
+    </p>
+    <p style="margin-top:12px">
+      ويكسب في: <strong>تحمّل التأخير +21 %</strong> (0.6119 مقابل 0.5037 — وهو المقياس الذي
+      وُضِعت المتحكّمة ذات التأخير أصلًا من أجله)، والمتوسّط على المواضع <strong>+18 %</strong>،
+      والاهتزاز <strong>−8 %</strong>، وطاقة التحكّم <strong>−15 %</strong>.
+    </p>
+    <p style="margin-top:12px">
+      <strong>لكنّ هذه المقارنة تقيس البحث لا المجموعة.</strong> التصميمان لم يخرجا من الأوزان
+      نفسها: لمّا صار 42 % من الشبكة مُجديًا بدل 12 %، بلغ البحث ركنًا عقوبةُ الجهد فيه
+      <strong>أخفّ 35 ضعفًا</strong> (<code>1.7×10⁻³</code> مقابل <code>6×10⁻²</code>). والعقوبة
+      الأخفّ تشتري عمقًا اسميًّا وتبيع متانة — وهو بالضبط النمط الذي يظهر في
+      <code>μ<sub>RS</sub> = 1.851</code> مقابل <code>1.479</code>. الضبط الحاسم — إعادة بناء
+      المتحكّم الفيزيائي عند أوزان المرجع الفائزة نفسها — في <code>phase2/matched_certify.py</code>.
+    </p>
+  </div>
 
   <div class="note">
     <p class="lbl">حدّان يجب ذكرهما</p>

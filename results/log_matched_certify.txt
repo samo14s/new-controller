@@ -2,3 +2,5 @@
 THE PHYSICS SET AT THE PAPER SET'S OWN WINNING WEIGHTS
 ==============================================================================
   weights k_f=3e+05 k_u=0.06 fc=3000 -- the triple that won variant A
+
+  mu controller alone: mu = 8.088, order 45, J = -0.27928, Ms = 1.764, V = 143, feasible = True

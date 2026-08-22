@@ -37,7 +37,8 @@ import certify2 as CF2
 import musyn
 import weights as W
 from design2 import Design2, optimise
-from eval2 import evaluate
+from eval2 import evaluate            # takes a Ctrl object
+from objective import evaluate as evaluate_ss   # takes a raw state space
 from plate_model import build_plate
 from plant_ss import ControlledPlant
 
@@ -68,7 +69,7 @@ def main():
     W.W_PF_DEF = dict(k=PAPER_W['kf'], fc_hz=PAPER_W['fc'], M=250.0)
     W.W_PU_DEF = dict(k=PAPER_W['ku'], fc_hz=2500.0, M=60.0)
     r = musyn.design_phys(plate, n_iter=2, reduce_to=None, verbose=False)
-    J0, info0 = evaluate(plate, r['ss'], detail=True)
+    J0, info0 = evaluate_ss(plate, r['ss'], detail=True)
     log(f'\n  mu controller alone: mu = {r["mu"]:.3f}, order {r["order"]}, '
         f'J = {J0:+.5f}, Ms = {info0["Ms"]:.3f}, V = {info0["V"]:.0f}, '
         f'feasible = {info0["feasible"]}')
