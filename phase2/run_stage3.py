@@ -23,7 +23,7 @@ from eval2 import evaluate
 
 OUT = C.RESULTS
 LOG = open(os.path.join(OUT, 'log_stage3.txt'), 'w')
-KINDS = ('fopid', 'lqg', 'mu_tdc', 'ps_ac', 'ps_ac_eta',
+KINDS = ('fopid', 'lqg', 'mu_tdc', 'mu_phys_tdc', 'ps_ac', 'ps_ac_eta',
          'ps_ac_obs', 'ps_ac_full')
 
 
@@ -34,21 +34,23 @@ def log(*a):
     LOG.flush()
 
 
-def load_mu():
-    p = os.path.join(OUT, 'musyn_phase2.npz')
+def load_mu(tag='mu_paper'):
+    p = os.path.join(OUT, 'musyn_phase2.npz' if tag in ('mu_paper', 'mu_exact')
+                     else 'musyn_phys.npz')
     if not os.path.exists(p):
         return None
     d = np.load(p, allow_pickle=True)
-    if 'mu_paper_ss0' not in d.files:
+    if f'{tag}_ss0' not in d.files:
         return None
-    return tuple(d[f'mu_paper_ss{i}'] for i in range(4))
+    return tuple(d[f'{tag}_ss{i}'] for i in range(4))
 
 
 def main(kinds=KINDS):
     t0 = time.time()
     plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
     plant = ControlledPlant(plate)
-    ss_mu = load_mu()
+    ss_mu = dict(mu_tdc=load_mu('mu_paper'),
+                 mu_phys_tdc=load_mu('mu_phys'))
 
     log('=' * 74)
     log('STAGES 3-4 - CONTROLLER DESIGN UNDER ONE PROTOCOL')
@@ -64,17 +66,18 @@ def main(kinds=KINDS):
         f'nominal poles <= -1 1/s')
     log(f'  optimiser  : PSO {C.OPT["n_particles"]}x{C.OPT["n_iter"]}, '
         f'seeds {C.OPT["seeds"]} -- identical for every structure')
-    log(f'  mu-synthesis controller loaded: {ss_mu is not None}')
+    log('  mu-synthesis controllers loaded: '
+        + ', '.join(f'{k}={v is not None}' for k, v in ss_mu.items()))
 
     p_store = os.path.join(OUT, 'stage3_controllers.pkl')
     store = (pickle.load(open(p_store, 'rb'))
              if os.path.exists(p_store) else {})
     for kind in kinds:
-        if kind == 'mu_tdc' and ss_mu is None:
+        if kind in ss_mu and ss_mu[kind] is None:
             log(f'\n--- {kind.upper()}: skipped, no mu controller on disk')
             continue
         log(f'\n--- {kind.upper()} ' + '-' * (68 - len(kind)))
-        d = Design2(kind, plant, plate, ss_mu)
+        d = Design2(kind, plant, plate, ss_mu.get(kind))
         t = time.time()
         r = optimise(d)
         J, info = evaluate(plate, r['ctrl'], detail=True)

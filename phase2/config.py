@@ -131,6 +131,7 @@ BOUNDS2 = dict(
     lqg=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
              log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
     mu_tdc=dict(kpd=(-1.5, 1.5), kdd=(-1.5, 1.5)),
+    mu_phys_tdc=dict(kpd=(-1.5, 1.5), kdd=(-1.5, 1.5)),
     ps_ac=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
                log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
     ps_ac_eta=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),

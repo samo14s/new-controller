@@ -129,11 +129,17 @@ def cancellation_gain(plant, x_pos=None):
     return float(-plant.a40 * float((D ** 2) @ g) / float(g @ g))
 
 
-def mu_tdc(plant, ss_mu, kpd, kdd):
-    """The published benchmark: robust controller + Eq. (30) delayed PD."""
+def mu_tdc(plant, ss_mu, kpd, kdd, name='MU_TDC'):
+    """The published benchmark: robust controller + Eq. (30) delayed PD.
+
+    `ss_mu` is the mu-synthesis controller; which uncertainty set produced it is
+    the only thing that separates MU_TDC from MU_PHYS_TDC.  The delayed PD is
+    tuned by the same two-parameter PSO in both cases, so the comparison isolates
+    the uncertainty description.
+    """
     k0 = cancellation_gain(plant)
     pd = (kpd * k0, kdd * k0 / plant.omega0[0])
-    return Ctrl('MU_TDC', 6, ss=ss_mu, pd=pd,
+    return Ctrl(name, 6, ss=ss_mu, pd=pd,
                 meta=dict(K_Pp0=k0))
 
 
@@ -195,6 +201,8 @@ def build(kind, plant, u, ss_mu=None):
                    10 ** u['log_r'], 10 ** u['log_ratio'])
     if kind == 'mu_tdc':
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'])
+    if kind == 'mu_phys_tdc':
+        return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'], name='MU_PHYS_TDC')
     if kind in ('ps_ac', 'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full'):
         # 'ps_ac' is the law the plan writes, u = -K(x_P) x: the GAIN is
         # scheduled and nothing else.  The two diagnostics that also schedule
