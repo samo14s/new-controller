@@ -50,3 +50,16 @@ MU-SYNTHESIS ON THE PHYSICS-BASED UNCERTAINTY SET
     k_f=1e+06 k_u=0.2 fc=1500 -> mu=302.603 order=45 J=-1.03671 Ms=1.285 V=53 maxRe=-9.3 [12s] OK
     k_f=1e+06 k_u=0.2 fc=3000 -> mu=311.943 order=45 J=-1.03623 Ms=1.286 V=53 maxRe=-11.0 [11s] OK
     k_f=3e+06 k_u=0.0017 fc=800 -> mu=16.666 order=45 J=-1037.24599 Ms=nan V=nan maxRe=37.2 [10s] constraint violated
+    k_f=3e+06 k_u=0.0017 fc=1500 -> mu=19.555 order=45 J=-1021.58988 Ms=nan V=nan maxRe=21.6 [11s] constraint violated
+    k_f=3e+06 k_u=0.0017 fc=3000 -> mu=16.412 order=45 J=-1454.64509 Ms=nan V=nan maxRe=454.6 [11s] constraint violated
+    k_f=3e+06 k_u=0.005 fc=800 -> mu=13.131 order=45 J=-1415.00037 Ms=nan V=nan maxRe=415.0 [10s] constraint violated
+    k_f=3e+06 k_u=0.005 fc=1500 -> mu=18.889 order=12 J=-1642.49710 Ms=nan V=nan maxRe=642.5 [10s] constraint violated
+    k_f=3e+06 k_u=0.005 fc=3000 -> mu=16.545 order=45 J=-1355.00089 Ms=nan V=nan maxRe=355.0 [10s] constraint violated
+    k_f=3e+06 k_u=0.017 fc=800 -> mu=13.192 order=45 J=-1399.83966 Ms=nan V=nan maxRe=399.8 [10s] constraint violated
+    k_f=3e+06 k_u=0.017 fc=1500 -> mu=14.825 order=45 J=-1460.45474 Ms=nan V=nan maxRe=460.5 [11s] constraint violated
+    k_f=3e+06 k_u=0.017 fc=3000 -> mu=16.595 order=45 J=-1438.26442 Ms=nan V=nan maxRe=438.3 [11s] constraint violated
+    k_f=3e+06 k_u=0.06 fc=800 -> mu=15.496 order=45 J=-1254.07300 Ms=nan V=nan maxRe=254.1 [10s] constraint violated
+    k_f=3e+06 k_u=0.06 fc=1500 -> mu=16.830 order=45 J=-1230.41021 Ms=nan V=nan maxRe=230.4 [10s] constraint violated
+    k_f=3e+06 k_u=0.06 fc=3000 -> mu=25.052 order=45 J=-0.21048 Ms=1.887 V=169 maxRe=-1.4 [11s] OK
+    k_f=3e+06 k_u=0.2 fc=800 -> mu=75.946 order=12 J=-1037.81995 Ms=nan V=nan maxRe=37.8 [11s] constraint violated
+    k_f=3e+06 k_u=0.2 fc=1500 -> mu=33.868 order=45 J=-1025.46265 Ms=nan V=nan maxRe=25.5 [11s] constraint violated
