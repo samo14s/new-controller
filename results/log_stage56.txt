@@ -18,3 +18,13 @@ STAGES 5-6 - STABILITY OVER THE POSITION DOMAIN, AND MARGINS
 
 controller      peak  tau_max/tau0  a_p^inf mm  delta_max    LK
 open          33.226          0.00      0.0108       0.00    no   [20s]
+fopid          0.739           inf      0.3700       1.48   yes   [1246s]
+lqg            0.723           inf      0.3817       1.41   yes   [269s]
+mu_tdc         0.603           inf      0.4364       1.54    no   [197s]
+mu_phys_tdc    0.762           inf      0.3778       1.35   n/a   [168s]  (state dimension 49 exceeds the 44 at which the common-P SDP still fits in memory)
+ps_ac          0.723           inf      0.3836       1.40    no   [133s]
+ps_ac_eta      0.750           inf      0.3661       1.34   yes   [271s]
+ps_ac_obs      0.626           inf      0.4149       1.66   yes   [306s]
+ps_ac_full     0.613           inf      0.4246       1.68   yes   [306s]
+
+total 2917s -> results/stage56.pkl
