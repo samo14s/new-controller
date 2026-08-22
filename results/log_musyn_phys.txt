@@ -63,3 +63,17 @@ MU-SYNTHESIS ON THE PHYSICS-BASED UNCERTAINTY SET
     k_f=3e+06 k_u=0.06 fc=3000 -> mu=25.052 order=45 J=-0.21048 Ms=1.887 V=169 maxRe=-1.4 [11s] OK
     k_f=3e+06 k_u=0.2 fc=800 -> mu=75.946 order=12 J=-1037.81995 Ms=nan V=nan maxRe=37.8 [11s] constraint violated
     k_f=3e+06 k_u=0.2 fc=1500 -> mu=33.868 order=45 J=-1025.46265 Ms=nan V=nan maxRe=25.5 [11s] constraint violated
+    k_f=3e+06 k_u=0.2 fc=3000 -> mu=34.254 order=45 J=-1016.24365 Ms=nan V=nan maxRe=16.2 [11s] constraint violated
+
+  mu_phys: J = -0.08406, mu = 3.963, order 45, weights k_f=3e+05 k_u=0.0017 fc=800, 60 trials, constraints met
+
+  [mu_phys_sym]  {'one_sided': False}
+    k_f=1e+05 k_u=0.0017 fc=800 -> mu=4.502 order=12 J=-101.07071 Ms=2.214 V=170 maxRe=-15.1 [10s] constraint violated
+    k_f=1e+05 k_u=0.0017 fc=1500 -> mu=4.552 order=12 J=-0.13261 Ms=1.906 V=154 maxRe=-11.0 [11s] OK
+    k_f=1e+05 k_u=0.0017 fc=3000 -> mu=4.743 order=45 J=-102.48518 Ms=2.497 V=167 maxRe=-12.1 [11s] constraint violated
+    k_f=1e+05 k_u=0.005 fc=800 -> mu=5.003 order=45 J=-0.13697 Ms=1.947 V=163 maxRe=-12.0 [12s] OK
+    k_f=1e+05 k_u=0.005 fc=1500 -> mu=4.634 order=12 J=-0.13427 Ms=1.918 V=154 maxRe=-11.0 [12s] OK
+    k_f=1e+05 k_u=0.005 fc=3000 -> mu=4.615 order=45 J=-103.81100 Ms=2.762 V=193 maxRe=-12.1 [11s] constraint violated
+    k_f=1e+05 k_u=0.017 fc=800 -> mu=4.856 order=45 J=-100.48387 Ms=2.097 V=159 maxRe=-12.3 [10s] constraint violated
+    k_f=1e+05 k_u=0.017 fc=1500 -> mu=5.339 order=45 J=-100.46550 Ms=2.093 V=165 maxRe=-12.0 [12s] constraint violated
+    k_f=1e+05 k_u=0.017 fc=3000 -> mu=7.407 order=45 J=-100.76122 Ms=2.152 V=159 maxRe=-15.6 [11s] constraint violated
