@@ -12,7 +12,9 @@ STAGES 5-6 - STABILITY OVER THE POSITION DOMAIN, AND MARGINS
   a_p^inf   largest depth at which peak < 1 everywhere
   delta_max largest inflation of the uncertainty set keeping peak < 1
   LK        common-P Lyapunov-Krasovskii feasibility at a_p^inf:
-            also covers arbitrarily fast motion of x_P, eta, alpha4
+            also covers arbitrarily fast motion of x_P, eta, alpha4;
+            n/a = not attempted, the SDP does not fit in memory at
+            that controller order (see certify2.lk_common_P)
 
 controller      peak  tau_max/tau0  a_p^inf mm  delta_max    LK
-open          33.226          0.00      0.0108       0.00    no   [14s]
+open          33.226          0.00      0.0108       0.00    no   [20s]
