@@ -196,6 +196,17 @@ function mixedDisplay(body) {
   return `<div class="mb mixed">${cells.join('')}</div>`;
 }
 
+/** A figure: the image is embedded as a data URI so the page carries it, and
+ *  the alt text is the caption -- one line of markdown per figure. */
+function figure(caption, src) {
+  const file = path.resolve(HERE, src);
+  const ext = path.extname(file).slice(1).toLowerCase();
+  const mime = ext === 'svg' ? 'image/svg+xml' : `image/${ext}`;
+  const b64 = fs.readFileSync(file).toString('base64');
+  return `<figure><img alt="" src="data:${mime};base64,${b64}">`
+       + `<figcaption>${inline(caption)}</figcaption></figure>`;
+}
+
 function tableRow(line) {
   return line.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split('|')
              .map(c => c.trim());
@@ -275,6 +286,13 @@ function convert(md) {
       out.push(`<div class="tw"><table><thead><tr>${th}</tr></thead>` +
                `<tbody>${tb}</tbody></table></div>`);
       continue;
+    }
+
+    const img = /^!\[(.+)\]\((\S+)\)\s*$/.exec(line);
+    if (img) {                                         // figure
+      flushPara();
+      out.push(figure(img[1], img[2]));
+      i++; continue;
     }
 
     if (/^(\s*)([-*]|\d+\.)\s+(.*)$/.test(line)) {     // list
@@ -381,6 +399,18 @@ li{margin:0 0 .32em; text-align:justify}
 .mitem{display:inline-flex; align-items:baseline; gap:5pt; direction:rtl}
 .mtxt{font-family:"Plex Arabic","DejaVu Sans",sans-serif; font-size:9.8pt}
 mjx-container, svg{color:inherit}
+
+/* figures --------------------------------------------------------------- */
+figure{margin:10pt 0 13pt; break-inside:avoid}
+figure img{
+  display:block; width:100%; height:auto;
+  border:.5pt solid var(--rule-soft); border-radius:2pt;
+}
+figcaption{
+  margin-top:5pt; font-size:8.6pt; line-height:1.62; color:var(--ink-2);
+  text-align:justify;
+}
+figcaption strong{color:var(--ink); font-weight:700}
 
 /* tables ---------------------------------------------------------------- */
 .tw{margin:7pt 0 9pt; break-inside:avoid}

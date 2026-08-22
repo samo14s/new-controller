@@ -37,6 +37,14 @@ def peak_on(Acl, Adcl, w):
     return p
 
 
+def _rho_at(Acl, Adcl, wk):
+    try:
+        G = np.linalg.solve(1j * wk * np.eye(Acl.shape[0]) - Acl, Adcl)
+        return float(np.max(np.abs(np.linalg.eigvals(G))))
+    except np.linalg.LinAlgError:
+        return 0.0
+
+
 def dense_grid(Acl, hi):
     """A grid far denser than the shipped one, to show the refined value is the
     converged value and not just a different guess."""
@@ -49,6 +57,35 @@ def dense_grid(Acl, hi):
         half = max(abs(float(np.real(lam))), 1e-9 * wk)
         g.append(np.linspace(max(wk - 40 * half, 0.0), wk + 40 * half, 20001))
     return np.unique(np.concatenate(g))
+
+
+def worst_ratio_vertex(plant, n_pos=9):
+    """The vertex where the plain grid understates the peak by the MOST.
+
+    Not the vertex with the largest peak: this section is about the size of the
+    error, and the error is worst where the plain grid misses the dominant
+    resonance outright.  figures_certify.fig_grid draws this same vertex, so
+    the figure and Section 6.3 cannot drift apart.
+    """
+    xs = np.linspace(0.0, plant.plate.lp, n_pos)
+    a4s = (C.ALPHA_LO * plant.abar4, C.ALPHA_HI * plant.abar4)
+    worst = dict(ratio=0.0)
+    for x in xs:
+        for a4 in a4s:
+            A, Ad, B, _, Cy = plant.matrices(x_pos=float(x), a4=a4)
+            Acl, Adcl, npl = CF2.augment(A, Ad, B, Cy, None, None, plant.n)
+            Acl, Adcl = CF2._scale(Acl, Adcl, plant.n, npl, WS)
+            if not np.all(np.isfinite(Acl)):
+                continue
+            hi = 5.0 * max(float(np.abs(np.linalg.eigvals(Acl)).max()), 1.0)
+            plain = peak_on(Acl, Adcl, np.logspace(-3, np.log10(hi), N_PLAIN))
+            ref = peak_on(Acl, Adcl, CF2._wgrid(Acl))
+            r = ref / max(plain, 1e-12)
+            if r > worst['ratio']:
+                worst = dict(ratio=r, x=float(x), a4=a4 / plant.abar4,
+                             plain=plain, refined=ref, hi=hi,
+                             Acl=Acl, Adcl=Adcl, ws=WS)
+    return worst
 
 
 def main():
@@ -71,29 +108,12 @@ def main():
         w = 2 * np.pi * f
         out.append(f'  mode {i}: omega = {w:8.1f} rad/s, half width zeta*omega '
                    f'= {z * w:5.1f} rad/s')
+    out.append('  (the closed loop under cutting sits a little below these)')
 
-    worst = dict(ratio=0.0)
-    for x in xs:
-        for a4 in a4s:
-            A, Ad, B, _, Cy = plant.matrices(x_pos=float(x), a4=a4)
-            Acl, Adcl, npl = CF2.augment(A, Ad, B, Cy, None, None, plant.n)
-            Acl, Adcl = CF2._scale(Acl, Adcl, plant.n, npl, WS)
-            if not np.all(np.isfinite(Acl)):
-                continue
-            hi = 5.0 * max(float(np.abs(np.linalg.eigvals(Acl)).max()), 1.0)
-            plain = peak_on(Acl, Adcl, np.logspace(-3, np.log10(hi), N_PLAIN))
-            ref = peak_on(Acl, Adcl, CF2._wgrid(Acl))
-            r = ref / max(plain, 1e-12)
-            if r > worst['ratio']:
-                worst = dict(ratio=r, x=float(x), a4=a4 / plant.abar4,
-                             plain=plain, refined=ref, hi=hi)
-
+    worst = worst_ratio_vertex(plant, n_pos=len(xs))
     hi = worst['hi']
     step = np.log(hi / 1e-3) / (N_PLAIN - 1)
-    A, Ad, B, _, Cy = plant.matrices(x_pos=worst['x'],
-                                     a4=worst['a4'] * plant.abar4)
-    Acl, Adcl, npl = CF2.augment(A, Ad, B, Cy, None, None, plant.n)
-    Acl, Adcl = CF2._scale(Acl, Adcl, plant.n, npl, WS)
+    Acl, Adcl = worst['Acl'], worst['Adcl']
     conv = peak_on(Acl, Adcl, dense_grid(Acl, hi))
 
     out.append('')
@@ -104,12 +124,21 @@ def main():
     out.append(f'  dense grid   : rho = {conv:.4f}   '
                f'(the refined value IS the converged one)')
     out.append(f'  understated by: {worst["ratio"]:.2f}x')
+    # The resonance that actually carries the peak, which is what the figure
+    # zooms on: its width against the grid spacing there.
+    w_ref = CF2._wgrid(Acl)
+    r_ref = np.array([_rho_at(Acl, Adcl, wk) for wk in w_ref])
+    w_pk = float(w_ref[int(np.nanargmax(r_ref))]) * WS
+    ev = np.linalg.eigvals(Acl)
+    k = int(np.argmin(np.abs(np.abs(np.imag(ev)) * WS - w_pk)))
+    width = 2.0 * abs(float(np.real(ev[k]))) * WS
+    spacing = w_pk * step
     out.append('')
-    out.append('  log-grid spacing at that vertex, against the mode widths:')
-    for i, (f, z) in enumerate(zip(C.F_MEASURED[:2], C.ZETA[:2]), 1):
-        w = 2 * np.pi * f
-        out.append(f'    mode {i}: spacing {w*step:6.1f} rad/s vs half width '
-                   f'{z*w:5.1f} rad/s  -> {w*step/(z*w):4.1f}x wider')
+    out.append('  the resonance carrying the peak:')
+    out.append(f'    frequency  {w_pk/(2*np.pi):8.1f} Hz')
+    out.append(f'    width      {width:8.1f} rad/s')
+    out.append(f'    spacing    {spacing:8.1f} rad/s  -> '
+               f'{spacing/width:4.1f}x wider than the resonance')
     out.append('')
     out.append('  A peak this much too small is enough to turn a verdict of')
     out.append('  instability into one of stability, which is why the grid is')

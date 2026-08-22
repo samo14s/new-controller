@@ -352,18 +352,15 @@ chk('dense-grid spectral radius there',
     gnum(gt, r'dense grid   : rho = ([\d.]+)', 'dense rho'), 21.47, 2)
 chk('understatement factor',
     gnum(gt, r'understated by: ([\d.]+)x', 'factor'), 3.1, 1)
-W_SPACE = (r'mode {i}: spacing\s+([\d.]+) rad/s vs half width\s+[\d.]+'
-           r' rad/s\s*->\s*[\d.]+x')
-W_RATIO = (r'mode {i}: spacing\s+[\d.]+ rad/s vs half width\s+[\d.]+'
-           r' rad/s\s*->\s*([\d.]+)x')
-chk('log-grid spacing at mode 1 (rad/s)',
-    gnum(gt, W_SPACE.format(i=1), 'spacing 1'), 74.8, 1)
-chk('log-grid spacing at mode 2 (rad/s)',
-    gnum(gt, W_SPACE.format(i=2), 'spacing 2'), 147.9, 1)
-chk('mode-1 spacing wider than the width, times',
-    gnum(gt, W_RATIO.format(i=1), 'ratio 1'), 7, 0)
-chk('mode-2 spacing wider than the width, times',
-    gnum(gt, W_RATIO.format(i=2), 'ratio 2'), 13, 0)
+chk('the peak resonance (Hz)',
+    gnum(gt, r'frequency\s+([\d.]+) Hz', 'peak frequency'), 506, 0)
+chk('its width (rad/s)',
+    gnum(gt, r'width\s+([\d.]+) rad/s', 'peak width'), 21, 0)
+chk('the log-grid spacing there (rad/s)',
+    gnum(gt, r'spacing\s+([\d.]+) rad/s', 'peak spacing'), 70, 0)
+chk('spacing wider than the resonance, times',
+    gnum(gt, r'->\s*([\d.]+)x wider than the resonance', 'peak ratio'),
+    3.3, 1)
 
 # --- 6.4  certified margins -------------------------------------------------
 section('6.4  certified margins')
@@ -509,6 +506,18 @@ chk_bool('and yet the physics set gives the weaker design',
          (st56['mu_phys_tdc']['ap_inf'] < st56['mu_tdc']['ap_inf'])
          and (st56['mu_phys_tdc']['delta_max']
               < st56['mu_tdc']['delta_max']), True)
+
+# --- the figures -----------------------------------------------------------
+section('figures the draft embeds')
+with open(os.path.join(HERE, 'paper_ar.md'), encoding='utf-8') as fh:
+    md = fh.read()
+refs = re.findall(r'^!\[(.+)\]\((\S+)\)\s*$', md, re.M)
+chk('figures embedded', len(refs), 10, 0)
+for cap, rel in refs:
+    tag = re.search(r'\*\*(?:\u0627\u0644\u0634\u0643\u0644)\s+(\S+?)\.\*\*', cap)
+    name = tag.group(1) if tag else os.path.basename(rel)
+    chk_bool(f'{name}: file present',
+             os.path.exists(os.path.normpath(os.path.join(HERE, rel))), True)
 
 # --- 9.2  what is numerical, not proved -------------------------------------
 section('9.2  the limits of the certificate')

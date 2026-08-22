@@ -9,6 +9,7 @@ SECTION 6.3 - WHAT REFINING THE FREQUENCY GRID IS WORTH
 
   mode 1: omega =   3392.9 rad/s, half width zeta*omega =  10.5 rad/s
   mode 2: omega =   6710.4 rad/s, half width zeta*omega =  11.4 rad/s
+  (the closed loop under cutting sits a little below these)
 
   worst vertex : x = 75.0 mm, alpha4 = 2.9 abar4
   plain grid   : rho = 6.9557
@@ -16,9 +17,10 @@ SECTION 6.3 - WHAT REFINING THE FREQUENCY GRID IS WORTH
   dense grid   : rho = 21.4716   (the refined value IS the converged one)
   understated by: 3.09x
 
-  log-grid spacing at that vertex, against the mode widths:
-    mode 1: spacing   74.8 rad/s vs half width  10.5 rad/s  ->  7.1x wider
-    mode 2: spacing  147.9 rad/s vs half width  11.4 rad/s  -> 13.0x wider
+  the resonance carrying the peak:
+    frequency     506.1 Hz
+    width          21.0 rad/s
+    spacing        70.1 rad/s  ->  3.3x wider than the resonance
 
   A peak this much too small is enough to turn a verdict of
   instability into one of stability, which is why the grid is

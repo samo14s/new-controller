@@ -126,53 +126,71 @@ def fig_crossing(n_pos=5):
 
 # ---------------------------------------------------------------------------
 def fig_grid():
+    """Section 6.3, drawn at the same vertex the text quotes.
+
+    The vertex comes from grid_trap.worst_ratio_vertex, so the numbers in the
+    annotation are the numbers in results/grid_trap.txt by construction.
+    """
+    from grid_trap import worst_ratio_vertex, N_PLAIN
+
     plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
     plant = ControlledPlant(plate, ap=C.AP_S)
-    made = load_controllers(plate, plant)
-    (A, Ad), pk, ws = _worst_vertex(plant, made['open'](plant), n_pos=3,
-                                    etas=(0.0,), zetas=(1.0,), xis=(1.0,))
+    w = worst_ratio_vertex(plant)
+    A, Ad, ws = w['Acl'], w['Adcl'], w['ws']
+
     w_ref = CF2._wgrid(A)
     r_ref = _rho_curve(A, Ad, w_ref)
-    w_log = np.logspace(-3, np.log10(5.0 * max(np.abs(np.linalg.eigvals(A)).max(),
-                                               1.0)), 400)
+    w_log = np.logspace(-3, np.log10(w['hi']), N_PLAIN)
     r_log = _rho_curve(A, Ad, w_log)
     f_ref = np.maximum(w_ref * ws, 1e-2) / (2 * np.pi)
     f_log = np.maximum(w_log * ws, 1e-2) / (2 * np.pi)
 
     fig, (a, b) = plt.subplots(1, 2, figsize=(10.8, 4.0))
     a.semilogx(f_ref, r_ref, color='#0E7490', lw=1.6,
-               label=f'refined grid ({len(w_ref)} pts)   peak {np.nanmax(r_ref):.2f}')
+               label=f'refined grid ({len(w_ref)} pts)   peak {w["refined"]:.2f}')
     a.semilogx(f_log, r_log, 'o-', color='#9F1239', ms=3, lw=1.0, alpha=.85,
-               label=f'plain log grid ({len(w_log)} pts)   peak {np.nanmax(r_log):.2f}')
+               label=f'plain log grid ({N_PLAIN} pts)   peak {w["plain"]:.2f}')
     a.axhline(1.0, color='k', lw=1.5, ls='--')
-    a.set_xlabel('frequency (Hz)'); a.set_ylabel(r'$\rho$')
+    a.set_xlabel('frequency (Hz)')
+    a.set_ylabel(r'$\rho$')
     a.set_xlim(1e2, 5e3)
     a.set_title('The trap — a plain log grid steps over the resonances')
     a.legend(loc='upper left', fontsize=8)
+    a.text(0.985, 0.52,
+           'worst vertex of the family:\n'
+           f'$x_P$ = {w["x"]*1e3:.0f} mm,   '
+           r'$\alpha_4$ = ' + f'{w["a4"]:.1f}' + r' $\bar\alpha_4$',
+           transform=a.transAxes, fontsize=8, color='0.3', ha='right',
+           va='center', bbox=BOX)
 
+    # zoom on the resonance carrying the refined peak: the one the plain grid
+    # never lands on
+    i_pk = int(np.nanargmax(r_ref))
+    f_pk = float(f_ref[i_pk])
     ev = np.linalg.eigvals(A)
-    k = int(np.argmax(np.abs(np.imag(ev))))
-    wk = abs(float(np.imag(ev[k]))); half = abs(float(np.real(ev[k])))
-    m = (f_ref > (wk - 12 * half) * ws / (2 * np.pi)) & \
-        (f_ref < (wk + 12 * half) * ws / (2 * np.pi))
-    ml = (f_log > (wk - 12 * half) * ws / (2 * np.pi)) & \
-         (f_log < (wk + 12 * half) * ws / (2 * np.pi))
+    k = int(np.argmin(np.abs(np.abs(np.imag(ev)) * ws / (2 * np.pi) - f_pk)))
+    half = abs(float(np.real(ev[k]))) * ws
+    span = 14 * half / (2 * np.pi)
+    m = (f_ref > f_pk - span) & (f_ref < f_pk + span)
+    ml = (f_log > f_pk - span) & (f_log < f_pk + span)
     b.plot(f_ref[m], r_ref[m], color='#0E7490', lw=1.8, label='refined')
-    b.plot(f_log[ml], r_log[ml], 'o', color='#9F1239', ms=6, label='log-grid samples')
+    if ml.sum():
+        b.plot(f_log[ml], r_log[ml], 'o', color='#9F1239', ms=6,
+               label='log-grid samples')
     b.axhline(1.0, color='k', lw=1.5, ls='--')
-    b.set_xlabel('frequency (Hz)'); b.set_ylabel(r'$\rho$')
-    b.set_title('Zoom on one mode')
+    b.axhline(w['refined'], color='#0E7490', lw=.9, ls=':')
+    b.axhline(w['plain'], color='#9F1239', lw=.9, ls=':')
+    b.set_xlabel('frequency (Hz)')
+    b.set_ylabel(r'$\rho$')
+    b.set_title('Zoom on the mode the plain grid misses')
     b.legend(loc='upper left', fontsize=8)
-    true_pk = float(np.nanmax(r_ref[m])) if m.sum() else float('nan')
-    log_pk = float(np.nanmax(r_log[ml])) if ml.sum() else float('nan')
-    b.axhline(true_pk, color='#0E7490', lw=.9, ls=':')
-    b.axhline(log_pk, color='#9F1239', lw=.9, ls=':')
+    step = np.log(w['hi'] / 1e-3) / (N_PLAIN - 1)
     b.text(0.5, 0.055,
-           f'the mode is {2*half*ws:.0f} rad/s wide while the log grid is spaced\n'
-           f'{(f_log[ml][1]-f_log[ml][0])*2*np.pi if ml.sum()>1 else float("nan"):.0f} '
-           'rad/s here, so it lands BESIDE the peak, never on it:\n'
-           f'it reports {log_pk:.1f} where the truth is {true_pk:.1f} — '
-           f'{true_pk/max(log_pk,1e-9):.1f}× too small.\n'
+           f'the mode is {2*half:.0f} rad/s wide while the log grid is spaced\n'
+           f'{2*np.pi*f_pk*step:.0f} rad/s here, so it lands BESIDE the peak, '
+           'never on it:\n'
+           f'the plain grid reports {w["plain"]:.2f} where the truth is '
+           f'{w["refined"]:.2f} — {w["ratio"]:.1f}x too small.\n'
            'That is enough to turn an unstable verdict into a stable one.',
            transform=b.transAxes, fontsize=8, color='0.2', ha='center',
            va='bottom', bbox=BOX)
