@@ -1,0 +1,51 @@
+==========================================================================
+PS-TDC - THE HYBRIDS: SCHEDULED GAIN + EQ. (30) DELAYED PD
+==========================================================================
+
+--- DESIGN ps_tdc: PSO on (kpd, kdd), base = stored PS-AC gains --------
+  J = +0.15789   order 6   6 parameters   [309s]
+  Ms = 2.000   effort = 276.9 V/N   slowest nominal pole = -97.4 1/s
+  parameters: kpd=-1.499, kdd=0.4638
+  -> stage3_controllers.pkl
+
+--- CERTIFY ps_tdc: same vertex family and bisections as stage 5-6 ------
+  peak = 0.689   tau_max/tau0 = inf   [7s]
+  a_p^inf = 0.3934 mm   (mu-TDC: 0.4364)   [17s]
+  delta_max = 1.45   (mu-TDC: 1.54)   [23s]
+  common-P LK at a_p^inf: no
+  -> stage56.pkl
+  -> stage78.pkl
+
+--- DESIGN ps_tdc_j: joint PSO on all six parameters --------
+  J = +0.15575   order 6   6 parameters   [331s]
+  Ms = 1.979   effort = 271.7 V/N   slowest nominal pole = -96.0 1/s
+  parameters: log_q_pos=19.57, log_q_vel=3.678, log_r=-11.14, log_ratio=10.4, kpd=1.014, kdd=1.489
+  -> stage3_controllers.pkl
+
+--- CERTIFY ps_tdc_j: same vertex family and bisections as stage 5-6 ------
+  peak = 0.685   tau_max/tau0 = inf   [7s]
+  a_p^inf = 0.3973 mm   (mu-TDC: 0.4364)   [17s]
+  delta_max = 1.46   (mu-TDC: 1.54)   [23s]
+  common-P LK at a_p^inf: no
+  -> stage56.pkl
+  -> stage78.pkl
+
+--- VERDICT PS-TDC (frozen base) against the pre-declared criteria ------------
+  FAIL  C1  a_p^inf  > 0.4364 mm  (mu-TDC)     0.3934
+  FAIL  C2  delta_max >= 1.54     (mu-TDC)     1.45
+  PASS  C3  S1 floor >= 0.8459 mm (LQG)        0.9132
+  PASS  C4  worst-of-4 >= 0.6528  (PS-AC)      0.6733
+  PASS  C5  no scenario collapses to 0         0.6733
+  3/5 criteria met -- reported as exactly that
+  (LK common-P: no)
+
+--- VERDICT PS-TDC (joint) against the pre-declared criteria ------------
+  FAIL  C1  a_p^inf  > 0.4364 mm  (mu-TDC)     0.3973
+  FAIL  C2  delta_max >= 1.54     (mu-TDC)     1.46
+  PASS  C3  S1 floor >= 0.8459 mm (LQG)        0.9073
+  FAIL  C4  worst-of-4 >= 0.6528  (PS-AC)      0.6353
+  PASS  C5  no scenario collapses to 0         0.6353
+  2/5 criteria met -- reported as exactly that
+  (LK common-P: no)
+
+total 1826s

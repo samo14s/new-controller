@@ -191,6 +191,36 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
 
 
 # ---------------------------------------------------------------------------
+# 5. HYBRID - the scheduled law of ps_ac plus the Eq. (30) delayed PD
+# ---------------------------------------------------------------------------
+def ps_tdc(plant, base, kpd, kdd):
+    """PS-TDC: u(t) = -K(x_P) xhat(t) + (kpd + kdd d/dt) y(t - tau).
+
+    The failure map after stages 5-8 is complementary: mu-TDC holds the best
+    CERTIFIED margins (a_p^inf, delta_max) and the worst performance, PS-AC the
+    reverse.  Isolating the delayed PD on the stored mu design showed the PD
+    alone is worth +5.7 % of a_p^inf, so the margin lives in the delayed term,
+    not in the D-K part.  This controller grafts that term onto the scheduled
+    law.
+
+    `base` is the STORED ps_ac parameter dict: the four gains of the scheduled
+    part are not re-tuned, exactly as mu_tdc keeps its mu controller frozen
+    while the same two-parameter PSO tunes (kpd, kdd).  Parameter count is
+    reported as 4 + 2 = 6, the same as mu_tdc's.
+    """
+    # the ADOPTED law schedules the gain alone (Section 5.2: the observer-
+    # scheduled variants lose the nominal loop under the reference's box)
+    inner = ps_ac(plant, 10 ** base['log_q_pos'], 10 ** base['log_q_vel'],
+                  10 ** base['log_r'], 10 ** base['log_ratio'],
+                  sched_K=True, sched_L=False)
+    k0 = cancellation_gain(plant)
+    pd = (kpd * k0, kdd * k0 / plant.omega0[0])
+    return Ctrl('PS_TDC', 6, builder=lambda x, e: (inner.at(x, e)[0], pd),
+                scheduled=True,
+                meta=dict(grid=inner.meta['grid'], K_Pp0=k0, base=dict(base)))
+
+
+# ---------------------------------------------------------------------------
 def build(kind, plant, u, ss_mu=None):
     """Decoded parameter dict -> Ctrl."""
     if kind == 'fopid':
@@ -203,6 +233,18 @@ def build(kind, plant, u, ss_mu=None):
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'])
     if kind == 'mu_phys_tdc':
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'], name='MU_PHYS_TDC')
+    if kind == 'ps_tdc':
+        # ss_mu carries the stored ps_ac parameter dict here
+        return ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])
+    if kind == 'ps_tdc_j':
+        # joint search: the scheduled base and the delayed pair tuned TOGETHER,
+        # six parameters -- the same tuning freedom the tables grant mu_tdc.
+        # The frozen-base ps_tdc showed why this matters: the stored PS-AC base
+        # sits at Ms = 1.990 of the 2.0 bound, leaving the delayed pair no
+        # room; here the base can back off the margin to buy the delayed term.
+        return ps_tdc(plant, {k: u[k] for k in
+                              ('log_q_pos', 'log_q_vel', 'log_r', 'log_ratio')},
+                      u['kpd'], u['kdd'])
     if kind in ('ps_ac', 'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full'):
         # 'ps_ac' is the law the plan writes, u = -K(x_P) x: the GAIN is
         # scheduled and nothing else.  The two diagnostics that also schedule

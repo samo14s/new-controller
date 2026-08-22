@@ -24,7 +24,7 @@ from eval2 import evaluate
 OUT = C.RESULTS
 LOG = open(os.path.join(OUT, 'log_stage3.txt'), 'w')
 KINDS = ('fopid', 'lqg', 'mu_tdc', 'mu_phys_tdc', 'ps_ac', 'ps_ac_eta',
-         'ps_ac_obs', 'ps_ac_full')
+         'ps_ac_obs', 'ps_ac_full', 'ps_tdc')
 
 
 def log(*a):
@@ -72,6 +72,12 @@ def main(kinds=KINDS):
     p_store = os.path.join(OUT, 'stage3_controllers.pkl')
     store = (pickle.load(open(p_store, 'rb'))
              if os.path.exists(p_store) else {})
+    # ps_tdc rides on the stored ps_ac gains, as mu_tdc rides on its mu design;
+    # when both run in one sweep, design ps_ac first so the base exists
+    if 'ps_ac' in store:
+        ss_mu['ps_tdc'] = dict(store['ps_ac']['params'])
+    else:
+        ss_mu['ps_tdc'] = None
     for kind in kinds:
         if kind in ss_mu and ss_mu[kind] is None:
             log(f'\n--- {kind.upper()}: skipped, no mu controller on disk')

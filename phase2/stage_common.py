@@ -14,7 +14,8 @@ LABEL = dict(open='no control', fopid='FOPID', lqg='LQG',
              mu_phys_tdc='mu-TDC on the physics set',
              ps_ac='PS-AC (proposed)',
              ps_ac_eta='PS-AC + eta', ps_ac_obs='PS-AC obs only',
-             ps_ac_full='PS-AC K+obs')
+             ps_ac_full='PS-AC K+obs', ps_tdc='PS-TDC (frozen base)',
+             ps_tdc_j='PS-TDC (joint)')
 
 
 def load_mu_ss(tag='mu_paper'):
@@ -40,11 +41,14 @@ def load_controllers(plate, plant_ref=None, include_open=True):
         store = pickle.load(f)
     ss = dict(mu_tdc=load_mu_ss('mu_paper'),
               mu_phys_tdc=load_mu_ss('mu_phys'))
+    if 'ps_ac' in store:            # ps_tdc rides on the stored ps_ac gains
+        ss['ps_tdc'] = dict(store['ps_ac']['params'])
     out = {}
     if include_open:
         out['open'] = lambda p: K2.Ctrl('open', 0)
     for kind in ('fopid', 'lqg', 'mu_tdc', 'mu_phys_tdc', 'ps_ac',
-                 'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full'):
+                 'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full', 'ps_tdc',
+                 'ps_tdc_j'):
         if kind not in store:
             continue
         if kind in ss and ss[kind] is None:
@@ -60,4 +64,5 @@ def load_controllers(plate, plant_ref=None, include_open=True):
 
 def n_params(name):
     return dict(open=0, fopid=5, lqg=4, mu_tdc=6, mu_phys_tdc=6, ps_ac=4,
-                ps_ac_eta=5, ps_ac_obs=4, ps_ac_full=4).get(name, 0)
+                ps_ac_eta=5, ps_ac_obs=4, ps_ac_full=4,
+                ps_tdc=6, ps_tdc_j=6).get(name, 0)
