@@ -10,3 +10,8 @@ STAGES 3-4 - CONTROLLER DESIGN UNDER ONE PROTOCOL
   mu-synthesis controllers loaded: mu_tdc=True, mu_phys_tdc=True
 
 --- MU_PHYS_TDC ---------------------------------------------------------
+  J = -0.05210   order 45   6 parameters   fixed   [402s]
+  Ms = 2.000   effort = 150.9 V/N   slowest nominal pole = -8.7 1/s
+  parameters: kpd=1.141, kdd=0.406
+
+total 402s -> results/stage3_controllers.pkl
