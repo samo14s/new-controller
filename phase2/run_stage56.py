@@ -61,7 +61,9 @@ def main(n_pos=9, n_eta=3):
     log('  a_p^inf   largest depth at which peak < 1 everywhere')
     log('  delta_max largest inflation of the uncertainty set keeping peak < 1')
     log('  LK        common-P Lyapunov-Krasovskii feasibility at a_p^inf:')
-    log('            also covers arbitrarily fast motion of x_P, eta, alpha4')
+    log('            also covers arbitrarily fast motion of x_P, eta, alpha4;')
+    log('            n/a = not attempted, the SDP does not fit in memory at')
+    log('            that controller order (see certify2.lk_common_P)')
     log('')
     log(f'{"controller":<12}{"peak":>8}{"tau_max/tau0":>14}{"a_p^inf mm":>12}'
         f'{"delta_max":>11}{"LK":>6}')
@@ -89,12 +91,16 @@ def main(n_pos=9, n_eta=3):
         pl_lk = ControlledPlant(plate, ap=max(ap_inf, 1e-6))
         lk = CF2.lk_common_P(pl_lk, mk(pl_lk), n_pos=3,
                              etas=(0.0, C.ETA_MAX), zetas=zetas, xis=(1.0,))
+        lk_txt = ('yes' if lk['feasible']
+                  else ('no' if lk.get('attempted', True) else 'n/a'))
         log(f'{name:<12}{peak:>8.3f}{ratio:>14}{ap_inf*1e3:>12.4f}'
-            f'{dmax:>11.2f}{("yes" if lk["feasible"] else "no"):>6}'
-            f'   [{time.time()-t:.0f}s]')
+            f'{dmax:>11.2f}{lk_txt:>6}'
+            f'   [{time.time()-t:.0f}s]'
+            + ('' if lk.get('attempted', True) else f'  ({lk["reason"]})'))
         res[name] = dict(peak=peak, tau_max=tm, tau_ratio=tm / tau0,
                          ap_inf=ap_inf, delta_max=dmax,
-                         lk=bool(lk['feasible']))
+                         lk=bool(lk['feasible']),
+                         lk_attempted=bool(lk.get('attempted', True)))
 
     with open(os.path.join(OUT, 'stage56.pkl'), 'wb') as f:
         pickle.dump(res, f)

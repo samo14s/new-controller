@@ -268,7 +268,28 @@ def margin_bisect(plant, ctrl, base_kw=None, lo=0.0, hi=8.0, tol=1e-2,
 
 
 # ---------------------------------------------------------------------------
-def lk_common_P(plant, ctrl, **kw):
-    """Common-P Lyapunov-Krasovskii certificate over the vertex family."""
+def lk_common_P(plant, ctrl, n_max=44, **kw):
+    """Common-P Lyapunov-Krasovskii certificate over the vertex family.
+
+    The SDP carries one dense n x n matrix variable and one linear matrix
+    inequality of size 2n per vertex, so the canonical form grows like
+    n^4 * (number of vertices).  At n = 49 -- a 45-state controller on the
+    4-state design plant -- that is 18 GB, more than the machine has, and the
+    solver dies taking the whole run with it.  Above `n_max` the certificate is
+    therefore NOT ATTEMPTED and says so, instead of being silently reported as
+    infeasible: "no" and "not attempted" are different claims.
+    """
     V, npl, _ = vertices(plant, ctrl, **kw)
-    return L.certificate_di(V, eps=0.0, n_plant=npl)
+    n = V[0][0].shape[0]
+    if n > n_max:
+        return dict(feasible=False, attempted=False, n=n,
+                    reason=f'state dimension {n} exceeds the {n_max} at which '
+                           f'the common-P SDP still fits in memory')
+    try:
+        out = dict(L.certificate_di(V, eps=0.0, n_plant=npl))
+    except (MemoryError, Exception) as exc:               # noqa: BLE001
+        return dict(feasible=False, attempted=False, n=n,
+                    reason=f'{type(exc).__name__}: {exc}')
+    out['attempted'] = True
+    out['n'] = n
+    return out
