@@ -58,3 +58,41 @@ M0c(c2) - THE fc=3000 ROW AT THE STORED RECIPE (n_iter=2), paper set,
   kf=3e+05 ku=2e-01 fc=3000 -> FAILED (Singular matrix)
   kf=3e+05 ku=2e-02 fc=3000 -> sup RS(3 nodes)=  2.063  order 14  [33s]
   M0c(c2) best: 2.063 at kf=3e+05 ku=2e-02 fc=3000
+
+M0d - WHERE THE D-K REPRODUCIBILITY GAP LIVES
+==============================================================================
+[A] determinism: the winner triple twice from clean state
+  run 1: mu=50.230 order=12   run 2: mu=50.230 order=12   K bytes IDENTICAL
+[B] history replay: the original loop, trials 1..27 (the stored winner was the last)
+   1: mu=   2.344 (hist    2.341)  J=-101.29195 (hist -101.13893)  DIVERGES  [7s]
+   2: mu=   2.454 (hist    2.470)  J=-101.73152 (hist -101.94118)  DIVERGES  [7s]
+   3: mu=   2.524 (hist    2.542)  J=-101.68603 (hist -101.94577)  DIVERGES  [7s]
+   4: mu=   2.456 (hist    2.462)  J=-101.17296 (hist -101.26210)  DIVERGES  [7s]
+   5: mu=   2.566 (hist    2.571)  J=-101.63312 (hist -102.09652)  DIVERGES  [7s]
+   6: mu=   2.630 (hist    2.618)  J=-101.91774 (hist -101.67230)  DIVERGES  [6s]
+   7: mu=   3.289 (hist    3.325)  J=-101.23064 (hist -100.89384)  DIVERGES  [7s]
+   8: mu=   3.392 (hist    3.408)  J=-101.08120 (hist -100.89692)  DIVERGES  [7s]
+   9: mu=   3.521 (hist    3.458)  J=-100.61561 (hist -100.92354)  DIVERGES  [7s]
+  10: mu=  24.877 (hist    7.488)  J=-1003.57133 (hist  -0.18027)  DIVERGES  [6s]
+  11: mu=  17.739 (hist   22.727)  J=-101.50046 (hist -117.61006)  DIVERGES  [6s]
+  12: mu=   7.802 (hist   20.812)  J= -0.23971 (hist -108.23553)  DIVERGES  [6s]
+  13: mu=  17.518 (hist   43.071)  J= -0.85979 (hist -114.48657)  DIVERGES  [7s]
+  14: mu=  15.414 (hist   21.054)  J= -0.89137 (hist -1275.10500)  DIVERGES  [7s]
+  15: mu=  17.606 (hist   17.631)  J= -0.86117 (hist  -0.86083)  DIVERGES  [7s]
+  16: mu=   3.466 (hist    3.469)  J=-101.57711 (hist -101.60228)  DIVERGES  [7s]
+  17: mu=   3.667 (hist    3.695)  J=-102.36040 (hist -102.33028)  DIVERGES  [6s]
+  18: mu=   3.827 (hist    3.825)  J=-102.97695 (hist -102.99569)  DIVERGES  [6s]
+  19: mu=   3.555 (hist    3.512)  J=-101.50424 (hist -101.50931)  DIVERGES  [6s]
+  20: mu=   3.715 (hist    3.687)  J=-102.31131 (hist -102.63541)  DIVERGES  [7s]
+  21: mu=   3.863 (hist    3.848)  J=-102.88628 (hist -103.01279)  DIVERGES  [6s]
+  22: mu=   3.957 (hist    3.991)  J=-101.12626 (hist -101.27738)  DIVERGES  [7s]
+  23: mu=   4.316 (hist    4.316)  J=-101.97203 (hist -101.90829)  DIVERGES  [6s]
+  24: mu=   4.546 (hist    4.452)  J=-102.09159 (hist -102.27636)  DIVERGES  [7s]
+  25: mu=   7.774 (hist   15.958)  J=-100.07637 (hist  -1.06552)  DIVERGES  [6s]
+  26: mu=   8.012 (hist    9.415)  J=-100.08855 (hist  -0.29743)  DIVERGES  [6s]
+  27: mu=  50.230 (hist    9.924)  J=-1001.76206 (hist  -0.05515)  DIVERGES  [6s]
+  first divergence at trial 1: the state change sits in trial 0 or the process start
+  replayed winner vs stored artifact: matrices DIFFER;  judged sup RS: replay 6.271  stored 1.205
+[C] state diff over the replay (weights excluded, they are the input):
+  nothing else changed: the chain is state-clean, and any gap must be elsewhere
+M0d total 243s -> results/m0d_repro.npz
