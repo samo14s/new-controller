@@ -28,3 +28,33 @@ M0b - RS-ORIENTED WEIGHTS AT MID-SPAN (performance weight shrunk so
   kf=1e+05 ku=2e-02 fc=1500 -> mu_RP=  2.932  RS(point)=  1.986  order 14  [29s]
   kf=1e+05 ku=6e-02 fc=1500 -> mu_RP=  7.185  RS(point)=  1.983  order 14  [29s]
   M0b best: RS(point) = 1.806 at kf=1e+04 ku=6e-02 fc=1500  (fixed mu_paper witness: 1.205)
+
+M0c(b) - HEAVIER D-K ON THE PHYSICS NODE (mid-span): orders (0, 2, 2, 2), n_iter 5
+  kf=3e+05 ku=2e-02 fc=1500 -> mu_RP=  4.169  RS(point)=  1.887  [43s]
+  kf=3e+05 ku=2e-03 fc=800 -> mu_RP=  3.459  RS(point)=  2.063  [42s]
+
+M0c(c) - PAPER-SET SYNTHESIS, JUDGED POSITION-FREE AT THREE NODES
+         (mu_paper witness under this judge: sup 1.205)
+  kf=1e+05 ku=2e-03 fc=800 -> sup RS(3 nodes)=  2.118  order 14  [43s]
+  kf=1e+05 ku=2e-02 fc=1500 -> sup RS(3 nodes)=  2.098  order 14  [42s]
+  kf=1e+05 ku=6e-02 fc=1500 -> sup RS(3 nodes)=  2.072  order 14  [39s]
+  kf=3e+05 ku=2e-03 fc=800 -> sup RS(3 nodes)=  2.171  order 14  [38s]
+  kf=3e+05 ku=2e-02 fc=1500 -> sup RS(3 nodes)=  2.095  order 14  [38s]
+  kf=3e+05 ku=6e-02 fc=1500 -> sup RS(3 nodes)=  2.080  order 14  [38s]
+  kf=1e+06 ku=2e-03 fc=800 -> sup RS(3 nodes)=  6.012  order 14  [42s]
+  kf=1e+06 ku=2e-02 fc=1500 -> sup RS(3 nodes)=  5.605  order 14  [42s]
+  kf=1e+06 ku=6e-02 fc=1500 -> sup RS(3 nodes)=  8.837  order 14  [38s]
+
+  (b) physics node, heavier D-K: best RS = 1.887 at kf=3e+05 ku=2e-02 fc=1500
+  (c) paper set, re-weighted: best RS = 2.072 at kf=1e+05 ku=6e-02 fc=1500
+  M0c total 446s
+
+M0c(c2) - THE fc=3000 ROW AT THE STORED RECIPE (n_iter=2), paper set,
+          judged position-free at three nodes; first entry = the stored
+          mu_paper triple, the sanity anchor (witness sup: 1.205)
+  kf=3e+05 ku=6e-02 fc=3000 -> sup RS(3 nodes)=  6.271  order 12  [36s]
+  kf=1e+05 ku=6e-02 fc=3000 -> sup RS(3 nodes)=  2.074  order 14  [36s]
+  kf=1e+06 ku=6e-02 fc=3000 -> sup RS(3 nodes)=  7.290  order 14  [32s]
+  kf=3e+05 ku=2e-01 fc=3000 -> FAILED (Singular matrix)
+  kf=3e+05 ku=2e-02 fc=3000 -> sup RS(3 nodes)=  2.063  order 14  [33s]
+  M0c(c2) best: 2.063 at kf=3e+05 ku=2e-02 fc=3000
