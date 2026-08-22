@@ -1440,49 +1440,51 @@ footer code{font-size:12px}
 <!-- ==================== 8 ==================== -->
 <section id="s8">
   <h2><span class="num">08</span>الورقة ومدقّق أرقامها</h2>
-  <p class="sub">مسوّدة عربية بالمتحكّم المجدوَل على الموضع عمودًا لها، و‏137 فحصًا تعيد قراءة <code>results/</code> وتؤكّد كل رقم تقتبسه.</p>
+  <p class="sub">مسوّدة عربية بالمتحكّم المجدوَل على الموضع عمودًا لها، و‏225 فحصًا تعيد قراءة <code>results/</code> وتؤكّد كل رقم تقتبسه.</p>
 
   <div class="stats">
     <div class="stat hero">
       <p class="k">فحوص المدقّق</p>
-      <p class="v">137</p>
-      <p class="d">كلّها تمرّ الآن، على 13 قسمًا من المسوّدة.</p>
+      <p class="v">225</p>
+      <p class="d">كلّها تمرّ، على 19 قسمًا من المسوّدة، بترتيبها فيها.</p>
     </div>
     <div class="stat">
-      <p class="k">أرقام صُحِّحت في المسوّدة</p>
-      <p class="v">4</p>
-      <p class="d">ثلاثة انكشفت أثناء بناء المدقّق، ورابع عند أوّل تشغيل.</p>
+      <p class="k">أرقام وعبارات صُحِّحت</p>
+      <p class="v">11</p>
+      <p class="d">أربعة عند بناء المدقّق، وسبعة في المراجعة الكاملة.</p>
     </div>
     <div class="stat">
-      <p class="k">ملفّات النتائج المقروءة</p>
-      <p class="v">4</p>
-      <p class="d"><code>stage3</code>، <code>stage56</code>، <code>stage78</code>، <code>phase1</code>.</p>
+      <p class="k">أقسام صارت قابلة للتوليد</p>
+      <p class="v">2</p>
+      <p class="d">‏§5.2 و§6.3 كانتا مؤكَّدتين بلا مصدر يعيد إنتاجهما.</p>
     </div>
     <div class="stat">
       <p class="k">أحكام تغيّرت بالتصحيح</p>
       <p class="v">0</p>
-      <p class="d">الأربعة كلّها في العبارة لا في النتيجة.</p>
+      <p class="d">الأحد عشر كلّها في العبارة أو الدقّة لا في النتيجة.</p>
     </div>
   </div>
 
   <div class="col">
     <p>
-      المسوّدة في <code>phase2/paper/paper_ar.md</code> مكتوبة يدويًّا، وأرقامها كلّها من
-      <code>results/</code>. فإذا أُعيد تشغيل مرحلة وتحرّك رقم، <strong>تَبْلى المسوّدة بصمت</strong>
-      ولا شيء يُنبِّه. و<code>phase2/paper/verify_numbers.py</code> يغلق هذه الفجوة.
+      المسوّدة في <code>phase2/paper/paper_ar.md</code> مكتوبة يدويًّا، وأرقامها من
+      <code>results/</code> ومن النموذج نفسه. فإذا أُعيد تشغيل مرحلة وتحرّك رقم،
+      <strong>تَبْلى المسوّدة بصمت</strong> ولا شيء يُنبِّه. و<code>phase2/paper/verify_numbers.py</code>
+      يغلق هذه الفجوة: يقرأ ملفّات النتائج، ويعيد بناء اللوحة حيث تصف المسوّدة النموذج،
+      ويفحص كل رقم مقتبَس.
     </p>
     <p>
-      والقاعدة المُعتمَدة فيه هي <strong>المساواة بعد التقريب لا هامش التسامح</strong>: المسوّدة
-      حين تطبع <code>0.8517</code> فهي تدّعي أربع مراتب، فيُقارَن الرقم المخزون بعد تقريبه إلى
+      والقاعدة المُعتمَدة فيه <strong>المساواة بعد التقريب لا هامش التسامح</strong>: المسوّدة
+      حين تطبع <code>0.8517</code> تدّعي أربع مراتب، فيُقارَن الرقم المخزون بعد تقريبه إلى
       أربع مراتب بالضبط. أي أنّ <strong>دقّة الطباعة نفسها هي المواصفة</strong> — وقيمةٌ تتحرّك
       في المرتبة الرابعة تسقط بدل أن تمرّ تحت هامش سخيّ.
     </p>
   </div>
 
-  <h3>ما أمسكه — أربعة، كلّها في المسوّدة</h3>
+  <h3>الأحد عشر تصحيحًا</h3>
   <div class="tblwrap">
     <table>
-      <caption>لا واحد منها يغيّر حكمًا؛ ثلاثة أرقام وعبارتان غير دقيقتين.</caption>
+      <caption>مرتّبة بترتيب المسوّدة. العمود الأخير هو السؤال الذي يهمّ: هل غيّر التصحيح حكمًا؟</caption>
       <thead>
         <tr>
           <th>الموضع</th><th>ما كانت تقوله المسوّدة</th>
@@ -1491,16 +1493,16 @@ footer code{font-size:12px}
       </thead>
       <tbody>
         <tr>
-          <td class="name">§4.2 البروتوكول</td>
-          <td>حدّ الجهد مستعمَل <span class="fail">11–61 %</span></td>
-          <td class="n"><span class="best">34–61 %</span></td>
-          <td class="wrapcell">لا — القيد المُلزِم ما زال هامش المقياس وحده</td>
+          <td class="name">§4.1 عدّ البارامترات</td>
+          <td class="wrapcell">‏μ-TDC <span class="fail">بستّة بارامترات</span></td>
+          <td class="wrapcell">المبحوث <span class="best">خمسة</span>: 3 أوزان + مكسبان</td>
+          <td class="wrapcell">لا — والعدّ الزائد في صالح المرجع لا ضدّه</td>
         </tr>
         <tr>
-          <td class="name">الملخّص و§8.1</td>
-          <td>التشتّت أفضل بـ<span class="fail">−9.8 %</span></td>
-          <td class="n"><span class="best">−9.5 %</span></td>
-          <td class="wrapcell">لا — جدول §7.2 كان يطبع المدَيين صحيحين</td>
+          <td class="name">§4.2 البروتوكول</td>
+          <td class="wrapcell">حدّ الجهد مستعمَل <span class="fail">11–61 %</span></td>
+          <td class="wrapcell"><span class="best">34–61 %</span></td>
+          <td class="wrapcell">لا — القيد المُلزِم ما زال هامش المقياس وحده</td>
         </tr>
         <tr>
           <td class="name">§5.2 جدولة المُراقِب</td>
@@ -1509,81 +1511,171 @@ footer code{font-size:12px}
           <td class="wrapcell">لا — النسختان تنهاران معًا إلى الصفر</td>
         </tr>
         <tr>
-          <td class="name">§7.1 السيناريو الاسمي</td>
+          <td class="name">§5.2 أقطاب الحلقة</td>
+          <td class="wrapcell"><span class="fail">+8.47</span> s⁻¹ منسوبة لجدولة المُراقِب</td>
+          <td class="wrapcell">‏<span class="best">+8.47</span> لـK+L و<span class="best">+2.99</span> لـL وحده</td>
+          <td class="wrapcell">لا — بل يقوّي الحجّة: النسختان معًا تسقطان</td>
+        </tr>
+        <tr>
+          <td class="name">§6.3 صقالة الشبكة</td>
+          <td class="wrapcell">ρ = <span class="fail">6.9</span> مقابل <span class="fail">19.6</span>، أصغر <span class="fail">2.8×</span></td>
+          <td class="wrapcell"><span class="best">6.96</span> مقابل <span class="best">21.47</span>، أصغر <span class="best">3.1×</span></td>
+          <td class="wrapcell">لا — الفخّ أشدّ ممّا قيل، لا أخفّ</td>
+        </tr>
+        <tr>
+          <td class="name">§6.3 تباعد الشبكة</td>
+          <td class="wrapcell">‏<span class="fail">142</span> rad/s عند النمط الثاني</td>
+          <td class="wrapcell"><span class="best">74.8</span> و<span class="best">147.9</span> عند النمطين</td>
+          <td class="wrapcell">لا</td>
+        </tr>
+        <tr>
+          <td class="name">§6.4 العمق المضمون</td>
+          <td class="wrapcell">«نحو <span class="fail">نصف</span> المقيس»</td>
+          <td class="wrapcell"><span class="best">45 %</span> (‏0.3836 من 0.8517)</td>
+          <td class="wrapcell">لا</td>
+        </tr>
+        <tr>
+          <td class="name">§7.1 الجهد</td>
           <td class="wrapcell">‏μ-TDC هو <span class="fail">الأقلّ جهدًا</span></td>
-          <td class="wrapcell">الأدنى <span class="best">ذروةً</span>: 24.6 V — والأدنى طاقةً هو FOPID</td>
+          <td class="wrapcell">الأدنى <span class="best">ذروةً</span>: 24.6 V — والأدنى طاقةً FOPID</td>
           <td class="wrapcell">لا — الجدول كان يُبرز كلًّا في عموده</td>
+        </tr>
+        <tr>
+          <td class="name">§7.1 زمن الاستقرار</td>
+          <td class="wrapcell">‏PS-AC <span class="fail">مُبرَز</span> عند 5.4 ms</td>
+          <td class="wrapcell">الثلاثة السريعة <span class="best">متعادلة</span> عند 5.4</td>
+          <td class="wrapcell">لا — إبرازٌ لا يراه القارئ في الجدول</td>
+        </tr>
+        <tr>
+          <td class="name">§7.1 الحلقة المفتوحة</td>
+          <td class="wrapcell">زمن استقرار <span class="fail">174.2 ms</span> لقطعٍ يتباعد</td>
+          <td class="wrapcell">لا زمن استقرار له — <span class="best">شرطة</span></td>
+          <td class="wrapcell">لا</td>
+        </tr>
+        <tr>
+          <td class="name">§8.4 مساحة الأوزان</td>
+          <td class="wrapcell">تتّسع <span class="fail">3.5×</span></td>
+          <td class="wrapcell">‏25/60 مقابل 7/60 = <span class="best">3.6×</span></td>
+          <td class="wrapcell">لا</td>
         </tr>
       </tbody>
     </table>
   </div>
   <p class="tnote">
-    الثلاثة الأولى انكشفت أثناء بناء المدقّق، بمقارنة كل رقم بمصدره قبل كتابة الفحص.
-    والرابع سقط في أوّل تشغيل. وسقط في التشغيل ذاته فحصٌ خامس كان <strong>خطأً في المدقّق
+    أربعة منها انكشفت عند بناء المدقّق أو أوّل تشغيل له، والسبعة الباقية في المراجعة
+    الكاملة للمسوّدة. وسقط في التشغيل الأوّل فحصٌ إضافي كان <strong>خطأً في المدقّق
     نفسه</strong> — طلب <code>634.535</code> بثلاث مراتب حيث تطبع المسوّدة <code>634.5</code> بواحدة —
     فصُحِّحت مواصفة الدقّة في تلك الخانة، لا المسوّدة.
   </p>
 
+  <h3>قسمان صارا قابلَين للتوليد</h3>
+  <div class="note warn">
+    <p class="lbl">أخطر ما كشفته المراجعة</p>
+    <p>
+      لم تكن مشكلة §5.2 و§6.3 أنّ أرقامهما خاطئة فحسب، بل أنّ <strong>لا شيء في المستودع
+      يعيد إنتاجها</strong>: كانت مؤكَّدة في النصّ ولا مصدر يُراجَع. فأضيف لكلٍّ منهما
+      برنامج يولّدها ويحفظها، ويقرؤها المدقّق كما يقرأ سائر النتائج.
+    </p>
+  </div>
+  <div class="tblwrap">
+    <table>
+      <thead>
+        <tr><th>القسم</th><th>البرنامج</th><th>الملف</th><th>ما يقيسه</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="name">§5.2</td>
+          <td><code>phase2/observer_collapse.py</code></td>
+          <td><code>results/observer_collapse.txt</code></td>
+          <td class="wrapcell">أقطاب الحلقة الاسمية للنسخ الأربع تحت صندوق المرجع، ونسبة النمطين عند العقدة</td>
+        </tr>
+        <tr>
+          <td class="name">§6.3</td>
+          <td><code>phase2/grid_trap.py</code></td>
+          <td><code>results/grid_trap.txt</code></td>
+          <td class="wrapcell">أسوأ رأس للشبكة المستوية، وتأكيدُ أنّ القيمة المصقولة هي المُقارَبة بتكثيفٍ خمسينيّ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <h3>التغطية</h3>
   <div class="tblwrap">
     <table>
-      <caption>‏137 فحصًا موزّعة على أقسام المسوّدة، وكلّها مقروءة من ملفّات النتائج المخزونة.</caption>
+      <caption>‏225 فحصًا على 19 قسمًا، بترتيب المسوّدة نفسه.</caption>
       <thead>
         <tr><th>قسم المسوّدة</th><th class="n">فحوص</th><th>المصدر</th></tr>
       </thead>
       <tbody>
+        <tr><td class="name">§2.1 اللوحة والرقعة</td><td class="n">12</td><td>إعادة بناء النموذج</td></tr>
         <tr><td class="name">§2.2 التحقّق من النموذج</td><td class="n">8</td><td><code>phase1_reproduction.txt</code></td></tr>
-        <tr><td class="name">§2.3 اصطلاح الإشارة</td><td class="n">5</td><td><code>phase1_reproduction.txt</code></td></tr>
-        <tr><td class="name">§4.2 البروتوكول</td><td class="n">7</td><td><code>stage3</code> + <code>phase1</code></td></tr>
-        <tr><td class="name">§5.2 جدولة المُراقِب</td><td class="n">6</td><td><code>stage78.pkl</code></td></tr>
+        <tr><td class="name">§2.3 اصطلاح الإشارة</td><td class="n">6</td><td><code>phase1_reproduction.txt</code></td></tr>
+        <tr><td class="name">§3 ركن الرقعة</td><td class="n">5</td><td>إعادة بناء النموذج</td></tr>
+        <tr><td class="name">§4.1 المتحكّمات المرجعية</td><td class="n">10</td><td><code>stage3</code> + <code>log_musyn</code></td></tr>
+        <tr class="hi"><td class="name">§4.2 البروتوكول</td><td class="n">25</td><td><code>config</code> + <code>stage3</code> + <code>phase1</code></td></tr>
+        <tr><td class="name">§5.1 تغيّر الحدّ التجديدي</td><td class="n">3</td><td>إعادة بناء النموذج</td></tr>
+        <tr><td class="name">§5.2 جدولة المُراقِب</td><td class="n">13</td><td><code>stage78</code> + <code>observer_collapse</code></td></tr>
         <tr><td class="name">§5.3 بارامترات PS-AC</td><td class="n">9</td><td><code>stage3_controllers.pkl</code></td></tr>
-        <tr><td class="name">§6.2 عائلة الرؤوس</td><td class="n">1</td><td>حسابيّ (9×3×2×2×2)</td></tr>
-        <tr><td class="name">§6.4 الهوامش المُصادَقة</td><td class="n">20</td><td><code>stage56.pkl</code></td></tr>
-        <tr class="hi"><td class="name">§7.1 السيناريو الاسمي</td><td class="n">43</td><td><code>stage78</code> + <code>stage3</code></td></tr>
+        <tr><td class="name">§6.2 عائلة الرؤوس</td><td class="n">10</td><td><code>config</code> (‏9×3×2×2×2)</td></tr>
+        <tr><td class="name">§6.3 صقالة الشبكة</td><td class="n">10</td><td><code>grid_trap.txt</code></td></tr>
+        <tr><td class="name">§6.4 الهوامش المُصادَقة</td><td class="n">21</td><td><code>stage56.pkl</code></td></tr>
+        <tr class="hi"><td class="name">§7.1 السيناريو الاسمي</td><td class="n">44</td><td><code>stage78</code> + <code>stage3</code></td></tr>
         <tr><td class="name">§7.2 مسح الموضع</td><td class="n">9</td><td><code>stage78.pkl</code></td></tr>
         <tr><td class="name">§7.3 اختبارات الإجهاد</td><td class="n">13</td><td><code>stage78.pkl</code></td></tr>
         <tr><td class="name">§8.1 حجم المكسب</td><td class="n">8</td><td><code>stage78.pkl</code></td></tr>
-        <tr><td class="name">§8.3 ما لم ينجح</td><td class="n">4</td><td><code>stage78</code> + <code>stage56</code></td></tr>
+        <tr><td class="name">§8.3 ما لم ينجح</td><td class="n">5</td><td><code>stage78</code> + <code>stage56</code></td></tr>
+        <tr><td class="name">§8.4 هندسة المجموعات</td><td class="n">10</td><td><code>set_geometry.npz</code> + <code>log_musyn</code></td></tr>
         <tr><td class="name">§9.2 حدود الشهادة</td><td class="n">4</td><td><code>stage56.pkl</code></td></tr>
       </tbody>
     </table>
   </div>
   <p class="tnote">
-    ‏§7.1 وحده يحمل 43 فحصًا لأنه جدول ستّة مقاييس × خمسة متحكّمات، زائد النِّسَب المشتقّة
-    منه (‏17 ضعفًا في زمن الاستقرار، 54 % في ذروة الاهتزاز).
+    ‏§7.1 وحده يحمل 44 فحصًا لأنه جدول ستّة مقاييس × خمسة متحكّمات، زائد النِّسَب المشتقّة
+    منه. و§4.2 يحمل 25 لأنه يفحص ثوابت البروتوكول كلّها — نقطة التشغيل، وأعماق السبر،
+    والحدود، وبذور المُحسِّن، وخطوة الزمن — لا نتائجه فقط.
   </p>
 
   <h3>مُخرَج التشغيل</h3>
   <div class="term">
 <pre><span class="dim">$ python phase2/paper/verify_numbers.py</span>
 
-<span class="hd">6.4  certified margins</span>
-<span class="dim">----------------------</span>
-  <span class="ok">ok </span>  mu_tdc: a_p^inf (mm)                        0.4364
-  <span class="ok">ok </span>  ps_ac: a_p^inf (mm)                         0.3836
-  <span class="ok">ok </span>  ps_ac: delay-independent (rho_peak &lt; 1)       True
+<span class="hd">5.2  the variants that also schedule the observer</span>
+<span class="dim">-------------------------------------------------</span>
+  <span class="ok">ok </span>  nominal poles, LQG (1/s)                          -93.62
+  <span class="ok">ok </span>  nominal poles, gain scheduled only (1/s)          -93.37
+  <span class="ok">ok </span>  nominal poles, observer scheduled only (1/s)        2.99
+  <span class="ok">ok </span>  nominal poles, K and L together (1/s)               8.47
+  <span class="ok">ok </span>  both observer-scheduled variants lose the loop      True
   <span class="dim">...</span>
-<span class="hd">9.2  the limits of the certificate</span>
-<span class="dim">----------------------------------</span>
-  <span class="ok">ok </span>  common-P LK infeasible for PS-AC             False
-  <span class="ok">ok </span>  common-P LK feasible for LQG                  True
+<span class="hd">6.3  what refining the frequency grid is worth</span>
+<span class="dim">---------------------------------------------</span>
+  <span class="ok">ok </span>  plain-grid spectral radius at the worst vertex      6.96
+  <span class="ok">ok </span>  refined-grid spectral radius there                 21.47
+  <span class="ok">ok </span>  dense-grid spectral radius there                   21.47
+  <span class="ok">ok </span>  understatement factor                                3.1
 
 <span class="dim">========================================================</span>
+    12  2.1  the plate, the patch and the reduction
      8  2.2  model verification
-     5  2.3  sign convention
-     7  4.2  protocol
-     6  5.2  the variant that also schedules the observer
+     6  2.3  sign convention
+     5  3    which corner the patch sits in
+    10  4.1  the reference controllers
+    25  4.2  protocol
+     3  5.1  how much the regenerative term varies
+    13  5.2  the variants that also schedule the observer
      9  5.3  PS-AC parameters
-     1  6.2  the vertex family
-    20  6.4  certified margins
-    43  7.1  nominal scenario
+    10  6.2  the vertex family
+    10  6.3  what refining the frequency grid is worth
+    21  6.4  certified margins
+    44  7.1  nominal scenario
      9  7.2  position sweep
     13  7.3  stress tests
-     8  8.1  PS-AC against LQG, and against the published controller
-     4  8.3  what did not work
+     8  8.1  PS-AC against LQG, and the published controller
+     5  8.3  what did not work
+    10  8.4  the uncertainty descriptions, as geometry
      4  9.2  the limits of the certificate
 <span class="dim">========================================================</span>
-<span class="ok">ALL 137 PAPER NUMBERS VERIFIED</span></pre>
+<span class="ok">ALL 225 PAPER NUMBERS VERIFIED</span></pre>
   </div>
   <p class="tnote">وحين يسقط فحص، يطبع السطر <code>BAD</code> ورقمَي الطرفين، ويخرج بحالة غير صفرية.</p>
 
@@ -1591,8 +1683,8 @@ footer code{font-size:12px}
     <p class="lbl">ما يعنيه هذا عمليًّا</p>
     <p>
       المسوّدة لم تعد تُصدَّق على الثقة. إعادة تشغيل أي مرحلة ثم <code>verify_numbers.py</code>
-      تكفي للحكم: إمّا أن يمرّ الـ137 كلّها، أو يُسمّى بالضبط أيُّ رقم تحرّك وإلى أين.
-      والتصحيحات الأربعة أعلاه هي أوّل ما ردّه هذا الإجراء — وكلّها كانت ستُنشَر لولاه.
+      تكفي للحكم: إمّا أن تمرّ الـ225 كلّها، أو يُسمّى بالضبط أيُّ رقم تحرّك وإلى أين.
+      والأحد عشر تصحيحًا أعلاه هي ما ردّه هذا الإجراء — وكلّها كانت ستُنشَر لولاه.
     </p>
   </div>
 </section>
