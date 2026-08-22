@@ -398,3 +398,46 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# ---------------------------------------------------------------------------
+def fig_mechanism():
+    """The pre-declared test of the proposed mechanism -- and its refutation."""
+    p = os.path.join(C.RESULTS, 'nominal_experiment2.npz')
+    if not os.path.exists(p):
+        print('   (nominal_experiment2.npz missing)')
+        return None
+    d = np.load(p)
+    w = np.abs(d['W22']); a = d['ap_inf'] * 1e3; dm = d['delta_max']
+    fr = d['frac']
+    node = np.isnan(fr) | (np.abs(fr - 0.5) < 1e-9)
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(11.2, 4.3))
+    for axis, y, nm in ((ax, a, '$a_p^\\infty$  (mm)'),
+                        (bx, dm, '$\\delta_{\\max}$')):
+        axis.scatter(w[~node], y[~node], s=110, color='#0E7490', zorder=3,
+                     label='nominal moved OFF the node')
+        axis.scatter(w[node], y[node], s=170, color='#9F1239', marker='D',
+                     zorder=4, label='nominal ON the mode-2 node')
+        axis.set_xscale('log')
+        axis.set_xlabel('$|W_c(2,2)|$ — nominal cutting stiffness on mode 2\n'
+                        '(the mechanism variable)   →  further from the node')
+        axis.set_ylabel(nm)
+        r = float(np.corrcoef(np.log10(np.maximum(w, 1e-9)), y)[0, 1])
+        axis.set_title(f'{nm}    measured  r = {r:+.3f}', fontsize=10)
+        for i in range(len(w)):
+            lab = 'centre' if np.isnan(fr[i]) else f'{fr[i]:.2f}'
+            axis.annotate(lab, (w[i], y[i]), textcoords='offset points',
+                          xytext=(0, 10), ha='center', fontsize=7.4,
+                          color='0.35')
+        axis.legend(loc='lower right', fontsize=8)
+        axis.set_ylim(0, max(y) * 1.42)
+    fig.suptitle('The pre-declared test of the proposed mechanism — '
+                 'it predicted a STRONG POSITIVE correlation',
+                 fontweight='bold', fontsize=10.5)
+    ax.text(0.5, 0.035,
+            'both correlations come out NEGATIVE, and the best nominal is the natural\n'
+            'centre — the one the reshaped set already uses.  The mechanism is\n'
+            'contradicted by its own test.',
+            transform=ax.transAxes, fontsize=8, color='0.2', ha='center',
+            va='bottom', bbox=BOX)
+    return save(fig, 'fig_p7_mechanism.png')

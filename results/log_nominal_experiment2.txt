@@ -12,3 +12,19 @@ THE NOMINAL SWEEP, WITH THE WEIGHTS RE-SEARCHED AT EVERY NOMINAL
       0.15   -9.516e+05    7.260   -0.34502  1.465   120   1e+05  0.0017   1.276      0.2333      0.613   [230s]
       0.30   -3.324e+05    5.846   -0.34037  1.452   118   1e+05  0.0017   1.298      0.2294      0.582   [222s]
       0.50       -96.15    4.083   -0.09046  1.824   147   3e+05  0.0017   0.853      0.3407      1.285   [347s]
+      0.70   -3.383e+05    9.820   +0.00664  1.634   153   1e+06   0.017   1.171      0.2489      0.879   [371s]
+      0.85   -9.042e+05    7.883   -0.01447  1.795   169   3e+05  0.0017   0.841      0.3524      1.137   [339s]
+      1.00   -1.596e+06    7.861   -0.10473  1.820   153   1e+05   0.017   0.872      0.3368      1.121   [390s]
+
+  best certified depth at x_nom/l_P = centre: a_p^inf 0.3563 mm, delta_max 1.309
+  the natural centre (on the node):     a_p^inf 0.3563 mm, delta_max 1.309
+  reference, paper set at its own winner: a_p^inf 0.4364 mm, delta_max 1.543   (from stage56)
+
+  THE TEST — correlation of the certified margins with the
+  mechanism variable log|W_c(2,2)|, the nominal cutting
+  stiffness on mode 2:
+      a_p^inf   r = -0.418
+      delta_max r = -0.572
+  the mechanism predicts a STRONG POSITIVE correlation for both.
+
+total 3029s -> results/nominal_experiment2.npz
