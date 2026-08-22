@@ -113,7 +113,7 @@ def mu_bound(M, blocks, d0=None, maxiter=200, x0=None):
     return mu_s, best, ds, bx
 
 
-def mu_curve_tight(H, blocks, warm=True, maxiter=200, refine=15):
+def mu_curve_tight(H, blocks, warm=True, maxiter=120, refine=8):
     """Both bounds over a frequency grid.  H: array of FRF matrices.
 
     The full-D optimisation costs about a second per frequency, and only the

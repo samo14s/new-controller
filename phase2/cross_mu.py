@@ -173,6 +173,10 @@ def main():
         log(f'  {name:22s}' + ''.join(f'{c:>22s}' for c in cells))
     log('')
     log('  mu_RS < 1 : robust stability GUARANTEED over the whole set')
+    log('  the diagonal is each design on the set it was designed for; the')
+    log('  off-diagonal is the cross-check.  The synthesis weights of the')
+    log('  paper are not published, so every mu here belongs to THIS')
+    log('  reproduction of its design chain, not to the published controller.')
     log('  mu_RP     : the quantity Eq. (29) minimises (stability + performance)')
     np.savez(os.path.join(OUT, 'cross_mu.npz'),
              **{k.replace('|', '__').replace(' ', '_').replace('(', '')
