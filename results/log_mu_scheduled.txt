@@ -1,0 +1,29 @@
+==============================================================================
+mu_RS PER SCHEDULING NODE - POSITION AS A SCHEDULING SIGNAL
+==============================================================================
+  nodes: the 21-point gain grid, cell half-width 2.5 mm; delay-free (Eq. 28 convention)
+
+[1] parametric physics only, position frozen (point test)
+  lqg       sup   0.724 at x =   0.0 mm   mu_RS < 1 at EVERY node
+  ps_ac     sup   0.721 at x =   0.0 mm   mu_RS < 1 at EVERY node
+  ps_ac_r   sup   0.717 at x =   0.0 mm   mu_RS < 1 at EVERY node
+  mu_paper  sup   0.904 at x = 100.0 mm   mu_RS < 1 at EVERY node
+  mu_phys   sup   1.175 at x = 100.0 mm   above 1
+
+[2] parametric physics + the grid cell of position (interpolation error certified)
+  lqg       sup   0.743 at x =   0.0 mm   mu_RS < 1 at EVERY node
+  ps_ac_r   sup   0.736 at x =   0.0 mm   mu_RS < 1 at EVERY node
+
+[3] everything, actuator block included (five nodes)
+  lqg       sup  86.881
+  ps_ac_r   sup  85.864
+  mu_paper  sup   1.205
+  mu_phys   sup   1.640
+
+  reading: the actuator channel at ~4 kHz is what blocks every
+  design in the study from mu_RS < 1 on the whole set; the
+  parametric physics itself is certified below one by the
+  scheduled members -- and the LQG row says how much of that is
+  bought by freezing the position alone.
+
+total 3244s -> results/mu_scheduled.*
