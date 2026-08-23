@@ -418,7 +418,7 @@ def alpha_ladder(cells, ladder=(5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2),
 
 
 # ---------------------------------------------------------------------------
-def main():
+def main(kinds=None):
     from plate_model import build_plate
     from plant_ss import ControlledPlant
     from stage_common import load_controllers
@@ -449,8 +449,9 @@ def main():
     log('')
 
     out = {}
-    for kind in ('ps_ac_r', 'ps_tdc_r'):
+    for kind in (kinds or ('ps_ac_r', 'ps_tdc_r')):
         if kind not in mks:
+            log(f'[{kind}] not on disk -- skipped')
             continue
         ctrl = mks[kind](plant)
         log(f'[{kind}]')
@@ -461,7 +462,7 @@ def main():
             log(f'  alpha = 0 infeasible at cell {r0["failed_cell"]} -- '
                 'no dwell statement possible on this tube')
             continue
-        a_star, r = alpha_ladder(cells, log=log)
+        a_star, r = alpha_ladder(cells, ladder=(2e-3, 1e-2), log=log)
         ws = cells.ws
         log(f'  alpha* = {a_star:.4f} (scaled) = {a_star*ws:.2f} 1/s')
         if a_star > 0.0 and len(r['mus']):
@@ -484,4 +485,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(tuple(sys.argv[1:]) or None)

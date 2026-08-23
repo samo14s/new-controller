@@ -56,3 +56,9 @@ M1-real: the stored mu_paper witness at the 21 nodes, mixed reading
   S1-style a_p,lim: [0.4189, 0.84, 0.7172, 1.0565, 0.5271] mm  floor 0.4189 mm  [7s]
   sup over probed points: 0.383
 -> results/mu_real_r5.npz
+
+M1-real 21-NODE SWEEP - witness and round-5 member, mixed reading
+  (incremental: mu_real_21.npz rewritten after every node)
+[mu_paper (witness)]
+  node  0  x =   0.0 mm:  complex   1.693  ->  mixed   0.248   [540s]
+  node  1  x =   5.0 mm:  complex   1.663  ->  mixed   0.247   [606s]

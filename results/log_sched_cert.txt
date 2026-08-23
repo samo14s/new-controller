@@ -1,0 +1,12 @@
+==============================================================================
+WHOLE-PASS CERTIFICATE - EXPONENTIAL DI-LK + DWELL-BOUNDED TRAVERSAL
+==============================================================================
+  reference depth a_p = 0.3 mm, delay tau = 4.082 ms (covers every tau' <= tau), feed speed v = 4.90 mm/s
+  cells: 20 over the edge; theta per cell: removal x mid-pass x damping x force coeff.
+
+[mu_tdc_ps]
+    cell  0 [  0.0,  5.0] mm  eps=2.19e-05  INFEASIBLE
+  alpha = 0 infeasible at cell 0 -- no dwell statement possible on this tube
+total 115s -> results/sched_cert.npz
+
+[mu_tdc_ps] WHOLE-PASS DEPTH LADDER (full box, alpha = 2e-3 = 10 1/s)

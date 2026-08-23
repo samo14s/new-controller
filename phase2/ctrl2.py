@@ -143,6 +143,30 @@ def mu_tdc(plant, ss_mu, kpd, kdd, name='MU_TDC'):
                 meta=dict(K_Pp0=k0))
 
 
+def mu_tdc_ps(plant, ss_mu, kpd, kdd):
+    """The witness base with the delayed pair SCHEDULED on the position.
+
+    mu-TDC freezes the Eq. (30) pair at the mid-span cancellation gain; the
+    regeneration it cancels is a4 D(x_P)^T D(x_P), which moves with the tool.
+    Here the pair tracks it: pd(x) = (kpd k0(x), kdd k0(x)/omega_1) with
+    k0(x) the least-squares cancellation gain AT the position -- the same two
+    tuned parameters, the same identified mu base, zero extra freedom (the
+    position is known, not estimated), so the count stays 6 as mu-TDC's.
+
+    The G1(real) standing is inherited EXACTLY: the mu judge is delay-free
+    (the paper's own Eq. 28 convention), so it sees only ss_mu -- the same
+    matrices the witness scores 0.248-0.419 with at every probed node.  What
+    the scheduling buys or loses lives entirely in the delay axis: Floquet,
+    the crossing certificate, and the time protocol decide it.
+    """
+    def build(x, e):
+        k0 = cancellation_gain(plant, x)
+        return ss_mu, (kpd * k0, kdd * k0 / plant.omega0[0])
+
+    return Ctrl('MU_TDC_PS', 6, builder=build, scheduled=True,
+                meta=dict(base='mu_paper'))
+
+
 # ---------------------------------------------------------------------------
 # 4. PROPOSED - position-scheduled active control
 # ---------------------------------------------------------------------------
@@ -241,6 +265,8 @@ def build(kind, plant, u, ss_mu=None):
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'])
     if kind == 'mu_phys_tdc':
         return mu_tdc(plant, ss_mu, u['kpd'], u['kdd'], name='MU_PHYS_TDC')
+    if kind == 'mu_tdc_ps':
+        return mu_tdc_ps(plant, ss_mu, u['kpd'], u['kdd'])
     if kind == 'ps_ac_r':
         # the robustness-scheduled variant: the gain-only law of ps_ac with
         # the design coefficient as a fifth tuned parameter

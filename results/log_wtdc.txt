@@ -1,0 +1,18 @@
+==========================================================================
+mu-TDC-PS - THE WITNESS BASE WITH THE POSITION-SCHEDULED PAIR
+==========================================================================
+
+--- DESIGN mu_tdc_ps: the stage-3 PSO on (kpd, kdd), witness base frozen ---
+  J = -0.03367   order 12   6 parameters   SCHEDULED pair   [737s]
+  Ms = 1.992   effort = 151.6 V/N   slowest nominal pole = -7.0 1/s
+  parameters: kpd=0.09798, kdd=0.1035
+  -> stage3_controllers.pkl
+
+--- CERTIFY mu_tdc_ps: same vertex family and bisections as stage 5-6 ---
+  peak = 0.613   tau_max/tau0 = inf   [7s]
+  a_p^inf = 0.4305 mm   (mu-TDC: 0.4364)   [28s]
+  delta_max = 1.54   (mu-TDC: 1.54)   [22s]
+  common-P LK at a_p^inf: no
+  -> stage56.pkl
+
+--- SCENARIOS mu_tdc_ps: stages 7-8, same code path as everyone ---
