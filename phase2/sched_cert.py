@@ -179,6 +179,150 @@ def certificate_alpha(vertices, tau, alpha=0.0, eps=0.0, n_plant=None,
     return out
 
 
+def _bounded_real_P(A, BBt, CtC):
+    """Stabilising solution of the bounded-real Riccati
+        A'P + PA + P BBt P + CtC = 0
+    via the stable invariant subspace of the Hamiltonian -- deterministic,
+    no optimiser.  The substitution P = theta Pt with theta^2 =
+    tr(CtC)/tr(BBt) balances the Hamiltonian's off-diagonal blocks first
+    (exact, pure conditioning).  Returns None when the subspace is
+    deficient (channel too large) or P is not PSD-symmetric."""
+    from scipy.linalg import schur
+    n = A.shape[0]
+    tB, tC = float(np.trace(BBt)), float(np.trace(CtC))
+    theta = np.sqrt(max(tC, 1e-300) / max(tB, 1e-300))
+    H = np.block([[A, theta * BBt], [-CtC / theta, -A.T]])
+    try:
+        _, U, k = schur(H, sort=lambda re, im: re < 0.0, output='real')
+    except Exception:
+        return None
+    if k != n:
+        return None
+    U1, U2 = U[:n, :n], U[n:, :n]
+    try:
+        P = np.linalg.solve(U1.T, U2.T).T
+    except np.linalg.LinAlgError:
+        return None
+    P = 0.5 * (theta * (P + P.T))
+    if not np.all(np.isfinite(P)) or np.linalg.eigvalsh(P).min() < -1e-10:
+        return None
+    return P
+
+
+def certificate_direct(vertices, tau, alpha=0.0, eps=0.0, n_plant=None,
+                       ws=(1.0, 4.0, 16.0), q0s=(1e-3, 3e-2),
+                       sdoms=None, kappa_rel=(0.3, 1.0, 3.0),
+                       margin=0.1, lams=(1e-1, 1e1, 1e3), tol=1e-12,
+                       prev=None):
+    """Solver-free DI-LK cell certificate for the (low-rank) delayed channel.
+
+    The diagnosis of record (log_sched_cert, DIAGNOSIS block): every vertex
+    of the refused cells passes the pointwise disc measure with margin, yet
+    the SDP reports infeasible even for a SINGLE vertex -- an SCS failure on
+    this LMI class, not a structural verdict.  So the certificate is built
+    explicitly and the optimiser is removed from the loop.  Phi < 0 is, by
+    the Schur complement on its (2,2) block, exactly
+
+        A'P + PA + 2aP + Q + e^{2 a tau} P A_d Q^-1 A_d' P  <  0 ,
+
+    so with Q FIXED FIRST (Q = w Qdir + q0 I, Qdir = mean A_d'A_d, the
+    delayed output directions of all vertices) the coupling term itself is
+    a known Riccati channel:
+
+        A_c'P + PA_c + 2aP
+          + P [ s/e^{-2 a tau} * mean_v(A_d,v Q^-1 A_d,v')
+                + kappa I ] P
+          + (1+margin) Q + (|dA|^2/kappa + margin sQ) I  =  0 ,
+
+    where the kappa terms absorb the in-cell vertex spread dA = max |A_v -
+    A_c| by Young's inequality and s >= 1 scales the mean coupling toward
+    an envelope of the vertices (s = m makes it a sum, a guaranteed
+    majorant).  The solution P then satisfies every vertex LMI with a
+    full-rank margin BY CONSTRUCTION -- when the construction prices
+    enough; and every (w, q0, s, kappa, lam) candidate is judged solely by
+    verify_certificate after trace-normalisation, so nothing rests on the
+    derivation, only on the numerical check.
+
+    Returns the same dict shape as certificate_alpha."""
+    n = vertices[0][0].shape[0]
+    npl = n if n_plant is None else int(n_plant)
+    m = len(vertices)
+    A_c = sum(A for A, _ in vertices) / m
+    Qdir = sum((Ad.T @ Ad) for _, Ad in vertices) / m
+    Qdir = 0.5 * (Qdir + Qdir.T)
+    sQ = float(np.trace(Qdir)) / n
+    A_a = A_c + alpha * np.eye(n)
+    c_disc = float(np.exp(-2.0 * alpha * tau))
+    # the vertex spread, DIRECTIONALLY: Delta_v = W_v Z_v' (thin SVD), so
+    # P Delta + Delta' P <= kap P (sum W W') P + kap^-1 (sum Z Z') per
+    # vertex -- the output side stays in the low-rank variation directions
+    # instead of charging every (undamped) mode through a scalar floor.
+    Din = np.zeros((n, n))
+    Dout = np.zeros((n, n))
+    spread = False
+    for A, _ in vertices:
+        D = A - A_c
+        U, s, Vt = np.linalg.svd(D)
+        r = int(np.sum(s > 1e-12 * max(s[0], 1e-300)))
+        if r == 0:
+            continue
+        spread = True
+        W = U[:, :r] * np.sqrt(s[:r])
+        Z = Vt[:r].T * np.sqrt(s[:r])
+        Din += W @ W.T
+        Dout += Z @ Z.T
+    if spread:
+        kap0 = np.sqrt(max(float(np.trace(Dout)), 1e-300)
+                       / max(float(np.trace(Din)), 1e-300))
+    if sdoms is None:
+        sdoms = (1.0, 3.0, float(m)) if m > 1 else (1.0,)
+    best = None
+    for w in ws:
+        for q0 in q0s:
+            Q = w * Qdir + q0 * sQ * np.eye(n)
+            try:
+                Qi = np.linalg.inv(Q)
+            except np.linalg.LinAlgError:
+                continue
+            Gm = sum(Ad @ Qi @ Ad.T for _, Ad in vertices) / m
+            Gm = 0.5 * (Gm + Gm.T)
+            for s_dom in sdoms:
+                for kr in (kappa_rel if spread else (None,)):
+                    BBt = (s_dom / c_disc) * Gm
+                    CtC = (1.0 + margin) * Q + margin * sQ * np.eye(n)
+                    if kr is not None:
+                        kap = kr * kap0
+                        BBt = BBt + kap * Din
+                        CtC = CtC + Dout / kap
+                    P = _bounded_real_P(A_a, 0.5 * (BBt + BBt.T),
+                                        0.5 * (CtC + CtC.T))
+                    if P is None:
+                        continue
+                    sc = float(np.trace(P) + np.trace(Q))
+                    if not np.isfinite(sc) or sc <= 0:
+                        continue
+                    Pn, Qn = P / sc, Q / sc
+                    for lam in (lams if eps > 0.0 else (0.0,)):
+                        v = verify_certificate(vertices, tau, alpha, eps,
+                                               npl, Pn, Qn, lam)
+                        pmax = float(np.linalg.eigvalsh(Pn).max())
+                        ok = (v['phi_max'] < -tol
+                              and v['p_min'] > 1e-13 * pmax
+                              and v['q_min'] > 0.0)
+                        if ok and (best is None
+                                   or v['phi_max'] < best['worst_eig']):
+                            best = dict(feasible=True, slack=-v['phi_max'],
+                                        status='direct',
+                                        worst_eig=v['phi_max'],
+                                        P=Pn, Q=Qn, lam=float(lam))
+    if best is None:
+        return dict(feasible=False, slack=None, status='direct',
+                    worst_eig=None, P=None, Q=None, lam=None)
+    if prev is not None:
+        best['t'] = jump_factor(prev, best)
+    return best
+
+
 def verify_certificate(vertices, tau, alpha, eps, n_plant, P, Q, lam):
     """Largest eigenvalue of every certificate LMI, rebuilt numerically from
     the stored (P, Q, lam) -- the solver-independent check.  Strictly

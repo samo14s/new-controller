@@ -50,3 +50,57 @@ DIAGNOSIS - where the cell DI-LK loses vs the exact crossing measure
   single-vertex LK @ worst (peak 0.541): infeasible  [2s]
   single-vertex LK @ best (peak 0.040): infeasible  [2s]
   common LK over 2 (best+worst): infeasible  [4s]
+  common LK all + eps residual: infeasible  [77s]
+
+[mu_tdc_ps @ 0.30 mm, near-nominal 0.02] cell 0: 32 vertices, eps = 9.54e-06, tau_scaled = 20.5
+  A_d rank-one quality: max s2/s1 = 5.58e-01
+  per-vertex crossing peak (= disc measure g_inf): min 0.299  max 0.358  (0/32 vertices >= 1)  [1s]
+  single-vertex LK @ worst (peak 0.358): infeasible  [1s]
+  single-vertex LK @ best (peak 0.299): infeasible  [1s]
+  common LK over 2 (best+worst): infeasible  [2s]
+  common LK all + eps residual: infeasible  [82s]
+
+
+==============================================================================
+ADIABATIC (THIN-CELL) LIMIT OF THE WHOLE-PASS CHAIN
+  point certificates every 0.83 mm (solver-free), alpha = 2e-03 scaled;
+  constant-in-time uncertainties SLICED (a4 lo/nom/hi), eta/xi at the
+  mid-pass tube, zeta nominal -- the h->0 limit of the cell chain,
+  v* = min_x 2 alpha / rho(x), rho = d ln mu / dx (rotation density)
+==============================================================================
+[ps_ac_ri]  a_p = 0.10 mm   feed 4.90 mm/s
+  a4 lo : rho max 3.029e+02 1/m at x = 50.0 mm;  v* (min-rule) = 66.376 mm/s, v* (integral) = 85.911 mm/s  [1s]
+  a4 nom: rho max 6.018e+02 1/m at x = 50.0 mm;  v* (min-rule) = 33.411 mm/s, v* (integral) = 43.136 mm/s  [0s]
+  a4 hi : rho max 6.018e+02 1/m at x = 50.0 mm;  v* (min-rule) = 33.411 mm/s, v* (integral) = 43.136 mm/s  [0s]
+  => v_cert(adiabatic, sliced) = 33.411 mm/s  vs feed 4.90 mm/s: CERTIFIED at the actual feed
+
+[ps_ac_rfa]  a_p = 0.30 mm   feed 4.90 mm/s
+  a4 lo : rho max 8.003e+02 1/m at x = 49.2 mm;  v* (min-rule) = 25.124 mm/s, v* (integral) = 42.247 mm/s  [1s]
+  a4 nom: rho max 8.003e+02 1/m at x = 49.2 mm;  v* (min-rule) = 25.124 mm/s, v* (integral) = 42.247 mm/s  [1s]
+  a4 hi : 3/121 point certificates missing -- slice not certifiable  [1s]
+
+[mu_tdc_ps]  a_p = 0.30 mm   feed 4.90 mm/s
+  a4 lo : 46/121 point certificates missing -- slice not certifiable  [1s]
+  a4 nom: 52/121 point certificates missing -- slice not certifiable  [0s]
+  a4 hi : 100/121 point certificates missing -- slice not certifiable  [0s]
+
+
+DIAGNOSIS-2 - the mechanism, named exactly (session measurements)
+  * single-vertex DI-LK rebuilt SOLVER-FREE (bounded-real Riccati on the
+    Hamiltonian's stable subspace + aligned Q + numerical verification):
+    FEASIBLE, worst LMI eig -5.8e-07 -- on the very vertex the SDP called
+    infeasible.  The SDP's single-vertex refusals were SCS failures, not
+    structure; certificate_direct (sched_cert.py) removes the optimiser.
+  * the CELL refusals are structural, but the named mechanism was wrong:
+    not "constant D-scale vs rank-one coupling" -- the crossing peak IS the
+    disc measure for rank-one coupling, no phase is lost.  Measured: the
+    vertex spread dA rotates the razor eigendirections of the zeta~0.3%
+    plate by many LINEWIDTHS (8-vertex subset: dA = 4e-3 vs linewidth
+    zeta*omega ~ 2e-3 scaled; full cell in x: dA = 1.4 = ~700 linewidths).
+    One quadratic functional across eigendirections rotated by >> 1
+    linewidth cannot exist: the feasible cell diameter scales with ZETA,
+    not with the tube -- ~1e4 cells would be needed at 20-cell geometry.
+  * therefore the chain is taken to its h->0 limit instead (adiabatic
+    certificate): point certificates P(x) every ~0.8 mm, scale-balanced
+    neighbour jump densities rho = d ln mu / dx, constant-in-time
+    uncertainties sliced -- v* = min_x 2 alpha / rho(x).  Measured next.
