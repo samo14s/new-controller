@@ -259,6 +259,14 @@ def build(kind, plant, u, ss_mu=None):
                         10 ** u['log_r'], 10 ** u['log_ratio'],
                         u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
                         10 ** u['log_fr'])
+    if kind == 'ps_ac_rfa':
+        # the augmented variant: the filter INSIDE the design model, so
+        # certainty equivalence survives (act_filter.ps_ac_rfa); same 5 + 3
+        from act_filter import ps_ac_rfa
+        return ps_ac_rfa(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
+                         10 ** u['log_r'], 10 ** u['log_ratio'],
+                         u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
+                         10 ** u['log_fr'])
     if kind == 'ps_tdc':
         # ss_mu carries the stored ps_ac parameter dict here
         return ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])

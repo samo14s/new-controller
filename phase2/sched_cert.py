@@ -4,52 +4,55 @@ The repository holds two delay certificates and each misses what milling
 actually does.  The exact crossing test (certify2) freezes the schedule: every
 vertex is judged with its own member, but nothing certifies the instant the
 loop TRAVERSES from one member to the next.  The common-P LK certificate
-(lk_lmi) certifies arbitrarily fast variation -- stronger than needed, and it
-must squeeze one functional through every member of the family at once, which
-is exactly where it dies as the members differ more.  What milling does is
-neither frozen nor arbitrarily fast: the position moves at the FEED SPEED and
-the removal advances with the PASS SCHEDULE -- both known, both slow.  This
-module turns that knowledge into the theorem.
+(lk_lmi.certificate_di) certifies arbitrarily fast variation -- stronger than
+needed, and it must squeeze one functional through every member of the family
+at once, which is exactly where it dies as the members differ more.  What
+milling does is neither frozen nor arbitrarily fast: the position moves at the
+FEED SPEED and the removal advances with the PASS SCHEDULE -- both known, both
+slow.  This module turns that knowledge into the theorem.
 
-Construction
-------------
-The scheduling domain is split into cells; cell i carries the member designed
-at its node, frozen.  Over each cell the closed loop is
+Why the delay-independent functional.  The tooth-period delay spans ~17
+periods of mode 2 (tau_scaled = 20.5 at ws = 2 pi 800), so any Jensen-bounded
+delay-DEPENDENT functional is hopeless here -- measured: the 3-block form is
+infeasible even where the DI form of the study certifies.  The study's own
+convention stands: the delay AXIS is certified exactly by the crossing test,
+and the LK functional's job is VARIATION.  So the cell functional is the
+study's own DI form, given an exponential rate:
 
-    xdot(t) = A_i(theta(t)) x(t) + A_di(theta(t)) x(t - tau),
-    (A_i, A_di)  in  conv{vertices of cell i}  (+)  an eps_i-ball,
+    V_i = x'P_i x + int_{t-tau}^t e^{2a(s-t)} x'Q_i x ds ,      P, Q > 0,
 
-with theta collecting everything that moves inside the cell: the position
-continuum between the sampled vertices (measured, it goes into eps_i), the
-removal interval the pass sweeps, the force coefficient in [a_lo, a_hi], the
-damping band.  Per cell the EXPONENTIAL Lyapunov-Krasovskii functional
+    Vdot_i + 2a V_i <= [x; x_tau]' Phi [x; x_tau],
 
-    V_i = x'P_i x + int_{t-tau}^t e^{2a(s-t)} x'Q_i x ds
-        + tau int_{-tau}^0 int_{t+s}^t e^{2a(r-t)} xdot'R_i xdot dr ds
+    Phi = [ A'P + PA + 2aP + Q      P A_d          ]
+          [ A_d'P                   -e^{-2a tau} Q ]   < 0.
 
-certifies  Vdot_i <= -2a V_i  through the LMI (Jensen with the e^{-2a tau}
-discount; affine in (A, A_d), so vertices + the S-procedure residual cover the
-continuum):
+At a = 0 this is byte-for-byte lk_lmi.certificate_di.  Feasibility at (a, tau)
+implies it for every delay tau' in [0, tau] (the true (2,2) block is then more
+negative), so one solve covers the whole spindle range whose tooth period does
+not exceed tau.  Phi is affine in (A, A_d): vertices + the S-procedure
+residual cover the cell continuum exactly as in lk_lmi.
 
-    [ A'P+PA+2aP+Q-cR    PA_d+cR      tau A'R  ]
-    [ A_d'P+cR           -c(Q+R)      tau A_d'R]  < 0,   c = e^{-2 a tau}.
-    [ tau R A            tau R A_d    -R       ]
-
-At a = 0 this is byte-for-byte the lk_lmi condition.  At a switch i -> j the
-state and its history are continuous, so V_j <= mu_ij V_i holds for every
-history iff  P_j <= mu P_i,  Q_j <= mu Q_i,  R_j <= mu R_i  (largest
-generalized eigenvalue over the three pairs).
+Cells and jumps.  The scheduling domain is split into cells; cell i carries
+the member designed at its node, frozen; the cell's vertex family spans the
+position continuum inside the cell (eps_i covers the gap to the sampled
+vertices), the removal interval, the mid-pass state, the damping band and the
+force-coefficient range.  At a switch i -> i+1 the state and history are
+continuous, so V_{i+1} <= mu V_i for every history iff P_{i+1} <= mu P_i and
+Q_{i+1} <= mu Q_i.  The chain is solved SEQUENTIALLY, each cell minimising its
+own jump factor subject to its LMIs (min t with P <= t P_prev, Q <= t Q_prev
+-- linear in the variables, one SDP), because a freely re-normalised family
+would show jumps that are artifacts of the solver's scale choice.
 
 Theorem (whole-pass stability under bounded scheduling rate).  Let every cell
 of the tube around the pass trajectory be certified at common rate a > 0, and
-let the traversal be monotone with dwell time  t_i >= h_i / v  in cell i.
-Then along the whole pass
+let the traversal be monotone with dwell time >= h_k / v at boundary k.  Then
 
     V(t) <= exp(-2a (t-t0) + sum_{switches k before t} ln mu_k) V(t0),
 
-and if  ln mu_k <= 2 a h_k / v  for every boundary k the envelope is
-non-increasing at every switch: the loop is exponentially stable over the
-ENTIRE operating domain, with the explicit admissible rate
+and if  ln mu_k <= 2 a h_k / v  for every k the envelope is non-increasing at
+every switch: the loop is exponentially stable over the ENTIRE operating
+domain -- every delay in [0, tau], every parameter path in the tube, arbitrary
+in-cell variation -- with the explicit admissible rate
 
     v_cert = min_k  2 a h_k / ln mu_k          (infinite if mu_k <= 1).
 
@@ -85,35 +88,23 @@ OUT = C.RESULTS
 
 
 # ---------------------------------------------------------------------------
-# the exponential LK cell certificate
+# the exponential delay-independent LK cell certificate
 # ---------------------------------------------------------------------------
-def _psi_alpha(A, Ad, P, Q, R, tau, alpha):
-    c = float(np.exp(-2.0 * alpha * tau))
-    return cp.bmat([
-        [A.T @ P + P @ A + 2.0 * alpha * P + Q - c * R,
-         P @ Ad + c * R, tau * A.T @ R],
-        [Ad.T @ P + c * R, -c * (Q + R), tau * Ad.T @ R],
-        [tau * R @ A, tau * R @ Ad, -R],
-    ])
-
-
 def certificate_alpha(vertices, tau, alpha=0.0, eps=0.0, n_plant=None,
-                      solver=None, verbose=False, kappa=1e7, prev=None,
-                      slack_min=None):
-    """Exponential-rate LK certificate over one cell's vertex family.
+                      solver=None, verbose=False, prev=None, slack_min=None,
+                      tol=1e-9):
+    """Exponential-rate DI-form LK certificate over one cell's vertex family.
 
-    Identical to lk_lmi.certificate at alpha = 0 (same functional, same
+    Identical to lk_lmi.certificate_di at alpha = 0 (same functional, same
     residual S-procedure, same normalisation); alpha > 0 adds the decay and
     the e^{-2 alpha tau} discount the derivation requires.
 
-    `prev` chains the cells: given the PREVIOUS cell's (P, Q, R), the
-    objective switches from maximising the slack to MINIMISING the jump
-    factor t subject to  P <= t P_prev, Q <= t Q_prev, R <= t R_prev  (linear
-    in (P, Q, R, t) jointly, so still one SDP) and slack >= slack_min.  A
-    freely re-normalised family would otherwise show jumps that are artifacts
-    of the solver's scale choice, not of the functionals.
+    `prev` chains the cells: given the previous cell's (P, Q), the objective
+    switches from maximising the slack to MINIMISING the jump factor t
+    subject to P <= t P_prev, Q <= t Q_prev and slack >= slack_min; the trace
+    normalisation is dropped there because the predecessor sets the scale.
 
-    Returns dict(feasible, slack, status, P, Q, R[, t]).
+    Returns dict(feasible, slack, status, P, Q[, t]).
     """
     if cp is None:
         raise RuntimeError('cvxpy is required for the certificate')
@@ -121,62 +112,110 @@ def certificate_alpha(vertices, tau, alpha=0.0, eps=0.0, n_plant=None,
     npl = n if n_plant is None else int(n_plant)
     P = cp.Variable((n, n), symmetric=True)
     Q = cp.Variable((n, n), symmetric=True)
-    R = cp.Variable((n, n), symmetric=True)
     lam = cp.Variable(nonneg=True)
     s = cp.Variable(nonneg=True)
+    c = float(np.exp(-2.0 * alpha * tau))
 
     Sp = np.zeros((npl, n))
     Sp[:, :npl] = np.eye(npl)
     E0 = eps * np.vstack([np.eye(npl), np.zeros((n - npl, npl))])
     SS = Sp.T @ Sp
     Zn = np.zeros((n, n))
-    FtF = np.block([[SS, Zn, Zn], [Zn, SS, Zn], [Zn, Zn, Zn]])
+    FtF = np.block([[SS, Zn], [Zn, SS]])
 
-    cons = [P >> np.eye(n), Q >> 1e-6 * np.eye(n), R >> 1e-6 * np.eye(n),
-            cp.trace(P) + cp.trace(Q) + cp.trace(R) + lam <= kappa]
+    cons = [P >> 1e-3 * np.eye(n), Q >> 1e-8 * np.eye(n)]
+    if prev is None:
+        cons.append(cp.trace(P) + cp.trace(Q) + lam == 1.0)
     for (A, Ad) in vertices:
-        Psi = _psi_alpha(A, Ad, P, Q, R, tau, alpha)
+        Phi = cp.bmat([[A.T @ P + P @ A + 2.0 * alpha * P + Q, P @ Ad],
+                       [Ad.T @ P, -c * Q]])
         if eps > 0.0:
-            Psi = Psi + lam * FtF
-            Ecal = cp.vstack([P @ E0, np.zeros((n, npl)), tau * R @ E0])
-            Th = cp.bmat([[Psi, Ecal], [Ecal.T, -lam * np.eye(npl)]])
-        else:
-            Th = Psi
-        cons.append(Th << -s * np.eye(Th.shape[0]))
+            Phi = Phi + lam * FtF
+            Ecal = cp.vstack([P @ E0, np.zeros((n, npl))])
+            Phi = cp.bmat([[Phi, Ecal], [Ecal.T, -lam * np.eye(npl)]])
+        cons.append(Phi << -s * np.eye(Phi.shape[0]))
 
     if prev is None:
         obj = cp.Maximize(s)
     else:
         t = cp.Variable(nonneg=True)
-        cons += [P << t * prev['P'], Q << t * prev['Q'], R << t * prev['R'],
-                 s >= (1e-10 if slack_min is None else float(slack_min))]
+        cons += [P << t * prev['P'], Q << t * prev['Q'],
+                 s >= (tol if slack_min is None else float(slack_min))]
         obj = cp.Minimize(t)
     prob = cp.Problem(obj, cons)
-    for sv in ([solver] if solver else ['CLARABEL', 'SCS']):
+    # CLARABEL 0.11/cvxpy 1.9 dies with a zero step on this constraint class
+    # (measured: NumericalError at iteration 1 even with entries at 26), so
+    # SCS carries the solve -- and the VERDICT never rests on the solver: the
+    # returned matrices are re-checked numerically below, so an inaccurate
+    # solve can only produce a certificate that verifies, or none.
+    for sv in ([solver] if solver else ['SCS']):
         try:
-            prob.solve(solver=sv, verbose=verbose)
+            prob.solve(solver=sv, verbose=verbose, eps=1e-6, max_iters=25000)
         except Exception:
             continue
         if prob.status in ('optimal', 'optimal_inaccurate'):
             break
     ok = (prob.status in ('optimal', 'optimal_inaccurate')
-          and s.value is not None and float(s.value) > 1e-10)
+          and s.value is not None and float(s.value) > tol
+          and P.value is not None and Q.value is not None)
+    worst = None
+    if ok:
+        v = verify_certificate(vertices, tau, alpha, eps, npl,
+                               np.array(P.value), np.array(Q.value),
+                               float(lam.value))
+        worst = v['phi_max']
+        ok = bool(v['phi_max'] < -tol and v['p_min'] > 1e-8
+                  and v['q_min'] > 1e-12)
     out = dict(feasible=bool(ok),
                slack=None if s.value is None else float(s.value),
-               status=prob.status,
+               status=prob.status, worst_eig=worst,
                P=None if P.value is None else np.array(P.value),
                Q=None if Q.value is None else np.array(Q.value),
-               R=None if R.value is None else np.array(R.value))
+               lam=None if lam.value is None else float(lam.value))
     if prev is not None:
-        out['t'] = None if not ok else float(t.value)
+        # the recorded jump factor is computed from the returned matrices,
+        # not read off the solver: exact for what is stored
+        out['t'] = jump_factor(prev, out) if ok else None
     return out
+
+
+def verify_certificate(vertices, tau, alpha, eps, n_plant, P, Q, lam):
+    """Largest eigenvalue of every certificate LMI, rebuilt numerically from
+    the stored (P, Q, lam) -- the solver-independent check.  Strictly
+    negative = the functional certifies; anything else is no certificate,
+    whatever the solver claimed."""
+    n = P.shape[0]
+    npl = int(n_plant)
+    c = float(np.exp(-2.0 * alpha * tau))
+    Sp = np.zeros((npl, n))
+    Sp[:, :npl] = np.eye(npl)
+    E0 = eps * np.vstack([np.eye(npl), np.zeros((n - npl, npl))])
+    SS = Sp.T @ Sp
+    Zn = np.zeros((n, n))
+    FtF = np.block([[SS, Zn], [Zn, SS]])
+    P = 0.5 * (P + P.T)
+    Q = 0.5 * (Q + Q.T)
+    phi_max = -np.inf
+    for (A, Ad) in vertices:
+        Phi = np.block([[A.T @ P + P @ A + 2.0 * alpha * P + Q, P @ Ad],
+                        [Ad.T @ P, -c * Q]])
+        if eps > 0.0:
+            Phi = Phi + lam * FtF
+            Ecal = np.vstack([P @ E0, np.zeros((n, npl))])
+            Phi = np.block([[Phi, Ecal],
+                            [Ecal.T, -lam * np.eye(npl)]])
+        phi_max = max(phi_max, float(np.linalg.eigvalsh(
+            0.5 * (Phi + Phi.T)).max()))
+    return dict(phi_max=phi_max,
+                p_min=float(np.linalg.eigvalsh(P).min()),
+                q_min=float(np.linalg.eigvalsh(Q).min()))
 
 
 def jump_factor(cert_i, cert_j):
     """mu_ij = min mu with V_j <= mu V_i for every history: the largest
-    generalized eigenvalue over the pairs (P_j, P_i), (Q_j, Q_i), (R_j, R_i)."""
+    generalized eigenvalue over the pairs (P_j, P_i) and (Q_j, Q_i)."""
     mu = 0.0
-    for k in ('P', 'Q', 'R'):
+    for k in ('P', 'Q'):
         Xi, Xj = cert_i[k], cert_j[k]
         Xi = 0.5 * (Xi + Xi.T) + 1e-12 * np.eye(len(Xi))
         Xj = 0.5 * (Xj + Xj.T)
@@ -212,15 +251,25 @@ class FamilyCells:
         self.n_x_cell, self.n_dense = n_x_cell, n_dense
         # eta drift of ONE pass inside one cell: the tube, not the box
         self.eta_pass = eta_pass
+        self._cell_cache = {}
 
-        ss0, pd0 = ctrl.at(float(self.nodes[len(self.nodes) // 2]), 0.0)
-        A0, Ad0, B0, _, Cy0 = plant.matrices(x_pos=float(self.nodes[0]))
-        Acl0, _, npl = augment(A0, Ad0, B0, Cy0, ss0, pd0, plant.n)
+        # ---- one coordinate system for the whole family -------------------
+        # The observer members carry Kalman gains up to ~1e11, so the raw
+        # closed loop is numerically hopeless for an SDP (CLARABEL dies at
+        # dres ~ 1e6 even after per-block balancing).  A diagonal balance of
+        # the FULL representative closed loop (permute=False: pure scaling,
+        # strictly positive) brings every entry to O(1e2) and is one fixed
+        # similarity, so functionals of different cells stay comparable.
+        mid = float(self.nodes[len(self.nodes) // 2])
+        ss0, pd0 = ctrl.at(mid, 0.0)
+        A0, Ad0, B0, _, Cy0 = plant.matrices(x_pos=mid)
+        Acl0, Adcl0, npl = augment(A0, Ad0, B0, Cy0, ss0, pd0, plant.n)
         self.npl = npl
+        Acl0, _ = _scale(Acl0, Adcl0, plant.n, npl, ws)
         from scipy.linalg import matrix_balance
         try:
-            _, T = matrix_balance(Acl0[npl:, npl:])
-            dd = np.concatenate([np.ones(npl), np.abs(np.diag(T))])
+            _, T = matrix_balance(Acl0, permute=False)
+            dd = np.abs(np.diag(T))
         except Exception:
             dd = np.ones(Acl0.shape[0])
         if not np.all(np.isfinite(dd)) or np.min(dd) <= 0:
@@ -248,8 +297,6 @@ class FamilyCells:
         covers the x-continuum between the samples (measured 2-norm gap to
         the linear interpolant, worst over the theta corners).  Memoized:
         the alpha ladder re-reads every cell at each rung."""
-        if not hasattr(self, '_cell_cache'):
-            self._cell_cache = {}
         if i in self._cell_cache:
             return self._cell_cache[i]
         ss, pd = self.ctrl.at(float(self.nodes[i]), 0.0)
@@ -275,26 +322,22 @@ class FamilyCells:
                     for a in (a_lo, a_hi):
                         pts = [self._closed(ss, pd, x, eta, xi, z, a)
                                for x in dense]
+                        ends = {x: self._closed(ss, pd, x, eta, xi, z, a)
+                                for x in xs}
                         for k, x in enumerate(dense):
-                            j = min(np.searchsorted(xs, x) - 1,
+                            j = min(max(np.searchsorted(xs, x) - 1, 0),
                                     len(xs) - 2)
-                            j = max(j, 0)
                             t = ((x - xs[j]) / (xs[j + 1] - xs[j])
                                  if xs[j + 1] > xs[j] else 0.0)
-                            Al = ((1 - t) * self._closed(ss, pd, xs[j], eta,
-                                                         xi, z, a)[0]
-                                  + t * self._closed(ss, pd, xs[j + 1], eta,
-                                                     xi, z, a)[0])
-                            Adl = ((1 - t) * self._closed(ss, pd, xs[j], eta,
-                                                          xi, z, a)[1]
-                                   + t * self._closed(ss, pd, xs[j + 1], eta,
-                                                      xi, z, a)[1])
-                            gap = np.hstack([pts[k][0][:self.npl] -
-                                             Al[:self.npl],
-                                             pts[k][1][:self.npl] -
-                                             Adl[:self.npl]])
-                            eps = max(eps, float(
-                                np.linalg.norm(gap, 2)))
+                            Al = ((1 - t) * ends[xs[j]][0]
+                                  + t * ends[xs[j + 1]][0])
+                            Adl = ((1 - t) * ends[xs[j]][1]
+                                   + t * ends[xs[j + 1]][1])
+                            gap = np.hstack([pts[k][0][:self.npl]
+                                             - Al[:self.npl],
+                                             pts[k][1][:self.npl]
+                                             - Adl[:self.npl]])
+                            eps = max(eps, float(np.linalg.norm(gap, 2)))
         self._cell_cache[i] = (V, eps)
         return V, eps
 
@@ -320,7 +363,7 @@ def certify_family(cells, alpha, verbose=True, log=print):
         else:
             r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
                                   n_plant=cells.npl, prev=prev,
-                                  slack_min=0.2 * certs[0]['slack'])
+                                  slack_min=0.1 * certs[0]['slack'])
             if not r['feasible']:      # fall back: feasibility over tightness
                 r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
                                       n_plant=cells.npl)
@@ -349,7 +392,8 @@ def certify_family(cells, alpha, verbose=True, log=print):
                 v_bounds=np.array(v_bounds))
 
 
-def alpha_ladder(cells, ladder=(5e-4, 1e-3, 2e-3, 5e-3, 1e-2), log=print):
+def alpha_ladder(cells, ladder=(5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2),
+                 log=print):
     """Climb a geometric ladder of decay rates; keep the last feasible rung.
     Returns (alpha, result) -- alpha = 0 with the base result if even the
     smallest rung fails."""
@@ -370,7 +414,7 @@ def main():
     from plant_ss import ControlledPlant
     from stage_common import load_controllers
 
-    fh = open(os.path.join(OUT, 'log_sched_cert.txt'), 'w')
+    fh = open(os.path.join(OUT, 'log_sched_cert.txt'), 'a')
 
     def log(*a):
         line = ' '.join(str(x) for x in a)
@@ -385,10 +429,12 @@ def main():
     v_feed = plant.feed_speed()
 
     log('=' * 78)
-    log('WHOLE-PASS CERTIFICATE - EXPONENTIAL LK + DWELL-BOUNDED TRAVERSAL')
+    log('WHOLE-PASS CERTIFICATE - EXPONENTIAL DI-LK + DWELL-BOUNDED '
+        'TRAVERSAL')
     log('=' * 78)
     log(f'  reference depth a_p = {C.AP_S*1e3:.1f} mm, delay tau = '
-        f'{plant.tau*1e3:.3f} ms, feed speed v = {v_feed*1e3:.2f} mm/s')
+        f'{plant.tau*1e3:.3f} ms (covers every tau\' <= tau), feed speed '
+        f'v = {v_feed*1e3:.2f} mm/s')
     log('  cells: 20 over the edge; theta per cell: removal x mid-pass x '
         'damping x force coeff.')
     log('')

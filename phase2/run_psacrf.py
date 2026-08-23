@@ -1,0 +1,506 @@
+"""run_psacrf.py — design and judge PS-AC-RF, the actuator-aware scheduled member.
+
+The filter scan (log_act_filter.txt) settled the first question the hard way:
+on the STORED PS-AC-R gains no fixed filter works.  The stored winner's
+high-band gain is BROADBAND (9.7e7 across 2.4-4.6 kHz -- a Kalman observer
+pushed to enormous process-noise ratio because nothing in the protocol charged
+for high-band gain), so three notches barely dent the proxy (56 -> 20-34), and
+the rolloff that would dent it destabilises the nominal loop (J = -1000s).
+Gains and filter must be designed TOGETHER: that is this module.
+
+    PS-AC-RF:  u = -K(x_P) xhat, the PS-AC-R envelope-scheduled Riccati law,
+               in series with F(s) = 3 notches at the truncated modes + a
+               second-order rolloff -- 5 + 3 = 8 searched parameters.
+
+Protocol: the stage-3 PSO exactly (same J, same three constraints, same
+optimiser, seeds and budget), plus ONE structure-specific constraint declared
+openly: the actuator-band proxy
+
+    max_x  max_band |W_Pau(jw) K(jw) S(jw)|  <=  0.55,   both bands
+    (2.2-4.8 kHz where the additive weights live, 0.3-1.4 kHz where the modes
+     do), at the three design positions
+
+-- the cheap stand-in for the G1 actuator channel (the y_Paf row of the RS cut
+is zero, so the block measures exactly |W_Pau K S|).  The D-K designs spent
+their synthesis pressure on that channel through the additive weights; the LQG
+members never had any such pressure, and their mu_RS = 85.8 is the bill.  This
+member gets the pressure through the constraint, and the disclosure is this
+paragraph plus the parameter count.
+
+Success criteria, PRE-DECLARED (docs/09 sections 2 and 5-bis):
+
+    G1  sup over the 21 nodes of mu_RS(point, ACTUATOR INCLUDED)      < 1
+    G2  the same with the interpolation cell of position              < 1
+    G3  S1 nominal floor (stage-7 protocol)             >= 0.6821 mm (mu-TDC)
+    G4  a_p^inf certified by crossing                   >= 0.3954 mm (PS-TDC-R)
+    G5  no scenario of the four collapses               (> 0.05 mm)
+    G6  whole-pass certificate (sched_cert): alpha > 0 with v_cert >= the
+        actual feed speed at the reference depth
+
+Anything short is reported as exactly that.
+
+    python phase2/run_psacrf.py                 (design + judge + certify)
+    python phase2/run_psacrf.py design          (stages singly)
+    python phase2/run_psacrf.py judge21 certify whole_pass scenarios verdict
+
+Appends to results/log_psacrf.txt; stores in the shared stage pkls + npz.
+"""
+import os
+import pickle
+import sys
+import time
+import warnings
+
+import numpy as np
+
+warnings.filterwarnings('ignore')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import config as C
+from plate_model import build_plate
+from plant_ss import ControlledPlant
+from act_filter import band_proxy
+from design2 import Design2
+from eval2 import evaluate
+from pso import pso
+
+OUT = C.RESULTS
+KIND = 'ps_ac_rfa'
+MU_SCR_MAX = 0.90
+PROXY_MAX = 0.55
+RE_VERT = -0.5          # corner poles: delay-free loop alive on the envelope
+MS_VERT = 2.0           # corner modulus margin: same bar as the nominal one
+                        # (the stored PS-AC-R sits at 1.14 on the corners, the
+                        #  fragile round-1 winner at 2.73 -- room and contrast)
+TARGET = dict(g3_floor=0.6821e-3, g4_apinf=0.3954e-3, g4_amb=0.4364e-3)
+LOG = open(os.path.join(OUT, 'log_psacrf.txt'), 'a')
+
+
+def log(*a):
+    line = ' '.join(str(x) for x in a)
+    print(line, flush=True)
+    LOG.write(line + '\n')
+    LOG.flush()
+
+
+def upd(fname, patch):
+    p = os.path.join(OUT, fname)
+    store = pickle.load(open(p, 'rb')) if os.path.exists(p) else {}
+    store.update(patch)
+    with open(p, 'wb') as f:
+        pickle.dump(store, f)
+    return store
+
+
+def proxy_of(plate, ctrl):
+    """The actuator-band proxy, worst over the three design positions."""
+    v = 0.0
+    for fr in C.POSITIONS_DESIGN:
+        ss, _ = ctrl.at(fr * plate.lp)
+        hi, lo = band_proxy(plate, ss)
+        v = max(v, hi, lo)
+    return v
+
+
+# -- the envelope screens: the physics corners, cheaply -----------------------
+_F_SCREEN = np.logspace(0.5, 4.1, 140)
+
+
+def vertex_screens(plate, plant, ctrl):
+    """(worst max-Re, worst Ms) of the closed loop over the eight corners of
+    the physics set -- removal x force coefficient x damping -- at the three
+    design positions.  The first PSO round showed why this pressure is
+    needed: J plus the band proxy alone steered the search into designs
+    whose PARAMETRIC mu collapsed at mode 2 (1.7-2.1 against the stored
+    member's 0.58) while every nominal screen looked fine.  The corners are
+    the same family the mu judge certifies, so this is envelope design made
+    explicit, at FRF cost."""
+    om = 2 * np.pi * _F_SCREEN
+    n = plant.n
+    worst_re, worst_ms = -np.inf, 0.0
+    corners = [(eta, am, z) for eta in (0.0, C.ETA_MAX)
+               for am in (C.ALPHA_LO / 1.6, C.ALPHA_HI / 1.6)
+               for z in (C.ZETA_LO, C.ZETA_HI)]
+    for frx in C.POSITIONS_DESIGN:
+        x = frx * plate.lp
+        ss, _ = ctrl.at(x)
+        Ac, Bc, Cc, Dc = [np.atleast_2d(np.asarray(m, float)) for m in ss]
+        Bc = Bc.reshape(-1, 1); Cc = Cc.reshape(1, -1)
+        nc = Ac.shape[0]
+        K = ss_frf_cached(ss, om)
+        for eta, am, z in corners:
+            A, _, B, _, Cy = plant.matrices(x_pos=x,
+                                            a4=am * 1.6 * plant.abar4,
+                                            eta=eta, zeta_scale=z)
+            ncl = A.shape[0] + nc
+            M = np.zeros((ncl, ncl))
+            M[:2 * n, :2 * n] = A + float(Dc[0, 0]) * (B @ Cy)
+            M[:2 * n, 2 * n:] = B @ Cc
+            M[2 * n:, :2 * n] = Bc @ Cy
+            M[2 * n:, 2 * n:] = Ac
+            worst_re = max(worst_re, float(np.max(np.linalg.eigvals(M).real)))
+            if worst_re > 0.0:
+                return worst_re, np.inf          # already dead: stop paying
+            Pu = _frf_siso(A, B, Cy, om)
+            worst_ms = max(worst_ms, float(np.max(np.abs(
+                1.0 / (1.0 - Pu * K)))))
+    return worst_re, worst_ms
+
+
+def _frf_siso(A, B, Cy, om):
+    n = A.shape[0]
+    I = np.eye(n)
+    out = np.empty(len(om), complex)
+    for k, w in enumerate(om):
+        out[k] = (Cy @ np.linalg.solve(1j * w * I - A, B))[0, 0]
+    return out
+
+
+def ss_frf_cached(ss, om):
+    from fopid import ss_frf
+    return ss_frf(ss, om)
+
+
+# -- the direct structured screen: scalar-D mu at key frequencies -------------
+class MuScreen:
+    """The G1 quantity itself, made cheap enough for the search loop.
+
+    Rounds 1-2 taught the lesson twice: neither the band proxy nor the
+    corner screens track the structured test -- designs cleared both and
+    collapsed under mu (1.7-2.8 at the modes).  So the screen IS mu now:
+    the scaled generalized plants of the judge, prepared ONCE per node, and
+    the scalar-D upper bound evaluated at a fixed handful of frequencies
+    around the modes and across the actuator band (~0.3 s per candidate).
+    Scalar-D over-estimates the tight bound and a 15-point grid can miss a
+    peak, so the full judge still has the last word on the winner."""
+
+    F_SCR = np.array([520.0, 565.0, 610.0, 700.0, 900.0, 1050.0, 1100.0,
+                      1178.0, 1300.0, 2790.0, 3000.0, 3350.0, 3700.0,
+                      4000.0, 4120.0, 4400.0])
+
+    def __init__(self, plate, nodes=(0.0, 0.5)):
+        import control as ct
+        from mu_scheduled import plant_at, POS
+        from dk_synthesis import prepare_plant
+        self.plate = plate
+        self.nodes = nodes
+        self.data = []
+        for frx in nodes:
+            U = plant_at(plate, frx * plate.lp)
+            P = U.generalized_plant()
+            Ps, info = prepare_plant(P)
+            keep = [j for j, (nm, _) in enumerate(U.blocks_used)
+                    if nm not in POS]
+            ch = np.concatenate([U.idx[U.blocks_used[j][0]] for j in keep])
+            rows = np.concatenate([[0, 1], 2 + ch]).astype(int)
+            cols = np.concatenate([[0], 1 + ch]).astype(int)
+            blocks = ([('F', 2, 1)]
+                      + [('S', U.blocks_used[j][1], U.blocks_used[j][1])
+                         for j in keep])
+            self.data.append(dict(Ps=ct.ss(Ps), info=info, rows=rows,
+                                  cols=cols, blocks=blocks,
+                                  ncon=P['ncon'], nmeas=P['nmeas']))
+
+    def __call__(self, ctrl, limit=None):
+        import control as ct
+        from cross_mu import frf
+        from dk_synthesis import mu_upper_bound
+        worst = 0.0
+        for frx, d in zip(self.nodes, self.data):
+            ss, _ = ctrl.at(frx * self.plate.lp)
+            A, B, Cm, D = [np.atleast_2d(np.asarray(m, float)) for m in ss]
+            w0, u0, y0 = d['info']['w0'], d['info']['u0'], d['info']['y0']
+            Ks = ct.ss(A / w0, B.reshape(-1, 1) / w0 * y0,
+                       Cm.reshape(1, -1) / u0, D * y0 / u0)
+            T = ct.ss(d['Ps'].lft(Ks, d['ncon'], d['nmeas']))
+            w = 2 * np.pi * self.F_SCR / w0
+            H = frf(T, w)[:, d['rows']][:, :, d['cols']]
+            d0 = None
+            for k in range(len(w)):
+                m, d0 = mu_upper_bound(H[k], d['blocks'], d0)
+                worst = max(worst, m)
+                if limit is not None and worst > limit:
+                    return worst
+        return worst
+
+
+# ---------------------------------------------------------------------------
+def design(plate, plant):
+    log('')
+    log(f'--- DESIGN {KIND}: stage-3 PSO + the member\'s declared design '
+        'pressure ---')
+    log('  member: the augmented structure (filter INSIDE the design model,')
+    log('  certainty equivalence intact -- act_filter.ps_ac_rfa)')
+    log(f'  screen 1 (corners): poles <= {RE_VERT} 1/s, Ms <= {MS_VERT} on '
+        'the 8 physics corners x 3 positions')
+    log(f'  screen 2 (structured): scalar-D mu_RS, actuator included, on the '
+        f'{len(MuScreen.F_SCR)}-frequency grid at 2 nodes <= {MU_SCR_MAX}')
+    log('  (rounds 1-2, recorded above, taught this twice: the band proxy')
+    log('   and the corner screens do not track the structured test -- the')
+    log('   screen is mu itself now.  All of it is this member\'s declared')
+    log('   synthesis pressure, as the D-K machinery is mu-TDC\'s.)')
+    d = Design2(KIND, plant, plate, None)
+    scr = MuScreen(plate)
+
+    def fit(u):
+        try:
+            c = d.build(u)
+        except Exception:
+            return -1e4
+        try:
+            re_v, ms_v = vertex_screens(plate, plant, c)
+        except Exception:
+            return -1e4
+        pen = 0.0
+        if re_v > RE_VERT:
+            pen += 10.0 * min((re_v - RE_VERT) / 10.0, 10.0)
+        if ms_v > MS_VERT:
+            pen += 10.0 * min(ms_v / MS_VERT - 1.0, 10.0)
+        if pen > 0.0:
+            return -60.0 - pen
+        try:
+            mu_s = scr(c, limit=4.0)
+        except Exception:
+            return -1e4
+        if mu_s > MU_SCR_MAX:
+            return -45.0 - 10.0 * (mu_s / MU_SCR_MAX - 1.0)
+        J, info = evaluate(plate, c, detail=True)
+        if not info['feasible']:
+            return J
+        return J
+
+    t0 = time.time()
+    best = (None, -np.inf)
+    for sd in C.OPT['seeds']:
+        t = time.time()
+        x, J, info = pso(fit, d.n, seed=sd, verbose=False)
+        log(f'  seed {sd}: J = {J:+.4f}   [{time.time()-t:.0f}s]')
+        if J > best[1]:
+            best = (x, J)
+    x, Jc = best
+    c = d.build(x)
+    J, info = evaluate(plate, c, detail=True)
+    p = proxy_of(plate, c)
+    mu_s = scr(c)
+    params = d.decode(x)
+    log(f'  winner: J = {J:+.5f}  mu_screen = {mu_s:.3f}  proxy = {p:.3f}  '
+        f'order {c.order}  {c.n_params} parameters  [{time.time()-t0:.0f}s]')
+    log(f'  Ms = {info["Ms"]:.3f}   effort = {info["V"]:.1f} V/N   '
+        f'slowest nominal pole = {info["max_re"]:.1f} 1/s')
+    log('  parameters: ' + ', '.join(f'{k}={v:.4g}'
+                                     for k, v in params.items()))
+    upd('stage3_controllers.pkl',
+        {KIND: dict(x=x, J=float(J), params=params, n_params=c.n_params,
+                    order=c.order, Ms=float(info['Ms']), V=float(info['V']),
+                    proxy=float(p), mu_screen=float(mu_s))})
+    log('  -> stage3_controllers.pkl')
+
+
+# ---------------------------------------------------------------------------
+def judge21(plate, plant):
+    """G1/G2: mu_RS per scheduling node, ACTUATOR INCLUDED, at all 21 nodes
+    (point) and with the interpolation cell of position (cell) -- the gate
+    quantity of docs/09, judged by the same machinery as every design."""
+    from mu_scheduled import plant_at, mu_rs, POS, N_NODES
+    from robust_design import freq_grid
+    from stage_common import load_controllers
+
+    ctrl = load_controllers(plate, plant)[KIND](plant)
+    f = freq_grid()
+    xs = np.linspace(0.0, plate.lp, N_NODES)
+    cell_h = plate.lp / (N_NODES - 1) / 2.0
+
+    log('')
+    log('--- JUDGE ps_ac_rf: mu_RS at the 21 nodes, actuator block INCLUDED')
+    t0 = time.time()
+    pt, cl = [], []
+    for x in xs:
+        ss, _ = ctrl.at(float(x))
+        pt.append(mu_rs(plant_at(plate, x), ss, f, drop=POS,
+                        actuator=True)[0])
+        cl.append(mu_rs(plant_at(plate, x, cell_h), ss, f,
+                        actuator=True)[0])
+        log(f'    x = {x*1e3:5.1f} mm   point {pt[-1]:7.3f}   '
+            f'cell {cl[-1]:7.3f}')
+    pt, cl = np.array(pt), np.array(cl)
+    log(f'  G1 sup(point) = {pt.max():.3f}  at x = {xs[pt.argmax()]*1e3:.1f} '
+        f'mm   {"< 1: MET" if pt.max() < 1 else ">= 1: NOT MET"}')
+    log(f'  G2 sup(cell)  = {cl.max():.3f}  at x = {xs[cl.argmax()]*1e3:.1f} '
+        f'mm   {"< 1: MET" if cl.max() < 1 else ">= 1: NOT MET"}')
+    log(f'  (references: best fixed design 1.205; scheduled LQG members 85.8;'
+        f' chain reproducible optimum 1.73)   [{time.time()-t0:.0f}s]')
+    np.savez(os.path.join(OUT, 'psacrf_mu.npz'), x=xs, point=pt, cell=cl,
+             cell_h=cell_h)
+    log('  -> results/psacrf_mu.npz')
+
+
+# ---------------------------------------------------------------------------
+def certify(plate):
+    """Crossing + margins + common-P LK: the exact stage-56 block."""
+    import certify2 as CF2
+    from stage_common import load_controllers
+
+    tau0 = 60.0 / (3 * C.RPM_S)
+    etas = tuple(np.linspace(0.0, C.ETA_MAX, 3))
+    zetas = (C.ZETA_LO, C.ZETA_HI)
+    full = dict(n_pos=9, etas=etas, zetas=zetas, xis=(0.5, 1.0))
+    plant0 = ControlledPlant(plate, ap=C.AP_S)
+    mk = load_controllers(plate, plant0)[KIND]
+    c0 = mk(plant0)
+
+    log('')
+    log('--- CERTIFY ps_ac_rf: same vertex family and bisections as '
+        'stage 5-6 ---')
+    t = time.time()
+    tm, peak, ok = CF2.analyse(plant0, c0, **full)
+    ratio = 'inf' if np.isinf(tm) else f'{tm/tau0:.2f}'
+    log(f'  peak = {peak:.3f}   tau_max/tau0 = {ratio}   '
+        f'[{time.time()-t:.0f}s]')
+
+    def plant_of(ap):
+        return ControlledPlant(plate, ap=ap)
+
+    light = dict(n_pos=5, etas=(0.0, C.ETA_MAX), zetas=zetas, xis=(1.0,))
+    t = time.time()
+    ap_inf = CF2.depth_bisect(plant_of, mk, n_iter=16, **light)
+    log(f'  a_p^inf = {ap_inf*1e3:.4f} mm   (G4 target {TARGET["g4_apinf"]*1e3:.4f},'
+        f' ambition {TARGET["g4_amb"]*1e3:.4f})   [{time.time()-t:.0f}s]')
+    t = time.time()
+    dmax = CF2.margin_bisect(plant0, c0, n_iter=14,
+                             base_kw=dict(n_pos=5, xis=(1.0,)))
+    log(f'  delta_max = {dmax:.2f}   (mu-TDC: 1.54, PS-TDC-R: 1.40)   '
+        f'[{time.time()-t:.0f}s]')
+    pl_lk = ControlledPlant(plate, ap=max(ap_inf, 1e-6))
+    lk = CF2.lk_common_P(pl_lk, mk(pl_lk), n_pos=3,
+                         etas=(0.0, C.ETA_MAX), zetas=zetas, xis=(1.0,))
+    lk_txt = ('yes' if lk['feasible']
+              else ('no' if lk.get('attempted', True) else 'n/a'))
+    log(f'  common-P LK at a_p^inf: {lk_txt}')
+    upd('stage56.pkl',
+        {KIND: dict(peak=peak, tau_max=tm, tau_ratio=tm / tau0,
+                    ap_inf=ap_inf, delta_max=dmax, lk=bool(lk['feasible']),
+                    lk_attempted=bool(lk.get('attempted', True)))})
+    log('  -> stage56.pkl')
+
+
+# ---------------------------------------------------------------------------
+def whole_pass(plate):
+    """G6: the exponential-LK + dwell certificate over the scheduling tube."""
+    import sched_cert as SC
+    from stage_common import load_controllers
+
+    plant = ControlledPlant(plate, ap=C.AP_S)
+    ctrl = load_controllers(plate, plant)[KIND](plant)
+    v_feed = plant.feed_speed()
+    log('')
+    log('--- WHOLE-PASS ps_ac_rf: exponential LK per cell + dwell theorem ---')
+    t = time.time()
+    cells = SC.FamilyCells(plant, ctrl)
+    r0 = SC.certify_family(cells, 0.0, verbose=False, log=log)
+    if not r0['feasible']:
+        log(f'  alpha = 0 INFEASIBLE at cell {r0["failed_cell"]} -- '
+            'G6 not met at the reference depth; reported as exactly that')
+        upd('stage56.pkl', {KIND + '_pass': dict(feasible=False)})
+        return
+    a_star, r = SC.alpha_ladder(cells, log=log)
+    ws = cells.ws
+    log(f'  every cell certified;  alpha* = {a_star*ws:.2f} 1/s (scaled '
+        f'{a_star:.4f})')
+    if a_star > 0 and len(r['mus']):
+        vc = r['v_cert'] * ws
+        log(f'  jump factors: min {r["mus"].min():.3f}  max '
+            f'{r["mus"].max():.3f}')
+        log(f'  G6 certified traversal speed v_cert = '
+            + ('unbounded' if np.isinf(vc) else f'{vc*1e3:.2f} mm/s')
+            + f'  vs actual feed {v_feed*1e3:.2f} mm/s  -> '
+            + ('MET' if (np.isinf(vc) or vc >= v_feed) else 'NOT MET'))
+        upd('stage56.pkl',
+            {KIND + '_pass': dict(feasible=True, alpha=a_star * ws,
+                                  mus=np.asarray(r['mus']),
+                                  v_cert=vc, v_feed=v_feed)})
+    else:
+        log('  alpha = 0 only: cells certified but no decay margin -- the '
+            'dwell theorem needs alpha > 0; G6 NOT met')
+        upd('stage56.pkl', {KIND + '_pass': dict(feasible=True, alpha=0.0)})
+    log(f'  [{time.time()-t:.0f}s]')
+
+
+# ---------------------------------------------------------------------------
+def scenarios(plate):
+    import run_stage78 as S78
+    from stage_common import load_controllers
+    plant = ControlledPlant(plate)
+    mk = load_controllers(plate, plant)[KIND]
+    log('')
+    log('--- SCENARIOS ps_ac_rf: stages 7-8, same code path as everyone ---')
+    p = os.path.join(OUT, 'stage78.pkl')
+    store = pickle.load(open(p, 'rb'))
+    for fn in (S78.s1, S78.s2, S78.s3, S78.s4):
+        fn(plate, plant, {KIND: mk}, store)
+    with open(p, 'wb') as f:
+        pickle.dump(store, f)
+    log('  -> stage78.pkl')
+
+
+# ---------------------------------------------------------------------------
+def verdict():
+    s56 = pickle.load(open(os.path.join(OUT, 'stage56.pkl'), 'rb'))
+    s78 = pickle.load(open(os.path.join(OUT, 'stage78.pkl'), 'rb'))
+    mu = np.load(os.path.join(OUT, 'psacrf_mu.npz'))
+    r = s56.get(KIND, {})
+    ps = s56.get(KIND + '_pass', {})
+    S1 = np.asarray(s78[f'S1_{KIND}']['limits'], float)
+    S3 = np.asarray(s78[f'S3_{KIND}'], float)
+    S4 = np.asarray(s78[f'S4_{KIND}'], float)
+    checks = [
+        ('G1  sup mu_RS(point, actuator) < 1',
+         f'{mu["point"].max():.3f}', mu['point'].max() < 1.0),
+        ('G2  sup mu_RS(cell, actuator) < 1',
+         f'{mu["cell"].max():.3f}', mu['cell'].max() < 1.0),
+        ('G3  S1 floor >= 0.6821 mm (mu-TDC)',
+         f'{S1.min()*1e3:.4f}', S1.min() >= TARGET['g3_floor']),
+        ('G4  a_p^inf >= 0.3954 mm (PS-TDC-R)',
+         f'{r.get("ap_inf", 0)*1e3:.4f}',
+         r.get('ap_inf', 0) >= TARGET['g4_apinf']),
+        ('G5  no scenario collapse (> 0.05)',
+         f'{min(S3.min(), S4.min()):.4f}', min(S3.min(), S4.min()) > 0.05),
+        ('G6  whole-pass: alpha > 0, v_cert >= feed',
+         (f'a={ps.get("alpha", 0):.1f}/s v={ps.get("v_cert", 0)*1e3:.1f}mm/s'
+          if ps.get('feasible') else 'infeasible'),
+         bool(ps.get('feasible')) and ps.get('alpha', 0) > 0
+         and (np.isinf(ps.get('v_cert', 0))
+              or ps.get('v_cert', 0) >= ps.get('v_feed', np.inf))),
+    ]
+    log('')
+    log('--- VERDICT PS-AC-RF against the pre-declared criteria ' + '-' * 16)
+    for name, val, ok in checks:
+        log(f'  {"PASS" if ok else "FAIL"}  {name:<40s} {val}')
+    n = sum(ok for _, _, ok in checks)
+    log(f'  {n}/6 criteria met'
+        + ('' if n == 6 else ' -- reported as exactly that'))
+
+
+# ---------------------------------------------------------------------------
+STAGES = dict(design=lambda pl, pt: design(pl, pt),
+              judge21=lambda pl, pt: judge21(pl, pt),
+              certify=lambda pl, pt: certify(pl),
+              whole_pass=lambda pl, pt: whole_pass(pl),
+              scenarios=lambda pl, pt: scenarios(pl),
+              verdict=lambda pl, pt: verdict())
+
+
+def main(args):
+    t0 = time.time()
+    which = [a for a in args if a in STAGES] or list(STAGES)
+    plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
+    plant = ControlledPlant(plate)
+    log('=' * 74)
+    log('PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)')
+    log('=' * 74)
+    for name in which:
+        STAGES[name](plate, plant)
+    log(f'\ntotal {time.time()-t0:.0f}s')
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

@@ -88,8 +88,16 @@ def act_filter_ss(depth, q, fr, orders=2):
 
 def ps_ac_rf(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
              name='PS_AC_RF'):
-    """PS-AC-R with the actuator filter in series: same scheduled Riccati law,
-    plus the fixed F(s).  Parameter count 5 + 3, reported as exactly that."""
+    """PS-AC-R with the actuator filter in SERIES: same scheduled Riccati law,
+    plus the fixed F(s).  Parameter count 5 + 3, reported as exactly that.
+
+    KEPT AS THE RECORD of the first two design rounds (log_psacrf.txt): the
+    appended filter breaks certainty equivalence -- the observer believes its
+    command reaches the plate while F(s) distorts it -- and the constrained
+    PSO landed on parametrically fragile designs twice (mu 1.7-2.1 at mode 2,
+    then 2.2-2.8 at mode 1, against 0.58 for the unfiltered member).  The
+    member that fixes this is ps_ac_rfa below.
+    """
     inner = ps_ac(plant, q_pos, q_vel, r, ratio, sched_K=True, sched_L=False,
                   a4_mult=a4_mult)
     Fss = act_filter_ss(depth, q, fr)
@@ -101,6 +109,87 @@ def ps_ac_rf(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
     return Ctrl(name, 8, builder=build, scheduled=True,
                 meta=dict(grid=inner.meta['grid'], depth=depth, q=q, fr=fr,
                           a4_mult=a4_mult))
+
+
+# ---------------------------------------------------------------------------
+def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
+              name='PS_AC_RFA'):
+    """The actuator-aware member with the filter INSIDE the design model.
+
+    u_cmd -> F(s) -> u_p -> plate.  The filter is part of the controller, so
+    its states are KNOWN -- nothing about them is estimated -- and certainty
+    equivalence survives:
+
+      * LQR on the augmented model  [x_F; x_p]  at each scheduling position
+        (cut model, a4_mult * alpha_40, the PS-AC-R envelope convention),
+        weighting only the plate states and the command;
+      * the observer estimates the PLATE alone, driven by the exact filtered
+        command u_p the controller itself computes, position-blind
+        (sched_L=False, the adopted PS-AC-R convention);
+      * u_cmd = -K_aug [x_F; xhat_p].
+
+    Same F(s) structure (three notches at the truncated modes + second-order
+    rolloff), same 5 + 3 = 8 searched parameters, same outer realisation
+    convention (the common 8 kHz rolloff).
+    """
+    n = plant.n
+    Q = np.diag(np.concatenate([q_pos * np.ones(n), q_vel * np.ones(n)]))
+    xs = np.linspace(0.0, plant.plate.lp, 21)
+    Af, Bf, Cf, Df = [np.atleast_2d(np.asarray(m, float))
+                      for m in act_filter_ss(depth, q, fr)]
+    Bf = Bf.reshape(-1, 1)
+    Cf = Cf.reshape(1, -1)
+    nf = Af.shape[0]
+    Wbar = _mean_noise(plant)
+
+    def build(x_pos, eta=0.0):
+        x = 0.5 * plant.plate.lp if x_pos is None else float(x_pos)
+        x = float(np.clip(x, xs[0], xs[-1]))
+        A, _, B, E, Cy = plant.matrices(x_pos=x, eta=0.0,
+                                        a4=a4_mult * plant.a40)
+        A0, B0, _ = plant.structure_only(0.0)
+        # augmented design model: [x_F ; x_p]
+        Aa = np.block([[Af, np.zeros((nf, 2 * n))],
+                       [B @ Cf, A]])
+        Ba = np.vstack([Bf, B @ Df])
+        Qa = np.zeros((nf + 2 * n, nf + 2 * n))
+        Qa[nf:, nf:] = Q
+        from scipy.linalg import solve_continuous_are
+        Pa = solve_continuous_are(Aa, Ba, Qa + 1e-9 * np.eye(nf + 2 * n),
+                                  np.atleast_2d(r))
+        Ka = np.linalg.solve(np.atleast_2d(r), Ba.T @ Pa)
+        Kf, Kp = Ka[:, :nf], Ka[:, nf:]
+        # plate-only observer, position-blind noise, structure-only model
+        Po = solve_continuous_are(A0.T, Cy.T,
+                                  ratio * Wbar + 1e-12 * np.eye(2 * n),
+                                  np.atleast_2d(1.0))
+        L = Po @ Cy.T
+        # controller realisation, y -> u_p, states [x_F ; xhat_p]
+        Ac = np.block([
+            [Af - Bf @ Kf, -Bf @ Kp],
+            [B0 @ (Cf - Df @ Kf), A0 - B0 @ (Df @ Kp) - L @ Cy]])
+        Bc = np.vstack([np.zeros((nf, 1)), L])
+        Cc = np.hstack([Cf - Df @ Kf, -Df @ Kp])
+        Dc = np.zeros((1, 1))
+        return _ro((Ac, Bc, Cc, Dc)), None
+
+    return Ctrl(name, 8, builder=build, scheduled=True,
+                meta=dict(grid=xs, depth=depth, q=q, fr=fr,
+                          a4_mult=a4_mult, augmented=True))
+
+
+def _mean_noise(plant):
+    n = plant.n
+    W = np.zeros((2 * n, 2 * n))
+    xs = np.linspace(0.0, plant.plate.lp, 21)
+    for x in xs:
+        _, _, _, E, _ = plant.matrices(x_pos=x)
+        W += E @ E.T
+    return W / len(xs)
+
+
+def _ro(ss):
+    return series(ss, rolloff_ss(C.ROLLOFF_HZ, C.ROLLOFF_ORDER))
 
 
 # ---------------------------------------------------------------------------

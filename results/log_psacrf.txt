@@ -1,0 +1,49 @@
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- DESIGN ps_ac_rf: stage-3 PSO + the declared actuator-band constraint ---
+  proxy: max over bands (0.3-1.4k, 2.2-4.8k) and the 3 design positions of |W_Pau K S| <= 0.55
+  seed 1: J = -0.4482   [179s]
+  seed 2: J = -0.4530   [472s]
+  seed 3: J = -0.5473   [155s]
+  winner: J = -0.44820  proxy = 0.464  order 14  8 parameters  [806s]
+  Ms = 1.903   effort = 232.5 V/N   slowest nominal pole = -47.1 1/s
+  parameters: log_q_pos=12.09, log_q_vel=5.98, log_r=-4.52, log_ratio=9.523, a4_mult=1.453, log_depth=-1.174, q_notch=2.784, log_fr=3.881
+  -> stage3_controllers.pkl
+
+total 807s
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- DESIGN ps_ac_rf: stage-3 PSO + the member's declared design pressure ---
+  band proxy: max over bands (0.3-1.4k, 2.2-4.8k), 3 positions, of |W_Pau K S| <= 0.55
+  envelope screens: corner poles <= -0.5 1/s and corner Ms <= 2.0 over the 8 physics corners x 3 positions
+  (round 1 ran without the screens: J = -0.448 and the parametric
+   mu collapsed to 1.7-2.1 at mode 2 -- J plus the band proxy alone
+   steer into parametrically fragile corners; the screens are the
+   envelope-design pressure made explicit, and they are declared
+   as part of this member's synthesis, as D-K is of mu-TDC's.)
+  seed 1: J = -0.8869   [190s]
+  seed 2: J = -0.5743   [461s]
+  seed 3: J = -0.5565   [194s]
+  winner: J = -0.55652  proxy = 0.495  order 14  8 parameters  [845s]
+  Ms = 1.676   effort = 191.6 V/N   slowest nominal pole = -47.1 1/s
+  parameters: log_q_pos=13.89, log_q_vel=7.882, log_r=-8.71, log_ratio=9.023, a4_mult=1.234, log_depth=-1.166, q_notch=2.336, log_fr=3.817
+  -> stage3_controllers.pkl
+
+total 845s
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- DESIGN ps_ac_rfa: stage-3 PSO + the member's declared design pressure ---
+  member: the augmented structure (filter INSIDE the design model,
+  certainty equivalence intact -- act_filter.ps_ac_rfa)
+  screen 1 (corners): poles <= -0.5 1/s, Ms <= 2.0 on the 8 physics corners x 3 positions
+  screen 2 (structured): scalar-D mu_RS, actuator included, on the 16-frequency grid at 2 nodes <= 0.9
+  (rounds 1-2, recorded above, taught this twice: the band proxy
+   and the corner screens do not track the structured test -- the
+   screen is mu itself now.  All of it is this member's declared
+   synthesis pressure, as the D-K machinery is mu-TDC's.)
