@@ -104,3 +104,40 @@ DIAGNOSIS-2 - the mechanism, named exactly (session measurements)
     certificate): point certificates P(x) every ~0.8 mm, scale-balanced
     neighbour jump densities rho = d ln mu / dx, constant-in-time
     uncertainties sliced -- v* = min_x 2 alpha / rho(x).  Measured next.
+ADIABATIC LADDER 2 - rfa at its crossing-certified depth; RI deeper
+[ps_ac_rfa]  a_p = 0.28 mm   feed 4.90 mm/s
+  a4 lo : rho max 8.003e+02 1/m at x = 49.2 mm;  v* (min-rule) = 25.124 mm/s, v* (integral) = 42.247 mm/s  [1s]
+  a4 nom: rho max 8.003e+02 1/m at x = 49.2 mm;  v* (min-rule) = 25.124 mm/s, v* (integral) = 42.247 mm/s  [1s]
+  a4 hi : rho max 8.800e+02 1/m at x = 2.5 mm;  v* (min-rule) = 22.849 mm/s, v* (integral) = 41.324 mm/s  [1s]
+  => v_cert(adiabatic, sliced) = 22.849 mm/s  vs feed 4.90 mm/s: CERTIFIED at the actual feed
+
+[ps_ac_ri]  a_p = 0.20 mm   feed 4.90 mm/s
+  a4 lo : rho max 3.029e+02 1/m at x = 50.0 mm;  v* (min-rule) = 66.376 mm/s, v* (integral) = 85.911 mm/s  [1s]
+  a4 nom: rho max 6.018e+02 1/m at x = 50.0 mm;  v* (min-rule) = 33.411 mm/s, v* (integral) = 43.136 mm/s  [0s]
+  a4 hi : 44/121 point certificates missing -- slice not certifiable  [0s]
+
+[ps_ac_ri]  a_p = 0.30 mm   feed 4.90 mm/s
+  a4 lo : rho max 6.009e+02 1/m at x = 49.2 mm;  v* (min-rule) = 33.460 mm/s, v* (integral) = 56.464 mm/s  [1s]
+  a4 nom: rho max 2.714e+03 1/m at x = 49.2 mm;  v* (min-rule) = 7.408 mm/s, v* (integral) = 11.107 mm/s  [0s]
+  a4 hi : 121/121 point certificates missing -- slice not certifiable  [0s]
+
+
+ADIABATIC VERDICT (results/adiab_pass.npz -- the P/Q chains, rotation
+densities and v* per slice, re-checkable from disk)
+  ps_ac_ri  @ 0.10 mm: v* = 33.4 mm/s (worst slice, all three certified)
+                       vs feed 4.90 mm/s -- CERTIFIED, margin 6.8x
+  ps_ac_rfa @ 0.28 mm: v* = 22.8 mm/s (worst slice, all three certified)
+                       vs feed 4.90 mm/s -- CERTIFIED, margin 4.7x
+  depth boundaries of the DI premise (pointwise disc measure >= 1 at the
+  a4-hi corner): ps_ac_ri loses the hi slice between 0.10 and 0.20 mm;
+  at 0.30 mm the nom slice still yields 7.4 mm/s but the hi slice fails
+  at every node.  ps_ac_rfa at 0.30 mm loses 3/121 nodes on the hi
+  slice -- consistent with its exact-crossing depth 0.2841 mm.
+  mu_tdc_ps: the DI premise is wrong BY DESIGN for a TDC member -- it
+  EXPLOITS the delay, so "stable for every tau' <= tau" is not its
+  contract (46-100/121 nodes refuse the disc); its whole-pass statement
+  stays with the exact-crossing instrument.
+  Caveats, stated: this is the h->0 limit of the chain theorem (the
+  O(h^2) in-cell residual is argued, not certified per cell); eta/xi
+  frozen at the mid-pass tube; zeta nominal; alpha fixed at 2e-3 scaled
+  (10 1/s), not optimised.
