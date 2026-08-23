@@ -155,3 +155,9 @@ total 3s
   structure: rfa + lead(f_l in 400-1780 Hz, k in 1.5-9), 10 parameters
   seed 1: J = -0.3891   [1664s]
   seed 2: J = -0.5052   [1598s]
+  seed 3: J = -0.3385   [1515s]
+  winner: J = -0.33845  proxy = 0.701  max|pole| = 5.03e+04 rad/s  order 15  10 parameters  [4781s]
+  Ms = 1.450   effort = 158.0 V/N   slowest nominal pole = -47.4 1/s
+  parameters: log_q_pos=13.15, log_q_vel=0.7708, log_r=-6.021, log_ratio=9.709, a4_mult=0.8921, log_depth=-1.107, q_notch=0.7245, log_fr=3.161, log_f_lead=2.627, k_lead=1.56
+  verdict vs ceiling: J = -0.3385 vs ps_ac_rfa -0.2807 (does NOT break the ceiling)
+  -> stage3_controllers.pkl [ps_ac_rfl]
