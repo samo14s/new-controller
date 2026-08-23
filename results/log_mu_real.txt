@@ -64,3 +64,6 @@ M1-real 21-NODE SWEEP - witness and round-5 member, mixed reading
   node  1  x =   5.0 mm:  complex   1.663  ->  mixed   0.247   [606s]
   node  2  x =  10.0 mm:  complex   1.663  ->  mixed   0.246   [648s]
   node  3  x =  15.0 mm:  complex   1.661  ->  mixed   0.244   [704s]
+  node  4  x =  20.0 mm:  complex   1.658  ->  mixed   0.243   [703s]
+  node  5  x =  25.0 mm:  complex   1.654  ->  mixed   0.242   [787s]
+  node  6  x =  30.0 mm:  complex   1.649  ->  mixed   0.252   [540s]

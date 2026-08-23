@@ -134,3 +134,18 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
 ==========================================================================
 
 --- SCENARIOS ps_ac_rf: stages 7-8, same code path as everyone ---
+  -> stage78.pkl
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- VERDICT PS-AC-RF against the pre-declared criteria ----------------
+  PASS  G1  sup mu_RS(point, actuator, REAL reading) < 1 0.383
+  PASS  G2  cell at the worst node (REAL reading) < 1 0.320
+  FAIL  G3  S1 floor >= 0.6821 mm (mu-TDC)       0.4189
+  FAIL  G4  a_p^inf >= 0.3954 mm (PS-TDC-R)      0.2841
+  PASS  G5  no scenario collapse (> 0.05)        0.2872
+  FAIL  G6  whole-pass: alpha > 0, v_cert >= feed infeasible
+  3/6 criteria met -- reported as exactly that
+
+total 3s

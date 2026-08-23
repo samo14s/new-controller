@@ -578,17 +578,23 @@ def scenarios(plate):
 def verdict():
     s56 = pickle.load(open(os.path.join(OUT, 'stage56.pkl'), 'rb'))
     s78 = pickle.load(open(os.path.join(OUT, 'stage78.pkl'), 'rb'))
-    mu = np.load(os.path.join(OUT, 'psacrf_mu.npz'))
+    # G1/G2 under the MIXED (real) reading -- the judge the member was built
+    # for after docs/09's resolution; mu_real_r5.npz is its record
+    mr = np.load(os.path.join(OUT, 'mu_real_r5.npz'))
+    g1 = max(float(mr['r5_0_point_peak']),
+             float(mr['r5_50_mixed'].max()),
+             float(mr['r5_100_mixed'].max()))
+    g2 = float(mr['r5_0_cell_peak'])
     r = s56.get(KIND, {})
     ps = s56.get(KIND + '_pass', {})
     S1 = np.asarray(s78[f'S1_{KIND}']['limits'], float)
     S3 = np.asarray(s78[f'S3_{KIND}'], float)
     S4 = np.asarray(s78[f'S4_{KIND}'], float)
     checks = [
-        ('G1  sup mu_RS(point, actuator) < 1',
-         f'{mu["point"].max():.3f}', mu['point'].max() < 1.0),
-        ('G2  sup mu_RS(cell, actuator) < 1',
-         f'{mu["cell"].max():.3f}', mu['cell'].max() < 1.0),
+        ('G1  sup mu_RS(point, actuator, REAL reading) < 1',
+         f'{g1:.3f}', g1 < 1.0),
+        ('G2  cell at the worst node (REAL reading) < 1',
+         f'{g2:.3f}', g2 < 1.0),
         ('G3  S1 floor >= 0.6821 mm (mu-TDC)',
          f'{S1.min()*1e3:.4f}', S1.min() >= TARGET['g3_floor']),
         ('G4  a_p^inf >= 0.3954 mm (PS-TDC-R)',

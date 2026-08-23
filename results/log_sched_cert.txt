@@ -28,3 +28,13 @@ total 115s -> results/sched_cert.npz
   nothing on the small ladder certifies either -- the DI-LK conservatism at rank-one delayed coupling is the whole story
 
 [ps_ac_ri] DESIGN: stage-3 PSO inside realizable bounds (ratio <= 1e9, poles <= 2pi*20kHz)
+  seed 1: J = -0.4827  [754s]
+  seed 2: J = -0.4822  [528s]
+  seed 3: J = -0.4924  [633s]
+  winner: J = -0.48221  Ms = 1.820  max|pole| = 1.21e+05 rad/s  [1917s]
+  parameters: log_q_pos=13.5, log_q_vel=0.7272, log_r=-8.928, log_ratio=9, a4_mult=0.4108
+  -> stage3_controllers.pkl
+
+[ps_ac_ri] WHOLE-PASS DEPTH LADDER, FULL BOX, alpha = 10 1/s
+  a_p = 0.10 mm: infeasible at cell 0  [95s]
+  the realizable member does not certify either -- reported as is
