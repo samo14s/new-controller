@@ -276,6 +276,14 @@ def build(kind, plant, u, ss_mu=None):
                   name='PS_AC_R')
         c.n_params = 5
         return c
+    if kind == 'ps_ac_ri':
+        # the envelope law confined to realizable gains (see config.BOUNDS2)
+        c = ps_ac(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
+                  10 ** u['log_r'], 10 ** u['log_ratio'],
+                  sched_K=True, sched_L=False, a4_mult=u['a4_mult'],
+                  name='PS_AC_RI')
+        c.n_params = 5
+        return c
     if kind == 'ps_ac_rf':
         # the actuator-aware member: PS-AC-R's scheduled Riccati law with the
         # fixed truncated-mode filter in series (act_filter.py); 5 + 3 tuned

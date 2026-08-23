@@ -129,3 +129,8 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
   -> stage56.pkl
 
 total 331s
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- SCENARIOS ps_ac_rf: stages 7-8, same code path as everyone ---

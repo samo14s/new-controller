@@ -137,6 +137,12 @@ BOUNDS2 = dict(
     ps_ac_r=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
                  log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0),
                  a4_mult=(0.4, 2.0)),
+    # ps_ac_ri: the same envelope law inside REALIZABLE bounds -- the whole-
+    # pass certificate needs a heavily damped loop (constant-scale DI-LK) AND
+    # a tame realization (the SDP); the stored members never had both.
+    ps_ac_ri=dict(log_q_pos=(10.0, 16.0), log_q_vel=(-4.0, 8.0),
+                  log_r=(-10.0, -4.0), log_ratio=(4.0, 9.0),
+                  a4_mult=(0.4, 2.0)),
     ps_ac_rf=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
                   log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0),
                   a4_mult=(0.4, 2.0),

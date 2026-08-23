@@ -16,3 +16,15 @@ mu-TDC-PS - THE WITNESS BASE WITH THE POSITION-SCHEDULED PAIR
   -> stage56.pkl
 
 --- SCENARIOS mu_tdc_ps: stages 7-8, same code path as everyone ---
+  -> stage78.pkl
+
+--- VERDICT mu-TDC-PS against the pre-declared bars ------------------
+  FAIL  C1  a_p^inf  > 0.4364 mm  (mu-TDC)           0.4305
+  FAIL  C2  delta_max >= 1.54     (mu-TDC)           1.54
+  FAIL  C3  S1 floor >= 0.6821 mm (mu-TDC)           0.6792
+  PASS  C5  no scenario collapses to 0               0.4393
+  PASS  G1(real), inherited from the witness verbatim 0.248-0.419
+  2/5 criteria met -- reported as exactly that
+  (common-P LK: no)
+
+total 1752s

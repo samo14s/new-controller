@@ -10,3 +10,21 @@ WHOLE-PASS CERTIFICATE - EXPONENTIAL DI-LK + DWELL-BOUNDED TRAVERSAL
 total 115s -> results/sched_cert.npz
 
 [mu_tdc_ps] WHOLE-PASS DEPTH LADDER (full box, alpha = 2e-3 = 10 1/s)
+  a_p = 0.10 mm: infeasible at cell 0  [54s]
+  no depth on the ladder certifies -- reported as exactly that
+
+[mu_tdc_ps] WHOLE-PASS MARGIN delta_pass at a_p = 0.3 mm, alpha = 10 1/s
+  (inflation scales the coefficient about nominal, the removal range and
+   the damping band together -- the margin_bisect convention, applied to
+   the strictest instrument in the house: cells + jumps + dwell)
+  scale 0.02: infeasible at cell 0  [62s]
+  even the near-nominal tube refuses -- reported as exactly that
+
+[mu_tdc_ps] WHOLE-PASS, SMALL-DEPTH LADDER, FULL BOX (the end-to-end
+  theorem demo; the conservatism of the DI-LK against the exact
+  crossing test -- peak 0.613 < 1 at 0.30 mm full box -- is the gap
+  being priced, not the physics)
+  a_p = 0.02 mm: infeasible at cell 0  [84s]
+  nothing on the small ladder certifies either -- the DI-LK conservatism at rank-one delayed coupling is the whole story
+
+[ps_ac_ri] DESIGN: stage-3 PSO inside realizable bounds (ratio <= 1e9, poles <= 2pi*20kHz)
