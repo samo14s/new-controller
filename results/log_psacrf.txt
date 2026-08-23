@@ -154,3 +154,4 @@ total 3s
   pressures: round-5 set exactly (corners -0.5/2.0, proxy 0.85/1.6, poles <= 125664 rad/s)
   structure: rfa + lead(f_l in 400-1780 Hz, k in 1.5-9), 10 parameters
   seed 1: J = -0.3891   [1664s]
+  seed 2: J = -0.5052   [1598s]
