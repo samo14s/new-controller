@@ -38,3 +38,15 @@ total 115s -> results/sched_cert.npz
 [ps_ac_ri] WHOLE-PASS DEPTH LADDER, FULL BOX, alpha = 10 1/s
   a_p = 0.10 mm: infeasible at cell 0  [95s]
   the realizable member does not certify either -- reported as is
+
+==============================================================================
+DIAGNOSIS - where the cell DI-LK loses vs the exact crossing measure
+  (rank-one A_d: crossing peak == disc g_inf; per vertex the two tests
+   are KYP-equivalent, so the gap must be common storage or numerics)
+==============================================================================
+[ps_ac_ri @ 0.10 mm, FULL BOX] cell 0: 32 vertices, eps = 1.46e-05, tau_scaled = 20.5
+  A_d rank-one quality: max s2/s1 = 1.39e-16
+  per-vertex crossing peak (= disc measure g_inf): min 0.040  max 0.541  (0/32 vertices >= 1)  [0s]
+  single-vertex LK @ worst (peak 0.541): infeasible  [2s]
+  single-vertex LK @ best (peak 0.040): infeasible  [2s]
+  common LK over 2 (best+worst): infeasible  [4s]
