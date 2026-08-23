@@ -163,8 +163,8 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
 <div class="verdict">
   <p>
     الأثر الشاهد المخزون — الذي حَكَم عليه قاضي الدراسة العقديّ بـ<span class="mono">1.156</span> —
-    يعبر البوّابة الحقيقية عند <span class="q">0.25–0.42</span>،
-    وعضو م1-الحقيقية المجدوَل يعبر G1 وG2 معًا عند <span class="q">0.28–0.38</span>
+    يعبر البوّابة الحقيقية على <b>كامل شبكة الجدولة</b>: ‏21/21 عقدة عند <span class="q">0.24–0.42</span>،
+    وعضو م1-الحقيقية المجدوَل يعبرها كلَّها كذلك عند <span class="q">0.28–0.38</span> مع G2
     بأرضية مواضع فوق عمق المرجع — وهو حتميّ، قابلٌ للاستنساخ، وقابلٌ للتنفيذ.
   </p>
 </div>
@@ -177,13 +177,13 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
   </div>
   <div class="kpi open">
     <div class="lbl">الشاهد الثابت mu_paper — القراءة الحقيقية</div>
-    <div class="num" id="kpi-witness">&le; 0.419</div>
-    <div class="sub" id="kpi-witness-sub">أقصى الحدود العليا المُتحقَّق منها على العقد المجسوسة — البوّابة معبورة بهامش أكثر من الضعف</div>
+    <div class="num" id="kpi-witness">0.419</div>
+    <div class="sub" id="kpi-witness-sub">سقف الحدود العليا المُتحقَّق منها على <b>كامل الشبكة (21 عقدة)</b> — البوّابة معبورة على كل عقدة، بقاعٍ 0.242 عند منتصف اللوح</div>
   </div>
   <div class="kpi member">
     <div class="lbl">العضو المجدوَل PS-AC-RFA (م1-الحقيقية)</div>
     <div class="num">0.383</div>
-    <div class="sub">G1 نقطةً (0.28–0.38) وG2 خليّةً (0.32 عند العقدة الأسوأ) محقّقتان؛ أرضية المواضع عند سرعة المرجع 0.42 mm؛ أقطاب ≤ 60 krad/s</div>
+    <div class="sub">G1 على كامل الشبكة (0.28–0.38 عبر الـ21 عقدة) وG2 خليّةً (0.32 عند العقدة الأسوأ) محقّقتان؛ أرضية المواضع عند سرعة المرجع 0.42 mm؛ أقطاب ≤ 60 krad/s</div>
   </div>
 </div>
 
@@ -241,15 +241,15 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
       <tr class="hero">
         <td><b>PS-AC-RFA — الجولة 5</b> (فائز م1-الحقيقية)</td>
         <td class="n">2.1–2.3</td><td class="n">—</td>
-        <td class="n"><b>0.284–0.383</b></td><td class="n"><b>0.320</b>†</td>
+        <td class="n"><b>0.283–0.383</b></td><td class="n"><b>0.320</b>†</td>
         <td><span class="pill ok">محققة + G2</span></td>
       </tr>
     </tbody>
   </table></div>
   <p class="note">* قيمة شبكة الغربال (19 ترددًا) لا شبكة القاضي الكاملة.
-  † خليّة العقدة الأسوأ؛ بقيّة الخلايا مؤجَّلة لمسح الـ21 عقدة (نمط «الخليّة ≈ النقطة ±0.02»
-  ثابت عبر سبعة قياسات).
-  المصادر: <code>results/mu_real.npz</code> · <code>mu_real_members.npz</code> · <code>mu_real_rf2.npz</code> · <code>mu_real_r5.npz</code> · السجل <code>log_mu_real.txt</code>.</p>
+  † خليّة العقدة الأسوأ (نمط «الخليّة ≈ النقطة ±0.02» ثابت عبر سبعة قياسات).
+  مدَيا الشاهد والجولة 5 المختلطان هما الآن قراءة <b>كامل الشبكة</b> — 21 عقدة لكلٍّ (الشكل في القسم ٤).
+  المصادر: <code>results/mu_real.npz</code> · <code>mu_real_members.npz</code> · <code>mu_real_rf2.npz</code> · <code>mu_real_r5.npz</code> · <code>mu_real_21.npz</code> · السجل <code>log_mu_real.txt</code>.</p>
 </section>
 
 <!-- ============ M0e ============ -->
@@ -323,11 +323,22 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     تُفحص قيمُها الذاتية عدديًّا، فأي حلٍّ «غير دقيق» إمّا يسلّم شهادة تصمد للفحص أو لا يسلّم شيئًا.
   </p>
   <p class="note" id="sweepbox">
-    المجسوس نقطيًّا: ثلاث عقد لكل متحكّم (الطرفان والمنتصف) وخلايا الاستيفاء للعضوين.
-    ومسح شبكة الجدولة الكاملة (21 عقدة، الشاهد ثم العضو) <b>يجري الآن تدريجيًّا</b> بحفظٍ
-    عقدةً فعقدة وتفقّدٍ مجدوَل يودِعه؛ عقدات الشاهد الخمس الأولى: 0.248، 0.247، 0.246،
-    0.244، 0.243 — راسخة عميقًا تحت البوّابة وتزداد عمقًا مع الابتعاد عن الحافّة الأسوأ.
+    اكتمل مسح شبكة الجدولة الكاملة: <b>42 سجلًّا</b> (21 عقدة × {الشاهد، العضو}، منحنيان
+    لكل عقدة؛ ثلاثة عمّال متوازون يكتب كلٌّ ملفَه ثم دُمجت) — <b>كل عقدة دون البوّابة</b>:
+    الشاهد 0.242–0.419 والعضو 0.283–0.383، والعقدة الرابطة للاثنين هي الطرف الحر حيث يبلغ
+    مِعامل الإزالة η أقصاه. والعقد المشتركة مع القياس الاستكشافي الثلاثي تستنسخه حرفيًّا
+    (0.248/0.249/0.419 و0.338/0.284/0.383).
   </p>
+  <div class="fig">
+    <div class="legend" id="lg3"></div>
+    <svg id="chart3" viewBox="0 0 860 300" role="img" aria-label="ذروة μ المختلطة عند كل عقدة من عقد الجدولة الإحدى والعشرين للشاهد والعضو المجدوَل"></svg>
+    <p class="cap">
+      ذروة μ المختلطة (نقطة، بكتلة المشغِّل) عند كل عقدة من الـ21 — البوّابة عند 1 تعلوها
+      بهامش 2.4× فأصعد. القراءة المركّبة على الشبكة نفسها (1.63–1.73 للشاهد و2.11–2.27
+      للعضو؛ في التلميحة) تُظهر تسعير 4–8× الزائد الذي أسقطته القراءة الحقيقية.
+      المصدر: <code>mu_real_21.npz</code> · الذروات <code>mu_real_21_sup.npz</code>.
+    </p>
+  </div>
   <p>
     وحاجز أعضاء LQG بقي حقيقيًّا لا قراءةً (3.8 بعد كل تخفيف — الترشيح كان ضروريًّا)، وعضو
     الجولة الثانية «الهشّ عقديًّا» (2.9–3.7) خرج <b>الأعمقَ عبورًا</b> (0.25–0.31):
@@ -376,9 +387,9 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
         <td>ضمن القيود المشتركة كلّها</td></tr>
       <tr><td>قابلية التنفيذ (أسرع قطب متحكّم)</td><td class="n">5.0e4 rad/s</td>
         <td>≈ 8 kHz — مقابل 1.4–8.8 MHz طفيلية في أعضاء الدراسة الأولى</td></tr>
-      <tr class="hero"><td>بوّابة G1(حقيقية) — النقاط الثلاث + الخليّة الأسوأ</td>
-        <td class="n">0.284–0.383 · 0.320</td>
-        <td>أعمق عضوٍ مجدوَل حتى الآن، بهامش يقارب ثلاثة أضعاف تحت البوّابة</td></tr>
+      <tr class="hero"><td>بوّابة G1(حقيقية) — كامل الشبكة (21 عقدة) + الخليّة الأسوأ</td>
+        <td class="n">0.283–0.383 · 0.320</td>
+        <td>أعمق عضوٍ مجدوَل حتى الآن — كل عقدةٍ دون البوّابة بهامش ≥ 2.6×</td></tr>
       <tr><td>أرضية المواضع عند سرعة المرجع (a<sub>p,lim</sub>)</td>
         <td class="n">0.419 mm</td>
         <td>[0.42، 0.84، 0.72، 1.06، 0.53] عبر المواضع الخمسة — <b>فوق عمق المرجع 0.3 mm</b>؛ ‏J السالب يعاقب متوسّط الأعماق الأعمق المسبورة (0.6 و1.0 mm)</td></tr>
@@ -414,8 +425,8 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     الدراسة — يحمل بالقراءة الحقيقية البوّابة والأداء معًا</b>: ‏G1(حقيقية) 0.248–0.419 +
     أرضية G3 (عتبتها رقمه) + G4. سؤال «من يجمع الاثنين؟» أجابه المعيار رجعيًّا حين صُحّح
     التسعير. ما بقي للجدولة أن تثبته: أرضية PS-TDC-R (‏0.9307 mm، +36٪) فوق قاعدةٍ تعبر
-    البوّابة — وهو ما يحاصره سقف J ≈ ‎−0.28 البنيوي للبنى المرشَّحة الحالية؛ تعويض تقدُّم
-    الطور عند النمطين هو المرشَّح المسمّى لكسره.
+    البوّابة — وهو ما يحاصره سقف J ≈ ‎−0.28 البنيوي للبنى المرشَّحة الحالية؛ كان تعويض
+    تقدُّم الطور المرشَّحَ المسمّى لكسره، <b>وقد قيس فرُفض</b> (أدناه).
   </p>
   <h3>حدود أداة المسار الكامل — قيست وسُمّيت</h3>
   <p>
@@ -437,10 +448,22 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     فرقُ 0.62 من J هو ثمن قابلية التنفيذ لبنية LQG المجدوَلة — رقم يعيد تسعير كل مقارنات
     الأداء السابقة.
   </p>
+  <h3>المرشَّح المسمّى قيس — تعويض تقدُّم الطور لا يكسر سقف J</h3>
+  <p>
+    العضو <span class="mono">ps_ac_rfl</span> — البنية المعزَّزة نفسها + lead من الرتبة الأولى
+    <b>داخل نموذج التصميم</b> (10 معاملات؛ نفس ضغوط الجولة 5 والمُحسِّن والبذور حرفيًّا كي يبقى
+    J قابلًا للمقارنة المباشرة) — بلغ <span class="mono">J = ‎−0.339‎</span> مقابل السقف
+    ‎−0.281‎ (بذوره: ‎−0.389 / ‎−0.505 / ‎−0.339‎). والأبلغ من الرقم أن السرب أوقف مِعاملَي
+    الـlead على الحدّين الأدنيين للصندوق (f<sub>lead</sub> = 424 Hz عند حدّه 400،
+    k = 1.56 عند حدّه 1.5) — أي أنه حاول <em>إطفاء</em> الرافعة: تقدُّمُ الطور يُشترى بكسبٍ
+    عالي التردد يحاسبه وكيل نطاق المشغِّل فورًا، فيخسر أكثر مما يكسب.
+    <b>سقف ‎−0.28‎ نتيجةٌ بنيوية الآن، ومرشَّحُ كسره المسمّى مقيسٌ ومرفوض</b>
+    (<code>log_psacrf.txt</code> · <code>stage3_controllers.pkl['ps_ac_rfl']</code>).
+  </p>
   <div class="next">
-    <div class="card"><b>مسح 21 عقدة — جارٍ</b><span>يعمل تدريجيًّا (عقدةً فعقدة تُودَع)؛ العقد الخمس الأولى للشاهد: 0.243–0.248 — ثابتة عميقًا تحت البوّابة.</span></div>
+    <div class="card"><b>مسح 21 عقدة — اكتمل</b><span>‏42/42 سجلًّا: الشاهد بسقف 0.419 والعضو 0.383 (كلاهما عند الطرف الحر) — كل عقدة دون البوّابة بهامش ≥ 2.4×. الشكل في القسم ٤ والجدول الكامل في السجل.</span></div>
     <div class="card"><b>بروتوكول 7–8 — نُفِّذ للعضوين الجديدين</b><span>‏rfa: حكم نهائي 3/6 (البوّابتان الحقيقيتان + عدم الانهيار)؛ ‏mu-TDC-PS: تعادل μ-TDC على كل محور. الجداول أعلاه.</span></div>
-    <div class="card"><b>الرافعة المفتوحة الوحيدة</b><span>بنية تجمع عمق القاعدة البارامتري المجدوَل وصمتَ نطاق المشغِّل دون سقف J — تعويض تقدُّم الطور هو المرشَّح المسمّى.</span></div>
+    <div class="card"><b>الرافعة الأخيرة — قيست وأُغلقت</b><span>‏ps_ac_rfl: ‏J = ‎−0.339‎ لا يكسر ‎−0.281‎ والسرب أطفأ الـlead بنفسه — السقف بنيوي. البند المفتوح الوحيد نظريّ: دالّة خلوية أرحب لشهادة المسار الكامل.</span></div>
   </div>
 </section>
 
@@ -453,11 +476,15 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     <li><span class="h">87f78d5</span><span class="m">mu_real: الحدّ المختلط الحقيقي/العقدي — ثمن القراءة العقدية</span></li>
     <li><span class="h">aa7696b</span><span class="m">القراءة الحقيقية تفتح البوّابة: G1 وG2 محقّقتان — بالشاهد وبالعضو المجدوَل</span></li>
     <li><span class="h">f2d6d1e</span><span class="m">عضو الجولة الثانية «الهش» هو الأعمق عبورًا: 0.25–0.31</span></li>
+    <li><span class="h">d088603</span><span class="m">توصيل عضو مسبار تقدُّم الطور ps_ac_rfl — ‏lead داخل نموذج التصميم</span></li>
+    <li><span class="h">9438442</span><span class="m">حكم المسبار: J = ‎−0.339‎ لا يكسر السقف — والسرب أطفأ الـlead بنفسه</span></li>
+    <li><span class="h">9ce1a30</span><span class="m">اكتمال مسح الـ21 عقدة: G1(حقيقية) محقّقة على كل عقدة — 0.419 و0.383</span></li>
   </ul>
   <p class="note" style="margin-top:16px">
     كل رقم في هذه الصفحة محسوب من أثرٍ مخزون على القرص — سياسة «الأثر أولًا» التي حمت
     نتائج الدراسة الأولى من فجوة الاستنساخ هي نفسها المتّبعة هنا:
-    <code>m0e_filter.npz</code> · <code>mu_real*.npz</code> · <code>log_musyn_sched.txt</code> ·
+    <code>m0e_filter.npz</code> · <code>mu_real*.npz</code> (ومنها مسح الشبكة الكامل
+    <code>mu_real_21.npz</code>) · <code>log_musyn_sched.txt</code> ·
     <code>log_psacrf.txt</code> · <code>log_mu_real.txt</code>.
   </p>
 </section>
@@ -496,6 +523,22 @@ var M0E = [
   {name:'(1e5, 1.7e-3, 800) · n=1',  nom:1.728, cert:1.728, lucky:false},
   {name:'(3e5, 1.7e-2, 1500) · n=3', nom:1.799, cert:1.996, lucky:false}
 ];
+/* the full 21-node sweep (mu_real_21.npz): peak mixed / complex mu per node */
+var SWEEP = {
+  x: [0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],
+  series: [
+    {name:'mu_paper — الشاهد الثابت', col:'--s1',
+     mx:[0.248,0.247,0.246,0.244,0.243,0.242,0.252,0.252,0.251,0.250,0.249,
+         0.262,0.283,0.303,0.322,0.339,0.359,0.376,0.394,0.406,0.419],
+     cx:[1.693,1.663,1.663,1.661,1.658,1.654,1.649,1.644,1.638,1.633,1.630,
+         1.642,1.652,1.662,1.669,1.675,1.678,1.680,1.679,1.677,1.733]},
+    {name:'PS-AC-RFA ج5 — العضو المجدوَل', col:'--s3',
+     mx:[0.338,0.331,0.324,0.316,0.309,0.302,0.296,0.291,0.287,0.283,0.284,
+         0.288,0.296,0.304,0.315,0.328,0.340,0.350,0.361,0.372,0.383],
+     cx:[2.149,2.176,2.201,2.223,2.240,2.254,2.264,2.270,2.270,2.266,2.261,
+         2.269,2.270,2.266,2.255,2.239,2.218,2.194,2.166,2.137,2.106]}
+  ]
+};
 
 /* ---------- helpers ---------- */
 var svgNS = 'http://www.w3.org/2000/svg';
@@ -605,8 +648,67 @@ function chart2(){
   });
 }
 
-chart1(); chart2();
+/* ---------- chart 3 : the 21-node sweep ---------- */
+function chart3(){
+  var svg = document.getElementById('chart3');
+  if (!svg) return;
+  svg.innerHTML = '';
+  var W = 860, H = 300, L = 46, R = 24, T = 24, B = 46;
+  var pw = W - L - R, ph = H - T - B;
+  var ymax = 1.08;
+  function X(v){ return L + pw * v / 100; }               /* clamp -> free end, LTR */
+  function Y(v){ return T + ph * (1 - v / ymax); }
+  var grid = tok('--grid'), muted = tok('--muted'), ink2 = tok('--ink-2');
+
+  [0.2, 0.4, 0.6, 0.8].forEach(function(g){
+    el(svg, 'line', {x1:L, y1:Y(g), x2:W-R, y2:Y(g), stroke:grid, 'stroke-width':1});
+    txt(svg, L-8, Y(g)+4, g.toFixed(1), {'text-anchor':'end', fill:muted, 'font-size':'11',
+        'font-family':'IBM Plex Mono, monospace', direction:'ltr'});
+  });
+  /* gate */
+  el(svg, 'line', {x1:L, y1:Y(1), x2:W-R, y2:Y(1), stroke:tok('--bad'), 'stroke-width':2,
+                   'stroke-dasharray':'5 4'});
+  txt(svg, L+6, Y(1)-7, 'البوّابة μ = 1', {'text-anchor':'end', fill:tok('--bad'),
+      'font-size':'12.5', 'font-weight':'600'});
+  [0, 25, 50, 75, 100].forEach(function(g){
+    txt(svg, X(g), H-B+18, String(g), {'text-anchor':'middle', fill:muted, 'font-size':'11',
+        'font-family':'IBM Plex Mono, monospace'});
+  });
+  txt(svg, L + pw/2, H-8, 'موضع العقدة على مجرى التغذية (mm) — من التثبيت إلى الطرف الحر',
+      {'text-anchor':'middle', fill:muted, 'font-size':'12'});
+
+  SWEEP.series.forEach(function(s){
+    var c = tok(s.col);
+    var pts = s.mx.map(function(v, i){ return X(SWEEP.x[i]) + ',' + Y(v); }).join(' ');
+    el(svg, 'polyline', {points:pts, fill:'none', stroke:c, 'stroke-width':2.5,
+                         'stroke-linejoin':'round', 'stroke-linecap':'round'});
+    s.mx.forEach(function(v, i){
+      el(svg, 'circle', {cx:X(SWEEP.x[i]), cy:Y(v), r:4, fill:c,
+                         stroke:tok('--surface'), 'stroke-width':1.5});
+      var halo = el(svg, 'circle', {cx:X(SWEEP.x[i]), cy:Y(v), r:11, fill:'transparent'});
+      hover(halo, '<b>' + s.name + '</b><br>العقدة ' + i + ' — ‏x = ' + SWEEP.x[i] +
+                  ' mm<br><span style="direction:ltr;unicode-bidi:embed">مختلطة ' + v.toFixed(3) +
+                  ' · مركّبة ' + s.cx[i].toFixed(2) + '</span>');
+    });
+  });
+  /* direct labels at the binding node (the free end); the two values sit
+     8 px apart vertically, so the higher series labels above, the lower below.
+     ltr run + 'end' pins the RIGHT edge, growing left into the plot. */
+  SWEEP.series.forEach(function(s, si){
+    var last = s.mx.length - 1;
+    txt(svg, X(100) - 8, Y(s.mx[last]) + (si === 0 ? -10 : 20), s.mx[last].toFixed(3),
+        {'text-anchor':'end', fill:ink2, 'font-size':'11.5', 'font-weight':'600',
+         'font-family':'IBM Plex Mono, monospace', direction:'ltr'});
+  });
+
+  var lg = document.getElementById('lg3');
+  if (lg) lg.innerHTML = SWEEP.series.map(function(s){
+    return '<span class="it"><span class="sw" style="background:' + tok(s.col) + '"></span>' + s.name + '</span>';
+  }).join('');
+}
+
+chart1(); chart2(); chart3();
 var mq = window.matchMedia('(prefers-color-scheme: dark)');
-if (mq.addEventListener) mq.addEventListener('change', function(){ chart1(); chart2(); });
+if (mq.addEventListener) mq.addEventListener('change', function(){ chart1(); chart2(); chart3(); });
 })();
 </script>
