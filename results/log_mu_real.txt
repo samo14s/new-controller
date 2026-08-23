@@ -39,3 +39,5 @@ MIXED REAL/COMPLEX mu - THE G1 QUANTITY RE-READ WITH THE PARAMETRICS REAL
   x= 50%: complex   3.239 -> MIXED   0.249 at   1178 Hz   <-- G1(real) MET  [704s]
   x=100%: complex   2.952 -> MIXED   0.313 at   1178 Hz   <-- G1(real) MET  [528s]
 -> results/mu_real_rf2.npz
+
+M1-real: the stored mu_paper witness at the 21 nodes, mixed reading
