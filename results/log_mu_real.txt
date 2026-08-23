@@ -70,3 +70,53 @@ M1-real 21-NODE SWEEP - witness and round-5 member, mixed reading
   node  7  x =  35.0 mm:  complex   1.644  ->  mixed   0.252   [542s]
   node  8  x =  40.0 mm:  complex   1.638  ->  mixed   0.251   [535s]
   node  9  x =  45.0 mm:  complex   1.633  ->  mixed   0.250   [522s]
+
+M1-real 21-NODE SWEEP - MERGED FINAL TABLE (3 parallel workers)
+[mu_paper (witness)]
+  node  0  x =   0.0 mm:  complex   1.693  ->  mixed   0.248   at   1042 Hz
+  node  1  x =   5.0 mm:  complex   1.663  ->  mixed   0.247   at   1042 Hz
+  node  2  x =  10.0 mm:  complex   1.663  ->  mixed   0.246   at   1042 Hz
+  node  3  x =  15.0 mm:  complex   1.661  ->  mixed   0.244   at   1042 Hz
+  node  4  x =  20.0 mm:  complex   1.658  ->  mixed   0.243   at   1178 Hz
+  node  5  x =  25.0 mm:  complex   1.654  ->  mixed   0.242   at   1178 Hz
+  node  6  x =  30.0 mm:  complex   1.649  ->  mixed   0.252   at   1178 Hz
+  node  7  x =  35.0 mm:  complex   1.644  ->  mixed   0.252   at   1178 Hz
+  node  8  x =  40.0 mm:  complex   1.638  ->  mixed   0.251   at   1178 Hz
+  node  9  x =  45.0 mm:  complex   1.633  ->  mixed   0.250   at   1178 Hz
+  node 10  x =  50.0 mm:  complex   1.630  ->  mixed   0.249   at   1178 Hz
+  node 11  x =  55.0 mm:  complex   1.642  ->  mixed   0.262   at   1178 Hz
+  node 12  x =  60.0 mm:  complex   1.652  ->  mixed   0.283   at   1178 Hz
+  node 13  x =  65.0 mm:  complex   1.662  ->  mixed   0.303   at   1178 Hz
+  node 14  x =  70.0 mm:  complex   1.669  ->  mixed   0.322   at   1178 Hz
+  node 15  x =  75.0 mm:  complex   1.675  ->  mixed   0.339   at   1042 Hz
+  node 16  x =  80.0 mm:  complex   1.678  ->  mixed   0.359   at   1042 Hz
+  node 17  x =  85.0 mm:  complex   1.680  ->  mixed   0.376   at   1042 Hz
+  node 18  x =  90.0 mm:  complex   1.679  ->  mixed   0.394   at   1042 Hz
+  node 19  x =  95.0 mm:  complex   1.677  ->  mixed   0.406   at   1042 Hz
+  node 20  x = 100.0 mm:  complex   1.733  ->  mixed   0.419   at   1042 Hz
+  sup over the 21 nodes = 0.419  (worst node 20, x = 100.0 mm)  < 1  G1(real) MET on every node
+[ps_ac_rfa round 5 (scheduled member)]
+  node  0  x =   0.0 mm:  complex   2.149  ->  mixed   0.338   at   1504 Hz
+  node  1  x =   5.0 mm:  complex   2.176  ->  mixed   0.331   at   1504 Hz
+  node  2  x =  10.0 mm:  complex   2.201  ->  mixed   0.324   at   1504 Hz
+  node  3  x =  15.0 mm:  complex   2.223  ->  mixed   0.316   at   1504 Hz
+  node  4  x =  20.0 mm:  complex   2.240  ->  mixed   0.309   at   1504 Hz
+  node  5  x =  25.0 mm:  complex   2.254  ->  mixed   0.302   at   1504 Hz
+  node  6  x =  30.0 mm:  complex   2.264  ->  mixed   0.296   at   1504 Hz
+  node  7  x =  35.0 mm:  complex   2.270  ->  mixed   0.291   at   1504 Hz
+  node  8  x =  40.0 mm:  complex   2.270  ->  mixed   0.287   at   1504 Hz
+  node  9  x =  45.0 mm:  complex   2.266  ->  mixed   0.283   at   1504 Hz
+  node 10  x =  50.0 mm:  complex   2.261  ->  mixed   0.284   at   1504 Hz
+  node 11  x =  55.0 mm:  complex   2.269  ->  mixed   0.288   at   1504 Hz
+  node 12  x =  60.0 mm:  complex   2.270  ->  mixed   0.296   at   1504 Hz
+  node 13  x =  65.0 mm:  complex   2.266  ->  mixed   0.304   at   1504 Hz
+  node 14  x =  70.0 mm:  complex   2.255  ->  mixed   0.315   at   1178 Hz
+  node 15  x =  75.0 mm:  complex   2.239  ->  mixed   0.328   at   1178 Hz
+  node 16  x =  80.0 mm:  complex   2.218  ->  mixed   0.340   at   1178 Hz
+  node 17  x =  85.0 mm:  complex   2.194  ->  mixed   0.350   at   1178 Hz
+  node 18  x =  90.0 mm:  complex   2.166  ->  mixed   0.361   at   1042 Hz
+  node 19  x =  95.0 mm:  complex   2.137  ->  mixed   0.372   at   1042 Hz
+  node 20  x = 100.0 mm:  complex   2.106  ->  mixed   0.383   at   1042 Hz
+  sup over the 21 nodes = 0.383  (worst node 20, x = 100.0 mm)  < 1  G1(real) MET on every node
+
+G1(real), full 21-node reading:  witness sup = 0.419,  member (round 5) sup = 0.383  -- both judged by the same mixed machinery, actuator block included
