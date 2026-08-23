@@ -299,6 +299,114 @@ def design(plate, plant):
 
 
 # ---------------------------------------------------------------------------
+def design_real(plate, plant):
+    """Round 5 -- M1-real: recover the performance under the REAL pressures.
+
+    The mixed reading showed the complex mu screen was overcharging: every
+    filtered member passes G1(real) at 0.25-0.49 while the complex screen
+    priced them at 2.4-10.  So the design pressure drops to what the real
+    physics actually bills:
+
+      * the corner screens (real-parameter envelope: poles and Ms on the 8
+        physics corners x 3 positions) -- unchanged;
+      * the actuator-band proxy RELAXED to hi <= 0.85, lo <= 1.6 (the
+        actuator block stays complex under the mixed reading, so the
+        high band still needs real pressure; the mode band was the J killer
+        at 0.55 and the 2x-3x G1(real) margins of rounds 2/4 buy the slack);
+      * realisability: controller poles <= 2*pi*20 kHz, so the winner stays
+        certifiable by construction (the legacy members' 1.4-8.8 MHz
+        parasitic modes are what locked them out of the SDP);
+      * J and the three shared constraints exactly as stage 3.
+
+    The mixed judge has the last word on the winner (judge stages).  The
+    round-4 entry is preserved as ps_ac_rfa_r4 before this round overwrites
+    the live key, so every number in docs/09 stays reconstructible.
+    """
+    PROXY_HI, PROXY_LO, POLE_MAX = 0.85, 1.6, 2 * np.pi * 20e3
+    log('')
+    log(f'--- DESIGN ROUND 5 ({KIND}) - M1-real: J under the real '
+        'pressures ---')
+    log(f'  corners: poles <= {RE_VERT} 1/s, Ms <= {MS_VERT} (8 corners x 3'
+        ' positions)')
+    log(f'  actuator proxy: hi <= {PROXY_HI} (2.2-4.8k), lo <= {PROXY_LO} '
+        '(0.3-1.4k), 3 positions')
+    log(f'  realisability: controller poles <= {POLE_MAX:.0f} rad/s')
+    log('  (the complex mu screen is gone -- the mixed reading showed it')
+    log('   overcharging by 5-20x; the mixed judge rules on the winner.)')
+    d = Design2(KIND, plant, plate, None)
+
+    def fit(u):
+        try:
+            c = d.build(u)
+        except Exception:
+            return -1e4
+        try:
+            ss, _ = c.at(0.05)
+            ev = np.linalg.eigvals(np.atleast_2d(np.asarray(ss[0], float)))
+            if np.abs(ev).max() > POLE_MAX:
+                return -400.0 - min(np.abs(ev).max() / POLE_MAX, 50.0)
+            re_v, ms_v = vertex_screens(plate, plant, c)
+        except Exception:
+            return -1e4
+        pen = 0.0
+        if re_v > RE_VERT:
+            pen += 10.0 * min((re_v - RE_VERT) / 10.0, 10.0)
+        if ms_v > MS_VERT:
+            pen += 10.0 * min(ms_v / MS_VERT - 1.0, 10.0)
+        if pen > 0.0:
+            return -300.0 - pen
+        try:
+            hi = lo = 0.0
+            for fr in C.POSITIONS_DESIGN:
+                h, l = band_proxy(plate, c.at(fr * plate.lp)[0])
+                hi, lo = max(hi, h), max(lo, l)
+        except Exception:
+            return -1e4
+        pen = 0.0
+        if hi > PROXY_HI:
+            pen += 10.0 * min(hi / PROXY_HI - 1.0, 8.0)
+        if lo > PROXY_LO:
+            pen += 10.0 * min(lo / PROXY_LO - 1.0, 8.0)
+        if pen > 0.0:
+            return -200.0 - pen
+        J, info = evaluate(plate, c, detail=True)
+        if not info['feasible']:
+            return max(-140.0, -100.0 + J / 50.0)
+        return J
+
+    t0 = time.time()
+    best = (None, -np.inf)
+    for sd in C.OPT['seeds']:
+        t = time.time()
+        x, J, info = pso(fit, d.n, seed=sd, verbose=False)
+        log(f'  seed {sd}: J = {J:+.4f}   [{time.time()-t:.0f}s]')
+        if J > best[1]:
+            best = (x, J)
+    x, _ = best
+    c = d.build(x)
+    J, info = evaluate(plate, c, detail=True)
+    p = proxy_of(plate, c)
+    params = d.decode(x)
+    ev = np.linalg.eigvals(np.atleast_2d(np.asarray(c.at(0.05)[0][0], float)))
+    log(f'  winner: J = {J:+.5f}  proxy = {p:.3f}  max|pole| = '
+        f'{np.abs(ev).max():.2e} rad/s  order {c.order}  '
+        f'{c.n_params} parameters  [{time.time()-t0:.0f}s]')
+    log(f'  Ms = {info["Ms"]:.3f}   effort = {info["V"]:.1f} V/N   '
+        f'slowest nominal pole = {info["max_re"]:.1f} 1/s')
+    log('  parameters: ' + ', '.join(f'{k}={v:.4g}'
+                                     for k, v in params.items()))
+    store = pickle.load(open(os.path.join(OUT, 'stage3_controllers.pkl'),
+                             'rb'))
+    if KIND in store and KIND + '_r4' not in store:
+        store[KIND + '_r4'] = store[KIND]      # keep round 4 reconstructible
+    store[KIND] = dict(x=x, J=float(J), params=params, n_params=c.n_params,
+                       order=c.order, Ms=float(info['Ms']),
+                       V=float(info['V']), proxy=float(p))
+    with open(os.path.join(OUT, 'stage3_controllers.pkl'), 'wb') as f:
+        pickle.dump(store, f)
+    log('  -> stage3_controllers.pkl (round 4 preserved as ps_ac_rfa_r4)')
+
+
 def judge21(plate, plant):
     """G1/G2: mu_RS per scheduling node, ACTUATOR INCLUDED, at all 21 nodes
     (point) and with the interpolation cell of position (cell) -- the gate
@@ -506,6 +614,7 @@ def verdict():
 
 # ---------------------------------------------------------------------------
 STAGES = dict(design=lambda pl, pt: design(pl, pt),
+              design_real=lambda pl, pt: design_real(pl, pt),
               judge21=lambda pl, pt: judge21(pl, pt),
               certify=lambda pl, pt: certify(pl),
               whole_pass=lambda pl, pt: whole_pass(pl),

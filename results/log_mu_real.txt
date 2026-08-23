@@ -41,3 +41,9 @@ MIXED REAL/COMPLEX mu - THE G1 QUANTITY RE-READ WITH THE PARAMETRICS REAL
 -> results/mu_real_rf2.npz
 
 M1-real: the stored mu_paper witness at the 21 nodes, mixed reading
+
+M1-real: the stored mu_paper witness at the 21 nodes, mixed reading
+  x =   0.0 mm:  complex   1.693  ->  mixed   0.248   [543s]
+
+[ps_ac_rfa ROUND 5] mixed judgement of the M1-real winner (J = -0.281)
+  x=  0% point: complex   2.149 -> MIXED   0.338 at   1504 Hz   <-- G1(real) MET  [552s]

@@ -1,0 +1,533 @@
+<title>البوابة بقراءتين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#EFF2F3; --surface:#FFFFFF; --surface-2:#F6F8F9;
+  --ink:#0F1719; --ink-2:#31434A; --muted:#57666C;
+  --rule:#D8DEE0; --rule-soft:#E7ECED;
+  --accent:#0E7490; --accent-ink:#0B5C73; --accent-soft:#E2F1F5;
+  --good:#15803D; --good-soft:#E6F4EA;
+  --warn:#B45309; --warn-soft:#FAF0E2;
+  --bad:#9F1239;  --bad-soft:#FBE9EE;
+  --s1:#7C3AED; --s2:#C2410C; --s3:#0891B2;
+  --grid:#E3E8EA; --shadow:0 1px 3px rgba(15,23,25,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1517; --surface:#162023; --surface-2:#1C282C;
+    --ink:#E8EDEE; --ink-2:#B9C6CA; --muted:#8FA0A5;
+    --rule:#2A383D; --rule-soft:#223034;
+    --accent:#2CA5C7; --accent-ink:#63C2DC; --accent-soft:#123842;
+    --good:#4ADE80; --good-soft:#12301C;
+    --warn:#FBBF24; --warn-soft:#3A2A0E;
+    --bad:#FB7185;  --bad-soft:#3D1220;
+    --s1:#9D6BFF; --s2:#E0653A; --s3:#0E93B5;
+    --grid:#243237; --shadow:0 1px 3px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1517; --surface:#162023; --surface-2:#1C282C;
+  --ink:#E8EDEE; --ink-2:#B9C6CA; --muted:#8FA0A5;
+  --rule:#2A383D; --rule-soft:#223034;
+  --accent:#2CA5C7; --accent-ink:#63C2DC; --accent-soft:#123842;
+  --good:#4ADE80; --good-soft:#12301C;
+  --warn:#FBBF24; --warn-soft:#3A2A0E;
+  --bad:#FB7185;  --bad-soft:#3D1220;
+  --s1:#9D6BFF; --s2:#E0653A; --s3:#0E93B5;
+  --grid:#243237; --shadow:0 1px 3px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:400; line-height:1.85; font-size:16.5px;
+  direction:rtl;
+}
+.wrap{max-width:900px; margin:0 auto; padding:0 20px 88px}
+a{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--rule)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; direction:ltr; unicode-bidi:embed}
+code{background:var(--surface-2); border:1px solid var(--rule-soft); padding:.05em .4em; border-radius:4px; font-size:.86em}
+
+/* ---- masthead ---- */
+header{padding:56px 0 8px}
+.kicker{font-size:.8rem; letter-spacing:.14em; color:var(--accent-ink); font-weight:600; margin-bottom:14px}
+h1{
+  font-family:Amiri,serif; font-weight:700; font-size:clamp(2.4rem,6vw,3.5rem);
+  line-height:1.25; margin:0 0 10px; text-wrap:balance;
+}
+.standfirst{font-size:1.12rem; color:var(--ink-2); max-width:64ch; margin:0}
+.meta{display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:20px; font-size:.85rem; color:var(--muted)}
+.meta b{color:var(--ink-2); font-weight:600}
+
+/* ---- verdict band ---- */
+.verdict{
+  margin:34px 0 0; border-right:4px solid var(--accent);
+  background:var(--surface); box-shadow:var(--shadow); border-radius:10px;
+  padding:22px 26px;
+}
+.verdict p{margin:0; font-family:Amiri,serif; font-size:1.35rem; line-height:1.9}
+.verdict .q{color:var(--accent-ink)}
+
+/* ---- KPI ---- */
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin:26px 0 0}
+.kpi{background:var(--surface); border-radius:10px; box-shadow:var(--shadow); padding:18px 20px 15px; border-top:3px solid var(--rule)}
+.kpi.closed{border-top-color:var(--bad)}
+.kpi.open{border-top-color:var(--good)}
+.kpi.member{border-top-color:var(--accent)}
+.kpi .lbl{font-size:.8rem; color:var(--muted); letter-spacing:.03em; margin-bottom:4px}
+.kpi .num{font-family:"IBM Plex Mono",monospace; font-size:1.9rem; font-weight:600; line-height:1.2; font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:embed}
+.kpi .sub{font-size:.83rem; color:var(--ink-2); margin-top:5px}
+.kpi.closed .num{color:var(--bad)}
+.kpi.open .num{color:var(--good)}
+.kpi.member .num{color:var(--accent-ink)}
+
+/* ---- sections ---- */
+section{margin-top:64px}
+.sec-head{display:flex; align-items:baseline; gap:14px; border-bottom:1px solid var(--rule); padding-bottom:10px; margin-bottom:22px}
+.sec-num{font-family:Amiri,serif; color:var(--accent-ink); font-size:1.5rem; font-weight:700}
+h2{font-family:Amiri,serif; font-weight:700; font-size:1.75rem; margin:0; text-wrap:balance}
+h3{font-family:Amiri,serif; font-weight:700; font-size:1.22rem; margin:30px 0 10px}
+p{max-width:70ch}
+.note{
+  background:var(--surface-2); border-radius:8px; padding:14px 18px;
+  font-size:.92rem; color:var(--ink-2); border-right:3px solid var(--rule);
+  max-width:none;
+}
+.note.finding{border-right-color:var(--accent); background:var(--accent-soft)}
+ul{padding-right:1.3em; max-width:70ch}
+li{margin:.45em 0}
+li::marker{color:var(--accent)}
+
+/* ---- tables ---- */
+.tblwrap{overflow-x:auto; background:var(--surface); border-radius:10px; box-shadow:var(--shadow); margin:18px 0}
+table{border-collapse:collapse; width:100%; font-size:.92rem; min-width:560px}
+th{font-weight:600; color:var(--ink-2); font-size:.84rem; letter-spacing:.02em}
+th,td{padding:10px 16px; text-align:right; border-bottom:1px solid var(--rule-soft)}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; direction:ltr; text-align:left; white-space:nowrap}
+.pill{display:inline-block; padding:.1em .65em; border-radius:99px; font-size:.8rem; font-weight:600; white-space:nowrap}
+.pill.ok{background:var(--good-soft); color:var(--good)}
+.pill.no{background:var(--bad-soft); color:var(--bad)}
+.pill.na{background:var(--surface-2); color:var(--muted)}
+tr.hero td{background:var(--accent-soft)}
+
+/* ---- charts ---- */
+.fig{background:var(--surface); border-radius:10px; box-shadow:var(--shadow); padding:20px 22px 14px; margin:20px 0}
+.fig .cap{font-size:.85rem; color:var(--muted); margin-top:10px; max-width:none}
+.fig svg{display:block; width:100%; height:auto}
+.fig text{font-family:"IBM Plex Sans Arabic",sans-serif}
+.legend{display:flex; flex-wrap:wrap; gap:6px 20px; font-size:.85rem; color:var(--ink-2); margin-bottom:10px}
+.legend .it{display:inline-flex; align-items:center; gap:7px}
+.sw{width:11px; height:11px; border-radius:50%; flex:none}
+.tip{
+  position:fixed; z-index:9; pointer-events:none; opacity:0;
+  background:var(--ink); color:var(--ground);
+  padding:6px 11px; border-radius:6px; font-size:.8rem; line-height:1.5;
+  transition:opacity .12s; max-width:260px; direction:rtl;
+}
+@media (prefers-reduced-motion: reduce){ .tip{transition:none} }
+
+/* ---- commits / footer ---- */
+.commits{list-style:none; padding:0; max-width:none}
+.commits li{display:flex; gap:14px; align-items:baseline; padding:8px 0; border-bottom:1px dashed var(--rule-soft); margin:0}
+.commits .h{font-family:"IBM Plex Mono",monospace; color:var(--accent-ink); font-size:.82rem; flex:none; direction:ltr}
+.commits .m{font-size:.9rem; color:var(--ink-2)}
+footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font-size:.82rem; color:var(--muted)}
+.next{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:16px}
+.next .card{background:var(--surface); border-radius:10px; box-shadow:var(--shadow); padding:16px 18px}
+.next .card b{display:block; color:var(--accent-ink); margin-bottom:6px; font-size:.95rem}
+.next .card span{font-size:.87rem; color:var(--ink-2)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">تحكّم نشط بارامتري في فرازة الجدران الرقيقة · على نموذج Du et al.، IJMS 274 (2024) 109257</div>
+  <h1>البوابة بقراءتين</h1>
+  <p class="standfirst">
+    بوّابة المشروع G1 — «استقرارٌ رصين μ<span class="mono">&lt;1</span> عند كل عقدة جدولة، بكتلة المشغِّل» —
+    أُغلقت بالقراءة العقدية المعلَنة بحكمٍ مقيس، ثم انفتحت على مصراعيها حين قِيست الكمّية نفسها
+    بالقراءة التي تملكها الفيزياء فعلًا: معلماتٌ حقيقية، لا أشباح عقدية.
+  </p>
+  <div class="meta">
+    <span>الفرع <b class="mono">claude/parametric-active-control-thin-wall-4d9ve1</b></span>
+    <span>الوثيقة الأمّ <b class="mono">docs/09_SCHEDULED_DK.md</b></span>
+    <span>آب/أغسطس 2026</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <p>
+    الأثر الشاهد المخزون — الذي حَكَم عليه قاضي الدراسة العقديّ بـ<span class="mono">1.156</span> —
+    يعبر البوّابة الحقيقية عند <span class="q">0.25–0.42</span>،
+    والعضو المجدوَل الجديد يعبر G1 وG2 معًا عند <span class="q">0.44–0.49</span>
+    وهو حتميّ، قابلٌ للاستنساخ، وقابلٌ للتنفيذ.
+  </p>
+</div>
+
+<div class="kpis">
+  <div class="kpi closed">
+    <div class="lbl">G1 بالقراءة العقدية المعلنة — M0e</div>
+    <div class="num">1.728</div>
+    <div class="sub">الأمثل <b>القابل للاستنساخ</b> لسلسلة D-K العقدية؛ «مغلقة استنساخًا» — والـ1.400 الأفضل ظاهريًّا سحبةٌ محظوظة (مُصادَقها 8.59)</div>
+  </div>
+  <div class="kpi open">
+    <div class="lbl">الشاهد الثابت mu_paper — القراءة الحقيقية</div>
+    <div class="num" id="kpi-witness">&le; 0.419</div>
+    <div class="sub" id="kpi-witness-sub">أقصى الحدود العليا المُتحقَّق منها على العقد المجسوسة — البوّابة معبورة بهامش أكثر من الضعف</div>
+  </div>
+  <div class="kpi member">
+    <div class="lbl">العضو المجدوَل PS-AC-RFA — نقطة وخليّة</div>
+    <div class="num">0.485</div>
+    <div class="sub">G1 (نقطة 0.44–0.49) وG2 (خليّة الاستيفاء 0.44) محقّقتان معًا؛ أقطاب المتحكّم ≤ 60 krad/s</div>
+  </div>
+</div>
+
+<!-- ============ الشكل المركزي ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">١</span><h2>القراءتان، على مقياس واحد</h2></div>
+  <p>
+    الكمّية واحدة — ذروة μ للاستقرار الرصين عند عقدة جدولة، بكتلة المشغِّل — والفارق كلّه في
+    <em>تسعير</em> المعلمات البارامترية: القراءة العقدية (اصطلاح المعادلة 29 في المرجع، وكلّ أرقام
+    الدراسة الأولى) تسمح لاضطراب الصلابة أن يكون عقديًّا، أي أن يتنكّر <em>تخميدًا سالبًا</em> —
+    وعلى لوحةٍ تخميدها ζ ≈ 0.3٪ هذا يضخّم كلّ شيء. القراءة المختلطة
+    (مقاييس D كاملة + مقاييس G على الكتل الحقيقية وحدها؛ حدّ Fan–Tits–Doyle القياسي) تدفع
+    للفيزياء سعرها الحقيقي فقط. كل قيمة هنا حدٌّ أعلى <b>مُتحقَّق منه عدديًّا</b> بمعزل عن المذيب.
+  </p>
+  <div class="fig">
+    <div class="legend" id="lg1"></div>
+    <svg id="chart1" viewBox="0 0 860 330" role="img" aria-label="مقارنة ذروة μ لأربعة متحكمات تحت ثلاث قراءات على مقياس لوغاريتمي"></svg>
+    <p class="cap">
+      ذروة μ_RS (نقطة، بكتلة المشغِّل؛ الأسوأ على العقد المجسوسة) — المحور لوغاريتمي.
+      «العقدية المشدَّدة» هي قاضي الدراسة الرسمي (مقاييس D كاملة)؛ لم تُحسب لعضوَي الترشيح لأن
+      حكمهما النهائي صار للقراءة المختلطة. مرّر المؤشر فوق النقاط للتفاصيل.
+    </p>
+  </div>
+
+  <div class="tblwrap"><table>
+    <thead><tr>
+      <th>المتحكّم</th><th class="n">عقدية سلّمية</th><th class="n">عقدية مشدَّدة</th>
+      <th class="n">مختلطة (نقطة)</th><th class="n">مختلطة (خليّة G2)</th><th>G1(حقيقية)</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>mu_paper — الشاهد الثابت (D-K المرجع)</td>
+        <td class="n">1.63–1.73</td><td class="n">1.156–1.205</td>
+        <td class="n"><b>0.248–0.419</b></td><td class="n">—</td>
+        <td><span class="pill ok">محققة</span></td>
+      </tr>
+      <tr>
+        <td>ps_ac_r — مجدوَل LQG (الدراسة الأولى)</td>
+        <td class="n">85.0–85.8</td><td class="n">85.8</td>
+        <td class="n">3.76–3.79</td><td class="n">—</td>
+        <td><span class="pill no">لا</span></td>
+      </tr>
+      <tr class="hero">
+        <td><b>PS-AC-RFA</b> — المجدوَل المرشَّح الموسَّع (الجولة 4)</td>
+        <td class="n">9.8–10.0</td><td class="n">≈4.1*</td>
+        <td class="n"><b>0.443–0.485</b></td><td class="n"><b>0.435–0.443</b></td>
+        <td><span class="pill ok">محققة + G2</span></td>
+      </tr>
+      <tr>
+        <td>ps_ac_rf — المرشَّح التسلسلي (الجولة 2، الأفضل أداءً)</td>
+        <td class="n">2.9–3.7</td><td class="n">—</td>
+        <td class="n"><b>0.249–0.313</b></td><td class="n">—</td>
+        <td><span class="pill ok">محققة</span></td>
+      </tr>
+    </tbody>
+  </table></div>
+  <p class="note">* قيمة شبكة الغربال (19 ترددًا) لا شبكة القاضي الكاملة.
+  المصادر: <code>results/mu_real.npz</code> · <code>mu_real_members.npz</code> · <code>mu_real_rf2.npz</code> · السجل <code>log_mu_real.txt</code>.</p>
+</section>
+
+<!-- ============ M0e ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٢</span><h2>كيف أُغلقت البوّابة أولًا — M0e</h2></div>
+  <p>
+    الخطوة المعلنة سلفًا في <code>docs/09</code>: بحث أوزانٍ <b>مُرشَّح بالاستقرار التركيبي</b> —
+    40 ثلاثية أوزان (ذراعا hinfsyn الصافي وD-K الكامل) عند منتصف الحافة، وكلّ مرشّح يُعاد تركيبه
+    باهتزاز ‎±10<sup>-3</sup>‎ على مدخلات التركيب (ألف ضعف الانجراف البيئي الذي قلب الفائزين
+    التاريخيين في تشخيص M0d)، والقاضي ثابتٌ لا يهتز. رُسِّخت البيئة أولًا: هذه الحاوية تستنسخ
+    أرقام حقبة M0 <b>بالبايت</b>.
+  </p>
+  <div class="fig">
+    <svg id="chart2" viewBox="0 0 860 240" role="img" aria-label="الجودة الاسمية مقابل المصادقة تحت الاهتزاز لأربع ثلاثيات"></svg>
+    <p class="cap">
+      الاسمي (نقطة فاتحة) ← المُصادَق تحت الاهتزاز (نقطة مصمتة) لكل ثلاثية مجسوسة. الصفّان
+      «الأفضل» (1.400) ينفجران إلى 8.59 و4.08 — سحبتان محظوظتان؛ صف الهضبة يبقى مكانه
+      (1.728، انتشار 0.010) وهو <b>الأمثل القابل للاستنساخ</b> — فوق الواحد بمسافة، وفوق شاهد
+      التصميم المثبّت (1.156). الحكم: G1 العقدية «غير قابلة للبلوغ استنساخًا».
+    </p>
+  </div>
+  <p class="note">
+    ملحق صادق: سطران من «القراءة» كُتبا قبل نزول أرقام الملحق وكذّبتهما الأرقام — التصحيح
+    أُلحق بالسجل كما هو (<code>results/log_musyn_sched.txt</code>)، درسًا في ألّا تُكتب قراءة قبل قياسها.
+  </p>
+</section>
+
+<!-- ============ التشريح والجولات ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٣</span><h2>تشريح الحاجز، وأربع جولات علّمت البنية</h2></div>
+  <p>
+    قياس مكوّنات μ فكّك الحاجز: فشل العضو المجدوَل كلّه <b>كسبُ متحكّمٍ عريض النطاق</b> تحت أوزان
+    المشغِّل (9.7×10<sup>7</sup> في 2.4–4.6 kHz مقابل 10<sup>6</sup> لتصميم D-K)، بينما احتياطه
+    البارامتري (0.577) أفضل من احتياط أفضل تصميم مثبّت (0.829) — الجدولة اشترته فعلًا.
+    ومسح المرشِّحات على الكسوب المخزونة أغلق المخرج الرخيص: لا مرشِّح ثابتًا يعمل — الكسوب
+    والمرشِّح يُصمَّمان معًا.
+  </p>
+  <ul>
+    <li><b>الجولة 1</b> — مؤشر النطاق وحده: كلّ القيود محترمة، وμ البارامترية تنهار إلى 1.7–2.1
+      عند النمط الثاني. <b>الآلية</b>: المرشِّح المُلحق يكسر تكافؤ اليقين — المرشد يظن أمره يبلغ
+      اللوحة وF(s) تشوّهه.</li>
+    <li><b>الجولة 2</b> — + غرابيل أركان المجموعة: الانهيار ينتقل إلى النمط الأول (2.2–2.8).
+      الغرابيل الرخيصة لا تتعقّب الاختبار البنيوي.</li>
+    <li><b>الإصلاح البنيوي</b> — <code>ps_ac_rfa</code>: المرشِّح <b>داخل نموذج التصميم</b>
+      (LQR موسَّعة على [المرشِّح؛ اللوحة] بإحداثيات مسوّاة — حالات فولطية وحالات مترية تفصل
+      بينها ثماني عقود)، والبديل «المتسق رصديًّا» ثبت خطؤه بنيويًّا: حلقة [مرشدٍ سريع ↔ تأخّر
+      المرشِّح] الداخلية نفسها غير مستقرة.</li>
+    <li><b>الجولتان 3–4</b> — درس سلّم العقوبات المقلوب (سربٌ يقف على حدود غربالٍ إلى الأبد)،
+      ثم غربال μ المباشر؛ الحصيلة العقدية تستقر على هضبة ≈ 2.4: أيّ مرشِّح يكفي نطاق المشغِّل
+      يدفع ~40–50° تأخّرَ طور عند النمط الثاني فيأكل التخميد الذي جاء يحميه.</li>
+  </ul>
+  <div class="note finding">
+    <b>اكتشافان جانبيان لهما وزنهما:</b>
+    (1) أعضاء الدراسة الأولى المخزونون يحملون أقطاب مركِّبٍ طفيليةً عند 1.4–8.8 MHz —
+    غير قابلة للتنفيذ ولا للشهادة؛ العضو الجديد أقطابه ≤ 60 krad/s: أول عضو قابلٍ للتنفيذ
+    والشهادة معًا. (2) μ العقدية للّوحة <em>المفتوحة</em> ≈ 40 — وهي مفتاح فهم كل شيء:
+    بالقراءة العقدية يلزم تخميد نشط عنيف قبل أي حديث عن المشغِّل؛ وبالقراءة الحقيقية
+    لا تطالب الفيزياء بذلك العنف أصلًا.
+  </div>
+</section>
+
+<!-- ============ القراءة الحقيقية ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٤</span><h2>القراءة الحقيقية — المنهج والتحقّق</h2></div>
+  <p>
+    معلمات النظام كلها حقيقية: حجمٌ مُزال، حالة منتصف ممر، معامل قوة قطع، نِسَب تخميد.
+    وحدة <code>phase2/mu_real.py</code> تحسب حدّ μ المختلط: عند G = 0 يرتدّ إلى حدّ الدراسة
+    حرفيًّا فلا يكون إلا أشدّ؛ والاختبارات الوحدوية تصيب الحالات معلومة الجواب
+    (كتلة حقيقية خلف حلقة تخيّلية: 2.0 ← ~0؛ خلف حلقة حقيقية: 2.0 ← 2.0 بالضبط؛
+    كتلة عقدية: لا تشديد زائفًا). والحكم لا يستند إلى المذيب: المقاييس الراجعة (D، G)
+    تُفحص قيمُها الذاتية عدديًّا، فأي حلٍّ «غير دقيق» إمّا يسلّم شهادة تصمد للفحص أو لا يسلّم شيئًا.
+  </p>
+  <p class="note" id="sweepbox">
+    المجسوس حتى الآن: ثلاث عقد لكل متحكّم (الطرفان والمنتصف — والطرفان هما الأسوأ بارامتريًّا
+    في كل مسوح الدراسة) وخليّة الاستيفاء للعضو عند العقد الثلاث. تعميم الحكم على شبكة الجدولة
+    الكاملة (21 عقدة) مُعلَنٌ ضمن م1-الحقيقية — كلفته الحسابية وحدها ما أجّله، لا شكٌّ في اتجاهه.
+  </p>
+  <p>
+    وحاجز أعضاء LQG بقي حقيقيًّا لا قراءةً (3.8 بعد كل تخفيف — الترشيح كان ضروريًّا)، وعضو
+    الجولة الثانية «الهشّ عقديًّا» (2.9–3.7) خرج <b>الأعمقَ عبورًا</b> (0.25–0.31):
+    هشاشته كلّها كانت في القراءة لا في الفيزياء.
+  </p>
+</section>
+
+<!-- ============ الشهادة ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٥</span><h2>شهادة المسار الكامل — النظرية والآلة</h2></div>
+  <p>
+    كانت للعائلة المجدوَلة شهادتان تفوتان ما يفعله الفرز فعلًا: اختبار العبور يجمّد الجدولة،
+    وشهادة P المشتركة تدفع ثمن «تغيّرٍ سريعٍ اعتباطًا» لا تستعمله الآلة. الجديد في
+    <code>phase2/sched_cert.py</code>: دالّة ليابونوف–كراسوفسكي <b>أسّية</b> مستقلة عن التأخير
+    لكل <em>خليّة</em> من أنبوب الجدولة (الجدوى عند τ تغطي كل τ′ ≤ τ — أي كل سرعات المغزل
+    الأسرع)، وعوامل قفزٍ بين خلايا متجاورة تُصغَّر في الصياغة نفسها
+    (min t بقيد P<sub>i+1</sub> ⪯ t·P<sub>i</sub> — ‏SDP واحدة)، ثم نظرية مكوث تُخرج
+    <b>سرعة عبور مُصادَقة</b>:
+  </p>
+  <p class="note mono" style="text-align:center">v_cert = min<sub>k</sub> 2·α·h<sub>k</sub> / ln μ<sub>k</sub></p>
+  <p>
+    تُقارن بسرعة التغذية الفعلية — فبطء الجدولة <em>المعلوم</em> يُستهلك في الضمان بدل أن يُهدر.
+    وسجلّ الجدوى صادق حتى الآن: الأعضاء القديمة غير قابلة للشهادة بنيويًّا (الأقطاب الطفيلية)،
+    وعضو الجولة الرابعة الضعيف يفشل صندوق الرؤوس عن حق، والحلقة المفتوحة تُحلّ «غير مجدية»
+    في ثانية عند 0.05 mm لأن ركن معامل القوة الأعلى يعادل ~0.09 mm فوق حدّها — ثلاث علاماتٍ
+    على أن الشهادة تقيس ما يجب أن تقيسه. <span id="passdemo">عرض النظرية كاملًا — سلّم الأعماق وv_cert مقابل
+    التغذية — ينتظر عضو م1-الحقيقية قويَّ التخميد.</span>
+  </p>
+</section>
+
+<!-- ============ الجولة 5 والتالي ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٦</span><h2>م1-الحقيقية — استرداد الأداء، والتالي</h2></div>
+  <p id="r5text">
+    القراءة الحقيقية أسقطت مبرّر الغربال العقدي الذي كان يخنق الأداء (كان يسعّر بـ5–20 ضعفًا).
+    الجولة الخامسة تعيد البحث تحت الضغوط الحقيقية وحدها: أركان المجموعة، مؤشر نطاق المشغِّل
+    مُرخًى (<span class="mono">hi ≤ 0.85</span> و<span class="mono">lo ≤ 1.6</span>)،
+    وقيد قابلية تنفيذ صريح — والقاضي المختلط يحكم على الفائز.
+  </p>
+  <div id="r5box"></div>
+  <div class="next">
+    <div class="card"><b>مسح 21 عقدة + خليّة</b><span>تعميم حكم G1/G2 الحقيقيتين من العقد المجسوسة إلى شبكة الجدولة كاملة، للشاهد والعضو.</span></div>
+    <div class="card"><b>شهادة المسار على العضو القوي</b><span>سلّم الأعماق وv_cert مقابل التغذية الفعلية — عرض النظرية كاملًا على عضوٍ يملك تخميدًا حقيقيًا.</span></div>
+    <div class="card"><b>بروتوكول المراحل 7–8</b><span>السيناريوهات الأربعة والمقاييس الستة ضد μ-TDC وPS-TDC-R — طاولة المقارنة النهائية للورقة.</span></div>
+  </div>
+</section>
+
+<!-- ============ السجل ============ -->
+<section>
+  <div class="sec-head"><span class="sec-num">٧</span><h2>سجلّ الإيداعات والآثار</h2></div>
+  <ul class="commits" id="commitlist">
+    <li><span class="h">fecb8b9</span><span class="m">M0e يغلق البوّابة: أمثل السلسلة القابل للاستنساخ 1.73 — مقيسًا</span></li>
+    <li><span class="h">cc81cc7</span><span class="m">العضو الواعي بالمشغِّل في جولاته التعليمية، وآلة شهادة المسار الكامل</span></li>
+    <li><span class="h">87f78d5</span><span class="m">mu_real: الحدّ المختلط الحقيقي/العقدي — ثمن القراءة العقدية</span></li>
+    <li><span class="h">aa7696b</span><span class="m">القراءة الحقيقية تفتح البوّابة: G1 وG2 محقّقتان — بالشاهد وبالعضو المجدوَل</span></li>
+    <li><span class="h">f2d6d1e</span><span class="m">عضو الجولة الثانية «الهش» هو الأعمق عبورًا: 0.25–0.31</span></li>
+  </ul>
+  <p class="note" style="margin-top:16px">
+    كل رقم في هذه الصفحة محسوب من أثرٍ مخزون على القرص — سياسة «الأثر أولًا» التي حمت
+    نتائج الدراسة الأولى من فجوة الاستنساخ هي نفسها المتّبعة هنا:
+    <code>m0e_filter.npz</code> · <code>mu_real*.npz</code> · <code>log_musyn_sched.txt</code> ·
+    <code>log_psacrf.txt</code> · <code>log_mu_real.txt</code>.
+  </p>
+</section>
+
+<footer>
+  مشروع بحثي على نموذج Du, Liu, Dai &amp; Long, «Robust combined time delay control for milling
+  chatter suppression of flexible workpieces»، IJMS 274 (2024) 109257 — إعادة إنتاجه ومجموعته
+  الفيزيائية ونتائجه المرجعية في تقرير الدراسة الأولى ووثائق <span class="mono">docs/00–08</span>.
+</footer>
+</div>
+
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+"use strict";
+var css = getComputedStyle(document.documentElement);
+function tok(n){ return css.getPropertyValue(n).trim(); }
+
+/* ---------- data ---------- */
+var READINGS = [
+  {key:'sc', name:'عقدية سلّمية-D', col:'--s1'},
+  {key:'tc', name:'عقدية مشدَّدة (قاضي الدراسة)', col:'--s2'},
+  {key:'mx', name:'مختلطة — القراءة الحقيقية', col:'--s3'}
+];
+var MEMBERS = [
+  {name:'mu_paper — الشاهد الثابت',  sc:1.733, tc:1.205, mx:0.419},
+  {name:'ps_ac_r — مجدوَل LQG',      sc:85.8,  tc:85.8,  mx:3.79},
+  {name:'PS-AC-RFA — الجولة 4',      sc:10.0,  tc:null,  mx:0.485},
+  {name:'ps_ac_rf — الجولة 2',       sc:3.70,  tc:null,  mx:0.313}
+];
+var M0E = [
+  {name:'(3e5, 1.7e-3, 800) · n=1',  nom:1.400, cert:8.586, lucky:true},
+  {name:'(3e5, 1.7e-2, 3000) · n=1', nom:1.400, cert:4.079, lucky:true},
+  {name:'(1e5, 1.7e-3, 800) · n=1',  nom:1.728, cert:1.728, lucky:false},
+  {name:'(3e5, 1.7e-2, 1500) · n=3', nom:1.799, cert:1.996, lucky:false}
+];
+
+/* ---------- helpers ---------- */
+var svgNS = 'http://www.w3.org/2000/svg';
+function el(p, n, at){ var e = document.createElementNS(svgNS, n);
+  for (var k in at) e.setAttribute(k, at[k]); p.appendChild(e); return e; }
+function txt(p, x, y, s, at){ var e = el(p, 'text', at || {});
+  e.setAttribute('x', x); e.setAttribute('y', y); e.textContent = s; return e; }
+var tip = document.getElementById('tip');
+function hover(node, html){
+  node.addEventListener('mousemove', function(ev){
+    tip.innerHTML = html; tip.style.opacity = 1;
+    var w = tip.offsetWidth;
+    tip.style.left = Math.min(window.innerWidth - w - 12, ev.clientX + 14) + 'px';
+    tip.style.top  = (ev.clientY + 16) + 'px';
+  });
+  node.addEventListener('mouseleave', function(){ tip.style.opacity = 0; });
+}
+function fmt(v){ return v == null ? '—' : (+v).toFixed(v < 10 ? 3 : 1); }
+
+/* ---------- chart 1 : log dot plot ---------- */
+function chart1(){
+  var svg = document.getElementById('chart1');
+  svg.innerHTML = '';
+  var W = 860, H = 330, L = 30, R = 265, T = 26, B = 40;
+  var pw = W - L - R;
+  var lo = Math.log10(0.2), hi = Math.log10(110);
+  /* axis stays LTR (small on the left) inside the RTL page */
+  function Xl(v){ return L + pw * (Math.log10(v) - lo) / (hi - lo); }
+  var rows = MEMBERS.length, rh = (H - T - B) / rows;
+  var grid = tok('--grid'), muted = tok('--muted'), ink2 = tok('--ink-2');
+
+  [0.25, 0.5, 1, 2, 5, 10, 25, 50, 100].forEach(function(g){
+    var x = Xl(g);
+    el(svg, 'line', {x1:x, y1:T, x2:x, y2:H-B, stroke:grid, 'stroke-width':1});
+    txt(svg, x, H-B+18, String(g), {'text-anchor':'middle', fill:muted, 'font-size':'11.5',
+        'font-family':'IBM Plex Mono, monospace'});
+  });
+  /* gate line */
+  var xg = Xl(1);
+  el(svg, 'line', {x1:xg, y1:T-8, x2:xg, y2:H-B, stroke:tok('--bad'), 'stroke-width':2,
+                   'stroke-dasharray':'5 4'});
+  txt(svg, xg, T-12, 'البوّابة μ = 1', {'text-anchor':'middle', fill:tok('--bad'),
+      'font-size':'12.5', 'font-weight':'600'});
+
+  MEMBERS.forEach(function(m, i){
+    var y = T + rh * i + rh/2;
+    /* the page is RTL and SVG text inherits it: 'end' pins the LEFT edge
+       of an rtl run, so the label grows rightward into the gutter */
+    txt(svg, W - R + 10, y + 4, m.name, {fill:ink2, 'font-size':'13',
+        'text-anchor':'end'});
+    /* connector from worst to best */
+    var vals = READINGS.map(function(r){ return m[r.key]; }).filter(function(v){ return v != null; });
+    var xmin = Xl(Math.min.apply(null, vals)), xmax = Xl(Math.max.apply(null, vals));
+    el(svg, 'line', {x1:xmin, y1:y, x2:xmax, y2:y, stroke:grid, 'stroke-width':2});
+    READINGS.forEach(function(r){
+      var v = m[r.key]; if (v == null) return;
+      var c = tok(r.col);
+      var dot = el(svg, 'circle', {cx:Xl(v), cy:y, r:7, fill:c,
+                    stroke:tok('--surface'), 'stroke-width':2});
+      var halo = el(svg, 'circle', {cx:Xl(v), cy:y, r:14, fill:'transparent'});
+      hover(halo, '<b>' + m.name + '</b><br>' + r.name +
+                  '<br><span style="direction:ltr;unicode-bidi:embed">μ = ' + fmt(v) + '</span>');
+    });
+    /* direct label on the mixed dot */
+    if (m.mx != null)
+      txt(svg, Xl(m.mx), y - 13, fmt(m.mx), {'text-anchor':'middle', fill:ink2,
+          'font-size':'11.5', 'font-family':'IBM Plex Mono, monospace', 'font-weight':'600'});
+  });
+
+  var lg = document.getElementById('lg1');
+  lg.innerHTML = READINGS.map(function(r){
+    return '<span class="it"><span class="sw" style="background:' + tok(r.col) + '"></span>' + r.name + '</span>';
+  }).join('');
+}
+
+/* ---------- chart 2 : M0e slope ---------- */
+function chart2(){
+  var svg = document.getElementById('chart2');
+  svg.innerHTML = '';
+  var W = 860, H = 240, L = 30, R = 250, T = 20, B = 38;
+  var pw = W - L - R;
+  var lo = Math.log10(1), hi = Math.log10(12);
+  function Xl(v){ return L + pw * (Math.log10(v) - lo) / (hi - lo); }
+  var rows = M0E.length, rh = (H - T - B) / rows;
+  var grid = tok('--grid'), muted = tok('--muted'), ink2 = tok('--ink-2');
+  [1, 1.5, 2, 3, 5, 8, 12].forEach(function(g){
+    var x = Xl(g);
+    el(svg, 'line', {x1:x, y1:T, x2:x, y2:H-B, stroke:grid, 'stroke-width':1});
+    txt(svg, x, H-B+17, String(g), {'text-anchor':'middle', fill:muted, 'font-size':'11',
+        'font-family':'IBM Plex Mono, monospace'});
+  });
+  var xg = Xl(1);
+  el(svg, 'line', {x1:xg, y1:T, x2:xg, y2:H-B, stroke:tok('--bad'), 'stroke-width':2, 'stroke-dasharray':'5 4'});
+  M0E.forEach(function(m, i){
+    var y = T + rh * i + rh/2;
+    var c = m.lucky ? tok('--warn') : tok('--good');
+    txt(svg, W - R + 14, y + 4, m.name, {fill:ink2, 'font-size':'12.5',
+        'font-family':'IBM Plex Mono, monospace', direction:'ltr',
+        'text-anchor':'start'});
+    el(svg, 'line', {x1:Xl(m.nom), y1:y, x2:Xl(m.cert), y2:y, stroke:c, 'stroke-width':2.5,
+                     'stroke-linecap':'round', opacity:.55});
+    var a = el(svg, 'circle', {cx:Xl(m.nom), cy:y, r:5.5, fill:tok('--surface'), stroke:c, 'stroke-width':2.5});
+    var b = el(svg, 'circle', {cx:Xl(m.cert), cy:y, r:6.5, fill:c, stroke:tok('--surface'), 'stroke-width':2});
+    hover(a, 'الاسمي: <span class="mono">' + m.nom.toFixed(3) + '</span>');
+    hover(b, 'المُصادَق تحت الاهتزاز: <span class="mono">' + m.cert.toFixed(3) + '</span>' +
+             (m.lucky ? '<br>سحبة محظوظة' : '<br>هضبة مستقرة'));
+  });
+}
+
+chart1(); chart2();
+var mq = window.matchMedia('(prefers-color-scheme: dark)');
+if (mq.addEventListener) mq.addEventListener('change', function(){ chart1(); chart2(); });
+})();
+</script>

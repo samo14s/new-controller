@@ -98,3 +98,22 @@ total 273s
   alpha = 10 1/s: infeasible at cell 0
   even alpha = 0 INFEASIBLE (cell 0) -- G6 not met at the reference depth; reported as exactly that
   [583s]
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- DESIGN ROUND 5 (ps_ac_rfa) - M1-real: J under the real pressures ---
+  corners: poles <= -0.5 1/s, Ms <= 2.0 (8 corners x 3 positions)
+  actuator proxy: hi <= 0.85 (2.2-4.8k), lo <= 1.6 (0.3-1.4k), 3 positions
+  realisability: controller poles <= 125664 rad/s
+  (the complex mu screen is gone -- the mixed reading showed it
+   overcharging by 5-20x; the mixed judge rules on the winner.)
+  seed 1: J = -0.2878   [547s]
+  seed 2: J = -0.2807   [96s]
+  seed 3: J = -0.3260   [93s]
+  winner: J = -0.28072  proxy = 0.817  max|pole| = 5.03e+04 rad/s  order 14  8 parameters  [737s]
+  Ms = 1.675   effort = 150.7 V/N   slowest nominal pole = -47.2 1/s
+  parameters: log_q_pos=13.04, log_q_vel=5.88, log_r=-6.269, log_ratio=9.757, a4_mult=1.763, log_depth=-0.6865, q_notch=0.7732, log_fr=3.218
+  -> stage3_controllers.pkl (round 4 preserved as ps_ac_rfa_r4)
+
+total 738s
