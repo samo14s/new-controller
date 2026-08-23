@@ -1,31 +1,27 @@
-"""run_psacrf.py — design and judge PS-AC-RF, the actuator-aware scheduled member.
+"""run_psacrf.py — design and judge the actuator-aware scheduled member.
 
-The filter scan (log_act_filter.txt) settled the first question the hard way:
-on the STORED PS-AC-R gains no fixed filter works.  The stored winner's
-high-band gain is BROADBAND (9.7e7 across 2.4-4.6 kHz -- a Kalman observer
-pushed to enormous process-noise ratio because nothing in the protocol charged
-for high-band gain), so three notches barely dent the proxy (56 -> 20-34), and
-the rolloff that would dent it destabilises the nominal loop (J = -1000s).
-Gains and filter must be designed TOGETHER: that is this module.
+The design story lives in docs/09 sec. 5-bis and in this module's own log,
+round by round; the short of it:
 
-    PS-AC-RF:  u = -K(x_P) xhat, the PS-AC-R envelope-scheduled Riccati law,
-               in series with F(s) = 3 notches at the truncated modes + a
-               second-order rolloff -- 5 + 3 = 8 searched parameters.
-
-Protocol: the stage-3 PSO exactly (same J, same three constraints, same
-optimiser, seeds and budget), plus ONE structure-specific constraint declared
-openly: the actuator-band proxy
-
-    max_x  max_band |W_Pau(jw) K(jw) S(jw)|  <=  0.55,   both bands
-    (2.2-4.8 kHz where the additive weights live, 0.3-1.4 kHz where the modes
-     do), at the three design positions
-
--- the cheap stand-in for the G1 actuator channel (the y_Paf row of the RS cut
-is zero, so the block measures exactly |W_Pau K S|).  The D-K designs spent
-their synthesis pressure on that channel through the additive weights; the LQG
-members never had any such pressure, and their mu_RS = 85.8 is the bill.  This
-member gets the pressure through the constraint, and the disclosure is this
-paragraph plus the parameter count.
+  * no fixed filter works on the STORED gains (broadband 9.7e7 high-band
+    gain; the scan is the record), so gains and filter are designed together;
+  * the member is ps_ac_rfa (act_filter.py): the filter INSIDE the design
+    model -- augmented LQR on [filter; plate] solved in scaled coordinates,
+    plate-only observer driven by the exact filtered command -- the one of
+    three structures that stands (the series member breaks certainty
+    equivalence and collapsed parametrically twice; the observer-consistent
+    shortcut has an unstable internal observer/filter loop);
+  * the search is the stage-3 PSO exactly (same J, constraints, optimiser,
+    seeds, budget) plus this member's DECLARED synthesis pressure, as the
+    D-K machinery is mu-TDC's: the 8-corner envelope screens and the
+    structured screen MuScreen -- the G1 quantity itself, scalar-D at 19
+    frequencies on pre-prepared plants (rounds 1-2 proved cheaper proxies
+    do not track mu; round 3's inverted penalty ladder is the recorded
+    lesson in shaping the ladder strictly);
+  * the complex reading floors near mu ~ 2.4 for this structure (the
+    filter's phase at mode 2 eats the active damping the parametric test
+    demands -- the open-loop COMPLEX mu of the plate is ~40); the mixed
+    real/complex re-reading of the same quantity lives in mu_real.py.
 
 Success criteria, PRE-DECLARED (docs/09 sections 2 and 5-bis):
 

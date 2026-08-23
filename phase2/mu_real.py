@@ -157,12 +157,16 @@ def mu_mixed(M, blocks, mu_cx=None, n_iter=9, floor=1e-4):
 
 
 def mu_curve_mixed(H, blocks, verbose=False):
-    """Mixed and complex upper-bound curves over a frequency grid.  The
-    complex curve uses the scalar-D bound as elsewhere; the mixed bound is
-    computed where it matters -- at every frequency whose complex value is
-    within a factor 3 of the complex peak -- and equals the complex value
-    elsewhere (it is never larger, so the reported peak is still a valid
-    upper bound of the mixed peak)."""
+    """Mixed and complex upper-bound curves over a frequency grid.
+
+    The complex curve uses the scalar-D bound as elsewhere.  The mixed bound
+    is computed frequency by frequency in DESCENDING order of the complex
+    bound, keeping the running best mixed value b; any remaining frequency
+    with cx <= b is skipped, because its true mixed value is <= cx <= b and
+    cannot move the peak.  The reported mixed curve therefore carries cx at
+    the skipped points (a valid over-estimate everywhere), and its maximum
+    over the COMPUTED points -- what the callers report -- is a certified
+    upper bound of the true mixed peak, at a fraction of the solves."""
     from dk_synthesis import mu_upper_bound
     H = np.asarray(H)
     n = len(H)
@@ -171,13 +175,15 @@ def mu_curve_mixed(H, blocks, verbose=False):
     for k in range(n):
         cx[k], d0 = mu_upper_bound(H[k], blocks, d0)
     mixed = cx.copy()
-    thresh = cx.max() / 3.0
-    for k in range(n):
-        if cx[k] >= thresh:
-            mixed[k] = mu_mixed(H[k], blocks, mu_cx=cx[k])[0]
-            if verbose:
-                print(f'    f[{k}] cx {cx[k]:.3f} -> mixed {mixed[k]:.3f}',
-                      flush=True)
+    best = 0.0
+    for k in np.argsort(cx)[::-1]:
+        if cx[k] <= best:
+            break
+        mixed[k] = mu_mixed(H[k], blocks, mu_cx=cx[k])[0]
+        best = max(best, mixed[k])
+        if verbose:
+            print(f'    f[{k}] cx {cx[k]:.3f} -> mixed {mixed[k]:.3f}',
+                  flush=True)
     return mixed, cx
 
 
@@ -206,6 +212,45 @@ def judge_mixed(plate, ss_K, x, f, drop=('d_D', 'd_r'), actuator=True):
     return dict(mixed=float(mixed[km]), f_mixed=float(f[km]),
                 cx=float(cx[kc]), f_cx=float(f[kc]),
                 curve_mixed=mixed, curve_cx=cx)
+
+
+def sweep21():
+    """M1-real: the stored witness judged at ALL 21 scheduling nodes under
+    the mixed reading -- one fixed artifact, the whole gate family."""
+    from plate_model import build_plate
+    from stage_common import load_mu_ss
+    from robust_design import freq_grid
+
+    fh = open(os.path.join(OUT, 'log_mu_real.txt'), 'a')
+
+    def log(*a):
+        line = ' '.join(str(x) for x in a)
+        print(line, flush=True)
+        fh.write(line + '\n')
+        fh.flush()
+
+    t0 = time.time()
+    plate = build_plate(patch=C.PATCH_SIDE, freqs=C.F_MEASURED)
+    ss = load_mu_ss('mu_paper')
+    f = freq_grid()
+    xs = np.linspace(0.0, plate.lp, 21)
+    log('')
+    log('M1-real: the stored mu_paper witness at the 21 nodes, mixed reading')
+    mx, cxs = [], []
+    for x in xs:
+        t = time.time()
+        r = judge_mixed(plate, ss, float(x), f)
+        mx.append(r['mixed'])
+        cxs.append(r['cx'])
+        log(f'  x = {x*1e3:5.1f} mm:  complex {r["cx"]:7.3f}  ->  mixed '
+            f'{r["mixed"]:7.3f}' + ('' if r['mixed'] < 1 else '  >= 1')
+            + f'   [{time.time()-t:.0f}s]')
+    mx, cxs = np.array(mx), np.array(cxs)
+    log(f'  sup over 21 nodes: complex {cxs.max():.3f}  ->  mixed '
+        f'{mx.max():.3f}'
+        + ('   <-- G1(real) MET AT EVERY NODE' if mx.max() < 1 else ''))
+    np.savez(os.path.join(OUT, 'mu_real_21.npz'), x=xs, mixed=mx, cx=cxs)
+    log(f'total {time.time()-t0:.0f}s -> results/mu_real_21.npz')
 
 
 def main():
@@ -264,4 +309,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    sweep21() if 'sweep' in sys.argv[1:] else main()

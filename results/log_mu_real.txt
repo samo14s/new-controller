@@ -5,3 +5,31 @@ MIXED REAL/COMPLEX mu - THE G1 QUANTITY RE-READ WITH THE PARAMETRICS REAL
   real scalars get the G-scale the complex reading denies them.
 
 [mu_paper]
+  x=  0%: complex   1.693 at   1042 Hz  ->  MIXED   0.486 at   1921 Hz   <-- G1(real) MET   [657s]
+  x= 50%: complex   1.630 at   1178 Hz  ->  MIXED   0.481 at   1921 Hz   <-- G1(real) MET   [654s]
+  x=100%: complex   1.733 at   1042 Hz  ->  MIXED   0.488 at   1921 Hz   <-- G1(real) MET   [648s]
+
+[ps_ac_r]
+  x=  0%: complex  85.704 at   4000 Hz  ->  MIXED  18.871 at   2453 Hz   [29s]
+[ps_ac_r] (fast path)
+  x=  0%: complex  85.704 at   4000 Hz  ->  MIXED   3.788 at   4000 Hz   [40s]
+  x= 50%: complex  85.816 at   4000 Hz  ->  MIXED   3.793 at   4000 Hz   [39s]
+  x=100%: complex  85.018 at   4000 Hz  ->  MIXED   3.757 at   4000 Hz   [39s]
+
+[ps_ac_rfa] (fast path)
+  x=  0%: complex   9.989 at   6000 Hz  ->  MIXED   0.480 at   1700 Hz   <-- G1(real) MET   [204s]
+  x= 50%: complex  10.020 at   6000 Hz  ->  MIXED   0.443 at   6000 Hz   <-- G1(real) MET   [204s]
+  x=100%: complex   9.837 at   6000 Hz  ->  MIXED   0.485 at   1700 Hz   <-- G1(real) MET   [213s]
+
+-> results/mu_real_members.npz
+
+[ps_ac_rfa] G2-real spot checks: interpolation CELL kept, actuator included
+
+[mu_paper] fast-path re-derivation for the stored artifact (npz record)
+  x=  0% cell: complex   9.987 -> MIXED   0.441 at   6000 Hz   <-- G2(real) MET  [558s]
+  x=  0%: complex   1.693 -> MIXED   0.248 at   1042 Hz  [546s]
+  x= 50% cell: complex  10.020 -> MIXED   0.443 at   6000 Hz   <-- G2(real) MET  [518s]
+  x= 50%: complex   1.630 -> MIXED   0.249 at   1178 Hz  [514s]
+  x=100%: complex   1.733 -> MIXED   0.419 at   1042 Hz  [476s]
+-> results/mu_real.npz
+  x=100% cell: complex   9.836 -> MIXED   0.435 at   6000 Hz   <-- G2(real) MET  [619s]

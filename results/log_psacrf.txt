@@ -78,3 +78,23 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
   -> stage3_controllers.pkl
 
 total 273s
+
+=== WHOLE-PASS DEPTH LADDER on the round-4 ps_ac_rfa member ===
+
+--- WHOLE-PASS ps_ac_rfa: exponential DI-LK per cell + dwell theorem (a_p = 0.05 mm) ---
+    cell  0 [  0.0,  5.0] mm  eps=2.86e-05  INFEASIBLE
+  alpha = 10 1/s: infeasible at cell 0
+  even alpha = 0 INFEASIBLE (cell 0) -- G6 not met at the reference depth; reported as exactly that
+  [626s]
+
+--- WHOLE-PASS ps_ac_rfa: exponential DI-LK per cell + dwell theorem (a_p = 0.10 mm) ---
+    cell  0 [  0.0,  5.0] mm  eps=5.75e-05  INFEASIBLE
+  alpha = 10 1/s: infeasible at cell 0
+  even alpha = 0 INFEASIBLE (cell 0) -- G6 not met at the reference depth; reported as exactly that
+  [643s]
+
+--- WHOLE-PASS ps_ac_rfa: exponential DI-LK per cell + dwell theorem (a_p = 0.15 mm) ---
+    cell  0 [  0.0,  5.0] mm  eps=8.63e-05  INFEASIBLE
+  alpha = 10 1/s: infeasible at cell 0
+  even alpha = 0 INFEASIBLE (cell 0) -- G6 not met at the reference depth; reported as exactly that
+  [583s]
