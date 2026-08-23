@@ -250,6 +250,15 @@ def build(kind, plant, u, ss_mu=None):
                   name='PS_AC_R')
         c.n_params = 5
         return c
+    if kind == 'ps_ac_rf':
+        # the actuator-aware member: PS-AC-R's scheduled Riccati law with the
+        # fixed truncated-mode filter in series (act_filter.py); 5 + 3 tuned
+        # parameters, reported as exactly that
+        from act_filter import ps_ac_rf
+        return ps_ac_rf(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
+                        10 ** u['log_r'], 10 ** u['log_ratio'],
+                        u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
+                        10 ** u['log_fr'])
     if kind == 'ps_tdc':
         # ss_mu carries the stored ps_ac parameter dict here
         return ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])

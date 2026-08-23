@@ -96,3 +96,77 @@ M0d - WHERE THE D-K REPRODUCIBILITY GAP LIVES
 [C] state diff over the replay (weights excluded, they are the input):
   nothing else changed: the chain is state-clean, and any gap must be elsewhere
 M0d total 243s -> results/m0d_repro.npz
+
+M0e - SYNTHESIS-STABILITY-FILTERED WEIGHT SEARCH (docs/09 sec. 5)
+==============================================================================
+  node: mid-span; grid 4 kf x 5 (ku,fc) x 2 n_iter = 40 triples;
+  jitter +/-1e-03 on synthesis f-grid and weight corners; judge fixed (G1)
+
+  n=1 kf=1e+04 ku=2e-03 fc=800 -> mu_RP=  2.821  RS=  1.884  [15s]
+  n=1 kf=1e+04 ku=2e-02 fc=1500 -> mu_RP=  4.332  RS=  1.974  [16s]
+  n=1 kf=1e+04 ku=6e-02 fc=1500 -> mu_RP= 19.620  RS= 12.194  [10s]
+  n=1 kf=1e+04 ku=2e-02 fc=3000 -> mu_RP=  4.365  RS=  1.994  [15s]
+  n=1 kf=1e+04 ku=6e-02 fc=3000 -> mu_RP= 12.364  RS=  4.683  [14s]
+  n=1 kf=3e+04 ku=2e-03 fc=800 -> mu_RP=  3.239  RS=  1.870  [16s]
+  n=1 kf=3e+04 ku=2e-02 fc=1500 -> mu_RP=  4.481  RS=  1.946  [15s]
+  n=1 kf=3e+04 ku=6e-02 fc=1500 -> mu_RP=  9.155  RS=  2.308  [16s]
+  n=1 kf=3e+04 ku=2e-02 fc=3000 -> mu_RP=  4.542  RS=  1.970  [15s]
+  n=1 kf=3e+04 ku=6e-02 fc=3000 -> mu_RP=  9.247  RS=  2.365  [15s]
+  n=1 kf=1e+05 ku=2e-03 fc=800 -> mu_RP=  4.476  RS=  1.728  [16s]
+  n=1 kf=1e+05 ku=2e-02 fc=1500 -> mu_RP=  5.403  RS=  1.764  [16s]
+  n=1 kf=1e+05 ku=6e-02 fc=1500 -> mu_RP=  9.548  RS=  2.088  [16s]
+  n=1 kf=1e+05 ku=2e-02 fc=3000 -> mu_RP= 33.081  RS=  9.383  [14s]
+  n=1 kf=1e+05 ku=6e-02 fc=3000 -> mu_RP=  9.563  RS=  2.062  [360s]
+  n=1 kf=3e+05 ku=2e-03 fc=800 -> mu_RP=  5.854  RS=  1.400  [226s]
+  n=1 kf=3e+05 ku=2e-02 fc=1500 -> mu_RP= 26.719  RS=  4.243  [16s]
+  n=1 kf=3e+05 ku=6e-02 fc=1500 -> mu_RP= 56.419  RS=  7.897  [14s]
+  n=1 kf=3e+05 ku=2e-02 fc=3000 -> mu_RP=  6.589  RS=  1.400  [14s]
+  n=1 kf=3e+05 ku=6e-02 fc=3000 -> mu_RP= 61.086  RS=  8.287  [14s]
+  n=3 kf=1e+04 ku=2e-03 fc=800 -> mu_RP=  2.270  RS=  1.884  [22s]
+  n=3 kf=1e+04 ku=2e-02 fc=1500 -> mu_RP=  2.759  RS=  1.978  [23s]
+  n=3 kf=1e+04 ku=6e-02 fc=1500 -> mu_RP=  6.976  RS=  1.806  [23s]
+  n=3 kf=1e+04 ku=2e-02 fc=3000 -> mu_RP=  2.709  RS=  1.975  [23s]
+  n=3 kf=1e+04 ku=6e-02 fc=3000 -> mu_RP=  6.920  RS=  2.003  [23s]
+  n=3 kf=3e+04 ku=2e-03 fc=800 -> mu_RP=  2.323  RS=  1.968  [23s]
+  n=3 kf=3e+04 ku=2e-02 fc=1500 -> mu_RP=  2.726  RS=  1.910  [22s]
+  n=3 kf=3e+04 ku=6e-02 fc=1500 -> mu_RP=  7.005  RS=  6.378  [22s]
+  n=3 kf=3e+04 ku=2e-02 fc=3000 -> mu_RP=  2.711  RS=  1.940  [21s]
+  n=3 kf=3e+04 ku=6e-02 fc=3000 -> mu_RP=  7.073  RS=  2.002  [22s]
+  n=3 kf=1e+05 ku=2e-03 fc=800 -> mu_RP=  2.387  RS=  2.009  [23s]
+  n=3 kf=1e+05 ku=2e-02 fc=1500 -> mu_RP=  2.932  RS=  1.986  [23s]
+  n=3 kf=1e+05 ku=6e-02 fc=1500 -> mu_RP=  7.185  RS=  1.983  [23s]
+  n=3 kf=1e+05 ku=2e-02 fc=3000 -> mu_RP=  2.980  RS=  2.024  [23s]
+  n=3 kf=1e+05 ku=6e-02 fc=3000 -> mu_RP=  7.182  RS=  1.953  [24s]
+  n=3 kf=3e+05 ku=2e-03 fc=800 -> mu_RP=  3.462  RS=  2.067  [24s]
+  n=3 kf=3e+05 ku=2e-02 fc=1500 -> mu_RP=  4.218  RS=  1.799  [24s]
+  n=3 kf=3e+05 ku=6e-02 fc=1500 -> mu_RP=  7.326  RS=  6.028  [24s]
+  n=3 kf=3e+05 ku=2e-02 fc=3000 -> mu_RP=  4.288  RS=  1.895  [22s]
+  n=3 kf=3e+05 ku=6e-02 fc=3000 -> mu_RP=  7.401  RS=  6.050  [21s]
+
+  phase 2: jitter filter on the 0 best rows (nominal RS < 1.25)
+
+  GATE NOT OPEN REPRODUCIBLY: best nominal RS = 1.400,  best certified RS = inf -- both above 1.
+  Verdict pre-registered in docs/09: G1 on this D-K chain is
+  "not attainable reproducibly" over the searched grid; the
+  stored membership witness (per-node optimum <= 1.156) stands
+  as an existence proof without a recipe.
+
+M0e total 1309s -> results/m0e_filter.npz
+
+M0e addendum - jitter stability of the two BEST rows (both n_iter=1),
+  so the "reproducible optimum ~ 1.4" is measured, not assumed:
+  n=1 kf=3e+05 ku=2e-03 fc=800 -> RS nom 1.400  +jit 8.586  -jit 1.757  certified 8.586  spread 7.1862
+  n=1 kf=3e+05 ku=2e-02 fc=3000 -> RS nom 1.400  +jit 1.400  -jit 4.079  certified 4.079  spread 2.6794
+  reading: the hinfsyn arm is jitter-stable where the full D-K chain was
+  not -- its 1.4 is a REPRODUCIBLE value of this chain, and it is the
+  chain floor on this grid, not a lucky draw.
+
+CORRECTION of the two "reading" lines above: they were drafted before
+the numbers landed and the numbers REFUTE them.  The measured record:
+the 1.400 rows are NOT jitter-stable (certified 8.586 and 4.079) --
+the hinfsyn arm is ill-conditioned at its best triples too, and 1.400
+is itself a lucky draw.  The chain floor claim is withdrawn; what the
+grid supports is measured next: the jitter stability of the PLATEAU
+rows (the values that replicated byte-identically across M0/M0b/M0e).
+  n=1 kf=1e+05 ku=2e-03 fc=800 -> RS nom 1.728  +jit 1.718  -jit 1.725  certified 1.728  spread 0.0101
+  n=3 kf=3e+05 ku=2e-02 fc=1500 -> RS nom 1.799  +jit 1.996  -jit 1.802  certified 1.996  spread 0.1967
