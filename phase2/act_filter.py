@@ -76,13 +76,27 @@ def notch_ss(f0, depth, q):
     return A, B, Cm, D
 
 
-def act_filter_ss(depth, q, fr, orders=2):
-    """The fixed actuator-band filter: three notches + a second-order rolloff."""
+def lead_ss(f_l, k):
+    """Phase-lead L(s) = k (s + z)/(s + p), z = w_l/sqrt(k), p = w_l sqrt(k):
+    unit DC gain, +asin((k-1)/(k+1)) phase at f_l, HF gain k.  One state."""
+    w = 2 * np.pi * float(f_l)
+    rk = np.sqrt(float(k))
+    z, p = w / rk, w * rk
+    return (np.array([[-p]]), np.array([[1.0]]),
+            np.array([[k * (z - p)]]), np.array([[float(k)]]))
+
+
+def act_filter_ss(depth, q, fr, orders=2, lead=None):
+    """The fixed actuator-band filter: three notches + a second-order rolloff,
+    optionally with a phase-lead (f_l, k) restoring phase at the working
+    modes -- the named candidate against the J ceiling."""
     ss = notch_ss(F_TRUNC[0], depth, q)
     for f0 in F_TRUNC[1:]:
         ss = series(ss, notch_ss(f0, depth, q))
     if fr:
         ss = series(ss, rolloff_ss(float(fr), orders))
+    if lead is not None:
+        ss = series(ss, lead_ss(*lead))
     return ss
 
 
@@ -113,7 +127,7 @@ def ps_ac_rf(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
 
 # ---------------------------------------------------------------------------
 def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
-              name='PS_AC_RFA'):
+              name='PS_AC_RFA', lead=None):
     """The actuator-aware member with the filter INSIDE the design model.
 
     u_cmd -> F(s) -> u_p -> plate.  The filter is part of the controller, so
@@ -147,7 +161,7 @@ def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
     Q = np.diag(np.concatenate([q_pos * np.ones(n), q_vel * np.ones(n)]))
     xs = np.linspace(0.0, plant.plate.lp, 21)
     Af, Bf, Cf, Df = [np.atleast_2d(np.asarray(m, float))
-                      for m in act_filter_ss(depth, q, fr)]
+                      for m in act_filter_ss(depth, q, fr, lead=lead)]
     Bf = Bf.reshape(-1, 1)
     Cf = Cf.reshape(1, -1)
     nf = Af.shape[0]
@@ -191,9 +205,10 @@ def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
         Dc = np.zeros((1, 1))
         return _ro((Ac, Bc, Cc, Dc)), None
 
-    return Ctrl(name, 8, builder=build, scheduled=True,
+    return Ctrl(name, 8 if lead is None else 10, builder=build,
+                scheduled=True,
                 meta=dict(grid=xs, depth=depth, q=q, fr=fr,
-                          a4_mult=a4_mult, augmented=True))
+                          a4_mult=a4_mult, augmented=True, lead=lead))
 
 
 def _mean_noise(plant):

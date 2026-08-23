@@ -149,3 +149,7 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
   3/6 criteria met -- reported as exactly that
 
 total 3s
+
+--- PROBE (ps_ac_rfl) - the named candidate against the J ceiling: phase lead inside the design model ---
+  pressures: round-5 set exactly (corners -0.5/2.0, proxy 0.85/1.6, poles <= 125664 rad/s)
+  structure: rfa + lead(f_l in 400-1780 Hz, k in 1.5-9), 10 parameters

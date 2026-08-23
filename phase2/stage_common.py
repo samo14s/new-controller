@@ -21,7 +21,8 @@ LABEL = dict(open='no control', fopid='FOPID', lqg='LQG',
              ps_ac_rf='PS-AC-RF (actuator-aware)',
              ps_ac_rfa='PS-AC-RF (augmented)',
              mu_tdc_ps='mu-TDC-PS (witness + scheduled pair)',
-             ps_ac_ri='PS-AC-RI (realizable envelope)')
+             ps_ac_ri='PS-AC-RI (realizable envelope)',
+             ps_ac_rfl='PS-AC-RFL (augmented + lead)')
 
 
 def load_mu_ss(tag='mu_paper'):
@@ -58,7 +59,7 @@ def load_controllers(plate, plant_ref=None, include_open=True):
     for kind in ('fopid', 'lqg', 'mu_tdc', 'mu_phys_tdc', 'ps_ac',
                  'ps_ac_eta', 'ps_ac_obs', 'ps_ac_full', 'ps_tdc',
                  'ps_tdc_j', 'ps_ac_r', 'ps_tdc_r', 'ps_ac_rf', 'ps_ac_rfa',
-                 'mu_tdc_ps', 'ps_ac_ri'):
+                 'mu_tdc_ps', 'ps_ac_ri', 'ps_ac_rfl'):
         if kind not in store:
             continue
         if kind in ss and ss[kind] is None:
@@ -77,4 +78,4 @@ def n_params(name):
                 ps_ac_eta=5, ps_ac_obs=4, ps_ac_full=4,
                 ps_tdc=6, ps_tdc_j=6, ps_ac_r=5,
                 ps_tdc_r=7, ps_ac_rf=8, ps_ac_rfa=8,
-                mu_tdc_ps=6, ps_ac_ri=5).get(name, 0)
+                mu_tdc_ps=6, ps_ac_ri=5, ps_ac_rfl=10).get(name, 0)
