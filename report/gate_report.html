@@ -164,8 +164,8 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
   <p>
     الأثر الشاهد المخزون — الذي حَكَم عليه قاضي الدراسة العقديّ بـ<span class="mono">1.156</span> —
     يعبر البوّابة الحقيقية عند <span class="q">0.25–0.42</span>،
-    والعضو المجدوَل الجديد يعبر G1 وG2 معًا عند <span class="q">0.44–0.49</span>
-    وهو حتميّ، قابلٌ للاستنساخ، وقابلٌ للتنفيذ.
+    وعضو م1-الحقيقية المجدوَل يعبر G1 وG2 معًا عند <span class="q">0.28–0.38</span>
+    بأرضية مواضع فوق عمق المرجع — وهو حتميّ، قابلٌ للاستنساخ، وقابلٌ للتنفيذ.
   </p>
 </div>
 
@@ -181,9 +181,9 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     <div class="sub" id="kpi-witness-sub">أقصى الحدود العليا المُتحقَّق منها على العقد المجسوسة — البوّابة معبورة بهامش أكثر من الضعف</div>
   </div>
   <div class="kpi member">
-    <div class="lbl">العضو المجدوَل PS-AC-RFA — نقطة وخليّة</div>
-    <div class="num">0.485</div>
-    <div class="sub">G1 (نقطة 0.44–0.49) وG2 (خليّة الاستيفاء 0.44) محقّقتان معًا؛ أقطاب المتحكّم ≤ 60 krad/s</div>
+    <div class="lbl">العضو المجدوَل PS-AC-RFA (م1-الحقيقية)</div>
+    <div class="num">0.383</div>
+    <div class="sub">G1 نقطةً (0.28–0.38) وG2 خليّةً (0.32 عند العقدة الأسوأ) محقّقتان؛ أرضية المواضع عند سرعة المرجع 0.42 mm؛ أقطاب ≤ 60 krad/s</div>
   </div>
 </div>
 
@@ -233,15 +233,23 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
         <td><span class="pill ok">محققة + G2</span></td>
       </tr>
       <tr>
-        <td>ps_ac_rf — المرشَّح التسلسلي (الجولة 2، الأفضل أداءً)</td>
+        <td>ps_ac_rf — المرشَّح التسلسلي (الجولة 2)</td>
         <td class="n">2.9–3.7</td><td class="n">—</td>
         <td class="n"><b>0.249–0.313</b></td><td class="n">—</td>
         <td><span class="pill ok">محققة</span></td>
       </tr>
+      <tr class="hero">
+        <td><b>PS-AC-RFA — الجولة 5</b> (فائز م1-الحقيقية)</td>
+        <td class="n">2.1–2.3</td><td class="n">—</td>
+        <td class="n"><b>0.284–0.383</b></td><td class="n"><b>0.320</b>†</td>
+        <td><span class="pill ok">محققة + G2</span></td>
+      </tr>
     </tbody>
   </table></div>
   <p class="note">* قيمة شبكة الغربال (19 ترددًا) لا شبكة القاضي الكاملة.
-  المصادر: <code>results/mu_real.npz</code> · <code>mu_real_members.npz</code> · <code>mu_real_rf2.npz</code> · السجل <code>log_mu_real.txt</code>.</p>
+  † خليّة العقدة الأسوأ؛ بقيّة الخلايا مؤجَّلة لمسح الـ21 عقدة (نمط «الخليّة ≈ النقطة ±0.02»
+  ثابت عبر سبعة قياسات).
+  المصادر: <code>results/mu_real.npz</code> · <code>mu_real_members.npz</code> · <code>mu_real_rf2.npz</code> · <code>mu_real_r5.npz</code> · السجل <code>log_mu_real.txt</code>.</p>
 </section>
 
 <!-- ============ M0e ============ -->
@@ -358,7 +366,32 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     مُرخًى (<span class="mono">hi ≤ 0.85</span> و<span class="mono">lo ≤ 1.6</span>)،
     وقيد قابلية تنفيذ صريح — والقاضي المختلط يحكم على الفائز.
   </p>
-  <div id="r5box"></div>
+  <div class="tblwrap" id="r5box"><table>
+    <thead><tr><th>الجولة 5 — الفائز</th><th class="n">القيمة</th><th>القراءة</th></tr></thead>
+    <tbody>
+      <tr><td>الأداء J (بروتوكول المرحلة 3 المشترك)</td><td class="n">-0.281</td>
+        <td>ثلاث جولات مستقلة بقيود مختلفة تتقارب عند J ≈ ‎−0.28: <b>سقف بنيوي</b> لبنية «مرشِّح + LQR موسَّعة» — ثمن متانة قناة المشغِّل ≈ 0.42 من J قياسًا للعضو غير المرشَّح (+0.138) الذي يفشل البوّابة (3.8)</td></tr>
+      <tr><td>هامش المعامل وM<sub>s</sub> والجهد</td><td class="n">1.675 · 151 V/N</td>
+        <td>ضمن القيود المشتركة كلّها</td></tr>
+      <tr><td>قابلية التنفيذ (أسرع قطب متحكّم)</td><td class="n">5.0e4 rad/s</td>
+        <td>≈ 8 kHz — مقابل 1.4–8.8 MHz طفيلية في أعضاء الدراسة الأولى</td></tr>
+      <tr class="hero"><td>بوّابة G1(حقيقية) — النقاط الثلاث + الخليّة الأسوأ</td>
+        <td class="n">0.284–0.383 · 0.320</td>
+        <td>أعمق عضوٍ مجدوَل حتى الآن، بهامش يقارب ثلاثة أضعاف تحت البوّابة</td></tr>
+      <tr><td>أرضية المواضع عند سرعة المرجع (a<sub>p,lim</sub>)</td>
+        <td class="n">0.419 mm</td>
+        <td>[0.42، 0.84، 0.72، 1.06، 0.53] عبر المواضع الخمسة — <b>فوق عمق المرجع 0.3 mm</b>؛ ‏J السالب يعاقب متوسّط الأعماق الأعمق المسبورة (0.6 و1.0 mm)</td></tr>
+      <tr><td>شهادة العبور a<sub>p</sub><sup>∞</sup> وهامش δ<sub>max</sub></td>
+        <td class="n">0.284 mm · 0.92</td>
+        <td>دون هدف G4 (‏0.395؛ μ-TDC عند 0.436 و1.54) — العضو العابر للبوّابة يدفع في العمق المُصادَق: <b>جبهة مقيسة لا عيب مخفي</b></td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">
+    ميزان اللحظة، بلا مواربة: الشاهد الثابت يجمع اليوم — من جداول الدراسة الأولى نفسها —
+    G1(حقيقية) وأرضية G3 (عتبتها 0.6821 mm هي رقمه) وG4 (‏0.4364 mm)؛ فعلى أي عضو مجدوَل أن
+    <b>يتفوّق على هذا المجموع</b> ليبرّر جدولته. ما يملكه المجدوَلون: عمقٌ بارامتري أكبر
+    (0.25–0.31) وأرضية جدولةٍ أعلى بلا بوّابة (0.9307 mm لـ PS-TDC-R) — ولم يجمع أحدٌ الاثنين بعد.
+  </p>
   <div class="next">
     <div class="card"><b>مسح 21 عقدة + خليّة</b><span>تعميم حكم G1/G2 الحقيقيتين من العقد المجسوسة إلى شبكة الجدولة كاملة، للشاهد والعضو.</span></div>
     <div class="card"><b>شهادة المسار على العضو القوي</b><span>سلّم الأعماق وv_cert مقابل التغذية الفعلية — عرض النظرية كاملًا على عضوٍ يملك تخميدًا حقيقيًا.</span></div>
@@ -409,7 +442,8 @@ var MEMBERS = [
   {name:'mu_paper — الشاهد الثابت',  sc:1.733, tc:1.205, mx:0.419},
   {name:'ps_ac_r — مجدوَل LQG',      sc:85.8,  tc:85.8,  mx:3.79},
   {name:'PS-AC-RFA — الجولة 4',      sc:10.0,  tc:null,  mx:0.485},
-  {name:'ps_ac_rf — الجولة 2',       sc:3.70,  tc:null,  mx:0.313}
+  {name:'ps_ac_rf — الجولة 2',       sc:3.70,  tc:null,  mx:0.313},
+  {name:'PS-AC-RFA — الجولة 5',      sc:2.26,  tc:null,  mx:0.383}
 ];
 var M0E = [
   {name:'(3e5, 1.7e-3, 800) · n=1',  nom:1.400, cert:8.586, lucky:true},

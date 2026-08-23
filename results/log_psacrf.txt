@@ -117,3 +117,15 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
   -> stage3_controllers.pkl (round 4 preserved as ps_ac_rfa_r4)
 
 total 738s
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- CERTIFY ps_ac_rf: same vertex family and bisections as stage 5-6 ---
+  peak = 1.066   tau_max/tau0 = 0.09   [8s]
+  a_p^inf = 0.2841 mm   (G4 target 0.3954, ambition 0.4364)   [25s]
+  delta_max = 0.92   (mu-TDC: 1.54, PS-TDC-R: 1.40)   [26s]
+  common-P LK at a_p^inf: no
+  -> stage56.pkl
+
+total 331s

@@ -47,3 +47,12 @@ M1-real: the stored mu_paper witness at the 21 nodes, mixed reading
 
 [ps_ac_rfa ROUND 5] mixed judgement of the M1-real winner (J = -0.281)
   x=  0% point: complex   2.149 -> MIXED   0.338 at   1504 Hz   <-- G1(real) MET  [552s]
+  x=  0% cell : complex   2.131 -> MIXED   0.320 at   1504 Hz   <-- G2(real) MET  [1677s]
+  (cells beyond node 0 deferred to the 21-node stage: the cell~point
+   pattern is stable at +-0.02 over six prior measurements; the
+   remaining POINTS are judged now)
+  x= 50% point: complex   2.261 -> MIXED   0.284 at   1504 Hz   <-- G1(real) MET  [512s]
+  x=100% point: complex   2.106 -> MIXED   0.383 at   1042 Hz   <-- G1(real) MET  [522s]
+  S1-style a_p,lim: [0.4189, 0.84, 0.7172, 1.0565, 0.5271] mm  floor 0.4189 mm  [7s]
+  sup over probed points: 0.383
+-> results/mu_real_r5.npz

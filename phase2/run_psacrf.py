@@ -459,7 +459,7 @@ def certify(plate):
     c0 = mk(plant0)
 
     log('')
-    log('--- CERTIFY ps_ac_rf: same vertex family and bisections as '
+    log(f'--- CERTIFY {KIND}: same vertex family and bisections as '
         'stage 5-6 ---')
     t = time.time()
     tm, peak, ok = CF2.analyse(plant0, c0, **full)
