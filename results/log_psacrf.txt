@@ -47,3 +47,34 @@ PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
    and the corner screens do not track the structured test -- the
    screen is mu itself now.  All of it is this member's declared
    synthesis pressure, as the D-K machinery is mu-TDC's.)
+  seed 1: J = -60.0356   [63s]
+  seed 2: J = -60.0013   [192s]
+  seed 3: J = -60.1027   [141s]
+  winner: J = -7398.44947  mu_screen = 331.678  proxy = 295.509  order 14  8 parameters  [396s]
+  Ms = nan   effort = nan V/N   slowest nominal pole = 6398.4 1/s
+  parameters: log_q_pos=17.36, log_q_vel=-0.7307, log_r=-7.836, log_ratio=11.65, a4_mult=0.5318, log_depth=-0.9058, q_notch=2.564, log_fr=3.457
+  -> stage3_controllers.pkl
+
+total 398s
+==========================================================================
+PS-AC-RF - THE ACTUATOR-AWARE SCHEDULED MEMBER (docs/09 sec. 5-bis)
+==========================================================================
+
+--- DESIGN ps_ac_rfa: stage-3 PSO + the member's declared design pressure ---
+  member: the augmented structure (filter INSIDE the design model,
+  certainty equivalence intact -- act_filter.ps_ac_rfa)
+  screen 1 (corners): poles <= -0.5 1/s, Ms <= 2.0 on the 8 physics corners x 3 positions
+  screen 2 (structured): scalar-D mu_RS, actuator included, on the 16-frequency grid at 2 nodes <= 0.9
+  (rounds 1-2, recorded above, taught this twice: the band proxy
+   and the corner screens do not track the structured test -- the
+   screen is mu itself now.  All of it is this member's declared
+   synthesis pressure, as the D-K machinery is mu-TDC's.)
+  seed 1: J = -213.8390   [99s]
+  seed 2: J = -214.1447   [90s]
+  seed 3: J = -215.3985   [81s]
+  winner: J = -0.28672  mu_screen = 2.146  proxy = 5.119  order 14  8 parameters  [271s]
+  Ms = 1.294   effort = 162.7 V/N   slowest nominal pole = -46.2 1/s
+  parameters: log_q_pos=15.02, log_q_vel=-2.028, log_r=-5.821, log_ratio=9.805, a4_mult=1.344, log_depth=-1.602, q_notch=0.6703, log_fr=3.85
+  -> stage3_controllers.pkl
+
+total 273s

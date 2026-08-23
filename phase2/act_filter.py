@@ -120,13 +120,24 @@ def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
     its states are KNOWN -- nothing about them is estimated -- and certainty
     equivalence survives:
 
-      * LQR on the augmented model  [x_F; x_p]  at each scheduling position
-        (cut model, a4_mult * alpha_40, the PS-AC-R envelope convention),
-        weighting only the plate states and the command;
-      * the observer estimates the PLATE alone, driven by the exact filtered
-        command u_p the controller itself computes, position-blind
-        (sched_L=False, the adopted PS-AC-R convention);
-      * u_cmd = -K_aug [x_F; xhat_p].
+      * LQR on the augmented model [x_F; x_p] at each scheduling position
+        (cut model, a4_mult * alpha_40, the envelope convention), weighting
+        the plate states and the command; the filter states get a relative
+        regularisation 1e-9 q_pos so the augmented Riccati is well posed.
+        The Riccati is solved in SCALED coordinates -- filter states carry
+        volt-sized signals and plate states metre-sized ones, eight decades
+        apart, and the raw 12-state ordqz dies at the high-gain weights the
+        mu physics demands; a diagonal similarity (x_F scaled by 1e-8) and
+        a time scale fix that EXACTLY (the gain is invariant);
+      * the observer estimates the PLATE alone, position-blind
+        (sched_L=False), driven by the exact filtered command u_p.  (An
+        'observer-consistent' variant that kept the plain plate LQR and
+        only re-wired the observer was tried and is structurally wrong:
+        with a fast observer, the internal observer <-> filter loop is
+        itself unstable -- separation does not survive lag in the command
+        path.  The augmented LQR internalises that lag; this is the one
+        structure of the three that stands.);
+      * u_cmd = -K_aug(x_P) [x_F; xhat_p].
 
     Same F(s) structure (three notches at the truncated modes + second-order
     rolloff), same 5 + 3 = 8 searched parameters, same outer realisation
@@ -141,25 +152,32 @@ def ps_ac_rfa(plant, q_pos, q_vel, r, ratio, a4_mult, depth, q, fr,
     Cf = Cf.reshape(1, -1)
     nf = Af.shape[0]
     Wbar = _mean_noise(plant)
+    SF, WSC = 1e-8, 2.0 * np.pi * 2000.0
 
     def build(x_pos, eta=0.0):
+        from scipy.linalg import solve_continuous_are
         x = 0.5 * plant.plate.lp if x_pos is None else float(x_pos)
         x = float(np.clip(x, xs[0], xs[-1]))
         A, _, B, E, Cy = plant.matrices(x_pos=x, eta=0.0,
                                         a4=a4_mult * plant.a40)
         A0, B0, _ = plant.structure_only(0.0)
-        # augmented design model: [x_F ; x_p]
+        # augmented design model [x_F ; x_p], scaled: x_F' = SF x_F, t' = WSC t
         Aa = np.block([[Af, np.zeros((nf, 2 * n))],
                        [B @ Cf, A]])
         Ba = np.vstack([Bf, B @ Df])
         Qa = np.zeros((nf + 2 * n, nf + 2 * n))
         Qa[nf:, nf:] = Q
-        from scipy.linalg import solve_continuous_are
-        Pa = solve_continuous_are(Aa, Ba, Qa + 1e-9 * np.eye(nf + 2 * n),
-                                  np.atleast_2d(r))
-        Ka = np.linalg.solve(np.atleast_2d(r), Ba.T @ Pa)
+        T = np.diag(np.concatenate([SF * np.ones(nf), np.ones(2 * n)]))
+        Ti = np.diag(1.0 / np.diag(T))
+        As, Bs = T @ Aa @ Ti / WSC, T @ Ba / WSC
+        Qs = Ti @ Qa @ Ti / WSC
+        # relative regularisation of the (cost-free) filter states, in the
+        # solver's own coordinates, so the Riccati pencil is well posed
+        Qs[:nf, :nf] = (1e-9 * np.trace(Qs[nf:, nf:]) / (2 * n)
+                        * np.eye(nf))
+        Pa = solve_continuous_are(As, Bs, Qs, np.atleast_2d(r / WSC))
+        Ka = np.linalg.solve(np.atleast_2d(r), Ba.T @ (T @ Pa @ T))
         Kf, Kp = Ka[:, :nf], Ka[:, nf:]
-        # plate-only observer, position-blind noise, structure-only model
         Po = solve_continuous_are(A0.T, Cy.T,
                                   ratio * Wbar + 1e-12 * np.eye(2 * n),
                                   np.atleast_2d(1.0))

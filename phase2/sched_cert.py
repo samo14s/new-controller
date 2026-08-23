@@ -346,29 +346,38 @@ class FamilyCells:
 
 
 # ---------------------------------------------------------------------------
-def certify_family(cells, alpha, verbose=True, log=print):
-    """Certify every cell at common rate alpha, chaining each cell's SDP to
-    minimise the jump factor from its predecessor (traversal is one-way: the
-    feed direction).  Returns certs + jump factors + the admissible traversal
-    speed.  alpha and v_cert are in the SCALED time of the cells (t~ = ws t);
-    the caller converts back with ws."""
+def certify_family(cells, alpha, verbose=True, log=print, chained=False):
+    """Certify every cell at common rate alpha; jump factors between the
+    stored functionals give the admissible traversal speed.
+
+    Default: every cell solved INDEPENDENTLY (maximize slack) -- the trace
+    normalisation pins the scale, so post-hoc jump factors between stored
+    functionals are honest, and the certificates could even be solved in
+    parallel.  `chained=True` instead minimises each jump inside the SDP
+    (min t s.t. P <= t P_prev, Q <= t Q_prev) -- tighter, sequential,
+    slower; worth it only if the independent jumps come back too big.
+    jump_factor() of the STORED matrices is what is recorded either way, so
+    the recorded v_cert never depends on the solver's objective.
+
+    alpha and v_cert are in the SCALED time of the cells (t~ = ws t); the
+    caller converts back with ws."""
     tau = cells.tau_scaled()
     certs, mus = [], []
     prev = None
     for i in range(len(cells.nodes)):
         V, eps = cells.cell(i)
-        if prev is None:
-            r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
-                                  n_plant=cells.npl)
-        else:
+        r = None
+        if chained and prev is not None:
             r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
                                   n_plant=cells.npl, prev=prev,
                                   slack_min=0.1 * certs[0]['slack'])
-            if not r['feasible']:      # fall back: feasibility over tightness
-                r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
-                                      n_plant=cells.npl)
-                if r['feasible']:
-                    r['t'] = jump_factor(prev, r)
+            if not r['feasible']:
+                r = None               # fall back: feasibility over tightness
+        if r is None:
+            r = certificate_alpha(V, tau, alpha=alpha, eps=eps,
+                                  n_plant=cells.npl)
+            if r['feasible'] and prev is not None:
+                r['t'] = jump_factor(prev, r)
         certs.append(r)
         if verbose:
             log(f'    cell {i:2d} [{cells.edges[i]*1e3:5.1f},'

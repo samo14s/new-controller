@@ -141,11 +141,17 @@ BOUNDS2 = dict(
                   a4_mult=(0.4, 2.0),
                   log_depth=(-1.7, -0.15), q_notch=(0.6, 4.0),
                   log_fr=(3.18, 3.9)),
-    ps_ac_rfa=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
-                   log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0),
-                   a4_mult=(0.4, 2.0),
-                   log_depth=(-1.7, -0.15), q_notch=(0.6, 4.0),
-                   log_fr=(3.18, 3.9)),
+    # ps_ac_rfa bounds are set to the THREADING regime the mu physics demands
+    # (measured, log_psacrf round 4): complex-mu of the lightly damped plate
+    # is ~40 open-loop, so mu < 1 requires strong active damping at the modes
+    # (high gain) FALLING to actuator-quiet by 2.4 kHz -- low-gain corners
+    # are mu-infeasible by physics, not by tuning, and keeping them in the
+    # box only feeds the swarm dead space.
+    ps_ac_rfa=dict(log_q_pos=(13.0, 20.0), log_q_vel=(-4.0, 8.0),
+                   log_r=(-12.0, -6.0), log_ratio=(6.0, 12.0),
+                   a4_mult=(0.8, 2.0),
+                   log_depth=(-1.7, -0.5), q_notch=(0.7, 2.5),
+                   log_fr=(3.15, 3.65)),
     ps_tdc=dict(kpd=(-1.5, 1.5), kdd=(-1.5, 1.5)),
     ps_tdc_r=dict(kpd=(-1.5, 1.5), kdd=(-1.5, 1.5)),
     ps_tdc_j=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),

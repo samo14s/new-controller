@@ -175,8 +175,8 @@ class MuScreen:
     peak, so the full judge still has the last word on the winner."""
 
     F_SCR = np.array([520.0, 565.0, 610.0, 700.0, 900.0, 1050.0, 1100.0,
-                      1178.0, 1300.0, 2790.0, 3000.0, 3350.0, 3700.0,
-                      4000.0, 4120.0, 4400.0])
+                      1178.0, 1300.0, 1600.0, 2000.0, 2400.0, 2790.0,
+                      3000.0, 3350.0, 3700.0, 4000.0, 4120.0, 4400.0])
 
     def __init__(self, plate, nodes=(0.0, 0.5)):
         import control as ct
@@ -243,6 +243,11 @@ def design(plate, plant):
     scr = MuScreen(plate)
 
     def fit(u):
+        # a strict penalty LADDER: passing a gate always pays, whatever the
+        # state of the next one.  Round 3 taught this the hard way: with the
+        # mu penalty reaching -173 against the corner-screen floor of -60,
+        # the swarm learned to stand at the corner-screen boundary forever
+        # (all three seeds ended at exactly -60.0x).
         try:
             c = d.build(u)
         except Exception:
@@ -257,17 +262,18 @@ def design(plate, plant):
         if ms_v > MS_VERT:
             pen += 10.0 * min(ms_v / MS_VERT - 1.0, 10.0)
         if pen > 0.0:
-            return -60.0 - pen
+            return -300.0 - pen               # worst band: [-410, -300]
         try:
-            mu_s = scr(c, limit=4.0)
+            mu_s = scr(c, limit=10.0)
         except Exception:
             return -1e4
         if mu_s > MU_SCR_MAX:
-            return -45.0 - 10.0 * (mu_s / MU_SCR_MAX - 1.0)
+            return -200.0 - 10.0 * min(mu_s / MU_SCR_MAX - 1.0, 8.0)
+            #                                   middle band: [-280, -200]
         J, info = evaluate(plate, c, detail=True)
         if not info['feasible']:
-            return J
-        return J
+            return max(-140.0, -100.0 + J / 50.0)   # band: [-140, -100]
+        return J                                    # the real objective
 
     t0 = time.time()
     best = (None, -np.inf)
@@ -384,44 +390,66 @@ def certify(plate):
 
 
 # ---------------------------------------------------------------------------
-def whole_pass(plate):
-    """G6: the exponential-LK + dwell certificate over the scheduling tube."""
+def whole_pass(plate, ap=None):
+    """G6: the exponential-LK + dwell certificate over the scheduling tube.
+    `ap` (defaults to the reference depth) lets the same machinery probe the
+    largest whole-pass-certified depth."""
     import sched_cert as SC
     from stage_common import load_controllers
 
-    plant = ControlledPlant(plate, ap=C.AP_S)
+    plant = ControlledPlant(plate, ap=C.AP_S if ap is None else ap)
     ctrl = load_controllers(plate, plant)[KIND](plant)
     v_feed = plant.feed_speed()
     log('')
-    log('--- WHOLE-PASS ps_ac_rf: exponential LK per cell + dwell theorem ---')
+    log(f'--- WHOLE-PASS {KIND}: exponential DI-LK per cell + dwell '
+        f'theorem (a_p = {plant.ap*1e3:.2f} mm) ---')
     t = time.time()
     cells = SC.FamilyCells(plant, ctrl)
-    r0 = SC.certify_family(cells, 0.0, verbose=False, log=log)
-    if not r0['feasible']:
-        log(f'  alpha = 0 INFEASIBLE at cell {r0["failed_cell"]} -- '
-            'G6 not met at the reference depth; reported as exactly that')
-        upd('stage56.pkl', {KIND + '_pass': dict(feasible=False)})
-        return
-    a_star, r = SC.alpha_ladder(cells, log=log)
     ws = cells.ws
-    log(f'  every cell certified;  alpha* = {a_star*ws:.2f} 1/s (scaled '
-        f'{a_star:.4f})')
-    if a_star > 0 and len(r['mus']):
-        vc = r['v_cert'] * ws
-        log(f'  jump factors: min {r["mus"].min():.3f}  max '
-            f'{r["mus"].max():.3f}')
-        log(f'  G6 certified traversal speed v_cert = '
-            + ('unbounded' if np.isinf(vc) else f'{vc*1e3:.2f} mm/s')
-            + f'  vs actual feed {v_feed*1e3:.2f} mm/s  -> '
-            + ('MET' if (np.isinf(vc) or vc >= v_feed) else 'NOT MET'))
-        upd('stage56.pkl',
-            {KIND + '_pass': dict(feasible=True, alpha=a_star * ws,
-                                  mus=np.asarray(r['mus']),
-                                  v_cert=vc, v_feed=v_feed)})
-    else:
-        log('  alpha = 0 only: cells certified but no decay margin -- the '
-            'dwell theorem needs alpha > 0; G6 NOT met')
-        upd('stage56.pkl', {KIND + '_pass': dict(feasible=True, alpha=0.0)})
+    a_star, r = 0.0, None
+    for a in (2e-3, 1e-2):                     # 10 and 50 1/s
+        ri = SC.certify_family(cells, a, verbose=True, log=log)
+        if not ri['feasible']:
+            log(f'  alpha = {a*ws:.0f} 1/s: infeasible at cell '
+                f'{ri["failed_cell"]}')
+            break
+        a_star, r = a, ri
+    if r is None:
+        r0 = SC.certify_family(cells, 0.0, verbose=False, log=log)
+        if r0['feasible']:
+            log('  cells certify at alpha = 0 only: no decay margin, so no '
+                'dwell statement; G6 NOT met')
+            upd('stage56.pkl', {KIND + '_pass': dict(feasible=True,
+                                                     alpha=0.0)})
+        else:
+            log(f'  even alpha = 0 INFEASIBLE (cell {r0["failed_cell"]}) -- '
+                'G6 not met at the reference depth; reported as exactly that')
+            upd('stage56.pkl', {KIND + '_pass': dict(feasible=False)})
+        log(f'  [{time.time()-t:.0f}s]')
+        return
+    vc = r['v_cert'] * ws
+    worst_lmi = max(c['worst_eig'] for c in r['certs'])
+    log(f'  every cell certified at alpha = {a_star*ws:.1f} 1/s '
+        f'(verified: worst LMI eigenvalue {worst_lmi:.2e})')
+    log(f'  jump factors: min {r["mus"].min():.3f}  max {r["mus"].max():.3f}')
+    log(f'  G6 certified traversal speed v_cert = '
+        + ('unbounded' if np.isinf(vc) else f'{vc*1e3:.2f} mm/s')
+        + f'  vs actual feed {v_feed*1e3:.2f} mm/s  -> '
+        + ('MET' if (np.isinf(vc) or vc >= v_feed) else 'NOT MET'))
+    upd('stage56.pkl',
+        {KIND + '_pass': dict(feasible=True, alpha=a_star * ws,
+                              mus=np.asarray(r['mus']),
+                              v_cert=vc, v_feed=v_feed)})
+    np.savez(os.path.join(OUT, 'psacrf_pass_cert.npz'),
+             alpha=a_star * ws, mus=np.asarray(r['mus']),
+             v_cert=vc, v_feed=v_feed,
+             P=np.array([c['P'] for c in r['certs']]),
+             Q=np.array([c['Q'] for c in r['certs']]),
+             lam=np.array([c['lam'] for c in r['certs']]),
+             edges=cells.edges, worst_eig=np.array([c['worst_eig']
+                                                    for c in r['certs']]))
+    log('  certificate matrices -> results/psacrf_pass_cert.npz '
+        '(re-checkable from disk)')
     log(f'  [{time.time()-t:.0f}s]')
 
 

@@ -1,0 +1,7 @@
+==============================================================================
+MIXED REAL/COMPLEX mu - THE G1 QUANTITY RE-READ WITH THE PARAMETRICS REAL
+==============================================================================
+  same judge machinery, same grid; only the delta set changes:
+  real scalars get the G-scale the complex reading denies them.
+
+[mu_paper]
