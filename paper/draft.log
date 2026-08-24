@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 19:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 20:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -509,76 +509,76 @@ Package microtype Info: Loading generic protrusion settings for font family
 <figs/fig_readings.pdf, id=226, 397.485pt x 209.58301pt>
 File: figs/fig_readings.pdf Graphic file (type pdf)
 <use figs/fig_readings.pdf>
-Package pdftex.def Info: figs/fig_readings.pdf  used on input line 319.
+Package pdftex.def Info: figs/fig_readings.pdf  used on input line 320.
 (pdftex.def)             Requested size: 401.05298pt x 211.46928pt.
 <figs/fig_sweep21.pdf, id=227, 397.485pt x 195.129pt>
 File: figs/fig_sweep21.pdf Graphic file (type pdf)
 <use figs/fig_sweep21.pdf>
-Package pdftex.def Info: figs/fig_sweep21.pdf  used on input line 331.
+Package pdftex.def Info: figs/fig_sweep21.pdf  used on input line 332.
 (pdftex.def)             Requested size: 373.0737pt x 183.15033pt.
  [5 <./figs/fig_readings.pdf>] [6 <./figs/fig_sweep21.pdf>] [7] [8]
 <figs/fig_refine.pdf, id=414, 419.166pt x 187.902pt>
 File: figs/fig_refine.pdf Graphic file (type pdf)
 <use figs/fig_refine.pdf>
-Package pdftex.def Info: figs/fig_refine.pdf  used on input line 624.
+Package pdftex.def Info: figs/fig_refine.pdf  used on input line 625.
 (pdftex.def)             Requested size: 457.01154pt x 204.86932pt.
 <figs/fig_sigma.pdf, id=415, 397.485pt x 180.675pt>
 File: figs/fig_sigma.pdf Graphic file (type pdf)
 <use figs/fig_sigma.pdf>
-Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 638.
+Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 639.
 (pdftex.def)             Requested size: 373.0737pt x 169.58363pt.
  [9] [10 <./figs/fig_refine.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 757--757
+Underfull \hbox (badness 10000) in paragraph at lines 758--758
 []\OT1/cmr/m/n/10 (+20) Whole pass, re-al-iz-able,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 762--763
+Underfull \hbox (badness 10000) in paragraph at lines 763--764
 []\OT1/cmr/m/n/10 (+20) static va-lid-ity $100%$ at
  []
 
 
-Underfull \hbox (badness 4981) in paragraph at lines 765--765
+Underfull \hbox (badness 4981) in paragraph at lines 766--766
 []\OT1/cmr/m/n/10 (+20) Realizability price (sched.
  []
 
 
-Underfull \hbox (badness 7814) in paragraph at lines 766--767
+Underfull \hbox (badness 7814) in paragraph at lines 767--768
 []$\OT1/cmr/m/n/10 (+20) +0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 145$ (8.8MHz
  poles) vs
  []
 
 [11 <./figs/fig_sigma.pdf>]
-Underfull \hbox (badness 4739) in paragraph at lines 811--811
+Underfull \hbox (badness 4739) in paragraph at lines 812--812
 []\OT1/cmr/m/n/10 (+20) Frozen-point mixed $\OML/cmm/m/it/10 ^^V$\OT1/cmr/m/n/1
 0 (+20) , 21
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 877--877
+Underfull \hbox (badness 10000) in paragraph at lines 878--878
 []$\OT1/cmr/m/n/10 (+20) 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 242$--$0\OML/
 cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 419$ ($1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+
 20) 16$--
  []
 
 
-Underfull \hbox (badness 3271) in paragraph at lines 886--887
+Underfull \hbox (badness 3271) in paragraph at lines 887--888
 []\OT1/cmr/m/n/10 (+20) out of DI con-tract
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 886--887
+Underfull \hbox (badness 10000) in paragraph at lines 887--888
 \OT1/cmr/m/n/10 (+20) (TDC); frozen-point
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 888--890
+Underfull \hbox (badness 10000) in paragraph at lines 889--891
 []$\OML/cmm/m/it/10 v[] \OT1/cmr/m/n/10 (+20) = 79\OML/cmm/m/it/10 :\OT1/cmr/m/
 n/10 (+20) 9$--
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 888--890
+Underfull \hbox (badness 10000) in paragraph at lines 889--891
 \OT1/cmr/m/n/10 (+20) 82\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 7$mm/s full
  []
 
@@ -586,61 +586,60 @@ Underfull \hbox (badness 10000) in paragraph at lines 888--890
 <figs/fig_lobes.pdf, id=588, 404.712pt x 216.81pt>
 File: figs/fig_lobes.pdf Graphic file (type pdf)
 <use figs/fig_lobes.pdf>
-Package pdftex.def Info: figs/fig_lobes.pdf  used on input line 921.
+Package pdftex.def Info: figs/fig_lobes.pdf  used on input line 922.
 (pdftex.def)             Requested size: 373.0737pt x 199.87122pt.
 <figs/fig_timeresp.pdf, id=593, 433.62pt x 195.129pt>
 File: figs/fig_timeresp.pdf Graphic file (type pdf)
 <use figs/fig_timeresp.pdf>
-Package pdftex.def Info: figs/fig_timeresp.pdf  used on input line 935.
+Package pdftex.def Info: figs/fig_timeresp.pdf  used on input line 936.
 (pdftex.def)             Requested size: 443.0219pt x 199.37134pt.
  [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1053
+Underfull \hbox (badness 10000) in paragraph at lines 1063--1063
 []$\OML/cmm/m/it/9 ^^V$\OT1/cmr/m/n/9 (+20) -TDC (bench-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1055
+Underfull \hbox (badness 10000) in paragraph at lines 1063--1065
 []\OT1/cmr/m/n/9 (+20) PS-TDC-J (delay-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1056--1056
+Underfull \hbox (badness 10000) in paragraph at lines 1066--1066
 []\OT1/cmr/m/n/9 (+20) lobe floor, $3600$--
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1058--1058
+Underfull \hbox (badness 10000) in paragraph at lines 1068--1068
 []\OT1/cmr/m/n/9 (+20) speeds at/above
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1062--1062
+Underfull \hbox (badness 10000) in paragraph at lines 1072--1072
 []\OT1/cmr/m/n/9 (+20) gate, mixed $\OML/cmm/m/it/9 ^^V[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1070--1071
+Underfull \hbox (badness 10000) in paragraph at lines 1080--1081
 []$\OT1/cmr/m/n/9 (+20) 23\OML/cmm/m/it/9 :\OT1/cmr/m/n/9 (+20) 6$--$24\OML/cmm
 /m/it/9 :\OT1/cmr/m/n/9 (+20) 7$mm/s
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1070--1071
+Underfull \hbox (badness 10000) in paragraph at lines 1080--1081
 \OT1/cmr/m/n/9 (+20) ([]), $\OML/cmm/m/it/9 a[] \OT1/cmr/m/n/9 (+20) =
  []
 
-[15 <./figs/fig_lobes.pdf>] [16 <./figs/fig_timeresp.pdf>]
-Underfull \hbox (badness 1661) in paragraph at lines 1132--1154
-\OT1/cmr/m/n/10.95 (+20) and ev-ery fig-ure of this paper---is scripted in the 
-project repos-i-tory. All quan-ti-ties
+
+Underfull \hbox (badness 3679) in paragraph at lines 1081--1082
+[]$\OT1/cmr/m/n/9 (+20) 246\OML/cmm/m/it/9 :\OT1/cmr/m/n/9 (+20) 6$mm/s ([],
  []
 
-
-Underfull \hbox (badness 1400) in paragraph at lines 1132--1154
-\OT1/cmtt/m/n/10.95 adiab[]rigor2.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/1
-0.95 adiab[]diff.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 baseline[]cm
-p.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 mu[]real[]cmp.npz\OT1/cmr/m
-/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 adiab[]cmp.npz\OT1/cmr/m/n/10.95 (+20) ,
+[15 <./figs/fig_lobes.pdf>] [16 <./figs/fig_timeresp.pdf>]
+Underfull \hbox (badness 4940) in paragraph at lines 1143--1166
+\OT1/cmtt/m/n/10.95 timeresp[]l.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.
+95 cert[]l.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 lobe[]champions.pk
+l\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 lobes[]tdcj.npz\OT1/cmr/m/n/10.
+95 (+20) , \OT1/cmtt/m/n/10.95 mu[]real[]tdcj.npz\OT1/cmr/m/n/10.95 (+20) ,
  []
 
 [17
@@ -648,7 +647,7 @@ p.npz\OT1/cmr/m/n/10.95 (+20) , \OT1/cmtt/m/n/10.95 mu[]real[]cmp.npz\OT1/cmr/m
 ] [18
 
 ]
-Overfull \hbox (0.68768pt too wide) in paragraph at lines 1352--1362
+Overfull \hbox (0.68768pt too wide) in paragraph at lines 1364--1374
 \OT1/cmr/m/n/10.95 (-20) The first term is $\OMS/cmsy/m/n/10.95 ^^T \OT1/cmr/m/
 n/10.95 (-20) 0$ by the point-wise LMI; the sec-ond is $\OMS/cmsy/m/n/10.95 ^^T
  \OML/cmm/m/it/10.95 v^^[ x[]Px$\OT1/cmr/m/n/10.95 (-20) ; the third is $\OMS/c
@@ -664,11 +663,11 @@ Package rerunfilecheck Info: File `draft.out' has not changed.
 (rerunfilecheck)             Checksum: 23385CFF64D52B232DC1FE179EF0EC44;6118.
  ) 
 Here is how much of TeX's memory you used:
- 13228 strings out of 476182
- 202342 string characters out of 5795595
+ 13230 strings out of 476182
+ 202356 string characters out of 5795595
  1949975 words of memory out of 5000000
  34693 multiletter control sequences out of 15000+600000
- 582042 words of font info for 224 fonts, out of 8000000 for 9000
+ 582093 words of font info for 225 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,13n,79p,1002b,599s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
@@ -699,10 +698,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-
 dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on draft.pdf (21 pages, 658013 bytes).
+Output written on draft.pdf (21 pages, 659215 bytes).
 PDF statistics:
- 957 PDF objects out of 1000 (max. 8388607)
- 559 compressed objects within 6 object streams
+ 958 PDF objects out of 1000 (max. 8388607)
+ 560 compressed objects within 6 object streams
  114 named destinations out of 1000 (max. 500000)
  44271 words of extra memory for PDF output out of 51595 (max. 10000000)
 

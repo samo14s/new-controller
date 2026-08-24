@@ -89,7 +89,8 @@ the benchmark's frozen-speed depth advantage within the same
 constraint set (lobe floor $0.340 \to 0.439$\,mm against the
 benchmark's $0.474$\,mm, the shared robustness bar measured binding
 on both sides, the member's whole-pass certificate strengthened to
-$49.5$\,mm/s), quantifying the residual $7\%$ as the measured price
+$246.6$\,mm/s---a $50\times$ rate margin), quantifying the residual
+$7\%$ as the measured price
 of delay independence on this plant; the family's own delay-exploiting
 member recovers it and more (floor $0.583$\,mm, $23\%$ above the
 benchmark) at the measured price of both the certificate and the
@@ -1000,16 +1001,25 @@ whole-pass-certifiable structure on this plant---the depth side of
 the Table~\ref{tab:head2head} frontier, narrowed from $28\%$ and
 quantified at its saturation.
 
-Table~\ref{tab:lobefirst} carries the champion's full battery.  It
-passes the gate ($0.332$--$0.450$), improves the shared objective it
-was not optimised for ($J = -0.166$ vs $-0.281$), raises the nominal
-floor to $0.539$\,mm, keeps the $3.0\times$ faster scenario recovery
-(at $0.70\times$ the energy), and its whole-pass certificate at
-$\ap = 0.15$\,mm reads $v^{*} = 49.5$\,mm/s on all three $a_4$
-slices at the \emph{fixed} base rate $\alpha = 10$\,s$^{-1}$---double
-the incumbent's $\alpha$-optimised $23.6$--$24.7$\,mm/s, so the
-lobe-first push strengthened the certificate rather than spending
-it.
+Table~\ref{tab:lobefirst} carries the champion's full battery.  Its
+gate record is complete at the same standard as the witness and the
+r5 member: mixed $\muRS = 0.330$--$0.450$ over \emph{all} 21
+scheduling nodes (worst at the free end), G1(real) met everywhere.
+It improves the shared objective it was not optimised for
+($J = -0.166$ vs $-0.281$), raises the nominal floor to $0.539$\,mm,
+and keeps the $3.0\times$ faster scenario recovery (at $0.70\times$
+the energy).  Its whole-pass certificate at $\ap = 0.15$\,mm, taken
+through the incumbents' own per-slice $\alpha$ ladder with every
+slice's static interval validation at $100\%$, reads
+$\vcert = 246.6$\,mm/s over the nine $(a_4, \zeta)$ slices---a
+$50\times$ rate margin against the actual feed, converged under grid
+refinement, and \emph{ten times} the incumbent member's
+$23.6$--$24.7$\,mm/s: the lobe-first push strengthened the
+certificate rather than spending it.  The binding slice ($a_4$ hi,
+$\alpha = 50$\,s$^{-1}$) reaches full static validity exactly at
+$h = 0.104$\,mm---the same cell size the empirical $\zeta$-law fixed
+for this class in Section~\ref{sec:pass}, reappearing here as the
+validity scale of the point chain.
 
 The remaining corner of the frontier is then measured rather than
 conjectured.  The family's own delay-exploiting member
@@ -1060,7 +1070,7 @@ $37/37$ \\
 nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
 $0.539$ / $0.886$ & $0.907$ / $1.373$ \\
 gate, mixed $\muRS$ (nodes) & $0.242$--$0.419$ & $0.283$--$0.383$ &
-$0.332$--$0.450$ & $3.46$--$3.48$ (not met) \\
+$0.330$--$0.450$ ($21/21$) & $3.46$--$3.48$ (not met) \\
 $M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $2.00$ /
 $160$ & $1.98$ / $272$ \\
 $J$ (shared objective) & $-0.025$ & $-0.281$ & $-0.166$ &
@@ -1068,9 +1078,9 @@ $+0.156$ \\
 recovery: time / energy / peak & $1$ / $1$ / $1$ & $0.33$ / $0.45$ /
 $0.71$ & $0.33$ / $0.70$ / $0.98$ & $0.07$ / $0.79$ / $1.48$ \\
 whole-pass certificate & out of DI contract & $23.6$--$24.7$\,mm/s
-(\mbox{$\alpha$-opt}), $\ap = 0.15$\,mm & $49.5$\,mm/s
-(fixed $\alpha$), $\ap = 0.15$\,mm & out of DI contract (as the
-benchmark) \\
+(\mbox{$\alpha$-opt}), $\ap = 0.15$\,mm & $246.6$\,mm/s
+(\mbox{$\alpha$-opt}, $100\%$ static validity), $\ap = 0.15$\,mm &
+out of DI contract (as the benchmark) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1101,12 +1111,13 @@ objectives may re-order members but not the certificates.
 (6)~Deep-cut corners near a member's exact crossing edge are
 intrinsically hostile to the DI premise (the measured $\rho$-spike);
 certification there should be attempted at the exact delay only.
-(7)~The lobe-first champion's certificate is reported at the fixed
-base rate $\alpha = 10$\,s$^{-1}$; the incumbents' per-slice $\alpha$
-optimisation can only raise it.  Its crossing pair
+(7)~The lobe-first champion's crossing pair
 ($\ap^{\infty}, \delta_{\max}$) has not been re-measured; the
 frozen-speed lobe verdicts of Table~\ref{tab:lobefirst} are the
-sharper statement of the same axis.
+sharper statement of the same axis.  Its certificate is
+$\alpha$-optimised with full static interval validation
+(\texttt{cert\_l2.npz}); the certified depth itself remains
+$0.15$\,mm, not the reference depth.
 
 \paragraph{Significance.}
 Beyond the benchmark, the paper argues for three transferable
@@ -1144,7 +1155,8 @@ are recomputed from stored artifacts
 \texttt{s1\_l.npz}, \texttt{timeresp\_l.npz}, \texttt{cert\_l.npz},
 \texttt{lobe\_champions.pkl}, \texttt{lobes\_tdcj.npz},
 \texttt{mu\_real\_tdcj.npz}, \texttt{s1\_tdcj.npz},
-\texttt{timeresp\_tdcj.npz}, run logs), and corrections to earlier
+\texttt{timeresp\_tdcj.npz}, \texttt{cert\_l2.npz},
+\texttt{mu\_real\_l21.npz}, run logs), and corrections to earlier
 readings are appended to the record rather than rewritten.  The
 lobe-first members carry the repository keys \texttt{ps\_ac\_rfa\_l2}
 (PS-AC-RFA-L, the champion), \texttt{ps\_ac\_rfa\_l},

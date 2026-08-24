@@ -655,3 +655,27 @@ midpoint validity at the first NX reaching 100% (ladder 481 -> 961)
 ==============================================================================
 FULL 21-NODE MIXED GATE SWEEP: ps_ac_rfa_l2  2026-08-24 19:58
 ==============================================================================
+  node  0  x =   0.0 mm:  complex   2.445  ->  mixed   0.396  at   1504 Hz   [273s]
+  node  3  x =  15.0 mm:  complex   2.401  ->  mixed   0.373  at   1504 Hz   [280s]
+  node  1  x =   5.0 mm:  complex   2.434  ->  mixed   0.388  at   1504 Hz   [288s]
+  node  2  x =  10.0 mm:  complex   2.420  ->  mixed   0.381  at   1504 Hz   [290s]
+  node  4  x =  20.0 mm:  complex   2.379  ->  mixed   0.362  at   1504 Hz   [301s]
+  node  5  x =  25.0 mm:  complex   2.356  ->  mixed   0.355  at   1504 Hz   [298s]
+  node  7  x =  35.0 mm:  complex   2.310  ->  mixed   0.340  at   1504 Hz   [301s]
+  node  6  x =  30.0 mm:  complex   2.332  ->  mixed   0.347  at   1504 Hz   [305s]
+  node  8  x =  40.0 mm:  complex   2.291  ->  mixed   0.337  at   1504 Hz   [287s]
+  node  9  x =  45.0 mm:  complex   2.275  ->  mixed   0.330  at   1504 Hz   [299s]
+  node 10  x =  50.0 mm:  complex   2.268  ->  mixed   0.332  at   1504 Hz   [304s]
+  node 11  x =  55.0 mm:  complex   2.287  ->  mixed   0.340  at   1504 Hz   [302s]
+  node 12  x =  60.0 mm:  complex   2.309  ->  mixed   0.349  at   1504 Hz   [298s]
+  node 13  x =  65.0 mm:  complex   2.331  ->  mixed   0.361  at   1504 Hz   [300s]
+  node 15  x =  75.0 mm:  complex   2.373  ->  mixed   0.384  at   1504 Hz   [291s]
+  node 14  x =  70.0 mm:  complex   2.353  ->  mixed   0.370  at   1504 Hz   [316s]
+  node 16  x =  80.0 mm:  complex   2.390  ->  mixed   0.397  at   1504 Hz   [308s]
+  node 17  x =  85.0 mm:  complex   2.403  ->  mixed   0.410  at   1504 Hz   [315s]
+  node 18  x =  90.0 mm:  complex   2.412  ->  mixed   0.431  at   1504 Hz   [312s]
+  node 19  x =  95.0 mm:  complex   2.416  ->  mixed   0.441  at   1504 Hz   [303s]
+  node 20  x = 100.0 mm:  complex   2.416  ->  mixed   0.450  at   1504 Hz   [288s]
+  sup over the 21 nodes = 0.450 (worst node 20, x = 100.0 mm)  < 1  G1(real) MET ON EVERY NODE   [total 1756s]
+-> results/mu_real_l21.npz
+mu21_l done.
