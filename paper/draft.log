@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 16:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -505,81 +505,80 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-<figs/fig_readings.pdf, id=220, 397.485pt x 209.58301pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
+<figs/fig_readings.pdf, id=226, 397.485pt x 209.58301pt>
 File: figs/fig_readings.pdf Graphic file (type pdf)
 <use figs/fig_readings.pdf>
-Package pdftex.def Info: figs/fig_readings.pdf  used on input line 310.
+Package pdftex.def Info: figs/fig_readings.pdf  used on input line 316.
 (pdftex.def)             Requested size: 401.05298pt x 211.46928pt.
- [4]
 <figs/fig_sweep21.pdf, id=227, 397.485pt x 195.129pt>
 File: figs/fig_sweep21.pdf Graphic file (type pdf)
 <use figs/fig_sweep21.pdf>
-Package pdftex.def Info: figs/fig_sweep21.pdf  used on input line 322.
+Package pdftex.def Info: figs/fig_sweep21.pdf  used on input line 328.
 (pdftex.def)             Requested size: 373.0737pt x 183.15033pt.
  [5 <./figs/fig_readings.pdf>] [6 <./figs/fig_sweep21.pdf>] [7] [8]
 <figs/fig_refine.pdf, id=414, 419.166pt x 187.902pt>
 File: figs/fig_refine.pdf Graphic file (type pdf)
 <use figs/fig_refine.pdf>
-Package pdftex.def Info: figs/fig_refine.pdf  used on input line 615.
+Package pdftex.def Info: figs/fig_refine.pdf  used on input line 621.
 (pdftex.def)             Requested size: 457.01154pt x 204.86932pt.
 <figs/fig_sigma.pdf, id=415, 397.485pt x 180.675pt>
 File: figs/fig_sigma.pdf Graphic file (type pdf)
 <use figs/fig_sigma.pdf>
-Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 629.
+Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 635.
 (pdftex.def)             Requested size: 373.0737pt x 169.58363pt.
  [9] [10 <./figs/fig_refine.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 748--748
+Underfull \hbox (badness 10000) in paragraph at lines 754--754
 []\OT1/cmr/m/n/10 (+20) Whole pass, re-al-iz-able,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 753--754
+Underfull \hbox (badness 10000) in paragraph at lines 759--760
 []\OT1/cmr/m/n/10 (+20) static va-lid-ity $100%$ at
  []
 
 
-Underfull \hbox (badness 4981) in paragraph at lines 756--756
+Underfull \hbox (badness 4981) in paragraph at lines 762--762
 []\OT1/cmr/m/n/10 (+20) Realizability price (sched.
  []
 
 
-Underfull \hbox (badness 7814) in paragraph at lines 757--758
+Underfull \hbox (badness 7814) in paragraph at lines 763--764
 []$\OT1/cmr/m/n/10 (+20) +0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 145$ (8.8MHz
  poles) vs
  []
 
 [11 <./figs/fig_sigma.pdf>]
-Underfull \hbox (badness 4739) in paragraph at lines 802--802
+Underfull \hbox (badness 4739) in paragraph at lines 808--808
 []\OT1/cmr/m/n/10 (+20) Frozen-point mixed $\OML/cmm/m/it/10 ^^V$\OT1/cmr/m/n/1
 0 (+20) , 21
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 866--866
+Underfull \hbox (badness 10000) in paragraph at lines 874--874
 []$\OT1/cmr/m/n/10 (+20) 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 242$--$0\OML/
 cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 419$ ($1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+
 20) 16$--
  []
 
 
-Underfull \hbox (badness 3271) in paragraph at lines 875--876
+Underfull \hbox (badness 3271) in paragraph at lines 883--884
 []\OT1/cmr/m/n/10 (+20) out of DI con-tract
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 875--876
+Underfull \hbox (badness 10000) in paragraph at lines 883--884
 \OT1/cmr/m/n/10 (+20) (TDC); frozen-point
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 877--879
+Underfull \hbox (badness 10000) in paragraph at lines 885--887
 []$\OML/cmm/m/it/10 v[] \OT1/cmr/m/n/10 (+20) = 79\OML/cmm/m/it/10 :\OT1/cmr/m/
 n/10 (+20) 9$--
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 877--879
+Underfull \hbox (badness 10000) in paragraph at lines 885--887
 \OT1/cmr/m/n/10 (+20) 82\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 7$mm/s full
  []
 
@@ -587,24 +586,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 877--879
 <figs/fig_lobes.pdf, id=588, 404.712pt x 216.81pt>
 File: figs/fig_lobes.pdf Graphic file (type pdf)
 <use figs/fig_lobes.pdf>
-Package pdftex.def Info: figs/fig_lobes.pdf  used on input line 903.
+Package pdftex.def Info: figs/fig_lobes.pdf  used on input line 917.
 (pdftex.def)             Requested size: 373.0737pt x 199.87122pt.
-<figs/fig_timeresp.pdf, id=589, 433.62pt x 195.129pt>
+<figs/fig_timeresp.pdf, id=591, 433.62pt x 195.129pt>
 File: figs/fig_timeresp.pdf Graphic file (type pdf)
 <use figs/fig_timeresp.pdf>
-Package pdftex.def Info: figs/fig_timeresp.pdf  used on input line 913.
+Package pdftex.def Info: figs/fig_timeresp.pdf  used on input line 928.
 (pdftex.def)             Requested size: 443.0219pt x 199.37134pt.
- [13] [14] [15 <./figs/fig_lobes.pdf> <./figs/fig_timeresp.pdf>] [16
+ [13]
+Underfull \hbox (badness 10000) in paragraph at lines 1032--1033
+[]$\OT1/cmr/m/n/10 (+20) 23\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 6$--$24\OML/
+cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 7$mm/s
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1032--1033
+\OT1/cmr/m/n/10 (+20) ([]), $\OML/cmm/m/it/10 a[] \OT1/cmr/m/n/10 (+20) =
+ []
+
+
+Underfull \hbox (badness 6173) in paragraph at lines 1033--1035
+[]$\OT1/cmr/m/n/10 (+20) 49\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 5$mm/s (fixe
+d $\OML/cmm/m/it/10 $\OT1/cmr/m/n/10 (+20) ),
+ []
+
+[14] [15 <./figs/fig_lobes.pdf> <./figs/fig_timeresp.pdf>] [16] [17
+
+] [18
 
 ]
-Overfull \hbox (0.68768pt too wide) in paragraph at lines 1179--1189
+Overfull \hbox (0.68768pt too wide) in paragraph at lines 1310--1320
 \OT1/cmr/m/n/10.95 (-20) The first term is $\OMS/cmsy/m/n/10.95 ^^T \OT1/cmr/m/
 n/10.95 (-20) 0$ by the point-wise LMI; the sec-ond is $\OMS/cmsy/m/n/10.95 ^^T
  \OML/cmm/m/it/10.95 v^^[ x[]Px$\OT1/cmr/m/n/10.95 (-20) ; the third is $\OMS/c
 msy/m/n/10.95 ^^T \OML/cmm/m/it/10.95 v^^[ [] e[]x[]Qx$
  []
 
-[17] [18] [19] (./draft.aux)
+[19] [20] [21] (./draft.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -614,10 +632,10 @@ Package rerunfilecheck Info: File `draft.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  13228 strings out of 476182
- 202316 string characters out of 5795595
- 1948975 words of memory out of 5000000
- 34691 multiletter control sequences out of 15000+600000
- 582138 words of font info for 227 fonts, out of 8000000 for 9000
+ 202342 string characters out of 5795595
+ 1949975 words of memory out of 5000000
+ 34693 multiletter control sequences out of 15000+600000
+ 582042 words of font info for 224 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  75i,13n,79p,1002b,599s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
@@ -646,10 +664,10 @@ i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on draft.pdf (19 pages, 597270 bytes).
+Output written on draft.pdf (21 pages, 607543 bytes).
 PDF statistics:
- 921 PDF objects out of 1000 (max. 8388607)
- 537 compressed objects within 6 object streams
- 110 named destinations out of 1000 (max. 500000)
+ 938 PDF objects out of 1000 (max. 8388607)
+ 549 compressed objects within 6 object streams
+ 114 named destinations out of 1000 (max. 500000)
  44271 words of extra memory for PDF output out of 51595 (max. 10000000)
 

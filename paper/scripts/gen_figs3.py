@@ -25,12 +25,14 @@ ROOT = os.path.dirname(os.path.dirname(
 FIGS = os.path.join(ROOT, 'paper', 'figs')
 RES = os.path.join(ROOT, 'results')
 
-ch = pickle.load(open(f'{RES}/lobe_champions.pkl', 'rb'))
-KF, KR = ch['filtered'], ch['realizable']
+# the paper's members: the gate-passing lobe-first filtered champion and
+# the incumbent realizable member (the widened-box lobe winner ps_ac_ri_l2
+# fails G1(real) and is reported in the text, not carried in the figures)
+KF, KR = 'ps_ac_rfa_l2', 'ps_ac_ri'
 SERIES = (('open', GY, 'open loop'),
           ('mu_tdc', C1, '$\\mu$-TDC (benchmark)'),
           (KF, C3, 'PS-AC-RFA-L'),
-          (KR, C2, 'PS-AC-RI-L'))
+          (KR, C2, 'PS-AC-RI'))
 
 # ---- Fig 5: stability lobes (champions) --------------------------------
 d = np.load(f'{RES}/lobes_l2.npz')

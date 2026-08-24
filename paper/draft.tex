@@ -84,8 +84,14 @@ Hamiltonian, with recorded SDP infeasibility verdicts at single
 vertices shown to be solver failures; grid refinement is used to
 falsify an over-optimistic coarse-grid claim, and delay-exploiting
 (TDC-type) members are classified out of the delay-independent
-contract by design.  Every number is derived from stored,
-re-checkable certificate matrices.
+contract by design.  A lobe-first redesign round then closes most of
+the benchmark's frozen-speed depth advantage within the same
+constraint set (lobe floor $0.340 \to 0.439$\,mm against the
+benchmark's $0.474$\,mm, the shared robustness bar measured binding
+on both sides, the member's whole-pass certificate strengthened to
+$49.5$\,mm/s), quantifying the residual $7\%$ as the measured price
+of delay independence on this plant.  Every number is derived from
+stored, re-checkable certificate matrices.
 \end{abstract}
 
 \section{Introduction}
@@ -844,6 +850,8 @@ member's worst-position nominal limit ($0.299$\,mm) sits essentially
 at the reference depth ($0.3$\,mm), so at that condition it operates
 with the thinnest depth margin of the three (its time response there
 remains quiet, $4.1\,\mu$m peak, Fig.~\ref{fig:timeresp}).
+The lobe-first round below narrows the depth side of this frontier
+within the same protocol.
 
 \begin{table}[t]
 \centering\small
@@ -888,23 +896,30 @@ own validated machinery (the Floquet bisection on the five-mode truth
 model; the Newmark time integration of the scenario protocol).  The
 lobe chart is the \emph{minimum over the tool-path positions}
 $\{0, L/2, L\}$---the machine-usable curve for a part whose dynamics
-change along the feed path---and shows the frozen-point complement of
-the whole-pass story: all three controllers lift the open-loop floor
-($0.039$\,mm worst) by roughly an order of magnitude across
-$3600$--$7200$\,rpm ($\mu$-TDC $0.474$--$0.802$\,mm, the filtered
-member $0.340$--$0.641$\,mm, the realizable member
-$0.232$--$0.656$\,mm).  In the time domain at the reference condition
-the open loop diverges within $0.089$\,s, while all three members
-hold the response at $3$--$4\,\mu$m with peak actuation of
-$16$--$25$\,V---far inside the $450$\,V authority.
+change along the feed path---and it is also where the shared protocol
+showed its one measured blind spot: the objective $J$ probes the
+design speed only, so the $J$-protocol members were never asked about
+the rest of the band, and their lobe floors over $3600$--$7200$\,rpm
+($0.340$\,mm filtered, $0.232$\,mm realizable) sit well under the
+benchmark's $0.474$\,mm.  The lobe-first round below closes most of
+that gap within the same constraints; the figures carry its
+gate-passing filtered champion PS-AC-RFA-L ($0.439$--$0.729$\,mm)
+next to $\mu$-TDC ($0.474$--$0.802$\,mm), the realizable member
+($0.232$--$0.656$\,mm), and the open loop ($0.039$\,mm worst)---all
+lifted from the open-loop floor by roughly an order of magnitude.  In
+the time domain at the reference condition the open loop diverges
+within $0.089$\,s, while the members hold the response at
+$3$--$4\,\mu$m with peak actuation of $16$--$25$\,V---far inside the
+$450$\,V authority.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=.8\linewidth]{figs/fig_lobes.pdf}
 \caption{Stability lobes: critical depth of cut vs.\ spindle speed,
 minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth
-model, Floquet $m = 120$, bisection to $5\,\mu$m).  The dotted line
-marks the design speed.  Source: \texttt{lobes.npz}.}
+model, Floquet $m = 120$, bisection to $5\,\mu$m).  PS-AC-RFA-L is
+the lobe-first champion of Section~\ref{sec:lobefirst}.  The dotted
+line marks the design speed.  Source: \texttt{lobes\_l2.npz}.}
 \label{fig:lobes}
 \end{figure}
 
@@ -917,9 +932,109 @@ envelope at the sensor (log scale)---the open loop diverges at
 $t = 0.089$\,s (dashed marker); all three members hold a
 $3$--$4\,\mu$m peak and settle near $1\,\mu$m.  Right: rms actuation
 voltage of the three members.
-Source: \texttt{timeresp.npz}.}
+Sources: \texttt{timeresp.npz}, \texttt{timeresp\_l.npz}.}
 \label{fig:timeresp}
 \end{figure}
+
+\subsection*{A lobe-first design round}
+\label{sec:lobefirst}
+
+The deficit above is a property of the design pressure, not of the
+scheduled structure, and it is treated the way every other gap in
+this study was treated: measure the binding mechanism, change one
+declared thing at a time, and let pre-declared bars judge the result
+at full resolution (Floquet $m = 120$, $37$ speeds, min over
+positions).  The bars, declared before the first search: L1, beat the
+incumbent's floor; L2, beat the benchmark's $0.474$\,mm; L3, hold the
+shared constraints---and the standing gate G1 disqualifies any winner
+it rejects.
+
+\emph{Round 1 (objective).}  The objective is replaced by the
+lobe-floor functional---the same Floquet-margin functional as $J$,
+extended over a nine-speed grid spanning the band at probe depths
+$(0.5, 0.7, 0.9)$\,mm---with each swarm warm-started at its stored
+$J$-protocol winner; structure, box, screens, optimiser and seeds are
+untouched.  The filtered floor moves $0.340 \to 0.407$\,mm, the
+realizable floor $0.232 \to 0.238$\,mm, and the binding pressures are
+then \emph{measured}: the filtered winner stands at its self-imposed
+corner-envelope bar (corner $M_s = 1.935$ of $2.0$) with both shared
+constraints slack, while the realizable winner stands at its
+search-box walls (gain ratio $8.999$ of $9$; poles
+$1.246\times10^{5}$ of the $1.257\times10^{5}$\,rad/s cap) with
+corner $M_s$ only $1.09$.
+
+\emph{Round 2 (parity and walls).}  The benchmark controller itself
+measures corner $M_s = 2.119$ on the same eight physics
+corners---the corner bar imposed on our own member was stricter than
+what the benchmark achieves.  Setting the member's corner bar to the
+benchmark's own measured value (the shared nominal bar
+$M_s \le 2.0$ is untouched) lifts the filtered floor to $0.439$\,mm,
+and the shared constraint itself now binds exactly
+($M_s = 1.999$)---the same bar the benchmark sits at ($2.00$).  A
+ten-parameter phase-lead arm under identical pressures measures
+\emph{worse} ($0.302$\,mm) and is recorded as a negative result.
+Widening the realizable box in gain and ratio only (the certificate's
+pole cap unchanged) lifts that class's floor to $0.314$\,mm and even
+produces a reference-depth path certificate ($9.5$\,mm/s at
+$\ap = 0.30$\,mm)---but the mixed gate rejects the winner
+($\muRS = 1.21$--$1.23$ at every probed node): the realizable box is
+thereby measured to be \emph{load-bearing for the gate}, not an
+arbitrary restriction, and the paper's realizable member remains
+PS-AC-RI.
+
+\emph{Round 3 (ceiling).}  A polish at the judge's own resolution
+($m = 120$) on exactly the six binding speeds, three independent
+seeds, moves the filtered floor by less than $0.001$\,mm.  At equal
+robustness bars on both sides, $0.439$ against $0.474$\,mm
+($7.4\%$, with $31$ of $37$ speeds at or above the benchmark's
+floor) is therefore the measured price of the delay-independent,
+whole-pass-certifiable structure on this plant---the depth side of
+the Table~\ref{tab:head2head} frontier, narrowed from $28\%$ and
+quantified at its saturation.
+
+Table~\ref{tab:lobefirst} carries the champion's full battery.  It
+passes the gate ($0.332$--$0.450$), improves the shared objective it
+was not optimised for ($J = -0.166$ vs $-0.281$), raises the nominal
+floor to $0.539$\,mm, keeps the $3.0\times$ faster scenario recovery
+(at $0.70\times$ the energy), and its whole-pass certificate at
+$\ap = 0.15$\,mm reads $v^{*} = 49.5$\,mm/s on all three $a_4$
+slices at the \emph{fixed} base rate $\alpha = 10$\,s$^{-1}$---double
+the incumbent's $\alpha$-optimised $23.6$--$24.7$\,mm/s, so the
+lobe-first push strengthened the certificate rather than spending
+it.
+
+\begin{table}[t]
+\centering\small
+\setlength{\tabcolsep}{5pt}
+\caption{The lobe-first round within the filtered class.  Lobe rows
+are full-resolution verdicts (Floquet $m = 120$, $3600$--$7200$\,rpm,
+min over the tool-path positions); gate and recovery by the standing
+machinery, each recovery ratio within one measurement batch.
+Sources: \texttt{lobes\_l2.npz}, \texttt{mu\_real\_l.npz},
+\texttt{s1\_l.npz}, \texttt{s1\_fresh.npz}, \texttt{cert\_l.npz}.}
+\label{tab:lobefirst}
+\begin{tabular}{@{}p{4.3cm}p{3.2cm}p{3.3cm}p{3.6cm}@{}}
+\toprule
+ & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RFA-L \\
+\midrule
+lobe floor, $3600$--$7200$\,rpm & $0.474$\,mm & $0.340$\,mm &
+$0.439$\,mm \\
+speeds at/above $0.474$\,mm & $37/37$ & $20/37$ & $31/37$ \\
+nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
+$0.539$ / $0.886$ \\
+gate, mixed $\muRS$ (nodes) & $0.242$--$0.419$ & $0.283$--$0.383$ &
+$0.332$--$0.450$ \\
+$M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $2.00$ /
+$160$ \\
+$J$ (shared objective) & $-0.025$ & $-0.281$ & $-0.166$ \\
+recovery: time / energy / peak & $1$ / $1$ / $1$ & $0.33$ / $0.45$ /
+$0.71$ & $0.33$ / $0.70$ / $0.98$ \\
+whole-pass certificate & out of DI contract & $23.6$--$24.7$\,mm/s
+(\mbox{$\alpha$-opt}), $\ap = 0.15$\,mm & $49.5$\,mm/s
+(fixed $\alpha$), $\ap = 0.15$\,mm \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 Under the corrected
 pricing the spatio-temporal variation is no longer an adversary to be
@@ -928,6 +1043,7 @@ constant, chained where moving, and the guarantee runs over the
 entire operating domain with an explicit rate margin against the
 actual feed.
 
+\clearpage
 \section{Limitations and outlook}
 
 We state the boundaries of the claims as measured.  (1)~All results are
@@ -946,6 +1062,12 @@ objectives may re-order members but not the certificates.
 (6)~Deep-cut corners near a member's exact crossing edge are
 intrinsically hostile to the DI premise (the measured $\rho$-spike);
 certification there should be attempted at the exact delay only.
+(7)~The lobe-first champion's certificate is reported at the fixed
+base rate $\alpha = 10$\,s$^{-1}$; the incumbents' per-slice $\alpha$
+optimisation can only raise it.  Its crossing pair
+($\ap^{\infty}, \delta_{\max}$) has not been re-measured; the
+frozen-speed lobe verdicts of Table~\ref{tab:lobefirst} are the
+sharper statement of the same axis.
 
 \paragraph{Significance.}
 Beyond the benchmark, the paper argues for three transferable
@@ -977,8 +1099,17 @@ are recomputed from stored artifacts
 \texttt{adiab\_diff.npz}, \texttt{baseline\_cmp.npz},
 \texttt{mu\_real\_cmp.npz}, \texttt{adiab\_cmp.npz},
 \texttt{lobes.npz}, \texttt{timeresp.npz}, \texttt{ri\_s1.npz},
-\texttt{s1\_fresh.npz}, run logs), and corrections to earlier
-readings are appended to the record rather than rewritten.
+\texttt{s1\_fresh.npz}, and for the lobe-first round
+\texttt{lobes\_l.npz}, \texttt{lobes\_l2.npz}, \texttt{mu\_real\_l.npz},
+\texttt{s1\_l.npz}, \texttt{timeresp\_l.npz}, \texttt{cert\_l.npz},
+\texttt{lobe\_champions.pkl}, run logs), and corrections to earlier
+readings are appended to the record rather than rewritten.  The
+lobe-first members carry the repository keys \texttt{ps\_ac\_rfa\_l2}
+(PS-AC-RFA-L, the champion), \texttt{ps\_ac\_rfa\_l},
+\texttt{ps\_ac\_rfl\_l} and \texttt{ps\_ac\_rfa\_l3} (the recorded
+round-1, lead and polish arms), and \texttt{ps\_ac\_ri\_l} /
+\texttt{ps\_ac\_ri\_l2} (the realizable-class arms, the latter
+gate-disqualified).
 
 \clearpage
 \appendix

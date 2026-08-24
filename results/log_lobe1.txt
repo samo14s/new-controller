@@ -520,3 +520,56 @@ JUDGE (-L winners), Stage A  2026-08-24 18:58
 
 MIXED GATE at the probed nodes (actuator block included)
   ps_ac_rfa_l2 x=  0%: complex   2.445 -> MIXED   0.396 at   1504 Hz   G1(real) MET   [274s]
+  ps_ac_rfa_l2 x= 50%: complex   2.268 -> MIXED   0.332 at   1504 Hz   G1(real) MET   [303s]
+  ps_ac_rfa_l2 x=100%: complex   2.416 -> MIXED   0.450 at   1504 Hz   G1(real) MET   [290s]
+  ps_ac_ri_l2  x=  0%: complex  27.928 -> MIXED   1.234 at   4000 Hz   >= 1: NOT MET   [61s]
+  ps_ac_ri_l2  x= 50%: complex  27.816 -> MIXED   1.229 at   4000 Hz   >= 1: NOT MET   [47s]
+  ps_ac_ri_l2  x=100%: complex  27.476 -> MIXED   1.214 at   4000 Hz   >= 1: NOT MET   [55s]
+-> results/mu_real_l.npz
+
+FRESH RECOVERY BATCH (mu_tdc + -L members, one batch, identical calls)
+  mu_tdc      : A_max     3.08 um  T_s   90.3 ms  E_u      673.7  u_max   24.59 V  [114s]
+  ps_ac_rfa_l2: A_max     3.05 um  T_s   30.2 ms  E_u      470.8  u_max   24.00 V  [115s]
+  ps_ac_ri_l2 : A_max     2.64 um  T_s   11.7 ms  E_u      175.8  u_max   18.21 V  [113s]
+  ratios vs mu_tdc (ps_ac_rfa_l2):  T_s 0.33  E_u 0.70  u_max 0.98
+  ratios vs mu_tdc (ps_ac_ri_l2):  T_s 0.13  E_u 0.26  u_max 0.74
+
+POSITION LIMITS at the reference speed (nominal floor / mean row)
+  ps_ac_rfa_l2: [0.5388, 1.1033, 0.7377, 1.384, 0.6675] mm  floor 0.5388  mean 0.8862  [5s]
+  ps_ac_ri_l2 : [0.3808, 0.6792, 0.9541, 0.7991, 0.4715] mm  floor 0.3808  mean 0.6569  [4s]
+-> results/s1_l.npz
+
+TIME RESPONSES at the reference condition (-L members, 2 s, moving)
+  ps_ac_rfa_l2: A_max       3.1 um  u_max     24.0 V  [11s]
+  ps_ac_ri_l2 : A_max       2.6 um  u_max     18.2 V  [11s]
+-> results/timeresp_l.npz
+judge_lobe1 Stage A done.
+
+==============================================================================
+STAGE B: WHOLE-PASS CERTIFICATE OF THE LOBE-FIRST CHAMPIONS  2026-08-24 19:22
+==============================================================================
+champions on record: {'filtered': 'ps_ac_rfa_l2', 'realizable': 'ps_ac_ri_l2'}
+[RI champion, full 9-slice]  ps_ac_ri_l2  a_p = 0.10 mm  feed 4.90 mm/s  (9 slices, NX = 121)
+  a4 lo  zeta 0.8 alpha 0.002: rho max 3.029e+02 1/m at x = 50.0 mm;  v* = 66.376 mm/s  [1s]
+  a4 lo  zeta 1.0 alpha 0.002: rho max 3.029e+02 1/m at x = 50.0 mm;  v* = 66.376 mm/s  [0s]
+  a4 lo  zeta 1.2 alpha 0.002: rho max 3.029e+02 1/m at x = 50.0 mm;  v* = 66.376 mm/s  [0s]
+  a4 nom zeta 0.8 alpha 0.002: rho max 9.212e+02 1/m at x = 58.3 mm;  v* = 21.826 mm/s  [0s]
+  a4 nom zeta 1.0 alpha 0.002: rho max 9.201e+02 1/m at x = 59.2 mm;  v* = 21.852 mm/s  [0s]
+  a4 nom zeta 1.2 alpha 0.002: rho max 9.201e+02 1/m at x = 59.2 mm;  v* = 21.852 mm/s  [0s]
+  a4 hi  zeta 0.8 alpha 0.002: rho max 9.266e+02 1/m at x = 50.8 mm;  v* = 21.699 mm/s  [0s]
+  a4 hi  zeta 1.0 alpha 0.002: rho max 9.266e+02 1/m at x = 50.8 mm;  v* = 21.699 mm/s  [0s]
+  a4 hi  zeta 1.2 alpha 0.002: rho max 9.266e+02 1/m at x = 50.8 mm;  v* = 21.699 mm/s  [0s]
+  => ps_ac_ri_l2 @ 0.10 mm: v_cert(sliced) = 21.699 mm/s vs feed 4.90: CERTIFIED at the actual feed
+[RI champion, ladder]  ps_ac_ri_l2  a_p = 0.20 mm  feed 4.90 mm/s  (1 slices, NX = 121)
+  a4 nom zeta 1.0 alpha 0.002: rho max 1.920e+03 1/m at x = 99.2 mm;  v* = 10.473 mm/s  [1s]
+  => ps_ac_ri_l2 @ 0.20 mm: v_cert(sliced) = 10.473 mm/s vs feed 4.90: CERTIFIED at the actual feed
+[RI champion, ladder]  ps_ac_ri_l2  a_p = 0.30 mm  feed 4.90 mm/s  (1 slices, NX = 121)
+  a4 nom zeta 1.0 alpha 0.002: rho max 2.126e+03 1/m at x = 95.8 mm;  v* = 9.457 mm/s  [1s]
+  => ps_ac_ri_l2 @ 0.30 mm: v_cert(sliced) = 9.457 mm/s vs feed 4.90: CERTIFIED at the actual feed
+[filtered champion]  ps_ac_rfa_l2  a_p = 0.15 mm  feed 4.90 mm/s  (3 slices, NX = 121)
+  a4 lo  zeta 1.0 alpha 0.002: rho max 4.058e+02 1/m at x = 50.0 mm;  v* = 49.545 mm/s  [1s]
+  a4 nom zeta 1.0 alpha 0.002: rho max 4.058e+02 1/m at x = 50.0 mm;  v* = 49.545 mm/s  [1s]
+  a4 hi  zeta 1.0 alpha 0.002: rho max 4.058e+02 1/m at x = 50.0 mm;  v* = 49.545 mm/s  [1s]
+  => ps_ac_rfa_l2 @ 0.15 mm: v_cert(sliced) = 49.545 mm/s vs feed 4.90: CERTIFIED at the actual feed
+-> results/cert_l.npz
+cert_lobe1 done.

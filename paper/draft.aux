@@ -29,11 +29,11 @@
 \citation{Packard1993}
 \citation{Du2024}
 \@writefile{toc}{\contentsline {paragraph}{Related work and positioning.}{3}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Plant, scheduling domain, and fairness protocol}{3}{section.2}\protected@file@percent }
-\newlabel{sec:plant}{{2}{3}{Plant, scheduling domain, and fairness protocol}{section.2}{}}
 \citation{Du2024}
 \citation{Fan1991}
 \citation{Young1992}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Plant, scheduling domain, and fairness protocol}{4}{section.2}\protected@file@percent }
+\newlabel{sec:plant}{{2}{4}{Plant, scheduling domain, and fairness protocol}{section.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{Fairness protocol.}{4}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {3}Two readings of one robustness gate}{4}{section.3}\protected@file@percent }
 \newlabel{sec:readings}{{3}{4}{Two readings of one robustness gate}{section.3}{}}
@@ -42,9 +42,9 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces One gate, two prices. Peak $\mu _{\mathrm  {RS}}$ (worst probed node, actuator block included) under the complex readings used by the benchmark's machinery and under the mixed real/complex reading. Every mixed value is a numerically verified upper bound. The complex reading overprices the parametrics by $4$--$8\times $ on gate-relevant controllers and by $20\times $ on the scheduled-LQG barrier.}}{5}{figure.1}\protected@file@percent }
 \newlabel{fig:readings}{{1}{5}{One gate, two prices. Peak $\muRS $ (worst probed node, actuator block included) under the complex readings used by the benchmark's machinery and under the mixed real/complex reading. Every mixed value is a numerically verified upper bound. The complex reading overprices the parametrics by $4$--$8\times $ on gate-relevant controllers and by $20\times $ on the scheduled-LQG barrier}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}The gate over the full scheduling domain}{5}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Scheduling the delayed pair is not a lever}{5}{subsection.3.4}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The full-domain gate: peak mixed $\mu _{\mathrm  {RS}}$ at each of the 21 scheduling nodes for the benchmark's fixed controller (witness) and the scheduled member of Section~\ref {sec:member}. Both curves clear the gate at every node with margin $\ge 2.4\times $; the binding node is the free end, where the removed-mass fraction acts most strongly. The complex reading on the same grid spans $1.63$--$1.73$ (witness) and $2.11$--$2.27$ (member).}}{6}{figure.2}\protected@file@percent }
 \newlabel{fig:sweep}{{2}{6}{The full-domain gate: peak mixed $\muRS $ at each of the 21 scheduling nodes for the benchmark's fixed controller (witness) and the scheduled member of Section~\ref {sec:member}. Both curves clear the gate at every node with margin $\ge 2.4\times $; the binding node is the free end, where the removed-mass fraction acts most strongly. The complex reading on the same grid spans $1.63$--$1.73$ (witness) and $2.11$--$2.27$ (member)}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Scheduling the delayed pair is not a lever}{6}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}An actuator-aware scheduled member, and three structural results}{6}{section.4}\protected@file@percent }
 \newlabel{sec:member}{{4}{6}{An actuator-aware scheduled member, and three structural results}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The filter belongs inside the design model}{6}{subsection.4.1}\protected@file@percent }
@@ -80,27 +80,30 @@
 \@writefile{toc}{\contentsline {section}{\numberline {6}Summary of certified results}{11}{section.6}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Final certified numbers (actual feed $4.90$\,mm/s; every row recomputable from stored matrices). Ratios $v_{\mathrm  {cert}}/ v_{\mathrm  {feed}}$ are robustness margins on the schedule rate---how much faster the process state could evolve with the certificate still valid---not productivity figures.}}{12}{table.1}\protected@file@percent }
 \newlabel{tab:final}{{1}{12}{Final certified numbers (actual feed $4.90$\,mm/s; every row recomputable from stored matrices). Ratios $\vcert / v_{\mathrm {feed}}$ are robustness margins on the schedule rate---how much faster the process state could evolve with the certificate still valid---not productivity figures}{table.1}{}}
-\citation{Du2024}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Baseline comparison: what each certification route delivers on the same plant and controllers. ``---'' = the route produces no statement of that kind.}}{13}{table.2}\protected@file@percent }
 \newlabel{tab:baseline}{{2}{13}{Baseline comparison: what each certification route delivers on the same plant and controllers. ``---'' = the route produces no statement of that kind}{table.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations and outlook}{13}{section.7}\protected@file@percent }
+\newlabel{sec:lobefirst}{{6}{13}{A lobe-first design round}{section*.14}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Head-to-head with the benchmark controller under the shared protocol. Gate = peak mixed $\mu _{\mathrm  {RS}}$ over the probed nodes (complex reading in parentheses). S1 recovery ratios are relative to $\mu $-TDC ($=1$). Sources: \texttt  {stage3\_controllers.pkl}, \texttt  {stage56.pkl}, \texttt  {stage78.pkl}, \texttt  {mu\_real*.npz}, \texttt  {adiab\_*.npz}.}}{14}{table.3}\protected@file@percent }
 \newlabel{tab:head2head}{{3}{14}{Head-to-head with the benchmark controller under the shared protocol. Gate = peak mixed $\muRS $ over the probed nodes (complex reading in parentheses). S1 recovery ratios are relative to $\mu $-TDC ($=1$). Sources: \texttt {stage3\_controllers.pkl}, \texttt {stage56.pkl}, \texttt {stage78.pkl}, \texttt {mu\_real*.npz}, \texttt {adiab\_*.npz}}{table.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Significance.}{14}{section*.14}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Stability lobes: critical depth of cut vs.\ spindle speed, minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth model, Floquet $m = 120$, bisection to $5\,\mu $m). The dotted line marks the design speed. Source: \texttt  {lobes.npz}.}}{15}{figure.5}\protected@file@percent }
-\newlabel{fig:lobes}{{5}{15}{Stability lobes: critical depth of cut vs.\ spindle speed, minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth model, Floquet $m = 120$, bisection to $5\,\mu $m). The dotted line marks the design speed. Source: \texttt {lobes.npz}}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Time response at the reference condition ($4900$\,rpm, $a_{\mathrm  {p}}= 0.3$\,mm, moving cut, $2$\,s window). Left: displacement envelope at the sensor (log scale)---the open loop diverges at $t = 0.089$\,s (dashed marker); all three members hold a $3$--$4\,\mu $m peak and settle near $1\,\mu $m. Right: rms actuation voltage of the three members. Source: \texttt  {timeresp.npz}.}}{15}{figure.6}\protected@file@percent }
-\newlabel{fig:timeresp}{{6}{15}{Time response at the reference condition ($4900$\,rpm, $\ap = 0.3$\,mm, moving cut, $2$\,s window). Left: displacement envelope at the sensor (log scale)---the open loop diverges at $t = 0.089$\,s (dashed marker); all three members hold a $3$--$4\,\mu $m peak and settle near $1\,\mu $m. Right: rms actuation voltage of the three members. Source: \texttt {timeresp.npz}}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Stability lobes: critical depth of cut vs.\ spindle speed, minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth model, Floquet $m = 120$, bisection to $5\,\mu $m). PS-AC-RFA-L is the lobe-first champion of Section~\ref {sec:lobefirst}. The dotted line marks the design speed. Source: \texttt  {lobes\_l2.npz}.}}{15}{figure.5}\protected@file@percent }
+\newlabel{fig:lobes}{{5}{15}{Stability lobes: critical depth of cut vs.\ spindle speed, minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth model, Floquet $m = 120$, bisection to $5\,\mu $m). PS-AC-RFA-L is the lobe-first champion of Section~\ref {sec:lobefirst}. The dotted line marks the design speed. Source: \texttt {lobes\_l2.npz}}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Time response at the reference condition ($4900$\,rpm, $a_{\mathrm  {p}}= 0.3$\,mm, moving cut, $2$\,s window). Left: displacement envelope at the sensor (log scale)---the open loop diverges at $t = 0.089$\,s (dashed marker); all three members hold a $3$--$4\,\mu $m peak and settle near $1\,\mu $m. Right: rms actuation voltage of the three members. Sources: \texttt  {timeresp.npz}, \texttt  {timeresp\_l.npz}.}}{15}{figure.6}\protected@file@percent }
+\newlabel{fig:timeresp}{{6}{15}{Time response at the reference condition ($4900$\,rpm, $\ap = 0.3$\,mm, moving cut, $2$\,s window). Left: displacement envelope at the sensor (log scale)---the open loop diverges at $t = 0.089$\,s (dashed marker); all three members hold a $3$--$4\,\mu $m peak and settle near $1\,\mu $m. Right: rms actuation voltage of the three members. Sources: \texttt {timeresp.npz}, \texttt {timeresp\_l.npz}}{figure.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The lobe-first round within the filtered class. Lobe rows are full-resolution verdicts (Floquet $m = 120$, $3600$--$7200$\,rpm, min over the tool-path positions); gate and recovery by the standing machinery, each recovery ratio within one measurement batch. Sources: \texttt  {lobes\_l2.npz}, \texttt  {mu\_real\_l.npz}, \texttt  {s1\_l.npz}, \texttt  {s1\_fresh.npz}, \texttt  {cert\_l.npz}.}}{16}{table.4}\protected@file@percent }
+\newlabel{tab:lobefirst}{{4}{16}{The lobe-first round within the filtered class. Lobe rows are full-resolution verdicts (Floquet $m = 120$, $3600$--$7200$\,rpm, min over the tool-path positions); gate and recovery by the standing machinery, each recovery ratio within one measurement batch. Sources: \texttt {lobes\_l2.npz}, \texttt {mu\_real\_l.npz}, \texttt {s1\_l.npz}, \texttt {s1\_fresh.npz}, \texttt {cert\_l.npz}}{table.4}{}}
+\citation{Du2024}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations and outlook}{17}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Significance.}{17}{section*.15}\protected@file@percent }
 \citation{Zhou1996}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{16}{appendix.A}\protected@file@percent }
-\newlabel{app:proofs}{{A}{16}{Proofs}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:cover}}{16}{subsection.A.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:kyp}}{16}{subsection.A.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}An absorption lemma}{16}{subsection.A.3}\protected@file@percent }
-\newlabel{lem:sproc}{{3}{16}{S-procedure residual absorption}{proposition.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{18}{appendix.A}\protected@file@percent }
+\newlabel{app:proofs}{{A}{18}{Proofs}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:cover}}{18}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:kyp}}{18}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}An absorption lemma}{18}{subsection.A.3}\protected@file@percent }
+\newlabel{lem:sproc}{{3}{18}{S-procedure residual absorption}{proposition.3}{}}
 \citation{Hespanha1999}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:chain}}{17}{subsection.A.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:diff}}{17}{subsection.A.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:chain}}{19}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:diff}}{19}{subsection.A.5}\protected@file@percent }
 \bibcite{Du2024}{1}
 \bibcite{Fan1991}{2}
 \bibcite{Young1992}{3}
@@ -117,7 +120,7 @@
 \bibcite{Zhao2013}{14}
 \bibcite{Zeng2025}{15}
 \bibcite{Briat2015}{16}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Remark: soundness of the numerical verifier}{18}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Remark: soundness of the numerical verifier}{20}{subsection.A.6}\protected@file@percent }
 \bibcite{ShammaAthans1990}{17}
 \bibcite{Lancaster1995}{18}
 \bibcite{Du2022}{19}
@@ -126,4 +129,4 @@
 \bibcite{Li2021}{22}
 \bibcite{Li2019}{23}
 \bibcite{Dong2023}{24}
-\gdef \@abspage@last{19}
+\gdef \@abspage@last{21}
