@@ -1,0 +1,673 @@
+% Draft manuscript -- compile with pdflatex + bibtex (article class;
+% switching to a journal class, e.g. elsarticle, is mechanical).
+\documentclass[11pt]{article}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{microtype}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newcommand{\ap}{a_{\mathrm{p}}}
+\newcommand{\vcert}{v_{\mathrm{cert}}}
+\newcommand{\muRS}{\mu_{\mathrm{RS}}}
+
+\title{Parameter-scheduled active chatter control of thin-walled milling:\\
+a mixed-$\mu$ full-domain gate and an adiabatic whole-pass\\
+stability certificate}
+
+\author{Sami Soufi\thanks{National Engineering School of Sfax (ENIS),
+Sfax, Tunisia. \texttt{sami.soufi@enis.tn}. [Author list and
+affiliations to be finalised.]}}
+\date{Draft of August 24, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Thin-walled milling couples a lightly damped, position-dependent
+structure to a regenerative delay, and active-control studies commonly
+compress the resulting spatio-temporal variation of the dynamics into a
+static uncertainty set.  Building on the plate/actuator benchmark of Du
+et al.\ [Int.\ J.\ Mech.\ Sci.\ 274 (2024) 109257], we develop a
+parameter-scheduled active control framework that exploits the variation
+directly and certifies stability over the entire operating domain.  The
+paper makes four contributions.
+(i)~\emph{Pricing:} the robust-stability gate of the benchmark is shown
+to be dominated by its uncertainty \emph{reading}, not its physics: on a
+plate with $\zeta\approx0.3\%$, treating real parametric perturbations
+as complex lets stiffness uncertainty masquerade as negative damping and
+overprices the gate by a factor of 4--8 across the whole scheduling
+domain.  A mixed real/complex $\mu$ re-reading
+(Fan--Tits--Doyle bound with solver-independent numerical verification
+of the returned scales) opens the gate at every one of 21 scheduling
+nodes for both the benchmark's own controller (peak
+$\muRS=0.419$) and a realizable scheduled member ($0.383$), where the
+complex reading had reported $1.16$--$85.8$.
+(ii)~\emph{Structure:} an actuator-aware scheduled member is
+synthesised with its command filter \emph{inside} the design model
+(augmented LQR in scaled coordinates), and three measured structural
+ceilings are reported, including the finding that the unfiltered
+scheduled-LQG performance of the baseline study is mortgaged to
+unimplementable $1.4$--$8.8$\,MHz compensator poles (a performance gap
+of $0.62$ in the shared objective).
+(iii)~\emph{Certification:} a whole-pass stability certificate is
+constructed from exponential delay-independent Lyapunov--Krasovskii
+point certificates chained by jump factors and a dwell-time rule.  A
+quantitative obstruction is identified---parameter variation rotates
+the razor-thin modal eigendirections by many linewidths, so a common
+quadratic storage per practical cell cannot exist (feasible cell
+diameter scales with $\zeta$)---and the certificate is therefore taken
+to its thin-cell limit with \emph{solver-free} point certificates built
+on the stable invariant subspace of a bounded-real Hamiltonian; en
+route, recorded SDP infeasibility verdicts at single vertices are shown
+to be solver failures.  (iv)~\emph{Results:} the realizable member is
+certified over the full parameter box at the reference feed with
+$\vcert = 79.9$--$82.7$\,mm/s ($16\times$ the actual feed of
+4.90\,mm/s), and with the removal schedule moving,
+$17.8$\,mm/s ($3.6\times$); the filtered gate-crossing member is
+certified at full box down to $h=0.104$\,mm cell size at
+$\ap=0.15$\,mm.  Grid refinement exposes and corrects an
+over-optimistic coarse-grid claim at $\ap=0.28$\,mm, and
+delay-exploiting (TDC-type) members are classified out of the
+delay-independent contract by design.  Every number is derived from
+stored, re-checkable certificate matrices.
+\end{abstract}
+
+\section{Introduction}
+
+Chatter in thin-walled milling arises from the interaction of a
+flexible, lightly damped workpiece with the regenerative cutting
+mechanism.  Because material is removed as the tool traverses the part,
+the structural dynamics seen by the cutting zone vary both in space
+(the position of the tool along the workpiece) and in time (the
+progressive removal), and they do so \emph{slowly and predictably}: the
+feed speed and the pass schedule are known.  Most robust active-control
+formulations nevertheless freeze this variation into a single
+uncertainty set and pay the price of guarding against a worst case
+that includes physically impossible fast excursions
+\cite{Munoa2016,Altintas1995}.
+
+Du, Liu, Dai and Long \cite{Du2024} provide a carefully instrumented
+benchmark: a five-mode plate model with piezoelectric actuation and
+displacement sensing, a robust combined time-delay controller
+($\mu$-TDC) designed by D--K iteration, and experimental validation.
+Their robustness analysis, however, follows the common practice of
+treating the real parametric perturbations---removed-mass fraction,
+cutting-force coefficient, damping---as complex when the
+structured-singular-value gate is evaluated.
+
+This paper asks two questions on that benchmark.  First, what does the
+robustness gate look like when the physics is priced as it is---real
+parameters read as real?  Second, can the known slowness of the
+spatio-temporal variation be converted into a stability
+\emph{guarantee} over an entire machining pass, rather than a
+collection of frozen-point statements?
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item A mixed real/complex $\mu$ re-reading of the robust-stability
+gate (Section~\ref{sec:readings}), with a numerical-verification
+protocol that removes the SDP solver from the trust chain.  Measured on
+the full 21-node scheduling grid, the complex reading overprices the
+gate by $4$--$8\times$; the gate is in fact met at every node by the
+benchmark controller itself and by a realizable scheduled member
+(Fig.~\ref{fig:sweep}).
+\item An actuator-aware scheduled controller family whose command
+filter lives inside the design model (augmented LQR solved in scaled
+coordinates), together with three measured structural results: a
+performance ceiling $J\approx-0.28$ for filtered structures (its named
+challenger, phase-lead compensation, is tested and rejected---the
+optimiser parks the lead at its lower bounds); the certainty-equivalence
+failure of the series-filter variant; and the finding that the
+baseline scheduled-LQG performance rests on parasitic MHz compensator
+poles (Section~\ref{sec:member}).
+\item A whole-pass certificate (Section~\ref{sec:pass}): exponential
+delay-independent Lyapunov--Krasovskii (LK) point certificates, jump
+factors between neighbouring functionals, and a dwell rule giving a
+certified traversal speed $\vcert$.  We identify the quantitative
+obstruction to cell-wise common storage (modal-direction rotation
+vs.\ linewidth), build solver-free point certificates on the
+bounded-real Hamiltonian, document recorded SDP verdicts as solver
+false-negatives, and formalise the thin-cell limit as a differential
+theorem whose hypotheses (single frozen construction regime, pointwise
+verified margins, converged derivative cost $\sigma(x)$) are all
+measured (Fig.~\ref{fig:refine},~\ref{fig:sigma}).
+\item An honesty layer that we consider part of the method: grid
+refinement is used to \emph{falsify} an initially certified
+coarse-grid claim (the $\ap=0.28$\,mm full-box certificate of the
+filtered member), the divergence mechanism is named, and
+delay-exploiting TDC members are classified out of the
+delay-independent contract by design rather than reported as failures.
+\end{enumerate}
+
+All computations follow an artifact-first policy: every number quoted
+here is recomputed from certificate matrices stored on disk, and the
+complete run logs (including failed rounds and corrected diagnoses) are
+part of the repository record.
+
+\section{Plant, scheduling domain, and fairness protocol}
+\label{sec:plant}
+
+We adopt the benchmark model of \cite{Du2024} without modification: a
+cantilever-edge thin plate discretised by a Chebyshev--Ritz expansion,
+calibrated to the measured modal table
+$f = (540, 1068, 2787, 3351, 4122)$\,Hz with damping ratios
+$\zeta = (0.31, 0.17, 0.27, 0.56, 0.35)\times10^{-2}$; a piezoelectric
+patch actuator and a displacement sensor at the dual (collocated-like)
+corner configuration; and regenerative milling forces with tooth-period
+delay $\tau = 60/(3\,\Omega)$ at spindle speed $\Omega$ (reference
+condition: $\Omega = 4900$\,rpm, $\ap = 0.3$\,mm, feed speed
+$4.90$\,mm/s).  Controller synthesis uses the study's two-mode design
+model; \emph{every} evaluation uses the five-mode truth model.
+
+The scheduling domain is the position $x \in [0, 100]$\,mm of the
+cutting zone along the feed path, discretised where needed at 21 nodes.
+The physical uncertainty set follows the benchmark: removed-mass
+fraction $\eta \in [0, 0.0755]$ (calibrated on the $+17\%$ frequency
+drift reported in \cite{Du2024}), cutting-force coefficient
+$a_4 \in [0.3, 2.9]\,\bar a_4$, damping scale $\pm20\%$, and a mid-pass
+interpolation state $\xi \in [0,1]$.
+
+\paragraph{Fairness protocol.}
+All controllers are compared under one protocol: the same plate, patch,
+sensor and sign convention; the same operating point; the same
+evaluation (Floquet monodromy with $m=120$ subintervals on the
+five-mode model); the same constraints (modulus margin
+$\max|S|\le 2$, actuation effort $\le 450$\,V/N); and the same
+optimiser (particle swarm, 20 particles $\times$ 21 iterations
+$\times$ seeds $\{1,2,3\}$) with a shared objective $J$ (log-margin of
+the Floquet spectral radius at depth probes $0.3/0.6/1.0$\,mm).  Only
+the controller structure differs, and its parameter count is reported.
+
+\section{Two readings of one robustness gate}
+\label{sec:readings}
+
+The gate quantity is the peak robust-stability structured singular
+value $\muRS$ at a scheduling node, actuator block included: the
+uncertainty structure collects one full complex block for actuator
+dynamics and repeated \emph{real} scalars for the physical parameters.
+The benchmark's D--K machinery (and its published numbers) evaluates
+this with complex readings of the real scalars.
+
+\subsection{Why the complex reading overprices this plant}
+
+A complex perturbation of a stiffness coefficient contains, at each
+frequency, a component in quadrature with displacement---i.e.\
+\emph{negative damping}.  On a plate whose modal damping is
+$\zeta\approx 0.3\%$, the open-loop complex-$\mu$ of the plate alone is
+$\approx 40$; any controller that must dominate a disguised negative
+damping across the modes pays an enormous, physically spurious premium.
+The real parameters of this problem---mass fraction, force coefficient,
+damping scale---do not have that freedom.
+
+\subsection{Mixed real/complex upper bound with verified scales}
+
+We evaluate the standard mixed-$\mu$ upper bound of Fan, Tits and Doyle
+\cite{Fan1991,Young1992}: full $D$-scales on the complex block and
+Hermitian $G$-scales on the real blocks, with a bisection on the bound
+level.  Two implementation details matter for trust:
+\begin{itemize}
+\item the non-square actuator channel is squared up by a zero column so
+the standard LMI form applies;
+\item \emph{solver-independent verification}: the returned scales are
+checked numerically (eigenvalue tests of the bound LMI); an inaccurate
+solve can only produce a certificate that verifies, or no certificate.
+The reported value is always a verified upper bound.
+\end{itemize}
+At $G=0$ the bound reduces exactly to the complex bound, so the mixed
+reading can only tighten.  Unit tests hit the known cases (a real block
+behind an imaginary loop: $2.0 \to \approx 0$; behind a real loop:
+$2.0 \to 2.0$ exactly; complex blocks: no spurious tightening).
+
+\subsection{The gate over the full scheduling domain}
+
+Figure~\ref{fig:readings} places the two readings on one scale for the
+main controllers of this study; Figure~\ref{fig:sweep} shows the
+complete 21-node sweep.  Three facts organise all downstream design
+decisions:
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.86\linewidth]{figs/fig_readings.pdf}
+\caption{One gate, two prices.  Peak $\muRS$ (worst probed node,
+actuator block included) under the complex readings used by the
+benchmark's machinery and under the mixed real/complex reading.  Every
+mixed value is a numerically verified upper bound.  The complex reading
+overprices the parametrics by $4$--$8\times$ on gate-relevant
+controllers and by $20\times$ on the scheduled-LQG barrier.}
+\label{fig:readings}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.8\linewidth]{figs/fig_sweep21.pdf}
+\caption{The full-domain gate: peak mixed $\muRS$ at each of the 21
+scheduling nodes for the benchmark's fixed controller (witness) and the
+scheduled member of Section~\ref{sec:member}.  Both curves clear the
+gate at every node with margin $\ge 2.4\times$; the binding node is the
+free end, where the removed-mass fraction acts most strongly.  The
+complex reading on the same grid spans $1.63$--$1.73$ (witness) and
+$2.11$--$2.27$ (member).}
+\label{fig:sweep}
+\end{figure}
+
+\begin{enumerate}
+\item \emph{The witness passes everywhere.}  The benchmark's own stored
+controller, judged by its own complex machinery at $1.156$--$1.205$
+(full-$D$) and $1.63$--$1.73$ (scalar-$D$), reads $0.242$--$0.419$
+mixed across all 21 nodes---gate met at every node, worst at the free
+end (1042\,Hz).
+\item \emph{The scheduled-LQG barrier is real.}  The unfiltered
+scheduled-LQG member reads $3.76$--$3.79$ mixed (complex: $85.8$): its
+actuator-band violence is a genuine physical failure, not a reading
+artifact.  Actuator-aware filtering is therefore necessary, not
+cosmetic.
+\item \emph{``Complex-fragile'' can be ``real-deep''.}  A series-filter
+member whose complex reading collapsed ($2.9$--$3.7$) is among the
+deepest gate-crossers in the mixed reading ($0.249$--$0.313$): its
+fragility was entirely in the reading.
+\end{enumerate}
+
+For completeness, the complex-reading gate itself was closed
+reproducibly before being re-read: a jitter-certified weight search
+(perturbing frequency grids and weight corners by $\pm\varepsilon$)
+shows the best \emph{reproducible} complex-reading optimum of the D--K
+family at $1.728$, while apparently better runs at $1.400$ are lucky
+draws whose jitter-certified values are $8.59$ and $4.08$.
+
+\subsection{Scheduling the delayed pair is not a lever}
+
+The cheapest scheduled attack on the gate--performance question keeps
+the witness base and schedules only the delayed pair of the TDC law
+with position, tracking the rank-one regenerative boundary
+$a_4 D(x)^{\!\top} D(x)$ instead of freezing it at midspan (six
+parameters, same count as $\mu$-TDC).  Under the full stage protocol
+the result is a tie within bisection accuracy, a hair \emph{below} on
+every axis: certified depth $0.4305$ vs $0.4364$\,mm, margin
+$1.535$ vs $1.543$, nominal floor $0.6792$ vs $0.6821$\,mm, mean floor
+$0.981$ vs $1.006$\,mm.  The hypothesis ``freezing the pair at midspan
+loses something material'' is falsified by measurement.  Combined with
+item~1 above, this yields the cleanest reading of the benchmark:
+\emph{under the corrected pricing, the study's own $\mu$-TDC already
+carries the gate and the performance floors simultaneously}; what
+scheduling still owes is a floor improvement on a gate-crossing base.
+
+\section{An actuator-aware scheduled member, and three structural
+results}
+\label{sec:member}
+
+\subsection{The filter belongs inside the design model}
+
+Because the barrier of item~2 is physical, the scheduled member is
+synthesised with its actuator-protection filter (three notches at the
+truncated modes $2787/3351/4122$\,Hz plus a second-order roll-off)
+\emph{inside} the design model: an augmented LQR on the joint state
+(filter; plate) at each scheduling node, with the observer estimating
+the plate alone, driven by the exact filtered command.  Two structural
+failures motivate this choice, both measured: the series
+arrangement breaks certainty equivalence (its parametric performance
+collapsed twice under pressure), and an ``observer-consistent''
+shortcut that rewires the observer around the plain-plant LQR carries
+an unstable internal observer--filter loop (closed-loop poles at
+$+2\times10^{5}$\,1/s): separation does not survive lag in the command
+path.
+
+The augmented Riccati equation is numerically hostile---filter states
+carry volt-sized signals and plate states metre-sized ones, eight
+decades apart---and is solved in scaled coordinates (an exact diagonal
+similarity; the gain is invariant, verified byte-identical where the
+raw solve succeeds).
+
+The final member (round 5) is an 8-parameter, order-14 controller
+with fastest pole $5.0\times10^{4}$\,rad/s ($\approx 8$\,kHz),
+$M_s = 1.675$, effort $151$\,V/N; its gate numbers appear in
+Fig.~\ref{fig:sweep} (point $0.283$--$0.383$ over 21 nodes; worst
+interpolation cell $0.320$), and its nominal position floor at the
+reference speed is $0.419$\,mm across the five probe positions
+($[0.42, 0.84, 0.72, 1.06, 0.53]$\,mm)---above the benchmark reference
+depth of $0.3$\,mm.
+
+\subsection{Three measured structural results}
+
+\paragraph{(a) A $J$-ceiling of the filtered structure, with its named
+challenger rejected.}  Three independent synthesis rounds under
+different constraint sets converge to $J \approx -0.28$
+(seeds: $-0.288/-0.281/-0.326$): the price of actuator-channel
+robustness for this structure is $\approx 0.42$ of $J$ relative to the
+unfiltered member ($+0.138$) that fails the gate at $3.8$.  The one
+named candidate to break the ceiling---first-order phase-lead
+compensation inside the design model (10 parameters)---was searched
+under the identical protocol and rejected: best seed
+$J = -0.339$, and the optimiser parks both lead parameters at their
+lower bounds ($f_{\mathrm{lead}} = 424$\,Hz at bound 400;
+$k = 1.56$ at bound 1.5), i.e.\ it tries to switch the lead off: phase
+advance is bought with high-frequency gain that the actuator-band
+constraint immediately bills.
+
+\paragraph{(b) The baseline performance is mortgaged to unimplementable
+poles.}  The stored scheduled-LQG member of the baseline study
+($J = +0.138$) carries compensator poles at up to $8.8$\,MHz (family
+range $1.4$--$8.8$\,MHz), originating from both the LQR and Kalman
+sides.  Re-running its own synthesis inside realizability bounds
+(gain ratio $\le 10^{9}$, poles $\le 2\pi\cdot20$\,kHz) lands at
+$J = -0.482$ with two agreeing seeds.  The gap of $0.62$ in the shared
+objective is the price of implementability for the scheduled-LQG
+structure and re-prices every performance comparison built on the
+stored gains.
+
+\paragraph{(c) A realizable envelope-law member for certification.}
+For the whole-pass certificate below we also carry \texttt{PS-AC-RI}:
+the same envelope design law inside explicit realizability bounds
+($J=-0.482$, $M_s = 1.82$, poles $\le 1.2\times10^{5}$\,rad/s,
+5 parameters)---deliberately heavy damping and a tame realization.
+
+\section{The whole-pass certificate}
+\label{sec:pass}
+
+\subsection{Chain form: cells, jumps, dwell}
+
+The repository's two delay certificates each miss what milling does:
+the exact crossing test freezes the schedule (each point judged with
+its own member, nothing certifies the traversal), and a common-$P$ LK
+certificate prices arbitrarily fast variation the machine never uses.
+The whole-pass certificate is built instead from the study's own
+delay-independent LK form given an exponential rate: for cell $i$ with
+frozen member and vertex family $(A, A_d)$,
+\begin{equation}
+V_i = x^{\!\top} P_i x + \int_{t-\tau}^{t} e^{2\alpha(s-t)}
+      x(s)^{\!\top} Q_i\, x(s)\, ds, \qquad
+\Phi_i = \begin{bmatrix} A^{\!\top}P_i + P_iA + 2\alpha P_i + Q_i &
+P_iA_d \\ A_d^{\!\top}P_i & -e^{-2\alpha\tau} Q_i \end{bmatrix}
+\prec 0 .
+\label{eq:lk}
+\end{equation}
+Feasibility at $(\alpha, \tau)$ covers every delay
+$\tau' \le \tau$ (all faster spindle speeds).  At a cell switch the
+state and history are continuous, so $V_{i+1} \le \mu\, V_i$ for every
+history iff $P_{i+1} \preceq \mu P_i$ and $Q_{i+1} \preceq \mu Q_i$;
+the recorded jump factor is the largest generalized eigenvalue over
+the stored pairs.  Monotone traversal with dwell $h_k / v$ then gives
+the certified traversal speed
+\begin{equation}
+\vcert = \min_k \; 2\alpha h_k / \ln \mu_k ,
+\label{eq:vcert}
+\end{equation}
+to be compared with the actual feed speed: the certificate consumes
+the known slowness of the schedule instead of paying common-$P$'s
+price.
+
+\subsection{The obstruction, measured: rotation vs.\ linewidth}
+
+Cell-wise SDP solves of \eqref{eq:lk} refuse on this plant even for
+near-nominal tubes.  A diagnosis ladder isolates why, in two steps.
+
+\emph{First, the pointwise tests agree.}  For rank-one delayed coupling
+$A_d = b\,c^{\!\top}$ (verified: $\sigma_2/\sigma_1 = 1.4\times
+10^{-16}$ for the LQG-type members), the exact crossing measure
+$\sup_\omega \rho\!\big((j\omega I - A)^{-1} A_d\big)$ \emph{is} the
+delay-disc measure $\|G\|_\infty$ of the scalar channel: no phase is
+lost between the crossing test and the DI premise, and per vertex the
+LK form is KYP-equivalent to $\|G\|_\infty < 1$.  Measured on a refused
+cell: all 32 vertices pass pointwise ($\|G\|_\infty \in
+[0.040, 0.541]$), yet the SDP reports infeasible even for a
+\emph{single} vertex with a $25\times$ margin.  Rebuilding that
+certificate without any optimiser (below) yields a verified functional
+with margin $-5.8\times10^{-7}$: \emph{the recorded single-vertex SDP
+refusals are solver failures}, and the verification-gated design of the
+pipeline (``an inaccurate solve can only produce a certificate that
+verifies, or none'') correctly reported ``no certificate'' while
+inviting the wrong mechanism story.
+
+\emph{Second, the cell refusals are structural, with a quantitative
+law.}  The vertex spread inside any practical cell rotates the
+razor-thin modal eigendirections by many half-power linewidths
+($\zeta\omega$): an 8-vertex $\theta$-corner family spreads
+$\|\Delta A\| = 4\times10^{-3}$ against a linewidth of
+$2\times10^{-3}$ (scaled), and the position axis alone contributes
+$\approx 700$ linewidths per twentieth of the span.  A single quadratic
+storage across eigendirections rotated by more than a linewidth cannot
+exist; the feasible cell diameter scales with $\zeta$, not with the
+tube.  This replaces our earlier, incorrect naming of the mechanism
+(``constant scales vs.\ rank-one coupling''), a correction kept on the
+record.
+
+\subsection{Solver-free point certificates}
+
+The cell certificate is therefore rebuilt at a point (and later chained
+densely).  Fix $Q = w\,\overline{A_d^{\!\top} A_d} + q_0 s_Q I$ first
+(aligned with the delayed output directions); by the Schur complement
+on \eqref{eq:lk} the coupling term is then a known Riccati channel, and
+\begin{equation}
+A_c^{\!\top} P + P A_c + 2\alpha P
++ P \Big[\tfrac{s}{e^{-2\alpha\tau}}\,
+\overline{A_d Q^{-1} A_d^{\!\top}} + \kappa\, \Sigma_{\mathrm{in}}
+\Big] P + (1{+}m) Q + \tfrac{1}{\kappa}\,\Sigma_{\mathrm{out}}
++ m\, s_Q I = 0
+\label{eq:ric}
+\end{equation}
+is solved on the stable invariant subspace of its Hamiltonian
+(balanced by the exact substitution $P = \theta \tilde P$,
+$\theta^2 = \mathrm{tr}\,C^{\!\top}C / \mathrm{tr}\,BB^{\!\top}$),
+where the $\kappa$-terms absorb vertex spread by a directional Young
+inequality on the thin-SVD factors of $\Delta A$.  \emph{Every}
+candidate is judged solely by the numerical verifier (eigenvalue tests
+of $\Phi$, $P$, $Q$); nothing rests on the construction.  A point
+certificate costs milliseconds; there is no optimiser in the loop.
+
+\subsection{The adiabatic (thin-cell) limit, measured to completion}
+
+With point certificates $P(x_k), Q(x_k)$ every $h$ along the pass and
+scale-balanced neighbour costs
+$\ln\mu_k = \tfrac12 \ln\big(\lambda_{\max}(P_{k+1}, P_k)\,
+\lambda_{\max}(P_k, P_{k+1})\big)$ (and likewise $Q$),
+\eqref{eq:vcert} becomes, as $h \to 0$,
+$\vcert \to \min_x 2\alpha / \rho(x)$ with rotation density
+$\rho = d \ln\mu / dx$.  Constant-in-time uncertainties are
+\emph{sliced}---$a_4$ and $\zeta$ do not evolve during a pass, so each
+realization keeps one chain and the guarantee is the minimum over
+slices---while the evolving quantities ($x$, and the removal pair
+$\eta, \xi$) are chained.  Four measurement campaigns close the limit:
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.98\linewidth]{figs/fig_refine.pdf}
+\caption{Grid refinement as an honesty instrument.  Left: secant
+$v^{*}$ under refinement---the realizable member converges on every
+slice, while the filtered member's $a_4$-hi slice at $\ap=0.28$\,mm
+\emph{diverges} ($22.9 \to 3.0$\,mm/s, below the actual feed): the
+coarse-grid certificate was over-optimistic and is corrected.  Right:
+fraction of intervals whose stored functional statically certifies
+their left/mid/right models; $100\%$ means a fully verified finite
+chain with no limit argument left open.}
+\label{fig:refine}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.8\linewidth]{figs/fig_sigma.pdf}
+\caption{The differential rotation cost $\sigma(x)$ of the
+frozen-parameter Riccati chains for the realizable member (three
+$a_4$ slices, $h/2$ grid).  $\sigma$ is converged under grid halving
+(ratios $0.96$--$0.98$) and the pointwise LMI margins are re-verified
+at $100\%$ of the nodes: every hypothesis of
+Theorem~\ref{thm:diff} is measured.}
+\label{fig:sigma}
+\end{figure}
+
+\paragraph{(i) Slices and rate optimisation.}
+Across all nine $a_4\times\zeta$ slices, with the decay rate $\alpha$
+ladder-optimised per slice, the realizable member at $\ap = 0.10$\,mm
+certifies at $\vcert = 82.7$\,mm/s (worst slice, converged under
+refinement)---$16.9\times$ the actual feed.  The $\zeta$-slice rows
+coincide; a wiring check confirms $\zeta$ reaches the model
+($\|A(1.2)-A(0.8)\| = 2.2\times10^{-3}$), so this is genuine
+certificate insensitivity to $\pm20\%$ damping.
+
+\paragraph{(ii) Static validation of finite chains.}
+Upgrading the $O(h^2)$ residual argument to measurement: an interval is
+\emph{statically valid} if its stored functional certifies the models
+at its left, mid and right samples.  The realizable member's $a_4$-lo
+slice reaches $100\%$ validity at $h = 0.104$\,mm
+(Fig.~\ref{fig:refine}, right)---a fully verified finite chain.  The
+nom/hi slices would need $h \sim 10^{-8}$\,m (margin/$\rho$) and stand
+instead on the differential reading below.
+
+\paragraph{(iii) A correction forced by refinement.}
+The filtered member's full-box certificate at $\ap = 0.28$\,mm does
+not survive refinement: its $a_4$-hi slice diverges
+($v^{*}: 22.9 \to 3.0$\,mm/s $<$ feed as $N_x: 121 \to 961$), with
+$\rho$ localising into a spike---the depth sits on the member's exact
+crossing edge ($\ap^{\infty} = 0.2841$\,mm).  The full-box
+\emph{statically validated} depth is $\ap = 0.15$\,mm
+($100\%$ validity at $h = 0.104$\,mm, $v^{*} = 24.7$\,mm/s,
+$5.0\times$ feed).  The $\rho$-spike divergence doubles as a
+diagnostic for near-marginal corners that coarse grids flatter.
+
+\paragraph{(iv) The live removal tube.}
+Rotation densities along the removal axes are measured directly
+($\rho_\eta \approx 645$ for the realizable member---removal motion
+costs as much as position motion---and $\rho_\xi \approx 1.9$), giving
+the composite path bound
+$v^{*}_{\mathrm{path}} = \min_x 2\alpha / (\rho_x + \rho_\eta\,
+\Delta\eta / \ell + \rho_\xi / \ell)$: with the entire admissible
+removal in a single pass (worst case), $17.8$\,mm/s---still
+$3.6\times$ the actual feed.
+
+\subsection{The differential theorem, hypotheses measured}
+
+\begin{theorem}[differential adiabatic chain]\label{thm:diff}
+Let the schedule follow the pass at speed $v$ and, on each regime
+interval, let fixed construction parameters give
+$P(x), Q(x)$ from \eqref{eq:ric} (smooth wherever the Hamiltonian
+retains its dichotomy) such that (i) the pointwise LMI \eqref{eq:lk}
+is verified at every $x$; (ii)
+$\sigma(x) = \max\big(\|P^{-1/2}P'P^{-1/2}\|,
+\|Q^{-1/2}Q'Q^{-1/2}\|\big)$; and (iii) regime boundaries carry jump
+factors $\mu_b$.  Then $V$ of \eqref{eq:lk} satisfies
+$\dot V \le (-2\alpha + v\,\sigma(x))\,V$ inside regimes and
+$V^{+} \le \mu_b V$ at boundaries, so the whole pass is exponentially
+stable whenever $v \le \min_x 2\alpha/\sigma(x)$ and the dwell rule
+holds at each boundary.
+\end{theorem}
+
+Measured on this plant (Fig.~\ref{fig:sigma}): the winner-parameter
+census returns a \emph{single} frozen construction per slice across
+the whole domain (61/61 nodes---no regimes, no jumps); pointwise
+margins verify at $100.0\%$ of the fine-grid nodes on every slice of
+both members; and $\sigma$ is converged under $h \to h/2$ (ratios
+$0.958$--$0.984$).  The theorem-grade speeds,
+$v^{*}_{\mathrm{diff}} = 79.9$\,mm/s (realizable member,
+$\ap=0.10$\,mm, worst slice) and $23.6$\,mm/s (filtered member,
+$\ap = 0.15$\,mm), confirm the secant estimates within $\approx3\%$.
+
+\subsection{Scope: delay-exploiting members}
+
+TDC-type members \emph{use} the delay by design (their delayed pair is
+part of the law, and their delayed coupling is genuinely rank-two:
+$\sigma_2/\sigma_1 = 0.56$), so ``stable for every
+$\tau' \le \tau$'' is not their contract; they rightly fail the
+pointwise disc at 46--100 of 121 nodes.  Their whole-pass statement
+belongs to the exact-crossing instrument; the certificate developed
+here covers the delay-agnostic (LQG-type) members.
+
+\section{Summary of certified results}
+
+\begin{table}[t]
+\centering\small
+\caption{Final certified numbers (actual feed $4.90$\,mm/s; every row
+recomputable from stored matrices).}
+\label{tab:final}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Quantity & Value & Margin & Basis \\
+\midrule
+Gate, witness, 21/21 nodes & $\muRS \le 0.419$ & $\ge 2.4\times$ &
+mixed $\mu$, verified scales \\
+Gate + cell, scheduled member & $0.283$--$0.383$; cell $0.320$ &
+$\ge 2.6\times$ & idem \\
+Whole pass, realizable, $\ap{=}0.10$ & $\vcert = 82.7$ ($79.9$ diff.)
+\,mm/s & $16\times$ & 9 slices, $\alpha$-opt., converged \\
+\quad with live removal schedule & $17.8$\,mm/s & $3.6\times$ &
+worst single-pass $\Delta\eta$ \\
+Whole pass, filtered, full box & $\ap = 0.15$\,mm, $v^{*}{=}24.7$
+($23.6$) & $5\times$ & static validity $100\%$ at $h{=}0.104$\,mm \\
+Performance ceiling (filtered) & $J = -0.281$ & --- & 3 rounds;
+lead probe $-0.339$ rejected \\
+Realizability price (sched.\ LQG) & $\Delta J = 0.62$ & --- &
+$+0.138$ (8.8\,MHz poles) vs $-0.482$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:final} collects the headline numbers.  Under the
+corrected pricing the spatio-temporal variation is no longer an
+adversary to be over-insured against: it is measured, scheduled,
+sliced where constant, chained where moving, and the guarantee runs
+over the entire operating domain with an explicit rate margin against
+the actual feed.
+
+\section{Limitations and outlook}
+
+We state the boundaries of the claims as measured.  (1)~All results are
+model-based certifications on the (experimentally validated) benchmark
+plant of \cite{Du2024}; no new experiments are reported.  (2)~The
+nom/hi slices of the realizable member rest on the differential
+reading of Theorem~\ref{thm:diff}; their static cell validation is
+physically out of reach ($h \sim 10^{-8}$\,m).  (3)~The
+$\eta/\xi$ tube enters the headline slice numbers frozen at midspan
+and enters the path bound through measured densities under a
+single-pass worst case; a fully coupled $(x, \eta, \xi)$ chain is
+mechanical with the same tooling.  (4)~The decay rate $\alpha$ is
+grid-optimised, not continuously optimised.  (5)~The performance
+objective $J$ is the benchmark's Floquet-margin protocol; other
+objectives may re-order members but not the certificates.
+(6)~Deep-cut corners near a member's exact crossing edge are
+intrinsically hostile to the DI premise (the measured $\rho$-spike);
+certification there should be attempted at the exact delay only.
+
+\section*{Reproducibility and data availability}
+
+The complete pipeline---plant construction, both $\mu$ readings with
+their verification layer, all synthesis rounds including failed ones,
+the diagnosis ladder, the solver-free certificates, and every figure
+of this paper---is scripted in the project repository.  All quantities
+are recomputed from stored artifacts
+(\texttt{mu\_real\_21.npz}, \texttt{adiab\_pass.npz},
+\texttt{adiab\_rigor.npz}, \texttt{adiab\_rigor2.npz},
+\texttt{adiab\_diff.npz}, run logs), and corrections to earlier
+readings are appended to the record rather than rewritten.
+
+\begin{thebibliography}{10}
+\bibitem{Du2024} Y.~Du, X.~Liu, H.~Dai, X.~Long, Robust combined
+time delay control for milling chatter suppression of flexible
+workpieces, Int.\ J.\ Mech.\ Sci.\ 274 (2024) 109257.
+\bibitem{Fan1991} M.~K.~H.~Fan, A.~L.~Tits, J.~C.~Doyle, Robustness in
+the presence of mixed parametric uncertainty and unmodeled dynamics,
+IEEE Trans.\ Autom.\ Control 36 (1991) 25--38.
+\bibitem{Young1992} P.~M.~Young, M.~P.~Newlin, J.~C.~Doyle, Practical
+computation of the mixed $\mu$ problem, Proc.\ American Control
+Conference (1992) 2190--2194.
+\bibitem{Altintas1995} Y.~Altinta\c{s}, E.~Budak, Analytical
+prediction of stability lobes in milling, CIRP Annals 44 (1995)
+357--362.
+\bibitem{Munoa2016} J.~Munoa, X.~Beudaert, Z.~Dombovari, Y.~Altintas,
+E.~Budak, C.~Brecher, G.~Stepan, Chatter suppression techniques in
+metal cutting, CIRP Annals 65 (2016) 785--808.
+\bibitem{Gu2003} K.~Gu, V.~L.~Kharitonov, J.~Chen, Stability of
+Time-Delay Systems, Birkh\"auser, Boston, 2003.
+\bibitem{Hespanha1999} J.~P.~Hespanha, A.~S.~Morse, Stability of
+switched systems with average dwell-time, Proc.\ 38th IEEE Conf.\
+Decision and Control (1999) 2655--2660.
+\bibitem{Rugh2000} W.~J.~Rugh, J.~S.~Shamma, Research on gain
+scheduling, Automatica 36 (2000) 1401--1425.
+\bibitem{Zhou1996} K.~Zhou, J.~C.~Doyle, K.~Glover, Robust and Optimal
+Control, Prentice Hall, Upper Saddle River, 1996.
+\bibitem{Packard1993} A.~Packard, J.~Doyle, The complex structured
+singular value, Automatica 29 (1993) 71--109.
+\end{thebibliography}
+
+\end{document}
