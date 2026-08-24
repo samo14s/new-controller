@@ -314,7 +314,9 @@ def certificate_direct(vertices, tau, alpha=0.0, eps=0.0, n_plant=None,
                             best = dict(feasible=True, slack=-v['phi_max'],
                                         status='direct',
                                         worst_eig=v['phi_max'],
-                                        P=Pn, Q=Qn, lam=float(lam))
+                                        P=Pn, Q=Qn, lam=float(lam),
+                                        params=dict(w=w, q0=q0,
+                                                    s_dom=s_dom, kr=kr))
     if best is None:
         return dict(feasible=False, slack=None, status='direct',
                     worst_eig=None, P=None, Q=None, lam=None)

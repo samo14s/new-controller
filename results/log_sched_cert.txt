@@ -265,3 +265,40 @@ reproducibility check, kept per the append-only rule)
   zeta reachability verified (|A(1.2)-A(0.8)| = 2.2e-3): the identical
   zeta-slice rows are genuine certificate insensitivity, not a wiring
   gap.
+
+==============================================================================
+DIFFERENTIAL READING, FORMALISED BY MEASUREMENT - frozen-parameter
+Riccati chains, pointwise-verified margins, sigma(x) with h/2
+convergence, regime census  (adiab_diff.npz)
+==============================================================================
+[ps_ac_ri]  a_p = 0.10 mm   feed 4.90 mm/s
+  a4 lo (alpha 1e-02): 1 winner parameter set(s) on the census; dominant (w=1.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 lo (alpha 1e-02): sigma_max 3.136e+02 (h) -> 3.087e+02 (h/2), ratio 0.984; v*_diff = 325.646 mm/s (margins verified at 100.0% of nodes)
+  a4 nom (alpha 1e-02): 1 winner parameter set(s) on the census; dominant (w=4.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 nom (alpha 1e-02): sigma_max 6.489e+02 (h) -> 6.287e+02 (h/2), ratio 0.969; v*_diff = 159.912 mm/s (margins verified at 100.0% of nodes)
+  a4 hi (alpha 5e-03): 1 winner parameter set(s) on the census; dominant (w=4.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 hi (alpha 5e-03): sigma_max 6.496e+02 (h) -> 6.293e+02 (h/2), ratio 0.969; v*_diff = 79.874 mm/s (margins verified at 100.0% of nodes)
+  => v*_diff (worst slice) = 79.874 mm/s vs feed 4.90: CERTIFIED under the differential reading
+
+[ps_ac_rfa]  a_p = 0.15 mm   feed 4.90 mm/s
+  a4 lo (alpha 2e-03): 1 winner parameter set(s) on the census; dominant (w=1.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 lo (alpha 2e-03): sigma_max 8.870e+02 (h) -> 8.502e+02 (h/2), ratio 0.959; v*_diff = 23.649 mm/s (margins verified at 100.0% of nodes)
+  a4 nom (alpha 2e-03): 1 winner parameter set(s) on the census; dominant (w=1.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 nom (alpha 2e-03): sigma_max 8.875e+02 (h) -> 8.507e+02 (h/2), ratio 0.959; v*_diff = 23.635 mm/s (margins verified at 100.0% of nodes)
+  a4 hi (alpha 2e-03): 1 winner parameter set(s) on the census; dominant (w=1.0, q0=0.03, s=1.0) on 61/61 nodes
+  a4 hi (alpha 2e-03): sigma_max 8.882e+02 (h) -> 8.513e+02 (h/2), ratio 0.958; v*_diff = 23.618 mm/s (margins verified at 100.0% of nodes)
+  => v*_diff (worst slice) = 23.618 mm/s vs feed 4.90: CERTIFIED under the differential reading
+
+total 14s -> results/adiab_diff.npz
+
+DIFFERENTIAL-READING VERDICT (adiab_diff.npz) - the last theory item CLOSED
+  Every hypothesis of the differential adiabatic-chain theorem measured:
+  ONE frozen winner-parameter set per slice on the whole domain (61/61
+  census nodes -- no regimes, no jumps), pointwise LMI margins verified
+  at 100.0% of the fine-grid nodes on every slice, sigma(x) converged
+  under h -> h/2 (ratios 0.96-0.98).  Theorem-grade numbers:
+    ps_ac_ri  @ 0.10 mm: v*_diff = 79.9 mm/s (worst slice) -- 16.3x feed
+    ps_ac_rfa @ 0.15 mm: v*_diff = 23.6 mm/s (worst slice) --  4.8x feed
+  confirming the secant estimates within ~3%.  The nom/hi slices that
+  could never be statically cell-validated (h* ~ 1e-8 m) now stand on a
+  fully measured differential foundation.
