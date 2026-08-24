@@ -54,17 +54,23 @@ ceilings are reported, including the finding that the unfiltered
 scheduled-LQG performance of the baseline study is mortgaged to
 unimplementable $1.4$--$8.8$\,MHz compensator poles (a performance gap
 of $0.62$ in the shared objective).
-(iii)~\emph{Certification:} a whole-pass stability certificate is
-constructed from exponential delay-independent Lyapunov--Krasovskii
-point certificates chained by jump factors and a dwell-time rule.  A
-quantitative obstruction is identified---parameter variation rotates
-the razor-thin modal eigendirections by many linewidths, so a common
-quadratic storage per practical cell cannot exist (feasible cell
-diameter scales with $\zeta$)---and the certificate is therefore taken
-to its thin-cell limit with \emph{solver-free} point certificates built
-on the stable invariant subspace of a bounded-real Hamiltonian; en
-route, recorded SDP infeasibility verdicts at single vertices are shown
-to be solver failures.  (iv)~\emph{Results:} the realizable member is
+(iii)~\emph{Theory:} a whole-pass stability theory is developed and
+\emph{proved}: a delay-cover proposition (one certificate covers every
+shorter delay, hence all faster spindle speeds), an elementary
+frequency-domain equivalence between the delay-independent LK
+inequality and the $H_\infty$ contract of the rank-one regenerative
+channel, a finite-cell chain theorem (cells, jump factors, dwell rule
+$\Rightarrow$ exponential stability of the traversal with an explicit
+certified feed speed), and its differential (adiabatic) limit for
+$C^1$ certificate fields.  Complete proofs are given; every hypothesis
+is additionally \emph{verified computationally} on the benchmark.  A
+quantitative empirical law is identified en route---parameter variation
+rotates the razor-thin modal eigendirections by many linewidths, so a
+common quadratic storage per practical cell cannot exist (feasible cell
+diameter scales with $\zeta$)---which motivates the thin-cell limit and
+its \emph{solver-free} point certificates built on the stable invariant
+subspace of a bounded-real Hamiltonian; recorded SDP infeasibility
+verdicts at single vertices are shown to be solver failures.  (iv)~\emph{Results:} the realizable member is
 certified over the full parameter box at the reference feed with
 $\vcert = 79.9$--$82.7$\,mm/s ($16\times$ the actual feed of
 4.90\,mm/s), and with the removal schedule moving,
@@ -125,17 +131,23 @@ optimiser parks the lead at its lower bounds); the certainty-equivalence
 failure of the series-filter variant; and the finding that the
 baseline scheduled-LQG performance rests on parasitic MHz compensator
 poles (Section~\ref{sec:member}).
-\item A whole-pass certificate (Section~\ref{sec:pass}): exponential
-delay-independent Lyapunov--Krasovskii (LK) point certificates, jump
-factors between neighbouring functionals, and a dwell rule giving a
-certified traversal speed $\vcert$.  We identify the quantitative
-obstruction to cell-wise common storage (modal-direction rotation
-vs.\ linewidth), build solver-free point certificates on the
-bounded-real Hamiltonian, document recorded SDP verdicts as solver
-false-negatives, and formalise the thin-cell limit as a differential
-theorem whose hypotheses (single frozen construction regime, pointwise
-verified margins, converged derivative cost $\sigma(x)$) are all
-measured (Fig.~\ref{fig:refine},~\ref{fig:sigma}).
+\item A whole-pass stability \emph{theory} with complete proofs
+(Section~\ref{sec:pass}, Appendix~\ref{app:proofs}):
+Proposition~\ref{prop:cover} (delay cover), Proposition~\ref{prop:kyp}
+(rank-one KYP equivalence, by an elementary frequency-domain argument),
+Theorem~\ref{thm:chain} (finite-cell chain: cells + jump factors +
+dwell rule $\Rightarrow$ exponential whole-pass stability with the
+explicit certified traversal speed $\vcert$ of \eqref{eq:vcert}), and
+Theorem~\ref{thm:diff} (the differential/adiabatic limit for $C^1$
+certificate fields).  Alongside the proofs, every hypothesis is
+verified computationally on the benchmark (single frozen construction
+regime, pointwise margins at $100\%$ of nodes, derivative cost
+$\sigma(x)$ converged under grid halving;
+Fig.~\ref{fig:refine},~\ref{fig:sigma}).  We further identify the
+quantitative \emph{empirical} obstruction to cell-wise common storage
+(modal-direction rotation vs.\ linewidth), build solver-free point
+certificates on the bounded-real Hamiltonian, and document recorded
+SDP verdicts as solver false-negatives.
 \item An honesty layer that we consider part of the method: grid
 refinement is used to \emph{falsify} an initially certified
 coarse-grid claim (the $\ap=0.28$\,mm full-box certificate of the
@@ -143,6 +155,51 @@ filtered member), the divergence mechanism is named, and
 delay-exploiting TDC members are classified out of the
 delay-independent contract by design rather than reported as failures.
 \end{enumerate}
+
+\paragraph{Related work and positioning.}
+Three literatures border this paper.
+\emph{(a) Switched and LPV time-delay systems.}  Dwell-time stability
+of switched delay systems via multiple or clock-dependent LK
+functionals is well developed
+\cite{Koru2018,Koru2018b,Sobhanipour2023,Zhao2013}, and time-varying
+delays have themselves been treated as switching signals
+\cite{Zeng2025}; parameter-dependent LK functionals for LPV delay
+systems are surveyed in \cite{Briat2015}.  Relative to this stream,
+the present contribution is not a new LMI relaxation but a change of
+\emph{deliverable and regime}: the switching signal is the machine's
+own geometry ($h_k$ is cell length, the dwell time is $h_k/v$ at feed
+speed $v$), so the certificate returns a physical quantity---the
+certified traversal speed \eqref{eq:vcert}---and, because the
+application sits in a regime where cell-wise LMIs are structurally
+infeasible (the $\zeta$-scaling law of
+Section~\ref{sec:pass}), the chain is driven into a thin-cell/
+differential limit with solver-free point certificates, for which we
+supply the complete stability proofs
+(Theorems~\ref{thm:chain}--\ref{thm:diff}).  Classical gain-scheduling
+analysis bounds the admissible parameter \emph{rate}
+\cite{ShammaAthans1990,Rugh2000}; here the rate bound is constructed,
+certificate-by-certificate, from stored matrices, and the schedule
+rate is a design datum (the feed), not an abstraction.
+\emph{(b) Machining dynamics and active chatter control.}  Stability
+lobes and active suppression are mature
+\cite{Altintas1995,Munoa2016}; for thin-walled parts specifically, the
+in-process variation of the dynamics is well recognised and has been
+handled by worst-position modal design \cite{Du2022}, time--space
+varying PD gains \cite{Wang2019}, robust LTI envelopes with
+perturbation models \cite{Zhang2019,Li2021}, model-predictive
+formulations \cite{Li2019}, and active fixtures with delayed state
+feedback \cite{Dong2023}; the benchmark itself combines a
+$\mu$-synthesis loop with time-delay control \cite{Du2024}.  In all of
+these, stability is assessed at frozen operating points (analytically
+or experimentally); certified statements over an \emph{entire pass},
+and mixed real/complex $\mu$ readings of the robustness gate, appear
+to be absent from this literature.
+\emph{(c) Computational robustness practice.}  The mixed-$\mu$ upper
+bound is classical \cite{Fan1991,Young1992,Packard1993}; the
+methodological point here is the verification-gated pipeline (no
+number rests on a solver's verdict) and the documented consequences of
+omitting it: a modern first-order SDP solver returning ``infeasible''
+on a certificate that exists with a $25\times$ margin.
 
 All computations follow an artifact-first policy: every number quoted
 here is recomputed from certificate matrices stored on disk, and the
@@ -385,7 +442,8 @@ P_iA_d \\ A_d^{\!\top}P_i & -e^{-2\alpha\tau} Q_i \end{bmatrix}
 \prec 0 .
 \label{eq:lk}
 \end{equation}
-Feasibility at $(\alpha, \tau)$ covers every delay
+This is the classical delay-independent LK form \cite{Gu2003} given an
+exponential rate; feasibility at $(\alpha, \tau)$ covers every delay
 $\tau' \le \tau$ (all faster spindle speeds).  At a cell switch the
 state and history are continuous, so $V_{i+1} \le \mu\, V_i$ for every
 history iff $P_{i+1} \preceq \mu P_i$ and $Q_{i+1} \preceq \mu Q_i$;
@@ -398,9 +456,36 @@ the certified traversal speed
 \end{equation}
 to be compared with the actual feed speed: the certificate consumes
 the known slowness of the schedule instead of paying common-$P$'s
-price.
+price.  The two statements underlying the chain are the following
+(proofs in Appendix~\ref{app:proofs}).
 
-\subsection{The obstruction, measured: rotation vs.\ linewidth}
+\begin{proposition}[delay cover]\label{prop:cover}
+If $P, Q \succ 0$ satisfy $\Phi \prec 0$ in \eqref{eq:lk} for delay
+$\tau$ and rate $\alpha \ge 0$, then the same pair certifies decay
+rate $\alpha$ for every delay $\tau' \in [0, \tau]$.
+\end{proposition}
+
+\begin{theorem}[finite-cell chain]\label{thm:chain}
+Partition the pass into cells $I_k$ of length $h_k$ and let
+$(P_k, Q_k) \succ 0$ satisfy \eqref{eq:lk} with rate $\alpha > 0$
+uniformly over the closed convex model hull of cell $k$ (vertex family
+plus a norm-$\varepsilon_k$ residual absorbed by the S-procedure of
+Lemma~\ref{lem:sproc}).  Let
+$\mu_k = \max\{\lambda_{\max}(P_{k+1}, P_k),\,
+\lambda_{\max}(Q_{k+1}, Q_k)\}$ denote the boundary jump factors, and
+let the schedule traverse the cells monotonically at speed $v$.  If
+$\ln \mu_k \le 2\alpha h_k / v$ at every boundary, then for every
+parameter path in the tube and every delay $\tau' \le \tau$ the closed
+loop is exponentially stable over the whole pass, with
+\[
+V(t) \;\le\; \exp\Big({-2\alpha (t - t_0)} +
+\textstyle\sum_{\text{switches}\le t} \ln \mu_k\Big)\, V(t_0);
+\]
+equivalently, every traversal speed $v \le \vcert$ of
+\eqref{eq:vcert} is certified.
+\end{theorem}
+
+\subsection{Pointwise equivalence, and an empirical obstruction law}
 
 Cell-wise SDP solves of \eqref{eq:lk} refuse on this plant even for
 near-nominal tubes.  A diagnosis ladder isolates why, in two steps.
@@ -409,9 +494,24 @@ near-nominal tubes.  A diagnosis ladder isolates why, in two steps.
 $A_d = b\,c^{\!\top}$ (verified: $\sigma_2/\sigma_1 = 1.4\times
 10^{-16}$ for the LQG-type members), the exact crossing measure
 $\sup_\omega \rho\!\big((j\omega I - A)^{-1} A_d\big)$ \emph{is} the
-delay-disc measure $\|G\|_\infty$ of the scalar channel: no phase is
-lost between the crossing test and the DI premise, and per vertex the
-LK form is KYP-equivalent to $\|G\|_\infty < 1$.  Measured on a refused
+delay-disc measure $\|G\|_\infty$ of the scalar channel
+$G(s) = c^{\!\top}(sI - A)^{-1} b$: no phase is lost between the
+crossing test and the DI premise.  More is true, by an elementary
+frequency-domain argument:
+
+\begin{proposition}[rank-one KYP equivalence]\label{prop:kyp}
+Let $A$ be Hurwitz and $A_d = b c^{\!\top}$.
+(a)~If $P, Q \succ 0$ satisfy $\Phi \prec 0$ in \eqref{eq:lk} for some
+$\alpha \ge 0$, then $\|G\|_\infty < 1$.
+(b)~Conversely, if $\|G\|_\infty < 1$ then, at $\alpha = 0$, the
+aligned pair $Q = c\,c^{\!\top} + \delta I$ (small $\delta > 0$) with
+$P$ the stabilising solution of a strict bounded-real Riccati equation
+satisfies $\Phi \prec 0$; by continuity the same holds for all
+sufficiently small $\alpha > 0$.
+(Proof in Appendix~\ref{app:proofs}.)
+\end{proposition}
+
+Measured on a refused
 cell: all 32 vertices pass pointwise ($\|G\|_\infty \in
 [0.040, 0.541]$), yet the SDP reports infeasible even for a
 \emph{single} vertex with a $25\times$ margin.  Rebuilding that
@@ -423,7 +523,12 @@ verifies, or none'') correctly reported ``no certificate'' while
 inviting the wrong mechanism story.
 
 \emph{Second, the cell refusals are structural, with a quantitative
-law.}  The vertex spread inside any practical cell rotates the
+empirical law.}  We state this deliberately as a measured observation
+rather than a theorem: the anisotropy of any certifying storage on
+this plant (eigenvalue range set by the $\sim\!10^4$ frequency ratio
+of the retained modes) makes a sharp analytic necessity bound
+unwieldy, while the measurement is unambiguous.  The vertex spread
+inside any practical cell rotates the
 razor-thin modal eigendirections by many half-power linewidths
 ($\zeta\omega$): an 8-vertex $\theta$-corner family spreads
 $\|\Delta A\| = 4\times10^{-3}$ against a linewidth of
@@ -541,17 +646,20 @@ $3.6\times$ the actual feed.
 
 \begin{theorem}[differential adiabatic chain]\label{thm:diff}
 Let the schedule follow the pass at speed $v$ and, on each regime
-interval, let fixed construction parameters give
-$P(x), Q(x)$ from \eqref{eq:ric} (smooth wherever the Hamiltonian
-retains its dichotomy) such that (i) the pointwise LMI \eqref{eq:lk}
-is verified at every $x$; (ii)
-$\sigma(x) = \max\big(\|P^{-1/2}P'P^{-1/2}\|,
-\|Q^{-1/2}Q'Q^{-1/2}\|\big)$; and (iii) regime boundaries carry jump
-factors $\mu_b$.  Then $V$ of \eqref{eq:lk} satisfies
+interval, let $x \mapsto (P(x), Q(x))$ be a $C^1$ field of positive
+definite matrices satisfying the pointwise LMI \eqref{eq:lk} with rate
+$\alpha$ (in our construction: the frozen-parameter Riccati field of
+\eqref{eq:ric}, which is real-analytic wherever the Hamiltonian
+retains its dichotomy \cite{Lancaster1995}).  Define
+$\sigma(x) = \max\big(\|P^{-1/2}P'P^{-1/2}\|_2,\,
+\|Q^{-1/2}Q'Q^{-1/2}\|_2\big)$, and let regime boundaries carry jump
+factors $\mu_b$ as in Theorem~\ref{thm:chain}.  Then $V$ of
+\eqref{eq:lk} satisfies
 $\dot V \le (-2\alpha + v\,\sigma(x))\,V$ inside regimes and
-$V^{+} \le \mu_b V$ at boundaries, so the whole pass is exponentially
-stable whenever $v \le \min_x 2\alpha/\sigma(x)$ and the dwell rule
-holds at each boundary.
+$V^{+} \le \mu_b V$ at boundaries; consequently the whole pass is
+exponentially stable whenever
+$v < \min_x 2\alpha/\sigma(x)$ and the dwell rule holds at each
+boundary.  (Proof in Appendix~\ref{app:proofs}.)
 \end{theorem}
 
 Measured on this plant (Fig.~\ref{fig:sigma}): the winner-parameter
@@ -629,6 +737,24 @@ objectives may re-order members but not the certificates.
 intrinsically hostile to the DI premise (the measured $\rho$-spike);
 certification there should be attempted at the exact delay only.
 
+\paragraph{Significance.}
+Beyond the benchmark, the paper argues for three transferable
+practices.  First, robustness gates on lightly damped structures
+should be reported under the mixed real/complex reading: on this
+plant the reading, not the physics, decided the gate, and the same
+inflation mechanism (parametric stiffness masquerading as negative
+damping) is generic to any $\zeta \ll 1$ structure.  Second, when the
+schedule of an LPV delay plant is slow and known---machining passes,
+but equally any traversal-type process---the deliverable of a
+stability analysis can and should be a \emph{certified schedule
+speed} (Theorems~\ref{thm:chain}--\ref{thm:diff}) rather than a
+family of frozen-point verdicts; the empirical $\zeta$-scaling law
+explains when cell-wise LMIs cannot supply it and the
+point-certificate chain can.  Third, certification pipelines should
+be verification-gated end to end: the documented single-vertex SDP
+false-negative shows that solver verdicts, positive or negative, are
+not evidence; stored, re-checkable certificate matrices are.
+
 \section*{Reproducibility and data availability}
 
 The complete pipeline---plant construction, both $\mu$ readings with
@@ -641,7 +767,219 @@ are recomputed from stored artifacts
 \texttt{adiab\_diff.npz}, run logs), and corrections to earlier
 readings are appended to the record rather than rewritten.
 
-\begin{thebibliography}{10}
+\appendix
+\section{Proofs}
+\label{app:proofs}
+
+Throughout, for a delay $\tau' \in [0, \tau]$ write the functional of
+\eqref{eq:lk} as $V = V_P + V_W$ with $V_P = x^{\!\top} P x$ and
+$V_W = \int_{t-\tau'}^{t} e^{2\alpha(s-t)} x(s)^{\!\top} Q\, x(s)\,ds$.
+
+\subsection{Proof of Proposition~\ref{prop:cover}}
+
+Differentiating along trajectories of
+$\dot x = A x + A_d x(t-\tau')$,
+\[
+\dot V + 2\alpha V \;=\;
+\xi^{\!\top}
+\begin{bmatrix}
+A^{\!\top}P + PA + 2\alpha P + Q & P A_d \\
+A_d^{\!\top} P & -e^{-2\alpha \tau'} Q
+\end{bmatrix}
+\xi, \qquad \xi = \big(x(t),\, x(t-\tau')\big).
+\]
+Since $\tau' \le \tau$ and $Q \succ 0$,
+$-e^{-2\alpha\tau'} Q \preceq -e^{-2\alpha\tau} Q$, so the matrix
+above is $\preceq \Phi \prec 0$: hence $\dot V \le -2\alpha V$, and
+$V_P \le V$ gives
+$|x(t)|^2 \le \lambda_{\min}(P)^{-1} e^{-2\alpha (t-t_0)} V(t_0)$.
+\hfill$\square$
+
+\subsection{Proof of Proposition~\ref{prop:kyp}}
+
+\emph{(a)}  $\Phi \prec 0$ as a real symmetric matrix implies
+$\xi^* \Phi\, \xi < 0$ for every nonzero complex $\xi \in
+\mathbb{C}^{2n}$.  Fix $\omega \in \mathbb{R}$ and set
+$\hat x = (j\omega I - A)^{-1} b$ (well defined, $A$ Hurwitz),
+$g = c^{\!\top}\hat x = G(j\omega)$, $w = \hat x^* P b$, and
+$\xi = \big(\hat x,\; e^{\alpha\tau} e^{j\varphi}\, \hat x\big)$ with
+$\varphi$ free.  Using $A \hat x = j\omega \hat x - b$,
+\[
+\hat x^{*}\big(A^{\!\top} P + P A\big)\hat x
+= 2\,\mathrm{Re}\big(\hat x^{*} P A \hat x\big)
+= -2\,\mathrm{Re}(w),
+\]
+and $A_d \xi_2 = b\, g\, e^{\alpha\tau} e^{j\varphi}$, while the
+$Q$-terms cancel:
+$\hat x^{*} Q \hat x - e^{-2\alpha\tau}\, e^{2\alpha\tau}\,
+\hat x^{*} Q \hat x = 0$.  Hence
+\[
+0 > \xi^{*} \Phi\, \xi
+= -2\,\mathrm{Re}(w) + 2\alpha\, \hat x^{*} P \hat x
++ 2\, e^{\alpha\tau} \mathrm{Re}\big(w\, g\, e^{j\varphi}\big)
+\qquad \text{for every } \varphi .
+\]
+If $w = 0$ this reads $0 > 2\alpha \hat x^* P \hat x \ge 0$, a
+contradiction unless $\hat x = 0$; so $w \neq 0$ wherever
+$\hat x \neq 0$.  Maximising over $\varphi$,
+$e^{\alpha\tau} |w|\, |g| < \mathrm{Re}(w) - \alpha \hat x^* P \hat x
+\le |w|$, whence $|G(j\omega)| < e^{-\alpha\tau} \le 1$ for every
+$\omega$; since $G$ is strictly proper and continuous,
+$\|G\|_\infty < 1$.
+
+\emph{(b)}  Pick $\gamma \in (\|G\|_\infty, 1)$.  By the strict
+bounded-real lemma \cite{Zhou1996} there exists $P \succ 0$ with
+\[
+A^{\!\top} P + P A + \gamma^{-2} P b\, b^{\!\top} P
++ c\, c^{\!\top} \;\prec\; 0 .
+\]
+Set $Q = c\,c^{\!\top} + \delta I$, $\delta > 0$.  At $\alpha = 0$
+the Schur complement of $\Phi$ with respect to its $(2,2)$ block
+$-Q$ is
+\[
+A^{\!\top} P + P A + Q
++ P b \,\big(c^{\!\top} Q^{-1} c\big)\, b^{\!\top} P ,
+\qquad
+c^{\!\top} Q^{-1} c = \frac{|c|^2}{\delta + |c|^2} < 1 < \gamma^{-2},
+\]
+which is
+$\preceq A^{\!\top}P + PA + c\,c^{\!\top} + \gamma^{-2} P b b^{\!\top}
+P + \delta I \prec 0$ for $\delta$ small enough; hence
+$\Phi \prec 0$.  All inequalities are strict, so they persist for all
+sufficiently small $\alpha > 0$ by continuity of
+$\Phi$ in $\alpha$. \hfill$\square$
+
+\subsection{An absorption lemma}
+
+\begin{proposition}[S-procedure residual absorption]
+\label{lem:sproc}
+In the closed loop of \eqref{eq:lk}, suppose the model residual
+between the true cell continuum and the vertex interpolant is
+supported on the \emph{plant block}---nonzero only in the plant rows
+and plant columns of $(A, A_d)$---which holds here because the member,
+the actuator path and the sensor geometry are frozen within a cell
+while only the plant physics varies.  Write the residual as
+$(E_0 \Delta_A S_p,\, E_0 \Delta_{A_d} S_p)$ with
+$\big\| [\Delta_A \;\; \Delta_{A_d}] \big\|_2 \le \varepsilon$, where
+$S_p$ selects and $E_0$ embeds the plant coordinates.  If there exists
+$\lambda > 0$ such that
+\[
+\begin{bmatrix}
+\Phi_0 + \lambda F^{\!\top} F & \mathcal{E} \\
+\mathcal{E}^{\!\top} & -\lambda I
+\end{bmatrix} \prec 0,
+\qquad
+F = \mathrm{diag}(S_p, S_p), \quad
+\mathcal{E} = \begin{bmatrix} \varepsilon\, P E_0 \\ 0 \end{bmatrix},
+\]
+at the interpolant $\Phi_0$, then
+$\Phi(A_0 + E_0\Delta_A S_p,\, A_{d,0} + E_0\Delta_{A_d} S_p) \prec 0$
+for every admissible residual.
+\end{proposition}
+
+\begin{proof}
+The residual enters \eqref{eq:lk} affinely:
+\[
+\Phi = \Phi_0 + \mathcal{L}\, \Delta\, F + (\mathcal{L}\,\Delta\,
+F)^{\!\top}, \qquad
+\mathcal{L} = \begin{bmatrix} P E_0 \\ 0 \end{bmatrix}, \quad
+\Delta = [\Delta_A \;\; \Delta_{A_d}],
+\]
+since $\Delta F\, \xi = \Delta_A x_p + \Delta_{A_d} x_{d,p}$
+reproduces exactly the perturbation's action on the state pair.  For
+any $\lambda > 0$, Young's inequality with $\|\Delta\|_2 \le
+\varepsilon$ gives
+\[
+\mathcal{L} \Delta F + (\mathcal{L}\Delta F)^{\!\top}
+\;\preceq\;
+\lambda^{-1} \varepsilon^{2}\, \mathcal{L}\mathcal{L}^{\!\top}
++ \lambda\, F^{\!\top} F
+\;=\;
+\lambda^{-1} \mathcal{E}\mathcal{E}^{\!\top} + \lambda F^{\!\top} F .
+\]
+By the Schur complement, the bordered LMI is exactly
+$\Phi_0 + \lambda F^{\!\top}F + \lambda^{-1}
+\mathcal{E}\mathcal{E}^{\!\top} \prec 0$, which therefore dominates
+$\Phi$ from above. \hfill$\square$
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:chain}}
+
+\emph{In-cell decay.}  $\Phi$ is affine in $(A, A_d)$, so negativity
+at the vertex family implies negativity on its convex hull, and
+Proposition~\ref{lem:sproc} extends it to the measured
+$\varepsilon_k$-residual around the interpolant; hence for every
+admissible parameter path, $\dot V_k + 2\alpha V_k \le 0$ inside cell
+$k$, uniformly in the delay $\tau' \le \tau$ by
+Proposition~\ref{prop:cover}.
+
+\emph{Jump.}  At a switch instant $t_k$ the state and the history
+segment are continuous.  Both terms of the functional are monotone in
+their matrices: $P_{k+1} \preceq \mu P_k$ gives
+$V_P^{(k+1)} \le \mu V_P^{(k)}$, and $Q_{k+1} \preceq \mu Q_k$ gives
+$V_W^{(k+1)} \le \mu V_W^{(k)}$ pointwise under the (positive)
+exponential weight; with
+$\mu = \mu_k$ as defined,
+$V_{k+1}(t_k) \le \mu_k V_k(t_k)$.
+
+\emph{Envelope.}  This is the multiple-Lyapunov-function argument of
+dwell-time theory \cite{Hespanha1999} carried by LK functionals:
+between switches
+$V(t) \le e^{-2\alpha (t - t_k)} V(t_k^{+})$; composing across cells,
+\[
+V(t) \le \exp\Big(-2\alpha(t - t_0) +
+\sum_{\text{switches} \le t} \ln \mu_k\Big) V(t_0).
+\]
+Monotone traversal at speed $v$ spends dwell $h_k / v \ge
+\ln\mu_k / (2\alpha)$ in cell $k$, so each factor
+$e^{-2\alpha h_k / v} \mu_k \le 1$: the envelope is non-increasing
+across every switch and decays exponentially inside cells; a uniform
+decay rate follows for $v$ strictly below $\vcert$.  Finally
+$V_P \le V$ converts the envelope into an exponential bound on
+$|x(t)|$. \hfill$\square$
+
+\subsection{Proof of Theorem~\ref{thm:diff}}
+
+Inside a regime, write $P(t) = P(x(t))$, $Q(t) = Q(x(t))$ with
+$\dot P = v P'$, $\dot Q = v Q'$ along the traversal.  By definition
+of $\sigma$, and since $P, Q \succ 0$,
+\[
+-\sigma P \preceq P' \preceq \sigma P,
+\qquad
+-\sigma Q \preceq Q' \preceq \sigma Q .
+\]
+Differentiating $V = x^{\!\top} P(t) x + \int_{t-\tau}^{t}
+e^{2\alpha(s-t)} x(s)^{\!\top} Q(t)\, x(s)\, ds$:
+\[
+\dot V + 2\alpha V
+= \xi^{\!\top} \Phi\big(x(t)\big)\, \xi
+\;+\; v\, x^{\!\top} P' x
+\;+\; v \int_{t-\tau}^{t} e^{2\alpha(s-t)} x(s)^{\!\top} Q'\,
+x(s)\, ds .
+\]
+The first term is $\le 0$ by the pointwise LMI; the second is
+$\le v \sigma\, x^{\!\top} P x$; the third is
+$\le v \sigma \int e^{2\alpha(s-t)} x^{\!\top} Q x$ because the
+integrand weight is positive.  Hence
+$\dot V \le \big({-2\alpha} + v\,\sigma(x(t))\big) V$.  Regime
+boundaries are finitely many and carry the jump argument of
+Theorem~\ref{thm:chain}; with $v < \min_x 2\alpha / \sigma(x)$ the
+decay rate $\inf_x (2\alpha - v\sigma(x)) > 0$ is uniform, and the
+dwell rule handles the boundary factors. \hfill$\square$
+
+\subsection{Remark: soundness of the numerical verifier}
+
+Every certificate in this paper is accepted only after symmetric
+eigenvalue tests of the assembled $\Phi$, $P$, $Q$ (largest eigenvalue
+of $\tfrac12(\Phi + \Phi^{\!\top})$ below a strict negative tolerance;
+positivity floors on $P, Q$).  Symmetric eigenvalue computations are
+backward stable, so the accepted margins dominate the floating-point
+perturbation at the tolerances used ($|\Phi|$-relative
+$10^{-8}$ or better in all accepted certificates); a fully rigorous
+variant would replace these by interval or rational arithmetic, which
+the stored matrices make possible \emph{post hoc}.
+
+\begin{thebibliography}{20}
 \bibitem{Du2024} Y.~Du, X.~Liu, H.~Dai, X.~Long, Robust combined
 time delay control for milling chatter suppression of flexible
 workpieces, Int.\ J.\ Mech.\ Sci.\ 274 (2024) 109257.
@@ -668,6 +1006,51 @@ scheduling, Automatica 36 (2000) 1401--1425.
 Control, Prentice Hall, Upper Saddle River, 1996.
 \bibitem{Packard1993} A.~Packard, J.~Doyle, The complex structured
 singular value, Automatica 29 (1993) 71--109.
+\bibitem{Koru2018} A.~T.~Koru, A.~Deliba\c{s}{\i}, H.~\"Ozbay, Dwell
+time-based stabilisation of switched linear delay systems using
+clock-dependent Lyapunov--Krasovskii functionals, Int.\ J.\ Control
+(2018).  % [verify volume/pages]
+\bibitem{Koru2018b} A.~T.~Koru, A.~Deliba\c{s}{\i}, H.~\"Ozbay, Dwell
+time-based stabilisation of switched delay systems using
+free-weighting matrices, Int.\ J.\ Control 91 (2018) 1--11.
+% [verify pages]
+\bibitem{Sobhanipour2023} H.~Sobhanipour et~al., Enhanced exponential
+stability analysis for switched linear time-varying delay systems
+under admissible edge-dependent average dwell-time strategy, IEEE
+Trans.\ Syst.\ Man Cybern.\ Syst.\ (2023).  % [complete author list]
+\bibitem{Zhao2013} X.~Zhao et~al., Stability of a class of switched
+positive linear time-delay systems, Int.\ J.\ Robust Nonlinear
+Control 23 (2013).  % [complete author list/pages]
+\bibitem{Zeng2025} H.-B.~Zeng et~al., A delay-derivative-dependent
+switched system model method for stability analysis of linear systems
+with time-varying delay, Automatica (2025).  % [complete]
+\bibitem{Briat2015} C.~Briat, Linear Parameter-Varying and Time-Delay
+Systems: Analysis, Observation, Filtering \& Control, Springer,
+Berlin, 2015.
+\bibitem{ShammaAthans1990} J.~S.~Shamma, M.~Athans, Analysis of gain
+scheduled control for nonlinear plants, IEEE Trans.\ Autom.\ Control
+35 (1990) 898--907.
+\bibitem{Lancaster1995} P.~Lancaster, L.~Rodman, Algebraic Riccati
+Equations, Oxford University Press, Oxford, 1995.
+\bibitem{Du2022} J.~Du et~al., Chatter suppression for milling of
+thin-walled workpieces based on active modal control, J.\ Manuf.\
+Process.\ (2022).  % [complete author list/volume]
+\bibitem{Wang2019} S.~Wang et~al., Vibration suppression of
+thin-walled workpiece milling using a time-space varying PD control
+method via piezoelectric actuator, Int.\ J.\ Adv.\ Manuf.\ Technol.\
+(2019).  % [complete]
+\bibitem{Zhang2019} X.~Zhang et~al., Robust active control based
+milling chatter suppression with perturbation model via piezoelectric
+stack actuators, Mech.\ Syst.\ Signal Process.\ (2019).  % [complete]
+\bibitem{Li2021} X.~Li et~al., Active suppression of milling chatter
+with LMI-based robust controller and electromagnetic actuator, J.\
+Mater.\ Process.\ Technol.\ (2021).  % [complete]
+\bibitem{Li2019} D.~Li et~al., Model predictive control based active
+chatter control in milling process, Mech.\ Syst.\ Signal Process.\
+(2019).  % [complete]
+\bibitem{Dong2023} X.~Dong et~al., Suppress chatter in milling of
+thin-walled parts via fixture with active support, J.\ Vib.\ Control
+(2023).  % [complete]
 \end{thebibliography}
 
 \end{document}
