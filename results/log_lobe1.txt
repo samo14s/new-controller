@@ -447,3 +447,5 @@ polish speeds (5700, 5900, 5800, 5600, 3700, 4300) rpm, probes (0.44, 0.48, 0.52
     [it 12] best J_P = -0.0967
     [it 13] best J_P = -0.0967
     [it 14] best J_P = -0.0967
+    [it 15] best J_P = -0.0967
+    [it 16] best J_P = -0.0967
