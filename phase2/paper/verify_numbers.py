@@ -267,6 +267,29 @@ chk_bool('effort bound never binding', bool(np.all(Vef < C.V_MAX_PER_N)), True)
 chk('alpha4 peak / mean',
     gnum(p1, r'peak / mean = ([0-9.]+)', 'alpha4 peak/mean'), 12.4, 1)
 
+# the time-step paragraph: measured, not asserted
+tt = read('timestep_trap.txt')
+chk('Nyquist at n_sub = 164 (kHz)',
+    gnum(tt, r'n_sub =\s*164 ->.*?Nyquist\s*([0-9.]+) kHz', 'Nyquist 164'),
+    20.1, 1)
+chk('designs diverging at n_sub = 164',
+    gnum(tt, r'n_sub =\s*164:\s*(\d+) of \d+', 'divergences at 164'), 5, 0)
+chk('designs tested at n_sub = 164',
+    gnum(tt, r'n_sub =\s*164:\s*\d+ of (\d+)', 'designs tested'), 6, 0)
+chk('designs diverging at n_sub = 328',
+    gnum(tt, r'n_sub =\s*328:\s*(\d+) of', 'divergences at 328'), 0, 0)
+chk('designs diverging at n_sub = 656',
+    gnum(tt, r'n_sub =\s*656:\s*(\d+) of', 'divergences at 656'), 0, 0)
+_fast = dict(re.findall(r'^\s{2}(\S.*?)\s{2,}\d+\s+([0-9.]+) kHz', tt, re.M))
+_fast = {k.strip(): float(v) for k, v in _fast.items()}
+chk('fastest pole, mu-TDC (kHz)', _fast['mu-TDC (Du 2024)'], 8.00, 2)
+chk('fastest pole, FOPID (kHz)', _fast['FOPID'], 99.86, 2)
+chk('fastest pole, PS-AC (kHz)', _fast['PS-AC (proposed)'], 759.28, 2)
+chk('fastest pole, LQG (kHz)', _fast['LQG'], 2018.20, 2)
+chk_bool('mu-TDC is the only design under that Nyquist',
+         sorted(k for k, v in _fast.items() if v < 20.1)
+         == ['mu-TDC (Du 2024)'], True)
+
 # --- 5.1  the gap the scheduling addresses ----------------------------------
 section('5.1  how much the regenerative term varies along the edge')
 xs_e, D_e = plate.D_top_edge(401)

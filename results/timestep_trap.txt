@@ -1,0 +1,46 @@
+==============================================================================
+THE TIME-STEP TRAP -- WHY n_sub = 656 AND NOT 164
+==============================================================================
+
+[1] the arithmetic
+  Oustaloup upper corner w_h/2pi        :    100.0 kHz
+  tooth period tau                      :   4.0816 ms
+  n_sub =  164 -> f_s =   40.2 kHz, Nyquist   20.1 kHz, w_h/f_Nyq =  4.98   <- the Oustaloup poles alias
+  n_sub =  328 -> f_s =   80.4 kHz, Nyquist   40.2 kHz, w_h/f_Nyq =  2.49   <- the Oustaloup poles alias
+  n_sub =  656 -> f_s =  160.7 kHz, Nyquist   80.4 kHz, w_h/f_Nyq =  1.24   <- the Oustaloup poles alias
+  n_sub = 1312 -> f_s =  321.4 kHz, Nyquist  160.7 kHz, w_h/f_Nyq =  0.62
+  -> the realisation must be sampled well above 100 kHz; 40 kHz
+     folds its top poles back into the band the loop is closed in.
+
+[2] the same nominal pass at each n_sub (T = 0.5 s, moving, a_p = 0.3 mm)
+  controller             n_sub=164         n_sub=328         n_sub=656        n_sub=1312
+  FOPID              DIV at 0.138s          2.114 um          2.093 um          2.087 um
+  LQG                DIV at 0.138s          2.030 um          1.996 um          1.985 um
+  mu-TDC (Du 2024)          3.105 um          3.089 um          3.084 um          3.086 um
+  PS-AC (proposed)     DIV at 0.135s          2.032 um          1.999 um          1.990 um
+  PS-AC-R (envelope design)     DIV at 0.144s          2.027 um          1.993 um          1.983 um
+  PS-TDC-R (envelope + pair)     DIV at 0.138s          2.027 um          1.993 um          1.983 um
+
+  n_sub =  164: 5 of 6 controllers diverge
+  n_sub =  328: 0 of 6 controllers diverge
+  n_sub =  656: 0 of 6 controllers diverge
+  n_sub = 1312: 0 of 6 controllers diverge
+  claim "all diverge at 164"     : NOT as stated
+  claim "none diverges at 656"   : CONFIRMED
+
+[3] how fast each realisation actually is (its own poles)
+  controller                  order   |lam|max/2pi   vs Nyquist(164)
+  FOPID                          16       99.86 kHz       4.97x  ABOVE
+  LQG                             6     2018.20 kHz     100.46x  ABOVE
+  mu-TDC (Du 2024)               12        8.00 kHz       0.40x  below
+  PS-AC (proposed)                6      759.28 kHz      37.79x  ABOVE
+  PS-AC-R (envelope design)       6     1398.91 kHz      69.63x  ABOVE
+  PS-TDC-R (envelope + pair)      6     1398.91 kHz      69.63x  ABOVE
+  -> the one design that survives n_sub = 164 is the one whose
+     fastest pole fits under that Nyquist rate.  The Oustaloup
+     corner is FOPID's instance of this; the LQG-structured
+     realisations are faster still, by design (cheap control).
+
+  reading: the divergence is a numerical artefact of the
+  integration rate, not a property of any controller -- which
+  is why the fairness protocol pins n_sub for everybody.
