@@ -573,3 +573,9 @@ champions on record: {'filtered': 'ps_ac_rfa_l2', 'realizable': 'ps_ac_ri_l2'}
   => ps_ac_rfa_l2 @ 0.15 mm: v_cert(sliced) = 49.545 mm/s vs feed 4.90: CERTIFIED at the actual feed
 -> results/cert_l.npz
 cert_lobe1 done.
+
+==============================================================================
+DELAY-EXPLOITING FAMILY MEMBERS ON THE LOBE AXIS  2026-08-24 19:34
+==============================================================================
+
+FULL-RESOLUTION LOBES (m = 120, min over {0, L/2, L})
