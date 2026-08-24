@@ -1019,7 +1019,14 @@ certificate rather than spending it.  The binding slice ($a_4$ hi,
 $\alpha = 50$\,s$^{-1}$) reaches full static validity exactly at
 $h = 0.104$\,mm---the same cell size the empirical $\zeta$-law fixed
 for this class in Section~\ref{sec:pass}, reappearing here as the
-validity scale of the point chain.
+validity scale of the point chain.  Its crossing pair completes the
+row to the stage-5/6 standard: $\ap^{\infty} = 0.351$\,mm and
+$\delta_{\max} = 1.215$ (r5: $0.284$\,mm and $0.918$), and at the
+reference depth its frozen-point crossing peak over the full vertex
+family is $0.827 < 1$ with $\tau_{\max}$ unbounded---a delay-covered
+pointwise statement r5 could not make (its peak was $1.066$); the
+classical common-$P$ LK at $\ap^{\infty}$ remains infeasible, as the
+$\zeta$-law predicts.
 
 The remaining corner of the frontier is then measured rather than
 conjectured.  The family's own delay-exploiting member
@@ -1069,6 +1076,8 @@ speeds at/above $0.474$\,mm & $37/37$ & $20/37$ & $31/37$ &
 $37/37$ \\
 nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
 $0.539$ / $0.886$ & $0.907$ / $1.373$ \\
+crossing $\ap^{\infty}$ / $\delta_{\max}$ & $0.436$\,mm / $1.543$ &
+$0.284$\,mm / $0.918$ & $0.351$\,mm / $1.215$ & --- \\
 gate, mixed $\muRS$ (nodes) & $0.242$--$0.419$ & $0.283$--$0.383$ &
 $0.330$--$0.450$ ($21/21$) & $3.46$--$3.48$ (not met) \\
 $M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $2.00$ /
@@ -1111,13 +1120,10 @@ objectives may re-order members but not the certificates.
 (6)~Deep-cut corners near a member's exact crossing edge are
 intrinsically hostile to the DI premise (the measured $\rho$-spike);
 certification there should be attempted at the exact delay only.
-(7)~The lobe-first champion's crossing pair
-($\ap^{\infty}, \delta_{\max}$) has not been re-measured; the
-frozen-speed lobe verdicts of Table~\ref{tab:lobefirst} are the
-sharper statement of the same axis.  Its certificate is
-$\alpha$-optimised with full static interval validation
-(\texttt{cert\_l2.npz}); the certified depth itself remains
-$0.15$\,mm, not the reference depth.
+(7)~The lobe-first champion's certified whole-pass depth remains
+$0.15$\,mm, not the reference depth; its reference-depth crossing
+statement (peak $0.827$, $\tau$-covered) is pointwise, not a
+traversal certificate.
 
 \paragraph{Significance.}
 Beyond the benchmark, the paper argues for three transferable
@@ -1156,7 +1162,8 @@ are recomputed from stored artifacts
 \texttt{lobe\_champions.pkl}, \texttt{lobes\_tdcj.npz},
 \texttt{mu\_real\_tdcj.npz}, \texttt{s1\_tdcj.npz},
 \texttt{timeresp\_tdcj.npz}, \texttt{cert\_l2.npz},
-\texttt{mu\_real\_l21.npz}, run logs), and corrections to earlier
+\texttt{mu\_real\_l21.npz}, \texttt{cross\_l.npz}, run logs), and
+corrections to earlier
 readings are appended to the record rather than rewritten.  The
 lobe-first members carry the repository keys \texttt{ps\_ac\_rfa\_l2}
 (PS-AC-RFA-L, the champion), \texttt{ps\_ac\_rfa\_l},

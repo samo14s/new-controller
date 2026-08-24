@@ -679,3 +679,14 @@ FULL 21-NODE MIXED GATE SWEEP: ps_ac_rfa_l2  2026-08-24 19:58
   sup over the 21 nodes = 0.450 (worst node 20, x = 100.0 mm)  < 1  G1(real) MET ON EVERY NODE   [total 1756s]
 -> results/mu_real_l21.npz
 mu21_l done.
+
+==============================================================================
+CROSSING PAIR OF THE LOBE-FIRST CHAMPION (ps_ac_rfa_l2)  2026-08-24 20:31
+  same vertex family and bisections as stage 5-6
+==============================================================================
+  peak = 0.827   tau_max/tau0 = inf   [5s]
+  a_p^inf = 0.3505 mm   (mu-TDC 0.4364, r5 0.2841)   [13s]
+  delta_max = 1.215   (mu-TDC 1.543, r5 0.918)   [16s]
+  common-P LK at a_p^inf: no
+  -> stage56.pkl [ps_ac_rfa_l2], results/cross_l.npz
+cross_lobe done.
