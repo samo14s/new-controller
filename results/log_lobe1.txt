@@ -1,0 +1,163 @@
+==============================================================================
+LOBE-FIRST REDESIGN ROUND  (run_lobe1.py)  2026-08-24 17:22
+==============================================================================
+
+--- LOBE-FIRST ROUND (ps_ac_rfa_l): structure/box/screens/optimiser/seeds of the incumbent,
+    objective J_L over 9 speeds x 3 positions x probes (0.5, 0.7, 0.9) mm, warm-started ---
+  incumbent under J_L: -0.9273
+    [it  1] best J_L = -0.9273
+    [it  2] best J_L = -0.9273
+    [it  3] best J_L = -0.9273
+    [it  4] best J_L = -0.9273
+    [it  5] best J_L = -0.9273
+    [it  6] best J_L = -0.9273
+    [it  7] best J_L = -0.9273
+    [it  8] best J_L = -0.9273
+    [it  9] best J_L = -0.9108
+    [it 10] best J_L = -0.9084
+    [it 11] best J_L = -0.9084
+    [it 12] best J_L = -0.8485
+    [it 13] best J_L = -0.8485
+    [it 14] best J_L = -0.7889
+    [it 15] best J_L = -0.7182
+    [it 16] best J_L = -0.6786
+    [it 17] best J_L = -0.6786
+    [it 18] best J_L = -0.6786
+    [it 19] best J_L = -0.6786
+    [it 20] best J_L = -0.6681
+  seed 1: J_L = -0.6681   [101s]
+    [it  1] best J_L = -0.9273
+    [it  2] best J_L = -0.9273
+    [it  3] best J_L = -0.9273
+    [it  4] best J_L = -0.9273
+    [it  5] best J_L = -0.9273
+    [it  6] best J_L = -0.9273
+    [it  7] best J_L = -0.9273
+    [it  8] best J_L = -0.9273
+    [it  9] best J_L = -0.9273
+    [it 10] best J_L = -0.9273
+    [it 11] best J_L = -0.9273
+    [it 12] best J_L = -0.9273
+    [it 13] best J_L = -0.9111
+    [it 14] best J_L = -0.8696
+    [it 15] best J_L = -0.7770
+    [it 16] best J_L = -0.7553
+    [it 17] best J_L = -0.7035
+    [it 18] best J_L = -0.7035
+    [it 19] best J_L = -0.7035
+    [it 20] best J_L = -0.7035
+  seed 2: J_L = -0.7035   [90s]
+    [it  1] best J_L = -0.9273
+    [it  2] best J_L = -0.9273
+    [it  3] best J_L = -0.9273
+    [it  4] best J_L = -0.9273
+    [it  5] best J_L = -0.9273
+    [it  6] best J_L = -0.9273
+    [it  7] best J_L = -0.9273
+    [it  8] best J_L = -0.9034
+    [it  9] best J_L = -0.9034
+    [it 10] best J_L = -0.9034
+    [it 11] best J_L = -0.9034
+    [it 12] best J_L = -0.9034
+    [it 13] best J_L = -0.9034
+    [it 14] best J_L = -0.8973
+    [it 15] best J_L = -0.8966
+    [it 16] best J_L = -0.8891
+    [it 17] best J_L = -0.8722
+    [it 18] best J_L = -0.8722
+    [it 19] best J_L = -0.8722
+    [it 20] best J_L = -0.8507
+  seed 3: J_L = -0.8507   [93s]
+  winner: J_L = -0.66810 (search -0.66810, incumbent -0.92727)   J(4900, old probes) = -0.2072
+  margins per probe: 0.5mm:+0.212@(5600.0, 1.0)  0.7mm:+0.675@(3600.0, 1.0)  0.9mm:+1.117@(3600.0, 1.0)
+  Ms = 1.861  effort = 159.6 V/N  max|pole| = 5.027e+04 rad/s  order 14  8 parameters  [289s]
+  parameters: log_q_pos=13.01, log_q_vel=5.593, log_r=-6.114, log_ratio=10.07, a4_mult=1.808, log_depth=-0.6626, q_notch=0.7028, log_fr=3.175
+  -> stage3_controllers.pkl [ps_ac_rfa_l]
+
+--- LOBE-FIRST ROUND (ps_ac_ri_l): structure/box/screens/optimiser/seeds of the incumbent,
+    objective J_L over 9 speeds x 3 positions x probes (0.5, 0.7, 0.9) mm, warm-started ---
+  incumbent under J_L: -1.4453
+    [it  1] best J_L = -1.4453
+    [it  2] best J_L = -1.4453
+    [it  3] best J_L = -1.4453
+    [it  4] best J_L = -1.4355
+    [it  5] best J_L = -1.4355
+    [it  6] best J_L = -1.4355
+    [it  7] best J_L = -1.4355
+    [it  8] best J_L = -1.4355
+    [it  9] best J_L = -1.4355
+    [it 10] best J_L = -1.4355
+    [it 11] best J_L = -1.4347
+    [it 12] best J_L = -1.4347
+    [it 13] best J_L = -1.4347
+    [it 14] best J_L = -1.4327
+    [it 15] best J_L = -1.4317
+    [it 16] best J_L = -1.4315
+    [it 17] best J_L = -1.4304
+    [it 18] best J_L = -1.4259
+    [it 19] best J_L = -1.4183
+    [it 20] best J_L = -1.4120
+  seed 1: J_L = -1.4120   [105s]
+    [it  1] best J_L = -1.4453
+    [it  2] best J_L = -1.4453
+    [it  3] best J_L = -1.4453
+    [it  4] best J_L = -1.4453
+    [it  5] best J_L = -1.4453
+    [it  6] best J_L = -1.4453
+    [it  7] best J_L = -1.4453
+    [it  8] best J_L = -1.4453
+    [it  9] best J_L = -1.4453
+    [it 10] best J_L = -1.4453
+    [it 11] best J_L = -1.4377
+    [it 12] best J_L = -1.4377
+    [it 13] best J_L = -1.4366
+    [it 14] best J_L = -1.4366
+    [it 15] best J_L = -1.4346
+    [it 16] best J_L = -1.4265
+    [it 17] best J_L = -1.4210
+    [it 18] best J_L = -1.4155
+    [it 19] best J_L = -1.4094
+    [it 20] best J_L = -1.4018
+  seed 2: J_L = -1.4018   [110s]
+    [it  1] best J_L = -1.4453
+    [it  2] best J_L = -1.4453
+    [it  3] best J_L = -1.4453
+    [it  4] best J_L = -1.4453
+    [it  5] best J_L = -1.4453
+    [it  6] best J_L = -1.4453
+    [it  7] best J_L = -1.4453
+    [it  8] best J_L = -1.4453
+    [it  9] best J_L = -1.4453
+    [it 10] best J_L = -1.4453
+    [it 11] best J_L = -1.4453
+    [it 12] best J_L = -1.4453
+    [it 13] best J_L = -1.4453
+    [it 14] best J_L = -1.4453
+    [it 15] best J_L = -1.4453
+    [it 16] best J_L = -1.4442
+    [it 17] best J_L = -1.4426
+    [it 18] best J_L = -1.4410
+    [it 19] best J_L = -1.4389
+    [it 20] best J_L = -1.4361
+  seed 3: J_L = -1.4361   [102s]
+  winner: J_L = -1.40182 (search -1.40182, incumbent -1.44531)   J(4900, old probes) = -0.4834
+  margins per probe: 0.5mm:+0.808@(3600.0, 0.0)  0.7mm:+1.417@(3600.0, 0.0)  0.9mm:+1.981@(3600.0, 0.0)
+  Ms = 1.814  effort = 112.3 V/N  max|pole| = 1.246e+05 rad/s  order 6  5 parameters  [321s]
+  parameters: log_q_pos=13.63, log_q_vel=-0.5842, log_r=-8.846, log_ratio=8.999, a4_mult=1.935
+  -> stage3_controllers.pkl [ps_ac_ri_l]
+
+FULL-RESOLUTION LOBES OF THE -L WINNERS (m = 120, tol 5 um, min over {0, L/2, L})
+  ps_ac_rfa_l : floor 0.407  max 0.717 mm  [99s]
+  ps_ac_ri_l  : floor 0.238  max 0.676 mm  [88s]
+-> results/lobes_l.npz
+
+PRE-DECLARED VERDICT (L1 floor>incumbent, L2 floor>0.474 mm = mu-TDC, L3 constraints):
+  ps_ac_rfa_l : floor 0.407 mm | incumbent 0.340 (L1 PASS) | mu-TDC 0.474 (L2 FAIL)
+  ps_ac_ri_l  : floor 0.238 mm | incumbent 0.232 (L1 PASS) | mu-TDC 0.474 (L2 FAIL)
+run_lobe1 done.
+
+==============================================================================
+JUDGE (-L winners), Stage A  2026-08-24 17:36
+==============================================================================
+
+MIXED GATE at the probed nodes (actuator block included)

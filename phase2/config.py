@@ -182,3 +182,11 @@ BOUNDS2 = dict(
 # the lobe-first (-L) members share their base structure's box exactly
 BOUNDS2['ps_ac_rfa_l'] = BOUNDS2['ps_ac_rfa']
 BOUNDS2['ps_ac_ri_l'] = BOUNDS2['ps_ac_ri']
+# round 2 (run_lobe2): rfa/rfl under the corner-parity bar keep their boxes;
+# the RI box is widened in gain/ratio ONLY (the realizability pole cap that
+# the certificate machinery needs is unchanged and screened as before)
+BOUNDS2['ps_ac_rfa_l2'] = BOUNDS2['ps_ac_rfa']
+BOUNDS2['ps_ac_rfl_l'] = BOUNDS2['ps_ac_rfl']
+BOUNDS2['ps_ac_ri_l2'] = dict(log_q_pos=(10.0, 18.0), log_q_vel=(-4.0, 8.0),
+                              log_r=(-10.0, -4.0), log_ratio=(4.0, 10.0),
+                              a4_mult=(0.4, 2.4))
