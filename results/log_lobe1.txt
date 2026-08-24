@@ -417,3 +417,33 @@ PER-CLASS CHAMPIONS by full-resolution floor:
     champion ps_ac_ri_l2  floor 0.314 mm  (L2 vs benchmark 0.474: FAIL)
 -> results/lobe_champions.pkl
 run_lobe2 done.
+==============================================================================
+LOBE-FIRST ROUND 3 (pocket polish, m = 120)  2026-08-24 18:42
+==============================================================================
+corner bar (benchmark parity, re-measured): 2.119
+polish speeds (5700, 5900, 5800, 5600, 3700, 4300) rpm, probes (0.44, 0.48, 0.52) mm, m = 120
+  round-2 winner under the polish objective: -0.0967
+    [it  1] best J_P = -0.0967
+    [it  2] best J_P = -0.0967
+    [it  3] best J_P = -0.0967
+    [it  4] best J_P = -0.0967
+==============================================================================
+LOBE-FIRST ROUND 3 (pocket polish, m = 120)  2026-08-24 18:48
+==============================================================================
+corner bar (benchmark parity, re-measured): 2.119
+polish speeds (5700, 5900, 5800, 5600, 3700, 4300) rpm, probes (0.44, 0.48, 0.52) mm, m = 120
+  round-2 winner under the polish objective: -0.0967
+    [it  1] best J_P = -0.0967
+    [it  2] best J_P = -0.0967
+    [it  3] best J_P = -0.0967
+    [it  4] best J_P = -0.0967
+    [it  5] best J_P = -0.0967
+    [it  6] best J_P = -0.0967
+    [it  7] best J_P = -0.0967
+    [it  8] best J_P = -0.0967
+    [it  9] best J_P = -0.0967
+    [it 10] best J_P = -0.0967
+    [it 11] best J_P = -0.0967
+    [it 12] best J_P = -0.0967
+    [it 13] best J_P = -0.0967
+    [it 14] best J_P = -0.0967
