@@ -120,3 +120,15 @@ M1-real 21-NODE SWEEP - MERGED FINAL TABLE (3 parallel workers)
   sup over the 21 nodes = 0.383  (worst node 20, x = 100.0 mm)  < 1  G1(real) MET on every node
 
 G1(real), full 21-node reading:  witness sup = 0.419,  member (round 5) sup = 0.383  -- both judged by the same mixed machinery, actuator block included
+
+MIXED GATE FOR THE COMPARISON STRUCTURES (fopid, lqg, ps_ac_ri)
+  fopid     x=  0mm: complex  72.432 -> MIXED 3.201  [33s]
+  fopid     x= 50mm: complex  72.415 -> MIXED 3.200  [34s]
+  fopid     x=100mm: complex  72.404 -> MIXED 3.200  [31s]
+  lqg       x=  0mm: complex  86.921 -> MIXED 3.841  [33s]
+  lqg       x= 50mm: complex  86.901 -> MIXED 3.841  [32s]
+  lqg       x=100mm: complex  86.886 -> MIXED 3.840  [32s]
+  ps_ac_ri  x=  0mm: complex  15.614 -> MIXED 0.690  [87s]
+  ps_ac_ri  x= 50mm: complex  15.599 -> MIXED 0.689  [72s]
+  ps_ac_ri  x=100mm: complex  15.563 -> MIXED 0.688  [77s]
+-> results/mu_real_cmp.npz

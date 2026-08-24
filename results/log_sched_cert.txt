@@ -330,3 +330,25 @@ BASELINE COMPARISON - common quadratic LK storage vs cell size
   N =    40 cells (h =    2500.0 um, spread 2.11e-02): FEASIBLE  worst eig -1.2e-06  [0.0s]
 
 -> results/baseline_cmp.npz
+
+ADIABATIC CHAIN FOR THE FIXED BASELINES (fopid, lqg) @ 0.10 mm
+  fopid  a4 lo : v* =   47.023 mm/s at alpha = 2e-03
+  fopid  a4 nom: v* =   47.023 mm/s at alpha = 2e-03
+  fopid  a4 hi : v* =   47.023 mm/s at alpha = 2e-03
+  => fopid: v_cert(adiabatic, sliced) = 47.023 mm/s vs feed 4.90 (CERTIFIED)  [2s]
+  lqg    a4 lo : no feasible alpha
+  lqg    a4 nom: no feasible alpha
+  lqg    a4 hi : no feasible alpha
+-> results/adiab_cmp.npz
+
+  lqg @ 0.10 mm: pointwise disc = 0.051 (huge margin; a certificate
+  EXISTS by the rank-one KYP proposition) yet the direct construction
+  is infeasible at every alpha down to 0 and under widened parameter
+  grids (w up to 1e6, margin down to 1e-3).  Cause, measured: the
+  member's parasitic ~2 MHz Kalman poles (|eig| = 2.5e3 scaled) give
+  the closed loop a ~4e3 dynamic range, driving the Riccati solution's
+  conditioning to ~1e7 -- past what float64 verification floors can
+  exhibit.  The realizability pathology that blocks hardware also
+  blocks certification numerics: the mortgage finding's
+  certification-side twin.  fopid (no parasitic stiffness): CERTIFIED
+  at 47.0 mm/s, all slices.

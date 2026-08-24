@@ -409,7 +409,7 @@ challenger rejected.}  Three independent synthesis rounds under
 different constraint sets converge to $J \approx -0.28$
 (seeds: $-0.288/-0.281/-0.326$): the price of actuator-channel
 robustness for this structure is $\approx 0.42$ of $J$ relative to the
-unfiltered member ($+0.138$) that fails the gate at $3.8$.  The one
+unfiltered member ($+0.145$) that fails the gate at $3.8$.  The one
 named candidate to break the ceiling---first-order phase-lead
 compensation inside the design model (10 parameters)---was searched
 under the identical protocol and rejected: best seed
@@ -421,11 +421,11 @@ constraint immediately bills.
 
 \paragraph{(b) The baseline performance is mortgaged to unimplementable
 poles.}  The stored scheduled-LQG member of the baseline study
-($J = +0.138$) carries compensator poles at up to $8.8$\,MHz (family
+($J = +0.145$) carries compensator poles at up to $8.8$\,MHz (family
 range $1.4$--$8.8$\,MHz), originating from both the LQR and Kalman
 sides.  Re-running its own synthesis inside realizability bounds
 (gain ratio $\le 10^{9}$, poles $\le 2\pi\cdot20$\,kHz) lands at
-$J = -0.482$ with two agreeing seeds.  The gap of $0.62$ in the shared
+$J = -0.482$ with two agreeing seeds.  The gap of $0.63$ in the shared
 objective is the price of implementability for the scheduled-LQG
 structure and re-prices every performance comparison built on the
 stored gains.
@@ -435,6 +435,10 @@ For the whole-pass certificate below we also carry \texttt{PS-AC-RI}:
 the same envelope design law inside explicit realizability bounds
 ($J=-0.482$, $M_s = 1.82$, poles $\le 1.2\times10^{5}$\,rad/s,
 5 parameters)---deliberately heavy damping and a tame realization.
+Judged under the mixed reading it meets the gate as well, at
+$\muRS = 0.688$--$0.690$ across the probed nodes (complex reading:
+$15.6$), so the certification member of Section~\ref{sec:pass}
+carries the gate and the whole-pass certificate simultaneously.
 
 \section{The whole-pass certificate}
 \label{sec:pass}
@@ -737,8 +741,8 @@ Whole pass, filtered, full box & $\ap = 0.15$\,mm, $v^{*}{=}24.7$
 ($23.6$) & $5\times$ & static validity $100\%$ at $h{=}0.104$\,mm \\
 Performance ceiling (filtered) & $J = -0.281$ & --- & 3 rounds;
 lead probe $-0.339$ rejected \\
-Realizability price (sched.\ LQG) & $\Delta J = 0.62$ & --- &
-$+0.138$ (8.8\,MHz poles) vs $-0.482$ \\
+Realizability price (sched.\ LQG) & $\Delta J = 0.63$ & --- &
+$+0.145$ (8.8\,MHz poles) vs $-0.482$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -798,6 +802,67 @@ ${\approx}16\times$); $17.8$\,mm/s live tube; $23.6$--$24.7$\,mm/s
 (filtered member, full box, $\ap = 0.15$\,mm) \\
 \bottomrule
 \end{tabular}
+\end{table}
+
+\subsection*{Structure comparison under the shared protocol}
+
+With the theory fixed, Table~\ref{tab:structures} compares the
+controller \emph{structures} under the identical fairness protocol
+(same optimiser, seeds, constraints and evaluation;
+Section~\ref{sec:plant}), on the three axes the paper certifies:
+shared objective $J$, the mixed-$\mu$ gate (actuator block included),
+and the whole-pass instruments.  Three structural facts emerge.
+First, \emph{the real-reading gate barrier is structural, not a
+scheduling artifact}: the fixed LQG fails at $3.84$ almost exactly
+where its scheduled counterpart fails ($3.76$--$3.79$), and the fixed
+FOPID fails at $3.20$---unfiltered high-gain structures hit the
+actuator band regardless of scheduling, while all three
+actuator-aware members pass ($0.24$--$0.69$).  Second, \emph{the
+robustness--performance price is quantified across structures}:
+gate-passing members pay $J \in [-0.48, -0.03]$ against
+$J \in [+0.06, +0.15]$ for the gate-failing ones.  Third, \emph{the
+realizability pathology has a certification-side twin}: the fixed
+LQG's parasitic ${\sim}2$\,MHz Kalman poles leave its pointwise disc
+margin huge ($0.05$) and a certificate guaranteed to exist by
+Proposition~\ref{prop:kyp}, yet no floating-point construction we
+tried can exhibit one (the ${\sim}4{\times}10^{3}$ dynamic range of
+the closed loop drives the Riccati conditioning past float64
+verification floors)---the same poles that block hardware block the
+certificate numerics, while the parasitic-free FOPID certifies at
+$47.0$\,mm/s.  Note the two whole-pass columns answer different
+contracts: the chain certifies the parametric box and every delay
+$\tau' \le \tau$ (no actuator block), the gate adds the actuator
+uncertainty; FOPID passes the first and fails the second.
+
+\begin{table}[t]
+\centering\small
+\caption{Controller structures under the shared protocol.  Gate =
+peak mixed $\muRS$ over probed nodes (complex reading in
+parentheses); $\ap^{\infty}$ = exact-crossing certified depth (full
+box); $\vcert$ = adiabatic whole-pass certificate at
+$\ap = 0.10$\,mm ($\dagger$: at $0.15$\,mm).  Sources:
+\texttt{stage3\_controllers.pkl}, \texttt{stage56.pkl},
+\texttt{mu\_real\_cmp.npz}, \texttt{adiab\_cmp.npz}.}
+\label{tab:structures}
+\begin{tabular}{@{}lrrrllr@{}}
+\toprule
+Structure (params) & $J$ & $M_s$ & V/N &
+Gate $\muRS$ & $\ap^{\infty}$ (mm) & $\vcert$ (mm/s) \\
+\midrule
+FOPID, fixed (5) & $+0.057$ & $1.99$ & $240$ &
+$3.20$ ($72$) fail & $0.370$ & $47.0$ \\
+LQG, fixed (4) & $+0.119$ & $1.99$ & $275$ &
+$3.84$ ($87$) fail & $0.382$ & uncert.\ (2\,MHz poles) \\
+LQG, scheduled, stored (5) & $+0.145$ & $1.99$ & $272$ &
+$3.76$--$3.79$ fail & $0.382$ & uncert.\ (8.8\,MHz poles) \\
+$\mu$-TDC (benchmark) (6) & $-0.025$ & $2.00$ & $152$ &
+$0.242$--$0.419$ pass & $0.436$ & out of DI contract (TDC) \\
+PS-AC-RI, realizable (5) & $-0.482$ & $1.82$ & $109$ &
+$0.69$ pass & --- & $79.9$--$82.7$ \\
+PS-AC-RFA r5 (8) & $-0.281$ & $1.68$ & $151$ &
+$0.283$--$0.383$ pass & $0.284$ & $23.6$--$24.7^{\dagger}$ \\
+\bottomrule
+\end{tabular}
 \end{table}  Under the corrected
 pricing the spatio-temporal variation is no longer an adversary to be
 over-insured against: it is measured, scheduled, sliced where
@@ -851,7 +916,8 @@ of this paper---is scripted in the project repository.  All quantities
 are recomputed from stored artifacts
 (\texttt{mu\_real\_21.npz}, \texttt{adiab\_pass.npz},
 \texttt{adiab\_rigor.npz}, \texttt{adiab\_rigor2.npz},
-\texttt{adiab\_diff.npz}, \texttt{baseline\_cmp.npz}, run logs), and corrections to earlier
+\texttt{adiab\_diff.npz}, \texttt{baseline\_cmp.npz},
+\texttt{mu\_real\_cmp.npz}, \texttt{adiab\_cmp.npz}, run logs), and corrections to earlier
 readings are appended to the record rather than rewritten.
 
 \appendix
