@@ -449,3 +449,73 @@ polish speeds (5700, 5900, 5800, 5600, 3700, 4300) rpm, probes (0.44, 0.48, 0.52
     [it 14] best J_P = -0.0967
     [it 15] best J_P = -0.0967
     [it 16] best J_P = -0.0967
+    [it 17] best J_P = -0.0967
+    [it 18] best J_P = -0.0967
+    [it 19] best J_P = -0.0967
+    [it 20] best J_P = -0.0967
+  seed 1: J_P = -0.0967   [147s]
+    [it  1] best J_P = -0.0967
+    [it  2] best J_P = -0.0967
+    [it  3] best J_P = -0.0967
+    [it  4] best J_P = -0.0967
+    [it  5] best J_P = -0.0967
+    [it  6] best J_P = -0.0967
+    [it  7] best J_P = -0.0967
+    [it  8] best J_P = -0.0967
+    [it  9] best J_P = -0.0967
+    [it 10] best J_P = -0.0967
+    [it 11] best J_P = -0.0967
+    [it 12] best J_P = -0.0967
+    [it 13] best J_P = -0.0967
+    [it 14] best J_P = -0.0967
+    [it 15] best J_P = -0.0967
+    [it 16] best J_P = -0.0967
+    [it 17] best J_P = -0.0967
+    [it 18] best J_P = -0.0967
+    [it 19] best J_P = -0.0967
+    [it 20] best J_P = -0.0967
+  seed 2: J_P = -0.0967   [161s]
+    [it  1] best J_P = -0.0967
+    [it  2] best J_P = -0.0967
+    [it  3] best J_P = -0.0967
+    [it  4] best J_P = -0.0967
+    [it  5] best J_P = -0.0967
+    [it  6] best J_P = -0.0967
+    [it  7] best J_P = -0.0967
+    [it  8] best J_P = -0.0967
+    [it  9] best J_P = -0.0967
+    [it 10] best J_P = -0.0967
+    [it 11] best J_P = -0.0967
+    [it 12] best J_P = -0.0967
+    [it 13] best J_P = -0.0967
+    [it 14] best J_P = -0.0967
+    [it 15] best J_P = -0.0967
+    [it 16] best J_P = -0.0967
+    [it 17] best J_P = -0.0966
+    [it 18] best J_P = -0.0964
+    [it 19] best J_P = -0.0964
+    [it 20] best J_P = -0.0964
+  seed 3: J_P = -0.0964   [150s]
+  winner: J_P = -0.09644 (warm -0.09673)   J(4900, old probes) = -0.1662
+  margins per probe: 0.44mm:+0.005@(5700.0, 1.0)  0.48mm:+0.097@(5700.0, 1.0)  0.52mm:+0.188@(5700.0, 1.0)
+  Ms = 1.994  effort = 160.4 V/N  max|pole| = 5.027e+04 rad/s  [466s]
+  parameters: log_q_pos=13, log_q_vel=5.646, log_r=-6.047, log_ratio=10.18, a4_mult=1.838, log_depth=-0.6702, q_notch=0.7106, log_fr=3.183
+  -> stage3_controllers.pkl [ps_ac_rfa_l3]
+
+FULL-RESOLUTION LOBES (m = 120): ps_ac_rfa_l3
+  ps_ac_rfa_l3: floor 0.439  max 0.729 mm  [98s]
+-> results/lobes_l2.npz (updated)
+
+PER-CLASS CHAMPIONS refreshed:
+  filtered  : ps_ac_rfa 0.340  ps_ac_rfa_l 0.407  ps_ac_rfa_l2 0.439  ps_ac_rfl_l 0.302  ps_ac_rfa_l3 0.439
+    champion ps_ac_rfa_l2  floor 0.439 mm  (L2 vs benchmark 0.474: FAIL)
+  realizable: ps_ac_ri 0.232  ps_ac_ri_l 0.238  ps_ac_ri_l2 0.314
+    champion ps_ac_ri_l2  floor 0.314 mm  (L2 vs benchmark 0.474: FAIL)
+-> results/lobe_champions.pkl
+run_lobe3 done.
+
+==============================================================================
+JUDGE (-L winners), Stage A  2026-08-24 18:58
+==============================================================================
+
+MIXED GATE at the probed nodes (actuator block included)

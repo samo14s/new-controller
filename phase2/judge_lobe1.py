@@ -37,7 +37,14 @@ from run_stage78 import time_run, settling
 from simulate import MillingSimulation
 from sim_ctrl2 import ScheduledLTI
 
-KINDS_L = ('ps_ac_rfa_l', 'ps_ac_ri_l')
+import pickle
+_p = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
+                  'results', 'lobe_champions.pkl')
+if os.path.exists(_p):
+    _c = pickle.load(open(_p, 'rb'))
+    KINDS_L = (_c['filtered'], _c['realizable'])
+else:
+    KINDS_L = ('ps_ac_rfa_l', 'ps_ac_ri_l')
 
 LOG = open(os.path.join(C.RESULTS, 'log_lobe1.txt'), 'a')
 
