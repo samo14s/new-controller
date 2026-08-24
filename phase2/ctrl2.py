@@ -295,7 +295,8 @@ def build(kind, plant, u, ss_mu=None):
                         10 ** u['log_r'], 10 ** u['log_ratio'],
                         u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
                         10 ** u['log_fr'])
-    if kind in ('ps_ac_rfa', 'ps_ac_rfa_l', 'ps_ac_rfa_l2'):
+    if kind in ('ps_ac_rfa', 'ps_ac_rfa_l', 'ps_ac_rfa_l2',
+            'ps_ac_rfa_l3'):
         # the augmented variant: the filter INSIDE the design model, so
         # certainty equivalence survives (act_filter.ps_ac_rfa); same 5 + 3;
         # the _l member is the same structure redesigned under the lobe-first

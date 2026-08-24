@@ -200,3 +200,220 @@ benchmark corner envelope, measured: corner Ms = 2.119 (the round-1 bar was 2.00
     [it  5] best J_L = -0.6696
     [it  6] best J_L = -0.6696
     [it  7] best J_L = -0.6696
+    [it  8] best J_L = -0.6696
+    [it  9] best J_L = -0.6696
+    [it 10] best J_L = -0.6696
+    [it 11] best J_L = -0.6655
+    [it 12] best J_L = -0.6655
+    [it 13] best J_L = -0.6655
+    [it 14] best J_L = -0.6655
+    [it 15] best J_L = -0.6489
+    [it 16] best J_L = -0.6333
+    [it 17] best J_L = -0.6207
+    [it 18] best J_L = -0.6089
+    [it 19] best J_L = -0.6089
+    [it 20] best J_L = -0.6089
+  seed 1: J_L = -0.6089   [144s]
+    [it  1] best J_L = -0.6696
+    [it  2] best J_L = -0.6696
+    [it  3] best J_L = -0.6696
+    [it  4] best J_L = -0.6696
+    [it  5] best J_L = -0.6696
+    [it  6] best J_L = -0.6696
+    [it  7] best J_L = -0.6696
+    [it  8] best J_L = -0.6696
+    [it  9] best J_L = -0.6696
+    [it 10] best J_L = -0.6696
+    [it 11] best J_L = -0.6696
+    [it 12] best J_L = -0.6696
+    [it 13] best J_L = -0.6696
+    [it 14] best J_L = -0.6696
+    [it 15] best J_L = -0.6696
+    [it 16] best J_L = -0.6579
+    [it 17] best J_L = -0.6519
+    [it 18] best J_L = -0.6084
+    [it 19] best J_L = -0.5966
+    [it 20] best J_L = -0.5966
+  seed 2: J_L = -0.5966   [141s]
+    [it  1] best J_L = -0.6696
+    [it  2] best J_L = -0.6696
+    [it  3] best J_L = -0.6696
+    [it  4] best J_L = -0.6696
+    [it  5] best J_L = -0.6696
+    [it  6] best J_L = -0.6696
+    [it  7] best J_L = -0.6696
+    [it  8] best J_L = -0.6696
+    [it  9] best J_L = -0.6696
+    [it 10] best J_L = -0.6696
+    [it 11] best J_L = -0.6696
+    [it 12] best J_L = -0.6696
+    [it 13] best J_L = -0.6696
+    [it 14] best J_L = -0.6696
+    [it 15] best J_L = -0.6696
+    [it 16] best J_L = -0.6585
+    [it 17] best J_L = -0.6261
+    [it 18] best J_L = -0.6254
+    [it 19] best J_L = -0.6068
+    [it 20] best J_L = -0.5799
+  seed 3: J_L = -0.5799   [143s]
+  winner: J_L = -0.57993   J(4900, old probes) = -0.1658
+  margins per probe: 0.5mm:+0.145@(5700.0, 1.0)  0.7mm:+0.579@(3600.0, 1.0)  0.9mm:+1.016@(3600.0, 1.0)
+  Ms = 1.999  effort = 160.3 V/N  max|pole| = 5.027e+04 rad/s  order 14  8 parameters  [434s]
+  parameters: log_q_pos=13, log_q_vel=5.644, log_r=-6.008, log_ratio=10.18, a4_mult=1.838, log_depth=-0.6682, q_notch=0.705, log_fr=3.181
+  -> stage3_controllers.pkl [ps_ac_rfa_l2]
+
+--- ROUND 2 ARM ps_ac_rfl_l: m = 60, grid 10 speeds, corner bar 2.119 (benchmark parity) ---
+  warm start under this arm: -203.2370
+    [it  1] best J_L = -1.8428
+    [it  2] best J_L = -1.8307
+    [it  3] best J_L = -1.7843
+    [it  4] best J_L = -1.7676
+    [it  5] best J_L = -1.7565
+    [it  6] best J_L = -1.7553
+    [it  7] best J_L = -1.7553
+    [it  8] best J_L = -1.7553
+    [it  9] best J_L = -1.7553
+    [it 10] best J_L = -1.7548
+    [it 11] best J_L = -1.7548
+    [it 12] best J_L = -1.7547
+    [it 13] best J_L = -1.7545
+    [it 14] best J_L = -1.7545
+    [it 15] best J_L = -1.7545
+    [it 16] best J_L = -1.7545
+    [it 17] best J_L = -1.7545
+    [it 18] best J_L = -1.7545
+    [it 19] best J_L = -1.7545
+    [it 20] best J_L = -1.7545
+  seed 1: J_L = -1.7545   [208s]
+    [it  1] best J_L = -1.8294
+    [it  2] best J_L = -1.8294
+    [it  3] best J_L = -1.8294
+    [it  4] best J_L = -1.7424
+    [it  5] best J_L = -1.7412
+    [it  6] best J_L = -1.4926
+    [it  7] best J_L = -1.4761
+    [it  8] best J_L = -1.4761
+    [it  9] best J_L = -1.4507
+    [it 10] best J_L = -1.4507
+    [it 11] best J_L = -1.3361
+    [it 12] best J_L = -1.2043
+    [it 13] best J_L = -1.0916
+    [it 14] best J_L = -1.0066
+    [it 15] best J_L = -1.0066
+    [it 16] best J_L = -1.0066
+    [it 17] best J_L = -1.0066
+    [it 18] best J_L = -1.0066
+    [it 19] best J_L = -1.0066
+    [it 20] best J_L = -1.0066
+  seed 2: J_L = -1.0066   [154s]
+    [it  1] best J_L = -1.8337
+    [it  2] best J_L = -1.8334
+    [it  3] best J_L = -1.8311
+    [it  4] best J_L = -1.8130
+    [it  5] best J_L = -1.7902
+    [it  6] best J_L = -1.7744
+    [it  7] best J_L = -1.7557
+    [it  8] best J_L = -1.7557
+    [it  9] best J_L = -1.7557
+    [it 10] best J_L = -1.7557
+    [it 11] best J_L = -1.7557
+    [it 12] best J_L = -1.7557
+    [it 13] best J_L = -1.7553
+    [it 14] best J_L = -1.7547
+    [it 15] best J_L = -1.7547
+    [it 16] best J_L = -1.7544
+    [it 17] best J_L = -1.7544
+    [it 18] best J_L = -1.7542
+    [it 19] best J_L = -1.7542
+    [it 20] best J_L = -1.7542
+  seed 3: J_L = -1.7542   [195s]
+  winner: J_L = -1.00660   J(4900, old probes) = -0.3491
+  margins per probe: 0.5mm:+0.462@(5700.0, 0.0)  0.7mm:+1.033@(3600.0, 0.0)  0.9mm:+1.525@(3600.0, 0.0)
+  Ms = 1.426  effort = 160.6 V/N  max|pole| = 5.027e+04 rad/s  order 15  10 parameters  [561s]
+  parameters: log_q_pos=13.03, log_q_vel=3.372, log_r=-6.105, log_ratio=9.698, a4_mult=1.976, log_depth=-1.18, q_notch=0.7166, log_fr=3.173, log_f_lead=2.99, k_lead=2.437
+  -> stage3_controllers.pkl [ps_ac_rfl_l]
+
+--- ROUND 2 ARM ps_ac_ri_l2: m = 60, grid 10 speeds ---
+  warm start under this arm: -1.3990
+    [it  1] best J_L = -1.2259
+    [it  2] best J_L = -1.1963
+    [it  3] best J_L = -1.0287
+    [it  4] best J_L = -1.0287
+    [it  5] best J_L = -1.0287
+    [it  6] best J_L = -1.0287
+    [it  7] best J_L = -0.9829
+    [it  8] best J_L = -0.9746
+    [it  9] best J_L = -0.9746
+    [it 10] best J_L = -0.9746
+    [it 11] best J_L = -0.9746
+    [it 12] best J_L = -0.9709
+    [it 13] best J_L = -0.9655
+    [it 14] best J_L = -0.9616
+    [it 15] best J_L = -0.9616
+    [it 16] best J_L = -0.9472
+    [it 17] best J_L = -0.9472
+    [it 18] best J_L = -0.9321
+    [it 19] best J_L = -0.9321
+    [it 20] best J_L = -0.9321
+  seed 1: J_L = -0.9321   [125s]
+    [it  1] best J_L = -1.3990
+    [it  2] best J_L = -1.3990
+    [it  3] best J_L = -1.3990
+    [it  4] best J_L = -1.0969
+    [it  5] best J_L = -1.0969
+    [it  6] best J_L = -1.0969
+    [it  7] best J_L = -1.0969
+    [it  8] best J_L = -1.0969
+    [it  9] best J_L = -1.0969
+    [it 10] best J_L = -1.0969
+    [it 11] best J_L = -1.0885
+    [it 12] best J_L = -1.0571
+    [it 13] best J_L = -0.9560
+    [it 14] best J_L = -0.9560
+    [it 15] best J_L = -0.9560
+    [it 16] best J_L = -0.9560
+    [it 17] best J_L = -0.9560
+    [it 18] best J_L = -0.9560
+    [it 19] best J_L = -0.9560
+    [it 20] best J_L = -0.9560
+  seed 2: J_L = -0.9560   [120s]
+    [it  1] best J_L = -1.3990
+    [it  2] best J_L = -1.3990
+    [it  3] best J_L = -1.3990
+    [it  4] best J_L = -1.3990
+    [it  5] best J_L = -1.3990
+    [it  6] best J_L = -1.3039
+    [it  7] best J_L = -1.1550
+    [it  8] best J_L = -1.0576
+    [it  9] best J_L = -1.0576
+    [it 10] best J_L = -1.0067
+    [it 11] best J_L = -0.9336
+    [it 12] best J_L = -0.9336
+    [it 13] best J_L = -0.9336
+    [it 14] best J_L = -0.9336
+    [it 15] best J_L = -0.9227
+    [it 16] best J_L = -0.9227
+    [it 17] best J_L = -0.9227
+    [it 18] best J_L = -0.9227
+    [it 19] best J_L = -0.9227
+    [it 20] best J_L = -0.9227
+  seed 3: J_L = -0.9227   [100s]
+  winner: J_L = -0.92266   J(4900, old probes) = -0.2992
+  margins per probe: 0.5mm:+0.388@(3600.0, 0.0)  0.7mm:+0.946@(3600.0, 0.0)  0.9mm:+1.435@(3600.0, 0.0)
+  Ms = 1.994  effort = 140.6 V/N  max|pole| = 1.204e+05 rad/s  order 6  5 parameters  [351s]
+  parameters: log_q_pos=14.27, log_q_vel=-0.3517, log_r=-8.139, log_ratio=9.476, a4_mult=1.985
+  -> stage3_controllers.pkl [ps_ac_ri_l2]
+
+FULL-RESOLUTION LOBES OF THE ROUND-2 ARMS (m = 120, tol 5 um)
+  ps_ac_rfa_l2: floor 0.439  max 0.729 mm  [99s]
+  ps_ac_rfl_l : floor 0.302  max 0.644 mm  [103s]
+  ps_ac_ri_l2 : floor 0.314  max 0.723 mm  [87s]
+-> results/lobes_l2.npz
+
+PER-CLASS CHAMPIONS by full-resolution floor:
+  filtered  : ps_ac_rfa 0.340  ps_ac_rfa_l 0.407  ps_ac_rfa_l2 0.439  ps_ac_rfl_l 0.302
+    champion ps_ac_rfa_l2  floor 0.439 mm  (L2 vs benchmark 0.474: FAIL)
+  realizable: ps_ac_ri 0.232  ps_ac_ri_l 0.238  ps_ac_ri_l2 0.314
+    champion ps_ac_ri_l2  floor 0.314 mm  (L2 vs benchmark 0.474: FAIL)
+-> results/lobe_champions.pkl
+run_lobe2 done.

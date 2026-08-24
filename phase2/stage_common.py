@@ -27,7 +27,8 @@ LABEL = dict(open='no control', fopid='FOPID', lqg='LQG',
              ps_ac_ri_l='PS-AC-RI-L (lobe-first realizable)',
              ps_ac_rfa_l2='PS-AC-RFA-L2 (lobe-first, corner parity)',
              ps_ac_rfl_l='PS-AC-RFL-L (lobe-first + lead)',
-             ps_ac_ri_l2='PS-AC-RI-L2 (lobe-first, widened box)')
+             ps_ac_ri_l2='PS-AC-RI-L2 (lobe-first, widened box)',
+             ps_ac_rfa_l3='PS-AC-RFA-L3 (pocket polish)')
 
 
 def load_mu_ss(tag='mu_paper'):
@@ -66,7 +67,8 @@ def load_controllers(plate, plant_ref=None, include_open=True):
                  'ps_tdc_j', 'ps_ac_r', 'ps_tdc_r', 'ps_ac_rf', 'ps_ac_rfa',
                  'mu_tdc_ps', 'ps_ac_ri', 'ps_ac_rfl',
                  'ps_ac_rfa_l', 'ps_ac_ri_l',
-                 'ps_ac_rfa_l2', 'ps_ac_rfl_l', 'ps_ac_ri_l2'):
+                 'ps_ac_rfa_l2', 'ps_ac_rfl_l', 'ps_ac_ri_l2',
+                 'ps_ac_rfa_l3'):
         if kind not in store:
             continue
         if kind in ss and ss[kind] is None:
@@ -87,4 +89,5 @@ def n_params(name):
                 ps_tdc_r=7, ps_ac_rf=8, ps_ac_rfa=8,
                 mu_tdc_ps=6, ps_ac_ri=5, ps_ac_rfl=10,
                 ps_ac_rfa_l=8, ps_ac_ri_l=5,
-                ps_ac_rfa_l2=8, ps_ac_rfl_l=10, ps_ac_ri_l2=5).get(name, 0)
+                ps_ac_rfa_l2=8, ps_ac_rfl_l=10, ps_ac_ri_l2=5,
+                ps_ac_rfa_l3=8).get(name, 0)
