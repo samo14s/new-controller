@@ -161,3 +161,36 @@ JUDGE (-L winners), Stage A  2026-08-24 17:36
 ==============================================================================
 
 MIXED GATE at the probed nodes (actuator block included)
+  ps_ac_rfa_l  x=  0%: complex   2.436 -> MIXED   0.383 at   1504 Hz   G1(real) MET   [318s]
+  ps_ac_rfa_l  x= 50%: complex   2.329 -> MIXED   0.320 at   1504 Hz   G1(real) MET   [305s]
+  ps_ac_rfa_l  x=100%: complex   2.387 -> MIXED   0.428 at   1504 Hz   G1(real) MET   [341s]
+  ps_ac_ri_l   x=  0%: complex  15.761 -> MIXED   0.697 at   4000 Hz   G1(real) MET   [94s]
+  ps_ac_ri_l   x= 50%: complex  15.682 -> MIXED   0.693 at   4000 Hz   G1(real) MET   [72s]
+  ps_ac_ri_l   x=100%: complex  15.504 -> MIXED   0.685 at   4000 Hz   G1(real) MET   [78s]
+-> results/mu_real_l.npz
+
+FRESH RECOVERY BATCH (mu_tdc + -L members, one batch, identical calls)
+  mu_tdc      : A_max     3.08 um  T_s   90.3 ms  E_u      673.7  u_max   24.59 V  [109s]
+  ps_ac_rfa_l : A_max     3.06 um  T_s   30.2 ms  E_u      408.5  u_max   21.99 V  [111s]
+  ps_ac_ri_l  : A_max     5.73 um  T_s   16.9 ms  E_u       88.2  u_max   21.96 V  [112s]
+  ratios vs mu_tdc (ps_ac_rfa_l):  T_s 0.33  E_u 0.61  u_max 0.89
+  ratios vs mu_tdc (ps_ac_ri_l):  T_s 0.19  E_u 0.13  u_max 0.89
+
+POSITION LIMITS at the reference speed (nominal floor / mean row)
+  ps_ac_rfa_l : [0.5008, 1.0243, 0.7347, 1.2905, 0.6324] mm  floor 0.5008  mean 0.8365  [5s]
+  ps_ac_ri_l  : [0.2931, 0.4774, 0.6031, 0.5505, 0.3691] mm  floor 0.2931  mean 0.4586  [4s]
+-> results/s1_l.npz
+
+TIME RESPONSES at the reference condition (-L members, 2 s, moving)
+  ps_ac_rfa_l : A_max       3.1 um  u_max     22.0 V  [11s]
+  ps_ac_ri_l  : A_max       5.7 um  u_max     22.0 V  [10s]
+-> results/timeresp_l.npz
+judge_lobe1 Stage A done.
+==============================================================================
+LOBE-FIRST ROUND 2  (run_lobe2.py)  2026-08-24 18:03
+==============================================================================
+benchmark corner envelope, measured: corner Ms = 2.119 (the round-1 bar was 2.000; nominal shared bar stays 2.0)
+
+--- ROUND 2 ARM ps_ac_rfa_l2: m = 60, grid 10 speeds, corner bar 2.119 (benchmark parity) ---
+  warm start under this arm: -0.6696
+    [it  1] best J_L = -0.6696
