@@ -605,3 +605,53 @@ TIME RESPONSE at the reference condition (ps_tdc_j, 2 s, moving)
   ps_tdc_j: A_max       2.1 um  u_max     36.5 V  [11s]
 -> results/timeresp_tdcj.npz
 judge_tdcj done.
+
+==============================================================================
+ALPHA OPTIMISATION OF THE RFA-L WHOLE-PASS CERTIFICATE  2026-08-24 19:55
+==============================================================================
+ps_ac_rfa_l2 @ 0.15 mm, feed 4.90 mm/s, NX = 121, alpha ladder (0.002, 0.005, 0.01, 0.02) (scaled; x5027 1/s physical)
+  a4 lo  zeta 0.8: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [3s]
+  a4 lo  zeta 1.0: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [2s]
+  a4 lo  zeta 1.2: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [2s]
+  a4 nom zeta 0.8: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [2s]
+  a4 nom zeta 1.0: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [2s]
+  a4 nom zeta 1.2: v* = 495.452 mm/s at alpha = 2e-02 (101 1/s)  [2s]
+  a4 hi  zeta 0.8: v* = 247.726 mm/s at alpha = 1e-02 (50 1/s)  [2s]
+  a4 hi  zeta 1.0: v* = 247.726 mm/s at alpha = 1e-02 (50 1/s)  [2s]
+  a4 hi  zeta 1.2: v* = 247.726 mm/s at alpha = 1e-02 (50 1/s)  [2s]
+binding slice: a4 hi zeta 1.2 at alpha = 1e-02
+  NX = 241: v* = 246.835 mm/s, midpoint validity 22%
+  NX = 481: v* = 246.609 mm/s
+=> v_cert(alpha-opt, 9 slices) = 247.726 mm/s vs feed 4.90 mm/s (50.6x rate margin)
+-> results/cert_l2.npz
+cert_lobe2 done.
+
+VALIDITY LADDER on the RFA-L binding slice (a4 hi, zeta 1.2) and the
+lo/nom winning alpha, static midpoint validation per (alpha, NX)
+  a4 hi  alpha 2e-03 NX 241: v*   49.367 mm/s  validity  32.1%  [3s]
+  a4 hi  alpha 2e-03 NX 481: v*   49.322 mm/s  validity 100.0%  [4s]
+  a4 hi  alpha 5e-03 NX 241: v*  123.417 mm/s  validity  28.3%  [1s]
+  a4 hi  alpha 5e-03 NX 481: v*  123.305 mm/s  validity 100.0%  [2s]
+  a4 hi  alpha 1e-02 NX 241: v*  246.835 mm/s  validity  22.5%  [1s]
+  a4 hi  alpha 1e-02 NX 481: v*  246.609 mm/s  validity  74.6%  [2s]
+  a4 hi  alpha 1e-02 NX 961: v*  246.553 mm/s  validity 100.0%  [8s]
+  a4 nom alpha 2e-02 NX 241: v*  493.670 mm/s  validity  37.5%  [1s]
+  a4 nom alpha 2e-02 NX 481: v*  493.218 mm/s  validity 100.0%  [2s]
+
+FINAL alpha-opt RECORD: all 9 slices at the winning alpha, static
+midpoint validity at the first NX reaching 100% (ladder 481 -> 961)
+  a4 lo  zeta 0.8: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [5s]
+  a4 lo  zeta 1.0: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [2s]
+  a4 lo  zeta 1.2: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [2s]
+  a4 nom zeta 0.8: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [2s]
+  a4 nom zeta 1.0: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [2s]
+  a4 nom zeta 1.2: v*  493.218 mm/s  alpha 2e-02 (101 1/s)  NX 481  validity 100.0%  [2s]
+  a4 hi  zeta 0.8: v*  246.553 mm/s  alpha 1e-02 (50 1/s)  NX 961  validity 100.0%  [7s]
+  a4 hi  zeta 1.0: v*  246.553 mm/s  alpha 1e-02 (50 1/s)  NX 961  validity 100.0%  [5s]
+  a4 hi  zeta 1.2: v*  246.553 mm/s  alpha 1e-02 (50 1/s)  NX 961  validity 100.0%  [5s]
+=> v_cert(alpha-opt, 9 slices, 100% static validity) = 246.553 mm/s vs feed 4.90 (50.3x rate margin)
+-> results/cert_l2.npz (final record)
+
+==============================================================================
+FULL 21-NODE MIXED GATE SWEEP: ps_ac_rfa_l2  2026-08-24 19:58
+==============================================================================
