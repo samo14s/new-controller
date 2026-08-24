@@ -179,3 +179,6 @@ BOUNDS2 = dict(
     ps_ac_full=dict(log_q_pos=(10.0, 20.0), log_q_vel=(-4.0, 8.0),
                     log_r=(-12.0, -4.0), log_ratio=(4.0, 16.0)),
 )
+# the lobe-first (-L) members share their base structure's box exactly
+BOUNDS2['ps_ac_rfa_l'] = BOUNDS2['ps_ac_rfa']
+BOUNDS2['ps_ac_ri_l'] = BOUNDS2['ps_ac_ri']

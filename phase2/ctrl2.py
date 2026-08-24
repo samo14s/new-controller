@@ -276,12 +276,14 @@ def build(kind, plant, u, ss_mu=None):
                   name='PS_AC_R')
         c.n_params = 5
         return c
-    if kind == 'ps_ac_ri':
-        # the envelope law confined to realizable gains (see config.BOUNDS2)
+    if kind in ('ps_ac_ri', 'ps_ac_ri_l'):
+        # the envelope law confined to realizable gains (see config.BOUNDS2);
+        # the _l member is the same structure redesigned under the lobe-first
+        # objective (run_lobe1.py)
         c = ps_ac(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
                   10 ** u['log_r'], 10 ** u['log_ratio'],
                   sched_K=True, sched_L=False, a4_mult=u['a4_mult'],
-                  name='PS_AC_RI')
+                  name=kind.upper())
         c.n_params = 5
         return c
     if kind == 'ps_ac_rf':
@@ -293,14 +295,19 @@ def build(kind, plant, u, ss_mu=None):
                         10 ** u['log_r'], 10 ** u['log_ratio'],
                         u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
                         10 ** u['log_fr'])
-    if kind == 'ps_ac_rfa':
+    if kind in ('ps_ac_rfa', 'ps_ac_rfa_l'):
         # the augmented variant: the filter INSIDE the design model, so
-        # certainty equivalence survives (act_filter.ps_ac_rfa); same 5 + 3
+        # certainty equivalence survives (act_filter.ps_ac_rfa); same 5 + 3;
+        # the _l member is the same structure redesigned under the lobe-first
+        # objective (run_lobe1.py)
         from act_filter import ps_ac_rfa
-        return ps_ac_rfa(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
-                         10 ** u['log_r'], 10 ** u['log_ratio'],
-                         u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
-                         10 ** u['log_fr'])
+        c = ps_ac_rfa(plant, 10 ** u['log_q_pos'], 10 ** u['log_q_vel'],
+                      10 ** u['log_r'], 10 ** u['log_ratio'],
+                      u['a4_mult'], 10 ** u['log_depth'], u['q_notch'],
+                      10 ** u['log_fr'])
+        if kind == 'ps_ac_rfa_l':
+            c.name = 'PS_AC_RFA_L'
+        return c
     if kind == 'ps_ac_rfl':
         # rfa + the phase lead (f_lead, k_lead): 5 + 3 + 2 = 10 parameters --
         # the named candidate against the J ceiling
