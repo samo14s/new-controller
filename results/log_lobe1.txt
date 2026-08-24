@@ -690,3 +690,14 @@ CROSSING PAIR OF THE LOBE-FIRST CHAMPION (ps_ac_rfa_l2)  2026-08-24 20:31
   common-P LK at a_p^inf: no
   -> stage56.pkl [ps_ac_rfa_l2], results/cross_l.npz
 cross_lobe done.
+
+==============================================================================
+CROSSING PAIR (ps_tdc_j)  2026-08-24 21:05
+  same vertex family and bisections as stage 5-6
+==============================================================================
+  peak = 0.685   tau_max/tau0 = inf   [3s]
+  a_p^inf = 0.3973 mm   (mu-TDC 0.4364, r5 0.2841)   [8s]
+  delta_max = 1.457   (mu-TDC 1.543, r5 0.918)   [11s]
+  common-P LK at a_p^inf: yes
+  -> stage56.pkl [ps_tdc_j], results/cross_ps_tdc_j.npz
+cross_lobe done.

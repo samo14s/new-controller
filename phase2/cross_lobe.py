@@ -32,7 +32,7 @@ from plate_model import build_plate
 from plant_ss import ControlledPlant
 from stage_common import load_controllers
 
-KIND = 'ps_ac_rfa_l2'
+KIND = sys.argv[1] if len(sys.argv) > 1 else 'ps_ac_rfa_l2'
 
 LOG = open(os.path.join(C.RESULTS, 'log_lobe1.txt'), 'a')
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     log('')
     log('=' * 78)
-    log(f'CROSSING PAIR OF THE LOBE-FIRST CHAMPION ({KIND})  '
+    log(f'CROSSING PAIR ({KIND})  '
         + time.strftime('%Y-%m-%d %H:%M'))
     log('  same vertex family and bisections as stage 5-6')
     log('=' * 78)
@@ -94,8 +94,9 @@ if __name__ == '__main__':
                        lk_attempted=bool(lk.get('attempted', True)))
     with open(p, 'wb') as f:
         pickle.dump(store, f)
-    np.savez_compressed(os.path.join(C.RESULTS, 'cross_l.npz'),
+    np.savez_compressed(os.path.join(C.RESULTS,
+                                 f'cross_{KIND}.npz'),
                         peak=peak, tau_max=tm, ap_inf=ap_inf,
                         delta_max=dmax, lk=bool(lk['feasible']))
-    log('  -> stage56.pkl [ps_ac_rfa_l2], results/cross_l.npz')
+    log(f'  -> stage56.pkl [{KIND}], results/cross_{KIND}.npz')
     log('cross_lobe done.')

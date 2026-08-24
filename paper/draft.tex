@@ -1041,7 +1041,15 @@ voltage peak, still far inside authority).  Its classification is
 equally measured: it is out of the delay-independent contract by
 design, and its unfiltered high-gain base fails the mixed gate
 outright ($\muRS = 3.46$--$3.48$ at the probed nodes)---exactly the
-exposure the gate exists to police.  Scheduling the delayed pair on
+exposure the gate exists to police.  Its crossing pair, re-measured
+fresh and matching the stored stage-5/6 record digit for digit, is
+$\ap^{\infty} = 0.397$\,mm / $\delta_{\max} = 1.457$ with a common-$P$
+LK at $\ap^{\infty}$: just \emph{below} the benchmark's
+$0.436$/$1.543$ on the pointwise crossing axis whose lobe axis it
+dominates---the two delay-exploiting members are ranked oppositely by
+the two metrics, a reminder that the frozen crossing certificate and
+the Floquet lobe are different questions.  Scheduling the delayed
+pair on
 the witness base instead extends the tie of
 Section~\ref{sec:readings} to the lobe axis (floor $0.472$ vs
 $0.474$\,mm, pointwise above at only $16$ of $37$ speeds).  The
@@ -1077,7 +1085,8 @@ $37/37$ \\
 nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
 $0.539$ / $0.886$ & $0.907$ / $1.373$ \\
 crossing $\ap^{\infty}$ / $\delta_{\max}$ & $0.436$\,mm / $1.543$ &
-$0.284$\,mm / $0.918$ & $0.351$\,mm / $1.215$ & --- \\
+$0.284$\,mm / $0.918$ & $0.351$\,mm / $1.215$ & $0.397$\,mm /
+$1.457$ \\
 gate, mixed $\muRS$ (nodes) & $0.242$--$0.419$ & $0.283$--$0.383$ &
 $0.330$--$0.450$ ($21/21$) & $3.46$--$3.48$ (not met) \\
 $M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $2.00$ /
@@ -1162,7 +1171,8 @@ are recomputed from stored artifacts
 \texttt{lobe\_champions.pkl}, \texttt{lobes\_tdcj.npz},
 \texttt{mu\_real\_tdcj.npz}, \texttt{s1\_tdcj.npz},
 \texttt{timeresp\_tdcj.npz}, \texttt{cert\_l2.npz},
-\texttt{mu\_real\_l21.npz}, \texttt{cross\_l.npz}, run logs), and
+\texttt{mu\_real\_l21.npz}, \texttt{cross\_l.npz},
+\texttt{cross\_ps\_tdc\_j.npz}, run logs), and
 corrections to earlier
 readings are appended to the record rather than rewritten.  The
 lobe-first members carry the repository keys \texttt{ps\_ac\_rfa\_l2}
