@@ -276,3 +276,26 @@ STABILITY LOBES vs SPINDLE SPEED (Floquet m = 120, five-mode truth model,
 min over positions {0, L/2, L}; head-to-head members only)
 ==============================================================================
   open      : min 0.039  max 0.404 mm over 3600-7200 rpm  [82s]
+  mu_tdc    : min 0.474  max 0.802 mm over 3600-7200 rpm  [102s]
+  ps_ac_rfa : min 0.340  max 0.641 mm over 3600-7200 rpm  [100s]
+  ps_ac_ri  : min 0.232  max 0.656 mm over 3600-7200 rpm  [89s]
+-> results/lobes.npz
+
+S1-STYLE METRICS FOR ps_ac_ri (fills the head-to-head blanks)
+  limits [0.2989, 0.4861, 0.6353, 0.568, 0.3838] mm  min 0.2989 mean 0.4744
+  A_max 4.1 um  E_u 82  u_max 16  T_s 18.7 ms
+
+TIME RESPONSES at the reference condition (4900 rpm, a_p = 0.3 mm, T = 2 s, moving)
+  open      : A_max    4152.1 um  u_max      0.0 V  DIVERGED at t = 0.089s  [0s]
+  mu_tdc    : A_max       3.1 um  u_max     24.6 V  [11s]
+  ps_ac_rfa : A_max       3.1 um  u_max     17.4 V  [11s]
+  ps_ac_ri  : A_max       4.1 um  u_max     15.6 V  [10s]
+-> results/timeresp.npz
+
+FRESH RECOVERY BATCH (one batch, identical calls; supersedes the
+stored-epoch S1 recovery numbers for the head-to-head ratios)
+  mu_tdc    : A_max     3.08 um  T_s   90.3 ms  E_u      673.7  u_max   24.59 V  [108s]
+  ps_ac_rfa : A_max     3.07 um  T_s   30.2 ms  E_u      300.3  u_max   17.42 V  [109s]
+  ps_ac_ri  : A_max     4.11 um  T_s   18.7 ms  E_u      82.41  u_max   15.65 V  [109s]
+  ratios vs mu_tdc:  T_s  rfa 0.33  ri 0.21;  E_u  rfa 0.45  ri 0.12;  u_max  rfa 0.71  ri 0.64
+-> results/s1_fresh.npz
