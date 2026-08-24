@@ -36,51 +36,55 @@ et al.\ [Int.\ J.\ Mech.\ Sci.\ 274 (2024) 109257], we develop a
 parameter-scheduled active control framework that exploits the variation
 directly and certifies stability over the entire operating domain.  The
 paper makes four contributions.
-(i)~\emph{Pricing:} the robust-stability gate of the benchmark is shown
-to be dominated by its uncertainty \emph{reading}, not its physics: on a
-plate with $\zeta\approx0.3\%$, treating real parametric perturbations
-as complex lets stiffness uncertainty masquerade as negative damping and
-overprices the gate by a factor of 4--8 across the whole scheduling
-domain.  A mixed real/complex $\mu$ re-reading
-(Fan--Tits--Doyle bound with solver-independent numerical verification
-of the returned scales) opens the gate at every one of 21 scheduling
-nodes for both the benchmark's own controller (peak
-$\muRS=0.419$) and a realizable scheduled member ($0.383$), where the
-complex reading had reported $1.16$--$85.8$.
-(ii)~\emph{Structure:} an actuator-aware scheduled member is
-synthesised with its command filter \emph{inside} the design model
-(augmented LQR in scaled coordinates), and three measured structural
-ceilings are reported, including the finding that the unfiltered
+(i)~\emph{Model:} a parameter-scheduled active control family for the
+varying plant, with the actuator-protection filter \emph{inside} the
+design model (augmented LQR in scaled coordinates), shaped by measured
+structural evidence---including the finding that the unfiltered
 scheduled-LQG performance of the baseline study is mortgaged to
 unimplementable $1.4$--$8.8$\,MHz compensator poles (a performance gap
 of $0.62$ in the shared objective).
-(iii)~\emph{Theory:} a whole-pass stability theory is developed and
-\emph{proved}: a delay-cover proposition (one certificate covers every
-shorter delay, hence all faster spindle speeds), an elementary
-frequency-domain equivalence between the delay-independent LK
-inequality and the $H_\infty$ contract of the rank-one regenerative
-channel, a finite-cell chain theorem (cells, jump factors, dwell rule
-$\Rightarrow$ exponential stability of the traversal with an explicit
-certified feed speed), and its differential (adiabatic) limit for
-$C^1$ certificate fields.  Complete proofs are given; every hypothesis
-is additionally \emph{verified computationally} on the benchmark.  A
-quantitative empirical law is identified en route---parameter variation
-rotates the razor-thin modal eigendirections by many linewidths, so a
-common quadratic storage per practical cell cannot exist (feasible cell
-diameter scales with $\zeta$)---which motivates the thin-cell limit and
-its \emph{solver-free} point certificates built on the stable invariant
-subspace of a bounded-real Hamiltonian; recorded SDP infeasibility
-verdicts at single vertices are shown to be solver failures.  (iv)~\emph{Results:} the realizable member is
-certified over the full parameter box at the reference feed with
-$\vcert = 79.9$--$82.7$\,mm/s ($16\times$ the actual feed of
-4.90\,mm/s), and with the removal schedule moving,
-$17.8$\,mm/s ($3.6\times$); the filtered gate-crossing member is
-certified at full box down to $h=0.104$\,mm cell size at
-$\ap=0.15$\,mm.  Grid refinement exposes and corrects an
-over-optimistic coarse-grid claim at $\ap=0.28$\,mm, and
-delay-exploiting (TDC-type) members are classified out of the
-delay-independent contract by design.  Every number is derived from
-stored, re-checkable certificate matrices.
+(ii)~\emph{Certification on the physical operating path instead of a
+single conservative frozen uncertainty set:} real parameters are
+priced as real---on a plate with $\zeta \approx 0.3\%$, treating them
+as complex lets stiffness uncertainty masquerade as negative damping
+and overprices the gate by $4$--$8\times$ across the whole scheduling
+domain.  A mixed real/complex $\mu$ re-reading (Fan--Tits--Doyle
+bound with solver-independent numerical verification of the returned
+scales) meets the gate at every one of 21 scheduling nodes for both
+the benchmark's own controller (peak $\muRS = 0.419$) and a
+realizable scheduled member ($0.383$), where the complex reading had
+reported $1.16$--$85.8$; quantities constant along a pass are sliced,
+and the quantities that actually evolve are chained along the path.
+(iii)~\emph{The finite-cell chain theorem}, proved together with a
+delay-cover proposition (one certificate covers every shorter delay,
+hence all faster spindle speeds) and an elementary frequency-domain
+equivalence between the delay-independent LK inequality and the
+$H_\infty$ contract of the rank-one regenerative channel: local
+Lyapunov--Krasovskii certificates, jump factors and a dwell rule
+combine into an exponential whole-pass certificate whose output is a
+certified traversal speed $\vcert$---the fastest admissible evolution
+of the process state under which the certificate remains valid.
+(iv)~\emph{The differential theorem}, proved: the continuous limit
+for $C^1$ Riccati certificate fields, governed by
+$\sigma(x) = \|P^{-1/2} P' P^{-1/2}\|$; its hypotheses are verified
+computationally on the benchmark.  The numerical campaign then
+\emph{demonstrates} the theory: the realizable member is certified
+over the full parameter box with $\vcert = 79.9$--$82.7$\,mm/s
+against an actual feed of $4.90$\,mm/s---a certificate \emph{rate
+margin} of ${\approx}16\times$ on the schedule speed, not a
+productivity figure---and $17.8$\,mm/s ($3.6\times$) with the removal
+schedule moving; the filtered gate-crossing member is certified at
+full box down to $h = 0.104$\,mm cell size at $\ap = 0.15$\,mm.  En
+route, a quantitative empirical law (modal-direction rotation vs.\
+linewidth; feasible cell diameter scales with $\zeta$) explains why
+cell-wise LMIs cannot certify such plants and motivates solver-free
+point certificates on the stable invariant subspace of a bounded-real
+Hamiltonian, with recorded SDP infeasibility verdicts at single
+vertices shown to be solver failures; grid refinement is used to
+falsify an over-optimistic coarse-grid claim, and delay-exploiting
+(TDC-type) members are classified out of the delay-independent
+contract by design.  Every number is derived from stored,
+re-checkable certificate matrices.
 \end{abstract}
 
 \section{Introduction}
@@ -113,48 +117,57 @@ spatio-temporal variation be converted into a stability
 \emph{guarantee} over an entire machining pass, rather than a
 collection of frozen-point statements?
 
-\paragraph{Contributions.}
+\paragraph{Contributions.}  The paper is built around four
+contributions; the numerical campaigns then serve as the
+\emph{demonstration} of the theory on a validated plant, not as the
+contribution itself.
 \begin{enumerate}
-\item A mixed real/complex $\mu$ re-reading of the robust-stability
-gate (Section~\ref{sec:readings}), with a numerical-verification
-protocol that removes the SDP solver from the trust chain.  Measured on
-the full 21-node scheduling grid, the complex reading overprices the
-gate by $4$--$8\times$; the gate is in fact met at every node by the
-benchmark controller itself and by a realizable scheduled member
-(Fig.~\ref{fig:sweep}).
-\item An actuator-aware scheduled controller family whose command
-filter lives inside the design model (augmented LQR solved in scaled
-coordinates), together with three measured structural results: a
-performance ceiling $J\approx-0.28$ for filtered structures (its named
-challenger, phase-lead compensation, is tested and rejected---the
-optimiser parks the lead at its lower bounds); the certainty-equivalence
-failure of the series-filter variant; and the finding that the
-baseline scheduled-LQG performance rests on parasitic MHz compensator
-poles (Section~\ref{sec:member}).
-\item A whole-pass stability \emph{theory} with complete proofs
-(Section~\ref{sec:pass}, Appendix~\ref{app:proofs}):
-Proposition~\ref{prop:cover} (delay cover), Proposition~\ref{prop:kyp}
-(rank-one KYP equivalence, by an elementary frequency-domain argument),
-Theorem~\ref{thm:chain} (finite-cell chain: cells + jump factors +
-dwell rule $\Rightarrow$ exponential whole-pass stability with the
-explicit certified traversal speed $\vcert$ of \eqref{eq:vcert}), and
-Theorem~\ref{thm:diff} (the differential/adiabatic limit for $C^1$
-certificate fields).  Alongside the proofs, every hypothesis is
-verified computationally on the benchmark (single frozen construction
-regime, pointwise margins at $100\%$ of nodes, derivative cost
-$\sigma(x)$ converged under grid halving;
-Fig.~\ref{fig:refine},~\ref{fig:sigma}).  We further identify the
-quantitative \emph{empirical} obstruction to cell-wise common storage
-(modal-direction rotation vs.\ linewidth), build solver-free point
-certificates on the bounded-real Hamiltonian, and document recorded
-SDP verdicts as solver false-negatives.
-\item An honesty layer that we consider part of the method: grid
-refinement is used to \emph{falsify} an initially certified
-coarse-grid claim (the $\ap=0.28$\,mm full-box certificate of the
-filtered member), the divergence mechanism is named, and
-delay-exploiting TDC members are classified out of the
-delay-independent contract by design rather than reported as failures.
+\item \emph{A parameter-scheduled active control model} for the
+milling system with in-process varying dynamics
+(Section~\ref{sec:member}): a controller family scheduled by tool
+position whose actuator-protection filter lives \emph{inside} the
+design model (augmented LQR solved in scaled coordinates), shaped by
+measured structural evidence---a performance ceiling
+$J \approx -0.28$ for filtered structures with its named challenger
+(phase-lead compensation) tested and rejected, the
+certainty-equivalence failure of the series-filter variant, and the
+finding that the unfiltered baseline performance rests on parasitic
+MHz compensator poles.
+\item \emph{Certification on the physical operating path rather than
+a single conservative frozen uncertainty set}
+(Sections~\ref{sec:readings} and~\ref{sec:pass}): real parameters are
+priced as real (mixed real/complex $\mu$ with a verification protocol
+that removes the SDP solver from the trust chain; measured on the
+benchmark: the complex reading overprices the gate by $4$--$8\times$
+across all 21 scheduling nodes, Fig.~\ref{fig:sweep}), quantities
+that are constant along a pass are sliced, and the quantities that
+actually evolve are chained along the path.
+\item \emph{The finite-cell chain theorem}
+(Theorem~\ref{thm:chain}, with Propositions~\ref{prop:cover}
+and~\ref{prop:kyp} and complete proofs in
+Appendix~\ref{app:proofs}): local Lyapunov--Krasovskii certificates,
+jump factors and a dwell rule combine into an exponential
+\emph{whole-pass} stability certificate whose output is the certified
+traversal speed $\vcert$ of \eqref{eq:vcert}---a physically
+interpretable quantity: the fastest admissible evolution of the
+process state under which the certificate remains valid.
+\item \emph{The differential theorem} (Theorem~\ref{thm:diff}): the
+continuous-limit guarantee that ties the variation of the Riccati
+certificate field to
+$\sigma(x) = \|P^{-1/2}(x) P'(x) P^{-1/2}(x)\|$, with regimes and
+boundary jumps; on the benchmark its hypotheses are verified
+computationally (a single frozen construction regime, pointwise
+margins at $100\%$ of nodes, $\sigma$ converged under grid halving;
+Fig.~\ref{fig:refine},~\ref{fig:sigma}).
 \end{enumerate}
+Supporting these, the campaign documents an empirical obstruction law
+(modal-direction rotation vs.\ linewidth, which motivates the
+thin-cell limit), solver-free point certificates on the bounded-real
+Hamiltonian with a documented SDP false-negative, and two
+methodological practices we consider part of the result: grid
+refinement used to falsify an over-optimistic coarse-grid claim, and
+the classification of delay-exploiting TDC members out of the
+delay-independent contract by design.
 
 \paragraph{Related work and positioning.}
 Three literatures border this paper.
@@ -189,11 +202,12 @@ varying PD gains \cite{Wang2019}, robust LTI envelopes with
 perturbation models \cite{Zhang2019,Li2021}, model-predictive
 formulations \cite{Li2019}, and active fixtures with delayed state
 feedback \cite{Dong2023}; the benchmark itself combines a
-$\mu$-synthesis loop with time-delay control \cite{Du2024}.  In all of
-these, stability is assessed at frozen operating points (analytically
-or experimentally); certified statements over an \emph{entire pass},
-and mixed real/complex $\mu$ readings of the robustness gate, appear
-to be absent from this literature.
+$\mu$-synthesis loop with time-delay control \cite{Du2024}.  These works treat the in-process variation through control design
+(worst-point, robust, adaptive or predictive); what they do not
+provide---and what the present paper adds---is a stability-and-%
+robustness \emph{certificate along the varying physical operating
+path}, with a certifiable traversal speed as its output, together
+with a mixed real/complex reading of the robustness gate.
 \emph{(c) Computational robustness practice.}  The mixed-$\mu$ upper
 bound is classical \cite{Fan1991,Young1992,Packard1993}; the
 methodological point here is the verification-gated pipeline (no
@@ -462,7 +476,9 @@ price.  The two statements underlying the chain are the following
 \begin{proposition}[delay cover]\label{prop:cover}
 If $P, Q \succ 0$ satisfy $\Phi \prec 0$ in \eqref{eq:lk} for delay
 $\tau$ and rate $\alpha \ge 0$, then the same pair certifies decay
-rate $\alpha$ for every delay $\tau' \in [0, \tau]$.
+rate $\alpha$ for every \emph{constant} delay $\tau' \in [0, \tau]$
+(the tooth period is constant within a pass at fixed spindle speed;
+shorter delays are faster speeds).
 \end{proposition}
 
 \begin{theorem}[finite-cell chain]\label{thm:chain}
@@ -470,7 +486,9 @@ Partition the pass into cells $I_k$ of length $h_k$ and let
 $(P_k, Q_k) \succ 0$ satisfy \eqref{eq:lk} with rate $\alpha > 0$
 uniformly over the closed convex model hull of cell $k$ (vertex family
 plus a norm-$\varepsilon_k$ residual absorbed by the S-procedure of
-Lemma~\ref{lem:sproc}).  Let
+Lemma~\ref{lem:sproc}).  For $X, Y \succ 0$ write
+$\lambda_{\max}(X, Y) = \min\{\mu : X \preceq \mu Y\}$, the largest
+generalized eigenvalue of the pencil $(X, Y)$; let
 $\mu_k = \max\{\lambda_{\max}(P_{k+1}, P_k),\,
 \lambda_{\max}(Q_{k+1}, Q_k)\}$ denote the boundary jump factors, and
 let the schedule traverse the cells monotonically at speed $v$.  If
@@ -607,7 +625,12 @@ Theorem~\ref{thm:diff} is measured.}
 Across all nine $a_4\times\zeta$ slices, with the decay rate $\alpha$
 ladder-optimised per slice, the realizable member at $\ap = 0.10$\,mm
 certifies at $\vcert = 82.7$\,mm/s (worst slice, converged under
-refinement)---$16.9\times$ the actual feed.  The $\zeta$-slice rows
+refinement).  Against the actual feed of $4.90$\,mm/s this is a rate
+margin $\vcert / v_{\mathrm{feed}} \approx 16.9$: the physical
+schedule evolves $16.9\times$ more slowly than the fastest evolution
+the certificate tolerates.  We stress the interpretation: this is a
+robustness margin on the schedule rate, \emph{not} a claim that
+material removal could be increased $16.9$-fold.  The $\zeta$-slice rows
 coincide; a wiring check confirms $\zeta$ reaches the model
 ($\|A(1.2)-A(0.8)\| = 2.2\times10^{-3}$), so this is genuine
 certificate insensitivity to $\pm20\%$ damping.
@@ -647,10 +670,14 @@ $3.6\times$ the actual feed.
 \begin{theorem}[differential adiabatic chain]\label{thm:diff}
 Let the schedule follow the pass at speed $v$ and, on each regime
 interval, let $x \mapsto (P(x), Q(x))$ be a $C^1$ field of positive
-definite matrices satisfying the pointwise LMI \eqref{eq:lk} with rate
-$\alpha$ (in our construction: the frozen-parameter Riccati field of
-\eqref{eq:ric}, which is real-analytic wherever the Hamiltonian
-retains its dichotomy \cite{Lancaster1995}).  Define
+definite matrices satisfying the pointwise LMI \eqref{eq:lk}, for the
+slice model $(A(x), A_d(x))$, with rate $\alpha$ (in our
+construction: the frozen-parameter Riccati field of \eqref{eq:ric},
+which is real-analytic wherever the Hamiltonian retains its dichotomy
+\cite{Lancaster1995}).  The functional evaluates both matrices at the
+\emph{current} schedule point,
+$V(t) = x^{\!\top} P(x(t))\, x + \int_{t-\tau}^{t} e^{2\alpha(s-t)}
+x(s)^{\!\top} Q(x(t))\, x(s)\, ds$.  Define
 $\sigma(x) = \max\big(\|P^{-1/2}P'P^{-1/2}\|_2,\,
 \|Q^{-1/2}Q'Q^{-1/2}\|_2\big)$, and let regime boundaries carry jump
 factors $\mu_b$ as in Theorem~\ref{thm:chain}.  Then $V$ of
@@ -659,7 +686,9 @@ $\dot V \le (-2\alpha + v\,\sigma(x))\,V$ inside regimes and
 $V^{+} \le \mu_b V$ at boundaries; consequently the whole pass is
 exponentially stable whenever
 $v < \min_x 2\alpha/\sigma(x)$ and the dwell rule holds at each
-boundary.  (Proof in Appendix~\ref{app:proofs}.)
+boundary; by Proposition~\ref{prop:cover} the statement again covers
+every constant delay $\tau' \le \tau$.
+(Proof in Appendix~\ref{app:proofs}.)
 \end{theorem}
 
 Measured on this plant (Fig.~\ref{fig:sigma}): the winner-parameter
@@ -687,11 +716,14 @@ here covers the delay-agnostic (LQG-type) members.
 \begin{table}[t]
 \centering\small
 \caption{Final certified numbers (actual feed $4.90$\,mm/s; every row
-recomputable from stored matrices).}
+recomputable from stored matrices).  Ratios $\vcert /
+v_{\mathrm{feed}}$ are robustness margins on the schedule rate---how
+much faster the process state could evolve with the certificate still
+valid---not productivity figures.}
 \label{tab:final}
 \begin{tabular}{@{}llll@{}}
 \toprule
-Quantity & Value & Margin & Basis \\
+Quantity & Value & Rate margin & Basis \\
 \midrule
 Gate, witness, 21/21 nodes & $\muRS \le 0.419$ & $\ge 2.4\times$ &
 mixed $\mu$, verified scales \\
@@ -711,12 +743,14 @@ $+0.138$ (8.8\,MHz poles) vs $-0.482$ \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:final} collects the headline numbers.  Under the
-corrected pricing the spatio-temporal variation is no longer an
-adversary to be over-insured against: it is measured, scheduled,
-sliced where constant, chained where moving, and the guarantee runs
-over the entire operating domain with an explicit rate margin against
-the actual feed.
+Table~\ref{tab:final} collects the headline numbers; they are the
+\emph{demonstration} of Theorems~\ref{thm:chain}--\ref{thm:diff} on
+a validated plant, not the contribution itself.  Under the corrected
+pricing the spatio-temporal variation is no longer an adversary to be
+over-insured against: it is measured, scheduled, sliced where
+constant, chained where moving, and the guarantee runs over the
+entire operating domain with an explicit rate margin against the
+actual feed.
 
 \section{Limitations and outlook}
 
@@ -905,12 +939,18 @@ $\Phi$ from above. \hfill$\square$
 
 \subsection{Proof of Theorem~\ref{thm:chain}}
 
-\emph{In-cell decay.}  $\Phi$ is affine in $(A, A_d)$, so negativity
-at the vertex family implies negativity on its convex hull, and
-Proposition~\ref{lem:sproc} extends it to the measured
-$\varepsilon_k$-residual around the interpolant; hence for every
+\emph{In-cell decay.}  The bordered matrix of
+Proposition~\ref{lem:sproc} is itself affine in $(A, A_d)$ (only
+$\Phi_0$ depends on the model, affinely), so its negativity at the
+vertex family implies its negativity at every convex interpolant, and
+Proposition~\ref{lem:sproc} then absorbs the measured
+$\varepsilon_k$-residual around each interpolant: the LMI holds at
+every model the cell continuum can produce.  Since $(P_k, Q_k)$ are
+constant inside the cell, the derivative computation of
+Proposition~\ref{prop:cover} applies verbatim with the time-varying
+model $(A(t), A_d(t))$ evaluated pointwise; hence for every
 admissible parameter path, $\dot V_k + 2\alpha V_k \le 0$ inside cell
-$k$, uniformly in the delay $\tau' \le \tau$ by
+$k$, uniformly in the constant delay $\tau' \le \tau$ by
 Proposition~\ref{prop:cover}.
 
 \emph{Jump.}  At a switch instant $t_k$ the state and the history
