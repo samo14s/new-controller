@@ -1,0 +1,43 @@
+====================================================================================
+THE TRUE-ENVELOPE COLLAPSE -- IS IT THE PLANT OR THE CONTROLLER?
+====================================================================================
+  alpha_4(t) peak / abar4 = 12.4267; the certified band is [0.3, 2.9]
+  frozen family: n_pos = 5, eta/zeta/xi nominal, a_scale = 0 (single pin)
+
+[Q3] a_p^inf (mm) against the frozen alpha_4 pin
+  pin/abar4     mu-TDC (Du 20  PS-AC (propos  PS-TDC-R (env     no control
+  0.3000               3.4719         2.9761         1.8731         0.1396
+  1.0000               1.3734         1.2426         1.2738         0.0420
+  1.6000               0.8268         0.7702         0.8053         0.0264
+  2.9000               0.4364         0.4227         0.4305         0.0147
+  6.0000               0.2040         0.2021         0.2040         0.0069
+  9.0000               0.1357         0.1338         0.1357         0.0049
+  12.4328              0.0967         0.0967         0.0967         0.0030
+  [C2] monotone non-increasing in the pin: PASS
+
+[Q1] at the top pin (12.4328 abar4), against the open loop
+  open loop                  0.0030 mm
+  mu-TDC (Du 2024)         0.0967 mm   3148.55 % from open
+  PS-AC (proposed)         0.0967 mm   3148.55 % from open
+  PS-TDC-R (envelope + pair)   0.0967 mm   3148.55 % from open
+  [C1] < 5 % for every design: FAIL -> controller-sensitive
+  reported after the fact, NOT pre-declared: the spread among
+  the three controlled designs is 0.000 % (0.0967-0.0967 mm) while each is 32.5x the open loop.
+  So the frozen-peak test is NOT vacuous -- feedback is worth a
+  large factor there -- but it cannot TELL THE DESIGNS APART,
+  which is the property a design criterion has to have.
+
+[Q2] where the binding crossing sits at the top pin
+  design                peak      f (Hz)     x (mm)
+  mu-TDC (Du 2024)        1.018      321.6     100.0
+  PS-AC (proposed)        1.029      505.3       0.0
+  PS-TDC-R (envelope + pair)  1.020      501.9       0.0
+  no control              0.924     1066.3       0.0
+  plate modes (Hz): 540.0 1068.0 2787.0 3351.0 4122.0
+
+  reading: a frozen certificate honest about the envelope the
+  periodic system really visits still credits feedback with a
+  large factor over the open loop, but it grades every design
+  in the study the same.  Its failure is DISCRIMINATION, not
+  vacuity -- and that is precisely what a criterion using the
+  duty cycle of alpha_4(t), rather than its extreme, would fix.
