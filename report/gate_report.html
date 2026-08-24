@@ -114,6 +114,7 @@ td.n,th.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nu
 .pill.ok{background:var(--good-soft); color:var(--good)}
 .pill.no{background:var(--bad-soft); color:var(--bad)}
 .pill.na{background:var(--surface-2); color:var(--muted)}
+.pill.warn{background:var(--warn-soft); color:var(--warn)}
 tr.hero td{background:var(--accent-soft)}
 
 /* ---- charts ---- */
@@ -381,25 +382,35 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     ‏ρ(x) = d ln μ/dx، تشريح الثوابت الزمنية (a₄، ζ)، و<span class="mono">v* = min 2α/ρ</span>:
   </p>
   <div class="tblwrap"><table>
-    <thead><tr><th>العضو</th><th class="n">العمق</th><th class="n">v* (أسوأ شريحة)</th>
+    <thead><tr><th>العضو</th><th class="n">العمق</th><th class="n">v* (أسوأ شريحة، متقارب)</th>
       <th class="n">التغذية الفعلية</th><th>الحكم</th></tr></thead>
     <tbody>
-      <tr class="hero"><td>PS-AC-RI (الواقعي)</td><td class="n">0.10 mm</td>
-        <td class="n"><b>33.4 mm/s</b></td><td class="n">4.90</td>
-        <td><span class="pill ok">مُصادَق — هامش 6.8×</span></td></tr>
-      <tr class="hero"><td>PS-AC-RFA ج5 (عابر البوّابة)</td><td class="n">0.28 mm</td>
-        <td class="n"><b>22.8 mm/s</b></td><td class="n">4.90</td>
-        <td><span class="pill ok">مُصادَق — هامش 4.7×</span></td></tr>
+      <tr class="hero"><td>PS-AC-RI (الواقعي) — الشرائح التسع a₄×ζ، α محسَّنة</td><td class="n">0.10 mm</td>
+        <td class="n"><b>82.7 mm/s</b></td><td class="n">4.90</td>
+        <td><span class="pill ok">مُصادَق — هامش 16.9×</span></td></tr>
+      <tr><td>PS-AC-RI — مسارٌ حيّ (η وξ يتحركان؛ أسوأ Δη)</td><td class="n">0.10 mm</td>
+        <td class="n"><b>17.8 mm/s</b></td><td class="n">4.90</td>
+        <td><span class="pill ok">مُصادَق — 3.6×</span></td></tr>
+      <tr class="hero"><td>PS-AC-RFA ج5 — <b>الصندوق الكامل مشهودًا سكونيًّا</b> (صلاحية 100٪ عند h = 0.104 mm)</td><td class="n">0.15 mm</td>
+        <td class="n"><b>24.7 mm/s</b></td><td class="n">4.90</td>
+        <td><span class="pill ok">مُصادَق — 5.0×</span></td></tr>
+      <tr><td>PS-AC-RFA عند 0.28 mm — شريحتا lo/nom فقط (متقاربتان)</td><td class="n">0.28 mm</td>
+        <td class="n">24.7 mm/s</td><td class="n">4.90</td>
+        <td><span class="pill warn">جزئي — شريحة hi تتباعد</span></td></tr>
     </tbody>
   </table></div>
   <p class="note">
-    حدود الفرضية القرصية صادقة: RI يفقد شريحة a₄-العليا نقطيًّا بين 0.10 و0.20 mm،
-    وrfa عند 0.30 يفقد 3/121 عقدة عليها — متسقًا مع عمق عبوره الدقيق 0.2841 mm. وأعضاء TDC
-    <b>تستعمل التأخير بتصميمها</b> فمقدمة «كل τ′ ≤ τ» ليست عقدها (ترفض القرص عن حق) —
-    عبارة مسارها تبقى للعبور الدقيق. القيود مصرَّح بها: حدّ h→0 (بقية O(h²) محتجّ بها)،
-    ‏η/ξ عند أنبوب المنتصف، ζ اسمية، α غير محسَّنة.
-    الآثار: <code>adiab_pass.npz</code> (سلاسل P/Q كاملة قابلة لإعادة الفحص) ·
-    <code>sched_cert.certificate_direct</code>.
+    <b>تصحيح فرضه التكرير:</b> ادّعاء rfa عند 0.28 mm بالصندوق الكامل لم يصمد — شريحة
+    a₄-hi تتباعد تحت تكرير الشبكة (v* ‏22.9 → 3.0 mm/s مع NX ‏121 → 961؛ ρ تتوضّع نتوءًا
+    عند حافة عمق عبوره الدقيق 0.2841 mm)، وتباعدُ النتوء نفسه أداةُ تشخيصٍ للأركان شبه
+    الحرجة. البنود الأربعة التي كانت «قيودًا مصرَّحًا بها» قيست كلها: الصلاحية الساكنة
+    (P_k يشهد يسار/منتصف/يمين كل فاصلة) تبلغ <b>100٪</b> لشريحة RI-lo عند h = 0.104 mm —
+    سلسلة منتهية مشهودة بالكامل؛ شريحتا nom/hi تقفان على القراءة التفاضلية h→0 (المطلوب
+    سكونيًّا h ~ 10⁻⁸ m) وصياغتها الكاملة هي البند النظري المتبقي الوحيد؛ وζ ثبت وصولها
+    للنموذج وتطابقُ صفوفها عدمُ حساسيةٍ حقيقي (±20٪)؛ وكثافتا أنبوب η/ξ قيستا (ρ_η ≈ 645
+    لRI — الإزالة تكلف كالموضع). وأعضاء TDC تبقى خارج عقد القرص بتصميمها — عبارتها للعبور
+    الدقيق. الآثار: <code>adiab_pass.npz</code> · <code>adiab_rigor.npz</code> ·
+    <code>adiab_rigor2.npz</code> · <code>sched_cert.certificate_direct</code>.
   </p>
 </section>
 
@@ -502,7 +513,7 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     <div class="card"><b>مسح 21 عقدة — اكتمل</b><span>‏42/42 سجلًّا: الشاهد بسقف 0.419 والعضو 0.383 (كلاهما عند الطرف الحر) — كل عقدة دون البوّابة بهامش ≥ 2.4×. الشكل في القسم ٤ والجدول الكامل في السجل.</span></div>
     <div class="card"><b>بروتوكول 7–8 — نُفِّذ للعضوين الجديدين</b><span>‏rfa: حكم نهائي 3/6 (البوّابتان الحقيقيتان + عدم الانهيار)؛ ‏mu-TDC-PS: تعادل μ-TDC على كل محور. الجداول أعلاه.</span></div>
     <div class="card"><b>الرافعة الأخيرة — قيست وأُغلقت</b><span>‏ps_ac_rfl: ‏J = ‎−0.339‎ لا يكسر ‎−0.281‎ والسرب أطفأ الـlead بنفسه — السقف بنيوي.</span></div>
-    <div class="card"><b>البند النظري — نُفِّذ</b><span>الدالّة الأرحب = الحد الأدياباتي: ‏v* = 33.4 و22.8 mm/s للعضوين المحايدين للتأخير مقابل تغذية 4.90 — مُصادَقان بهامش 6.8× و4.7× (القسم ٥)؛ وصياغة النظرية الحدية كاملةً بند المرحلة القادمة.</span></div>
+    <div class="card"><b>النظرية الحدية — قيست إلى تمامها</b><span>‏RI: ‏82.7 mm/s على الشرائح التسع (16.9×) و17.8 بمسارٍ حي (3.6×)؛ ‏rfa: العمق المشهود سكونيًّا بالصندوق الكامل 0.15 mm (‏24.7، ‏5×) وتصحيحُ 0.28. المتبقي الوحيد: صياغة القراءة التفاضلية (استمرارية P(x)).</span></div>
   </div>
 </section>
 
@@ -519,7 +530,8 @@ footer{margin-top:70px; padding-top:18px; border-top:1px solid var(--rule); font
     <li><span class="h">9438442</span><span class="m">حكم المسبار: J = ‎−0.339‎ لا يكسر السقف — والسرب أطفأ الـlead بنفسه</span></li>
     <li><span class="h">9ce1a30</span><span class="m">اكتمال مسح الـ21 عقدة: G1(حقيقية) محقّقة على كل عقدة — 0.419 و0.383</span></li>
     <li><span class="h">b33f267</span><span class="m">المُثبِت المباشر بلا مذيب + الآلية الصحيحة لرفض الخلايا (دوران/عرض الخط)</span></li>
-    <li><span class="h">—</span><span class="m">الشهادة الأدياباتية: v* = 33.4 و22.8 mm/s — مُصادَقان عند التغذية الفعلية</span></li>
+    <li><span class="h">321f43b</span><span class="m">الشهادة الأدياباتية الأولى: العضوان المحايدان للتأخير عند التغذية الفعلية</span></li>
+    <li><span class="h">—</span><span class="m">النظرية الحدية كاملةً: 82.7 mm/s للواقعي، مسار حيّ 17.8، عمق rfa المشهود 0.15 — وتصحيح 0.28</span></li>
   </ul>
   <p class="note" style="margin-top:16px">
     كل رقم في هذه الصفحة محسوب من أثرٍ مخزون على القرص — سياسة «الأثر أولًا» التي حمت

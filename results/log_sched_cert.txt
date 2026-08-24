@@ -141,3 +141,127 @@ densities and v* per slice, re-checkable from disk)
   O(h^2) in-cell residual is argued, not certified per cell); eta/xi
   frozen at the mid-pass tube; zeta nominal; alpha fixed at 2e-3 scaled
   (10 1/s), not optimised.
+
+==============================================================================
+LIMIT THEOREM, MEASURED TO COMPLETION - validity ladder, zeta slices,
+alpha ladder, eta/xi tube densities (all solver-free; adiab_rigor.npz)
+==============================================================================
+[ps_ac_ri]  a_p = 0.10 mm   feed 4.90 mm/s
+  zeta 0.8 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 0.8 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 0.8 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  zeta 1.0 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 1.0 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 1.0 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  zeta 1.2 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 1.2 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 1.2 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  => all 9 slices certified; v_cert = 83.526 mm/s vs feed 4.90 (CERTIFIED)  [9s]
+  refine a4 lo : NX=121: v* 66.38 valid 6.7%  NX=241: v* 66.24 valid 38.3%  NX=481: v* 66.21 valid 100.0%  NX=961: v* 66.20 valid 100.0%
+  refine a4 nom: NX=121: v* 33.41 valid 0.0%  NX=241: v* 33.15 valid 0.0%  NX=481: v* 33.08 valid 0.0%  NX=961: v* 33.07 valid 0.0%
+  refine a4 hi : NX=121: v* 33.41 valid 0.0%  NX=241: v* 33.15 valid 0.0%  NX=481: v* 33.08 valid 0.0%  NX=961: v* 33.07 valid 0.0%
+  [20s]
+  path bound (dEta=ETA_MAX): rho_eta mean 6.45e+02, rho_xi mean 1.94e+00 -> v*_path = 17.771 mm/s (CERTIFIED)
+  path bound (dEta=ETA_MAX/5): rho_eta mean 6.45e+02, rho_xi mean 1.94e+00 -> v*_path = 28.147 mm/s (CERTIFIED)
+  [0s]
+
+[ps_ac_rfa]  a_p = 0.28 mm   feed 4.90 mm/s
+  zeta 0.8 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 0.8 a4 nom: v* = 125.620 mm/s at alpha = 1e-02
+  zeta 0.8 a4 hi : v* =  22.791 mm/s at alpha = 2e-03
+  zeta 1.0 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 1.0 a4 nom: v* = 125.620 mm/s at alpha = 1e-02
+  zeta 1.0 a4 hi : v* =  22.849 mm/s at alpha = 2e-03
+  zeta 1.2 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 1.2 a4 nom: v* = 203.368 mm/s at alpha = 2e-02
+  zeta 1.2 a4 hi : v* =  22.902 mm/s at alpha = 2e-03
+  => all 9 slices certified; v_cert = 22.791 mm/s vs feed 4.90 (CERTIFIED)  [16s]
+  refine a4 lo : NX=121: v* 25.12 valid 70.0%  NX=241: v* 24.78 valid 100.0%  NX=481: v* 24.69 valid 100.0%  NX=961: v* 24.66 valid 100.0%
+  refine a4 nom: NX=121: v* 25.12 valid 0.0%  NX=241: v* 24.78 valid 16.2%  NX=481: v* 24.69 valid 45.8%  NX=961: v* 24.66 valid 100.0%
+  refine a4 hi : NX=121: v* 22.85 valid 0.0%  NX=241: v* 11.92 valid 0.0%  NX=481: v* 6.03 valid 17.1%  NX=961: v* 3.02 valid 33.4%
+  [36s]
+  path bound (dEta=ETA_MAX): rho_eta mean 1.30e+02, rho_xi mean 4.35e-01 -> v*_path = 21.919 mm/s (CERTIFIED)
+  path bound (dEta=ETA_MAX/5): rho_eta mean 1.30e+02, rho_xi mean 4.35e-01 -> v*_path = 24.286 mm/s (CERTIFIED)
+  [1s]
+
+total 82s -> results/adiab_rigor.npz
+
+==============================================================================
+LIMIT THEOREM, MEASURED TO COMPLETION - validity ladder, zeta slices,
+alpha ladder, eta/xi tube densities (all solver-free; adiab_rigor.npz)
+==============================================================================
+[ps_ac_ri]  a_p = 0.10 mm   feed 4.90 mm/s
+  zeta 0.8 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 0.8 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 0.8 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  zeta 1.0 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 1.0 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 1.0 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  zeta 1.2 a4 lo : v* = 331.881 mm/s at alpha = 1e-02
+  zeta 1.2 a4 nom: v* = 167.053 mm/s at alpha = 1e-02
+  zeta 1.2 a4 hi : v* =  83.526 mm/s at alpha = 5e-03
+  => all 9 slices certified; v_cert = 83.526 mm/s vs feed 4.90 (CERTIFIED)  [9s]
+  refine a4 lo : NX=121: v* 66.38 valid 6.7%  NX=241: v* 66.24 valid 38.3%  NX=481: v* 66.21 valid 100.0%  NX=961: v* 66.20 valid 100.0%
+  refine a4 nom: NX=121: v* 33.41 valid 0.0%  NX=241: v* 33.15 valid 0.0%  NX=481: v* 33.08 valid 0.0%  NX=961: v* 33.07 valid 0.0%
+  refine a4 hi : NX=121: v* 33.41 valid 0.0%  NX=241: v* 33.15 valid 0.0%  NX=481: v* 33.08 valid 0.0%  NX=961: v* 33.07 valid 0.0%
+  [21s]
+  path bound (dEta=ETA_MAX): rho_eta mean 6.45e+02, rho_xi mean 1.94e+00 -> v*_path = 17.771 mm/s (CERTIFIED)
+  path bound (dEta=ETA_MAX/5): rho_eta mean 6.45e+02, rho_xi mean 1.94e+00 -> v*_path = 28.147 mm/s (CERTIFIED)
+  [0s]
+
+[ps_ac_rfa]  a_p = 0.28 mm   feed 4.90 mm/s
+  zeta 0.8 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 0.8 a4 nom: v* = 125.620 mm/s at alpha = 1e-02
+  zeta 0.8 a4 hi : v* =  22.791 mm/s at alpha = 2e-03
+  zeta 1.0 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 1.0 a4 nom: v* = 125.620 mm/s at alpha = 1e-02
+  zeta 1.0 a4 hi : v* =  22.849 mm/s at alpha = 2e-03
+  zeta 1.2 a4 lo : v* = 251.239 mm/s at alpha = 2e-02
+  zeta 1.2 a4 nom: v* = 203.368 mm/s at alpha = 2e-02
+  zeta 1.2 a4 hi : v* =  22.902 mm/s at alpha = 2e-03
+  => all 9 slices certified; v_cert = 22.791 mm/s vs feed 4.90 (CERTIFIED)  [16s]
+  refine a4 lo : NX=121: v* 25.12 valid 70.0%  NX=241: v* 24.78 valid 100.0%  NX=481: v* 24.69 valid 100.0%  NX=961: v* 24.66 valid 100.0%
+  refine a4 nom: NX=121: v* 25.12 valid 0.0%  NX=241: v* 24.78 valid 16.2%  NX=481: v* 24.69 valid 45.8%  NX=961: v* 24.66 valid 100.0%
+  refine a4 hi : NX=121: v* 22.85 valid 0.0%  NX=241: v* 11.92 valid 0.0%  NX=481: v* 6.03 valid 17.1%  NX=961: v* 3.02 valid 33.4%
+  [35s]
+  path bound (dEta=ETA_MAX): rho_eta mean 1.30e+02, rho_xi mean 4.35e-01 -> v*_path = 21.919 mm/s (CERTIFIED)
+  path bound (dEta=ETA_MAX/5): rho_eta mean 1.30e+02, rho_xi mean 4.35e-01 -> v*_path = 24.286 mm/s (CERTIFIED)
+  [1s]
+
+total 83s -> results/adiab_rigor.npz
+RIGOR-2  zeta reachability: |A(1.2)-A(0.8)| = 2.160e-03 (zeta reaches the model; identical slice rows = certificate insensitivity)
+  RI a4 lo  at alpha=1e-02: NX=121: v* 331.88 valid 0%  NX=241: v* 331.21 valid 19%  NX=481: v* 331.04 valid 57%  NX=961: v* 330.99 valid 100%
+  RI a4 nom at alpha=1e-02: NX=121: v* 167.05 valid 0%  NX=241: v* 165.75 valid 0%  NX=481: v* 165.42 valid 0%  NX=961: v* 165.33 valid 0%
+  RI a4 hi  at alpha=5e-03: NX=121: v* 83.53 valid 0%  NX=241: v* 82.87 valid 0%  NX=481: v* 82.71 valid 0%  NX=961: v* 82.67 valid 0%
+  rfa a4 hi @ 0.24 mm: NX=121: v* 25.12  NX=241: v* 24.78  NX=481: v* 24.69 valid 23%  NX=961: v* 24.66 valid 36%
+  rfa a4 hi @ 0.20 mm: NX=121: v* 25.12  NX=241: v* 24.78  NX=481: v* 24.69 valid 26%  NX=961: v* 24.66 valid 70%
+  rfa a4 hi @ 0.15 mm: NX=121: v* 25.12  NX=241: v* 24.78  NX=481: v* 24.69 valid 51%  NX=961: v* 24.66 valid 100%
+
+LIMIT-THEOREM VERDICT (adiab_rigor.npz + adiab_rigor2.npz; RIGOR-2 rows
+above; the duplicate suite block above this section is an import
+side-effect re-run -- byte-identical numbers, an accidental
+reproducibility check, kept per the append-only rule)
+  ps_ac_ri @ 0.10 mm, FULL box (a4 x zeta, eta/xi tube):
+    alpha-optimised, converged: v_cert = 82.7 mm/s (worst slice a4-hi,
+    alpha 5e-3) vs feed 4.90 -- CERTIFIED, margin 16.9x
+    live-tube path bound (worst dEta = ETA_MAX in one pass): 17.8 mm/s
+    -- CERTIFIED, 3.6x
+    STATIC-cell validation (P_k certifies left/mid/right of every
+    interval): a4-lo slice 100% at h = 0.21 mm (alpha 2e-3, v* 66.2)
+    and at h = 0.104 mm (alpha 1e-2, v* 331) -- a fully verified finite
+    chain, no limit argument left open.  a4-nom/hi: static validity 0%
+    at every reachable h (needed h ~ margin/rho ~ 1e-8 m) -- those
+    slices stand on the differential (h->0) reading, whose full
+    formalisation (P(x) continuity across candidate switches) is the
+    remaining theory item.
+  ps_ac_rfa: CORRECTION OF RECORD -- the 0.28 mm full-box claim does
+    not survive refinement: the a4-hi slice DIVERGES (v* 22.9 -> 3.0
+    mm/s < feed as NX 121 -> 961, rho spiking at the crossing edge;
+    its exact-crossing depth is 0.2841).  lo/nom converge (24.7,
+    static 100% at h <= 0.104 mm).  The full-box STATICALLY VALIDATED
+    depth is 0.15 mm: hi-slice validity 100% at h = 0.104 mm,
+    v* = 24.7 mm/s -- CERTIFIED, 5.0x.  The rho-spike divergence is
+    itself a diagnostic: it flags near-marginal corners.
+  zeta reachability verified (|A(1.2)-A(0.8)| = 2.2e-3): the identical
+  zeta-slice rows are genuine certificate insensitivity, not a wiring
+  gap.
