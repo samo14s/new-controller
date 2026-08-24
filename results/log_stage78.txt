@@ -265,3 +265,14 @@ STAGE 8(c) - INCREASED DELAY   a_p,lim (mm) at tau/tau_0
 ================================================================================================
 controller             1.00t0     1.25t0     1.50t0     2.00t0     3.00t0    worst
 PS-AC-RF (augmented)     0.4189     0.4832     0.3691     0.3487     0.3282   0.3282
+
+==============================================================================
+STABILITY LOBES vs SPINDLE SPEED (Floquet m = 120, five-mode truth model,
+min over positions {0, L/2, L}; head-to-head members only)
+==============================================================================
+
+==============================================================================
+STABILITY LOBES vs SPINDLE SPEED (Floquet m = 120, five-mode truth model,
+min over positions {0, L/2, L}; head-to-head members only)
+==============================================================================
+  open      : min 0.039  max 0.404 mm over 3600-7200 rpm  [82s]
