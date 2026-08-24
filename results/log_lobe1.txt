@@ -519,3 +519,4 @@ JUDGE (-L winners), Stage A  2026-08-24 18:58
 ==============================================================================
 
 MIXED GATE at the probed nodes (actuator block included)
+  ps_ac_rfa_l2 x=  0%: complex   2.445 -> MIXED   0.396 at   1504 Hz   G1(real) MET   [274s]
