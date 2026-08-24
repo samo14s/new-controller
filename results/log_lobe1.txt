@@ -579,3 +579,29 @@ DELAY-EXPLOITING FAMILY MEMBERS ON THE LOBE AXIS  2026-08-24 19:34
 ==============================================================================
 
 FULL-RESOLUTION LOBES (m = 120, min over {0, L/2, L})
+  ps_tdc_j  : floor 0.583  max 1.349 mm  >=0.474: 37/37  >= mu-TDC pointwise: 31/37  [97s]
+  mu_tdc_ps : floor 0.472  max 0.802 mm  >=0.474: 36/37  >= mu-TDC pointwise: 16/37  [102s]
+-> results/lobes_tdcj.npz
+
+MIXED GATE of the ps_tdc_j scheduled base (delay-free judge convention, as mu-TDC is judged; actuator block included)
+  x=  0%: complex  78.596 -> MIXED   3.473 at   4000 Hz   >= 1: NOT MET   [34s]
+  x= 50%: complex  78.642 -> MIXED   3.476 at   4000 Hz   >= 1: NOT MET   [31s]
+  x=100%: complex  78.191 -> MIXED   3.456 at   4000 Hz   >= 1: NOT MET   [31s]
+-> results/mu_real_tdcj.npz
+
+FRESH RECOVERY BATCH (mu_tdc + delay-exploiting members, one batch)
+  mu_tdc    : A_max     3.08 um  T_s   90.3 ms  E_u      673.7  u_max   24.59 V  [111s]
+  ps_tdc_j  : A_max     2.06 um  T_s    6.3 ms  E_u      532.4  u_max   36.49 V  [113s]
+  mu_tdc_ps : A_max     3.08 um  T_s   73.1 ms  E_u      649.2  u_max   24.59 V  [110s]
+  ratios vs mu_tdc (ps_tdc_j):  T_s 0.07  E_u 0.79  u_max 1.48
+  ratios vs mu_tdc (mu_tdc_ps):  T_s 0.81  E_u 0.96  u_max 1.00
+
+POSITION LIMITS at the reference speed
+  ps_tdc_j  : [0.9073, 1.4162, 1.4455, 1.9076, 1.1881] mm  floor 0.9073  mean 1.3729  [4s]
+  mu_tdc_ps : [0.6792, 1.3782, 0.7318, 1.1969, 0.919] mm  floor 0.6792  mean 0.9810  [4s]
+-> results/s1_tdcj.npz
+
+TIME RESPONSE at the reference condition (ps_tdc_j, 2 s, moving)
+  ps_tdc_j: A_max       2.1 um  u_max     36.5 V  [11s]
+-> results/timeresp_tdcj.npz
+judge_tdcj done.

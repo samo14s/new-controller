@@ -90,8 +90,11 @@ constraint set (lobe floor $0.340 \to 0.439$\,mm against the
 benchmark's $0.474$\,mm, the shared robustness bar measured binding
 on both sides, the member's whole-pass certificate strengthened to
 $49.5$\,mm/s), quantifying the residual $7\%$ as the measured price
-of delay independence on this plant.  Every number is derived from
-stored, re-checkable certificate matrices.
+of delay independence on this plant; the family's own delay-exploiting
+member recovers it and more (floor $0.583$\,mm, $23\%$ above the
+benchmark) at the measured price of both the certificate and the
+robustness gate---each guarantee is priced in depth.  Every number is
+derived from stored, re-checkable certificate matrices.
 \end{abstract}
 
 \section{Introduction}
@@ -905,12 +908,13 @@ benchmark's $0.474$\,mm.  The lobe-first round below closes most of
 that gap within the same constraints; the figures carry its
 gate-passing filtered champion PS-AC-RFA-L ($0.439$--$0.729$\,mm)
 next to $\mu$-TDC ($0.474$--$0.802$\,mm), the realizable member
-($0.232$--$0.656$\,mm), and the open loop ($0.039$\,mm worst)---all
-lifted from the open-loop floor by roughly an order of magnitude.  In
-the time domain at the reference condition the open loop diverges
-within $0.089$\,s, while the members hold the response at
-$3$--$4\,\mu$m with peak actuation of $16$--$25$\,V---far inside the
-$450$\,V authority.
+($0.232$--$0.656$\,mm), the family's delay-exploiting member
+($0.583$--$1.349$\,mm, dashed---its classification is measured
+below), and the open loop ($0.039$\,mm worst)---all lifted from the
+open-loop floor by roughly an order of magnitude.  In the time domain
+at the reference condition the open loop diverges within $0.089$\,s,
+while the members hold the response at $2$--$4\,\mu$m with peak
+actuation of $16$--$37$\,V---far inside the $450$\,V authority.
 
 \begin{figure}[t]
 \centering
@@ -918,8 +922,11 @@ $450$\,V authority.
 \caption{Stability lobes: critical depth of cut vs.\ spindle speed,
 minimum over the tool-path positions $\{0, L/2, L\}$ (five-mode truth
 model, Floquet $m = 120$, bisection to $5\,\mu$m).  PS-AC-RFA-L is
-the lobe-first champion of Section~\ref{sec:lobefirst}.  The dotted
-line marks the design speed.  Source: \texttt{lobes\_l2.npz}.}
+the lobe-first champion of Section~\ref{sec:lobefirst}; the dashed
+curve is the family's delay-exploiting member (out of the DI contract
+and the gate, as marked in Table~\ref{tab:lobefirst}).  The dotted
+line marks the design speed.  Sources: \texttt{lobes\_l2.npz},
+\texttt{lobes\_tdcj.npz}.}
 \label{fig:lobes}
 \end{figure}
 
@@ -929,10 +936,11 @@ line marks the design speed.  Source: \texttt{lobes\_l2.npz}.}
 \caption{Time response at the reference condition ($4900$\,rpm,
 $\ap = 0.3$\,mm, moving cut, $2$\,s window).  Left: displacement
 envelope at the sensor (log scale)---the open loop diverges at
-$t = 0.089$\,s (dashed marker); all three members hold a
-$3$--$4\,\mu$m peak and settle near $1\,\mu$m.  Right: rms actuation
-voltage of the three members.
-Sources: \texttt{timeresp.npz}, \texttt{timeresp\_l.npz}.}
+$t = 0.089$\,s (dashed vertical marker); the members hold a
+$2$--$4\,\mu$m peak and settle near or below $1\,\mu$m.  Right: rms
+actuation voltage of the members.
+Sources: \texttt{timeresp.npz}, \texttt{timeresp\_l.npz},
+\texttt{timeresp\_tdcj.npz}.}
 \label{fig:timeresp}
 \end{figure}
 
@@ -1003,35 +1011,66 @@ the incumbent's $\alpha$-optimised $23.6$--$24.7$\,mm/s, so the
 lobe-first push strengthened the certificate rather than spending
 it.
 
+The remaining corner of the frontier is then measured rather than
+conjectured.  The family's own delay-exploiting member
+PS-TDC-J---the scheduled base with the grafted delayed pair, six
+parameters as $\mu$-TDC, designed under the \emph{unchanged} shared
+protocol---already carries a lobe floor of $0.583$\,mm: above the
+benchmark's floor at all $37$ speeds, above the benchmark's own curve
+pointwise at $31$ of $37$, with a nominal floor of $0.907$\,mm
+($+33\%$ over $\mu$-TDC) and scenario settling $14\times$ faster
+($T_s = 6.3$\,ms) at $0.79\times$ the energy ($1.48\times$ the
+voltage peak, still far inside authority).  Its classification is
+equally measured: it is out of the delay-independent contract by
+design, and its unfiltered high-gain base fails the mixed gate
+outright ($\muRS = 3.46$--$3.48$ at the probed nodes)---exactly the
+exposure the gate exists to police.  Scheduling the delayed pair on
+the witness base instead extends the tie of
+Section~\ref{sec:readings} to the lobe axis (floor $0.472$ vs
+$0.474$\,mm, pointwise above at only $16$ of $37$ speeds).  The
+frontier is thereby priced in full on one plant under one protocol:
+giving up the whole-pass certificate buys the step from $0.439$ to
+$0.474$\,mm, and giving up the robustness gate as well buys the step
+to $0.583$\,mm---each guarantee has a measured depth cost, and each
+member of the family occupies exactly one declared corner
+(Fig.~\ref{fig:lobes}, dashed curve; Table~\ref{tab:lobefirst}).
+
 \begin{table}[t]
-\centering\small
-\setlength{\tabcolsep}{5pt}
-\caption{The lobe-first round within the filtered class.  Lobe rows
-are full-resolution verdicts (Floquet $m = 120$, $3600$--$7200$\,rpm,
-min over the tool-path positions); gate and recovery by the standing
+\centering\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{The lobe-first round and the priced frontier.  Lobe rows are
+full-resolution verdicts (Floquet $m = 120$, $3600$--$7200$\,rpm, min
+over the tool-path positions); gate and recovery by the standing
 machinery, each recovery ratio within one measurement batch.
-Sources: \texttt{lobes\_l2.npz}, \texttt{mu\_real\_l.npz},
-\texttt{s1\_l.npz}, \texttt{s1\_fresh.npz}, \texttt{cert\_l.npz}.}
+PS-TDC-J is the family's delay-exploiting member under the unchanged
+shared protocol.  Sources: \texttt{lobes\_l2.npz},
+\texttt{lobes\_tdcj.npz}, \texttt{mu\_real\_l.npz},
+\texttt{mu\_real\_tdcj.npz}, \texttt{s1\_l.npz},
+\texttt{s1\_fresh.npz}, \texttt{s1\_tdcj.npz}, \texttt{cert\_l.npz}.}
 \label{tab:lobefirst}
-\begin{tabular}{@{}p{4.3cm}p{3.2cm}p{3.3cm}p{3.6cm}@{}}
+\begin{tabular}{@{}p{3.2cm}p{2.7cm}p{2.9cm}p{2.9cm}p{3.0cm}@{}}
 \toprule
- & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RFA-L \\
+ & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RFA-L & PS-TDC-J
+(delay-expl.) \\
 \midrule
 lobe floor, $3600$--$7200$\,rpm & $0.474$\,mm & $0.340$\,mm &
-$0.439$\,mm \\
-speeds at/above $0.474$\,mm & $37/37$ & $20/37$ & $31/37$ \\
+$0.439$\,mm & $0.583$\,mm \\
+speeds at/above $0.474$\,mm & $37/37$ & $20/37$ & $31/37$ &
+$37/37$ \\
 nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
-$0.539$ / $0.886$ \\
+$0.539$ / $0.886$ & $0.907$ / $1.373$ \\
 gate, mixed $\muRS$ (nodes) & $0.242$--$0.419$ & $0.283$--$0.383$ &
-$0.332$--$0.450$ \\
+$0.332$--$0.450$ & $3.46$--$3.48$ (not met) \\
 $M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $2.00$ /
-$160$ \\
-$J$ (shared objective) & $-0.025$ & $-0.281$ & $-0.166$ \\
+$160$ & $1.98$ / $272$ \\
+$J$ (shared objective) & $-0.025$ & $-0.281$ & $-0.166$ &
+$+0.156$ \\
 recovery: time / energy / peak & $1$ / $1$ / $1$ & $0.33$ / $0.45$ /
-$0.71$ & $0.33$ / $0.70$ / $0.98$ \\
+$0.71$ & $0.33$ / $0.70$ / $0.98$ & $0.07$ / $0.79$ / $1.48$ \\
 whole-pass certificate & out of DI contract & $23.6$--$24.7$\,mm/s
 (\mbox{$\alpha$-opt}), $\ap = 0.15$\,mm & $49.5$\,mm/s
-(fixed $\alpha$), $\ap = 0.15$\,mm \\
+(fixed $\alpha$), $\ap = 0.15$\,mm & out of DI contract (as the
+benchmark) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1089,6 +1128,7 @@ not evidence; stored, re-checkable certificate matrices are.
 
 \section*{Reproducibility and data availability}
 
+{\sloppy
 The complete pipeline---plant construction, both $\mu$ readings with
 their verification layer, all synthesis rounds including failed ones,
 the diagnosis ladder, the solver-free certificates, and every figure
@@ -1102,14 +1142,16 @@ are recomputed from stored artifacts
 \texttt{s1\_fresh.npz}, and for the lobe-first round
 \texttt{lobes\_l.npz}, \texttt{lobes\_l2.npz}, \texttt{mu\_real\_l.npz},
 \texttt{s1\_l.npz}, \texttt{timeresp\_l.npz}, \texttt{cert\_l.npz},
-\texttt{lobe\_champions.pkl}, run logs), and corrections to earlier
+\texttt{lobe\_champions.pkl}, \texttt{lobes\_tdcj.npz},
+\texttt{mu\_real\_tdcj.npz}, \texttt{s1\_tdcj.npz},
+\texttt{timeresp\_tdcj.npz}, run logs), and corrections to earlier
 readings are appended to the record rather than rewritten.  The
 lobe-first members carry the repository keys \texttt{ps\_ac\_rfa\_l2}
 (PS-AC-RFA-L, the champion), \texttt{ps\_ac\_rfa\_l},
 \texttt{ps\_ac\_rfl\_l} and \texttt{ps\_ac\_rfa\_l3} (the recorded
 round-1, lead and polish arms), and \texttt{ps\_ac\_ri\_l} /
 \texttt{ps\_ac\_ri\_l2} (the realizable-class arms, the latter
-gate-disqualified).
+gate-disqualified).\par}
 
 \clearpage
 \appendix
