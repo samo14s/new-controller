@@ -1,14 +1,19 @@
-% Draft manuscript -- compile with pdflatex + bibtex (article class;
-% switching to a journal class, e.g. elsarticle, is mechanical).
-\documentclass[11pt]{article}
-\usepackage[margin=2.6cm]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
+% Draft manuscript -- Elsevier elsarticle class, numbered references
+% (pdflatex; the bibliography is inline thebibliography).
+\documentclass[preprint,12pt]{elsarticle}
+\usepackage{amsmath,amssymb}
+% elsarticle pre-defines a proof environment; amsthm's replaces it
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 \usepackage{microtype}
+\biboptions{numbers,sort&compress}
+\journal{International Journal of Mechanical Sciences}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}{Proposition}
@@ -16,17 +21,19 @@
 \newcommand{\vcert}{v_{\mathrm{cert}}}
 \newcommand{\muRS}{\mu_{\mathrm{RS}}}
 
-\title{Parameter-scheduled active chatter control of thin-walled milling:\\
-a mixed-$\mu$ full-domain gate and an adiabatic whole-pass\\
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Parameter-scheduled active chatter control of thin-walled
+milling: a mixed-$\mu$ full-domain gate and an adiabatic whole-pass
 stability certificate}
 
-\author{Sami Soufi\thanks{National Engineering School of Sfax (ENIS),
-Sfax, Tunisia. \texttt{sami.soufi@enis.tn}. [Author list and
-affiliations to be finalised.]}}
-\date{Draft of August 24, 2026}
-
-\begin{document}
-\maketitle
+% [Author list and affiliations to be finalised.]
+\author[enis]{Sami Soufi}
+\ead{sami.soufi@enis.tn}
+\affiliation[enis]{organization={National Engineering School of Sfax
+(ENIS)}, city={Sfax}, country={Tunisia}}
 
 \begin{abstract}
 Thin-walled milling couples a lightly damped, position-dependent
@@ -97,6 +104,15 @@ benchmark) at the measured price of both the certificate and the
 robustness gate---each guarantee is priced in depth.  Every number is
 derived from stored, re-checkable certificate matrices.
 \end{abstract}
+
+\begin{keyword}
+thin-walled milling \sep chatter \sep active vibration control
+\sep parameter scheduling \sep time-delay systems \sep
+Lyapunov--Krasovskii certificates \sep mixed $\mu$-analysis \sep
+stability lobes
+\end{keyword}
+
+\end{frontmatter}
 
 \section{Introduction}
 
@@ -237,10 +253,10 @@ part of the repository record.
 We adopt the benchmark model of \cite{Du2024} without modification: a
 cantilever-edge thin plate discretised by a Chebyshev--Ritz expansion,
 calibrated to the measured modal table
-\[
-f = (540,\, 1068,\, 2787,\, 3351,\, 4122)\ \mathrm{Hz}, \qquad
-\zeta = (0.31,\, 0.17,\, 0.27,\, 0.56,\, 0.35)\times 10^{-2};
-\]
+\begin{align*}
+f &= (540,\, 1068,\, 2787,\, 3351,\, 4122)\ \mathrm{Hz},\\
+\zeta &= (0.31,\, 0.17,\, 0.27,\, 0.56,\, 0.35)\times 10^{-2};
+\end{align*}
 a piezoelectric
 patch actuator and a displacement sensor at the dual (collocated-like)
 corner configuration; and regenerative milling forces with tooth-period
@@ -474,11 +490,13 @@ The whole-pass certificate is built instead from the study's own
 delay-independent LK form given an exponential rate: for cell $i$ with
 frozen member and vertex family $(A, A_d)$,
 \begin{equation}
+\begin{gathered}
 V_i = x^{\!\top} P_i x + \int_{t-\tau}^{t} e^{2\alpha(s-t)}
-      x(s)^{\!\top} Q_i\, x(s)\, ds, \qquad
+      x(s)^{\!\top} Q_i\, x(s)\, ds, \\
 \Phi_i = \begin{bmatrix} A^{\!\top}P_i + P_iA + 2\alpha P_i + Q_i &
 P_iA_d \\ A_d^{\!\top}P_i & -e^{-2\alpha\tau} Q_i \end{bmatrix}
 \prec 0 .
+\end{gathered}
 \label{eq:lk}
 \end{equation}
 This is the classical delay-independent LK form \cite{Gu2003} given an
@@ -739,7 +757,7 @@ here covers the delay-agnostic (LQG-type) members.
 \section{Summary of certified results}
 
 \begin{table}[t]
-\centering\small
+\centering\footnotesize
 \caption{Final certified numbers (actual feed $4.90$\,mm/s; every row
 recomputable from stored matrices).  Ratios $\vcert /
 v_{\mathrm{feed}}$ are robustness margins on the schedule rate---how
@@ -747,7 +765,7 @@ much faster the process state could evolve with the certificate still
 valid---not productivity figures.}
 \label{tab:final}
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{4.4cm}p{4.0cm}p{1.9cm}p{4.8cm}@{}}
+\begin{tabular}{@{}p{3.6cm}p{3.3cm}p{1.6cm}p{4.0cm}@{}}
 \toprule
 Quantity & Value & Rate margin & Basis \\
 \midrule
@@ -797,12 +815,12 @@ Theorem~\ref{thm:chain}: the classical baseline collapses into the
 present method exactly where it starts to work.
 
 \begin{table}[t]
-\centering\small
+\centering\footnotesize
 \caption{Baseline comparison: what each certification route delivers
 on the same plant and controllers.  ``---'' = the route produces no
 statement of that kind.}
 \label{tab:baseline}
-\begin{tabular}{@{}p{4.6cm}p{4.2cm}p{5.2cm}@{}}
+\begin{tabular}{@{}p{3.9cm}p{3.6cm}p{4.6cm}@{}}
 \toprule
 Certification route & Gate verdict & Whole-pass statement \\
 \midrule
@@ -858,7 +876,7 @@ The lobe-first round below narrows the depth side of this frontier
 within the same protocol.
 
 \begin{table}[t]
-\centering\small
+\centering\footnotesize
 \setlength{\tabcolsep}{5pt}
 \caption{Head-to-head with the benchmark controller under the shared
 protocol.  Gate = peak mixed $\muRS$ over the probed nodes (complex
@@ -867,7 +885,7 @@ $\mu$-TDC ($=1$).  Sources: \texttt{stage3\_controllers.pkl},
 \texttt{stage56.pkl}, \texttt{stage78.pkl},
 \texttt{mu\_real*.npz}, \texttt{adiab\_*.npz}.}
 \label{tab:head2head}
-\begin{tabular}{@{}p{4.6cm}p{3.4cm}p{3.6cm}p{3.2cm}@{}}
+\begin{tabular}{@{}p{3.9cm}p{2.9cm}p{3.0cm}p{2.7cm}@{}}
 \toprule
  & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RI \\
 \midrule
@@ -1073,7 +1091,7 @@ shared protocol.  Sources: \texttt{lobes\_l2.npz},
 \texttt{mu\_real\_tdcj.npz}, \texttt{s1\_l.npz},
 \texttt{s1\_fresh.npz}, \texttt{s1\_tdcj.npz}, \texttt{cert\_l.npz}.}
 \label{tab:lobefirst}
-\begin{tabular}{@{}p{3.2cm}p{2.7cm}p{2.9cm}p{2.9cm}p{3.0cm}@{}}
+\begin{tabular}{@{}p{2.7cm}p{2.3cm}p{2.4cm}p{2.5cm}p{2.5cm}@{}}
 \toprule
  & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RFA-L & PS-TDC-J
 (delay-expl.) \\
@@ -1202,8 +1220,9 @@ $\dot x = A x + A_d x(t-\tau')$,
 A^{\!\top}P + PA + 2\alpha P + Q & P A_d \\
 A_d^{\!\top} P & -e^{-2\alpha \tau'} Q
 \end{bmatrix}
-\xi, \qquad \xi = \big(x(t),\, x(t-\tau')\big).
+\xi,
 \]
+with $\xi = \big(x(t),\, x(t-\tau')\big)$.
 Since $\tau' \le \tau$ and $Q \succ 0$,
 $-e^{-2\alpha\tau'} Q \preceq -e^{-2\alpha\tau} Q$, so the matrix
 above is $\preceq \Phi \prec 0$: hence $\dot V \le -2\alpha V$, and
@@ -1431,21 +1450,21 @@ singular value, Automatica 29 (1993) 71--109.
 \bibitem{Koru2018} A.~T.~Koru, A.~Deliba\c{s}{\i}, H.~\"Ozbay, Dwell
 time-based stabilisation of switched linear delay systems using
 clock-dependent Lyapunov--Krasovskii functionals, Int.\ J.\ Control
-(2018).  % [verify volume/pages]
+93 (2020) 1172--1179.
 \bibitem{Koru2018b} A.~T.~Koru, A.~Deliba\c{s}{\i}, H.~\"Ozbay, Dwell
 time-based stabilisation of switched delay systems using
 free-weighting matrices, Int.\ J.\ Control 91 (2018) 1--11.
-% [verify pages]
-\bibitem{Sobhanipour2023} H.~Sobhanipour et~al., Enhanced exponential
+\bibitem{Sobhanipour2023} H.~Sobhanipour, B.~Rezaie, Enhanced
+exponential
 stability analysis for switched linear time-varying delay systems
 under admissible edge-dependent average dwell-time strategy, IEEE
-Trans.\ Syst.\ Man Cybern.\ Syst.\ (2023).  % [complete author list]
-\bibitem{Zhao2013} X.~Zhao et~al., Stability of a class of switched
-positive linear time-delay systems, Int.\ J.\ Robust Nonlinear
-Control 23 (2013).  % [complete author list/pages]
+Trans.\ Syst.\ Man Cybern.\ Syst.\ 53 (2023).
+\bibitem{Zhao2013} X.~Zhao, L.~Zhang, P.~Shi, Stability of a class
+of switched positive linear time-delay systems, Int.\ J.\ Robust
+Nonlinear Control 23 (2013) 578--589.
 \bibitem{Zeng2025} H.-B.~Zeng et~al., A delay-derivative-dependent
 switched system model method for stability analysis of linear systems
-with time-varying delay, Automatica (2025).  % [complete]
+with time-varying delay, Automatica 175 (2025) 112183.
 \bibitem{Briat2015} C.~Briat, Linear Parameter-Varying and Time-Delay
 Systems: Analysis, Observation, Filtering \& Control, Springer,
 Berlin, 2015.
@@ -1454,25 +1473,26 @@ scheduled control for nonlinear plants, IEEE Trans.\ Autom.\ Control
 35 (1990) 898--907.
 \bibitem{Lancaster1995} P.~Lancaster, L.~Rodman, Algebraic Riccati
 Equations, Oxford University Press, Oxford, 1995.
-\bibitem{Du2022} J.~Du et~al., Chatter suppression for milling of
+\bibitem{Du2022} J.~Du, X.~Long, Chatter suppression for milling of
 thin-walled workpieces based on active modal control, J.\ Manuf.\
-Process.\ (2022).  % [complete author list/volume]
+Process.\ 84 (2022) 1042--1053.
 \bibitem{Wang2019} S.~Wang et~al., Vibration suppression of
 thin-walled workpiece milling using a time-space varying PD control
 method via piezoelectric actuator, Int.\ J.\ Adv.\ Manuf.\ Technol.\
-(2019).  % [complete]
+105 (2019) 2843--2856.
 \bibitem{Zhang2019} X.~Zhang et~al., Robust active control based
 milling chatter suppression with perturbation model via piezoelectric
-stack actuators, Mech.\ Syst.\ Signal Process.\ (2019).  % [complete]
+stack actuators, Mech.\ Syst.\ Signal Process.\ 120 (2019)
+808--835.
 \bibitem{Li2021} X.~Li et~al., Active suppression of milling chatter
 with LMI-based robust controller and electromagnetic actuator, J.\
-Mater.\ Process.\ Technol.\ (2021).  % [complete]
+Mater.\ Process.\ Technol.\ 297 (2021) 117238.
 \bibitem{Li2019} D.~Li et~al., Model predictive control based active
 chatter control in milling process, Mech.\ Syst.\ Signal Process.\
-(2019).  % [complete]
+128 (2019) 266--281.
 \bibitem{Dong2023} X.~Dong et~al., Suppress chatter in milling of
 thin-walled parts via fixture with active support, J.\ Vib.\ Control
-(2023).  % [complete]
+(2023).  doi:10.1177/10775463231161389.
 \end{thebibliography}
 
 \end{document}
