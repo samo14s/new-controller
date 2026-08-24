@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 14:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.8.24)  24 AUG 2026 15:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -518,45 +518,73 @@ File: figs/fig_sweep21.pdf Graphic file (type pdf)
 Package pdftex.def Info: figs/fig_sweep21.pdf  used on input line 322.
 (pdftex.def)             Requested size: 373.0737pt x 183.15033pt.
  [5 <./figs/fig_readings.pdf>] [6 <./figs/fig_sweep21.pdf>] [7] [8]
-<figs/fig_refine.pdf, id=413, 419.166pt x 187.902pt>
+<figs/fig_refine.pdf, id=414, 419.166pt x 187.902pt>
 File: figs/fig_refine.pdf Graphic file (type pdf)
 <use figs/fig_refine.pdf>
-Package pdftex.def Info: figs/fig_refine.pdf  used on input line 608.
+Package pdftex.def Info: figs/fig_refine.pdf  used on input line 615.
 (pdftex.def)             Requested size: 457.01154pt x 204.86932pt.
-<figs/fig_sigma.pdf, id=414, 397.485pt x 180.675pt>
+<figs/fig_sigma.pdf, id=415, 397.485pt x 180.675pt>
 File: figs/fig_sigma.pdf Graphic file (type pdf)
 <use figs/fig_sigma.pdf>
-Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 622.
+Package pdftex.def Info: figs/fig_sigma.pdf  used on input line 629.
 (pdftex.def)             Requested size: 373.0737pt x 169.58363pt.
  [9] [10 <./figs/fig_refine.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 741--741
+Underfull \hbox (badness 10000) in paragraph at lines 748--748
 []\OT1/cmr/m/n/10 (+20) Whole pass, re-al-iz-able,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 746--747
+Underfull \hbox (badness 10000) in paragraph at lines 753--754
 []\OT1/cmr/m/n/10 (+20) static va-lid-ity $100%$ at
  []
 
 
-Underfull \hbox (badness 4981) in paragraph at lines 749--749
+Underfull \hbox (badness 4981) in paragraph at lines 756--756
 []\OT1/cmr/m/n/10 (+20) Realizability price (sched.
  []
 
 
-Underfull \hbox (badness 7814) in paragraph at lines 750--751
+Underfull \hbox (badness 7814) in paragraph at lines 757--758
 []$\OT1/cmr/m/n/10 (+20) +0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 145$ (8.8MHz
  poles) vs
  []
 
 [11 <./figs/fig_sigma.pdf>]
-Underfull \hbox (badness 4739) in paragraph at lines 795--795
+Underfull \hbox (badness 4739) in paragraph at lines 802--802
 []\OT1/cmr/m/n/10 (+20) Frozen-point mixed $\OML/cmm/m/it/10 ^^V$\OT1/cmr/m/n/1
 0 (+20) , 21
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 861--861
+[]$\OT1/cmr/m/n/10 (+20) 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 242$--$0\OML/
+cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 419$ ($1\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+
+20) 16$--
+ []
+
+
+Underfull \hbox (badness 3271) in paragraph at lines 870--871
+[]\OT1/cmr/m/n/10 (+20) out of DI con-tract
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 870--871
+\OT1/cmr/m/n/10 (+20) (TDC); frozen-point
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--874
+[]$\OML/cmm/m/it/10 v[] \OT1/cmr/m/n/10 (+20) = 79\OML/cmm/m/it/10 :\OT1/cmr/m/
+n/10 (+20) 9$--
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 872--874
+\OT1/cmr/m/n/10 (+20) 82\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 (+20) 7$mm/s full
+ []
+
 [12] [13] [14] [15]
-Overfull \hbox (0.68768pt too wide) in paragraph at lines 1124--1134
+Overfull \hbox (0.68768pt too wide) in paragraph at lines 1130--1140
 \OT1/cmr/m/n/10.95 (-20) The first term is $\OMS/cmsy/m/n/10.95 ^^T \OT1/cmr/m/
 n/10.95 (-20) 0$ by the point-wise LMI; the sec-ond is $\OMS/cmsy/m/n/10.95 ^^T
  \OML/cmm/m/it/10.95 v^^[ x[]Px$\OT1/cmr/m/n/10.95 (-20) ; the third is $\OMS/c
@@ -572,13 +600,13 @@ Package rerunfilecheck Info: File `draft.out' has not changed.
 (rerunfilecheck)             Checksum: 23385CFF64D52B232DC1FE179EF0EC44;6118.
  ) 
 Here is how much of TeX's memory you used:
- 13204 strings out of 476182
- 201809 string characters out of 5795595
- 1945975 words of memory out of 5000000
+ 13206 strings out of 476182
+ 201824 string characters out of 5795595
+ 1948975 words of memory out of 5000000
  34675 multiletter control sequences out of 15000+600000
- 581979 words of font info for 225 fonts, out of 8000000 for 9000
+ 582030 words of font info for 226 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,13n,79p,1002b,590s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1002b,599s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk> </
 root/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0600.600pk> </root/
 .texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></usr/share/t
@@ -590,27 +618,25 @@ type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on draft.pdf (18 pages, 494598 bytes).
+r10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on draft.pdf (18 pages, 471222 bytes).
 PDF statistics:
- 784 PDF objects out of 1000 (max. 8388607)
- 496 compressed objects within 5 object streams
+ 775 PDF objects out of 1000 (max. 8388607)
+ 491 compressed objects within 5 object streams
  106 named destinations out of 1000 (max. 500000)
  44261 words of extra memory for PDF output out of 51595 (max. 10000000)
 

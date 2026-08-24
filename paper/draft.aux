@@ -48,7 +48,6 @@
 \@writefile{toc}{\contentsline {section}{\numberline {4}An actuator-aware scheduled member, and three structural results}{6}{section.4}\protected@file@percent }
 \newlabel{sec:member}{{4}{6}{An actuator-aware scheduled member, and three structural results}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}The filter belongs inside the design model}{6}{subsection.4.1}\protected@file@percent }
-\citation{Gu2003}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Three measured structural results}{7}{subsection.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(a) A $J$-ceiling of the filtered structure, with its named challenger rejected.}{7}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(b) The baseline performance is mortgaged to unimplementable poles.}{7}{section*.5}\protected@file@percent }
@@ -56,7 +55,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5}The whole-pass certificate}{7}{section.5}\protected@file@percent }
 \newlabel{sec:pass}{{5}{7}{The whole-pass certificate}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Chain form: cells, jumps, dwell}{7}{subsection.5.1}\protected@file@percent }
-\newlabel{eq:lk}{{1}{7}{Chain form: cells, jumps, dwell}{equation.5.1}{}}
+\citation{Gu2003}
+\newlabel{eq:lk}{{1}{8}{Chain form: cells, jumps, dwell}{equation.5.1}{}}
 \newlabel{eq:vcert}{{2}{8}{Chain form: cells, jumps, dwell}{equation.5.2}{}}
 \newlabel{prop:cover}{{1}{8}{delay cover}{proposition.1}{}}
 \newlabel{thm:chain}{{1}{8}{finite-cell chain}{theorem.1}{}}
@@ -66,11 +66,11 @@
 \newlabel{eq:ric}{{3}{9}{Solver-free point certificates}{equation.5.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}The adiabatic (thin-cell) limit, measured to completion}{9}{subsection.5.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(i) Slices and rate optimisation.}{9}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{(ii) Static validation of finite chains.}{9}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{(iii) A correction forced by refinement.}{9}{section*.9}\protected@file@percent }
 \citation{Lancaster1995}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Grid refinement as an honesty instrument. Left: secant $v^{*}$ under refinement---the realizable member converges on every slice, while the filtered member's $a_4$-hi slice at $a_{\mathrm  {p}}=0.28$\,mm \emph  {diverges} ($22.9 \to 3.0$\,mm/s, below the actual feed): the coarse-grid certificate was over-optimistic and is corrected. Right: fraction of intervals whose stored functional statically certifies their left/mid/right models; $100\%$ means a fully verified finite chain with no limit argument left open.}}{10}{figure.3}\protected@file@percent }
 \newlabel{fig:refine}{{3}{10}{Grid refinement as an honesty instrument. Left: secant $v^{*}$ under refinement---the realizable member converges on every slice, while the filtered member's $a_4$-hi slice at $\ap =0.28$\,mm \emph {diverges} ($22.9 \to 3.0$\,mm/s, below the actual feed): the coarse-grid certificate was over-optimistic and is corrected. Right: fraction of intervals whose stored functional statically certifies their left/mid/right models; $100\%$ means a fully verified finite chain with no limit argument left open}{figure.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{(ii) Static validation of finite chains.}{10}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{(iii) A correction forced by refinement.}{10}{section*.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{(iv) The live removal tube.}{10}{section*.10}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.5}The differential theorem, hypotheses measured}{10}{subsection.5.5}\protected@file@percent }
 \newlabel{thm:diff}{{2}{10}{differential adiabatic chain}{theorem.2}{}}
@@ -83,26 +83,26 @@
 \newlabel{tab:final}{{1}{12}{Final certified numbers (actual feed $4.90$\,mm/s; every row recomputable from stored matrices). Ratios $\vcert / v_{\mathrm {feed}}$ are robustness margins on the schedule rate---how much faster the process state could evolve with the certificate still valid---not productivity figures}{table.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Baseline comparison: what each certification route delivers on the same plant and controllers. ``---'' = the route produces no statement of that kind.}}{13}{table.2}\protected@file@percent }
 \newlabel{tab:baseline}{{2}{13}{Baseline comparison: what each certification route delivers on the same plant and controllers. ``---'' = the route produces no statement of that kind}{table.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Controller structures under the shared protocol. Gate = peak mixed $\mu _{\mathrm  {RS}}$ over probed nodes (complex reading in parentheses); $a_{\mathrm  {p}}^{\infty }$ = exact-crossing certified depth (full box); $v_{\mathrm  {cert}}$ = adiabatic whole-pass certificate at $a_{\mathrm  {p}}= 0.10$\,mm ($\dagger $: at $0.15$\,mm). Sources: \texttt  {stage3\_controllers.pkl}, \texttt  {stage56.pkl}, \texttt  {mu\_real\_cmp.npz}, \texttt  {adiab\_cmp.npz}.}}{13}{table.3}\protected@file@percent }
-\newlabel{tab:structures}{{3}{13}{Controller structures under the shared protocol. Gate = peak mixed $\muRS $ over probed nodes (complex reading in parentheses); $\ap ^{\infty }$ = exact-crossing certified depth (full box); $\vcert $ = adiabatic whole-pass certificate at $\ap = 0.10$\,mm ($\dagger $: at $0.15$\,mm). Sources: \texttt {stage3\_controllers.pkl}, \texttt {stage56.pkl}, \texttt {mu\_real\_cmp.npz}, \texttt {adiab\_cmp.npz}}{table.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Limitations and outlook}{13}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Significance.}{13}{section*.13}\protected@file@percent }
-\citation{Zhou1996}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Head-to-head with the benchmark controller under the shared protocol. Gate = peak mixed $\mu _{\mathrm  {RS}}$ over the probed nodes (complex reading in parentheses). S1 recovery ratios are relative to $\mu $-TDC ($=1$). Sources: \texttt  {stage3\_controllers.pkl}, \texttt  {stage56.pkl}, \texttt  {stage78.pkl}, \texttt  {mu\_real*.npz}, \texttt  {adiab\_*.npz}.}}{14}{table.3}\protected@file@percent }
+\newlabel{tab:head2head}{{3}{14}{Head-to-head with the benchmark controller under the shared protocol. Gate = peak mixed $\muRS $ over the probed nodes (complex reading in parentheses). S1 recovery ratios are relative to $\mu $-TDC ($=1$). Sources: \texttt {stage3\_controllers.pkl}, \texttt {stage56.pkl}, \texttt {stage78.pkl}, \texttt {mu\_real*.npz}, \texttt {adiab\_*.npz}}{table.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{14}{appendix.A}\protected@file@percent }
 \newlabel{app:proofs}{{A}{14}{Proofs}{appendix.A}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:cover}}{14}{subsection.A.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:kyp}}{14}{subsection.A.2}\protected@file@percent }
-\citation{Hespanha1999}
+\citation{Zhou1996}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.3}An absorption lemma}{15}{subsection.A.3}\protected@file@percent }
 \newlabel{lem:sproc}{{3}{15}{S-procedure residual absorption}{proposition.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:chain}}{15}{subsection.A.4}\protected@file@percent }
+\citation{Hespanha1999}
 \bibcite{Du2024}{1}
 \bibcite{Fan1991}{2}
 \bibcite{Young1992}{3}
-\bibcite{Altintas1995}{4}
-\bibcite{Munoa2016}{5}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:diff}}{16}{subsection.A.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Remark: soundness of the numerical verifier}{16}{subsection.A.6}\protected@file@percent }
+\bibcite{Altintas1995}{4}
+\bibcite{Munoa2016}{5}
 \bibcite{Gu2003}{6}
 \bibcite{Hespanha1999}{7}
 \bibcite{Rugh2000}{8}

@@ -432,7 +432,14 @@ sides.  Re-running its own synthesis inside realizability bounds
 $J = -0.482$ with two agreeing seeds.  The gap of $0.63$ in the shared
 objective is the price of implementability for the scheduled-LQG
 structure and re-prices every performance comparison built on the
-stored gains.
+stored gains.  The pathology has a certification-side twin, measured:
+for an LQG member carrying ${\sim}2$\,MHz parasitic poles the
+pointwise disc margin is huge ($0.05$) and a certificate is guaranteed
+to exist by Proposition~\ref{prop:kyp}, yet no floating-point
+construction we tried can exhibit one---the
+${\sim}4{\times}10^{3}$ closed-loop dynamic range drives the Riccati
+conditioning past float64 verification floors
+(\texttt{mu\_real\_cmp.npz}, \texttt{adiab\_cmp.npz}).
 
 \paragraph{(c) A realizable envelope-law member for certification.}
 For the whole-pass certificate below we also carry \texttt{PS-AC-RI}:
@@ -809,67 +816,66 @@ ${\approx}16\times$); $17.8$\,mm/s live tube; $23.6$--$24.7$\,mm/s
 \end{tabular}
 \end{table}
 
-\subsection*{Structure comparison under the shared protocol}
+\subsection*{Head-to-head with the benchmark controller}
 
-With the theory fixed, Table~\ref{tab:structures} compares the
-controller \emph{structures} under the identical fairness protocol
-(same optimiser, seeds, constraints and evaluation;
-Section~\ref{sec:plant}), on the three axes the paper certifies:
-shared objective $J$, the mixed-$\mu$ gate (actuator block included),
-and the whole-pass instruments.  Three structural facts emerge.
-First, \emph{the real-reading gate barrier is structural, not a
-scheduling artifact}: the fixed LQG fails at $3.84$ almost exactly
-where its scheduled counterpart fails ($3.76$--$3.79$), and the fixed
-FOPID fails at $3.20$---unfiltered high-gain structures hit the
-actuator band regardless of scheduling, while all three
-actuator-aware members pass ($0.24$--$0.69$).  Second, \emph{the
-robustness--performance price is quantified across structures}:
-gate-passing members pay $J \in [-0.48, -0.03]$ against
-$J \in [+0.06, +0.15]$ for the gate-failing ones.  Third, \emph{the
-realizability pathology has a certification-side twin}: the fixed
-LQG's parasitic ${\sim}2$\,MHz Kalman poles leave its pointwise disc
-margin huge ($0.05$) and a certificate guaranteed to exist by
-Proposition~\ref{prop:kyp}, yet no floating-point construction we
-tried can exhibit one (the ${\sim}4{\times}10^{3}$ dynamic range of
-the closed loop drives the Riccati conditioning past float64
-verification floors)---the same poles that block hardware block the
-certificate numerics, while the parasitic-free FOPID certifies at
-$47.0$\,mm/s.  Note the two whole-pass columns answer different
-contracts: the chain certifies the parametric box and every delay
-$\tau' \le \tau$ (no actuator block), the gate adds the actuator
-uncertainty; FOPID passes the first and fails the second.
+The controller comparison of this paper is deliberately confined to
+the one comparison that is beyond fairness dispute: the benchmark's
+own published controller, on the benchmark's own plant, judged by the
+shared protocol (Table~\ref{tab:head2head}).  The comparison is
+respectful by measurement: under the corrected pricing, $\mu$-TDC
+already carries the gate and the depth floors simultaneously
+(Section~\ref{sec:readings}), and scheduling its delayed pair buys
+nothing (the tie of Section~\ref{sec:readings})---within its own
+class the benchmark controller is close to optimal.  What the
+scheduled members add over it is orthogonal: a whole-pass certificate
+its delay-exploiting structure cannot receive under the
+delay-independent contract (its own whole-pass evidence remains the
+frozen-point crossing sweep, full-box peak $0.613$ at the reference
+depth), a realizable member that carries gate and pass certificate
+together, and---for the filtered member---scenario recovery
+$3.0\times$ faster at $0.45\times$ the control energy and
+$0.71\times$ the voltage peak.  The price is equally measured and
+stated: lower certified depth floors ($0.284$ vs $0.436$\,mm
+crossing; $0.419$ vs $0.682$\,mm nominal floor).  This is a measured
+frontier between depth headroom and certified traversal with faster,
+cheaper recovery---not a domination claim.
 
 \begin{table}[t]
 \centering\small
-\caption{Controller structures under the shared protocol.  Gate =
-peak mixed $\muRS$ over probed nodes (complex reading in
-parentheses); $\ap^{\infty}$ = exact-crossing certified depth (full
-box); $\vcert$ = adiabatic whole-pass certificate at
-$\ap = 0.10$\,mm ($\dagger$: at $0.15$\,mm).  Sources:
-\texttt{stage3\_controllers.pkl}, \texttt{stage56.pkl},
-\texttt{mu\_real\_cmp.npz}, \texttt{adiab\_cmp.npz}.}
-\label{tab:structures}
-\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrllr@{}}
+\setlength{\tabcolsep}{5pt}
+\caption{Head-to-head with the benchmark controller under the shared
+protocol.  Gate = peak mixed $\muRS$ over the probed nodes (complex
+reading in parentheses).  S1 recovery ratios are relative to
+$\mu$-TDC ($=1$).  Sources: \texttt{stage3\_controllers.pkl},
+\texttt{stage56.pkl}, \texttt{stage78.pkl},
+\texttt{mu\_real*.npz}, \texttt{adiab\_*.npz}.}
+\label{tab:head2head}
+\begin{tabular}{@{}p{4.6cm}p{3.4cm}p{3.6cm}p{3.2cm}@{}}
 \toprule
-Structure (params) & $J$ & $M_s$ & V/N &
-Gate $\muRS$ & $\ap^{\infty}$ (mm) & $\vcert$ (mm/s) \\
+ & $\mu$-TDC (benchmark) & PS-AC-RFA r5 & PS-AC-RI \\
 \midrule
-FOPID, fixed (5) & $+0.057$ & $1.99$ & $240$ &
-$3.20$ ($72$) fail & $0.370$ & $47.0$ \\
-LQG, fixed (4) & $+0.119$ & $1.99$ & $275$ &
-$3.84$ ($87$) fail & $0.382$ & uncert.\ (2\,MHz poles) \\
-LQG, scheduled, stored (5) & $+0.145$ & $1.99$ & $272$ &
-$3.76$--$3.79$ fail & $0.382$ & uncert.\ (8.8\,MHz poles) \\
-$\mu$-TDC (benchmark) (6) & $-0.025$ & $2.00$ & $152$ &
-$0.242$--$0.419$ pass & $0.436$ & out of DI contract (TDC) \\
-PS-AC-RI, realizable (5) & $-0.482$ & $1.82$ & $109$ &
-$0.69$ pass & --- & $79.9$--$82.7$ \\
-PS-AC-RFA r5 (8) & $-0.281$ & $1.68$ & $151$ &
-$0.283$--$0.383$ pass & $0.284$ & $23.6$--$24.7^{\dagger}$ \\
+parameters / order & 6 / 12 & 8 / 14 & 5 / 6 \\
+$J$ (shared objective) & $-0.025$ & $-0.281$ & $-0.482$ \\
+$M_s$ / effort (V/N) & $2.00$ / $152$ & $1.68$ / $151$ & $1.82$ /
+$109$ \\
+gate, mixed $\muRS$ & $0.242$--$0.419$ ($1.16$--$1.21$) &
+$0.283$--$0.383$; cell $0.320$ ($2.1$--$2.3$) & $0.688$--$0.690$
+($15.6$) \\
+crossing $\ap^{\infty}$ / $\delta_{\max}$ & $0.436$\,mm / $1.543$ &
+$0.284$\,mm / $0.918$ & --- \\
+nominal floor / mean (mm) & $0.682$ / $1.006$ & $0.419$ / $0.712$ &
+--- \\
+S1 recovery: time / energy / peak & $1$ / $1$ / $1$ &
+$0.33$ / $0.45$ / $0.71$ & --- \\
+whole-pass certificate & out of DI contract (TDC); frozen-point
+crossing, peak $0.613$ & $\vcert = 23.6$--$24.7$\,mm/s, full box,
+$\ap = 0.15$\,mm & $\vcert = 79.9$--$82.7$\,mm/s full box;
+$17.8$ live tube \\
 \bottomrule
 \end{tabular}
-\end{table}  Under the corrected
+\end{table}
+
+Under the corrected
 pricing the spatio-temporal variation is no longer an adversary to be
 over-insured against: it is measured, scheduled, sliced where
 constant, chained where moving, and the guarantee runs over the
