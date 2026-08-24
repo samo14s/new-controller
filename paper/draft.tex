@@ -745,7 +745,60 @@ $+0.138$ (8.8\,MHz poles) vs $-0.482$ \\
 
 Table~\ref{tab:final} collects the headline numbers; they are the
 \emph{demonstration} of Theorems~\ref{thm:chain}--\ref{thm:diff} on
-a validated plant, not the contribution itself.  Under the corrected
+a validated plant, not the contribution itself.
+
+\subsection*{Baseline comparison of certification routes}
+
+Table~\ref{tab:baseline} makes the value case directly: the same
+plant and the same controllers, judged by the four certification
+routes a practitioner could take.  The frozen conservative-set route
+(the benchmark's practice) refuses the gate outright under its
+complex reading; frozen-point analysis under the corrected reading
+meets the gate at every node but says nothing about any $v > 0$
+between the nodes; and the classical cell-wise common-storage route
+is \emph{measured} here on a cell-size ladder
+(\texttt{baseline\_cmp.npz}; nominal slice, three samples per cell,
+no residual---an upper bound on its feasibility): it is infeasible at
+every practical granularity, becoming feasible only at
+$h \le 0.1$\,mm for the realizable member ($1000$ cells over the
+pass; sample spread $6\times10^{-3}$, i.e.\ $3$--$6$ linewidths---an
+independent probe of the empirical $\zeta$-scaling law of
+Section~\ref{sec:pass}) and $h \le 2.5$\,mm for the more heavily
+damped filtered member.  Moreover, at the granularity where per-cell
+common storage finally exists, it still yields no traversal statement
+without jump factors and a dwell rule---that is, without
+Theorem~\ref{thm:chain}: the classical baseline collapses into the
+present method exactly where it starts to work.
+
+\begin{table}[t]
+\centering\small
+\caption{Baseline comparison: what each certification route delivers
+on the same plant and controllers.  ``---'' = the route produces no
+statement of that kind.}
+\label{tab:baseline}
+\begin{tabular}{@{}p{4.6cm}p{4.2cm}p{5.2cm}@{}}
+\toprule
+Certification route & Gate verdict & Whole-pass statement \\
+\midrule
+Frozen conservative set, complex $\mu$ (benchmark practice) &
+refused: $1.156$--$1.205$ (witness, its own judge); $2.1$--$2.3$
+(scheduled member) & --- (no certificate at any speed) \\
+Frozen-point mixed $\mu$, 21 nodes &
+met: $0.242$--$0.419$ / $0.283$--$0.383$ &
+--- (no statement for any $v > 0$) \\
+Common quadratic LK storage (classical cell-wise LMI) &
+n/a &
+infeasible for $1$--$500$ cells (realizable member) and $1$--$20$
+cells (filtered); feasible only at $h \le 0.1$ / $2.5$\,mm, and even
+then requires Theorem~\ref{thm:chain} to stitch cells \\
+Point-certificate chain + differential limit (this work) &
+met, full 21-node domain &
+$\vcert = 79.9$--$82.7$\,mm/s (full box; rate margin
+${\approx}16\times$); $17.8$\,mm/s live tube; $23.6$--$24.7$\,mm/s
+(filtered member, full box, $\ap = 0.15$\,mm) \\
+\bottomrule
+\end{tabular}
+\end{table}  Under the corrected
 pricing the spatio-temporal variation is no longer an adversary to be
 over-insured against: it is measured, scheduled, sliced where
 constant, chained where moving, and the guarantee runs over the
@@ -798,7 +851,7 @@ of this paper---is scripted in the project repository.  All quantities
 are recomputed from stored artifacts
 (\texttt{mu\_real\_21.npz}, \texttt{adiab\_pass.npz},
 \texttt{adiab\_rigor.npz}, \texttt{adiab\_rigor2.npz},
-\texttt{adiab\_diff.npz}, run logs), and corrections to earlier
+\texttt{adiab\_diff.npz}, \texttt{baseline\_cmp.npz}, run logs), and corrections to earlier
 readings are appended to the record rather than rewritten.
 
 \appendix
