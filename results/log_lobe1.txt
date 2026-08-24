@@ -194,3 +194,9 @@ benchmark corner envelope, measured: corner Ms = 2.119 (the round-1 bar was 2.00
 --- ROUND 2 ARM ps_ac_rfa_l2: m = 60, grid 10 speeds, corner bar 2.119 (benchmark parity) ---
   warm start under this arm: -0.6696
     [it  1] best J_L = -0.6696
+    [it  2] best J_L = -0.6696
+    [it  3] best J_L = -0.6696
+    [it  4] best J_L = -0.6696
+    [it  5] best J_L = -0.6696
+    [it  6] best J_L = -0.6696
+    [it  7] best J_L = -0.6696
