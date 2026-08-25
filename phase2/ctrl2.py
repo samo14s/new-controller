@@ -146,8 +146,35 @@ def mu_tdc(plant, ss_mu, kpd, kdd, name='MU_TDC'):
 # ---------------------------------------------------------------------------
 # 4. PROPOSED - position-scheduled active control
 # ---------------------------------------------------------------------------
+def _floor_direction(E, n, c):
+    """Regularised disturbance direction (results/g0_lambda.txt, sweep R3).
+
+    A position-scheduled Kalman filter is designed on W(x) = E(x) E(x)^T, i.e.
+    it believes the cutting force enters exactly along the mode-shape row D(x).
+    At mid-edge the second mode passes through a node, |D_2|/|D_1| = 1.10e-02
+    (results/observer_collapse.txt), so the filter gives that mode almost no
+    estimation gain and a 9.5 % frequency error -- the reference's own +10 %
+    mass / -10 % stiffness box -- pushes the estimation loop unstable.
+
+    The regularisation floors the off-dominant components of the assumed
+    direction at c |D_1|: the filter is forbidden from believing that any mode
+    is unexcited.  c = 0 leaves the direction untouched and is exactly the
+    unregularised scheduled filter.  G0a measured that c = 0.02 already removes
+    the collapse at the PS-AC weights and c = 0.05 at the PS-AC-obs weights,
+    at ZERO cost in Ms, V, J, a_p^inf or delta_max, because those are attained
+    at edge positions where the floor does not bind.
+    """
+    Ef = E.copy()
+    d = Ef[n:, 0]
+    f = c * abs(float(d[0]))
+    for i in range(1, n):
+        if abs(float(d[i])) < f:
+            d[i] = f * (1.0 if float(d[i]) >= 0.0 else -1.0)
+    return Ef
+
+
 def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
-          sched_K=True, sched_L=True, name=None, a4_mult=1.0):
+          sched_K=True, sched_L=True, name=None, a4_mult=1.0, dfloor=0.0):
     """u(t) = -K(x_P) xhat(t),  xhat from an observer also built at x_P.
 
     Design model at position x:
@@ -183,8 +210,14 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
         K = _lqr_gain(Ak, B, Q, r)
         # observer: the cutting force enters through E(x_P), so a scheduled
         # filter knows the disturbance DIRECTION at the current position while a
-        # fixed one has to average over the whole edge
-        W = (E @ E.T) if sched_L else Wbar
+        # fixed one has to average over the whole edge.  dfloor > 0 regularises
+        # that direction (see _floor_direction); dfloor = 0 is the unchanged
+        # unregularised filter, byte for byte.
+        if sched_L:
+            Ew = _floor_direction(E, n, dfloor) if dfloor > 0.0 else E
+            W = Ew @ Ew.T
+        else:
+            W = Wbar
         L = _kalman_gain(A0, Cy, ratio * W + 1e-12 * np.eye(2 * n), 1.0)
         # the controller state matrix must use the model the observer runs on
         Aobs = Ak if sched_K else A0
@@ -194,7 +227,7 @@ def ps_ac(plant, q_pos, q_vel, r, ratio, schedule_eta=False, n_grid=21,
         name = 'PS_AC' + ('+eta' if schedule_eta else '')
     return Ctrl(name, 5 if schedule_eta else 4, builder=build, scheduled=True,
                 meta=dict(grid=xs, sched_K=sched_K, sched_L=sched_L,
-                          a4_mult=a4_mult))
+                          a4_mult=a4_mult, dfloor=dfloor))
 
 
 # ---------------------------------------------------------------------------
@@ -229,6 +262,62 @@ def ps_tdc(plant, base, kpd, kdd):
 
 
 # ---------------------------------------------------------------------------
+# 6. PS-ROB - the observer-scheduled law with the direction floor
+# ---------------------------------------------------------------------------
+def ps_rob(plant, q_pos, q_vel, r, ratio, a4_mult=1.0, dfloor=0.0,
+           name='PS_ROB'):
+    """u(t) = -K(x_P) xhat(t), xhat from an observer ALSO scheduled on x_P, with
+    the assumed disturbance direction regularised by _floor_direction.
+
+    The three ingredients, and where each was measured:
+      * K(x_P) on the cutting-loaded model at an ENVELOPE coefficient
+        a4_mult * alpha_40, as PS-AC-R does (a fifth tuned parameter, so the
+        optimiser chooses how conservative the design point is);
+      * L(x_P) on W(x) = E_c(x) E_c(x)^T with E_c the FLOORED direction --
+        the only regularisation G0a found free in Ms (results/g0_lambda.txt,
+        sweep R3: Ms, V, J, a_p^inf, delta_max all bit-identical across
+        c = 0.02 .. 0.5, while the box limit goes from 0.0000 to 1.1530 mm);
+      * the floor level c itself is TUNED, because G0a also measured that the
+        level that works depends on the weight set (c = 0.02 suffices at the
+        PS-AC weights, c = 0.05 is needed at the PS-AC-obs weights).
+
+    Six tuned parameters: the four of LQG/PS-AC, plus a4_mult (PS-AC-R's fifth)
+    plus the floor level.  Reported as six.
+    """
+    c = ps_ac(plant, q_pos, q_vel, r, ratio, sched_K=True, sched_L=True,
+              a4_mult=a4_mult, dfloor=dfloor, name=name)
+    c.n_params = 6
+    return c
+
+
+def ps_rob_tdc(plant, base, kpd, kdd, name='PS_ROB_TDC'):
+    """PS-ROB plus the Eq. (30) delayed pair, exactly as PS-TDC-R grafts it.
+
+    `base` is a parameter dict carrying the six PS-ROB values; the pair adds
+    two, so the count is 6 + 2 = 8 -- one more than PS-TDC-R's seven and two
+    more than mu-TDC's six.  That is a cost, and it is printed in the table.
+    """
+    inner = ps_rob(plant, 10 ** base['log_q_pos'], 10 ** base['log_q_vel'],
+                   10 ** base['log_r'], 10 ** base['log_ratio'],
+                   a4_mult=float(base.get('a4_mult', 1.0)),
+                   dfloor=float(base.get('dfloor', 0.0)))
+    k0 = cancellation_gain(plant)
+    pd = (kpd * k0, kdd * k0 / plant.omega0[0])
+    return Ctrl(name, 8, builder=lambda x, e: (inner.at(x, e)[0], pd),
+                scheduled=True,
+                meta=dict(grid=inner.meta['grid'], K_Pp0=k0, base=dict(base),
+                          dfloor=float(base.get('dfloor', 0.0))))
+
+
+# ---------------------------------------------------------------------------
+def _rob_base(u):
+    """The six PS-ROB parameters out of a decoded search vector."""
+    b = {k: float(u[k]) for k in ('log_q_pos', 'log_q_vel', 'log_r',
+                                  'log_ratio', 'a4_mult')}
+    b['dfloor'] = 10.0 ** float(u['log_dfloor'])
+    return b
+
+
 def build(kind, plant, u, ss_mu=None):
     """Decoded parameter dict -> Ctrl."""
     if kind == 'fopid':
@@ -250,6 +339,17 @@ def build(kind, plant, u, ss_mu=None):
                   name='PS_AC_R')
         c.n_params = 5
         return c
+    if kind == 'ps_rob':
+        b = _rob_base(u)
+        return ps_rob(plant, 10 ** b['log_q_pos'], 10 ** b['log_q_vel'],
+                      10 ** b['log_r'], 10 ** b['log_ratio'],
+                      a4_mult=b['a4_mult'], dfloor=b['dfloor'])
+    if kind == 'ps_rob_tdc':
+        # joint form: u carries the six base parameters AND the pair.  The
+        # frozen-base form is reached by passing the stored base through ss_mu,
+        # exactly as ps_tdc does.
+        b = _rob_base(u) if 'log_q_pos' in u else dict(ss_mu)
+        return ps_rob_tdc(plant, b, u['kpd'], u['kdd'])
     if kind == 'ps_tdc':
         # ss_mu carries the stored ps_ac parameter dict here
         return ps_tdc(plant, ss_mu, u['kpd'], u['kdd'])

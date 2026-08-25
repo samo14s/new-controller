@@ -1,0 +1,109 @@
+====================================================================================================
+AUDIT OF results/dominate.txt -- ACTING ON TWO ADVERSARIAL REVIEWS
+====================================================================================================
+  nothing below moves a threshold; where a reading changes the count,
+  both counts are printed.
+
+[A] WHAT GRID THE CERTIFIED NUMBERS LIVE ON
+  depth_bisect  (lo 2e-6, hi 4e-3, tol 2e-6, n_iter 16): 11 halvings execute, step 0.00195 mm
+  margin_bisect (lo 0, hi 8, tol 1e-2, n_iter 14): 10 halvings, step 0.00781
+  D1 lead  PS-ROB-TDC 0.4403 - mu-TDC 0.4364 = 0.0039 mm = 2.00 cells   -> WITHIN RESOLUTION
+  D2 lead  1.7148 - 1.5430 = 0.1719 = 22.0 cells   -> REAL
+  [A1] the D1 lead is quoted in cells above, as declared.
+
+[E] ARE THE SEVEN AXES INDEPENDENT?
+  S1 minimum sits at x/l_P = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+     -> at x = 0 for 10 of 10 rows; 0 belongs to BOTH the S1 grid (np.float64(0.0), np.float64(0.25), np.float64(0.5), np.float64(0.75), np.float64(1.0)) and the S2 grid linspace(0, 1, 11)
+  S2 measured directly on three rows (11-point grid, run_stage78 kw):
+    PS-ROB-TDC   S1 0.9161   S2 0.9161   difference 0.00e+00 mm
+    PS-TDC-R     S1 0.9307   S2 0.9307   difference 0.00e+00 mm
+    mu-TDC       S1 0.6821   S2 0.6821   difference 0.00e+00 mm
+     -> S2 is a refinement of S1, not a scenario; "worst-of-4" is worst-of-3.
+  D4 and D5 test the same scalar: max |worst4 - min_scen| = 0.000e+00, thresholds 0.6704 vs 0.05
+     -> D5 is implied by D4; it is not an independent axis.
+  a_p^inf vs delta_max: Pearson +0.861 over all rows, +0.978 with mu-TDC (the only non-LQG structure) removed
+     -> inside the scheduled family the two certificates are nearly one axis.
+  [E] verdict: the independent performance axes are FOUR --
+     (1) the frozen delay-independent certificate (D1 with D2),
+     (2) the nominal floor (D3), (3) the worst perturbed scenario
+     (D4), (4) mu_RS (D6).  D5 is implied, D7 is a compliance
+     statement about the comparison, S2 is a refinement of S1.
+
+[F] THE COUNT ON THOSE FOUR AXES, AT THE RECORD-HOLDERS' EXACT VALUES
+    thresholds: cert a_p^inf >= 0.436353 mm AND delta_max >= 1.675781;  floor >= 0.930701;
+                worst scenario >= 0.670393;  mu_RS <= 0.716518
+  design          cert  floor  worst  mu_RS   of 4
+  PS-ROB           FAIL   FAIL   FAIL   FAIL      0
+  PS-ROB-TDC       PASS   FAIL   FAIL   FAIL      1
+  PS-ROB-F         FAIL   FAIL   FAIL   FAIL      0
+  PS-ROB-TDC-F     PASS   FAIL   FAIL   FAIL      1
+  PS-ROB-TDC-G     FAIL   PASS   FAIL   FAIL      1
+  PS-ROB-G         FAIL   FAIL   FAIL   FAIL      0
+  mu-TDC           FAIL   FAIL   FAIL   FAIL      0
+  PS-AC            FAIL   FAIL   FAIL   FAIL      0
+  PS-AC K+obs      FAIL   FAIL   FAIL   FAIL      0
+  PS-TDC-R         FAIL   PASS   PASS   PASS      3
+
+[D] THE BOX SCREEN ON EVERY STORED DESIGN, so superlatives have a scope
+  design            tier 1     tier 2   verdict (tier 2 wins)
+  FOPID              -11.66     -11.66   PASS
+  LQG                -93.62     -93.62   PASS
+  mu-TDC on the physics set     0.84     -11.99   PASS
+  mu-TDC (Du 2024)     9.08     -43.19   PASS
+  PS-AC (proposed)   -92.99     -92.99   PASS
+  PS-AC + eta        -92.99     -92.99   PASS
+  PS-AC K+obs         13.17      13.17   FAIL
+  PS-AC obs only       9.67       9.67   FAIL
+  PS-AC-R (envelope design)   -92.87     -92.87   PASS
+  PS-TDC (frozen base)   -91.60     -94.68   PASS
+  PS-TDC (joint)     -90.95     -96.88   PASS
+  PS-TDC-R (envelope + pair)   -91.37     -94.82   PASS
+
+[B] TIER 2, RUN UNCONDITIONALLY, ON THE SIX NEW ROWS
+  design            tier 1     tier 2   verdict
+  PS-ROB             -84.21     -84.21   PASS
+  PS-ROB-TDC         -17.47     -26.83   PASS
+  PS-ROB-F           -11.11     -11.11   PASS
+  PS-ROB-TDC-F         5.41      -5.22   PASS
+  PS-ROB-TDC-G       -83.67     -85.31   PASS
+  PS-ROB-G           -12.24     -12.24   PASS
+  [A2] rows whose box PASS is withdrawn by the strict tier: 0 -- none
+
+[C] IS D1 A RESULT OR A SEED DRAW?  every seed of search B, certified
+    seed 1: J +0.17749   a_p^inf 0.4403 mm   delta_max 1.7148   [345s]
+    seed 2: J +0.15454   a_p^inf 0.4051 mm   delta_max 1.6680   [675s]
+    seed 3: J +0.15596   a_p^inf 0.4188 mm   delta_max 1.6914   [306s]
+  a_p^inf over the three seeds: 0.4403, 0.4051, 0.4188 mm
+  [A3] every seed at or above 0.4364 mm: NO -> D1 is a SEED DRAW, reported as such
+      spread 0.0351 mm = 18.0 cells
+
+[G] ERRATA IN results/dominate.txt
+  max Re, PS-ROB-TDC (stored): -51.6406 /s
+  CORRECTED "clear the -1 /s threshold by 17 to 93 /s"
+            -> the three surviving references clear it by -43.19, -92.99, -94.82 /s; the -17.46 is PS-ROB-TDC's own margin
+  CORRECTED "the highest protocol objective ... in the whole table"
+            -> correct as written (the TABLE); any widening to "the study" is false -- results/margin_landscape.npz holds a protocol-feasible ps_tdc point at J = +0.1961
+
+====================================================================================================
+THE SCOREBOARD AFTER THE AUDIT
+====================================================================================================
+  On the four independent axes at the exact stored thresholds, the leader is PS-TDC-R with 3 of 4.
+    PS-ROB-TDC   1 of 4  (cert Y, floor n, worst n, mu_RS n)
+    PS-TDC-R     3 of 4  (cert n, floor Y, worst Y, mu_RS Y)
+    mu-TDC       0 of 4  (cert n, floor n, worst n, mu_RS n)
+
+  WHAT THE CAMPAIGN ESTABLISHED, and what it did not:
+   * ESTABLISHED: the direction floor makes the observer-scheduled
+     family ADMISSIBLE.  The box collapse S3 = 0.0000 becomes
+     0.6792 mm, the mechanism was measured before the fix, and the fix is one scalar.
+   * ESTABLISHED: delta_max 1.7148 against mu-TDC 1.5430 is 22 bisection cells -- far outside resolution.  It was
+     already held by ps_ac_full at 1.6758; what is new is that it is
+     now held by an admissible design.
+   * NOT ESTABLISHED: that a_p^inf measures the physical depth.  The
+     conservatism budget ranks the same designs in the OPPOSITE order
+     from the Floquet truth, and the honest envelope returns 0.0967
+     mm for every design.  D1 is a lead on a CERTIFICATE.
+   * NOT ESTABLISHED: a J lead.  +0.0039 against a per-seed spread of
+     0.0230 is inside the noise of the search that produced it.
+
+total 1363s -> results/dominate_audit.*

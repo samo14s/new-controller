@@ -1,0 +1,273 @@
+==============================================================================================================
+PS-ROB / PS-ROB-TDC  -- DOES A DESIGN LEAD ON ALL SEVEN AXES?
+==============================================================================================================
+  plate      : build_plate(patch=right, freqs=F_MEASURED), 5-mode evaluation
+  protocol   : PSO 20x20, seeds (1, 2, 3), Ms <= 2.0, effort <= 450.0 V/N, nominal poles <= -1 /s,
+               n_sub = 656, m = 120 for every reported limit, m = 40 inside the PSO
+  added      : the two-tier box-robust screen (G0c), 42 plates x 3 positions
+  thresholds : D1 0.4364 mm, D2 1.54, D3 0.9307 mm, D4 0.6704 mm, D5 0.05 mm, D6 0.717
+
+==============================================================================================================
+K0  ANCHOR CHECKS
+==============================================================================================================
+  K0a  edited ctrl2 vs the pre-edit ctrl2 (git HEAD), elementwise on the state space at the five
+       positions and on (J, Ms, V, max Re): worst |difference| = 0.000e+00   PASS
+       12 stored designs, pre-edit ctrl2.py from git HEAD
+  K0b  ps_rob(dfloor = 0) vs ctrl2.build("ps_ac_full"): max elementwise |difference| over 5 positions = 0.000e+00   PASS
+  K0c  ps_rob at the stored ps_ac_obs weights, a4_mult = 1, c = 0.05, against G0a's
+       "ADD full floor c=0.05" row of results/g0_lambda.txt:
+         Ms            1.9992  vs G0a    1.9990   OK
+         V           251.0864  vs G0a  251.1000   OK
+         J             0.0392  vs G0a    0.0392   OK
+         ap_inf        0.4246  vs G0a    0.4246   OK
+         delta         1.6758  vs G0a    1.6760   OK
+         floor         0.8927  vs G0a    0.8927   OK
+         S3            0.8430  vs G0a    0.8430   OK
+         mre_box      -8.4013  vs G0a   -8.4000   OK
+  K0c  PASS
+
+  K0: PASS - the new controller is ANCHORED to the measured family
+
+  [A] PS-ROB         evaluated in 297s
+  [B] PS-ROB-TDC     evaluated in 292s
+  [C] PS-ROB-F       evaluated in 290s
+  [D] PS-ROB-TDC-F   evaluated in 297s
+  [E] PS-ROB-TDC-G   evaluated in 298s
+  [F] PS-ROB-G       evaluated in 293s
+  [mu_tdc] reference row assembled (stored)
+  [ps_ac] reference row assembled (stored)
+  [ps_ac_full] reference row assembled (mu computed)
+  [ps_tdc_r] reference row assembled (stored)
+
+==============================================================================================================
+THE SCOREBOARD  (new rows first; the four published rows as stored)
+==============================================================================================================
+design          par  obj         J     Ms      V  a_p^inf  delta   floor      S2      S3      S4  worst4  mu_RS     box
+PS-ROB            6    J    0.1613  1.993  247.8   0.4285  1.684  0.8985  0.8985  0.6616  0.6441  0.6441  0.736  -84.21
+PS-ROB-TDC        8    J    0.1775  1.988  254.2   0.4403  1.715  0.9161  0.9161  0.6792  0.6441  0.6441  0.735  -17.46
+PS-ROB-F          6   G2    0.0767  1.994  249.6   0.4305  1.691  0.8985  0.8985  0.6645  0.6470  0.6470  0.736  -11.11
+PS-ROB-TDC-F      8   G2    0.0772  1.978  256.1   0.4364  1.699  0.8927  0.8927  0.6675  0.6470  0.6470  0.736   -5.22
+PS-ROB-TDC-G      8   G3    0.1745  1.987  255.5   0.4285  1.715  0.9424  0.9424  0.7055  0.6528  0.6528  0.737  -83.67
+PS-ROB-G          6   G3    0.0830  1.996  248.2   0.4285  1.684  0.8985  0.8985  0.6616  0.6441  0.6441  0.736  -12.24
+mu-TDC            6    J   -0.0246  2.000  152.0   0.4364  1.543  0.6821  0.6821  0.4423  0.5037  0.4423  0.904  -43.19
+PS-AC             4    J    0.1253  1.990  271.6   0.3836  1.402  0.8517  0.8517  0.6528  0.6850  0.6528  0.721  -92.99
+PS-AC K+obs       4    J   -0.0158  1.999  251.1   0.4246  1.676  0.8927  0.8927  0.0000  0.6411  0.0000  0.739   13.17
+PS-TDC-R          7    J    0.1736  2.000  278.4   0.3954  1.434  0.9307  0.9307  0.7143  0.6704  0.6704  0.717  -91.37
+
+  J is eval2.evaluate on the nominal plate; obj says which objective
+  the row was TUNED on (J = the protocol objective, G2 = the declared
+  deviation).  box = the worst max Re /s the two-tier screen sees.
+
+==============================================================================================================
+PASS / FAIL PER CRITERION
+==============================================================================================================
+design              D1     D2     D3     D4     D5     D6     D7   met
+threshold       0.4364   1.54 0.9307 0.6704   0.05  0.717   prot
+PS-ROB            FAIL   PASS   FAIL   FAIL   PASS   FAIL   PASS   3/7
+PS-ROB-TDC        PASS   PASS   FAIL   FAIL   PASS   FAIL   PASS   4/7
+PS-ROB-F          FAIL   PASS   FAIL   FAIL   PASS   FAIL   FAIL   2/7
+PS-ROB-TDC-F      FAIL   PASS   FAIL   FAIL   PASS   FAIL   FAIL   2/7
+PS-ROB-TDC-G      FAIL   PASS   PASS   FAIL   PASS   FAIL   FAIL   3/7
+PS-ROB-G          FAIL   PASS   FAIL   FAIL   PASS   FAIL   FAIL   2/7
+mu-TDC            FAIL   PASS   FAIL   FAIL   PASS   FAIL   PASS   3/7
+PS-AC             FAIL   FAIL   FAIL   FAIL   PASS   FAIL   PASS   2/7
+PS-AC K+obs       FAIL   PASS   FAIL   FAIL   FAIL   FAIL   FAIL   1/7
+PS-TDC-R          FAIL   FAIL   PASS   FAIL   PASS   PASS   PASS   4/7
+
+  D7 for a new row = feasible under the existing screens AND under the
+  box screen AND tuned on the protocol objective.  A row tuned on G2
+  fails D7 BY CONSTRUCTION -- it is a frontier probe, not a protocol
+  design, and it is listed so the frontier is visible, not to claim a
+  win.
+
+==============================================================================================================
+THE SAME SEVEN, READ TWO OTHER WAYS  (nothing above is changed)
+==============================================================================================================
+  (i)  the thresholds at the reference designs' EXACT stored values,
+       because the quoted four decimals make two record-holders fail
+       their own record:
+         D1 0.436353 mm (mu-TDC, quoted 0.4364)   D2 1.542969 (mu-TDC, quoted 1.54)
+         D3 0.930701 mm (PS-TDC-R, quoted 0.9307)  D4 0.670393 mm (PS-TDC-R, quoted 0.6704)
+         D6 0.716518 (PS-AC-R, quoted 0.717)
+  (ii) D7 read LITERALLY as the task words it -- "PSO 20x20, seeds
+       (1,2,3), Ms <= 2, effort <= 450 V/N, nominal poles <= -1 /s,
+       n_sub = 656, m = 120, five-mode evaluation" -- which the G2
+       rows also satisfy, since only the OBJECTIVE differs.  The
+       pre-declared reading (D7 fails for a G2 row) is the strict one
+       and is what the table above uses.
+
+design           as declared  exact thr  literal D7   both
+PS-ROB                   3/7        3/7         3/7    3/7
+PS-ROB-TDC               4/7        4/7         4/7    4/7
+PS-ROB-F                 2/7        2/7         3/7    3/7
+PS-ROB-TDC-F             2/7        3/7         3/7    4/7
+PS-ROB-TDC-G             3/7        3/7         4/7    4/7
+PS-ROB-G                 2/7        2/7         3/7    3/7
+mu-TDC                   3/7        4/7         3/7    4/7
+PS-AC                    2/7        2/7         2/7    2/7
+PS-AC K+obs              1/7        1/7         1/7    1/7
+PS-TDC-R                 4/7        5/7         4/7    5/7
+
+==============================================================================================================
+SHORTFALLS, in per cent of the threshold
+==============================================================================================================
+  PS-ROB         D1 short by 1.80 % (0.4285 vs 0.4364); D3 short by 3.46 % (0.8985 vs 0.9307); D4 short by 3.93 % (0.6441 vs 0.6704); D6 over by 2.62 % (0.7358 vs 0.7170)
+  PS-ROB-TDC     D3 short by 1.57 % (0.9161 vs 0.9307); D4 short by 3.93 % (0.6441 vs 0.6704); D6 over by 2.56 % (0.7353 vs 0.7170)
+  PS-ROB-F       D1 short by 1.35 % (0.4305 vs 0.4364); D3 short by 3.46 % (0.8985 vs 0.9307); D4 short by 3.49 % (0.6470 vs 0.6704); D6 over by 2.68 % (0.7362 vs 0.7170); D7 DEVIATION: objective G2
+  PS-ROB-TDC-F   D1 short by 0.01 % (0.4364 vs 0.4364); D3 short by 4.09 % (0.8927 vs 0.9307); D4 short by 3.49 % (0.6470 vs 0.6704); D6 over by 2.65 % (0.7360 vs 0.7170); D7 DEVIATION: objective G2
+  PS-ROB-TDC-G   D1 short by 1.80 % (0.4285 vs 0.4364); D4 short by 2.62 % (0.6528 vs 0.6704); D6 over by 2.79 % (0.7370 vs 0.7170); D7 DEVIATION: objective G2
+  PS-ROB-G       D1 short by 1.80 % (0.4285 vs 0.4364); D3 short by 3.46 % (0.8985 vs 0.9307); D4 short by 3.93 % (0.6441 vs 0.6704); D6 over by 2.65 % (0.7360 vs 0.7170); D7 DEVIATION: objective G2
+  mu-TDC         D1 short by 0.01 % (0.4364 vs 0.4364); D3 short by 26.71 % (0.6821 vs 0.9307); D4 short by 34.03 % (0.4423 vs 0.6704); D6 over by 26.03 % (0.9037 vs 0.7170)
+  PS-AC          D1 short by 12.09 % (0.3836 vs 0.4364); D2 short by 8.94 % (1.4023 vs 1.5400); D3 short by 8.48 % (0.8517 vs 0.9307); D4 short by 2.62 % (0.6528 vs 0.6704); D6 over by 0.52 % (0.7207 vs 0.7170)
+  PS-AC K+obs    D1 short by 2.69 % (0.4246 vs 0.4364); D3 short by 4.09 % (0.8927 vs 0.9307); D4 short by 100.00 % (0.0000 vs 0.6704); D6 over by 3.03 % (0.7387 vs 0.7170); D5 collapse: min scenario 0.0000 mm; D7 published row, computed here (98s)
+  PS-TDC-R       D1 short by 9.40 % (0.3954 vs 0.4364); D2 short by 6.91 % (1.4336 vs 1.5400); D4 short by 0.00 % (0.6704 vs 0.6704)
+
+==============================================================================================================
+THE ADDED CONSTRAINT, APPLIED TO EVERY COMPARED DESIGN (D7)
+==============================================================================================================
+design           tier-1 worst  r at worst    tier 2   verdict
+PS-ROB                 -84.21      0.9045         -      PASS
+PS-ROB-TDC             -17.46      0.9246         -      PASS
+PS-ROB-F               -11.11      0.9246         -      PASS
+PS-ROB-TDC-F             5.41      0.9297     -5.22      PASS
+PS-ROB-TDC-G           -83.67      0.9045         -      PASS
+PS-ROB-G               -12.24      0.9246         -      PASS
+mu-TDC                   9.08      0.9045    -43.19      PASS
+PS-AC                  -92.99      0.9045         -      PASS
+PS-AC K+obs             13.17      0.9347         -      FAIL
+PS-TDC-R               -91.37      0.9045         -      PASS
+
+  The published references were NOT re-optimised under this screen;
+  they were re-verdicted, which is what D7 asks of a new constraint.
+  Adding a constraint can only shrink a feasible set, so a row that
+  remains feasible keeps its published numbers as an attainable
+  lower bound under the enlarged protocol -- and the surviving
+  references clear the threshold by one to two orders of magnitude,
+  i.e. the new constraint is inactive at their optima.
+
+==============================================================================================================
+THE DESIGNS THEMSELVES
+==============================================================================================================
+  PS-ROB         ps_rob  6 parameters  objective J  score +0.16125
+     log_q_pos=17.6487, log_q_vel=3.4856, log_r=-11.3220, log_ratio=10.2322, a4_mult=1.6857, log_dfloor=-0.6753  -> c = 0.2112
+     per-seed best: 1:+0.15066, 2:+0.13537, 3:+0.16125   1260 evaluations, 0 tier-2 calls, 340s
+     S3 row: 0.8049 0.6616 0.9921 0.7962 0.8956 0.9015   S4 row: 0.8985 0.7728 0.7611 0.7318 0.6441
+     moving-pass simulation (n_sub = 656): A_max = 2.309 um, u_max = 34.73 V, no divergence
+  PS-ROB-TDC     ps_rob_tdc  8 parameters  objective J  score +0.17749
+     log_q_pos=19.3339, log_q_vel=-1.3932, log_r=-11.6004, log_ratio=10.2323, a4_mult=1.7464, log_dfloor=-0.9475, kpd=0.1022, kdd=0.6041  -> c = 0.1128
+     per-seed best: 1:+0.17749, 2:+0.15454, 3:+0.15596   1260 evaluations, 30 tier-2 calls, 353s
+     S3 row: 0.8283 0.6792 1.0097 0.8634 0.9102 0.9219   S4 row: 0.9161 0.7903 0.7786 0.7435 0.6441
+     moving-pass simulation (n_sub = 656): A_max = 2.311 um, u_max = 34.72 V, no divergence
+  PS-ROB-F       ps_rob  6 parameters  objective G2  score -0.70251
+     log_q_pos=19.6801, log_q_vel=5.1330, log_r=-10.3355, log_ratio=10.2414, a4_mult=1.7151, log_dfloor=-1.1687  -> c = 0.0678
+     per-seed best: 1:-0.90491, 2:-1.09555, 3:-0.70251   1260 evaluations, 0 tier-2 calls, 997s
+     S3 row: 0.8137 0.6645 0.9980 0.8049 0.8956 0.9015   S4 row: 0.8985 0.7757 0.7698 0.7435 0.6470
+     moving-pass simulation (n_sub = 656): A_max = 2.307 um, u_max = 34.87 V, no divergence
+  PS-ROB-TDC-F   ps_rob_tdc  8 parameters  objective G2  score -0.54017
+     log_q_pos=18.7558, log_q_vel=3.9383, log_r=-10.0069, log_ratio=10.2570, a4_mult=1.5424, log_dfloor=-1.2742, kpd=0.3563, kdd=0.3458  -> c = 0.0532
+     per-seed best: 1:-1.00161, 2:-0.54017, 3:-1.08976   1260 evaluations, 38 tier-2 calls, 1105s
+     S3 row: 0.8254 0.6675 1.0184 0.8868 0.8722 0.8985   S4 row: 0.8927 0.7932 0.7815 0.7523 0.6470
+     moving-pass simulation (n_sub = 656): A_max = 2.300 um, u_max = 35.12 V, no divergence
+  PS-ROB-TDC-G   ps_rob_tdc  8 parameters  objective G3  score -0.23201
+     log_q_pos=19.3223, log_q_vel=0.8741, log_r=-10.1307, log_ratio=10.2582, a4_mult=1.2158, log_dfloor=-0.1503, kpd=-0.6513, kdd=0.2406  -> c = 0.7075
+     per-seed best: 1:-0.38733, 2:-0.44079, 3:-0.23201   1260 evaluations, 29 tier-2 calls, 1514s
+     S3 row: 0.8196 0.7055 0.9980 0.8400 0.9278 0.9453   S4 row: 0.9424 0.7962 0.7845 0.7523 0.6528
+     moving-pass simulation (n_sub = 656): A_max = 2.297 um, u_max = 35.07 V, no divergence
+  PS-ROB-G       ps_rob  6 parameters  objective G3  score -0.32154
+     log_q_pos=19.0161, log_q_vel=3.2372, log_r=-9.8795, log_ratio=10.2345, a4_mult=1.6836, log_dfloor=-1.1516  -> c = 0.0705
+     per-seed best: 1:-0.34139, 2:-3.50391, 3:-0.32154   1260 evaluations, 0 tier-2 calls, 1181s
+     S3 row: 0.8079 0.6616 0.9950 0.7991 0.8956 0.9015   S4 row: 0.8985 0.7728 0.7640 0.7347 0.6441
+     moving-pass simulation (n_sub = 656): A_max = 2.309 um, u_max = 34.77 V, no divergence
+
+==============================================================================================================
+ABLATION -- THE SAME DESIGN WITH THE OBSERVER SCHEDULING SWITCHED OFF
+==============================================================================================================
+  identical weights, identical a4_mult, identical delayed pair; only
+  sched_L goes True -> False, which also removes the direction floor
+  (there is no scheduled direction left to floor).
+design                        J     Ms  a_p^inf  delta   floor      S3      S4  mu_RS      box
+PS-ROB (obs sched)       0.1613  1.993   0.4285  1.684  0.8985  0.6616  0.6441  0.736   -84.21
+PS-ROB (obs FIXED)       0.0674  1.774   0.3719  1.379  0.7494  0.5300  0.6762  0.783   -91.30
+PS-ROB-TDC (obs sched)   0.1775  1.988   0.4403  1.715  0.9161  0.6792  0.6441  0.735   -17.46
+PS-ROB-TDC (obs FIXED)   0.0908  1.812   0.3797  1.426  0.7815  0.5446  0.7230  0.783   -90.20
+
+
+total 2516s
+
+==============================================================================================================
+VERDICT
+==============================================================================================================
+  NO design in this run meets all seven.  Best: PS-ROB-TDC at 4 of 7, tied with
+  PS-TDC-R among the published rows -- and on a COMPLEMENTARY set of axes.
+
+  THE PROTOCOL DESIGN.  PS-ROB-TDC: D1, D2, D5, D7 met; D3, D4, D6 missed.
+    It is the only design in the table holding BOTH of mu-TDC's certified records at once:
+      a_p^inf 0.4403 mm  (+0.88 % on D1 = 0.4364),   delta_max 1.715  (+11.35 % on D2 = 1.54)
+    and it carries the highest protocol objective in the whole table, J = +0.1775
+    (best of any row here: PS-ROB-TDC at +0.1775), with no collapse anywhere
+    (worst scenario 0.6441 mm against the 0.05 mm collapse line).
+    It misses D3 by 1.57 % (0.9161 vs 0.9307), D4 by 3.93 % (0.6441 vs 0.6704),
+    and D6 by 2.56 % (0.7353 vs 0.717).
+
+  WHAT THE SIX NEW DESIGNS REACH BETWEEN THEM (best value of each axis over all six):
+    D1 best 0.4403 mm (PS-ROB-TDC)  -- MET
+    D2 best 1.715  -- MET
+    D3 best 0.9424 mm (PS-ROB-TDC-G)  -- MET, but by a DIFFERENT design from D1:
+       no single design in this run met D1 and D3 together (PS-ROB-TDC has floor 0.9161,
+       PS-ROB-TDC-G has a_p^inf 0.4285).
+    D4 best 0.6528 mm (PS-ROB-TDC-G)  -- NOT MET by any of the six, short by 2.62 %
+    D6 best 0.7353 (PS-ROB-TDC)  -- NOT MET by any of the six, over by 2.56 %
+
+  WHAT THE ABLATION MEASURES -- the same weights with the observer scheduling OFF:
+    PS-ROB       a_p^inf 0.4285 -> 0.3719 (-13.2 %),  delta 1.684 -> 1.379 (-18.1 %),
+                 floor 0.8985 -> 0.7494 (-16.6 %),  S4 0.6441 -> 0.6762 (+5.0 %),  mu_RS 0.736 -> 0.783
+    PS-ROB-TDC   a_p^inf 0.4403 -> 0.3797 (-13.7 %),  delta 1.715 -> 1.426 (-16.9 %),
+                 floor 0.9161 -> 0.7815 (-14.7 %),  S4 0.6441 -> 0.7230 (+12.3 %),  mu_RS 0.735 -> 0.783
+    So the observer scheduling is what BUYS D1 and D2 and the nominal floor, and what
+    PAYS on the delay scenario S4 -- the axis that keeps D4 out of reach.  It does NOT
+    cost mu_RS: at these weights the fixed-observer version is WORSE on D6, so the D6
+    shortfall is a property of the weight region the new design lives in, not of
+    scheduling the filter.
+
+  READ THIS AS: the direction floor turns the observer-scheduled family from
+  INADMISSIBLE (S3 = 0.0000, the box collapse) into the strongest certified design
+  in the study on D1, D2 and the protocol objective, under a protocol that is
+  STRICTER than the published one.  It does not deliver the user's ask of seven
+  of seven.  Two axes -- D4 (the tau x 3 spindle-speed case) and D6 (mu_RS) --
+  were not met by ANY of the six searches, including the two whose objective
+  aimed straight at them; that is the measured frontier, not a tuning accident,
+  and the ablation says which of them is caused by the scheduling itself.
+
+==============================================================================================================
+WHAT THIS RUN DID NOT DO -- declared in the docstring before the run, repeated here
+==============================================================================================================
+  * the four published references were NOT re-optimised under the box screen; they were
+    re-verdicted.  Adding a constraint can only shrink a feasible set, and the three that
+    survive clear the -1 /s threshold by 17 to 93 /s, so it is inactive at their optima.
+  * a_p^inf and delta_max use run_stage56's REDUCED vertex families (a_p^inf: n_pos 5,
+    etas (0, ETA_MAX), zetas (0.8, 1.2), xis (1,), 16 steps; delta_max: n_pos 5, xis (1,),
+    14 steps), so both are UPPER BOUNDS -- identically for the new rows and the stored ones.
+  * the Lyapunov-Krasovskii column and the settling time T_s were not computed.
+  * mu_RS is the delay-free POINT test only (position channels dropped, actuator block out),
+    so a design's delayed pair does not enter it -- the same convention the stored mu_paper
+    row was made under.  The grid-cell test and the actuator-included test were not run
+    for the new designs.
+  * the box screen carries the reference's mass/stiffness box alone: not the +-20 % damping
+    box, not material removal, not spindle speed.
+  * G3's b3, b4e and b4t are PROXIES: m = 40 and the three scheduling positions, while the
+    reported floor, S3 and S4 use m = 120 and the five evaluation positions.  D6 is not in
+    G3 at all (one mu_RS node costs 5.5 s; 1260 of them would cost two hours).
+  * the PSO budget is exactly the protocol's 20x20 with seeds (1,2,3) -- no larger budget was
+    tried, and the search is stochastic: the per-seed spread is printed for every row and
+    reaches 0.02 in J and 3.2 in G3, so a different seed set could move these numbers.
+  * the direction floor is DISCONTINUOUS at the single point where D_2 crosses zero
+    (x = 49.7 mm), where the floored component flips sign.  The moving-pass simulation at
+    n_sub = 656 did not diverge for any of the six designs, but no finer time-step study
+    was made and no smooth variant was compared.
+  * run-to-run: LAPACK threading moves Ms and max Re in the fourth decimal (K0c reproduced
+    G0a to 1.6e-4 relative on max Re under the box across three runs); the K0c tolerances
+    absorb that and nothing in the verdict turns on it.
+  * side effect, named: importing mu_scheduled pulls in cross_mu, which opens
+    results/log_cross_mu.txt with mode 'w' at module level.  That file was already 0 bytes
+    and is still 0 bytes; only its mtime moved.  No other file in results/ was written
+    except results/dominate.txt and results/dominate.npz.

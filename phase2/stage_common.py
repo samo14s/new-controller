@@ -17,7 +17,9 @@ LABEL = dict(open='no control', fopid='FOPID', lqg='LQG',
              ps_ac_full='PS-AC K+obs', ps_tdc='PS-TDC (frozen base)',
              ps_tdc_j='PS-TDC (joint)',
              ps_ac_r='PS-AC-R (envelope design)',
-             ps_tdc_r='PS-TDC-R (envelope + pair)')
+             ps_tdc_r='PS-TDC-R (envelope + pair)',
+             ps_rob='PS-ROB (floored observer)',
+             ps_rob_tdc='PS-ROB-TDC (+ pair)')
 
 
 def load_mu_ss(tag='mu_paper'):
@@ -70,4 +72,4 @@ def n_params(name):
     return dict(open=0, fopid=5, lqg=4, mu_tdc=6, mu_phys_tdc=6, ps_ac=4,
                 ps_ac_eta=5, ps_ac_obs=4, ps_ac_full=4,
                 ps_tdc=6, ps_tdc_j=6, ps_ac_r=5,
-                ps_tdc_r=7).get(name, 0)
+                ps_tdc_r=7, ps_rob=6, ps_rob_tdc=8).get(name, 0)

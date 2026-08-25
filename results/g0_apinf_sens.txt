@@ -1,0 +1,197 @@
+====================================================================================
+G0b -- WHAT SETS a_p^inf FOR THE SCHEDULED FAMILY, AND WHICH KNOB MOVES IT?
+====================================================================================
+  target D1            : 0.4364 mm (mu-TDC)
+  family (both parts)  : n_pos 5, etas (0.0, 0.0755), zetas (0.8, 1.2), xis (1.0,), alpha_4 ends {0.3, 2.9} abar4 -> 40 vertices
+  bisections           : depth n_iter 16, margin n_iter 14 -- the Stage 5-6 settings
+
+------------------------------------------------------------------------------------
+PART 1 -- WHERE THE CONSTRAINT BINDS, at each design's own a_p^inf
+------------------------------------------------------------------------------------
+  plate modes (Hz): 540.0 1068.0 2787.0 3351.0 4122.0
+
+design       a_p^inf mm    peak  f_peak Hz    x mm  alpha4     eta   zeta   xi  ord
+mu_tdc           0.4364  1.0011      315.0   100.0     2.9  0.0000   0.80  1.0   12
+ps_ac            0.3836  1.0033      643.6     0.0     2.9  0.0755   0.80  1.0    6
+ps_ac_obs        0.4149  0.9979      572.4     0.0     2.9  0.0755   0.80  1.0    6
+ps_ac_full       0.4246  1.0010      458.7     0.0     2.9  0.0000   0.80  1.0    6
+ps_tdc_r         0.3954  0.9995      634.5     0.0     2.9  0.0755   0.80  1.0    6
+  alpha4 column is the vertex end in units of abar4 (design band 0.3 .. 2.9)
+
+  the five worst vertices per design (peak, f Hz, x mm, alpha4, eta, zeta)
+  mu_tdc:
+      1.0011      315.0   100.0   2.9  0.0000  0.80
+      0.9960      316.3   100.0   2.9  0.0000  1.20
+      0.9904      518.7     0.0   2.9  0.0755  0.80
+      0.9820      402.1     0.0   2.9  0.0000  0.80
+      0.9806      518.7     0.0   2.9  0.0755  1.20
+  ps_ac:
+      1.0033      643.6     0.0   2.9  0.0755  0.80
+      0.9946      644.6     0.0   2.9  0.0755  1.20
+      0.8797      522.9     0.0   2.9  0.0000  0.80
+      0.8740      522.9     0.0   2.9  0.0000  1.20
+      0.5688      669.3    25.0   2.9  0.0755  0.80
+  ps_ac_obs:
+      0.9979      572.4     0.0   2.9  0.0755  0.80
+      0.9924      457.8     0.0   2.9  0.0000  0.80
+      0.9890      576.3     0.0   2.9  0.0755  1.20
+      0.9855      457.8     0.0   2.9  0.0000  1.20
+      0.6704      476.8    25.0   2.9  0.0000  0.80
+  ps_ac_full:
+      1.0010      458.7     0.0   2.9  0.0000  0.80
+      1.0003      567.3     0.0   2.9  0.0755  0.80
+      0.9940      458.7     0.0   2.9  0.0000  1.20
+      0.9917      567.1     0.0   2.9  0.0755  1.20
+      0.6792      485.2    25.0   2.9  0.0000  0.80
+  ps_tdc_r:
+      0.9995      634.5     0.0   2.9  0.0755  0.80
+      0.9903      634.5     0.0   2.9  0.0755  1.20
+      0.8845      507.4     0.0   2.9  0.0000  0.80
+      0.8791      509.8     0.0   2.9  0.0000  1.20
+      0.5929      519.8    25.0   2.9  0.0000  0.80
+
+  [S1] same depth, second independent pass: same vertex, and peak to 1e-10 relative?
+      mu_tdc       vertex  33 vs  33   rel peak diff 0.00e+00   f 315.0 vs 315.0 Hz   PASS
+      ps_ac        vertex   5 vs   5   rel peak diff 0.00e+00   f 643.6 vs 643.6 Hz   PASS
+      ps_ac_obs    vertex   5 vs   5   rel peak diff 0.00e+00   f 572.4 vs 572.4 Hz   PASS
+      ps_ac_full   vertex   1 vs   1   rel peak diff 0.00e+00   f 458.7 vs 458.7 Hz   PASS
+      ps_tdc_r     vertex   5 vs   5   rel peak diff 0.00e+00   f 634.5 vs 634.5 Hz   PASS
+      [S1] PASS -- the binding-vertex identification is reproducible
+
+  margin of the binding vertex over the runner-up (how sharply the argmax is defined)
+      mu_tdc       top 1.0011  2nd 0.9960  gap 0.510 %   spread over the 40 vertices 0.9032
+      ps_ac        top 1.0033  2nd 0.9946  gap 0.873 %   spread over the 40 vertices 0.9741
+      ps_ac_obs    top 0.9979  2nd 0.9924  gap 0.548 %   spread over the 40 vertices 0.9656
+      ps_ac_full   top 1.0010  2nd 1.0003  gap 0.061 %   spread over the 40 vertices 0.9675
+      ps_tdc_r     top 0.9995  2nd 0.9903  gap 0.919 %   spread over the 40 vertices 0.9039
+
+  comparison with results/envelope_probe.txt, which asked the same question at the
+  TRUE alpha_4 peak (12.43 abar4) and found mu-TDC binding at 321.6 Hz and the LQG
+  family at ~505 Hz:
+      mu_tdc       design-band f_peak    315.0 Hz   nearest plate mode 540.0 Hz  (-41.7 %)
+      ps_ac        design-band f_peak    643.6 Hz   nearest plate mode 540.0 Hz  (+19.2 %)
+      ps_ac_obs    design-band f_peak    572.4 Hz   nearest plate mode 540.0 Hz  (+6.0 %)
+      ps_ac_full   design-band f_peak    458.7 Hz   nearest plate mode 540.0 Hz  (-15.1 %)
+      ps_tdc_r     design-band f_peak    634.5 Hz   nearest plate mode 540.0 Hz  (+17.5 %)
+
+------------------------------------------------------------------------------------
+PART 2 -- WHAT MOVES IT: one-knob ladders around the stored ps_ac point
+------------------------------------------------------------------------------------
+  base: log_q_pos=18.8027, log_q_vel=4.4045, log_r=-10.0138, log_ratio=10.4709, a4_mult=1.0000
+  the a4_mult ladder is the PS-AC-R structure (5 parameters); the other four are PS-AC (4).
+
+  log_q_pos   (bounds (10.0, 20.0), base 18.8027)
+           value  a_p^inf mm  delta_max    max Re      Ms      V/N  feasible
+         10.0000      0.2177      0.574     86.06   8.262    797.3  NO
+         11.6667      0.3817      1.402    342.88   2.793    161.5  NO
+         13.3333      0.3758      1.363    189.42   6.762    381.1  NO
+         15.0000      0.3817      1.395    -93.70   2.610    265.3  NO
+         16.6667      0.3817      1.402    -97.89   2.073    270.6  NO
+         18.3333      0.3836      1.402    -98.73   1.998    271.5  yes
+         18.8027      0.3836      1.402    -98.83   1.990    271.6  yes <- base
+         20.0000      0.3817      1.402    -98.99   1.978    271.8  yes
+      span of a_p^inf along this knob alone: 0.2177 .. 0.3836 mm (all points)
+      span among FEASIBLE points only          : 0.3817 .. 0.3836 mm (3 of 8 feasible)
+      signed slope at the base: down +0.00000 mm/unit; up -0.00163 mm/unit
+      [S2] does NOT reach 0.4364 mm anywhere on this ladder
+      [S3] points BELOW the base a_p^inf (0.3836 mm): 6 of 8  -- this knob mostly moves a_p^inf the WRONG way
+
+  log_q_vel   (bounds (-4.0, 8.0), base 4.4045)
+           value  a_p^inf mm  delta_max    max Re      Ms      V/N  feasible
+         -4.0000      0.3836      1.402    -98.84   1.990    271.6  yes
+         -2.0000      0.3836      1.402    -98.84   1.990    271.6  yes
+          0.0000      0.3836      1.402    -98.84   1.990    271.6  yes
+          2.0000      0.3836      1.402    -98.84   1.990    271.6  yes
+          4.0000      0.3836      1.402    -98.84   1.990    271.6  yes
+          4.4045      0.3836      1.402    -98.83   1.990    271.6  yes <- base
+          6.0000      0.3836      1.402    -98.64   2.005    271.4  NO
+          8.0000      0.3817      1.402    -95.28   2.386    267.3  NO
+      span of a_p^inf along this knob alone: 0.3817 .. 0.3836 mm (all points)
+      span among FEASIBLE points only          : 0.3836 .. 0.3836 mm (6 of 8 feasible)
+      signed slope at the base: down +0.00000 mm/unit; up +0.00000 mm/unit
+      [S2] does NOT reach 0.4364 mm anywhere on this ladder
+      [S3] points BELOW the base a_p^inf (0.3836 mm): 1 of 8
+
+  log_r   (bounds (-12.0, -4.0), base -10.0138)
+           value  a_p^inf mm  delta_max    max Re      Ms      V/N  feasible
+        -12.0000      0.3817      1.402    -99.02   1.976    271.8  yes
+        -10.6667      0.3817      1.402    -98.92   1.983    271.7  yes
+        -10.0138      0.3836      1.402    -98.83   1.990    271.6  yes <- base
+         -9.3333      0.3836      1.402    -98.69   2.001    271.5  NO
+         -8.0000      0.3817      1.402    -98.20   2.041    270.9  NO
+         -6.6667      0.3817      1.395    -97.13   2.162    269.8  NO
+         -5.3333      0.3817      1.395    -94.88   2.467    267.3  NO
+         -4.0000      0.3797      1.387    -90.25   3.375    262.4  NO
+      span of a_p^inf along this knob alone: 0.3797 .. 0.3836 mm (all points)
+      span among FEASIBLE points only          : 0.3817 .. 0.3836 mm (3 of 8 feasible)
+      signed slope at the base: down +0.00299 mm/unit; up +0.00000 mm/unit
+      [S2] does NOT reach 0.4364 mm anywhere on this ladder
+      [S3] points BELOW the base a_p^inf (0.3836 mm): 6 of 8  -- this knob mostly moves a_p^inf the WRONG way
+
+  log_ratio   (bounds (4.0, 16.0), base 10.4709)
+           value  a_p^inf mm  delta_max    max Re      Ms      V/N  feasible
+          4.0000      0.0108      0.000    -10.53   1.000      0.0  yes
+          6.0000      0.0127      0.000    -12.06   1.004      4.2  yes
+          8.0000      0.0557      0.000    -43.29   1.134     71.9  yes
+         10.0000      0.3505      1.301    -92.47   1.624    184.4  yes
+         10.4709      0.3836      1.402    -98.83   1.990    271.6  yes <- base
+         12.0000      0.3251      1.129   1871.56   9.679    749.8  NO
+         14.0000      0.0000      0.000  49893.41   1.024    746.4  NO
+         16.0000      0.0000      0.000 645023.83   1.074    667.1  NO
+      span of a_p^inf along this knob alone: 0.0000 .. 0.3836 mm (all points)
+      span among FEASIBLE points only          : 0.0108 .. 0.3836 mm (5 of 8 feasible)
+      signed slope at the base: down +0.07047 mm/unit; up -0.03830 mm/unit
+      [S2] does NOT reach 0.4364 mm anywhere on this ladder
+      [S3] points BELOW the base a_p^inf (0.3836 mm): 7 of 8  -- this knob mostly moves a_p^inf the WRONG way
+
+  a4_mult   (bounds (0.4, 2.0), base 1.0000)
+           value  a_p^inf mm  delta_max    max Re      Ms      V/N  feasible
+          0.4000      0.3817      1.410    -99.07   1.985    271.4  yes
+          0.6667      0.3817      1.402    -98.96   1.987    271.5  yes
+          0.9333      0.3836      1.402    -98.86   1.990    271.6  yes
+          1.0000      0.3836      1.402    -98.83   1.990    271.6  yes <- base
+          1.2000      0.3817      1.402    -98.75   1.992    271.7  yes
+          1.4667      0.3817      1.402    -98.65   1.994    271.8  yes
+          1.7333      0.3817      1.387    -98.54   1.997    271.9  yes
+          2.0000      0.3797      1.379    -98.44   1.999    272.1  yes
+      span of a_p^inf along this knob alone: 0.3797 .. 0.3836 mm (all points)
+      span among FEASIBLE points only          : 0.3797 .. 0.3836 mm (8 of 8 feasible)
+      signed slope at the base: down +0.00000 mm/unit; up -0.00976 mm/unit
+      [S2] does NOT reach 0.4364 mm anywhere on this ladder
+      [S3] points BELOW the base a_p^inf (0.3836 mm): 6 of 8  -- this knob mostly moves a_p^inf the WRONG way
+
+------------------------------------------------------------------------------------
+VERDICT
+------------------------------------------------------------------------------------
+  ladder points evaluated : 40   feasible: 25
+  best a_p^inf over ALL ladder points      : 0.3836 mm
+  best a_p^inf over FEASIBLE ladder points : 0.3836 mm (-12.09 % of D1)
+  [S2] knobs that reach D1 feasibly by themselves: NONE
+  total 1695s
+
+------------------------------------------------------------------------------------
+ADDENDUM -- derived from the npz AFTER the run, NOT pre-declared
+------------------------------------------------------------------------------------
+  [A1] depth resolution.  certify2.depth_bisect stops at tol = 0.0020 mm, so any
+       difference below 0.0020 mm in the Part 2 tables is NOT resolved by the
+       instrument.  The four knobs whose feasible span is 0.3817 .. 0.3836 mm move
+       a_p^inf by exactly one quantum, i.e. by nothing the bisection can see.  The
+       gap the campaign must close, 0.3836 -> 0.4364 mm, is 26 quanta wide, so it is
+       far above the resolution floor and the negative result is not a numerical artefact.
+
+  [A2] binding frequency vs a_p^inf, ranked (5 designs, post-hoc observation)
+       design        a_p^inf mm   f_bind Hz    x mm
+       ps_ac             0.3836       643.6     0.0
+       ps_tdc_r          0.3954       634.5     0.0
+       ps_ac_obs         0.4149       572.4     0.0
+       ps_ac_full        0.4246       458.7     0.0
+       mu_tdc            0.4364       315.0   100.0
+       Spearman rank correlation between a_p^inf and (-f_bind) over these 5 designs: +1.000
+       n = 5.  This is an OBSERVED ordering, not a mechanism and not a prediction;
+       it says the designs that certify deeper are the ones whose crossing peak sits
+       lower in frequency, and nothing about causation.
+
+  [A3] what is common to all five binding vertices: alpha_4 = 2.9 abar4 (the UPPER
+       end of the design band) and zeta = 0.80 (the LOW damping end), 5 of 5.  The
+       binding position is x = 0 mm for all four LQG-family designs and x = 100 mm
+       (the far edge) for mu-TDC; eta is not shared.

@@ -1,0 +1,173 @@
+============================================================================================
+G0c - BOX-ROBUST NOMINAL-POLE SCREEN: definition, verdicts, price
+============================================================================================
+  threshold      : max Re(lambda) <= -1.0 /s, no cutting
+  positions      : x_P/l_P in (0.0, 0.5, 1.0)  (same as eval2._evaluate)
+  evaluation     : 5-mode model, eval2.nominal_poles, delayed PD folded in at tau -> 0
+
+  VERTEX SET of the reference +10 % mass / -10 % stiffness box
+  (paper_box_scale: the box enters only as a common frequency ratio r = sqrt((1+dk)/(1+dm)))
+    dm=+0.10,dk=+0.10   ->  r = 1.0000   (coincides with nominal)
+    dm=+0.10,dk=-0.10   ->  r = 0.9045
+    dm=-0.10,dk=+0.10   ->  r = 1.1055
+    dm=-0.10,dk=-0.10   ->  r = 1.0000   (coincides with nominal)
+  -> 4 vertices, 2 distinct perturbed plates; the screen runs on those plus the nominal.
+  -> the two non-trivial corners are exactly the "box +10%" / "box -10%" cases of run_stage78.s3.
+
+============================================================================================
+B2  VERDICT FOR EVERY STORED DESIGN
+============================================================================================
+design                 nominal  dm=+0.10,  dm=-0.10,     worst  verdict
+                        max Re     max Re     max Re    max Re
+fopid                   -11.66     -11.66     -11.66    -11.66  PASS
+lqg                     -99.51     -93.62    -105.12    -93.62  PASS
+mu_tdc                   -1.08       9.08     -11.05      9.08  FAIL
+mu_phys_tdc              -8.68       0.84     -12.02      0.84  FAIL   (not a scoreboard row)
+ps_ac                   -98.83     -92.99    -104.39    -92.99  PASS
+ps_ac_eta               -98.83     -92.99    -104.39    -92.99  PASS   (not a scoreboard row)
+ps_ac_obs               -13.34       2.99     -94.74      2.99  FAIL
+ps_ac_full              -13.05       8.47     -94.20      8.47  FAIL
+ps_tdc                  -97.38     -91.60    -102.88    -91.60  PASS
+ps_tdc_j                -95.98     -90.95    -100.79    -90.95  PASS   (not a scoreboard row)
+ps_ac_r                 -98.76     -92.87    -104.37    -92.87  PASS
+ps_tdc_r                -97.17     -91.37    -102.69    -91.37  PASS
+
+  columns are max over the three scheduling positions, on that plate.
+  PASS = every position on every vertex (and the nominal) has max Re <= -1.0 /s.
+
+============================================================================================
+B1  DOES THE SCREEN REPRODUCE THE KNOWN COLLAPSE?
+============================================================================================
+    ps_ac       PASS  (required PASS)   worst max Re =   -92.99 /s
+    ps_ac_obs   FAIL  (required FAIL)   worst max Re =    +2.99 /s
+    ps_ac_full  FAIL  (required FAIL)   worst max Re =    +8.47 /s
+
+    B1 MET.
+
+============================================================================================
+DIAGNOSTIC - vertex screen vs a 41-point sweep of r over the box
+============================================================================================
+design                vertex worst  sweep worst  r at sweep worst  interior worse?
+fopid                       -11.66       -11.66            1.1055               no
+lqg                         -93.62       -93.62            0.9045               no
+mu_tdc                        9.08         9.08            0.9045               no
+mu_phys_tdc                   0.84         0.84            0.9045               no
+ps_ac                       -92.99       -92.99            0.9045               no
+ps_ac_eta                   -92.99       -92.99            0.9045               no
+ps_ac_obs                     2.99         9.67            0.9397              yes
+ps_ac_full                    8.47        13.17            0.9347              yes
+ps_tdc                      -91.60       -91.60            0.9045               no
+ps_tdc_j                    -90.95       -90.95            0.9045               no
+ps_ac_r                     -92.87       -92.87            0.9045               no
+ps_tdc_r                    -91.37       -91.37            0.9045               no
+
+  "interior worse?" = the sweep found a worse max Re strictly inside the r range.
+  designs the VERTEX screen would pass while the sweep fails them: NONE
+
+============================================================================================
+DIAGNOSTIC - designs carrying a delayed PD: is the failure the pair or the base?
+============================================================================================
+  the screen folds the delayed PD in at tau -> 0, exactly as the EXISTING screen does
+  (eval2.nominal_poles).  Re-running with pd removed isolates which half fails.
+design                   with pd    pd removed   verdict w/o pd
+mu_tdc                      9.08        -41.55             PASS
+mu_phys_tdc                 0.84        -12.02             PASS
+ps_tdc                    -91.60        -92.99             PASS
+ps_tdc_j                  -90.95        -92.95             PASS
+ps_tdc_r                  -91.37        -92.87             PASS
+
+============================================================================================
+DIAGNOSTIC - the TRUE delayed nominal loop (tau = tau_0), for the designs carrying a pd
+============================================================================================
+  the tau -> 0 folding is an APPROXIMATION.  For a design with no delayed pair it is exact
+  (there is no delay in the loop at all), so only these designs can be misjudged by it.
+  Here the no-cutting loop is closed with the pair at its true delay and its Floquet radius
+  rho is taken over one tooth period tau_0 = 4.082 ms (a_p -> 0, m = 40);
+  the comparable exponent is log(rho)/tau_0, and the -1 /s threshold is rho <= 0.99593.
+design                tau->0 worst  true-delay worst   rho worst  verdict (true)
+mu_tdc                        9.08            -43.19      0.8384            PASS
+mu_phys_tdc                   0.84            -12.04      0.9521            PASS
+ps_tdc                      -91.60            -94.68      0.6795            PASS
+ps_tdc_j                    -90.95            -98.38      0.6693            PASS
+ps_tdc_r                    -91.37            -94.82      0.6791            PASS
+
+  This column is NOT the screen; it is the honest check on the screen's own approximation.
+  Where the two disagree, the tau -> 0 folding -- which is what the PUBLISHED protocol already
+  uses for every design -- is the thing being reported, not the physics.
+
+============================================================================================
+CHECK - nominal column against the values logged at design time
+============================================================================================
+  results/log_ps_tdc.txt "slowest nominal pole": ps_tdc -97.4, ps_tdc_j -96.0, ps_ac_r -98.8, ps_tdc_r -97.2 /s
+  results/log_stage3.txt: mu_phys_tdc -8.7 /s
+  this run, nominal column          : ps_tdc -97.4, ps_tdc_j -96.0, ps_ac_r -98.8, ps_tdc_r -97.2, mu_phys_tdc -8.7
+  -> the nominal half of the screen reproduces the design-time numbers; only the vertex half is new.
+
+============================================================================================
+B3  COST PER CALL (ms)
+============================================================================================
+design                build ctrl  old screen  box screen     added  added/build
+fopid                       1.44       2.900       4.425     1.525      105.6%
+lqg                        31.34       2.430       3.772     1.342        4.3%
+mu_tdc                      0.01       1.321       4.008     2.688    25110.9%
+mu_phys_tdc                 0.01       2.087       6.535     4.448    50636.7%
+ps_ac                      88.03       2.430       5.131     2.701        3.1%
+ps_ac_eta                  18.03       1.274       3.858     2.584       14.3%
+ps_ac_obs                  49.71       1.752       3.827     2.075        4.2%
+ps_ac_full                 62.60       1.096       3.987     2.890        4.6%
+ps_tdc                     36.36       1.235       3.847     2.612        7.2%
+ps_tdc_j                   62.02       2.479       4.654     2.175        3.5%
+ps_ac_r                    59.87       2.306       3.812     1.506        2.5%
+ps_tdc_r                   79.56       1.216       3.713     2.496        3.1%
+
+  one full eval2.evaluate (ps_ac, feasible particle, Floquet m=40) :    2642.6 ms
+  its Ms/effort screen alone (3 positions)                               :      61.0 ms
+  old pole screen, mean over designs                                     :     1.877 ms
+  box pole screen, mean over designs                                     :     4.297 ms
+  true-delay variant of the box screen (mu_tdc, 3x3 Floquet)             :    2369.3 ms
+  ADDED by the box screen, mean                                          :     2.420 ms  (0.092% of one objective evaluation)
+
+============================================================================================
+CONSEQUENCE OF ADOPTING THE SCREEN (D7: it applies to EVERY design)
+============================================================================================
+  designs that FAIL: mu_tdc, mu_phys_tdc, ps_ac_obs, ps_ac_full
+  of those, rows of the PUBLISHED scoreboard: mu_tdc, ps_ac_obs, ps_ac_full
+
+    mu_tdc       (mu-TDC (Du 2024)) would be INADMISSIBLE under the new protocol.
+    ps_ac_obs    (PS-AC obs only) would be INADMISSIBLE under the new protocol.
+    ps_ac_full   (PS-AC K+obs) would be INADMISSIBLE under the new protocol.
+
+  Adopting the screen silently would delete those rows from the comparison, which is a
+  change in the comparison itself, not in the new controller.  It must be reported as a
+  cost of the screen: either every published design is re-designed under the screen, or
+  the screen is declared and the removed rows are shown with their failure numbers.
+
+  BUT the mu-TDC failure is NOT the same kind of failure as ps_ac_obs / ps_ac_full:
+    * ps_ac_obs and ps_ac_full carry no delayed pair, so the tau -> 0 folding is exact for them;
+      they genuinely lose the no-cutting loop at the r = 0.9045 vertex, which is the measured
+      mechanism behind their S3 = 0.0000.
+    * mu_tdc (and mu_phys_tdc) fail ONLY through the folding: with the pair removed the base
+      is at -41.55 /s, and with the pair at its TRUE delay the same box screen gives
+      -43.19 /s -- a PASS.  Their failure is an artefact of the approximation the
+      published protocol already uses, not a lost loop.
+
+  RECOMMENDATION, priced.  Run the box screen in two tiers:
+    tier 1  tau -> 0 folding at the vertices, 2.4 ms added per particle -- 0.09% of one objective
+            evaluation.  Every particle pays this.
+    tier 2  only when tier 1 rejects: re-test at the TRUE delay, 2369 ms.  Paid solely by
+            particles tier 1 has already rejected, so it costs nothing on the accepted path,
+            and it keeps mu-TDC admissible while still failing ps_ac_obs and ps_ac_full.
+  Under tier 1 ALONE the published mu-TDC row is deleted from the comparison; under the two
+  tiers it is not.  That choice must be declared, not made silently.
+
+  WHAT THIS RUN DID NOT DO:
+    * no design was re-optimised under the screen -- the price is measured on the STORED
+      parameters only, so it does not say what a PSO would find if the screen were active;
+    * the screen is a VERTEX test; the 41-point r sweep shows the interior can be worse
+      (ps_ac_obs +2.99 -> +9.67 at r = 0.9397) though no verdict flips on these 12 designs;
+    * damping (C.ZETA_LO/HI = 0.8/1.2), material removal (eta) and spindle-speed changes are
+      NOT in this box; only the reference mass/stiffness box is;
+    * the true-delay column uses m = 40, not the full m = 120;
+    * timings are single-machine wall clock, one process, no repetition across runs.
+
+total 37.5s

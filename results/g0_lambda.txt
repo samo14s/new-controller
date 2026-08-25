@@ -1,0 +1,139 @@
+======================================================================================================================
+G0a - IS THERE A NON-COLLAPSING OBSERVER-SCHEDULED REGION?
+======================================================================================================================
+  plate          : build_plate(patch=right, freqs=F_MEASURED), 5-mode evaluation, m = 120
+  box            : +10 % mass / -10 % stiffness -> omega x 0.9045 (9.5 % drop)
+  stored weights : ps_ac     log_q_pos=18.8027 log_q_vel=4.4045 log_r=-10.0138 log_ratio=10.4709
+                   ps_ac_obs log_q_pos=19.8153 log_q_vel=5.6211 log_r=-11.2066 log_ratio=10.2486
+
+----------------------------------------------------------------------------------------------------------------------
+K1(a)  STATE-SPACE IDENTITY of the hand-built family vs ctrl2.build
+----------------------------------------------------------------------------------------------------------------------
+  ps_ac        max relative elementwise difference over 5 positions = 0.000e+00   OK
+  ps_ac_obs    max relative elementwise difference over 5 positions = 0.000e+00   OK
+  ps_ac_full   max relative elementwise difference over 5 positions = 0.000e+00   OK
+
+----------------------------------------------------------------------------------------------------------------------
+SWEEP A  R1 gain blend, ps_ac weights, sched_K = True   (lam = 0 IS the stored ps_ac)
+----------------------------------------------------------------------------------------------------------------------
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+A lam=0.00                     -98.83     -92.99  1.990   271.6   0.1253   0.3836   1.402  0.8517  0.7903
+A lam=0.10                     -98.58     -92.75  2.011   273.4-100.0562   0.3895   1.434  0.8517  0.8137  [INADMISSIBLE: protocol screen]
+A lam=0.20                     -97.99     -92.02  2.044   275.9-100.2222   0.3954   1.465  0.8576  0.8400  [INADMISSIBLE: protocol screen]
+A lam=0.30                     -97.37     -91.31  2.078   278.3-100.3920   0.4032   1.504  0.8634  0.8517  [INADMISSIBLE: protocol screen]
+A lam=0.40                     -96.78     -90.63  2.113   280.8-100.5656   0.4110   1.527  0.8664  0.8722  [INADMISSIBLE: protocol screen]
+A lam=0.50                     -96.19     -89.97  2.149   283.3-100.7431   0.4168   1.559  0.8664  0.9073  [INADMISSIBLE: protocol screen]
+A lam=0.60                     -95.63     -89.33  2.185   285.8-100.9244   0.4246   1.590  0.8693  0.9482  [INADMISSIBLE: protocol screen]
+A lam=0.70                     -94.76     -88.71  2.222   288.2-101.1096   0.4305   1.621  0.8751  0.9395  [INADMISSIBLE: protocol screen]
+A lam=0.80                     -93.68     -88.11  2.260   290.7-101.2985   0.4383   1.637  0.8810  0.9746  [INADMISSIBLE: protocol screen]
+A lam=0.90                     -85.00     -67.14  2.298   293.2-101.4911   0.4442   1.660  0.8868  1.1120  [INADMISSIBLE: protocol screen]
+A lam=1.00                     -14.01       0.78  2.337   295.6-101.6875   0.4520   1.684  0.8781  0.0000  [INADMISSIBLE: protocol screen]  [COLLAPSE]
+----------------------------------------------------------------------------------------------------------------------
+SWEEP B  R1 gain blend, ps_ac_obs weights, sched_K = False   (lam = 1 IS the stored ps_ac_obs)
+----------------------------------------------------------------------------------------------------------------------
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+B lam=0.00                     -97.27     -92.22  1.767   228.1   0.0224   0.3739   1.402  0.6938  0.7932
+B lam=0.10                     -96.76     -91.73  1.789   230.4   0.0306   0.3778   1.434  0.7084  0.8108
+B lam=0.20                     -96.20     -91.24  1.812   232.7   0.0415   0.3836   1.457  0.7201  0.8283
+B lam=0.30                     -95.60     -90.67  1.834   235.0   0.0559   0.3856   1.488  0.7377  0.8517
+B lam=0.40                     -94.96     -90.05  1.857   237.4   0.0739   0.3895   1.512  0.7523  0.8722
+B lam=0.50                     -94.26     -89.38  1.880   239.7   0.0938   0.3934   1.543  0.7698  0.8956
+B lam=0.60                     -93.52     -88.67  1.904   242.0   0.1009   0.3993   1.566  0.7903  0.9190
+B lam=0.70                     -92.73     -87.90  1.927   244.3   0.1032   0.4032   1.590  0.8137  0.9482
+B lam=0.80                     -91.89     -87.08  1.951   246.5   0.1115   0.4090   1.613  0.8371  0.9249
+B lam=0.90                     -68.43     -49.93  1.975   248.8   0.1123   0.4110   1.637  0.8576  0.9044
+B lam=1.00                     -13.34       2.99  2.000   251.1  -0.0381   0.4149   1.660  0.8781  0.0000  [COLLAPSE]
+----------------------------------------------------------------------------------------------------------------------
+ANCHOR   ps_ac_obs weights, sched_K = True, lam = 1   (IS the stored ps_ac_full)
+----------------------------------------------------------------------------------------------------------------------
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+ANCHOR ps_ac_full              -13.05       8.47  1.999   251.1  -0.0158   0.4246   1.676  0.8927  0.0000  [COLLAPSE]
+----------------------------------------------------------------------------------------------------------------------
+SWEEP R2  covariance blend, ps_ac weights, sched_K = True
+----------------------------------------------------------------------------------------------------------------------
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+R2 W-blend lam=0.00            -98.83     -92.99  1.990   271.6   0.1253   0.3836   1.402  0.8517  0.7903
+R2 W-blend lam=0.10            -98.60     -92.71  2.016   273.9-100.0794   0.3915   1.441  0.8547  0.8137  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.20            -97.96     -91.97  2.053   276.8-100.2627   0.3993   1.473  0.8576  0.8342  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.30            -97.35     -91.26  2.089   279.6-100.4444   0.4051   1.512  0.8605  0.8430  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.40            -96.76     -90.58  2.125   282.3-100.6246   0.4129   1.535  0.8664  0.8693  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.50            -96.19     -89.94  2.161   284.8-100.8036   0.4188   1.559  0.8693  0.9015  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.60            -95.64     -89.31  2.196   287.2-100.9816   0.4266   1.590  0.8751  0.9161  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.70            -94.96     -88.70  2.232   289.5-101.1588   0.4324   1.621  0.8781  0.9190  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.80            -93.86     -88.11  2.267   291.6-101.3354   0.4383   1.645  0.8839  0.9599  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=0.90            -92.57     -87.52  2.302   293.7-101.5115   0.4461   1.660  0.8898  1.0184  [INADMISSIBLE: protocol screen]
+R2 W-blend lam=1.00            -14.01       0.78  2.337   295.6-101.6875   0.4520   1.684  0.8781  0.0000  [INADMISSIBLE: protocol screen]  [COLLAPSE]
+----------------------------------------------------------------------------------------------------------------------
+SWEEP R3  direction floor at full scheduling, ps_ac weights, sched_K = True
+----------------------------------------------------------------------------------------------------------------------
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+R3 floor c=0.00                -14.01       0.78  2.337   295.6-101.6875   0.4520   1.684  0.8781  0.0000  [INADMISSIBLE: protocol screen]  [COLLAPSE]
+R3 floor c=0.01                -14.01       0.78  2.337   295.6-101.6875   0.4520   1.684  0.8781  0.0000  [INADMISSIBLE: protocol screen]  [COLLAPSE]
+R3 floor c=0.02                -19.18      -3.46  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+R3 floor c=0.05                -41.01     -21.96  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+R3 floor c=0.10                -80.64     -55.71  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+R3 floor c=0.20                -91.10     -86.11  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+R3 floor c=0.50                -91.10     -86.11  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+R3 floor c=1.00                -91.10     -86.11  2.337   302.4-101.6875   0.4520   1.684  0.8781  1.1179  [INADMISSIBLE: protocol screen]
+
+======================================================================================================================
+K1  ENDPOINT / ANCHOR CHECK   (delta_max to 0.02, S3 to 0.01 mm)
+======================================================================================================================
+  design          delta stored  delta here   S3 stored   S3 here   verdict
+  ps_ac                 1.4023      1.4023      0.7903    0.7903      PASS
+  ps_ac_obs             1.6602      1.6602      0.0000    0.0000      PASS
+  ps_ac_full            1.6758      1.6758      0.0000    0.0000      PASS
+  K1: PASS - the sweep is ANCHORED
+
+======================================================================================================================
+K2  THE GATE:  S3 > 0.05 mm  AND  delta_max >= 1.54
+======================================================================================================================
+  GATE MET: A lam=0.50                     -96.19     -89.97  2.149   283.3-100.7431   0.4168   1.559  0.8664  0.9073  [INADMISSIBLE: protocol screen]
+  GATE MET: A lam=0.60                     -95.63     -89.33  2.185   285.8-100.9244   0.4246   1.590  0.8693  0.9482  [INADMISSIBLE: protocol screen]
+  GATE MET: A lam=0.70                     -94.76     -88.71  2.222   288.2-101.1096   0.4305   1.621  0.8751  0.9395  [INADMISSIBLE: protocol screen]
+  GATE MET: A lam=0.80                     -93.68     -88.11  2.260   290.7-101.2985   0.4383   1.637  0.8810  0.9746  [INADMISSIBLE: protocol screen]
+  GATE MET: A lam=0.90                     -85.00     -67.14  2.298   293.2-101.4911   0.4442   1.660  0.8868  1.1120  [INADMISSIBLE: protocol screen]
+  GATE MET: B lam=0.50                     -94.26     -89.38  1.880   239.7   0.0938   0.3934   1.543  0.7698  0.8956
+  GATE MET: B lam=0.60                     -93.52     -88.67  1.904   242.0   0.1009   0.3993   1.566  0.7903  0.9190
+  GATE MET: B lam=0.70                     -92.73     -87.90  1.927   244.3   0.1032   0.4032   1.590  0.8137  0.9482
+  GATE MET: B lam=0.80                     -91.89     -87.08  1.951   246.5   0.1115   0.4090   1.613  0.8371  0.9249
+  GATE MET: B lam=0.90                     -68.43     -49.93  1.975   248.8   0.1123   0.4110   1.637  0.8576  0.9044
+  GATE MET: R2 W-blend lam=0.50            -96.19     -89.94  2.161   284.8-100.8036   0.4188   1.559  0.8693  0.9015  [INADMISSIBLE: protocol screen]
+  GATE MET: R2 W-blend lam=0.60            -95.64     -89.31  2.196   287.2-100.9816   0.4266   1.590  0.8751  0.9161  [INADMISSIBLE: protocol screen]
+  GATE MET: R2 W-blend lam=0.70            -94.96     -88.70  2.232   289.5-101.1588   0.4324   1.621  0.8781  0.9190  [INADMISSIBLE: protocol screen]
+  GATE MET: R2 W-blend lam=0.80            -93.86     -88.11  2.267   291.6-101.3354   0.4383   1.645  0.8839  0.9599  [INADMISSIBLE: protocol screen]
+  GATE MET: R2 W-blend lam=0.90            -92.57     -87.52  2.302   293.7-101.5115   0.4461   1.660  0.8898  1.0184  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=0.02                -19.18      -3.46  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=0.05                -41.01     -21.96  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=0.10                -80.64     -55.71  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=0.20                -91.10     -86.11  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=0.50                -91.10     -86.11  2.337   295.6-101.6875   0.4520   1.684  0.8781  1.1530  [INADMISSIBLE: protocol screen]
+  GATE MET: R3 floor c=1.00                -91.10     -86.11  2.337   302.4-101.6875   0.4520   1.684  0.8781  1.1179  [INADMISSIBLE: protocol screen]
+  5 of 21 gate-passing points also satisfy the protocol screen Ms <= 2.0, V <= 450.0.
+
+total 2502s
+
+======================================================================================================================
+ADDENDUM - THE CLIFF, AND THE DIRECTION FLOOR AT THE ps_ac_obs WEIGHTS
+  Added after the main sweep; NO pre-declared criterion is changed.
+  "ADD A/B lam"      : inside the collapse cliff, lam in (0.90, 1.00).
+  "ADD B floor"      : R3 floor at the ps_ac_obs weights, sched_K =
+                       False, lam = 1 -- i.e. the stored ps_ac_obs with
+                       the mid-edge direction degeneracy floored.
+  "ADD full floor"   : the same floor on the stored ps_ac_full
+                       (sched_K = True, lam = 1).
+======================================================================================================================
+point                       maxRe nom  maxRe box     Ms       V        J  a_p^inf   delta   floor      S3
+ADD A lam=0.95                 -49.47     -33.16  2.318   294.4-101.5889   0.4481   1.676  0.8839  1.1325  [INADMISSIBLE: protocol screen]
+ADD B lam=0.95                 -40.86     -23.43  1.987   250.0   0.0363   0.4129   1.652  0.8693  0.8956
+ADD A lam=0.99                 -21.10      -6.00  2.334   295.4-101.6677   0.4520   1.684  0.8810  1.1501  [INADMISSIBLE: protocol screen]
+ADD B lam=0.99                 -18.84      -2.29  1.997   250.9  -0.0239   0.4149   1.660  0.8781  0.8898
+ADD B floor c=0.02             -16.91       0.09  2.000   251.1  -0.0284   0.4149   1.660  0.8781  0.0000  [COLLAPSE]
+ADD full floor c=0.02          -16.64       5.54  1.999   251.1  -0.0060   0.4246   1.676  0.8927  0.0000  [COLLAPSE]
+ADD B floor c=0.05             -33.21     -13.71  2.000   251.1   0.0167   0.4149   1.660  0.8781  0.8868
+ADD full floor c=0.05          -32.98      -8.40  1.999   251.1   0.0392   0.4246   1.676  0.8927  0.8430
+
+  ADDENDUM points that are non-collapsing, meet the K2 gate AND
+  satisfy the protocol screen: 4 of 8.  Largest
+  a_p^inf among them: 0.4246 mm (ADD full floor c=0.05), against D1 = 0.4364.
+addendum 215s
