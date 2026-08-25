@@ -32,8 +32,18 @@ PRE-DECLARED (house rule: written before the run, reported whatever comes out)
       design.  It is a frozen family, so a higher alpha_4 cannot help; a
       non-monotone row means a numerical failure and is reported as one, not
       smoothed.
-  C3  every depth here is computed from STORED controller matrices through
-      stage_common.load_controllers -- no design is re-run.
+  C3  every depth here is produced the way run_stage56 produces its own:
+      stage_common.load_controllers returns FACTORIES over the stored tuned
+      PARAMETERS, not stored state spaces, so for the LQG-structured members
+      the Riccati equations are re-solved against the plant at each bisection
+      depth.  Only mu-TDC carries a stored state space.  That is the study's
+      convention and it is what makes these numbers comparable with the
+      published ones -- but it is a re-synthesis, and calling it "stored
+      matrices" would be false.
+
+  C4  every plant here is the TWO-mode design plant (ControlledPlant defaults
+      to C.N_MODES_DESIGN = 2), the same order the published certificates use.
+      The Floquet limits they are compared against elsewhere run on five modes.
 
 Writes results/envelope_probe.txt (and .npz).
 
@@ -132,11 +142,20 @@ def main():
     out.append('[Q3] a_p^inf (mm) against the frozen alpha_4 pin')
     out.append('  ' + 'pin/abar4'.ljust(12)
                + ''.join(f'{LABEL.get(k, k)[:13]:>15}' for k in kinds))
+    cap = BISECT['hi'] * 1e3
     D = np.zeros((len(PINS), len(kinds)))
     for i, mult in enumerate(PINS):
+        cells = []
         for j, k in enumerate(kinds):
             D[i, j] = depth_at_pin(plate, mks[k], mult) * 1e3
-        out.append(f'  {mult:<12.4f}' + ''.join(f'{v:15.4f}' for v in D[i]))
+            # depth_bisect returns its own upper bound when the family is
+            # stable all the way up: that is a censored search, not a depth
+            cells.append(f'{D[i, j]:14.4f}' + ('*' if D[i, j] >= cap - 1e-9
+                                               else ' '))
+        out.append(f'  {mult:<12.4f}' + ''.join(cells))
+    n_cap = int((D >= cap - 1e-9).sum())
+    out.append(f'  * = censored at the bisection ceiling {cap:.4f} mm, not a '
+               f'measured depth ({n_cap} of {D.size} entries)')
 
     mono = bool(np.all(np.diff(D, axis=0) <= 1e-9))
     out.append(f'  [C2] monotone non-increasing in the pin: '

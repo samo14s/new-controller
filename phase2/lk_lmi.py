@@ -165,6 +165,17 @@ def certificate_di(vertices, eps=0.0, n_plant=None, solver=None,
     which no spindle speed whatsoever -- no lobe -- can destabilise the loop,
     over the whole uncertainty set.  It is what the stability-lobe minimum is,
     made into a theorem.
+
+    A SOLVER STATUS IS NOT A CERTIFICATE.  cvxpy returns `optimal_inaccurate`
+    for points that violate the constraints by many orders of magnitude on this
+    problem -- P with eigenvalues at -3e5 where P >> 1e-3 I was asked, a trace
+    of 1.4e5 where the normalisation fixes it at 1, and Psi with a +1.9e7
+    eigenvalue where Psi << -s I was asked.  Reporting that as feasible is a
+    false positive, so the returned (P, Q) is VERIFIED here against the three
+    inequalities it is supposed to satisfy, and `feasible` means the verified
+    matrices really are a Lyapunov-Krasovskii pair.  `certified` carries that
+    verdict, `status` keeps the solver's own word, and the residuals are
+    returned so a marginal case can be judged rather than trusted.
     """
     if cp is None:
         raise RuntimeError('cvxpy is required for the certificate')
@@ -200,10 +211,46 @@ def certificate_di(vertices, eps=0.0, n_plant=None, solver=None,
             continue
         if prob.status in ('optimal', 'optimal_inaccurate'):
             break
-    ok = (prob.status in ('optimal', 'optimal_inaccurate')
-          and s.value is not None and float(s.value) > tol)
-    return dict(feasible=bool(ok),
+    solved = (prob.status in ('optimal', 'optimal_inaccurate')
+              and s.value is not None and float(s.value) > tol)
+    Pv = None if P.value is None else np.array(P.value)
+    Qv = None if Q.value is None else np.array(Q.value)
+    res = verify_di(vertices, Pv, Qv)
+    return dict(feasible=bool(solved and res['certified']),
+                certified=res['certified'],
+                solver_feasible=bool(solved),
                 slack=None if s.value is None else float(s.value),
-                status=prob.status,
-                P=None if P.value is None else np.array(P.value),
-                Q=None if Q.value is None else np.array(Q.value))
+                status=prob.status, residual=res,
+                P=Pv, Q=Qv)
+
+
+def verify_di(vertices, P, Q, rtol=1e-8):
+    """Do these (P, Q) really satisfy the delay-independent LK inequalities?
+
+    Returns the three residuals, each normalised by the size of the matrix it
+    came from so the verdict does not depend on how the solver scaled its
+    answer: P and Q must be positive definite, and every vertex Psi must be
+    negative definite.  A solution that fails any of them is not a certificate,
+    whatever the solver called it.
+    """
+    if P is None or Q is None:
+        return dict(certified=False, reason='solver returned no matrices',
+                    min_eig_P=np.nan, min_eig_Q=np.nan, max_eig_Psi=np.nan)
+    Ps = 0.5 * (P + P.T)
+    Qs = 0.5 * (Q + Q.T)
+    mp = float(np.linalg.eigvalsh(Ps).min())
+    mq = float(np.linalg.eigvalsh(Qs).min())
+    worst = -np.inf
+    for (A, Ad) in vertices:
+        Psi = np.block([[A.T @ Ps + Ps @ A + Qs, Ps @ Ad],
+                        [Ad.T @ Ps, -Qs]])
+        Psi = 0.5 * (Psi + Psi.T)
+        sc = max(float(np.abs(Psi).max()), 1e-300)
+        worst = max(worst, float(np.linalg.eigvalsh(Psi).max()) / sc)
+    nP = max(float(np.abs(Ps).max()), 1e-300)
+    nQ = max(float(np.abs(Qs).max()), 1e-300)
+    ok = (mp / nP > rtol) and (mq / nQ > rtol) and (worst < -rtol)
+    return dict(certified=bool(ok), min_eig_P=mp, min_eig_Q=mq,
+                rel_min_eig_P=mp / nP, rel_min_eig_Q=mq / nQ,
+                max_eig_Psi=worst,
+                reason='' if ok else 'the returned matrices violate the LMIs')

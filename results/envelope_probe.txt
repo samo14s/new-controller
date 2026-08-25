@@ -6,13 +6,14 @@ THE TRUE-ENVELOPE COLLAPSE -- IS IT THE PLANT OR THE CONTROLLER?
 
 [Q3] a_p^inf (mm) against the frozen alpha_4 pin
   pin/abar4     mu-TDC (Du 20  PS-AC (propos  PS-TDC-R (env     no control
-  0.3000               3.4719         2.9761         1.8731         0.1396
-  1.0000               1.3734         1.2426         1.2738         0.0420
-  1.6000               0.8268         0.7702         0.8053         0.0264
-  2.9000               0.4364         0.4227         0.4305         0.0147
-  6.0000               0.2040         0.2021         0.2040         0.0069
-  9.0000               0.1357         0.1338         0.1357         0.0049
-  12.4328              0.0967         0.0967         0.0967         0.0030
+  0.3000              3.4719         2.9761         1.8731         0.1396 
+  1.0000              1.3734         1.2426         1.2738         0.0420 
+  1.6000              0.8268         0.7702         0.8053         0.0264 
+  2.9000              0.4364         0.4227         0.4305         0.0147 
+  6.0000              0.2040         0.2021         0.2040         0.0069 
+  9.0000              0.1357         0.1338         0.1357         0.0049 
+  12.4328             0.0967         0.0967         0.0967         0.0030 
+  * = censored at the bisection ceiling 4.0000 mm, not a measured depth (0 of 28 entries)
   [C2] monotone non-increasing in the pin: PASS
 
 [Q1] at the top pin (12.4328 abar4), against the open loop

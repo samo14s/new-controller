@@ -1,0 +1,141 @@
+============================================================================================
+CONSERVATISM BUDGET - decomposition of a_p^inf vs a_p,lim
+============================================================================================
+  tau_0 = 4.0816 ms at 4900 rpm;  alpha_4 band [0.3, 2.9] abar4;  alpha_40 = 1.6 abar4
+  bisection family n_pos=5 (MATCHED to run_stage56's `light` kw for its depth bisection)
+  pin check (certify2.vertices a_scale semantics verified in code): True
+
+--------------------------------------------------------------------------------------------
+ALPHA_4: what the certificate sweeps vs what the truth does
+--------------------------------------------------------------------------------------------
+  a_p mm   min/abar4   max/abar4    duty %  % of period in [0.3,2.9]  % above 2.9
+   0.300     -0.0000     12.4328     11.58                      1.05        10.40
+   0.400     -0.0000     12.2563     12.25                      1.40        10.67
+   0.850     -0.0000     11.4950     15.25                      2.93        11.97
+
+--------------------------------------------------------------------------------------------
+MODEL-ORDER PROBE  Floquet floor, coeff_mode=average, by modes retained
+  (the D3 rung is R3m -> R4, i.e. 2-mode crossing test -> 5-mode
+   Floquet; this says whether that rung is truncation or method)
+--------------------------------------------------------------------------------------------
+controller           2         3         4         5
+mu_tdc          1.2407    0.6616    0.6587    0.6645
+ps_ac           1.2992    1.2992    1.2992    1.1998
+ps_tdc_r        1.3314    1.3314    1.3314    1.2261
+
+============================================================================================
+mu_tdc
+============================================================================================
+  R0L ap_inf light family (run_stage56 kw)    0.4364 mm   stored 0.4364 mm   [11s]
+  R0  ap_inf FULL 216-vertex family           0.4364 mm   [62s]
+  R1  + eta/zeta/xi collapsed to nominal      0.4364 mm   [10s]
+  R2  + alpha_4 pinned at 1.6 abar4           0.8268 mm   [8s]
+  R2m + alpha_4 pinned at 1.0 abar4           1.3734 mm   [9s]
+  R3m + delay-DEPENDENT (tau_max >= tau_0)    1.3734 mm   [12s]
+      delay-independence probe at pin 1.0 abar4:
+        a_p/R2m       1.00      1.02      1.10      1.30      2.00
+        peak         1.001     1.036     1.183     1.631    10.864
+        tau_max/tau_0      0.239     0.210     0.038     0.027     0.010
+  R4  Floquet, coeff_mode=average, 5 modes    0.6645 mm   [4s]
+  R5  Floquet, coeff_mode=time (THE TRUTH)    0.6821 mm   stored 0.6821 mm   [4s]
+  R6  a_p^inf over the TRUE alpha_4 envelope [0, 12.43] abar4 = min over pins   0.0967 mm [43s]
+      pin/abar4      0.00     0.30     1.00     1.60     2.90     6.00     9.00    12.43
+      a_p^inf mm   3.9385   3.4719   1.3734   0.8268   0.4364   0.2040   0.1357   0.0967
+
+  total gap  a_p^inf(full)/a_p,lim = 64.0 %   ln-gap = +0.4467   (identity residual +0.00e+00)
+  cause                                       rung   ln-share   % of gap
+  (P) parametric coverage                 R0 -> R1    +0.0000       +0.0
+  (E) alpha_4 envelope                    R1 -> R2    +0.6391     +143.1
+  (D) alpha_4 level 1.6->1.0             R2 -> R2m    +0.5075     +113.6
+  (D) delay independence                R2m -> R3m    +0.0000       +0.0
+  (D) 2-mode -> 5-mode model             R3m -> R4    -0.7259     -162.5
+  (F) freezing vs periodicity              R4 -> R5    +0.0261       +5.8
+  TOTAL                                   R0 -> R5    +0.4467     +100.0
+
+============================================================================================
+ps_ac
+============================================================================================
+  R0L ap_inf light family (run_stage56 kw)    0.3836 mm   stored 0.3836 mm   [29s]
+  R0  ap_inf FULL 216-vertex family           0.3836 mm   [44s]
+  R1  + eta/zeta/xi collapsed to nominal      0.4227 mm   [3s]
+  R2  + alpha_4 pinned at 1.6 abar4           0.7702 mm   [3s]
+  R2m + alpha_4 pinned at 1.0 abar4           1.2426 mm   [3s]
+  R3m + delay-DEPENDENT (tau_max >= tau_0)    1.2426 mm   [3s]
+      delay-independence probe at pin 1.0 abar4:
+        a_p/R2m       1.00      1.02      1.10      1.30      2.00
+        peak         1.001     1.029     1.152     1.509     3.671
+        tau_max/tau_0      0.153     0.137     0.112     0.072     0.035
+  R4  Floquet, coeff_mode=average, 5 modes    1.1998 mm   [4s]
+  R5  Floquet, coeff_mode=time (THE TRUTH)    0.8517 mm   stored 0.8517 mm   [4s]
+  R6  a_p^inf over the TRUE alpha_4 envelope [0, 12.43] abar4 = min over pins   0.0967 mm [19s]
+      pin/abar4      0.00     0.30     1.00     1.60     2.90     6.00     9.00    12.43
+      a_p^inf mm   4.0000   2.9761   1.2426   0.7702   0.4227   0.2021   0.1338   0.0967
+
+  total gap  a_p^inf(full)/a_p,lim = 45.0 %   ln-gap = +0.7976   (identity residual +0.00e+00)
+  cause                                       rung   ln-share   % of gap
+  (P) parametric coverage                 R0 -> R1    +0.0969      +12.2
+  (E) alpha_4 envelope                    R1 -> R2    +0.6000      +75.2
+  (D) alpha_4 level 1.6->1.0             R2 -> R2m    +0.4783      +60.0
+  (D) delay independence                R2m -> R3m    +0.0000       +0.0
+  (D) 2-mode -> 5-mode model             R3m -> R4    -0.0351       -4.4
+  (F) freezing vs periodicity              R4 -> R5    -0.3426      -43.0
+  TOTAL                                   R0 -> R5    +0.7976     +100.0
+
+============================================================================================
+ps_tdc_r
+============================================================================================
+  R0L ap_inf light family (run_stage56 kw)    0.3954 mm   stored 0.3954 mm   [8s]
+  R0  ap_inf FULL 216-vertex family           0.3954 mm   [52s]
+  R1  + eta/zeta/xi collapsed to nominal      0.4305 mm   [14s]
+  R2  + alpha_4 pinned at 1.6 abar4           0.8053 mm   [13s]
+  R2m + alpha_4 pinned at 1.0 abar4           1.2738 mm   [12s]
+  R3m + delay-DEPENDENT (tau_max >= tau_0)    1.2738 mm   [15s]
+      delay-independence probe at pin 1.0 abar4:
+        a_p/R2m       1.00      1.02      1.10      1.30      2.00
+        peak         1.000     1.042     1.226     1.873    23.322
+        tau_max/tau_0        inf     0.099     0.047     0.027     0.006
+  R4  Floquet, coeff_mode=average, 5 modes    1.2261 mm   [47s]
+  R5  Floquet, coeff_mode=time (THE TRUTH)    0.9307 mm   stored 0.9307 mm   [47s]
+  R6  a_p^inf over the TRUE alpha_4 envelope [0, 12.43] abar4 = min over pins   0.0967 mm [111s]
+      pin/abar4      0.00     0.30     1.00     1.60     2.90     6.00     9.00    12.43
+      a_p^inf mm   2.2148   1.8731   1.2738   0.8053   0.4305   0.2040   0.1357   0.0967
+
+  total gap  a_p^inf(full)/a_p,lim = 42.5 %   ln-gap = +0.8561   (identity residual +0.00e+00)
+  cause                                       rung   ln-share   % of gap
+  (P) parametric coverage                 R0 -> R1    +0.0851       +9.9
+  (E) alpha_4 envelope                    R1 -> R2    +0.6263      +73.2
+  (D) alpha_4 level 1.6->1.0             R2 -> R2m    +0.4586      +53.6
+  (D) delay independence                R2m -> R3m    +0.0000       +0.0
+  (D) 2-mode -> 5-mode model             R3m -> R4    -0.0382       -4.5
+  (F) freezing vs periodicity              R4 -> R5    -0.2757      -32.2
+  TOTAL                                   R0 -> R5    +0.8561     +100.0
+
+============================================================================================
+PRE-DECLARED CHECKS
+============================================================================================
+  mu_tdc       R0L==stage56 PASS   R5==stage78 PASS   sum identity PASS
+  ps_ac        R0L==stage56 PASS   R5==stage78 PASS   sum identity PASS
+  ps_tdc_r     R0L==stage56 PASS   R5==stage78 PASS   sum identity PASS
+  ALL CHECKS PASS
+
+============================================================================================
+SUMMARY  (a_p in mm)
+============================================================================================
+rung                        mu_tdc         ps_ac      ps_tdc_r
+R0_ap_inf_full              0.4364        0.3836        0.3954
+R0L_ap_inf_light            0.4364        0.3836        0.3954
+R1_ap_inf_pos               0.4364        0.4227        0.4305
+R2_ap_inf_a16               0.8268        0.7702        0.8053
+R2m_ap_inf_a10              1.3734        1.2426        1.2738
+R3m_ap_tau0_a10             1.3734        1.2426        1.2738
+R4_floquet_avg              0.6645        1.1998        1.2261
+R5_floquet_time             0.6821        0.8517        0.9307
+R6_true_envelope            0.0967        0.0967        0.0967
+
+share % of ln-gap                 mu_tdc         ps_ac      ps_tdc_r
+P_parametric                        +0.0         +12.2          +9.9
+E_alpha_envelope                  +143.1         +75.2         +73.2
+D1_alpha_level                    +113.6         +60.0         +53.6
+D2_delay_independence               +0.0          +0.0          +0.0
+D3_design_model                   -162.5          -4.4          -4.5
+F_periodicity                       +5.8         -43.0         -32.2
