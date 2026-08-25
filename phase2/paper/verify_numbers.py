@@ -403,6 +403,70 @@ chk_bool('open loop crosses as tau -> 0 (rho_peak > 1)',
 chk('guaranteed depth as a share of the measured one',
     st56['ps_ac']['ap_inf'] * MM / (s1('ps_ac').min() * MM), 0.45, 2)
 
+# --- 6.4  where the rest of the depth goes ----------------------------------
+section('6.4  the conservatism budget')
+cb = read('conservatism_budget.txt')
+SHARE = [('P_parametric', 0.0, 12.2, 9.9),
+         ('E_alpha_envelope', 143.1, 75.2, 73.2),
+         ('D1_alpha_level', 113.6, 60.0, 53.6),
+         ('D2_delay_independence', 0.0, 0.0, 0.0),
+         ('D3_design_model', -162.5, -4.4, -4.5),
+         ('F_periodicity', 5.8, -43.0, -32.2)]
+for row, *want in SHARE:
+    got = gvec(cb, rf'{row}\s+([+-][\d.]+\s+[+-][\d.]+\s+[+-][\d.]+)', row)
+    for name, g, w in zip(('mu_tdc', 'ps_ac', 'ps_tdc_r'), got, want):
+        chk(f'{row}, {name} (% of ln-gap)', g, w, 1)
+chk_bool('delay independence costs exactly zero for all three',
+         bool(np.all(gvec(cb, r'D2_delay_independence\s+'
+                              r'([+-][\d.]+\s+[+-][\d.]+\s+[+-][\d.]+)',
+                          'D2 row') == 0.0)), True)
+a4row = gvec(cb, r'0\.300\s+([-\d.]+\s+[\d.]+\s+[\d.]+\s+[\d.]+\s+[\d.]+)',
+             'alpha4 envelope row')
+chk('alpha4 peak / mean, from the ladder', a4row[1], 12.4328, 4)
+chk('engagement duty (% of a tooth period)', a4row[2], 11.58, 2)
+chk('share of the period inside the certified band (%)', a4row[3], 1.05, 2)
+chk('share of the period above 2.9 abar4 (%)', a4row[4], 10.40, 2)
+
+# --- 6.4  the honest envelope -----------------------------------------------
+section('6.4  the true-envelope probe')
+ep = read('envelope_probe.txt')
+top = [float(v) for v in re.findall(r'^\s+12\.4328\s+(.*)$', ep, re.M)[0]
+       .replace('*', ' ').split()]
+for name, v, want in zip(('mu_tdc', 'ps_ac', 'ps_tdc_r', 'open'), top,
+                         (0.0967, 0.0967, 0.0967, 0.0030)):
+    chk(f'{name}: a_p^inf at the true alpha4 peak (mm)', v, want, 4)
+chk('feedback is worth this factor at the true peak',
+    gnum(ep, r'while each is\s+([\d.]+)x the open loop', 'open-loop factor'),
+    32.5, 1)
+chk('spread across the three designs there (%)',
+    gnum(ep, r'is ([\d.]+) %\s*\(', 'design spread'), 0.000, 3)
+chk_bool('the pre-declared plant-side hypothesis FAILED',
+         'FAIL -> controller-sensitive' in ep, True)
+
+# --- 9.5  the withdrawn LK column -------------------------------------------
+section('9.5  the LK audit')
+la = read('lk_audit.txt')
+chk('designs whose LK matrices verify',
+    gnum(la, r'VERIFY\s*:\s*(\d+) of \d+', 'verified count'), 0, 0)
+chk('designs audited',
+    gnum(la, r'VERIFY\s*:\s*\d+ of (\d+)', 'audited count'), 12, 0)
+chk('designs where stored and re-run disagree',
+    gnum(la, r'DISAGREE:\s*(\d+) of \d+', 'disagree count'), 3, 0)
+chk_bool('PS-AC is one of the three that flipped',
+         'PS-AC (proposed): stored False, re-run True' in la, True)
+_relP = np.array([float(v) for v in
+                  re.findall(r'\s(-?\d\.\d{3}e[+-]\d{2})\s+-?\d\.\d{3}e[+-]\d{2}\s',
+                             la)])
+chk('worst relative min eig of P over the audit', _relP.min(), -2.13, 2)
+_f1 = float(np.asarray(plate.omega_n, float)[0]) / (2 * np.pi)
+chk('first plate mode quoted in 9.5 (Hz)', _f1, 540.0, 1)
+chk('slowest realisation pole quoted in 9.5 (MHz)',
+    _fast['PS-AC (proposed)'] / 1e3, 0.76, 2)
+chk('fastest realisation pole quoted in 9.5 (MHz)',
+    _fast['LQG'] / 1e3, 2.0, 1)
+chk_bool('so the closed loop spans about 4000x in frequency',
+         3000 < _fast['LQG'] * 1e3 / _f1 < 5000, True)
+
 # --- 7.1  the nominal scenario ----------------------------------------------
 section('7.1  nominal scenario')
 NOM = [
@@ -596,7 +660,6 @@ chk('a_p^inf (mm)', st56['ps_ac_r']['ap_inf'] * MM, 0.3817, 4)
 chk('delta_max', st56['ps_ac_r']['delta_max'], 1.39, 2)
 chk_bool('the crossing margins do not improve over PS-AC',
          st56['ps_ac_r']['ap_inf'] <= st56['ps_ac']['ap_inf'], True)
-chk_bool('common-P LK feasible', st56['ps_ac_r']['lk'], True)
 chk('floor (mm)', s1('ps_ac_r').min() * MM, 0.8459, 4)
 chk('worst-of-4 (mm)', worst_all('ps_ac_r'), 0.6616, 4)
 
@@ -610,7 +673,6 @@ chk_bool('J above every other design',
 chk('tuned parameters', tdr['n_params'], 7, 0)
 chk('a_p^inf (mm)', st56['ps_tdc_r']['ap_inf'] * MM, 0.3954, 4)
 chk('delta_max', st56['ps_tdc_r']['delta_max'], 1.43, 2)
-chk_bool('common-P LK feasible', st56['ps_tdc_r']['lk'], True)
 chk('floor, best of the study (mm)', s1('ps_tdc_r').min() * MM, 0.9307, 4)
 chk_bool('floor above every other controller',
          s1('ps_tdc_r').min() > max(s1(k).min() for k in
@@ -666,11 +728,14 @@ for cap, rel in refs:
 
 # --- 9.2  what is numerical, not proved -------------------------------------
 section('10.2  the limits of the certificate')
-chk_bool('common-P LK infeasible for PS-AC', st56['ps_ac']['lk'], False)
-chk_bool('common-P LK attempted for PS-AC', st56['ps_ac']['lk_attempted'],
-         True)
-chk_bool('common-P LK feasible for FOPID', st56['fopid']['lk'], True)
-chk_bool('common-P LK feasible for LQG', st56['lqg']['lk'], True)
+# The LK column the draft used to quote here is withdrawn (Section 9.5); what
+# guards that withdrawal now lives in the '9.5 the LK audit' section above.
+_body = '\n'.join(ln for ln in md.splitlines() if not ln.startswith('> '))
+for gone in ('3/5 مع شهادة LK', 'صارت مُجدية', '| صندوق $+10\\%$ | LK |'):
+    chk_bool(f'the withdrawn LK claim is gone: {gone[:28]}',
+             gone not in _body, True)
+chk_bool('both withdrawal notes are in place',
+         md.count('> **سُحِب:**') == 2, True)
 
 # ---------------------------------------------------------------------------
 print()
