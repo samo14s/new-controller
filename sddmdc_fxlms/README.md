@@ -18,7 +18,7 @@
 | **0** تثبيت النموذج المرجعي: كل معادلة وكل رقم منشور | ✅ | [`docs/00_REFERENCE_MODEL.md`](docs/00_REFERENCE_MODEL.md) |
 | **0′** تدقيق بندًا ببند (3 حرجة، 19 رئيسية، 19 ثانوية + R1–R6) | ✅ | [`docs/01_AUDIT.md`](docs/01_AUDIT.md) |
 | **0″** المختبر الافتراضي ومعايرته على أرقام منشورة | ✅ | [`docs/02_VIRTUAL_TESTBED.md`](docs/02_VIRTUAL_TESTBED.md) |
-| **1** إعادة الإنتاج + بوّابة M0 للمسار الرئيسي | ✅ G1–G4 | [`docs/03_REPRODUCTION.md`](docs/03_REPRODUCTION.md) |
+| **1** إعادة الإنتاج + بوّابة M0 + معاينات M1 والورقة 3 | ✅ G1–G4، والحدود المغلقة، وقانون الهجين | [`docs/03_REPRODUCTION.md`](docs/03_REPRODUCTION.md) |
 | **2** المسارات المرشّحة، فحص الجِدّة، والبرنامج | ✅ | [`docs/04_CANDIDATES.md`](docs/04_CANDIDATES.md)، [`docs/05_ROADMAP.md`](docs/05_ROADMAP.md) |
 | — طلب البيانات من المؤلّفين (مسودّة، لم تُرسَل) | ⏳ | [`docs/email_data_request.md`](docs/email_data_request.md) |
 
@@ -33,6 +33,14 @@
   1.6–7.8 % وبحدّ التباعد ضمن خطوة شبكة، بلا أيّ تشغيل تكيّفي.
 * **ميزانية التخميد:** معدّلا انحلال قطب التكيّف والنمط المجاور مجموعهما $\zeta_n\omega_n$ ضمن 8 %.
   فالتكيّف الأمامي يعيد توزيع التخميد ولا يضيف إليه، والتباعد هو بلوغ معدّل التكيّف $\zeta_n\omega_n$.
+* **صمود الميزانية وصيغها المغلقة:** تصمد أمام خطأ نموذج ×3.1 و+17.6°. وأسرع تقارب
+  $t_{\min}\approx(4.4\pm0.6)/\sigma_n$ على عقدٍ كامل من التخميد. ونسبة حدَّي المنطقة الفعّالة دالّة
+  في $(\sigma_n,\Delta)$ وحدها (خطأ 0.1–4.8 %)، فتُعكس خرائط المقال لتعطي تخميد كل نمط:
+  0.23 % و0.24–0.30 % و0.19–0.20 %، تتّفق مع ثلاثة تقديرات مستقلّة.
+* **قانون الهجين:** حلقة PPF ترفع تخميد النمط المجاور حتى 3.6 مرّات، فيتسارع FxLMS بالنسبة نفسها
+  ضمن 14.5 %.
+* **مخطّط تصميم واحد:** $t_5\sigma_n$ مقابل $g/\sigma_n$ يضع تجارب المقال الثلاث والمختبر على منحنى
+  واحد (`results/figures/fig_design_chart.png`).
 * **الخريطة $(\mu,L)$ المنشورة أحادية البُعد:** مسحا $\mu$ و$L$ في المقال ينطبقان على منحنى واحد
   بدلالة $\mu L$ (خطأ وسيط 2.8–11.4 %)، دون أيّ نموذج.
 * **المختبر يتنبّأ خارج العيّنة:** الشكل 16(d) بخطأ وسيط 10 %، وحالة القناتين بخطأ 13–15 %، و$t_{\min}$
@@ -57,11 +65,8 @@ results/   كل رقم مذكور في الوثائق
 ## التشغيل
 
 ```bash
-pip install numpy scipy matplotlib numba
-cd scripts
-python calibrate.py && python run_identification.py && python run_control.py
-python probe_theory.py && python probe_budget.py && python run_sweeps.py
-python analysis_collapse.py && COLLAPSE_SOURCE=pixel python analysis_collapse.py
+pip install -r requirements.txt
+./run_all.sh          # كل رقم في docs/ من الصفر، نحو 40 دقيقة على حاسوب محمول
 ```
 
 صور أشكال المقال غير مخزّنة في المستودع، لأنّه عامّ وحقوقها للناشر. تُستخرج محلّيًّا من ملفّ PDF
