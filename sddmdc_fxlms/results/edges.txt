@@ -1,0 +1,24 @@
+T = 5.0 s, ln20 = 2.996; testbed zeta = 0.0024
+
+=== 120 Hz (mode 4): f_n = 117.07 Hz, |Delta| = 18.41 rad/s ===
+  testbed zeta 0.0024: sigma = 1.765 1/s, Delta/sigma = 10.4
+  formula: rho = (muL)_up/(muL)_lo = 2.75;  t_min = 1.98 s at g/sigma = 0.86
+  testbed (full FxLMS): rho = 1474/510 = 2.89  -> formula error -4.8 %
+  paper exp: rho = 1303/497 = 2.62  -> inverted zeta_4 = 0.228 % (sigma = 1.68 1/s); formula t_min = 2.06 s vs published 2.90 s
+  paper sim: rho = 1342/516 = 2.60  -> inverted zeta_4 = 0.226 % (sigma = 1.66 1/s); formula t_min = 2.07 s vs published 2.52 s
+
+=== 280 Hz (mode 6): f_n = 276.07 Hz, |Delta| = 24.69 rad/s ===
+  testbed zeta 0.0024: sigma = 4.163 1/s, Delta/sigma = 5.9
+  formula: rho = (muL)_up/(muL)_lo = 6.56;  t_min = 0.95 s at g/sigma = 0.76
+  testbed (full FxLMS): rho = 1452/221 = 6.57  -> formula error -0.1 %
+  paper exp: rho = 2002/246 = 8.14  -> inverted zeta_6 = 0.297 % (sigma = 5.15 1/s); formula t_min = 0.80 s vs published 1.19 s
+  paper sim: rho = 2078/323 = 6.43  -> inverted zeta_6 = 0.235 % (sigma = 4.08 1/s); formula t_min = 0.96 s vs published 1.07 s
+
+=== 85 Hz (mode 3): f_n = 86.96 Hz, |Delta| = 12.32 rad/s ===
+  testbed zeta 0.0024: sigma = 1.311 1/s, Delta/sigma = 9.4
+  formula: rho = (muL)_up/(muL)_lo = 1.97;  t_min = 2.73 s at g/sigma = 0.84
+  paper exp: rho = 1115/675 = 1.65  -> inverted zeta_3 = 0.199 % (sigma = 1.08 1/s); formula t_min = 3.16 s vs published 3.80 s
+  paper sim: rho = 935/604 = 1.55  -> inverted zeta_3 = 0.185 % (sigma = 1.01 1/s); formula t_min = 3.34 s vs published 3.75 s
+
+Pre-declared check (testbed, 120 and 280 Hz, |error| <= 10 %): PASS
+Independent damping estimates for comparison: zeta_3 ~ 0.165 % from the beat decay of Fig. 14(a) (docs/01 H4); zeta = 0.24 % fitted on Fig. 16(c) (results/calibration.txt).
