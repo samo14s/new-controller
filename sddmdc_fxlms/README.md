@@ -20,6 +20,7 @@
 | **0″** المختبر الافتراضي ومعايرته على أرقام منشورة | ✅ | [`docs/02_VIRTUAL_TESTBED.md`](docs/02_VIRTUAL_TESTBED.md) |
 | **1** إعادة الإنتاج + بوّابة M0 + معاينات M1 والورقة 3 | ✅ G1–G4، والحدود المغلقة، وقانون الهجين | [`docs/03_REPRODUCTION.md`](docs/03_REPRODUCTION.md) |
 | **2** المسارات المرشّحة، فحص الجِدّة، والبرنامج | ✅ | [`docs/04_CANDIDATES.md`](docs/04_CANDIDATES.md)، [`docs/05_ROADMAP.md`](docs/05_ROADMAP.md) |
+| — مخطّط الورقة 1 (عنوان، ملخّص، أشكال، أقسام) | 📝 | [`docs/06_PAPER1_OUTLINE.md`](docs/06_PAPER1_OUTLINE.md) |
 | — طلب البيانات من المؤلّفين (مسودّة، لم تُرسَل) | ⏳ | [`docs/email_data_request.md`](docs/email_data_request.md) |
 
 ## النتائج الأساسية بسطر لكل منها
