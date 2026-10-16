@@ -10,3 +10,4 @@ open loop: t_min = 2.48 s, |Gs(120)| = 0.1964, |Gp(120)| = 0.0448
       0.80 |    117.15   |             3.63 | yes    |       0.78 |         3.18 |  -12.4 %   (|Gs| 0.1954, |Gp| 0.0446)
 
 Pre-declared check (sigma ratio 1..5, |dev| <= 20 %): max |dev| = 14.5 % -> PASS
+saved figures/fig_hybrid.png

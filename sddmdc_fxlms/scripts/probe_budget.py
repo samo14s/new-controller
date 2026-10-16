@@ -17,9 +17,14 @@ Pre-declared check: along beta (mu swept, L fixed) on the TRUTH loop,
 |sum of the two decay rates / sigma_n - 1| <= 10 % wherever the loop is stable.
 Writes results/budget.txt.
 """
-import numpy as np
+import os
 
-from _common import Tee, identify, Testbed
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+from _common import Tee, identify, Testbed, FIGS
 from control import Plants
 import theory
 import calib
@@ -31,7 +36,9 @@ fs, A = T.fs, 5.0
 CASES = [('120 Hz / S2 / A2', 120.0, 1, [1], 3), ('280 Hz / S1 / A1', 280.0, 0, [0], 5),
          ('85 Hz / S2 / A1+A2', 85.0, 1, [0, 1], 2)]
 worst = 0.0
-for label, f, s, acts, kmode in CASES:
+fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+for ax, (label, f, s, acts, kmode) in zip(axes, CASES):
+    rows = []
     w0 = 2 * np.pi * f / fs
     fn = T.P.freq[kmode]
     sig_n = T.zeta[kmode] * T.P.omega[kmode]
@@ -72,4 +79,19 @@ for label, f, s, acts, kmode in CASES:
         dev = abs(tot / sig_n - 1)
         worst = max(worst, dev)
         log(f"   {frac:13.2f} | {rate[ia]:10.3f} | {rate[im]:9.3f} | {tot / sig_n:10.3f}")
+        rows.append((frac, rate[ia] / sig_n, rate[im] / sig_n, tot / sig_n))
+    rows = np.array(rows)
+    ax.plot(rows[:, 0], rows[:, 1], 'o-', label='adaptation pole')
+    ax.plot(rows[:, 0], rows[:, 2], 's-', label=f'adjacent mode ({fn:.2f} Hz)')
+    ax.plot(rows[:, 0], rows[:, 3], 'k--', label='sum')
+    ax.axhline(1.0, color='0.6', lw=0.8)
+    ax.set_xlabel(r'$\beta/\beta_{\rm div}$')
+    ax.set_ylabel(r'decay rate / $\sigma_n$')
+    ax.set_title(label, fontsize=10)
+    ax.set_ylim(0, 1.2)
+    ax.grid(alpha=0.3)
+    ax.legend(fontsize=8)
+fig.suptitle('Damping budget: the adaptation only redistributes the adjacent mode\'s damping', fontsize=11)
+fig.tight_layout()
+fig.savefig(os.path.join(FIGS, 'fig_budget.png'), dpi=140)
 log(f"\nG4: max |sum/sigma_n - 1| = {100 * worst:.1f} %  -> {'PASS' if worst <= 0.10 else 'FAIL'}")
