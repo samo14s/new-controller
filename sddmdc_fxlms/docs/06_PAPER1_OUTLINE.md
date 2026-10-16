@@ -59,7 +59,10 @@ vibration control of lightly damped thin-walled structures, verified on publishe
 6. **Verification.** G1–G4، والتحقّق خارج العيّنة، وخرائط المختبر.
 7. **Re-analysis of the published experiments.** الانهيار، وعكس الحدود، والمخطّط الموحّد، والتناقضات
    (H6، والحدّ السريع المنحني عند 120 Hz، والإشارة).
-8. **Hybrid design law.** PPF + FxLMS.
+8. **Breaking the budget, and design rules.** PPF + FxLMS (الهجين كنتيجة لازمة لا كمبدأ جديد،
+   مع نسبة Clark 1995 وVipperman & Clark 1996 وLi & Wang 2008)؛ قاعدة التصميم في أسوأ حالة
+   $(\mu L)_{\rm div}\simeq\sigma_n/(A^2|G||\hat G|\cos\Delta\varphi)$ (وFraanje et al. 2007 للحالة العامّة)؛
+   والردّ على «PSO رباعي الأبعاد»: الاختزال إلى $(g,r)$ وهامش ≤ 16 %.
 9. **Discussion and limitations.** نمط واحد غالب؛ مرجع نغمي مستقرّ؛ لا لاخطّيات؛ المختبر عيّنة
    معقولة لا نسخة؛ الحاجة إلى بيانات خام (طلب مُرسل؟).
 10. **Conclusions.**
@@ -71,4 +74,5 @@ vibration control of lightly damped thin-walled structures, verified on publishe
 - [ ] المهامّ M1–M4 في `docs/05` §2 (تحسين صيغة $t_{\min}$، تصحيح $\Gamma$ الدقيق بفلوكيه،
       القناتان، التنبّؤ الأعمى بالخرائط).
 - [ ] إرسال طلب البيانات (`docs/email_data_request.md`)؛ إن وصلت، يُعاد §7 على البيانات الخام.
-- [ ] فحص FxLMS كاملة (لا LTI فقط) لقانون الهجين.
+- [ ] فحص FxLMS كاملة (لا LTI فقط) لقانون الهجين، بمسار معاد تعريفه على الحلقة المغلقة.
+- [ ] بنود المراجِع 1 و3 و5 و6 و7 في `docs/02` §6 (هامش جهد MFC، والتأخير الحسابي، و«حقيقة» FE ثانية).
