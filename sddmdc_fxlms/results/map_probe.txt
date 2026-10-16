@@ -1,0 +1,42 @@
+
+=== 120 Hz / S2 / A2: testbed truth, full FxLMS, mu in paper units x1e-6 ===
+   L   | lower mu*L | upper mu*L | ridge mu*L   (x1e-6)
+    40 |        517 | axis |        800
+    48 |        452 | axis |        960
+    60 |        554 | axis |       1200
+    64 |        572 | axis |       1216
+    80 |        516 |       1486 |       1240
+    90 |        471 |       1469 |       1170
+    96 |        481 |       1468 |       1200
+   100 |        505 |       1468 |       1200
+   112 |        539 |       1481 |       1288
+   120 |        519 |       1481 |       1200
+   128 |        488 |       1474 |       1216
+   140 |        490 |       1472 |       1190
+   144 |        504 |       1465 |       1224
+   150 |        520 |       1477 |       1275
+   160 |        519 |       1470 |       1200
+  lower edge: mean mu*L = 510e-6, CV = 5.9 %, slope b = -1.01 over L = 40..160  (paper: see maps_muL_analysis.txt)
+  upper edge: mean mu*L = 1474e-6, CV = 0.4 %, slope b = -1.01 over L = 80..160  (paper: see maps_muL_analysis.txt)
+  ridge edge: mean mu*L = 1172e-6, CV = 10.4 %, slope b = -0.79 over L = 40..160  (paper: see maps_muL_analysis.txt)
+
+=== 280 Hz / S1 / A1: testbed truth, full FxLMS, mu in paper units x1e-6 ===
+   L   | lower mu*L | upper mu*L | ridge mu*L   (x1e-6)
+    40 |        205 | axis |        960
+    48 |        227 | axis |       1104
+    60 |        209 | axis |       1050
+    64 |        220 |       1460 |       1088
+    80 |        217 |       1456 |       1080
+    90 |        222 |       1452 |       1080
+    96 |        217 |       1452 |       1056
+   100 |        223 |       1456 |       1100
+   112 |        217 |       1457 |       1064
+   120 |        227 |       1451 |       1080
+   128 |        224 |       1449 |       1088
+   140 |        229 |       1453 |       1050
+   144 |        224 |       1447 |       1080
+   150 |        220 |       1443 |       1050
+   160 |        229 |       1446 |       1040
+  lower edge: mean mu*L = 221e-6, CV = 3.0 %, slope b = -0.96 over L = 40..160  (paper: see maps_muL_analysis.txt)
+  upper edge: mean mu*L = 1452e-6, CV = 0.3 %, slope b = -1.01 over L = 64..160  (paper: see maps_muL_analysis.txt)
+  ridge edge: mean mu*L = 1065e-6, CV = 3.2 %, slope b = -0.98 over L = 40..160  (paper: see maps_muL_analysis.txt)
