@@ -6,6 +6,10 @@
 > milling chatter suppression of flexible workpieces"**,
 > *International Journal of Mechanical Sciences* **274** (2024) 109257.
 
+> **مشروع ثانٍ مستقلّ في المستودع نفسه:** [`sddmdc_fxlms/`](sddmdc_fxlms/README.md)، مبنيّ على
+> Ouyang et al., *Thin-Walled Structures* **228** (2026) 115090 (تعريف sd-DMDc + FxLMS لصفيحة
+> مركّبة ذكية)، وهو عدديّ بالكامل وبلا مختبر.
+
 ## الحالة
 
 | المرحلة | الحالة |
