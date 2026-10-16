@@ -1,0 +1,109 @@
+calibration: zeta = 0.00240, mu_scale = 0.2471  (calibrated on Fig. 16c)
+ROM: p = 66, r = 63
+gain normalisation 120 Hz: paper sum|G|^2 = 0.0300, testbed = 0.0386 -> nu = 1.000
+gain normalisation 280 Hz: paper sum|G|^2 = 0.0864, testbed = 0.0837 -> nu = 1.327
+gain normalisation 85 Hz: paper sum|G|^2 = 0.0197, testbed = 0.0753 -> nu = 0.337
+
+16c (calibration): 120 Hz, sensor S2, actuators ['A2'], mu swept, fixed L = 128
+   truth vs paper exp: median |ratio-1| =   9.9 %, max =   73.8 %  (21 pts)
+   rom vs paper sim : median |ratio-1| =   2.4 %, max =  144.8 %  (21 pts)
+   theory vs paper exp: median |ratio-1| =  10.1 %, max =  111.9 %  (21 pts)
+   truth vs rom      : median |ratio-1| =   1.8 %, max =   86.4 %  (21 pts)
+   NORMALISED (nu=1.00) truth vs paper exp: median |ratio-1| =   9.9 %, max =   73.8 %  (21 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| =  10.1 %, max =  111.9 %  (21 pts)
+   paper exp: optimum mu = 8.5e-06 (t = 2.90 s); t < 5 s for mu in [4e-06, 1e-05]
+   truth    : optimum mu = 9.5e-06 (t = 2.48 s); t < 5 s for mu in [4e-06, 1.1e-05]
+   theory   : optimum mu = 9e-06 (t = 2.49 s); t < 5 s for mu in [4e-06, 1.1e-05]
+   truth/nu : optimum mu = 9.5e-06 (t = 2.48 s); t < 5 s for mu in [4e-06, 1.1e-05]
+   theory/nu: optimum mu = 9e-06 (t = 2.49 s); t < 5 s for mu in [4e-06, 1.1e-05]
+
+16d (validation): 120 Hz, sensor S2, actuators ['A2'], L swept, fixed mu = 1e-05
+   truth vs paper exp: median |ratio-1| =  10.0 %, max =   91.7 %  (15 pts)
+   rom vs paper sim : median |ratio-1| =   7.4 %, max =   54.8 %  (15 pts)
+   theory vs paper exp: median |ratio-1| =   8.8 %, max =   88.4 %  (15 pts)
+   truth vs rom      : median |ratio-1| =   2.7 %, max =   58.4 %  (15 pts)
+   NORMALISED (nu=1.00) truth vs paper exp: median |ratio-1| =  10.0 %, max =   91.7 %  (15 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| =   8.8 %, max =   88.4 %  (15 pts)
+   paper exp: optimum L = 96 (t = 2.55 s); t < 5 s for L in [48, 128]
+   truth    : optimum L = 128 (t = 2.48 s); t < 5 s for L in [48, 144]
+   theory   : optimum L = 120 (t = 2.49 s); t < 5 s for L in [60, 144]
+   truth/nu : optimum L = 128 (t = 2.48 s); t < 5 s for L in [48, 144]
+   theory/nu: optimum L = 120 (t = 2.49 s); t < 5 s for L in [60, 144]
+
+19c (validation): 280 Hz, sensor S1, actuators ['A1'], mu swept, fixed L = 128
+   truth vs paper exp: median |ratio-1| =  10.1 %, max = 1173.9 %  (18 pts)
+   rom vs paper sim : median |ratio-1| =  62.7 %, max = 1769.2 %  (18 pts)
+   theory vs paper exp: median |ratio-1| =  21.7 %, max = 1580.7 %  (18 pts)
+   truth vs rom      : median |ratio-1| =   5.4 %, max =  538.6 %  (12 pts)
+   NORMALISED (nu=1.33) truth vs paper exp: median |ratio-1| =  71.9 %, max = 1580.7 %  (18 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| = 142.0 %, max = 1580.7 %  (18 pts)
+   paper exp: optimum mu = 1e-05 (t = 1.19 s); t < 5 s for mu in [2e-06, 1.5e-05]
+   truth    : optimum mu = 8e-06 (t = 1.17 s); t < 5 s for mu in [2e-06, 1.1e-05]
+   theory   : optimum mu = 7e-06 (t = 1.14 s); t < 5 s for mu in [2e-06, 1e-05]
+   truth/nu : optimum mu = 6e-06 (t = 1.17 s); t < 5 s for mu in [2e-06, 8e-06]
+   theory/nu: optimum mu = 6e-06 (t = 1.30 s); t < 5 s for mu in [2e-06, 7e-06]
+
+19d (validation): 280 Hz, sensor S1, actuators ['A1'], L swept, fixed mu = 1.2e-05
+   truth vs paper exp: median |ratio-1| =  22.3 %, max = 1150.0 %  (14 pts)
+   rom vs paper sim : median |ratio-1| =  69.4 %, max = 1512.9 %  (14 pts)
+   theory vs paper exp: median |ratio-1| =  27.0 %, max = 1279.3 %  (14 pts)
+   truth vs rom      : median |ratio-1| =  17.6 %, max =  404.0 %  (10 pts)
+   NORMALISED (nu=1.33) truth vs paper exp: median |ratio-1| = 199.9 %, max = 1500.0 %  (14 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| = 252.3 %, max = 1500.0 %  (14 pts)
+   paper exp: optimum L = 112 (t = 1.25 s); t < 5 s for L in [32, 160]
+   truth    : optimum L = 80 (t = 1.17 s); t < 5 s for L in [32, 120]
+   theory   : optimum L = 80 (t = 1.12 s); t < 5 s for L in [32, 96]
+   truth/nu : optimum L = 60 (t = 1.16 s); t < 5 s for L in [16, 80]
+   theory/nu: optimum L = 60 (t = 1.12 s); t < 5 s for L in [16, 80]
+
+21c (validation): 85 Hz, sensor S2, actuators ['A1', 'A2'], mu swept, fixed L = 64
+   truth vs paper exp: median |ratio-1| = 250.9 %, max =  426.3 %  (19 pts)
+   rom vs paper sim : median |ratio-1| = 176.8 %, max =  433.3 %  (18 pts)
+   theory vs paper exp: median |ratio-1| = 250.9 %, max =  426.3 %  (19 pts)
+   truth vs rom      : median |ratio-1| =   0.6 %, max =    1.5 %  (9 pts)
+   NORMALISED (nu=0.34) truth vs paper exp: median |ratio-1| =  12.6 %, max =  514.2 %  (19 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| =  22.0 %, max =  443.5 %  (19 pts)
+   paper exp: optimum mu = 1.6e-05 (t = 3.80 s); t < 5 s for mu in [1.1e-05, 1.8e-05]
+   truth    : optimum mu = 7e-06 (t = 3.25 s); t < 5 s for mu in [4e-06, 8e-06]
+   theory   : optimum mu = 7e-06 (t = 3.67 s); t < 5 s for mu in [4.5e-06, 8e-06]
+   truth/nu : optimum mu = 1.9e-05 (t = 3.26 s); t < 5 s for mu in [1.2e-05, 1.9e-05]
+   theory/nu: optimum mu = 1.9e-05 (t = 3.68 s); t < 5 s for mu in [1.3e-05, 1.9e-05]
+
+21d (validation): 85 Hz, sensor S2, actuators ['A1', 'A2'], L swept, fixed mu = 6e-06
+   truth vs paper exp: median |ratio-1| = 241.9 %, max =  422.2 %  (13 pts)
+   rom vs paper sim : median |ratio-1| = 263.6 %, max =  433.3 %  (13 pts)
+   theory vs paper exp: median |ratio-1| = 242.9 %, max =  422.2 %  (13 pts)
+   truth vs rom      : median |ratio-1| =   0.5 %, max =    1.0 %  (6 pts)
+   NORMALISED (nu=0.34) truth vs paper exp: median |ratio-1| =  14.5 %, max =   28.0 %  (12 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| =  13.9 %, max =   28.1 %  (12 pts)
+   paper exp: optimum L = 150 (t = 3.83 s); t < 5 s for L in [120, 160]
+   truth    : optimum L = 64 (t = 3.28 s); t < 5 s for L in [60, 80]
+   theory   : optimum L = 80 (t = 3.71 s); t < 5 s for L in [48, 80]
+   truth/nu : optimum L = 160 (t = 4.32 s); t < 5 s for L in [128, 160]
+   theory/nu: optimum L = 160 (t = 4.21 s); t < 5 s for L in [140, 160]
+
+17b (validation (FEM path)): 120 Hz, sensor S2, actuators ['A2'], mu swept, fixed L = 128
+   truth vs paper exp: median |ratio-1| =  97.3 %, max =  144.5 %  (9 pts)
+   theory vs paper exp: median |ratio-1| =  98.0 %, max =  145.7 %  (9 pts)
+   truth vs rom      : median |ratio-1| =   1.9 %, max =   10.8 %  (7 pts)
+   NORMALISED (nu=1.00) truth vs paper exp: median |ratio-1| =  97.3 %, max =  144.5 %  (9 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| =  98.0 %, max =  145.7 %  (9 pts)
+   paper exp: optimum mu = 3.5e-06 (t = 4.48 s); t < 5 s for mu in [3e-06, 3.5e-06]
+   truth    : optimum mu = 3.5e-06 (t = 2.37 s); t < 5 s for mu in [1.5e-06, 4e-06]
+   theory   : optimum mu = 3.5e-06 (t = 2.37 s); t < 5 s for mu in [1.5e-06, 4e-06]
+   truth/nu : optimum mu = 3.5e-06 (t = 2.37 s); t < 5 s for mu in [1.5e-06, 4e-06]
+   theory/nu: optimum mu = 3.5e-06 (t = 2.37 s); t < 5 s for mu in [1.5e-06, 4e-06]
+
+17c (validation (FEM path)): 120 Hz, sensor S2, actuators ['A2'], L swept, fixed mu = 1e-05
+   truth vs paper exp: median |ratio-1| =  63.1 %, max =   74.2 %  (6 pts)
+   theory vs paper exp: median |ratio-1| = 100.4 %, max =  237.3 %  (6 pts)
+   truth vs rom      : median |ratio-1| =   1.0 %, max =    4.2 %  (5 pts)
+   NORMALISED (nu=1.00) truth vs paper exp: median |ratio-1| =  63.1 %, max =   74.2 %  (6 pts)
+   NORMALISED theory vs paper exp: median |ratio-1| = 100.4 %, max =  237.3 %  (6 pts)
+   paper exp: optimum L = 40 (t = 3.83 s); t < 5 s for L in [40, 48]
+   truth    : optimum L = 40 (t = 2.40 s); t < 5 s for L in [30, 48]
+   theory   : optimum L = 40 (t = 2.39 s); t < 5 s for L in [20, 48]
+   truth/nu : optimum L = 40 (t = 2.40 s); t < 5 s for L in [30, 48]
+   theory/nu: optimum L = 40 (t = 2.39 s); t < 5 s for L in [20, 48]
+
+saved figures/fig_sweeps.png and results/sweeps.npz

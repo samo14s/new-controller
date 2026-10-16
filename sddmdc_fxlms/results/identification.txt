@@ -1,0 +1,52 @@
+=== sd-DMDc identification on the virtual testbed ===
+record: 600000 samples (60 s), n = 37 channels (35 w + 2 eps), l = 3 inputs
+normalize='group'  ->  p = 66  (99.9 % cumulative singular values of Omega), r = p - l = 63
+
+Table 4 analogue -- natural frequencies [Hz]
+ mode | truth (=Table 4 exp) | sd-DMDc here | err %  | zeta id | paper sd-DMDc err % | paper FEM err %
+  1   |    14.02 (B)       |    14.02     | +0.018 | 0.0028  |  +0.21              |  +3.57
+  2   |    30.49 (T)       |    30.49     | +0.014 | 0.0025  |  +0.39              |  +3.74
+  3   |    86.96 (B)       |    86.96     | +0.005 | 0.0024  |  +0.33              |  +4.43
+  4   |   117.07 (T)       |   117.07     | +0.003 | 0.0024  |  +0.75              |  +1.79
+  5   |   242.61 (B)       |   242.62     | +0.006 | 0.0024  |  +0.51              |  -3.03
+  6   |   276.07 (T)       |   276.07     | +0.001 | 0.0023  |  +0.50              |  +3.59
+ truth damping ratio: 0.0024 (all modes)
+ extra lightly-damped (zeta < 5 %) eigenvalues below 320 Hz: 13 (frequencies [214.5 215.3 216.  216.1 217.1 217.9 218.5 218.6 219.3 219.8 220.1 260.9
+ 302. ])
+
+Fig. 7 analogue -- MAC(truth mode i, identified mode i) at the 35 points: 1.0000 1.0000 1.0000 1.0000 1.0000 1.0000
+ max off-diagonal MAC: 0.061
+
+Table 3 analogue -- Eq. (22) on the identification record (in-sample)
+ pair     | eps_t here | eps_f here | paper eps_t | paper eps_f
+ E  -> S1 |     72.12% |     22.04% |      14.84% |       9.47%
+ E  -> S2 |      9.88% |      6.65% |      13.57% |       8.25%
+ A1 -> S1 |     20.24% |      9.41% |      14.11% |       9.87%
+ A1 -> S2 |      4.11% |      2.33% |      15.17% |       9.80%
+ A2 -> S1 |     13.58% |     10.08% |      13.93% |       9.20%
+ A2 -> S2 |      2.99% |      2.18% |      15.78% |      10.51%
+
+Out-of-sample (band-limited random 5-300 Hz, fresh noise) -- NOT in the paper
+ E : S1: eps_t=55.08% eps_f=18.50%   S2: eps_t= 8.44% eps_f= 6.50%
+ A1: S1: eps_t=18.59% eps_f= 9.42%   S2: eps_t= 5.02% eps_f= 3.74%
+ A2: S1: eps_t=12.74% eps_f= 9.20%   S2: eps_t= 5.11% eps_f= 3.87%
+
+Table 5 analogue -- steady sine amplitude under 5 V PZT, model vs testbed
+ f [Hz] sensor | testbed (noisy) | sd-DMDc | rel err | paper exp | paper err
+    20  S1     |       0.0586    |  0.0881 |  50.20% |   0.2250  |  4.89%
+   245  S1     |       1.0085    |  0.9145 |   9.32% |   0.6880  |  9.53%
+   280  S1     |       0.4068    |  0.4776 |  17.39% |   0.3410  |  0.59%
+    35  S2     |       0.0332    |  0.0322 |   2.96% |   0.0190  |  7.89%
+    85  S2     |       0.7986    |  0.8350 |   4.55% |   0.4100  |  2.93%
+   120  S2     |       0.2239    |  0.2395 |   7.00% |   0.2720  |  6.25%
+
+Sensitivity of the 99.9 % rank rule to units/normalisation (paper: unstated)
+ option                       |  p  |  r  | stable | max|lam| | mean eps_f (6 pairs)
+ SI (m, strain, V)            |   3 |   0 |   --   |   --     | model empty
+ mm, microstrain, V           |  18 |  15 | False  | 1.002615 | unstable
+ 0.1 mm, microstrain, V       |  54 |  51 | False  | 1.000758 | unstable
+ 10 mm, microstrain, V        |  13 |  10 | True   | 0.999724 | 115.05%
+ group RMS (default here)     |  66 |  63 | True   | 0.999976 | 8.78%
+ channel RMS                  |  64 |  61 | False  | 1.004247 | unstable
+
+ROM saved to /home/user/new-controller/sddmdc_fxlms/results/rom.npz

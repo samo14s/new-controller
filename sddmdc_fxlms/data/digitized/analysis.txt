@@ -1,20 +1,112 @@
-fig16c  Experiment  L=128  opt mu=8.5e-06  t_min=2.89 s  muL_opt=1.088e-03  slow n=4 CV(t*mu)=0.05 p=1.15 C=2.337e-03 s (rel rms 0.05)
-fig16c  Simulation  L=128  opt mu=8.5e-06  t_min=2.53 s  muL_opt=1.088e-03  slow n=5 CV(t*mu)=0.03 p=1.06 C=2.477e-03 s (rel rms 0.03)
-fig16d  Experiment  mu=1e-05  opt L=100      t_min=2.53 s  muL_opt=1.000e-03
-fig16d  Simulation  mu=1e-05  opt L=100      t_min=2.60 s  muL_opt=1.000e-03
-fig17b  Exp_FEM     L=128  opt mu=3.5e-06  t_min=4.53 s  muL_opt=4.480e-04
-fig17b  Exp_sdDMDc  L=128  opt mu=8.5e-06  t_min=2.96 s  muL_opt=1.088e-03  slow n=4 CV(t*mu)=0.04 p=1.12 C=2.374e-03 s (rel rms 0.04)
-fig17c  Exp_FEM     mu=1e-05  opt L=40       t_min=3.86 s  muL_opt=4.000e-04
-fig17c  Exp_sdDMDc  mu=1e-05  opt L=96       t_min=2.55 s  muL_opt=9.600e-04  slow n=4 CV(t*L)=0.15 p=1.45 C=3.186e-03 s (rel rms 0.17)
-fig19c  Experiment  L=128  opt mu=1.1e-05  t_min=1.19 s  muL_opt=1.408e-03  slow n=4 CV(t*mu)=0.01 p=0.99 C=1.126e-03 s (rel rms 0.01)
-fig19c  Simulation  L=128  opt mu=1.1e-05  t_min=1.06 s  muL_opt=1.408e-03  slow n=6 CV(t*mu)=0.03 p=0.99 C=1.623e-03 s (rel rms 0.03)
-fig19d  Experiment  mu=1.2e-05  opt L=112      t_min=1.20 s  muL_opt=1.344e-03
-fig19d  Simulation  mu=1.2e-05  opt L=120      t_min=1.20 s  muL_opt=1.440e-03  slow n=4 CV(t*L)=0.05 p=0.92 C=1.509e-03 s (rel rms 0.05)
-fig21c  Experiment  L=64  opt mu=1.6e-05  t_min=3.80 s  muL_opt=1.024e-03  slow n=8 CV(t*mu)=0.01 p=0.98 C=3.177e-03 s (rel rms 0.01)
-fig21c  Simulation  L=64  opt mu=1.3e-05  t_min=3.77 s  muL_opt=8.320e-04  slow n=8 CV(t*mu)=0.02 p=1.03 C=2.995e-03 s (rel rms 0.02)
-fig21d  Experiment  mu=6e-06  opt L=160      t_min=3.84 s  muL_opt=9.600e-04  slow n=4 CV(t*L)=0.16 p=1.73 C=3.929e-03 s (rel rms 0.16)
-fig21d  Simulation  mu=6e-06  opt L=128      t_min=3.76 s  muL_opt=7.680e-04  slow n=4 CV(t*L)=0.21 p=1.91 C=3.724e-03 s (rel rms 0.21)
-fig22a  Experiment  L=64  opt mu=1.5e-05  t_min=3.80 s  muL_opt=9.600e-04
-fig22a  Simulation  L=64  opt mu=1.1e-05  t_min=3.49 s  muL_opt=7.040e-04
-fig22b  Experiment  mu=6e-06  opt L=160      t_min=4.00 s  muL_opt=9.600e-04
-fig22b  Simulation  mu=6e-06  opt L=128      t_min=3.76 s  muL_opt=7.680e-04
+Digitized convergence-time curves, Ouyang et al. TWS 228 (2026) 115090
+(best = inset value where available, else main axes; capped points t>=19.8 s excluded from optima/fits)
+
+OPTIMA  (near = grid points within 0.03 s of the minimum)
+  fig16c  Experiment  L=128     opt mu=8.5e-6  t_min=2.886 s  mu*L=1.088e-03  near=[8.0e-6,8.5e-6,9.0e-6]  eff(<5s)=[4.0e-6,10.0e-6]
+  fig16c  Simulation  L=128     opt mu=8.5e-6  t_min=2.529 s  mu*L=1.088e-03  near=[8.5e-6,9.0e-6]  eff(<5s)=[4.0e-6,11.0e-6]
+  fig16d  Experiment  mu=1e-05   opt L=100     t_min=2.528 s  mu*L=1.000e-03  near=[96,100]  eff(<5s)=[48,128]
+  fig16d  Simulation  mu=1e-05   opt L=112     t_min=2.603 s  mu*L=1.120e-03  near=[100,112]  eff(<5s)=[60,128]
+  fig17b  Exp_FEM     L=128     opt mu=3.5e-6  t_min=4.534 s  mu*L=4.480e-04  near=[3.5e-6]  eff(<5s)=[3.0e-6,3.5e-6]
+  fig17b  Exp_sdDMDc  L=128     opt mu=8.5e-6  t_min=2.947 s  mu*L=1.088e-03  near=[8.0e-6,8.5e-6,9.0e-6]  eff(<5s)=[4.0e-6,10.0e-6]
+  fig17c  Exp_FEM     mu=1e-05   opt L=40      t_min=3.824 s  mu*L=4.000e-04  near=[40]  eff(<5s)=[40,48]
+  fig17c  Exp_sdDMDc  mu=1e-05   opt L=96      t_min=2.546 s  mu*L=9.600e-04  near=[96]  eff(<5s)=[48,96]
+  fig19c  Experiment  L=128     opt mu=10.0e-6 t_min=1.192 s  mu*L=1.280e-03  near=[9.0e-6,10.0e-6,11.0e-6]  eff(<5s)=[2.0e-6,15.0e-6]
+  fig19c  Simulation  L=128     opt mu=11.0e-6 t_min=1.056 s  mu*L=1.408e-03  near=[11.0e-6]  eff(<5s)=[3.0e-6,16.0e-6]
+  fig19d  Experiment  mu=1.2e-05 opt L=112     t_min=1.213 s  mu*L=1.344e-03  near=[90,96,100,112]  eff(<5s)=[32,160]
+  fig19d  Simulation  mu=1.2e-05 opt L=120     t_min=1.198 s  mu*L=1.440e-03  near=[112,120]  eff(<5s)=[32,160]
+  fig21c  Experiment  L=64      opt mu=16.0e-6 t_min=3.793 s  mu*L=1.024e-03  near=[15.0e-6,16.0e-6]  eff(<5s)=[11.0e-6,18.0e-6]
+  fig21c  Simulation  L=64      opt mu=13.0e-6 t_min=3.767 s  mu*L=8.320e-04  near=[13.0e-6]  eff(<5s)=[9.5e-6,15.0e-6]
+  fig21d  Experiment  mu=6e-06   opt L=160     t_min=3.833 s  mu*L=9.600e-04  near=[150,160]  eff(<5s)=[120,160]
+  fig21d  Simulation  mu=6e-06   opt L=128     t_min=3.757 s  mu*L=7.680e-04  near=[128]  eff(<5s)=[112,150]
+  fig22a  Experiment  L=64      opt mu=15.0e-6 t_min=3.809 s  mu*L=9.600e-04  near=[15.0e-6]  eff(<5s)=[7.5e-6,18.0e-6]
+  fig22a  Simulation  L=64      opt mu=11.0e-6 t_min=3.493 s  mu*L=7.040e-04  near=[11.0e-6]  eff(<5s)=[5.0e-6,16.0e-6]
+  fig22b  Experiment  mu=6e-06   opt L=160     t_min=3.998 s  mu*L=9.600e-04  near=[150,160]  eff(<5s)=[112,160]
+  fig22b  Simulation  mu=6e-06   opt L=128     t_min=3.758 s  mu*L=7.680e-04  near=[128]  eff(<5s)=[80,160]
+
+SLOW BRANCH  (left of optimum, t >= 1.5 t_min): t = C/(mu L) LS fit; CV of t*x; log-log slope p (t ~ x^-p); offset model t = C2/(mu L) + t0
+  fig16c  Experiment  n=7 mu=[1.0e-6..4.0e-6]  CV(t*mu)=0.046  p=1.07  C=2.420e-03 s (rel rms 5.8%, max 9.4%)  C2=2.597e-03 t0=-0.85 s  kappa=ln20/(C fs)=0.124
+  fig16c  Simulation  n=7 mu=[1.5e-6..4.5e-6]  CV(t*mu)=0.026  p=1.04  C=2.471e-03 s (rel rms 2.8%, max 4.2%)  C2=2.608e-03 t0=-0.46 s  kappa=ln20/(C fs)=0.121
+  fig16d  Experiment  n=5 L=[32..64]  CV(t*L)=0.116  p=1.17  C=2.685e-03 s (rel rms 10.9%, max 15.7%)  C2=3.409e-03 t0=-1.69 s  kappa=ln20/(C fs)=0.112  [lam_min model: CV=0.06 p=1.12]
+  fig16d  Simulation  n=5 L=[32..64]  CV(t*L)=0.128  p=1.24  C=2.890e-03 s (rel rms 12.2%, max 17.3%)  C2=3.857e-03 t0=-2.26 s  kappa=ln20/(C fs)=0.104  [lam_min model: CV=0.08 p=1.18]
+  fig17b  Exp_FEM     n=3 mu=[1.0e-6..2.0e-6]  CV(t*mu)=0.099  p=1.26  C=1.956e-03 s (rel rms 9.5%, max 12.1%)  C2=2.459e-03 t0=-3.07 s  kappa=ln20/(C fs)=0.153
+  fig17b  Exp_sdDMDc  n=7 mu=[1.0e-6..4.0e-6]  CV(t*mu)=0.040  p=1.06  C=2.434e-03 s (rel rms 5.0%, max 8.2%)  C2=2.586e-03 t0=-0.73 s  kappa=ln20/(C fs)=0.123
+  fig17c  Exp_FEM     n=3 L=[20..32]  CV(t*L)=0.213  p=1.80  C=2.463e-03 s (rel rms 20.8%, max 29.4%)  C2=4.342e-03 t0=-7.52 s  kappa=ln20/(C fs)=0.122  [lam_min model: CV=0.20 p=0.68]
+  fig17c  Exp_sdDMDc  n=7 L=[20..64]  CV(t*L)=0.154  p=1.29  C=3.075e-03 s (rel rms 19.6%, max 32.4%)  C2=3.904e-03 t0=-2.65 s  kappa=ln20/(C fs)=0.0974  [lam_min model: CV=0.20 p=0.73]
+  fig19c  Experiment  n=6 mu=[0.5e-6..5.0e-6]  CV(t*mu)=0.015  p=0.98  C=1.126e-03 s (rel rms 2.0%, max 3.6%)  C2=1.119e-03 t0=0.07 s  kappa=ln20/(C fs)=0.266
+  fig19c  Simulation  n=7 mu=[1.0e-6..7.0e-6]  CV(t*mu)=0.031  p=1.00  C=1.624e-03 s (rel rms 2.8%, max 7.3%)  C2=1.612e-03 t0=0.06 s  kappa=ln20/(C fs)=0.184
+  fig19d  Experiment  n=4 L=[16..48]  CV(t*L)=0.051  p=1.06  C=1.265e-03 s (rel rms 5.2%, max 9.6%)  C2=1.323e-03 t0=-0.20 s  kappa=ln20/(C fs)=0.237  [lam_min model: CV=0.04 p=1.04]
+  fig19d  Simulation  n=6 L=[16..64]  CV(t*L)=0.058  p=0.90  C=1.524e-03 s (rel rms 7.1%, max 10.7%)  C2=1.391e-03 t0=0.42 s  kappa=ln20/(C fs)=0.197  [lam_min model: CV=0.07 p=0.88]
+  fig21c  Experiment  n=12 mu=[3.0e-6..8.5e-6]  CV(t*mu)=0.009  p=0.98  C=3.185e-03 s (rel rms 1.0%, max 2.1%)  C2=3.112e-03 t0=0.24 s  kappa=ln20/(C fs)=0.0941
+  fig21c  Simulation  n=11 mu=[2.5e-6..7.5e-6]  CV(t*mu)=0.025  p=1.05  C=2.981e-03 s (rel rms 2.5%, max 4.2%)  C2=3.061e-03 t0=-0.32 s  kappa=ln20/(C fs)=0.1
+  fig21d  Experiment  n=8 L=[40..100]  CV(t*L)=0.130  p=1.24  C=3.784e-03 s (rel rms 14.4%, max 23.9%)  C2=4.996e-03 t0=-3.42 s  kappa=ln20/(C fs)=0.0792  [lam_min model: CV=0.09 p=1.00]
+  fig21d  Simulation  n=7 L=[40..96]  CV(t*L)=0.168  p=1.32  C=3.601e-03 s (rel rms 18.0%, max 25.9%)  C2=5.116e-03 t0=-4.43 s  kappa=ln20/(C fs)=0.0832  [lam_min model: CV=0.08 p=1.05]
+  fig22a  Experiment  n=8 mu=[1.0e-6..4.5e-6]  CV(t*mu)=0.374  p=0.18  C=7.313e-04 s (rel rms 40.3%, max 55.9%)  C2=1.496e-04 t0=5.37 s  kappa=ln20/(C fs)=0.41
+  fig22a  Simulation  n=6 mu=[1.0e-6..3.5e-6]  CV(t*mu)=0.355  p=0.15  C=5.931e-04 s (rel rms 36.7%, max 49.5%)  C2=9.405e-05 t0=5.01 s  kappa=ln20/(C fs)=0.505
+  fig22b  Experiment  n=3 L=[32..48]  CV(t*L)=0.121  p=0.40  C=1.632e-03 s (rel rms 10.0%, max 13.6%)  C2=6.685e-04 t0=4.24 s  kappa=ln20/(C fs)=0.184  [lam_min model: CV=0.41 p=0.16]
+  fig22b  Simulation  n=3 L=[32..48]  CV(t*L)=0.117  p=0.42  C=1.475e-03 s (rel rms 9.8%, max 12.7%)  C2=6.195e-04 t0=3.77 s  kappa=ln20/(C fs)=0.203  [lam_min model: CV=0.41 p=0.16]
+
+SIM vs EXP (common uncapped points; effective = both < 5 s)
+  fig16c  stable    n=20  max rel 18.9% (at 11.0e-6)  max abs 1.34 s (at 12.0e-6)
+  fig16c  effective n=13  max rel 12.4% (at 8.5e-6)  max abs 0.42 s (at 5.5e-6)
+  fig16d  stable    n=15  max rel 11.9% (at 120)  max abs 0.90 s (at 32)
+  fig16d  effective n= 9  max rel 11.9% (at 120)  max abs 0.37 s (at 120)
+  fig19c  stable    n=17  max rel 51.6% (at 4.0e-6)  max abs 3.83 s (at 1.0e-6)
+  fig19c  effective n=13  max rel 51.6% (at 4.0e-6)  max abs 1.23 s (at 3.0e-6)
+  fig19d  stable    n=17  max rel 33.3% (at 40)  max abs 0.96 s (at 16)
+  fig19d  effective n=16  max rel 33.3% (at 40)  max abs 0.85 s (at 32)
+  fig21c  stable    n=22  max rel 60.7% (at 17.0e-6)  max abs 2.54 s (at 17.0e-6)
+  fig21c  effective n= 5  max rel 11.0% (at 11.0e-6)  max abs 0.52 s (at 11.0e-6)
+  fig21d  stable    n=15  max rel 41.7% (at 160)  max abs 1.60 s (at 160)
+  fig21d  effective n= 5  max rel 19.2% (at 150)  max abs 0.74 s (at 150)
+  fig22a  stable    n=27  max rel 132.7% (at 18.0e-6)  max abs 6.06 s (at 18.0e-6)
+  fig22a  effective n=12  max rel 24.3% (at 16.0e-6)  max abs 0.96 s (at 16.0e-6)
+  fig22b  stable    n=16  max rel 24.2% (at 160)  max abs 0.97 s (at 160)
+  fig22b  effective n= 7  max rel 24.2% (at 160)  max abs 0.97 s (at 160)
+
+DIVERGENCE ONSET (last converged / first capped point right of the optimum)
+  fig17b  Exp_FEM     mu in (5.0e-6, 5.5e-6]  mu*L in (6.400e-04, 7.040e-04]
+  fig17c  Exp_FEM     L in (60, 64]  mu*L in (6.000e-04, 6.400e-04]
+  fig21c  Experiment  mu in (18.0e-6, 19.0e-6]  mu*L in (1.152e-03, 1.216e-03]
+  fig21c  Simulation  mu in (17.0e-6, 18.0e-6]  mu*L in (1.088e-03, 1.152e-03]
+  fig22a  Experiment  mu in (19.0e-6, 20.0e-6]  mu*L in (1.216e-03, 1.280e-03]
+  fig22a  Simulation  mu in (18.0e-6, 19.0e-6]  mu*L in (1.152e-03, 1.216e-03]
+
+C CONSISTENCY  (same case: mu-sweep vs L-sweep; exp vs sim)
+  120 Hz 1-ch C_mu exp 2.420e-03 sim 2.471e-03 | C_L exp 2.685e-03 sim 2.890e-03 | C_L/C_mu exp 1.11 sim 1.17 | C_exp/C_sim mu 0.98 L 0.93
+  280 Hz 1-ch C_mu exp 1.126e-03 sim 1.624e-03 | C_L exp 1.265e-03 sim 1.524e-03 | C_L/C_mu exp 1.12 sim 0.94 | C_exp/C_sim mu 0.69 L 0.83
+  85 Hz 2-ch  C_mu exp 3.185e-03 sim 2.981e-03 | C_L exp 3.784e-03 sim 3.601e-03 | C_L/C_mu exp 1.19 sim 1.21 | C_exp/C_sim mu 1.07 L 1.05
+
+CROSS-FIGURE CHECK (same experimental sd-DMDc data plotted twice)
+  fig16c vs fig17b: n=19  mean(fig17b-fig16c)=+0.066 s  max |diff|=0.117 s
+  fig16d vs fig17c: n=8  mean(fig17c-fig16d)=+0.004 s  max |diff|=0.016 s
+
+PAPER STATEMENTS vs DIGITIZED DATA
+  16c "min at mu=9e-6": exp opt 8.5e-6 near ['8.0e-6', '8.5e-6', '9.0e-6']; sim opt 8.5e-6 near ['8.5e-6', '9.0e-6']
+  16c "max rel err <12%, abs <0.4 s across the entire stable range": stable range 18.9% / 1.34 s; effective range 12.4% / 0.42 s
+  16c "effective conv. for mu in [4e-6,1e-5] (both)": exp [4.0e-6, 10.0e-6], sim [4.0e-6, 11.0e-6] (sim t(1.1e-5)=4.43 s)
+  16d "effective for L in [48,128]": exp [48, 128], sim [60, 128] at 5 s; with the drawn line (5.19 s) sim [48, 128] (t_sim(48)=5.13)
+  16d "optimal L 112 (sim) / 100 (exp)": exp opt 100 near [96.0, 100.0]; sim opt 112 near [100.0, 112.0]
+  16d "relative error within 13%": max 11.9%
+  17a/b "FEM 17.64 s at mu=5e-6, L=128": 17b FEM(5e-6) = 17.64 s
+  17b/c "FEM minima 4.48 s and 3.83 s": 4.53 s (mu=3.5e-6), 3.82 s (L=40)
+  17c "FEM diverges for L>60": FEM t(60)=14.36 s, t(64)=20.00 s
+  19c optima: exp 10.0e-6 (near ['9.0e-6', '10.0e-6', '11.0e-6']), sim 11.0e-6 (near ['11.0e-6']); effective exp [2.0e-6, 15.0e-6] sim [3.0e-6, 16.0e-6]
+  19d optima: exp 112 (near ['90', '96', '100', '112']), sim 120 (near ['112', '120']); effective exp [32, 160] sim [32, 160]
+  21c optima: exp 16.0e-6 (near ['15.0e-6', '16.0e-6']), sim 13.0e-6 (near ['13.0e-6']); effective exp [11.0e-6, 18.0e-6] sim [9.5e-6, 15.0e-6]
+  21d optima: exp 160 (near ['150', '160']), sim 128 (near ['128']); effective exp [120, 160] sim [112, 150]
+  19 "abs discrepancy < 1.3 s in effective regions": 19c 1.23 s, 19d 0.85 s
+  21 "curves match closely for mu<=1.4e-5 and L<=140": max |diff| 1.14 s (12%) for mu<=1.4e-5, 1.10 s (13%) for L<=140
+  22a "minima 3.48 s (sim) and 3.81 s (exp)": sim 3.49 s (mu2=11.0e-6), exp 3.81 s (mu2=15.0e-6)
+  22 "discrepancies within 1.5 s across effective regions": 22a 0.96 s, 22b 0.97 s
+
+QUALITY: resolution (s/px), inset-minus-main offset, drawn threshold line
+  fig16c  main 0.0428 s/px  inset 0.0103 s/px  inset-main mean -0.008 max 0.027  dashed line at 5.01 s
+  fig16d  main 0.0311 s/px  inset 0.0132 s/px  inset-main mean -0.006 max 0.023  dashed line at 5.19 s
+  fig17b  main 0.0959 s/px  inset -  inset-main mean - max -  dashed line at - s
+  fig17c  main 0.0924 s/px  inset -  inset-main mean - max -  dashed line at - s
+  fig19c  main 0.0448 s/px  inset 0.0093 s/px  inset-main mean -0.007 max 0.032  dashed line at 5.01 s
+  fig19d  main 0.0210 s/px  inset 0.0083 s/px  inset-main mean -0.004 max 0.018  dashed line at 5.06 s
+  fig21c  main 0.0379 s/px  inset 0.0203 s/px  inset-main mean -0.014 max 0.039  dashed line at 4.98 s
+  fig21d  main 0.0376 s/px  inset 0.0148 s/px  inset-main mean +0.012 max 0.039  dashed line at 5.00 s
+  fig22a  main 0.0460 s/px  inset 0.0215 s/px  inset-main mean -0.012 max 0.076  dashed line at 5.02 s
+  fig22b  main 0.0164 s/px  inset 0.0119 s/px  inset-main mean -0.004 max 0.015  dashed line at 5.01 s

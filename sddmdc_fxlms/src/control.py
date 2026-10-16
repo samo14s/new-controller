@@ -152,3 +152,22 @@ def fem_like_model(zeta=0.006):
     from plate import F_FEM
     T = Testbed(zeta=zeta, f_override=F_FEM, f_amp=1e7, f_lp=1e6, f_hp=1e-6)
     return LTIModel(T.Ad, T.Bd, T.Cc[T.iv], T.fs)
+
+
+# Published converged voltages (Figs. 11, 13, 14): sum_j |G_s,j(w0)|^2 of the
+# real plate, as d^2 / sum_j |y_j|^2 (minimum-norm FxLMS solution).
+PAPER_G2 = {120.0: (0.272 / 1.570)**2, 280.0: (0.341 / 1.160)**2,
+            85.0: 0.410**2 / (1.901**2 + 2.215**2)}
+NU_CASES = ((120.0, 1, (1,)), (280.0, 0, (0,)), (85.0, 1, (0, 1)))
+
+
+def gain_normalisation(T):
+    """nu per control frequency: rescales mu so that the testbed runs at the
+    paper's adaptation gain sum|G_s|^2, relative to the calibration case
+    (120 Hz, where nu = 1 by construction because mu_scale was fitted there)."""
+    def g2(f, s, acts):
+        H = T.frf([f], out_rows=T.iv)[0]
+        return float(sum(abs(H[s, 1 + a])**2 for a in acts))
+    ref = PAPER_G2[120.0] / g2(120.0, 1, (1,))
+    return {f: PAPER_G2[f] / g2(f, s, acts) / ref for f, s, acts in NU_CASES}, \
+        {f: g2(f, s, acts) for f, s, acts in NU_CASES}

@@ -1,0 +1,38 @@
+calibration: zeta = 0.00240, mu_scale = 0.2471 (calibrated)
+gain normalisation nu (published converged voltages, see run_sweeps.py): 120 Hz: 1.000, 280 Hz: 1.327, 85 Hz: 0.337
+each case is run twice: raw (mu_scale only) and gain-normalised (mu_scale * nu); the figure shows the normalised runs
+
+=== Fig. 10-11: 120 Hz / S2 / A2: L = 128, mu_paper = 5e-06 -> mu_testbed = 1.235e-06 ===
+  truth nu=1.00: decay time 3.806 s | amplitude 0.2239 -> 1.42e-03 V (99.37 % reduction) | tone reduction 90.8 dB | actuating peak [1.14] V
+  rom   nu=1.00: decay time 3.706 s | amplitude 0.2395 -> 1.60e-08 V (100.00 % reduction) | tone reduction 137.7 dB | actuating peak [1.201] V
+  truth nu=1.00: decay time 3.806 s | amplitude 0.2239 -> 1.42e-03 V (99.37 % reduction) | tone reduction 90.8 dB | actuating peak [1.14] V
+  rom   nu=1.00: decay time 3.706 s | amplitude 0.2395 -> 1.60e-08 V (100.00 % reduction) | tone reduction 137.7 dB | actuating peak [1.201] V
+  paper: decay 4.121 s (exp) / 3.763 s (sim); amplitude 0.272 / 0.255 V; actuating peaks [1.57] / [1.465] V; 70 dB; 98.16 % reduction
+  ratio exp/sim decay time (normalised): testbed 1.027, paper 1.095
+  10 repeated virtual experiments: decay 3.806 +- 0.012 s   (paper: +-0.014 / 0.015 / 0.031 s)
+
+=== Fig. 13: 280 Hz / S1 / A1: L = 128, mu_paper = 5e-06 -> mu_testbed = 1.235e-06 ===
+  truth nu=1.00: decay time 1.680 s | amplitude 0.4068 -> 1.42e-03 V (99.65 % reduction) | tone reduction 96.3 dB | actuating peak [1.407] V
+  rom   nu=1.00: decay time 1.631 s | amplitude 0.4776 -> 1.07e-09 V (100.00 % reduction) | tone reduction 244.6 dB | actuating peak [1.553] V
+  truth nu=1.33: decay time 1.219 s | amplitude 0.4068 -> 1.42e-03 V (99.65 % reduction) | tone reduction 97.0 dB | actuating peak [1.407] V
+  rom   nu=1.33: decay time 1.329 s | amplitude 0.4776 -> 1.41e-09 V (100.00 % reduction) | tone reduction 242.1 dB | actuating peak [1.553] V
+  paper: decay 1.832 s (exp) / 2.51 s (sim); amplitude 0.341 / 0.339 V; actuating peaks [1.16] / [1.195] V; 79 dB; 97.95 % reduction
+  ratio exp/sim decay time (normalised): testbed 0.917, paper 0.730
+  10 repeated virtual experiments: decay 1.219 +- 0.001 s   (paper: +-0.014 / 0.015 / 0.031 s)
+
+=== Fig. 14: 85 Hz / S2 / A1+A2: L = 64, mu_paper = 1e-05 -> mu_testbed = 2.471e-06 ===
+  truth nu=1.00: decay time 20.000 s | amplitude 0.7986 -> 1.68e+00 V (-110.50 % reduction) | tone reduction 31.7 dB | actuating peak [2.271 2.94 ] V
+  rom   nu=1.00: decay time 20.000 s | amplitude 0.8350 -> 1.39e+00 V (-66.11 % reduction) | tone reduction 35.2 dB | actuating peak [2.281 2.953] V
+  truth nu=0.34: decay time 5.584 s | amplitude 0.7986 -> 1.42e-03 V (99.82 % reduction) | tone reduction 89.9 dB | actuating peak [1.779 2.304] V
+  rom   nu=0.34: decay time 5.661 s | amplitude 0.8350 -> 1.59e-05 V (100.00 % reduction) | tone reduction 90.8 dB | actuating peak [1.88  2.434] V
+  paper: decay 5.165 s (exp) / 4.577 s (sim); amplitude 0.41 / 0.422 V; actuating peaks [1.901, 2.215] / [1.718, 1.99] V; 67 dB; 99.51 % reduction
+  ratio exp/sim decay time (normalised): testbed 0.986, paper 1.128
+  10 repeated virtual experiments: decay 5.591 +- 0.003 s   (paper: +-0.014 / 0.015 / 0.031 s)
+
+=== Fig. 12: noise injected in the simulation, 120 Hz / S2 ===
+  SNR 50 dB: decay 3.72 s (noise-free 3.71 s), residual tone 3.37e-06 V, residual broadband RMS 5.37e-04 V
+  SNR 40 dB: decay 3.77 s (noise-free 3.71 s), residual tone 1.07e-05 V, residual broadband RMS 1.70e-03 V
+  SNR 30 dB: decay 4.11 s (noise-free 3.71 s), residual tone 3.39e-05 V, residual broadband RMS 5.37e-03 V
+  SNR 20 dB: decay 20.00 s (noise-free 3.71 s), residual tone 1.07e-04 V, residual broadband RMS 1.70e-02 V
+
+saved figures/fig_control.png

@@ -1,0 +1,36 @@
+testbed zeta = 0.00240, mu_scale = 0.2471; ROM r = 63
+
+=== G1: exact two-weight reduction ===
+  120 Hz, L = 100, mu = 2e-06: max|e_full - e_2w| = 2.46e-13 V (max|e| = 0.240)
+  280 Hz, L =  37, mu = 3e-06: max|e_full - e_2w| = 7.08e-13 V (max|e| = 0.478)
+  85 Hz, L =  16, mu = 1e-06: max|e_full - e_2w| = 7.52e-13 V (max|e| = 0.835)
+  G1: PASS
+
+=== G2/G3: 120 Hz / S2 / A2, L = 128, mu swept (paper units) ===
+  mu_paper :   0.5   1.0   1.5   2.0   2.5   3.0   3.5   4.0   4.5   5.0   5.5   6.0   6.5   7.0   7.5   8.0   8.5   9.0   9.5  10.0  11.0  12.0  13.0  14.0  15.0  16.0  17.0  18.0  19.0  20.0  21.0  22.0  23.0  24.0  25.0
+  full     : 20.00 19.03 12.65  9.45  7.58  6.31  5.42  4.74  4.22  3.81  3.46  3.20  2.89  2.83  2.54  2.51  2.49  2.48  2.48  2.48  3.15 10.73 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  LTI      : 20.00 19.34 12.89  9.66  7.73  6.44  5.52  4.83  4.29  3.88  3.54  3.23  2.92  2.85  2.56  2.52  2.50  2.48  2.48  2.49  3.13  9.83 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  median |LTI/full - 1| = 1.6 %, max = 8.4 % over 21 converging points
+  divergence: full FxLMS first non-convergent mu = 13.0e-6, LTI spectral radius > 1 from mu = 13.0e-6  -> G3 PASS
+  cost: full sweep 7.3 s, LTI sweep 0.9 s
+  at the optimum (mu = 9.5e-6, t5 = 2.48 s) e(t5) is carried by closed-loop poles at [117.06 120.02] Hz with decay rates [0.41 1.47] 1/s; open-loop structural modes: [ 14.02  30.49  86.96 117.07 242.61 276.07] Hz, sigma_n = zeta*omega_n = [0.21 0.46 1.31 1.77 3.66 4.16] 1/s
+
+=== G2/G3: 280 Hz / S1 / A1, L = 128, mu swept (paper units) ===
+  mu_paper :   0.5   1.0   1.5   2.0   2.5   3.0   3.5   4.0   4.5   5.0   5.5   6.0   6.5   7.0   7.5   8.0   8.5   9.0   9.5  10.0  11.0  12.0  13.0  14.0  15.0  16.0  17.0  18.0  19.0  20.0  21.0  22.0  23.0  24.0  25.0
+  full     : 17.25  8.61  5.71  4.27  3.41  2.83  2.42  2.11  1.87  1.68  1.50  1.42  1.23  1.20  1.18  1.17  1.17  1.18  1.20  1.47  3.13 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  LTI      : 17.59  8.76  5.82  4.35  3.47  2.88  2.46  2.15  1.91  1.71  1.53  1.44  1.24  1.20  1.19  1.18  1.17  1.18  1.20  1.47  3.07 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  median |LTI/full - 1| = 1.8 %, max = 2.3 % over 21 converging points
+  divergence: full FxLMS first non-convergent mu = 12.0e-6, LTI spectral radius > 1 from mu = 13.0e-6  -> G3 PASS
+  cost: full sweep 7.4 s, LTI sweep 1.0 s
+  at the optimum (mu = 8.5e-6, t5 = 1.17 s) e(t5) is carried by closed-loop poles at [279.93 276.14] Hz with decay rates [3.05 1.26] 1/s; open-loop structural modes: [ 14.02  30.49  86.96 117.07 242.61 276.07] Hz, sigma_n = zeta*omega_n = [0.21 0.46 1.31 1.77 3.66 4.16] 1/s
+
+=== G2/G3: 85 Hz / S2 / A1+A2, L = 64, mu swept (paper units) ===
+  mu_paper :   0.5   1.0   1.5   2.0   2.5   3.0   3.5   4.0   4.5   5.0   5.5   6.0   6.5   7.0   7.5   8.0   8.5   9.0   9.5  10.0  11.0  12.0  13.0  14.0  15.0  16.0  17.0  18.0  19.0  20.0  21.0  22.0  23.0  24.0  25.0
+  full     : 20.00 18.88 12.58  9.43  7.54  6.29  5.37  4.75  4.26  3.80  3.69  3.28  3.25  3.25  3.72  4.77 10.26 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  LTI      : 20.00 20.00 13.55 10.16  8.13  6.78  5.81  5.07  4.43  4.21  3.78  3.71  3.67  3.68  3.72  4.70  9.09 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00 20.00
+  median |LTI/full - 1| = 7.8 %, max = 13.3 % over 15 converging points
+  divergence: full FxLMS first non-convergent mu = 9.0e-6, LTI spectral radius > 1 from mu = 9.5e-6  -> G3 PASS
+  cost: full sweep 8.5 s, LTI sweep 0.9 s
+  at the optimum (mu = 7.0e-6, t5 = 3.25 s) e(t5) is carried by closed-loop poles at [84.99 86.97] Hz with decay rates [1.03 0.29] 1/s; open-loop structural modes: [ 14.02  30.49  86.96 117.07 242.61 276.07] Hz, sigma_n = zeta*omega_n = [0.21 0.46 1.31 1.77 3.66 4.16] 1/s
+
+G2: median errors [1.6 1.8 7.8] % -> PASS

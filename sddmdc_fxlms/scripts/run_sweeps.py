@@ -25,7 +25,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from _common import Tee, identify, Testbed, ROOT, FIGS, RESULTS
-from control import Plants, run_case, lti_t5, fem_like_model
+from control import Plants, run_case, lti_t5, fem_like_model, gain_normalisation, PAPER_G2
 import calib
 
 log = Tee('sweeps.txt')
@@ -67,28 +67,47 @@ CURVES = [
     ('17c', 120.0, 1, [1], 'L', 1e-5, 'validation (FEM path)', P_fem, 'FEM'),
 ]
 
+# --- per-case gain normalisation -------------------------------------------
+# Tonal FxLMS adapts at a rate proportional to mu * sum_j |G_s,j(w0)|^2 (with
+# G_c = G_s).  The testbed matches the paper's secondary-path gain only on
+# average (one g_A for both MFCs), so at each control frequency the published
+# CONVERGED voltages give the paper's sum_j |G_j|^2 = d^2 / sum_j |y_j|^2
+# (Figs. 11, 13, 14 -- not used anywhere in the fit), and the testbed's comes
+# from its FRF.  nu_case rescales mu so that both run at the same adaptation
+# gain; it equals 1 for the calibration case by construction.
+NU, G2T = gain_normalisation(T)
+for f in NU:
+    log(f"gain normalisation {f:g} Hz: paper sum|G|^2 = {PAPER_G2[f]:.4f}, testbed = "
+        f"{G2T[f]:.4f} -> nu = {NU[f]:.3f}")
+
 store = {}
 fig, axes = plt.subplots(2, 4, figsize=(18, 8))
-for ax, (fg, f, s, acts, sw, fixed, role, PP, filt) in zip(axes.T.ravel(), CURVES):
+fig2, axes2 = plt.subplots(2, 4, figsize=(18, 8))
+for ax, ax2, (fg, f, s, acts, sw, fixed, role, PP, filt) in zip(axes.T.ravel(), axes2.T.ravel(), CURVES):
     x, te, ts = paper(fg, filt)
     xs = np.unique(np.r_[x, np.linspace(x.min(), x.max(), 25)])
     if sw == 'L':
         xs = np.unique(np.round(xs).astype(int))
-    tt, tr, th = [], [], []
+    tt, tr, th, tn, thn = [], [], [], [], []
     for xv in xs:
         mu = KAPPA * (xv if sw == 'mu' else fixed)
         L = int(fixed if sw == 'mu' else xv)
         tt.append(run_case(PP, 'truth', f, s, acts, mu, L)['t_c'])
         tr.append(run_case(PP, 'rom', f, s, acts, mu, L)['t_c'])
         th.append(lti_t5(PP, 'rom', f, s, acts, mu, L)[0])
-    tt, tr, th = map(np.array, (tt, tr, th))
-    store[fg] = dict(x=xs, truth=tt, rom=tr, theory=th, paper_x=x, paper_exp=te, paper_sim=ts)
+        tn.append(run_case(PP, 'truth', f, s, acts, NU[f] * mu, L)['t_c'])
+        thn.append(lti_t5(PP, 'rom', f, s, acts, NU[f] * mu, L)[0])
+    tt, tr, th, tn, thn = map(np.array, (tt, tr, th, tn, thn))
+    store[fg] = dict(x=xs, truth=tt, rom=tr, theory=th, truth_norm=tn, theory_norm=thn,
+                     paper_x=x, paper_exp=te, paper_sim=ts)
     # scores on the paper's abscissae (exclude points capped at 20 s on both sides)
     idx = np.searchsorted(xs, x)
     log(f"\n{fg} ({role}): {f:g} Hz, sensor S{s + 1}, actuators {['A%d' % (a + 1) for a in acts]},"
         f" {sw} swept, fixed {'L' if sw == 'mu' else 'mu'} = {fixed:g}")
     for name, vec, ref in (('truth vs paper exp', tt, te), ('rom vs paper sim ', tr, ts),
-                           ('theory vs paper exp', th, te), ('truth vs rom      ', tt, None)):
+                           ('theory vs paper exp', th, te), ('truth vs rom      ', tt, None),
+                           (f'NORMALISED (nu={NU[f]:.2f}) truth vs paper exp', tn, te),
+                           (f'NORMALISED theory vs paper exp', thn, te)):
         b = vec[idx]
         r_ = tr[idx] if ref is None else ref
         ok = np.isfinite(r_) & ~((b >= 19.5) & (r_ >= 19.5))
@@ -97,7 +116,8 @@ for ax, (fg, f, s, acts, sw, fixed, role, PP, filt) in zip(axes.T.ravel(), CURVE
         err = np.abs(np.log(b[ok] / r_[ok]))
         log(f"   {name}: median |ratio-1| = {100 * (np.exp(np.median(err)) - 1):5.1f} %, "
             f"max = {100 * (np.exp(err.max()) - 1):6.1f} %  ({ok.sum()} pts)")
-    for name, vec in (('paper exp', te), ('truth', tt[idx]), ('theory', th[idx])):
+    for name, vec in (('paper exp', te), ('truth', tt[idx]), ('theory', th[idx]),
+                      ('truth/nu', tn[idx]), ('theory/nu', thn[idx])):
         good = np.isfinite(vec)
         if good.any():
             k = np.nanargmin(np.where(good, vec, np.inf))
@@ -119,10 +139,27 @@ for ax, (fg, f, s, acts, sw, fixed, role, PP, filt) in zip(axes.T.ravel(), CURVE
     ax.grid(alpha=0.3)
     if fg == '16c':
         ax.legend(fontsize=7)
+    ax2.plot(x, te, 'o', mfc='none', color='k', label='paper exp')
+    if np.isfinite(ts).any():
+        ax2.plot(x, ts, 's', mfc='none', color='0.5', label='paper sim')
+    ax2.plot(xs, tn, '-', color='C0', label='testbed truth, gain-normalised')
+    ax2.plot(xs, thn, ':', color='C2', lw=2, label='LTI theory, gain-normalised')
+    ax2.axhline(5, color='k', lw=0.6, ls='--')
+    ax2.set_ylim(0, 21)
+    ax2.set_xlabel(r'$\mu$ (paper units)' if sw == 'mu' else r'$L$')
+    ax2.set_ylabel('convergence time [s]')
+    ax2.set_title(f'Fig. {fg} -- {role}, nu = {NU[f]:.2f}', fontsize=10)
+    ax2.grid(alpha=0.3)
+    if fg == '16c':
+        ax2.legend(fontsize=7)
 
 fig.suptitle(f'Virtual testbed vs published curves (zeta = {ZETA:.4f}, '
              f'mu_testbed = {KAPPA:.3f} mu_paper; only Fig. 16c used for fitting)', fontsize=11)
 fig.tight_layout()
 fig.savefig(os.path.join(FIGS, 'fig_sweeps.png'), dpi=130)
+fig2.suptitle('Same, with mu rescaled per case by the published converged voltages '
+              '(Figs. 11/13/14): equal adaptation gain sum|G_s|^2', fontsize=11)
+fig2.tight_layout()
+fig2.savefig(os.path.join(FIGS, 'fig_sweeps_normalised.png'), dpi=130)
 np.savez(os.path.join(RESULTS, 'sweeps.npz'), **{f'{k}_{kk}': v for k, d in store.items() for kk, v in d.items()})
 log("\nsaved figures/fig_sweeps.png and results/sweeps.npz")

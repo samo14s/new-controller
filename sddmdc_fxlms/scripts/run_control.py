@@ -20,7 +20,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from _common import Tee, identify, Testbed, FIGS
-from control import Plants, run_case
+from control import Plants, run_case, gain_normalisation
 import calib
 
 log = Tee('control.txt')
@@ -31,6 +31,11 @@ log(f"calibration: zeta = {ZETA:.5f}, mu_scale = {KAPPA:.4f} "
 T, M, _, _ = identify(Testbed(zeta=ZETA))
 P = Plants(T, M)
 fs = T.fs
+NU, _ = gain_normalisation(T)
+log("gain normalisation nu (published converged voltages, see run_sweeps.py): "
+    + ", ".join(f"{f:g} Hz: {v:.3f}" for f, v in NU.items()))
+log("each case is run twice: raw (mu_scale only) and gain-normalised (mu_scale * nu);"
+    " the figure shows the normalised runs")
 
 CASES = [  # label, f, sensor, actuators, mu_paper, L, paper numbers
     ('Fig. 10-11: 120 Hz / S2 / A2', 120.0, 1, [1], 5e-6, 128,
@@ -52,17 +57,19 @@ fig, axes = plt.subplots(3, 2, figsize=(13, 9))
 for row, (label, f, s, acts, mu_p, L, pp) in enumerate(CASES):
     log(f"\n=== {label}: L = {L}, mu_paper = {mu_p:g} -> mu_testbed = {KAPPA * mu_p:.3e} ===")
     res = {}
-    for which in ('truth', 'rom'):
-        r = run_case(P, which, f, s, acts, KAPPA * mu_p, L, return_signals=True)
+    for which, nu in (('truth', 1.0), ('rom', 1.0), ('truth', NU[f]), ('rom', NU[f])):
+        r = run_case(P, which, f, s, acts, KAPPA * nu * mu_p, L, return_signals=True)
         e, k_on = r['e'][:, 0], r['k_on']
         a0 = tone_amp(e, f, 0, k_on)
         a1 = tone_amp(e, f, len(e) - int(2 * fs), len(e))
-        res[which] = r
+        res[(which, nu)] = r
         db = 20 * np.log10(a0 / a1)
         red = 100 * (1 - r['amp_end'] / r['amp0'])
-        log(f"  {which:5s}: decay time {r['t_c']:.3f} s | amplitude {r['amp0']:.4f} -> {r['amp_end']:.2e} V"
+        log(f"  {which:5s} nu={nu:.2f}: decay time {r['t_c']:.3f} s | amplitude {r['amp0']:.4f} -> {r['amp_end']:.2e} V"
             f" ({red:.2f} % reduction) | tone reduction {db:.1f} dB | actuating peak "
             f"{np.round(r['y_peak'], 3)} V")
+        if nu == 1.0 and NU[f] != 1.0:
+            continue
         ax = axes[row, 0 if which == 'truth' else 1]
         t = (np.arange(len(e)) - k_on) / fs
         ax.plot(t, e, lw=0.4, color='C0' if which == 'truth' else 'C3')
@@ -72,10 +79,10 @@ for row, (label, f, s, acts, mu_p, L, pp) in enumerate(CASES):
         ax.set_ylabel('sensing voltage [V]')
     log(f"  paper: decay {pp['t'][0]} s (exp) / {pp['t'][1]} s (sim); amplitude {pp['amp'][0]} / {pp['amp'][1]} V;"
         f" actuating peaks {pp['y'][0]} / {pp['y'][1]} V; {pp['db']} dB; {pp['red']} % reduction")
-    log(f"  ratio exp/sim decay time: testbed {res['truth']['t_c'] / res['rom']['t_c']:.3f}, "
-        f"paper {pp['t'][0] / pp['t'][1]:.3f}")
+    log(f"  ratio exp/sim decay time (normalised): testbed "
+        f"{res[('truth', NU[f])]['t_c'] / res[('rom', NU[f])]['t_c']:.3f}, paper {pp['t'][0] / pp['t'][1]:.3f}")
     # 10 repeated experiments
-    reps = [run_case(P, 'truth', f, s, acts, KAPPA * mu_p, L, seed=100 + i) for i in range(10)]
+    reps = [run_case(P, 'truth', f, s, acts, KAPPA * NU[f] * mu_p, L, seed=100 + i) for i in range(10)]
     tc = np.array([q['t_c'] for q in reps])
     log(f"  10 repeated virtual experiments: decay {tc.mean():.3f} +- {tc.std(ddof=1):.3f} s"
         "   (paper: +-0.014 / 0.015 / 0.031 s)")

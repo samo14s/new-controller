@@ -1,0 +1,42 @@
+
+=== 120 Hz / S2 (single): 16c (mu swept, L = 128)  vs  16d (L swept, mu = 1e-05) ===
+  t_exp mu*L    : 15 overlapping points, median |disc| =   5.9 %, max =  39.1 %  [L in 32..150]
+  t_exp mu*L_eff: 15 overlapping points, median |disc| =  12.0 %, max =  58.0 %  [L in 32..150]
+  t_sim mu*L    : 15 overlapping points, median |disc| =   6.4 %, max =  41.9 %  [L in 32..150]
+  t_sim mu*L_eff: 15 overlapping points, median |disc| =   4.7 %, max =  68.2 %  [L in 32..150]
+
+=== 280 Hz / S1 (single): 19c (mu swept, L = 128)  vs  19d (L swept, mu = 1.2e-05) ===
+  t_exp mu*L    : 14 overlapping points, median |disc| =   3.7 %, max =  13.4 %  [L in 16..160]
+  t_exp mu*L_eff: 14 overlapping points, median |disc| =   3.4 %, max =  18.8 %  [L in 16..160]
+  t_sim mu*L    : 14 overlapping points, median |disc| =   7.3 %, max =  19.0 %  [L in 16..160]
+  t_sim mu*L_eff: 14 overlapping points, median |disc| =  10.3 %, max =  25.9 %  [L in 16..160]
+
+=== 85 Hz / S2 (two-channel): 21c (mu swept, L = 64)  vs  21d (L swept, mu = 6e-06) ===
+  t_exp mu*L    : 12 overlapping points, median |disc| =   4.1 %, max =  41.7 %  [L in 40..160]
+  t_exp mu*L_eff: 11 overlapping points, median |disc| =   5.7 %, max =  18.0 %  [L in 48..160]
+  t_sim mu*L    : 12 overlapping points, median |disc| =   7.9 %, max =  45.0 %  [L in 40..160]
+  t_sim mu*L_eff: 11 overlapping points, median |disc| =   7.0 %, max =  32.9 %  [L in 48..160]
+
+=== 120 Hz / S2, FEM path (exp): 17b (mu swept, L = 128)  vs  17c (L swept, mu = 1e-05) ===
+  t_exp mu*L    :  6 overlapping points, median |disc| =  14.8 %, max =  61.1 %  [L in 20..60]
+  t_exp mu*L_eff:  5 overlapping points, median |disc| =  17.9 %, max = 200.1 %  [L in 30..60]
+
+=== Verdict (pre-declared threshold: median |disc| <= 10 % with L_eff) ===
+  120 Hz / S2 (single)             t_exp:  12.0 %  FAIL
+  120 Hz / S2 (single)             t_sim:   4.7 %  PASS
+  280 Hz / S1 (single)             t_exp:   3.4 %  PASS
+  280 Hz / S1 (single)             t_sim:  10.3 %  FAIL
+  85 Hz / S2 (two-channel)         t_exp:   5.7 %  PASS
+  85 Hz / S2 (two-channel)         t_sim:   7.0 %  PASS
+  120 Hz / S2, FEM path (exp)      t_exp:  17.9 %  FAIL
+  H1 on published data: FAIL
+
+=== POST-HOC (not pre-declared): the same test with the raw product mu*L ===
+  120 Hz / S2 (single)             t_exp:   5.9 %  <= 10 %
+  120 Hz / S2 (single)             t_sim:   6.4 %  <= 10 %
+  280 Hz / S1 (single)             t_exp:   3.7 %  <= 10 %
+  280 Hz / S1 (single)             t_sim:   7.3 %  <= 10 %
+  85 Hz / S2 (two-channel)         t_exp:   4.1 %  <= 10 %
+  85 Hz / S2 (two-channel)         t_sim:   7.9 %  <= 10 %
+  120 Hz / S2, FEM path (exp)      t_exp:  14.8 %  > 10 %
+  Reading: theory.py shows lambda_min(Gamma) is the decay rate of the SLOW eigen-direction only; the 5 % time mixes both directions, so L_eff = 2 lambda_min over-corrects and the exact correction lies between L and L_eff.  The raw product is the trace of Gamma, i.e. the averaged gain.

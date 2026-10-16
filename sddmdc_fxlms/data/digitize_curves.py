@@ -27,15 +27,33 @@ Method (fully automatic once the per-panel configuration below is fixed):
      template is correlated with the series mask; the score is the fraction of
      the non-occluded template pixels that carry the series colour, minus a
      penalty for series colour just outside the marker (rejects thick lines and
-     blobs).  Local maxima above a threshold are marker centres (sub-pixel by a
-     3-point parabola).  Marker size is chosen automatically per axes among a
-     few candidates (largest median peak score).
+     blobs).  Local maxima above 0.55 are marker candidates.  The marker size
+     (radius r, outline width w) is chosen per axes and series as the size that
+     gives the best median score of the 3 best markers (the clean ones; sizes
+     fitted to partly hidden markers come out too small and bias the centres).
+     Each centre is then refined on the raw matched fraction (not normalised by
+     occlusion) within +-3 px, with a 3-point parabola for sub-pixel accuracy.
   6. Data: pixel -> data with the calibration; x is snapped to a nominal grid
      (mu on multiples of 0.5e-6; L on the set used in the paper) and the snap
-     residual is reported.  Expected grid points that were not found get a
-     local re-search with a lower threshold (method="local") and, failing that,
-     the centre of the series-coloured run in the nominal column
-     (method="column").
+     residual (fraction of the local grid step) is reported.
+  7. Expected grid points (configuration "expect") that were not found:
+       a) the other series has a marker at the same x and this series' colour
+          is present around it -> the marker is hidden under the other one
+          (drawn on top): relaxed score (visible fraction >= 12 %) within
+          +-(r+3) px of that marker, accepted if >= 0.4 (method
+          "occluded_fit"); otherwise the covering marker's centre is used
+          (method "coincident", e.g. both curves at the 20 s cap);
+       b) else a weaker maximum (>= 0.35) within +-4 px of the nominal column,
+          between the neighbouring markers' heights (method "local"), or the
+          relaxed score >= 0.5 (method "local_relaxed").
+     Every point carries its method in diagnostics.csv; check_<panel>.png
+     shows peak points in black, local in orange, occluded_fit in magenta,
+     coincident in cyan ("+" main axes, "x" inset).
+  8. Analysis (on <panel>_best.csv): optimum and near-optimal set, mu*L at the
+     optimum, effective range (t < 5 s), divergence onset, slow-branch test of
+     t*mu (t*L) = const and fit t = C/(mu L), sim-vs-exp discrepancies, the
+     paper's textual statements against the digitized data, cross-figure and
+     inset-vs-main consistency.
 
 Outputs (in --out):
   <panel>.csv          main-axes points           columns series,x,y,x_nominal
@@ -45,7 +63,8 @@ Outputs (in --out):
   diagnostics.csv      every point with pixel coordinates, score, method
   calibration.csv      fitted pixel->data maps and residuals per axes
   check_<panel>.png    extracted points drawn on the original image
-  analysis.json / analysis.txt   optima, mu*L products, slow-branch fits
+  analysis.json / analysis.txt   optima, mu*L products, slow-branch fits,
+                       checks (analysis.json also holds the best curves)
 
 Usage:
   python digitize_curves.py --fig16 p13_img1.png --fig17 p15_img0.png \
@@ -443,10 +462,27 @@ def peaks(sc, r, thr):
     return keep
 
 
-SIZES = {'o': [(4.5, 2.5), (5.0, 2.5), (5.5, 3.0), (6.0, 3.0), (6.5, 3.0),
-               (3.5, 2.0), (4.0, 2.0)],
-         's': [(4.5, 2.5), (5.0, 2.5), (5.5, 3.0), (6.0, 3.0), (6.5, 3.0),
-               (3.5, 2.0), (4.0, 2.0)]}
+def refine(m, p, rad=3):
+    """Move peak p=(x, y, score) to the max of map m within +-rad px."""
+    x0, y0 = int(round(p[0])), int(round(p[1]))
+    a, b = max(1, x0 - rad), min(m.shape[1] - 2, x0 + rad)
+    c, d = max(1, y0 - rad), min(m.shape[0] - 2, y0 + rad)
+    if a > b or c > d:
+        return p
+    win = m[c:d + 1, a:b + 1]
+    k = np.unravel_index(win.argmax(), win.shape)
+    y, x = k[0] + c, k[1] + a
+
+    def para(m1, c_, p1):
+        den = m1 - 2 * c_ + p1
+        return 0.0 if den >= 0 else 0.5 * (m1 - p1) / den
+    dx = para(m[y, x - 1], m[y, x], m[y, x + 1])
+    dy = para(m[y - 1, x], m[y, x], m[y + 1, x])
+    return (x + dx, y + dy, p[2])
+
+
+SIZES = {k: [(r, w) for r in (4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0)
+             for w in (2.0, 2.5, 3.0)] for k in ('o', 's')}
 
 
 # ----------------------------------------------------------------------------
@@ -522,15 +558,25 @@ def digitize_axes(img, dark, name, roi, xticks, yticks, xmul, series,
             pk = peaks(sc, r, thr)
             pk = [p for p in pk if not _excluded(p[0] + X0, p[1] + Y0,
                                                  exclude, frame)]
-            top = sorted([p[2] for p in pk], reverse=True)[:nexp]
-            if not top:
+            # size criterion: median score of the 3 best markers (the
+            # clean, unoccluded ones); a size fitted to partly hidden
+            # markers would be too small and bias the centres
+            top = sorted([p[2] for p in pk], reverse=True)[:3]
+            if len(top) < 3:
                 continue
-            q = float(np.median(top)) * min(1.0, len(top) / nexp)
+            q = float(np.median(top))
             if best is None or q > best[0]:
                 best = (q, r, w, sc, pk)
         _, r, w, sc, pk = best
         sizes_used[sname] = (r, w)
         maps[sname] = (sc, score_map(S, O, kind, r, w, relaxed=True), r)
+        # localisation: the occlusion-normalised score favours positions
+        # where part of the ring lies on the other series (counted as
+        # unknown), which biases partly hidden markers away from the
+        # occluder.  The centre is therefore refined on the raw matched
+        # fraction ftot (unbiased by occlusion) within +-3 px.
+        ftot = score_parts(S, O, kind, r, w)[1]
+        pk = [refine(ftot, p_) for p_ in pk]
         found = {}
         for (px, py, sco) in pk:
             gx, gy = px + X0, py + Y0
@@ -597,7 +643,7 @@ def digitize_axes(img, dark, name, roi, xticks, yticks, xmul, series,
                 if near >= 8:
                     b = best_in(scr, ox - r - 3, ox + r + 3, oy - r - 3,
                                 oy + r + 3)
-                    if b is not None and b[0] >= 0.5:
+                    if b is not None and b[0] >= 0.4:
                         found[xn] = record(sname, xn, b[1], b[2], b[0],
                                            'occluded_fit')
                     else:
@@ -641,9 +687,6 @@ def _excluded(gx, gy, exclude, frame):
 # ----------------------------------------------------------------------------
 # overlay
 # ----------------------------------------------------------------------------
-MARK = {'o': 'o', 's': 's'}
-
-
 def overlay(img, panel, cfg, main_pts, inset_pts, cals, path):
     x0, y0, x1, y1 = cfg['roi']
     crop = img[y0:y1, x0:x1].astype(np.uint8)
@@ -700,25 +743,67 @@ def best_rows(main, inset):
 
 
 SWEEPS = {
-    # panel: (fixed parameter name, fixed value, swept parameter)
-    'fig16c': ('L', 128, 'mu'), 'fig16d': ('mu', 1e-5, 'L'),
-    'fig17b': ('L', 128, 'mu'), 'fig17c': ('mu', 1e-5, 'L'),
-    'fig19c': ('L', 128, 'mu'), 'fig19d': ('mu', 1.2e-5, 'L'),
-    'fig21c': ('L', 64, 'mu'), 'fig21d': ('mu', 6e-6, 'L'),
-    'fig22a': ('L', 64, 'mu'), 'fig22b': ('mu', 6e-6, 'L'),
+    # panel: fixed parameter, swept parameter, excitation frequency [Hz], note
+    'fig16c': dict(fix=('L', 128), sw='mu', f=120.0, note='1-ch S2'),
+    'fig16d': dict(fix=('mu', 1e-5), sw='L', f=120.0, note='1-ch S2'),
+    'fig17b': dict(fix=('L', 128), sw='mu', f=120.0, note='1-ch S2 exp'),
+    'fig17c': dict(fix=('mu', 1e-5), sw='L', f=120.0, note='1-ch S2 exp'),
+    'fig19c': dict(fix=('L', 128), sw='mu', f=280.0, note='1-ch S1'),
+    'fig19d': dict(fix=('mu', 1.2e-5), sw='L', f=280.0, note='1-ch S1'),
+    'fig21c': dict(fix=('L', 64), sw='mu', f=85.0,
+                   note='2-ch S2, mu1=mu2, L1=L2'),
+    'fig21d': dict(fix=('mu', 6e-6), sw='L', f=85.0,
+                   note='2-ch S2, mu1=mu2, L1=L2'),
+    'fig22a': dict(fix=('L', 64), sw='mu', f=85.0,
+                   note='2-ch, sweep mu2; mu1=1.4e-5, L1=L2=64'),
+    'fig22b': dict(fix=('mu', 6e-6), sw='L', f=85.0,
+                   note='2-ch, sweep L2; L1=128, mu1=mu2=6e-6'),
 }
 FS = 10000.0     # dSPACE sampling rate [Hz]
-CAP = 19.5       # points at the 20 s cap (divergent / >20 s) are excluded
+CAP = 19.8       # points at the 20 s cap (divergent / >20 s) are excluded
+TOL_OPT = 0.03   # [s] points within this of the minimum are "near-optimal"
+SLOW_K = 1.5     # slow branch: left of the optimum and t >= SLOW_K * t_min
 
 
-def analyse(panel, rows):
-    fixname, fixval, sw = SWEEPS[panel]
+def lam_min(L, f):
+    """Smaller eigenvalue (per unit filtered-tone power/2) of the L x L
+    autocorrelation matrix of a pure tone, R_ij = cos(w(i-j)):
+    lambda_min = (L - |sin(L w)/sin(w)|)/2,  w = 2 pi f / fs."""
+    w = 2 * math.pi * f / FS
+    L = np.asarray(L, float)
+    return 0.5 * (L - np.abs(np.sin(L * w) / math.sin(w)))
+
+
+def series_arrays(rows, s):
+    P = sorted([p for p in rows if p['series'] == s],
+               key=lambda p: p['x_nominal'])
+    return (np.array([p['x_nominal'] for p in P]),
+            np.array([p['y'] for p in P]))
+
+
+def eff_range(x, t, thr=5.0):
+    """x-range of the contiguous run of t < thr containing the minimum."""
+    ok = t < thr
+    if not ok.any():
+        return None
+    i0 = int(np.argmin(np.where(t < CAP, t, np.inf)))
+    if not ok[i0]:
+        return None
+    i, j = i0, i0
+    while i - 1 >= 0 and ok[i - 1]:
+        i -= 1
+    while j + 1 < len(t) and ok[j + 1]:
+        j += 1
+    return [float(x[i]), float(x[j])]
+
+
+def analyse(panel, rows, dash=None):
+    sw_cfg = SWEEPS[panel]
+    fixname, fixval = sw_cfg['fix']
+    sw, f = sw_cfg['sw'], sw_cfg['f']
     res = {}
     for s in sorted(set(p['series'] for p in rows)):
-        P = sorted([p for p in rows if p['series'] == s],
-                   key=lambda p: p['x_nominal'])
-        x = np.array([p['x_nominal'] for p in P])
-        t = np.array([p['y'] for p in P])
+        x, t = series_arrays(rows, s)
         mu = x if sw == 'mu' else np.full_like(x, fixval)
         L = x if sw == 'L' else np.full_like(x, fixval)
         valid = t < CAP
@@ -726,33 +811,107 @@ def analyse(panel, rows):
             continue
         i0 = int(np.flatnonzero(valid)[np.argmin(t[valid])])
         tmin = float(t[i0])
-        # slow branch: left of the optimum, t >= 2 tmin, not capped
-        slow = (np.arange(len(x)) < i0) & (t >= 2.0 * tmin) & valid
         d = dict(n_points=int(len(x)), x_opt=float(x[i0]), t_min=tmin,
                  muL_opt=float(mu[i0] * L[i0]),
-                 near_opt=[float(v) for v in x[(t <= tmin + 0.05) & valid]])
+                 near_opt=[float(v) for v in x[(t <= tmin + TOL_OPT)
+                                               & valid]],
+                 eff_range_5s=eff_range(x, t, 5.0))
+        if dash is not None:
+            d['eff_range_drawn_line'] = eff_range(x, t, dash)
+        # divergence onset: last uncapped / first capped point right of opt
+        cap_r = [i for i in range(i0 + 1, len(x)) if not valid[i]]
+        if cap_r:
+            j = cap_r[0]
+            d['divergence_bracket_x'] = [float(x[j - 1]), float(x[j])]
+            d['divergence_bracket_muL'] = [float(mu[j - 1] * L[j - 1]),
+                                           float(mu[j] * L[j])]
+        slow = (np.arange(len(x)) < i0) & (t >= SLOW_K * tmin) & valid
         if slow.sum() >= 3:
             ts, ms, Ls, xs = t[slow], mu[slow], L[slow], x[slow]
             prod = ts * xs                     # t*mu or t*L
             g = 1.0 / (ms * Ls)
             C = float((ts * g).sum() / (g * g).sum())
             rel = (ts - C * g) / ts
-            # power law t = K x^-p (log-log LS)
-            p_exp, lnK = np.polyfit(np.log(xs), np.log(ts), 1)
-            # offset model t = C2/(mu L) + t0
+            p_exp, _ = np.polyfit(np.log(xs), np.log(ts), 1)
             A = np.vstack([g, np.ones_like(g)]).T
             (C2, t0), *_ = np.linalg.lstsq(A, ts, rcond=None)
             d.update(slow_x=[float(v) for v in xs],
-                     slow_t=[float(v) for v in ts],
-                     t_times_x_mean=float(prod.mean()),
+                     slow_t=[round(float(v), 4) for v in ts],
+                     t_times_x=[float(v) for v in prod],
                      t_times_x_cv=float(prod.std(ddof=1) / prod.mean()),
+                     loglog_exponent=float(-p_exp),
                      C=C, C_rel_rms=float(np.sqrt(np.mean(rel ** 2))),
                      C_rel_max=float(np.abs(rel).max()),
-                     loglog_exponent=float(-p_exp),
                      C_with_offset=float(C2), t0_offset=float(t0),
                      kappa=float(math.log(20.0) / (C * FS)))
+            if sw == 'L':     # eigenvalue-spread variant for L sweeps
+                lm = lam_min(Ls, f)
+                q = ts * lm
+                pl, _ = np.polyfit(np.log(lm), np.log(ts), 1)
+                d.update(t_times_lammin_cv=float(q.std(ddof=1) / q.mean()),
+                         loglog_exponent_vs_lammin=float(-pl))
         res[s] = d
     return res
+
+
+def compare(rows, a='Experiment', b='Simulation'):
+    """sim-vs-exp discrepancy on common, uncapped grid points."""
+    xa, ta = series_arrays(rows, a)
+    xb, tb = series_arrays(rows, b)
+    if not len(xa) or not len(xb):
+        return None
+    da = dict(zip(np.round(xa, 12), ta))
+    db = dict(zip(np.round(xb, 12), tb))
+    out = {}
+    for name, cond in (('stable', lambda u, v: u < CAP and v < CAP),
+                       ('effective', lambda u, v: u < 5.0 and v < 5.0)):
+        ks = [k for k in sorted(set(da) & set(db)) if cond(da[k], db[k])]
+        if not ks:
+            continue
+        rel = np.array([abs(db[k] - da[k]) / da[k] for k in ks])
+        ab = np.array([abs(db[k] - da[k]) for k in ks])
+        out[name] = dict(n=len(ks), x_range=[float(ks[0]), float(ks[-1])],
+                         max_rel=float(rel.max()),
+                         x_at_max_rel=float(ks[int(rel.argmax())]),
+                         max_abs=float(ab.max()),
+                         x_at_max_abs=float(ks[int(ab.argmax())]))
+    return out
+
+
+def inset_consistency(main_pts, inset_pts):
+    m = {(p['series'], round(p['x_nominal'], 12)): p['y'] for p in main_pts}
+    d = [q['y'] - m[(q['series'], round(q['x_nominal'], 12))]
+         for q in inset_pts
+         if (q['series'], round(q['x_nominal'], 12)) in m]
+    if not d:
+        return None
+    d = np.array(d)
+    return dict(n=len(d), mean=float(d.mean()), max_abs=float(np.abs(d).max()))
+
+
+def dashed_level(dark, frame, cy, exclude):
+    """y value of the dashed threshold line (many short dark runs)."""
+    xl, xr, yt, yb, th = frame
+    best = None
+    for y in range(int(yt + th + 2), int(yb - th - 1)):
+        if abs((y - cy['a']) / cy['b'] - 5.0) > 1.5:
+            continue
+        row = dark[y, int(xl + th + 2):int(xr - th - 1)]
+        idx = np.flatnonzero(row)
+        if idx.size < 0.3 * row.size:
+            continue
+        runs = 1 + int((np.diff(idx) > 1).sum())
+        if runs >= 8 and (best is None or idx.size > best[1]):
+            best = (y, idx.size)
+    if best is None:
+        return None
+    # centre of the line: average over adjacent rows with similar coverage
+    y0 = best[0]
+    ys = [y for y in range(y0 - 3, y0 + 4)
+          if dark[y, int(xl + th + 2):int(xr - th - 1)].sum() >
+          0.6 * best[1]]
+    yc = float(np.mean(ys))
+    return (yc - cy['a']) / cy['b']
 
 
 # ----------------------------------------------------------------------------
@@ -805,11 +964,25 @@ def main():
                 diag.append(dict(panel=panel, axes=src, **p))
         overlay(img, panel, cfg, main_pts, inset_pts, cals,
                 os.path.join(args.out, 'check_%s.png' % panel))
-        analysis[panel] = analyse(panel, best)
+        dash = dashed_level(dark, cxy[2], cxy[1], excl)
+        curves = {s_: [(p_['x_nominal'], p_['y']) for p_ in best
+                       if p_['series'] == s_] for s_, _, _ in cfg['series']}
+        analysis[panel] = dict(
+            sweep=SWEEPS[panel], drawn_threshold_line_s=dash,
+            series=analyse(panel, best, dash),
+            sim_vs_exp=compare(best), _curve=curves,
+            inset_minus_main=(inset_consistency(main_pts, inset_pts)
+                              if inset_pts else None),
+            resolution_s_per_px=dict(
+                main=-1.0 / cal['y_b'],
+                inset=(-1.0 / cal_rows[-1]['y_b'] if inset_pts else None)))
         n = {s: sum(p['series'] == s for p in main_pts)
              for s, _, _ in cfg['series']}
-        print('%-7s main %s  inset %d  x-rms %.2f px  y-rms %.2f px' % (
-            panel, n, len(inset_pts), cal['x_rms_px'], cal['y_rms_px']))
+        nfb = sum(not p['method'].startswith('peak')
+                  for p in main_pts + inset_pts)
+        print('%-7s main %s  inset %d  fallback %d  x-rms %.2f px  '
+              'y-rms %.2f px' % (panel, n, len(inset_pts), nfb,
+                                 cal['x_rms_px'], cal['y_rms_px']))
     with open(os.path.join(args.out, 'diagnostics.csv'), 'w',
               newline='') as f:
         keys = ['panel', 'axes', 'series', 'x', 'y', 'x_nominal', 'snap_res',
@@ -827,25 +1000,232 @@ def main():
         for c in cal_rows:
             wr.writerow(c)
     with open(os.path.join(args.out, 'analysis.json'), 'w') as f:
-        json.dump(analysis, f, indent=1)
-    lines = []
-    for panel, a in analysis.items():
-        fixname, fixval, sw = SWEEPS[panel]
-        for s, d in a.items():
-            line = ('%-7s %-11s %s=%g  opt %s=%-8g t_min=%.2f s  muL_opt=%.3e'
-                    % (panel, s, fixname, fixval, sw, d['x_opt'], d['t_min'],
-                       d['muL_opt']))
-            if 'C' in d:
-                line += ('  slow n=%d CV(t*%s)=%.2f p=%.2f C=%.3e s '
-                         '(rel rms %.2f)' % (len(d['slow_x']), sw,
-                                            d['t_times_x_cv'], sw and
-                                            d['loglog_exponent'], d['C'],
-                                            d['C_rel_rms']))
-            lines.append(line)
-    txt = '\n'.join(lines)
+        json.dump(analysis, f, indent=1)    # includes the best curves
+    txt = report(analysis)
     print(txt)
     with open(os.path.join(args.out, 'analysis.txt'), 'w') as f:
         f.write(txt + '\n')
+
+
+def _curve_val(a, s_, x):
+    for k, v in a['_curve'][s_]:
+        if abs(k - x) <= 1e-12 * max(1.0, abs(x)):
+            return v
+    return float('nan')
+
+
+def _maxdiff(a, xmax, s1='Experiment', s2='Simulation'):
+    c1 = {round(k, 12): v for k, v in a['_curve'][s1]}
+    c2 = {round(k, 12): v for k, v in a['_curve'][s2]}
+    ks = [k for k in sorted(set(c1) & set(c2)) if k <= xmax * (1 + 1e-9)
+          and c1[k] < CAP and c2[k] < CAP]
+    d = np.array([abs(c2[k] - c1[k]) for k in ks])
+    r = np.array([abs(c2[k] - c1[k]) / c1[k] for k in ks])
+    return float(d.max()), float(r.max()), len(ks)
+
+
+def claims(an):
+    """Statements of the paper text (Sec. 5) against the digitized data."""
+    out = ['', 'PAPER STATEMENTS vs DIGITIZED DATA']
+
+    def S(p_, s_):
+        return an[p_]['series'][s_]
+
+    def rng(p_, s_, key='eff_range_5s'):
+        r = S(p_, s_)[key]
+        sw = an[p_]['sweep']['sw']
+        return 'None' if r is None else '[%s, %s]' % (_fx(sw, r[0]),
+                                                      _fx(sw, r[1]))
+    try:
+        e, m = S('fig16c', 'Experiment'), S('fig16c', 'Simulation')
+        out.append('  16c "min at mu=9e-6": exp opt %s near %s; sim opt %s '
+                   'near %s' % (_fx('mu', e['x_opt']),
+                                [_fx('mu', v) for v in e['near_opt']],
+                                _fx('mu', m['x_opt']),
+                                [_fx('mu', v) for v in m['near_opt']]))
+        c = an['fig16c']['sim_vs_exp']
+        out.append('  16c "max rel err <12%%, abs <0.4 s across the entire '
+                   'stable range": stable range %.1f%% / %.2f s; effective '
+                   'range %.1f%% / %.2f s' % (
+                       100 * c['stable']['max_rel'], c['stable']['max_abs'],
+                       100 * c['effective']['max_rel'],
+                       c['effective']['max_abs']))
+        out.append('  16c "effective conv. for mu in [4e-6,1e-5] (both)": exp '
+                   '%s, sim %s (sim t(1.1e-5)=%.2f s)' % (
+                       rng('fig16c', 'Experiment'),
+                       rng('fig16c', 'Simulation'),
+                       _curve_val(an['fig16c'], 'Simulation', 1.1e-5)))
+        out.append('  16d "effective for L in [48,128]": exp %s, sim %s at '
+                   '5 s; with the drawn line (%.2f s) sim %s (t_sim(48)=%.2f)'
+                   % (rng('fig16d', 'Experiment'), rng('fig16d', 'Simulation'),
+                      an['fig16d']['drawn_threshold_line_s'],
+                      rng('fig16d', 'Simulation', 'eff_range_drawn_line'),
+                      _curve_val(an['fig16d'], 'Simulation', 48)))
+        e, m = S('fig16d', 'Experiment'), S('fig16d', 'Simulation')
+        out.append('  16d "optimal L 112 (sim) / 100 (exp)": exp opt %g near '
+                   '%s; sim opt %g near %s' % (e['x_opt'], e['near_opt'],
+                                               m['x_opt'], m['near_opt']))
+        out.append('  16d "relative error within 13%%": max %.1f%%' % (
+            100 * an['fig16d']['sim_vs_exp']['stable']['max_rel']))
+        out.append('  17a/b "FEM 17.64 s at mu=5e-6, L=128": 17b FEM(5e-6) = '
+                   '%.2f s' % _curve_val(an['fig17b'], 'Exp_FEM', 5e-6))
+        out.append('  17b/c "FEM minima 4.48 s and 3.83 s": %.2f s (mu=%s), '
+                   '%.2f s (L=%g)' % (
+                       S('fig17b', 'Exp_FEM')['t_min'],
+                       _fx('mu', S('fig17b', 'Exp_FEM')['x_opt']),
+                       S('fig17c', 'Exp_FEM')['t_min'],
+                       S('fig17c', 'Exp_FEM')['x_opt']))
+        out.append('  17c "FEM diverges for L>60": FEM t(60)=%.2f s, t(64)='
+                   '%.2f s' % (_curve_val(an['fig17c'], 'Exp_FEM', 60),
+                               _curve_val(an['fig17c'], 'Exp_FEM', 64)))
+        for p_, sw in (('fig19c', 'mu'), ('fig19d', 'L'), ('fig21c', 'mu'),
+                       ('fig21d', 'L')):
+            e, m = S(p_, 'Experiment'), S(p_, 'Simulation')
+            out.append('  %s optima: exp %s (near %s), sim %s (near %s); '
+                       'effective exp %s sim %s' % (
+                           p_[3:], _fx(sw, e['x_opt']),
+                           [_fx(sw, v) for v in e['near_opt']],
+                           _fx(sw, m['x_opt']),
+                           [_fx(sw, v) for v in m['near_opt']],
+                           rng(p_, 'Experiment'), rng(p_, 'Simulation')))
+        out.append('  19 "abs discrepancy < 1.3 s in effective regions": '
+                   '19c %.2f s, 19d %.2f s' % (
+                       an['fig19c']['sim_vs_exp']['effective']['max_abs'],
+                       an['fig19d']['sim_vs_exp']['effective']['max_abs']))
+        d1 = _maxdiff(an['fig21c'], 1.4e-5)
+        d2 = _maxdiff(an['fig21d'], 140)
+        out.append('  21 "curves match closely for mu<=1.4e-5 and L<=140": '
+                   'max |diff| %.2f s (%.0f%%) for mu<=1.4e-5, %.2f s (%.0f%%)'
+                   ' for L<=140' % (d1[0], 100 * d1[1], d2[0], 100 * d2[1]))
+        out.append('  22a "minima 3.48 s (sim) and 3.81 s (exp)": sim %.2f s '
+                   '(mu2=%s), exp %.2f s (mu2=%s)' % (
+                       S('fig22a', 'Simulation')['t_min'],
+                       _fx('mu', S('fig22a', 'Simulation')['x_opt']),
+                       S('fig22a', 'Experiment')['t_min'],
+                       _fx('mu', S('fig22a', 'Experiment')['x_opt'])))
+        out.append('  22 "discrepancies within 1.5 s across effective regions"'
+                   ': 22a %.2f s, 22b %.2f s' % (
+                       an['fig22a']['sim_vs_exp']['effective']['max_abs'],
+                       an['fig22b']['sim_vs_exp']['effective']['max_abs']))
+    except KeyError as exc:      # some panels not processed
+        out.append('  (incomplete: %s)' % exc)
+    return out
+
+
+def _fx(sw, v):
+    return ('%.1fe-6' % (v * 1e6)) if sw == 'mu' else ('%g' % v)
+
+
+def report(analysis):
+    L = ['Digitized convergence-time curves, Ouyang et al. TWS 228 (2026) '
+         '115090', '(best = inset value where available, else main axes; '
+         'capped points t>=%.1f s excluded from optima/fits)' % CAP, '',
+         'OPTIMA  (near = grid points within %.2f s of the minimum)'
+         % TOL_OPT]
+    for panel, a in analysis.items():
+        sw = a['sweep']['sw']
+        fixname, fixval = a['sweep']['fix']
+        for s, d in a['series'].items():
+            L.append('  %-7s %-11s %s=%-7g opt %s=%-7s t_min=%.3f s  '
+                     'mu*L=%.3e  near=[%s]  eff(<5s)=%s' % (
+                         panel, s, fixname, fixval, sw, _fx(sw, d['x_opt']),
+                         d['t_min'], d['muL_opt'],
+                         ','.join(_fx(sw, v) for v in d['near_opt']),
+                         None if d['eff_range_5s'] is None else
+                         '[%s,%s]' % tuple(_fx(sw, v)
+                                           for v in d['eff_range_5s'])))
+    L += ['', 'SLOW BRANCH  (left of optimum, t >= %.1f t_min): '
+          't = C/(mu L) LS fit; CV of t*x; log-log slope p (t ~ x^-p);'
+          ' offset model t = C2/(mu L) + t0' % SLOW_K]
+    for panel, a in analysis.items():
+        sw = a['sweep']['sw']
+        for s, d in a['series'].items():
+            if 'C' not in d:
+                L.append('  %-7s %-11s  (fewer than 3 slow-branch points)'
+                         % (panel, s))
+                continue
+            extra = ''
+            if 't_times_lammin_cv' in d:
+                extra = '  [lam_min model: CV=%.2f p=%.2f]' % (
+                    d['t_times_lammin_cv'], d['loglog_exponent_vs_lammin'])
+            L.append('  %-7s %-11s n=%d %s=[%s..%s]  CV(t*%s)=%.3f  p=%.2f  '
+                     'C=%.3e s (rel rms %.1f%%, max %.1f%%)  C2=%.3e t0=%.2f s'
+                     '  kappa=ln20/(C fs)=%.3g%s' % (
+                         panel, s, len(d['slow_x']), sw,
+                         _fx(sw, d['slow_x'][0]), _fx(sw, d['slow_x'][-1]),
+                         sw, d['t_times_x_cv'], d['loglog_exponent'], d['C'],
+                         100 * d['C_rel_rms'], 100 * d['C_rel_max'],
+                         d['C_with_offset'], d['t0_offset'], d['kappa'],
+                         extra))
+    L += ['', 'SIM vs EXP (common uncapped points; effective = both < 5 s)']
+    for panel, a in analysis.items():
+        c = a['sim_vs_exp']
+        if not c:
+            continue
+        sw = a['sweep']['sw']
+        for k, v in c.items():
+            L.append('  %-7s %-9s n=%2d  max rel %.1f%% (at %s)  max abs '
+                     '%.2f s (at %s)' % (panel, k, v['n'], 100 * v['max_rel'],
+                                        _fx(sw, v['x_at_max_rel']),
+                                        v['max_abs'],
+                                        _fx(sw, v['x_at_max_abs'])))
+    L += ['', 'DIVERGENCE ONSET (last converged / first capped point right '
+          'of the optimum)']
+    for panel, a in analysis.items():
+        sw = a['sweep']['sw']
+        for s_, d in a['series'].items():
+            if 'divergence_bracket_x' in d:
+                bx, bm = d['divergence_bracket_x'], d['divergence_bracket_muL']
+                L.append('  %-7s %-11s %s in (%s, %s]  mu*L in (%.3e, %.3e]'
+                         % (panel, s_, sw, _fx(sw, bx[0]), _fx(sw, bx[1]),
+                            bm[0], bm[1]))
+    L += ['', 'C CONSISTENCY  (same case: mu-sweep vs L-sweep; exp vs sim)']
+    for c1, c2, lab in (('fig16c', 'fig16d', '120 Hz 1-ch'),
+                        ('fig19c', 'fig19d', '280 Hz 1-ch'),
+                        ('fig21c', 'fig21d', '85 Hz 2-ch')):
+        if c1 not in analysis or c2 not in analysis:
+            continue
+        g = {}
+        for pn in (c1, c2):
+            for s_ in ('Experiment', 'Simulation'):
+                g[(pn, s_)] = analysis[pn]['series'].get(s_, {}).get('C')
+        if None in g.values():
+            continue
+        L.append('  %-11s C_mu exp %.3e sim %.3e | C_L exp %.3e sim %.3e | '
+                 'C_L/C_mu exp %.2f sim %.2f | C_exp/C_sim mu %.2f L %.2f' % (
+                     lab, g[(c1, 'Experiment')], g[(c1, 'Simulation')],
+                     g[(c2, 'Experiment')], g[(c2, 'Simulation')],
+                     g[(c2, 'Experiment')] / g[(c1, 'Experiment')],
+                     g[(c2, 'Simulation')] / g[(c1, 'Simulation')],
+                     g[(c1, 'Experiment')] / g[(c1, 'Simulation')],
+                     g[(c2, 'Experiment')] / g[(c2, 'Simulation')]))
+    L += ['', 'CROSS-FIGURE CHECK (same experimental sd-DMDc data plotted '
+          'twice)']
+    for pa, sa, pb, sb in (('fig16c', 'Experiment', 'fig17b', 'Exp_sdDMDc'),
+                           ('fig16d', 'Experiment', 'fig17c', 'Exp_sdDMDc')):
+        if pa in analysis and pb in analysis:
+            ra = {round(k, 12): v for k, v in analysis[pa]['_curve'][sa]}
+            rb = {round(k, 12): v for k, v in analysis[pb]['_curve'][sb]}
+            ks = sorted(set(ra) & set(rb))
+            dd = np.array([rb[k] - ra[k] for k in ks])
+            L.append('  %s vs %s: n=%d  mean(%s-%s)=%+.3f s  max |diff|=%.3f s'
+                     % (pa, pb, len(ks), pb, pa, dd.mean(),
+                        np.abs(dd).max()))
+    L += claims(analysis)
+    L += ['', 'QUALITY: resolution (s/px), inset-minus-main offset, drawn '
+          'threshold line']
+    for panel, a in analysis.items():
+        r = a['resolution_s_per_px']
+        im = a['inset_minus_main']
+        L.append('  %-7s main %.4f s/px  inset %s  inset-main mean %s max %s'
+                 '  dashed line at %s s' % (
+                     panel, r['main'],
+                     '-' if r['inset'] is None else '%.4f s/px' % r['inset'],
+                     '-' if im is None else '%+.3f' % im['mean'],
+                     '-' if im is None else '%.3f' % im['max_abs'],
+                     '-' if a['drawn_threshold_line_s'] is None else
+                     '%.2f' % a['drawn_threshold_line_s']))
+    return '\n'.join(L)
 
 
 if __name__ == '__main__':

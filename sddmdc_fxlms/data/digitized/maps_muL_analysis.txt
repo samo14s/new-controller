@@ -1,0 +1,215 @@
+H-muL test: is the effective-convergence region (t <= 5 s) a band of
+constant mu*L?  mu in 1e-6, P = mu*L in 1e-6 x taps.  Boundary = white/colour
+edge on each tested L row (t = 5 s iso-line of the authors' interpolant).
+c = censored by the axis limit (not used).  s = fractional position of the
+boundary between last inside node and first outside node; t_out = recovered
+value of that outside node (authors clip divergent cases at 20 s).
+
+=== fig18_exp: rows 15, node t 2.70..4.93 s, rim level 4.93 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  40 |  12.02    481  0.98   5.0 |  15.96c     -     -     - |  16.00c 3.85      -
+  48 |  10.20    490  0.80   5.1 |  15.96c     -     -     - |  16.00c 3.35      -
+  60 |   9.11    547  0.89   5.1 |  15.96c     -     -     - |  16.00c 3.21      -
+  64 |   8.83    565  0.17     - |  15.96c     -     -     - |  16.00c 3.21      -
+  80 |   5.92    474  0.08     - |  15.96c     -     -     - |  12.52  2.80   1001
+  90 |   5.19    468  0.81   5.2 |  13.47   1213  0.47   6.2 |  10.55  2.78    950
+  96 |   5.14    494  0.86   5.1 |  12.38   1189  0.38   6.8 |  10.14  2.73    973
+ 100 |   5.12    512  0.88   5.1 |  12.15   1215  0.15   7.8 |   9.99  2.71    999
+ 112 |   4.57    512  0.43   5.4 |  11.16   1250  0.16   6.9 |   8.66  2.85    970
+ 120 |   3.95    474  0.05     - |  11.01   1321  0.01     - |   7.80  2.81    936
+ 128 |   3.66    469  0.34   5.7 |  10.80   1382  0.80   5.4 |   8.51  2.93   1089
+ 140 |   3.51    491  0.49   5.7 |   9.61   1345  0.61   6.1 |   7.15  2.81   1000
+ 144 |   3.48    501  0.52   5.7 |   9.45   1361  0.45   6.6 |   6.97  2.74   1004
+ 150 |   3.38    507  0.62   5.5 |   9.19   1379  0.19   7.3 |   6.74  2.70   1010
+ 160 |   2.99    478  0.01     - |   8.59   1375  0.59   6.2 |   5.98  2.80    956
+  lower  n=15 L=40-160 P=497+-28 (CV 5.7%, max/min 1.21) r(L,P)=-0.27 b=-1.03 [-1.10,-0.96] trend -5%
+  upper  n=10 L=90-160 P=1303+-78 (CV 6.0%, max/min 1.16) r(L,P)=+0.92 b=-0.72 [-0.81,-0.63] trend +16%
+  opt    n=11 L=80-160 P=990+-41 (CV 4.2%, max/min 1.16) r(L,P)=+0.16 b=-0.97 [-1.10,-0.84] trend +2%
+  delay_lower D=1.5 [-4,8] C=513 rms=0.389 | D=0: rms=0.393, F=0.2, p=0.64
+  delay_upper D=47.5 [30,70] C=1815 rms=0.220 | D=0: rms=0.634, F=58.4, p=6.07e-05
+  delay_opt   D=3.0 [-10,20] C=1015 rms=0.320 | D=0: rms=0.324, F=0.2, p=0.651
+  const-P upper: censored rows [40.0, 48.0, 60.0, 64.0, 80.0] -> violations 0 (worst shortfall -0.28e-6)
+  const-P opt: censored rows [40.0, 48.0, 60.0, 64.0] -> violations 1 (worst shortfall +0.54e-6)
+  delay_upper: unconstrained fit violates 1/5 censored rows (worst shortfall +1.77e-6); constrained fit: D=3.5 C=1317 rms=0.578
+  delay_opt: unconstrained fit violates 1/4 censored rows (worst shortfall +0.85e-6); constrained fit: D=-3.5 C=954 rms=0.340
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.12293529165124605
+  outside nodes: s_lo med 0.5180254774784467, t_out_lo med 5.177675012929812; s_hi med 0.41666712682840057, t_out_hi med 6.633066984954536
+  band ratio mu_hi/mu_lo: n=10 mean 2.66 (min 2.37, max 2.95)
+  pixel-rows lower: n=428 CV 4.9% r=-0.37 b=-1.04
+  pixel-rows upper: n=279 CV 5.3% r=+0.92 b=-0.74
+
+=== fig18_sim: rows 15, node t 2.61..4.90 s, rim level 4.93 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  40 |  12.83    513  0.17     - |  15.94c     -     -     - |  16.00c 4.07      -
+  48 |   9.62    462  0.38     - |  15.94c     -     -     - |  16.00c 3.13      -
+  60 |   9.21    553  0.79   5.1 |  15.94c     -     -     - |  16.00c 3.04      -
+  64 |   9.11    583  0.89   5.1 |  15.94c     -     -     - |  16.00c 3.05      -
+  80 |   6.44    515  0.56   5.2 |  15.94c     -     -     - |  12.57  2.68   1006
+  90 |   5.28    475  0.72   5.2 |  13.94   1255  0.94   5.1 |  11.53  2.62   1038
+  96 |   5.17    497  0.83   5.2 |  12.83   1232  0.83   5.4 |  10.38  2.72    996
+ 100 |   5.15    515  0.85   5.1 |  12.44   1244  0.44   6.8 |  10.10  2.67   1010
+ 112 |   4.86    545  0.14     - |  11.59   1298  0.59   5.9 |   9.53  2.67   1067
+ 120 |   4.32    519  0.68   5.3 |  11.51   1382  0.51   6.0 |   8.81  2.63   1058
+ 128 |   3.83    490  0.17   6.0 |  11.18   1431  0.18   6.9 |   8.54  2.61   1094
+ 140 |   3.60    504  0.40   5.9 |   9.81   1373  0.81   5.5 |   7.64  2.62   1069
+ 144 |   3.60    518  0.40   5.9 |   9.65   1390  0.65   6.0 |   7.57  2.63   1090
+ 150 |   3.54    532  0.46   5.8 |   9.37   1405  0.37   7.0 |   7.45  2.65   1118
+ 160 |   3.29    526  0.71   5.4 |   8.80   1407  0.80   5.3 |   6.60  2.63   1056
+  lower  n=15 L=40-160 P=516+-30 (CV 5.9%, max/min 1.26) r(L,P)=+0.01 b=-0.99 [-1.08,-0.91] trend +0%
+  upper  n=10 L=90-160 P=1342+-76 (CV 5.7%, max/min 1.16) r(L,P)=+0.87 b=-0.74 [-0.85,-0.64] trend +14%
+  opt    n=11 L=80-160 P=1055+-39 (CV 3.7%, max/min 1.12) r(L,P)=+0.78 b=-0.87 [-0.95,-0.80] trend +9%
+  delay_lower D=2.0 [-4,10] C=531 rms=0.448 | D=0: rms=0.455, F=0.4, p=0.538
+  delay_upper D=43.0 [24,68] C=1820 rms=0.265 | D=0: rms=0.630, F=37.1, p=0.000291
+  delay_opt   D=16.5 [8,28] C=1206 rms=0.190 | D=0: rms=0.327, F=17.8, p=0.00226
+  const-P upper: censored rows [40.0, 48.0, 60.0, 64.0, 80.0] -> violations 0 (worst shortfall -0.77e-6)
+  const-P opt: censored rows [40.0, 48.0, 60.0, 64.0] -> violations 0 (worst shortfall -0.48e-6)
+  delay_upper: unconstrained fit violates 1/5 censored rows (worst shortfall +1.20e-6); constrained fit: D=14.0 C=1482 rms=0.434
+  delay_opt: unconstrained fit violates 1/4 censored rows (worst shortfall +1.03e-6); constrained fit: D=5.5 C=1097 rms=0.255
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.1665885863751058
+  outside nodes: s_lo med 0.5576834125261314, t_out_lo med 5.298944560075995; s_hi med 0.6203242947435008, t_out_hi med 5.956549227390703
+  band ratio mu_hi/mu_lo: n=10 mean 2.62 (min 2.38, max 2.92)
+  pixel-rows lower: n=432 CV 5.1% r=-0.05 b=-1.00
+  pixel-rows upper: n=281 CV 5.2% r=+0.88 b=-0.75
+
+=== fig20_exp: rows 17, node t 1.15..4.91 s, rim level 4.89 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  16 |  15.53    249  0.47   5.2 |  17.95c     -     -     - |  18.00c 4.21      -
+  32 |   8.00    256  1.00   5.0 |  17.95c     -     -     - |  18.00c 2.30      -
+  40 |   5.74    230  0.26     - |  17.95c     -     -     - |  18.00c 1.80      -
+  48 |   5.05    243  0.95   5.0 |  17.95c     -     -     - |  18.00c 1.55      -
+  60 |   4.16    250  0.84   5.2 |  17.95c     -     -     - |  18.00c 1.24      -
+  64 |   3.89    249  0.11     - |  17.95c     -     -     - |  18.00c 1.21      -
+  80 |   3.00    240  1.00   5.0 |  17.95c     -     -     - |  16.30  1.16   1304
+  90 |   2.61    235  0.39   6.0 |  17.95c     -     -     - |  14.68  1.16   1321
+  96 |   2.55    245  0.45   6.1 |  17.95c     -     -     - |  13.61  1.18   1306
+ 100 |   2.49    249  0.51   5.9 |  17.95c     -     -     - |  13.54  1.17   1354
+ 112 |   2.05    229  0.95   5.1 |  17.86   2000  0.86   5.2 |  10.43  1.17   1168
+ 120 |   1.99    239  0.01     - |  16.37   1964  0.37   7.5 |  10.31  1.17   1237
+ 128 |   1.87    239  0.13   7.2 |  15.74   2015  0.74   5.5 |  10.02  1.15   1283
+ 140 |   1.81    253  0.19   8.0 |  14.34   2008  0.34   7.2 |   9.57  1.15   1340
+ 144 |   1.78    256  0.22   8.0 |  14.08   2027  0.08     - |   8.30  1.18   1195
+ 150 |   1.72    258  0.28   7.7 |  13.24   1986  0.24   7.2 |   7.57  1.18   1135
+ 160 |   1.63    261  0.37   7.2 |  12.59   2014  0.59   6.2 |   7.43  1.18   1188
+  lower  n=17 L=16-160 P=246+-10 (CV 3.9%, max/min 1.14) r(L,P)=+0.28 b=-0.99 [-1.03,-0.96] trend +4%
+  upper  n= 7 L=112-160 P=2002+-21 (CV 1.1%, max/min 1.03) r(L,P)=+0.39 b=-0.97 [-1.05,-0.88] trend +1%
+  opt    n=11 L=80-160 P=1257+-76 (CV 6.0%, max/min 1.19) r(L,P)=-0.61 b=-1.16 [-1.32,-1.00] trend -11%
+  delay_lower D=-0.4 [-1,0] C=243 rms=0.141 | D=0: rms=0.151, F=2.1, p=0.173
+  delay_upper D=4.7 [-7,18] C=2072 rms=0.137 | D=0: rms=0.149, F=0.9, p=0.394
+  delay_opt   D=-13.0 [-24,0] C=1116 rms=0.480 | D=0: rms=0.589, F=4.5, p=0.0618
+  const-P upper: censored rows [16.0, 32.0, 40.0, 48.0, 60.0, 64.0, 80.0, 90.0, 96.0, 100.0] -> violations 0 (worst shortfall -2.02e-6)
+  const-P opt: censored rows [16.0, 32.0, 40.0, 48.0, 60.0, 64.0] -> violations 0 (worst shortfall -1.65e-6)
+  delay_upper: unconstrained fit violates 0/10 censored rows (worst shortfall -1.79e-6); constrained fit: D=4.7 C=2072 rms=0.137
+  delay_opt: unconstrained fit violates 0/6 censored rows (worst shortfall -3.88e-6); constrained fit: D=-13.0 C=1116 rms=0.480
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.33425241340348366
+  outside nodes: s_lo med 0.3866325340461243, t_out_lo med 5.982484355569703; s_hi med 0.3677814199607745, t_out_hi med 6.6773200967002815
+  band ratio mu_hi/mu_lo: n=7 mean 8.09 (min 7.70, max 8.72)
+  pixel-rows lower: n=459 CV 5.1% r=-0.26 b=-1.04
+  pixel-rows upper: n=153 CV 1.0% r=+0.50 b=-0.95
+
+=== fig20_sim: rows 16, node t 1.10..4.90 s, rim level 4.91 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  32 |   9.91    317  0.09     - |  17.94c     -     -     - |  18.00c 2.77      -
+  40 |   7.37    295  0.63   5.2 |  17.94c     -     -     - |  18.00c 2.13      -
+  48 |   6.71    322  0.29   5.4 |  17.94c     -     -     - |  18.00c 1.94      -
+  60 |   5.42    325  0.58   5.3 |  17.94c     -     -     - |  18.00c 1.63      -
+  64 |   5.00    320  1.00   5.0 |  17.94c     -     -     - |  18.00c 1.56      -
+  80 |   3.89    311  0.11     - |  17.94c     -     -     - |  18.00c 1.17      -
+  90 |   3.35    302  0.65   5.5 |  17.94c     -     -     - |  16.82  1.10   1513
+  96 |   3.17    305  0.83   5.2 |  17.94c     -     -     - |  16.32  1.14   1567
+ 100 |   3.08    308  0.92   5.1 |  17.94c     -     -     - |  15.86  1.19   1586
+ 112 |   2.90    325  0.10     - |  17.94c     -     -     - |  13.01  1.11   1457
+ 120 |   2.84    341  0.16   6.3 |  17.22   2066  0.22   6.9 |  12.76  1.14   1531
+ 128 |   2.60    333  0.40   6.2 |  16.05   2054  0.05     - |  11.02  1.13   1411
+ 140 |   2.48    348  0.52   6.0 |  15.09   2113  0.09   7.4 |   9.73  1.18   1362
+ 144 |   2.39    345  0.61   5.8 |  14.67   2113  0.67   5.8 |   9.41  1.25   1354
+ 150 |   2.25    337  0.75   5.5 |  13.95   2093  0.95   5.1 |   8.74  1.20   1312
+ 160 |   2.10    335  0.90   5.2 |  12.67   2027  0.67   5.6 |   8.83  1.15   1413
+  lower  n=16 L=32-160 P=323+-16 (CV 5.0%, max/min 1.18) r(L,P)=+0.68 b=-0.94 [-0.98,-0.89] trend +11%
+  upper  n= 6 L=120-160 P=2078+-35 (CV 1.7%, max/min 1.04) r(L,P)=-0.09 b=-1.01 [-1.23,-0.79] trend -0%
+  opt    n=10 L=90-160 P=1451+-95 (CV 6.6%, max/min 1.21) r(L,P)=-0.84 b=-1.28 [-1.42,-1.13] trend -16%
+  delay_lower D=1.7 [-1,5] C=326 rms=0.178 | D=0: rms=0.186, F=1.4, p=0.252
+  delay_upper D=2.5 [-21,38] C=2116 rms=0.214 | D=0: rms=0.215, F=0.1, p=0.827
+  delay_opt   D=-23.0 [-32,-11] C=1171 rms=0.437 | D=0: rms=0.742, F=15.0, p=0.00472
+  const-P upper: censored rows [32.0, 40.0, 48.0, 60.0, 64.0, 80.0, 90.0, 96.0, 100.0, 112.0] -> violations 0 (worst shortfall -0.56e-6)
+  const-P opt: censored rows [32.0, 40.0, 48.0, 60.0, 64.0, 80.0] -> violations 0 (worst shortfall -0.14e-6)
+  delay_upper: unconstrained fit violates 0/10 censored rows (worst shortfall -0.49e-6); constrained fit: D=2.5 C=2116 rms=0.214
+  delay_opt: unconstrained fit violates 0/6 censored rows (worst shortfall -2.56e-6); constrained fit: D=-23.0 C=1171 rms=0.437
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.1476050475715534
+  outside nodes: s_lo med 0.5928898581154769, t_out_lo med 5.435023318841046; s_hi med 0.4422382107891778, t_out_hi med 5.827075961674854
+  band ratio mu_hi/mu_lo: n=6 mean 6.11 (min 6.04, max 6.22)
+  pixel-rows lower: n=410 CV 4.3% r=+0.68 b=-0.94
+  pixel-rows upper: n=142 CV 1.2% r=+0.09 b=-0.98
+
+=== fig23_exp: rows 14, node t 3.39..5.02 s, rim level 4.84 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  48 |  16.15    775  0.85   5.0 |  19.93c     -     -     - |  20.00c 4.23      -
+  60 |  11.39    683  0.61   5.2 |  18.04   1083  0.04     - |  15.64  3.88    938
+  64 |  10.41    666  0.59   5.2 |  18.04   1155  0.04     - |  14.50  3.84    928
+  80 |   7.67    613  0.66   5.1 |  14.09   1127  0.09  19.9 |  12.70  3.39   1016
+  90 |   7.50    675  0.00     - |  13.11   1180  0.11  15.4 |  11.17  3.47   1005
+  96 |   7.20    691  0.61   5.2 |  11.15   1070  0.15  12.1 |  11.00c 3.75      -
+ 100 |   6.99    699  0.01     - |  11.08   1108  0.08  16.9 |   9.93  3.85    993
+ 112 |   6.35    711  0.30     - |   9.36   1048  0.72   5.4 |   9.00c 3.92      -
+ 120 |   5.74    689  0.52   5.2 |   9.02   1082  0.04     - |   8.08  3.83    970
+ 128 |   5.00    640  0.00     - |   9.02   1155  0.04     - |   7.80  3.76    999
+ 140 |   4.46    624  0.08     - |   8.04   1126  0.08  18.3 |   7.07  3.45    990
+ 144 |   4.39    632  0.22   5.6 |   7.63   1099  0.27   8.3 |   6.89  3.45    992
+ 150 |   4.36    654  0.29   5.5 |   7.53   1130  0.07     - |   6.82  3.48   1023
+ 160 |   4.32    692  0.35   5.4 |   7.09   1135  0.19  10.3 |   6.62  3.74   1059
+  lower  n=14 L=48-160 P=675+-42 (CV 6.2%, max/min 1.26) r(L,P)=-0.43 b=-1.08 [-1.17,-0.98] trend -8%
+  upper  n=13 L=60-160 P=1115+-38 (CV 3.4%, max/min 1.13) r(L,P)=+0.03 b=-1.00 [-1.07,-0.93] trend +0%
+  opt    n=11 L=60-160 P=992+-37 (CV 3.7%, max/min 1.14) r(L,P)=+0.69 b=-0.92 [-0.98,-0.87] trend +7%
+  delay_lower D=-9.7 [-14,-5] C=597 rms=0.408 | D=0: rms=0.584, F=12.6, p=0.00404
+  delay_upper D=0.0 [-6,6] C=1116 rms=0.393 | D=0: rms=0.393, F=0.0, p=1
+  delay_opt   D=9.0 [4,15] C=1081 rms=0.248 | D=0: rms=0.401, F=14.5, p=0.0042
+  const-P upper: censored rows [48.0] -> violations 0 (worst shortfall -3.24e-6)
+  const-P opt: censored rows [48.0] -> violations 0 (worst shortfall -0.67e-6)
+  delay_upper: unconstrained fit violates 0/1 censored rows (worst shortfall -3.25e-6); constrained fit: D=0.0 C=1116 rms=0.393
+  delay_opt: unconstrained fit violates 1/1 censored rows (worst shortfall +1.03e-6); constrained fit: D=3.0 C=1010 rms=0.321
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.15322050831815132
+  outside nodes: s_lo med 0.3261891507774708, t_out_lo med 5.192372704490726; s_hi med 0.08146358604787096, t_out_hi med 13.754252752921674
+  band ratio mu_hi/mu_lo: n=13 mean 1.68 (min 1.47, max 1.84)
+  pixel-rows lower: n=412 CV 5.4% r=-0.37 b=-1.06
+  pixel-rows upper: n=408 CV 4.4% r=+0.49 b=-0.93
+
+=== fig23_sim: rows 14, node t 3.78..4.99 s, rim level 4.88 s
+   L |  mu_lo   P_lo  s_lo t_out |  mu_hi   P_hi  s_hi t_out | mu_opt t_min  P_opt
+  48 |  14.80    710  0.20     - |  18.69    897  0.69   5.1 |  17.14  4.78    823
+  60 |   9.56    574  0.88   5.0 |  15.75    945  0.75   5.3 |  13.09  3.90    785
+  64 |   9.02    577  0.96   5.0 |  15.51    993  0.51   5.6 |  12.95  3.78    829
+  80 |   7.13    570  0.74   5.1 |  11.93    954  0.93   5.0 |   9.76  4.22    781
+  90 |   7.13    642  0.74   5.1 |  10.17    915  0.17   6.6 |   8.92  4.59    803
+  96 |   6.86    658  0.28   5.4 |   9.56    918  0.12   6.5 |   8.53  4.60    819
+ 100 |   6.55    655  0.89   5.0 |   9.39    939  0.79   5.1 |   8.13  4.58    813
+ 112 |   5.44    609  0.12     - |   8.48    950  0.96   5.0 |   7.31  4.16    818
+ 120 |   4.63    555  0.74   5.1 |   7.84    941  0.68   5.4 |   6.75  4.12    809
+ 128 |   4.16    532  0.69   5.2 |   7.23    926  0.46   5.8 |   6.02  3.79    771
+ 140 |   4.05    568  0.89   5.0 |   6.55    918  0.11   8.7 |   5.60  4.15    784
+ 144 |   4.09    589  0.82   5.1 |   6.49    934  0.97   5.0 |   5.41  4.17    780
+ 150 |   4.05    608  0.89   5.1 |   6.12    917  0.23   6.3 |   5.30  4.20    795
+ 160 |   3.82    611  0.36   5.5 |   5.88    941  0.76   5.3 |   5.50c 4.21      -
+  lower  n=14 L=48-160 P=604+-48 (CV 8.0%, max/min 1.34) r(L,P)=-0.35 b=-1.08 [-1.20,-0.95] trend -9%
+  upper  n=14 L=48-160 P=935+-23 (CV 2.5%, max/min 1.11) r(L,P)=-0.17 b=-1.01 [-1.05,-0.97] trend -1%
+  opt    n=13 L=48-150 P=801+-19 (CV 2.4%, max/min 1.07) r(L,P)=-0.46 b=-1.03 [-1.07,-0.99] trend -3%
+  delay_lower D=-10.2 [-16,-2] C=530 rms=0.547 | D=0: rms=0.666, F=5.8, p=0.0328
+  delay_upper D=1.8 [-2,6] C=958 rms=0.333 | D=0: rms=0.347, F=1.0, p=0.328
+  delay_opt   D=-2.2 [-5,1] C=781 rms=0.201 | D=0: rms=0.218, F=2.0, p=0.184
+  near-optimal (t<=t_min+0.1 s) width / mu_opt, median: 0.18926037114178346
+  outside nodes: s_lo med 0.7421361505779984, t_out_lo med 5.091496004566592; s_hi med 0.6821285083152269, t_out_hi med 5.31314990766011
+  band ratio mu_hi/mu_lo: n=14 mean 1.56 (min 1.26, max 1.74)
+  pixel-rows lower: n=412 CV 6.9% r=-0.34 b=-1.07
+  pixel-rows upper: n=412 CV 2.1% r=+0.08 b=-0.99
+
+=== Cross-check of digitized nodes against the article's text (1-D sweeps)
+  fig18_exp L=128   eff.range 4-10, argmin 9 (t=2.93 s; within 0.05 s: [8.0, 9.0])  | paper: Fig.16(c): eff. mu in [4,10] (exp & sim); t_min at mu=9
+  fig18_sim L=128   eff.range 4-11, argmin 9 (t=2.61 s; within 0.05 s: [8.0, 9.0])  | paper: Fig.16(c): eff. mu in [4,10] (exp & sim); t_min at mu=9
+  fig18_exp mu=10   eff.range 60-128, argmin 100 (t=2.71 s; within 0.05 s: [96.0, 100.0])  | paper: Fig.16(d): eff. L in [48,128]; t_min at L=100 (exp), 112 (sim)
+  fig18_sim mu=10   eff.range 48-128, argmin 112 (t=2.67 s; within 0.05 s: [96.0, 100.0, 112.0])  | paper: Fig.16(d): eff. L in [48,128]; t_min at L=100 (exp), 112 (sim)
+  fig20_exp L=128   eff.range 2-15, argmin 10 (t=1.15 s; within 0.05 s: [9.0, 10.0, 11.0])  | paper: Fig.19(c): t_min at mu=11 (exp & sim); eff. mu ranges differ by 1
+  fig20_sim L=128   eff.range 3-16, argmin 11 (t=1.13 s; within 0.05 s: [11.0])  | paper: Fig.19(c): t_min at mu=11 (exp & sim); eff. mu ranges differ by 1
+  fig20_exp mu=12   eff.range 32-160, argmin 100 (t=1.17 s; within 0.05 s: [90.0, 96.0, 100.0, 112.0])  | paper: Fig.19(d): t_min at L=112 / 120; eff. L ranges identical
+  fig20_sim mu=12   eff.range 32-160, argmin 120 (t=1.17 s; within 0.05 s: [112.0, 120.0, 128.0])  | paper: Fig.19(d): t_min at L=112 / 120; eff. L ranges identical
+  fig23_exp L=64    eff.range 11-18, argmin 14 (t=3.84 s; within 0.05 s: [14.0, 15.0])  | paper: Fig.21(c): t_min at mu=16 (exp), 13 (sim)
+  fig23_sim L=64    eff.range 9.5-15, argmin 13 (t=3.78 s; within 0.05 s: [13.0])  | paper: Fig.21(c): t_min at mu=16 (exp), 13 (sim)
+  fig23_exp mu=6    eff.range 120-160, argmin 160 (t=3.82 s; within 0.05 s: [140.0, 144.0, 150.0, 160.0])  | paper: Fig.21(d): t_min at L=150 (exp), 128 (sim)
+  fig23_sim mu=6    eff.range 112-150, argmin 128 (t=3.79 s; within 0.05 s: [128.0])  | paper: Fig.21(d): t_min at L=150 (exp), 128 (sim)

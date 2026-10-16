@@ -119,7 +119,13 @@ def lti_t5(Acl, Bd, Ccl, d_amp, w, fs, f_exc, t_cap=20.0, pre=1.0, fast=True,
     if rho > 1.0 + 1e-9:
         return t_cap, rho
     I = np.eye(Acl.shape[0])
-    Xp = np.linalg.solve(np.exp(1j * w) * I - Acl, Bd[:, 0] * d_amp / 2)
+    Mw = np.exp(1j * w) * I - Acl
+    try:
+        Xp = np.linalg.solve(Mw, Bd[:, 0] * d_amp / 2)
+    except np.linalg.LinAlgError:
+        # two actuators, one sensor: e^{iw} is an eigenvalue of the marginal
+        # null-space direction, unobservable in e -- any particular solution
+        Xp = np.linalg.lstsq(Mw, Bd[:, 0] * d_amp / 2, rcond=None)[0]
     xf0 = 2 * Xp.real
     coef = np.linalg.solve(V, -xf0)
     amp = (Ccl[0] @ V) * coef
