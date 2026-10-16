@@ -1,0 +1,12 @@
+paper experimental points (pixel data), sigma_n from the map inversion:
+  120 Hz: C = 2.290e-03 s, sigma = 1.677 1/s, 20 points, x range 0.15..1.20, min t5*sigma = 4.84
+  280 Hz: C = 1.141e-03 s, sigma = 5.152 1/s, 18 points, x range 0.03..1.11, min t5*sigma = 6.14
+  85 Hz: C = 3.203e-03 s, sigma = 1.087 1/s, 23 points, x range 0.17..0.99, min t5*sigma = 4.12
+testbed (truth plant, averaged LTI):
+  120 Hz zeta 0.17 %: divergence at g/sigma = 1.087
+  280 Hz zeta 0.17 %: divergence at g/sigma = 1.066
+  120 Hz zeta 0.24 %: divergence at g/sigma = 1.092
+  280 Hz zeta 0.24 %: divergence at g/sigma = 1.082
+  120 Hz zeta 0.35 %: divergence at g/sigma = 1.105
+  280 Hz zeta 0.35 %: divergence at g/sigma = 1.119
+saved figures/fig_design_chart.png
