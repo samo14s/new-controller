@@ -1,0 +1,17 @@
+series,x,y,x_nominal
+Experiment,99.9095,5.1253,100
+Experiment,111.885,4.8006,112
+Experiment,119.909,4.5435,120
+Experiment,127.938,4.3329,128
+Experiment,139.929,4.1588,140
+Experiment,143.903,4.0843,144
+Experiment,149.928,4.0225,150
+Experiment,159.93,3.9959,160
+Simulation,99.903,4.5046,100
+Simulation,111.934,4.1228,112
+Simulation,119.888,3.9244,120
+Simulation,127.916,3.7578,128
+Simulation,139.957,3.9707,140
+Simulation,143.928,4.1393,144
+Simulation,149.888,4.3621,150
+Simulation,160.06,4.9636,160

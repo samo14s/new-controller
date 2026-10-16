@@ -1,0 +1,42 @@
+SIGN '+' junction, '-' update (Elliott)                     : final/initial amplitude = 0.000392
+SIGN '-' junction (Eq.18) + '-' update (Eq.20) literal      : final/initial amplitude = inf
+SIGN '-' junction, '+' update (Widrow/Kuo)                  : final/initial amplitude = 0.000392
+|Gs(w0)|= 11.583971369850246
+zeta=0.0017 sigma=1.250/s : alpha_opt*fs=1.734 (ratio to sigma 1.39), t5_min=1.228s, t5_min*sigma/ln20=0.51
+   alpha*fs=  0.125  t5=    inf  t5(stay)=    inf  H1-pred= 23.957
+   alpha*fs=  0.212  t5= 13.844  t5(stay)= 13.844  H1-pred= 14.160
+   alpha*fs=  0.358  t5=  8.192  t5(stay)=  8.192  H1-pred=  8.369
+   alpha*fs=  0.606  t5=  4.856  t5(stay)=  4.856  H1-pred=  4.947
+   alpha*fs=  1.025  t5=  2.556  t5(stay)=  3.453  H1-pred=  2.924
+   alpha*fs=  1.734  t5=  1.228  t5(stay)=    inf  H1-pred=  1.728
+   alpha*fs=  2.933  t5=    inf  t5(stay)=    inf  H1-pred=  1.021
+   alpha*fs=  4.962  t5=    inf  t5(stay)=    inf  H1-pred=  0.604
+   alpha*fs=  8.395  t5=    inf  t5(stay)=    inf  H1-pred=  0.357
+zeta=0.0034 sigma=2.501/s : alpha_opt*fs=2.910 (ratio to sigma 1.16), t5_min=0.548s, t5_min*sigma/ln20=0.46
+   alpha*fs=  0.250  t5= 11.711  t5(stay)= 11.711  H1-pred= 11.978
+   alpha*fs=  0.423  t5=  6.922  t5(stay)=  6.922  H1-pred=  7.080
+   alpha*fs=  0.716  t5=  4.092  t5(stay)=  4.092  H1-pred=  4.185
+   alpha*fs=  1.211  t5=  2.465  t5(stay)=  2.465  H1-pred=  2.473
+   alpha*fs=  2.049  t5=  1.204  t5(stay)=  2.100  H1-pred=  1.462
+   alpha*fs=  3.467  t5=    inf  t5(stay)=    inf  H1-pred=  0.864
+   alpha*fs=  5.866  t5=    inf  t5(stay)=    inf  H1-pred=  0.511
+   alpha*fs=  9.924  t5=    inf  t5(stay)=    inf  H1-pred=  0.302
+   alpha*fs= 16.791  t5=    inf  t5(stay)=    inf  H1-pred=  0.178
+zeta=0.0068 sigma=5.002/s : alpha_opt*fs=5.819 (ratio to sigma 1.16), t5_min=0.207s, t5_min*sigma/ln20=0.35
+   alpha*fs=  0.500  t5=  5.843  t5(stay)=  5.843  H1-pred=  5.989
+   alpha*fs=  0.846  t5=  3.453  t5(stay)=  3.453  H1-pred=  3.540
+   alpha*fs=  1.432  t5=  2.042  t5(stay)=  2.042  H1-pred=  2.092
+   alpha*fs=  2.422  t5=  1.187  t5(stay)=  1.187  H1-pred=  1.237
+   alpha*fs=  4.098  t5=  0.515  t5(stay)=  1.369  H1-pred=  0.731
+   alpha*fs=  6.934  t5=    inf  t5(stay)=    inf  H1-pred=  0.432
+   alpha*fs= 11.732  t5=    inf  t5(stay)=    inf  H1-pred=  0.255
+   alpha*fs= 19.849  t5=    inf  t5(stay)=    inf  H1-pred=  0.151
+   alpha*fs= 33.582  t5=    inf  t5(stay)=    inf  H1-pred=  0.089
+H2 small-L test at alpha*fs = 0.3751419769948722
+  L= 128 t5=7.819  ratio=1.000  bounds=[0.977,1.024]
+  L=  64 t5=9.130  ratio=1.168  bounds=[0.829,1.260]
+  L=  48 t5=7.246  ratio=0.927  bounds=[0.887,1.146]
+  L=  40 t5=8.333  ratio=1.066  bounds=[0.960,1.043]
+  L=  32 t5=10.782  ratio=1.379  bounds=[0.784,1.382]
+  L=  24 t5=15.770  ratio=2.017  bounds=[0.650,2.162]
+  L=  16 t5=28.228  ratio=3.610  bounds=[0.563,4.449]

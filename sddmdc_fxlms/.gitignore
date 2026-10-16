@@ -1,0 +1,5 @@
+# Figures of the article (publisher copyright) and overlays drawn on them:
+# regenerate locally with data/extract_figures.py + the digitisation scripts.
+data/source_figs/
+data/digitized/check_*.png
+data/digitized/checkmap_*.png

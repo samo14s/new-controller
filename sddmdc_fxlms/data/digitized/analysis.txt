@@ -1,0 +1,20 @@
+fig16c  Experiment  L=128  opt mu=8.5e-06  t_min=2.89 s  muL_opt=1.088e-03  slow n=4 CV(t*mu)=0.05 p=1.15 C=2.337e-03 s (rel rms 0.05)
+fig16c  Simulation  L=128  opt mu=8.5e-06  t_min=2.53 s  muL_opt=1.088e-03  slow n=5 CV(t*mu)=0.03 p=1.06 C=2.477e-03 s (rel rms 0.03)
+fig16d  Experiment  mu=1e-05  opt L=100      t_min=2.53 s  muL_opt=1.000e-03
+fig16d  Simulation  mu=1e-05  opt L=100      t_min=2.60 s  muL_opt=1.000e-03
+fig17b  Exp_FEM     L=128  opt mu=3.5e-06  t_min=4.53 s  muL_opt=4.480e-04
+fig17b  Exp_sdDMDc  L=128  opt mu=8.5e-06  t_min=2.96 s  muL_opt=1.088e-03  slow n=4 CV(t*mu)=0.04 p=1.12 C=2.374e-03 s (rel rms 0.04)
+fig17c  Exp_FEM     mu=1e-05  opt L=40       t_min=3.86 s  muL_opt=4.000e-04
+fig17c  Exp_sdDMDc  mu=1e-05  opt L=96       t_min=2.55 s  muL_opt=9.600e-04  slow n=4 CV(t*L)=0.15 p=1.45 C=3.186e-03 s (rel rms 0.17)
+fig19c  Experiment  L=128  opt mu=1.1e-05  t_min=1.19 s  muL_opt=1.408e-03  slow n=4 CV(t*mu)=0.01 p=0.99 C=1.126e-03 s (rel rms 0.01)
+fig19c  Simulation  L=128  opt mu=1.1e-05  t_min=1.06 s  muL_opt=1.408e-03  slow n=6 CV(t*mu)=0.03 p=0.99 C=1.623e-03 s (rel rms 0.03)
+fig19d  Experiment  mu=1.2e-05  opt L=112      t_min=1.20 s  muL_opt=1.344e-03
+fig19d  Simulation  mu=1.2e-05  opt L=120      t_min=1.20 s  muL_opt=1.440e-03  slow n=4 CV(t*L)=0.05 p=0.92 C=1.509e-03 s (rel rms 0.05)
+fig21c  Experiment  L=64  opt mu=1.6e-05  t_min=3.80 s  muL_opt=1.024e-03  slow n=8 CV(t*mu)=0.01 p=0.98 C=3.177e-03 s (rel rms 0.01)
+fig21c  Simulation  L=64  opt mu=1.3e-05  t_min=3.77 s  muL_opt=8.320e-04  slow n=8 CV(t*mu)=0.02 p=1.03 C=2.995e-03 s (rel rms 0.02)
+fig21d  Experiment  mu=6e-06  opt L=160      t_min=3.84 s  muL_opt=9.600e-04  slow n=4 CV(t*L)=0.16 p=1.73 C=3.929e-03 s (rel rms 0.16)
+fig21d  Simulation  mu=6e-06  opt L=128      t_min=3.76 s  muL_opt=7.680e-04  slow n=4 CV(t*L)=0.21 p=1.91 C=3.724e-03 s (rel rms 0.21)
+fig22a  Experiment  L=64  opt mu=1.5e-05  t_min=3.80 s  muL_opt=9.600e-04
+fig22a  Simulation  L=64  opt mu=1.1e-05  t_min=3.49 s  muL_opt=7.040e-04
+fig22b  Experiment  mu=6e-06  opt L=160      t_min=4.00 s  muL_opt=9.600e-04
+fig22b  Simulation  mu=6e-06  opt L=128      t_min=3.76 s  muL_opt=7.680e-04

@@ -1,0 +1,103 @@
+== H2 slow branch t*mu (x1e-6 s) ==
+120Hz-S2     mu=1.0e-06  t*mu exp= 19.70  sim= 20.00
+120Hz-S2     mu=1.5e-06  t*mu exp= 19.35  sim= 20.10
+120Hz-S2     mu=2.0e-06  t*mu exp= 18.00  sim= 18.90
+120Hz-S2     mu=2.5e-06  t*mu exp= 17.25  sim= 18.50
+120Hz-S2     mu=3.0e-06  t*mu exp= 17.70  sim= 18.75
+120Hz-S2     mu=3.5e-06  t*mu exp= 17.85  sim= 18.90
+120Hz-S2     mu=4.0e-06  t*mu exp= 18.40  sim= 18.80
+120Hz-S2     mu=4.5e-06  t*mu exp= 19.35  sim= 19.12
+120Hz-S2     mu=5.0e-06  t*mu exp= 20.61  sim= 18.82
+120Hz-S2     mu=5.5e-06  t*mu exp= 21.18  sim= 18.86
+120Hz-S2     mu=6.0e-06  t*mu exp= 21.00  sim= 18.78
+120Hz-S2     mu=6.5e-06  t*mu exp= 20.93  sim= 18.66
+120Hz-S2     mu=7.0e-06  t*mu exp= 21.21  sim= 18.69
+120Hz-S2     mu=7.5e-06  t*mu exp= 22.13  sim= 19.50
+120Hz-S2     mu=8.0e-06  t*mu exp= 23.36  sim= 20.64
+120Hz-S2     mu=8.5e-06  t*mu exp= 24.65  sim= 21.42
+120Hz-S2     mu=9.0e-06  t*mu exp= 26.10  sim= 22.77
+120Hz-S2     mu=9.5e-06  t*mu exp= 28.50  sim= 25.65
+120Hz-S2     mu=1.0e-05  t*mu exp= 33.70  sim= 30.20
+120Hz-S2     mu=1.1e-05  t*mu exp= 60.17  sim= 48.73
+120Hz-S2     mu=1.2e-05  t*mu exp=113.28  sim= 98.04
+280Hz-S1     mu=5.0e-07  t*mu exp=  8.75  sim= 10.00
+280Hz-S1     mu=1.0e-06  t*mu exp=  8.80  sim= 12.60
+280Hz-S1     mu=2.0e-06  t*mu exp=  8.80  sim= 12.60
+280Hz-S1     mu=3.0e-06  t*mu exp=  9.00  sim= 12.60
+280Hz-S1     mu=4.0e-06  t*mu exp=  9.00  sim= 13.60
+280Hz-S1     mu=5.0e-06  t*mu exp=  9.16  sim= 12.55
+280Hz-S1     mu=6.0e-06  t*mu exp=  9.00  sim= 12.60
+280Hz-S1     mu=7.0e-06  t*mu exp=  9.31  sim= 12.60
+280Hz-S1     mu=8.0e-06  t*mu exp= 10.00  sim= 12.56
+280Hz-S1     mu=9.0e-06  t*mu exp= 10.98  sim= 12.60
+280Hz-S1     mu=1.0e-05  t*mu exp= 11.90  sim= 11.70
+280Hz-S1     mu=1.1e-05  t*mu exp= 13.09  sim= 11.77
+280Hz-S1     mu=1.2e-05  t*mu exp= 18.84  sim= 15.00
+280Hz-S1     mu=1.3e-05  t*mu exp= 25.09  sim= 19.11
+280Hz-S1     mu=1.4e-05  t*mu exp= 35.28  sim= 31.78
+280Hz-S1     mu=1.5e-05  t*mu exp= 52.50  sim= 51.00
+280Hz-S1     mu=1.6e-05  t*mu exp= 89.60  sim= 78.40
+280Hz-S1     mu=1.7e-05  t*mu exp=207.40  sim=171.70
+85Hz-S2-2ch  mu=2.5e-06  t*mu exp= 50.00  sim= 46.75
+85Hz-S2-2ch  mu=3.0e-06  t*mu exp= 49.20  sim= 45.60
+85Hz-S2-2ch  mu=3.5e-06  t*mu exp= 49.35  sim= 48.65
+85Hz-S2-2ch  mu=4.0e-06  t*mu exp= 49.60  sim= 47.60
+85Hz-S2-2ch  mu=4.5e-06  t*mu exp= 49.50  sim= 47.25
+85Hz-S2-2ch  mu=5.0e-06  t*mu exp= 49.50  sim= 46.00
+85Hz-S2-2ch  mu=6.0e-06  t*mu exp= 49.80  sim= 45.60
+85Hz-S2-2ch  mu=7.0e-06  t*mu exp= 49.70  sim= 44.80
+85Hz-S2-2ch  mu=8.0e-06  t*mu exp= 49.60  sim= 44.80
+85Hz-S2-2ch  mu=9.0e-06  t*mu exp= 51.30  sim= 45.45
+85Hz-S2-2ch  mu=1.0e-05  t*mu exp= 51.65  sim= 45.77
+85Hz-S2-2ch  mu=1.1e-05  t*mu exp= 52.80  sim= 46.20
+85Hz-S2-2ch  mu=1.2e-05  t*mu exp= 51.60  sim= 47.40
+85Hz-S2-2ch  mu=1.3e-05  t*mu exp= 53.30  sim= 48.75
+85Hz-S2-2ch  mu=1.4e-05  t*mu exp= 53.90  sim= 53.90
+85Hz-S2-2ch  mu=1.5e-05  t*mu exp= 57.30  sim= 62.25
+85Hz-S2-2ch  mu=1.6e-05  t*mu exp= 60.80  sim= 82.40
+85Hz-S2-2ch  mu=1.7e-05  t*mu exp= 70.55  sim=113.90
+85Hz-S2-2ch  mu=1.8e-05  t*mu exp= 82.80  sim=360.00
+85Hz-S2-2ch  mu=1.9e-05  t*mu exp=380.00  sim=380.00
+== H1 collapse: L-sweep vs mu-sweep at equal mu*L ==
+120Hz-S2     L=  32 muL=3.20e-04 tL(exp/sim)= 9.60/10.50 tmu(exp/sim)= 6.90/ 7.40 ratio=1.39/1.42  split-bounds=[0.78,1.38]
+120Hz-S2     L=  40 muL=4.00e-04 tL(exp/sim)= 6.00/ 6.40 tmu(exp/sim)= 5.70/ 6.04 ratio=1.05/1.06  split-bounds=[0.96,1.04]
+120Hz-S2     L=  48 muL=4.80e-04 tL(exp/sim)= 4.80/ 5.10 tmu(exp/sim)= 4.85/ 5.05 ratio=0.99/1.01  split-bounds=[0.89,1.15]
+120Hz-S2     L=  60 muL=6.00e-04 tL(exp/sim)= 4.25/ 4.40 tmu(exp/sim)= 4.23/ 4.07 ratio=1.00/1.08  split-bounds=[0.82,1.28]
+120Hz-S2     L=  64 muL=6.40e-04 tL(exp/sim)= 4.10/ 4.25 tmu(exp/sim)= 4.12/ 3.76 ratio=0.99/1.13  split-bounds=[0.83,1.26]
+120Hz-S2     L=  80 muL=8.00e-04 tL(exp/sim)= 2.90/ 3.20 tmu(exp/sim)= 3.36/ 3.00 ratio=0.86/1.07  split-bounds=[0.96,1.04]
+120Hz-S2     L=  90 muL=9.00e-04 tL(exp/sim)= 2.60/ 2.85 tmu(exp/sim)= 3.02/ 2.67 ratio=0.86/1.07  split-bounds=[0.93,1.08]
+120Hz-S2     L=  96 muL=9.60e-04 tL(exp/sim)= 2.55/ 2.70 tmu(exp/sim)= 2.95/ 2.60 ratio=0.86/1.04  split-bounds=[0.90,1.13]
+120Hz-S2     L= 100 muL=1.00e-03 tL(exp/sim)= 2.55/ 2.65 tmu(exp/sim)= 2.93/ 2.59 ratio=0.87/1.02  split-bounds=[0.89,1.14]
+120Hz-S2     L= 112 muL=1.12e-03 tL(exp/sim)= 2.85/ 2.65 tmu(exp/sim)= 2.90/ 2.52 ratio=0.98/1.05  split-bounds=[0.91,1.11]
+120Hz-S2     L= 120 muL=1.20e-03 tL(exp/sim)= 3.15/ 2.80 tmu(exp/sim)= 2.98/ 2.66 ratio=1.06/1.05  split-bounds=[0.96,1.04]
+120Hz-S2     L= 128 muL=1.28e-03 tL(exp/sim)= 3.40/ 3.05 tmu(exp/sim)= 3.37/ 3.02 ratio=1.01/1.01  split-bounds=[0.98,1.02]
+120Hz-S2     L= 140 muL=1.40e-03 tL(exp/sim)= 6.00/ 5.40 tmu(exp/sim)= 5.34/ 4.34 ratio=1.12/1.24  split-bounds=[0.92,1.09]
+120Hz-S2     L= 144 muL=1.44e-03 tL(exp/sim)= 6.70/ 6.10 tmu(exp/sim)= 6.46/ 5.37 ratio=1.04/1.14  split-bounds=[0.92,1.10]
+120Hz-S2     L= 150 muL=1.50e-03 tL(exp/sim)= 8.00/ 7.00 tmu(exp/sim)= 8.32/ 7.12 ratio=0.96/0.98  split-bounds=[0.92,1.09]
+280Hz-S1     L=  16 muL=1.92e-04 tL(exp/sim)= 6.65/ 7.60 tmu(exp/sim)= 6.60/ 9.45 ratio=1.01/0.80  split-bounds=[0.90,1.13]
+280Hz-S1     L=  32 muL=3.84e-04 tL(exp/sim)= 3.35/ 4.20 tmu(exp/sim)= 3.00/ 4.20 ratio=1.12/1.00  split-bounds=[0.90,1.12]
+280Hz-S1     L=  40 muL=4.80e-04 tL(exp/sim)= 2.40/ 3.20 tmu(exp/sim)= 2.44/ 3.60 ratio=0.98/0.89  split-bounds=[0.91,1.11]
+280Hz-S1     L=  48 muL=5.76e-04 tL(exp/sim)= 2.10/ 2.75 tmu(exp/sim)= 2.04/ 2.96 ratio=1.03/0.93  split-bounds=[0.91,1.11]
+280Hz-S1     L=  60 muL=7.20e-04 tL(exp/sim)= 1.80/ 2.35 tmu(exp/sim)= 1.62/ 2.25 ratio=1.11/1.04  split-bounds=[0.92,1.09]
+280Hz-S1     L=  64 muL=7.68e-04 tL(exp/sim)= 1.70/ 2.20 tmu(exp/sim)= 1.50/ 2.10 ratio=1.13/1.05  split-bounds=[0.92,1.09]
+280Hz-S1     L=  80 muL=9.60e-04 tL(exp/sim)= 1.33/ 1.75 tmu(exp/sim)= 1.29/ 1.69 ratio=1.03/1.04  split-bounds=[0.93,1.08]
+280Hz-S1     L=  96 muL=1.15e-03 tL(exp/sim)= 1.26/ 1.45 tmu(exp/sim)= 1.22/ 1.40 ratio=1.03/1.04  split-bounds=[0.95,1.06]
+280Hz-S1     L= 112 muL=1.34e-03 tL(exp/sim)= 1.25/ 1.27 tmu(exp/sim)= 1.19/ 1.12 ratio=1.05/1.13  split-bounds=[0.96,1.04]
+280Hz-S1     L= 120 muL=1.44e-03 tL(exp/sim)= 1.45/ 1.24 tmu(exp/sim)= 1.29/ 1.12 ratio=1.13/1.11  split-bounds=[0.96,1.04]
+280Hz-S1     L= 128 muL=1.54e-03 tL(exp/sim)= 1.60/ 1.28 tmu(exp/sim)= 1.57/ 1.25 ratio=1.02/1.02  split-bounds=[0.98,1.02]
+280Hz-S1     L= 140 muL=1.68e-03 tL(exp/sim)= 1.95/ 1.85 tmu(exp/sim)= 2.00/ 1.57 ratio=0.97/1.18  split-bounds=[0.98,1.02]
+280Hz-S1     L= 150 muL=1.80e-03 tL(exp/sim)= 2.50/ 2.70 tmu(exp/sim)= 2.58/ 2.34 ratio=0.97/1.15  split-bounds=[0.97,1.04]
+280Hz-S1     L= 160 muL=1.92e-03 tL(exp/sim)= 3.45/ 4.00 tmu(exp/sim)= 3.50/ 3.40 ratio=0.99/1.18  split-bounds=[1.00,1.00]
+85Hz-S2-2ch  L=  32 muL=1.92e-04 tL(exp/sim)=20.00/20.00 tmu(exp/sim)=16.40/15.20 ratio=1.22/1.32  split-bounds=[0.63,2.38]
+85Hz-S2-2ch  L=  40 muL=2.40e-04 tL(exp/sim)=18.70/18.60 tmu(exp/sim)=13.25/12.90 ratio=1.41/1.44  split-bounds=[0.72,1.65]
+85Hz-S2-2ch  L=  48 muL=2.88e-04 tL(exp/sim)=13.60/12.50 tmu(exp/sim)=11.00/10.50 ratio=1.24/1.19  split-bounds=[0.82,1.27]
+85Hz-S2-2ch  L=  60 muL=3.60e-04 tL(exp/sim)= 9.20/ 8.30 tmu(exp/sim)= 8.90/ 8.20 ratio=1.03/1.01  split-bounds=[0.98,1.02]
+85Hz-S2-2ch  L=  64 muL=3.84e-04 tL(exp/sim)= 8.30/ 7.60 tmu(exp/sim)= 8.30/ 7.60 ratio=1.00/1.00  split-bounds=[0.93,1.09]
+85Hz-S2-2ch  L=  80 muL=4.80e-04 tL(exp/sim)= 6.35/ 6.00 tmu(exp/sim)= 6.65/ 6.00 ratio=0.95/1.00  split-bounds=[0.83,1.27]
+85Hz-S2-2ch  L= 100 muL=6.00e-04 tL(exp/sim)= 5.85/ 5.50 tmu(exp/sim)= 5.50/ 4.87 ratio=1.06/1.13  split-bounds=[0.87,1.18]
+85Hz-S2-2ch  L= 112 muL=6.72e-04 tL(exp/sim)= 5.25/ 4.55 tmu(exp/sim)= 4.98/ 4.39 ratio=1.05/1.04  split-bounds=[0.95,1.05]
+85Hz-S2-2ch  L= 120 muL=7.20e-04 tL(exp/sim)= 4.80/ 4.17 tmu(exp/sim)= 4.67/ 4.14 ratio=1.03/1.01  split-bounds=[0.98,1.02]
+85Hz-S2-2ch  L= 128 muL=7.68e-04 tL(exp/sim)= 4.33/ 3.75 tmu(exp/sim)= 4.30/ 3.95 ratio=1.01/0.95  split-bounds=[0.93,1.08]
+85Hz-S2-2ch  L= 140 muL=8.40e-04 tL(exp/sim)= 3.85/ 4.17 tmu(exp/sim)= 4.07/ 3.76 ratio=0.95/1.11  split-bounds=[0.89,1.14]
+85Hz-S2-2ch  L= 150 muL=9.00e-04 tL(exp/sim)= 3.83/ 4.60 tmu(exp/sim)= 3.85/ 3.87 ratio=1.00/1.19  split-bounds=[0.89,1.14]
+85Hz-S2-2ch  L= 160 muL=9.60e-04 tL(exp/sim)= 3.85/ 5.45 tmu(exp/sim)= 3.82/ 4.15 ratio=1.01/1.31  split-bounds=[0.92,1.10]
