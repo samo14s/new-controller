@@ -1,0 +1,9 @@
+missing [520.0, 580.0, 630.0, 640.0, 650.0, 660.0, 670.0, 680.0, 690.0, 700.0, 710.0, 720.0, 730.0, 1220.0, 1260.0, 1270.0, 1420.0, 1430.0, 1460.0, 1490.0, 1500.0, 1530.0, 1540.0, 1570.0, 1580.0, 1610.0, 1640.0, 1650.0, 1680.0, 1690.0, 1720.0, 1730.0, 1760.0, 1790.0, 1800.0, 1830.0, 1840.0]
+speeds without vertex 37 min {'rpm': 1940.0, 'g': 256.88062450426696} max {'rpm': 740.0, 'g': 1486.9820549808492}
+tooth {1: 1939.5, 2: 969.8, 3: 646.5, 4: 484.9, 5: 387.9} peaks [(488, np.float64(6.78)), (651, np.float64(8.99)), (977, np.float64(13.64)), (1952, np.float64(29.27))]
+   500-   550 (  50 rpm) g  1479.0 ->  1136.0 slope -6.860 sloped straight line  vtx  5/ 6 grid  maxdev 0.007  fig9 runs 3 (longest 30) unc 1.2-2.0 mm k4 False | tooth-passing k=4 at 484.9 rpm; uncontrolled lobe peak 6.8 mm at 488 rpm (Fig 9 dashed)
+   560-   610 (  50 rpm) g   752.0 ->  1286.3 slope +10.686 sloped straight line  vtx  5/ 6 grid  maxdev 0.000  fig9 runs 5 (longest 10) unc 2.1-5.3 mm k3 False | 
+   620-   740 ( 120 rpm) g  1393.0 ->  1487.0 slope +0.783 sloped straight line  vtx  2/13 grid  maxdev 0.000  fig9 runs 6 (longest 40) unc 1.2-9.0 mm k3 True | tooth-passing k=3 at 646.5 rpm; uncontrolled lobe peak 9.0 mm at 651 rpm (Fig 9 dashed)
+  1210-  1230 (  20 rpm) g   850.0 ->  1050.0 slope +10.000 sloped straight line  vtx  2/ 3 grid  maxdev 0.000  fig9 runs 2 (longest 10) unc 1.6-1.7 mm k2 False | 
+  1250-  1280 (  30 rpm) g  1120.0 ->  1150.0 slope +1.000 sloped straight line  vtx  2/ 4 grid  maxdev 0.000  fig9 runs 3 (longest 10) unc 1.9-2.4 mm k2 False | 
+  1410-  1860 ( 450 rpm) g  1162.0 ->   328.5 slope -1.852 sloped straight line  vtx 25/46 grid  maxdev 0.007  fig9 runs 15 (longest 140) unc 5.7-24.6 mm k1 False | overlaps Fig 9 white rectangle seqno 613 (1655-1906 rpm); overlaps Fig 9 white rectangle seqno 615 (1748-1999 rpm); overlaps Fig 9 white rectangle seqno 621 (1495-1746 rpm)

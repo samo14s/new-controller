@@ -1,0 +1,47 @@
+baseline                        1000  a<=1%:  59/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 983  gens 48.1
+baseline                        1950  a<=1%:  60/60  g<=2%:  42/60  f=0:  0  med gap 0.002%  p90 0.12%  nfe 784  gens 38.2
+baseline                        2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 823  gens 40.1
+init=uniform                    1000  a<=1%:  57/60  g<=2%:  58/60  f=0:  0  med gap 0.000%  p90 0.17%  nfe 896  gens 43.8
+init=uniform                    1950  a<=1%:  58/60  g<=2%:  35/60  f=0:  2  med gap 0.008%  p90 0.14%  nfe 759  gens 37.0
+init=uniform                    2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 781  gens 38.1
+init=strat0                     1000  a<=1%:  58/60  g<=2%:  58/60  f=0:  0  med gap 0.000%  p90 0.02%  nfe 924  gens 45.2
+init=strat0                     1950  a<=1%:  60/60  g<=2%:  44/60  f=0:  0  med gap 0.000%  p90 0.10%  nfe 804  gens 39.2
+init=strat0                     2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 837  gens 40.8
+window=8                        1000  a<=1%:  38/60  g<=2%:  41/60  f=0:  0  med gap 0.246%  p90 5.61%  nfe 515  gens 24.8
+window=8                        1950  a<=1%:  59/60  g<=2%:  15/60  f=0:  1  med gap 0.082%  p90 0.33%  nfe 341  gens 16.0
+window=8                        2500  a<=1%:  59/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.12%  nfe 571  gens 27.6
+window=25                       1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1180  gens 58.0
+window=25                       1950  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1164  gens 57.2
+window=25                       2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1048  gens 51.4
+no window                       1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1220  gens 60.0
+no window                       1950  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1220  gens 60.0
+no window                       2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1220  gens 60.0
+NP=10                           1000  a<=1%:  58/60  g<=2%:  59/60  f=0:  1  med gap 0.000%  p90 0.00%  nfe 499  gens 48.9
+NP=10                           1950  a<=1%:  52/60  g<=2%:  25/60  f=0:  8  med gap 0.055%  p90 100.00%  nfe 326  gens 31.6
+NP=10                           2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 443  gens 43.3
+NP=30                           1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.01%  nfe 1412  gens 46.0
+NP=30                           1950  a<=1%:  60/60  g<=2%:  35/60  f=0:  0  med gap 0.012%  p90 0.15%  nfe 1102  gens 35.7
+NP=30                           2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1230  gens 40.0
+gens=100                        1000  a<=1%:  59/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 986  gens 48.3
+gens=100                        1950  a<=1%:  60/60  g<=2%:  42/60  f=0:  0  med gap 0.002%  p90 0.12%  nfe 788  gens 38.4
+gens=100                        2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 823  gens 40.1
+lp=20                           1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 991  gens 48.5
+lp=20                           1950  a<=1%:  60/60  g<=2%:  37/60  f=0:  0  med gap 0.007%  p90 0.13%  nfe 735  gens 35.8
+lp=20                           2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 859  gens 42.0
+tol=1e-6                        1000  a<=1%:  59/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1117  gens 54.9
+tol=1e-6                        1950  a<=1%:  60/60  g<=2%:  42/60  f=0:  0  med gap 0.002%  p90 0.12%  nfe 819  gens 40.0
+tol=1e-6                        2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 859  gens 42.0
+uniform,no window               1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1220  gens 60.0
+uniform,no window               1950  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1220  gens 60.0
+uniform,no window               2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1220  gens 60.0
+rec: strat0,NP=20,G=100,W=25    1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1226  gens 60.3
+rec: strat0,NP=20,G=100,W=25    1950  a<=1%:  60/60  g<=2%:  59/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1273  gens 62.6
+rec: strat0,NP=20,G=100,W=25    2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1057  gens 51.9
+rec: strat0,NP=30,G=100,W=25    1000  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1812  gens 59.4
+rec: strat0,NP=30,G=100,W=25    1950  a<=1%:  60/60  g<=2%:  57/60  f=0:  0  med gap 0.000%  p90 0.00%  nfe 1843  gens 60.4
+rec: strat0,NP=30,G=100,W=25    2500  a<=1%:  60/60  g<=2%:  60/60  f=0:  0  med gap 0.002%  p90 0.00%  nfe 1535  gens 50.2
+total 143 s
+
+real	2m23.418s
+user	2m21.758s
+sys	0m0.055s

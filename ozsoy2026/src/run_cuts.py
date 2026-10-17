@@ -51,8 +51,13 @@ def work(job):
     out["pred_ours_td"] = "stable" if c["stable"] else "chatter"
     out["max_fact_td"] = float(np.abs(c["run"]["fact"]).max())
     run = c["run"]
+    out["diverged_td"] = bool(run["diverged"])
     if job["cut"]:
-        t, v = run["t"], run["v"]
+        # a diverging run (chatter past 1 cm; the model keeps one regeneration
+        # only) stops early and leaves zeros: analyse the part actually run
+        nz = np.nonzero(run["x"])[0]
+        nv = int(nz[-1]) + 1 if run["diverged"] and len(nz) else len(run["x"])
+        t, v = run["t"][:nv], run["v"][:nv]
         acc = np.gradient(v, t)
         dt = t[1] - t[0]
         tail = acc[len(acc) // 2:]

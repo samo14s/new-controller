@@ -1,0 +1,3 @@
+REF single gain g=60.31 V s/m, mean a_lim=6.520 mm, min a_lim=1.720 mm; binding speeds above it: [1970.]
+SADE seed 1: g=56.31 mean a=6.476 evals=680 gens=33
+SADE seed 2: g=59.09 mean a=6.507 evals=760 gens=37

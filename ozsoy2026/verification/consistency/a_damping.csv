@@ -1,0 +1,7 @@
+object,zeta_fit_pct_fixed_fn_k,zeta_fit_pct_free,fn_free_Hz,k_free_N_per_m,rms_resid_at_1.45pct,rms_resid_at_1.34pct,resid_units
+fig5_identified,1.44997,1.44993,129.307,1.34006e+07,8.37255e-10,2.97397e-08,m/N
+fig5_measured,1.39263,1.61622,129.856,1.17622e+07,7.30061e-08,7.29451e-08,m/N
+fig6a_uncontrolled,1.3571,1.33979,129.024,1.34015e+07,0.161399,0.149195,dB re 1 m/N
+fig6b_open_loop_pole,1.34053,1.34053,129.292,nan,0.89003,0.00362747,rad/s (|sigma - model|)
+fig9_uncontrolled_flat,1.33955,nan,nan,nan,0.0631772,0.000448646,rms of ln(a_model/a_plot)
+fig9_uncontrolled_all,1.33936,nan,nan,nan,0.0630328,0.000693478,rms of ln(a_model/a_plot)

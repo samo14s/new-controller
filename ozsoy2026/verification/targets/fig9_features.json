@@ -1,0 +1,273 @@
+{
+ "labels": [
+  {
+   "path": 548,
+   "glyph_block": "upper",
+   "x_pt": 131.4705047607422,
+   "y_pt": 529.35400390625,
+   "n_vertices": 19,
+   "rpm": 1258.1298602162428,
+   "depth_mm": 10.039929269415353,
+   "letter": "B"
+  },
+  {
+   "path": 548,
+   "glyph_block": "lower",
+   "x_pt": 130.8290023803711,
+   "y_pt": 538.1875,
+   "n_vertices": 12,
+   "rpm": 1250.662939265425,
+   "depth_mm": 8.039881643919088,
+   "letter": "A"
+  }
+ ],
+ "features": {
+  "uncontrolled_minima": [
+   {
+    "rpm": 413.0,
+    "depth_mm": 1.213
+   },
+   {
+    "rpm": 524.0,
+    "depth_mm": 1.212
+   },
+   {
+    "rpm": 714.0,
+    "depth_mm": 1.212
+   },
+   {
+    "rpm": 1121.0,
+    "depth_mm": 1.212
+   },
+   {
+    "rpm": 2607.0,
+    "depth_mm": 1.212
+   }
+  ],
+  "uncontrolled_peaks": [
+   {
+    "rpm": 488.0,
+    "depth_mm": 6.781
+   },
+   {
+    "rpm": 651.0,
+    "depth_mm": 8.993
+   },
+   {
+    "rpm": 977.0,
+    "depth_mm": 13.635
+   },
+   {
+    "rpm": 1952.0,
+    "depth_mm": 29.269
+   }
+  ],
+  "uncontrolled_clipped_at_top_rpm_range": [
+   1947.0,
+   1952.0
+  ],
+  "controlled_rpm_range": [
+   500.0,
+   3000.0
+  ],
+  "controlled_rpm_step": 9.999,
+  "controlled_max": {
+   "rpm": 740.0,
+   "depth_mm": 15.436
+  },
+  "controlled_min_all": {
+   "rpm": 1940.0,
+   "depth_mm": 3.225
+  },
+  "controlled_min_visible": {
+   "rpm": 2070.0,
+   "depth_mm": 3.821
+  },
+  "controlled_hidden_rpm_ranges": [
+   [
+    960.0,
+    970.0
+   ],
+   [
+    1500.0,
+    2050.0
+   ]
+  ],
+  "controlled_hidden_min": {
+   "rpm": 1940.0,
+   "depth_mm": 3.225
+  },
+  "at_speeds": [
+   {
+    "rpm": 500,
+    "controlled_mm": 14.867,
+    "uncontrolled_mm": 1.985,
+    "ratio": 7.49,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 560,
+    "controlled_mm": 7.977,
+    "uncontrolled_mm": 2.055,
+    "ratio": 3.88,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 600,
+    "controlled_mm": 11.697,
+    "uncontrolled_mm": 4.633,
+    "ratio": 2.52,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 700,
+    "controlled_mm": 15.355,
+    "uncontrolled_mm": 1.266,
+    "ratio": 12.13,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 730,
+    "controlled_mm": 15.419,
+    "uncontrolled_mm": 1.269,
+    "ratio": 12.15,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 760,
+    "controlled_mm": 8.374,
+    "uncontrolled_mm": 1.68,
+    "ratio": 4.98,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 800,
+    "controlled_mm": 10.772,
+    "uncontrolled_mm": 2.933,
+    "ratio": 3.67,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 1200,
+    "controlled_mm": 11.346,
+    "uncontrolled_mm": 1.471,
+    "ratio": 7.71,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 1300,
+    "controlled_mm": 11.495,
+    "uncontrolled_mm": 2.747,
+    "ratio": 4.18,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 1950,
+    "controlled_mm": 3.243,
+    "uncontrolled_mm": 29.165,
+    "ratio": 0.11,
+    "controlled_visible": false
+   },
+   {
+    "rpm": 2300,
+    "controlled_mm": 4.659,
+    "uncontrolled_mm": 1.483,
+    "ratio": 3.14,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 2500,
+    "controlled_mm": 5.273,
+    "uncontrolled_mm": 1.238,
+    "ratio": 4.26,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 2700,
+    "controlled_mm": 5.904,
+    "uncontrolled_mm": 1.225,
+    "ratio": 4.82,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 2800,
+    "controlled_mm": 6.34,
+    "uncontrolled_mm": 1.268,
+    "ratio": 5.0,
+    "controlled_visible": true
+   },
+   {
+    "rpm": 3000,
+    "controlled_mm": 6.856,
+    "uncontrolled_mm": 1.439,
+    "ratio": 4.76,
+    "controlled_visible": true
+   }
+  ],
+  "max_ratio": {
+   "rpm": 710.0,
+   "ratio": 12.65,
+   "controlled_mm": 15.391,
+   "uncontrolled_mm": 1.217
+  },
+  "controlled_below_uncontrolled_rpm": [
+   960.0,
+   970.0,
+   1500.0,
+   1510.0,
+   1520.0,
+   1530.0,
+   1540.0,
+   1550.0,
+   1560.0,
+   1570.0,
+   1580.0,
+   1590.0,
+   1600.0,
+   1610.0,
+   1620.0,
+   1630.0,
+   1640.0,
+   1650.0,
+   1660.0,
+   1670.0,
+   1680.0,
+   1690.0,
+   1700.0,
+   1710.0,
+   1720.0,
+   1730.0,
+   1740.0,
+   1750.0,
+   1760.0,
+   1770.0,
+   1780.0,
+   1790.0,
+   1800.0,
+   1810.0,
+   1820.0,
+   1830.0,
+   1840.0,
+   1850.0,
+   1860.0,
+   1870.0,
+   1880.0,
+   1890.0,
+   1900.0,
+   1910.0,
+   1920.0,
+   1930.0,
+   1940.0,
+   1950.0,
+   1960.0,
+   1970.0,
+   1980.0,
+   1990.0,
+   2000.0,
+   2010.0,
+   2020.0,
+   2030.0,
+   2040.0
+  ]
+ }
+}

@@ -1,0 +1,130 @@
+[
+ {
+  "zeta": 0.0134,
+  "case": "500rpm_g1487",
+  "legend_gain": 1487,
+  "model_pole": [
+   -121.18,
+   801.3
+  ],
+  "digitised_pole": [
+   -125.35,
+   800.3
+  ],
+  "gain_matching_digitised_real_part": 1543.2
+ },
+ {
+  "zeta": 0.0134,
+  "case": "1300rpm_g1162",
+  "legend_gain": 1162,
+  "model_pole": [
+   -97.07,
+   805.0
+  ],
+  "digitised_pole": [
+   -97.03,
+   805.4
+  ],
+  "gain_matching_digitised_real_part": 1161.4
+ },
+ {
+  "zeta": 0.0134,
+  "case": "2500rpm_g585",
+  "legend_gain": 585,
+  "model_pole": [
+   -54.28,
+   809.8
+  ],
+  "digitised_pole": [
+   -61.68,
+   808.8
+  ],
+  "gain_matching_digitised_real_part": 684.8
+ },
+ {
+  "zeta": 0.0134,
+  "case": "3000rpm_g797",
+  "legend_gain": 797,
+  "model_pole": [
+   -70.0,
+   808.3
+  ],
+  "digitised_pole": [
+   -72.48,
+   808.8
+  ],
+  "gain_matching_digitised_real_part": 830.4
+ },
+ {
+  "zeta": 0.0134,
+  "case": "open_loop",
+  "model_pole": [
+   -10.89,
+   812.3
+  ]
+ },
+ {
+  "zeta": 0.0145,
+  "case": "500rpm_g1487",
+  "legend_gain": 1487,
+  "model_pole": [
+   -122.07,
+   801.1
+  ],
+  "digitised_pole": [
+   -125.35,
+   800.3
+  ],
+  "gain_matching_digitised_real_part": 1531.2
+ },
+ {
+  "zeta": 0.0145,
+  "case": "1300rpm_g1162",
+  "legend_gain": 1162,
+  "model_pole": [
+   -97.97,
+   804.9
+  ],
+  "digitised_pole": [
+   -97.03,
+   805.4
+  ],
+  "gain_matching_digitised_real_part": 1149.4
+ },
+ {
+  "zeta": 0.0145,
+  "case": "2500rpm_g585",
+  "legend_gain": 585,
+  "model_pole": [
+   -55.17,
+   809.7
+  ],
+  "digitised_pole": [
+   -61.68,
+   808.8
+  ],
+  "gain_matching_digitised_real_part": 672.8
+ },
+ {
+  "zeta": 0.0145,
+  "case": "3000rpm_g797",
+  "legend_gain": 797,
+  "model_pole": [
+   -70.89,
+   808.2
+  ],
+  "digitised_pole": [
+   -72.48,
+   808.8
+  ],
+  "gain_matching_digitised_real_part": 818.4
+ },
+ {
+  "zeta": 0.0145,
+  "case": "open_loop",
+  "model_pole": [
+   -11.78,
+   812.3
+  ]
+ }
+]

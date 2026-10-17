@@ -1,0 +1,2469 @@
+{
+ "paper": {
+  "citation": "Ozsoy M, Sims ND, Ozturk E (2026) Robust active control of milling chatter under actuator constraints: a spindle speed mapped framework with experimental validation. J Manuf Process 171:247-257. doi:10.1016/j.jmapro.2026.05.009",
+  "page_convention": "journal page J = PDF page J-245 (PDF page 1 is the repository cover) = pymupdf index J-246",
+  "license_note": "CC BY-NC-ND: this file holds numbers and short paraphrased context only"
+ },
+ "sources": {
+  "vector_figures": "extract_vector_figs.py (Figs. 5, 6a, 6b, 8, 9)",
+  "raster_fig11": "extract_fig11_raster.py",
+  "fft_panels": "extract_fft_peaks.py (Figs. 10, 12)",
+  "checks": "check_fig11_vs_fig9.py, check_fig6b_poles.py, check_fig6a_peaks.py, context_minima.py"
+ },
+ "targets": [
+  {
+   "id": "T1.struct.fn",
+   "group": "Table 1",
+   "quantity": "preloaded structure natural frequency",
+   "value": 129.3,
+   "unit": "Hz",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "dominant workpiece mode identified by impact test (also stated in Sec. 2.2 text)",
+   "compare_with": "params.FN",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T1.struct.zeta",
+   "group": "Table 1",
+   "quantity": "preloaded structure damping ratio",
+   "value": 1.45,
+   "unit": "%",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "identified damping of the dominant mode (also in Sec. 2.2 text)",
+   "compare_with": "params.ZETA_TABLE1",
+   "suggested_tolerance": "exact",
+   "notes": "Figs. 6a, 6b and the uncontrolled SLD imply 1.34 % (see ambiguity A1); Fig. 5 identified curve is consistent with 1.45 %.",
+   "status": "ambiguous"
+  },
+  {
+   "id": "T1.struct.k",
+   "group": "Table 1",
+   "quantity": "preloaded structure stiffness",
+   "value": 13400000.0,
+   "unit": "N/m",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "modal stiffness of the dominant mode",
+   "compare_with": "params.K",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T1.beam.fn",
+   "group": "Table 1",
+   "quantity": "beam natural frequencies (actuator mounted)",
+   "value": [
+    23,
+    47
+   ],
+   "unit": "Hz",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "beam carrying the actuator, identified before preload",
+   "notes": "not used by the paper's model (beam-workpiece interface modelled as rigid, Sec. 2.2)",
+   "status": "stated"
+  },
+  {
+   "id": "T1.beam.zeta",
+   "group": "Table 1",
+   "quantity": "beam damping ratios",
+   "value": [
+    4.3,
+    2.9
+   ],
+   "unit": "%",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "beam modes",
+   "status": "stated"
+  },
+  {
+   "id": "T1.beam.k",
+   "group": "Table 1",
+   "quantity": "beam stiffnesses",
+   "value": [
+    790000.0,
+    2000000.0
+   ],
+   "unit": "N/m",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "beam modes",
+   "status": "stated"
+  },
+  {
+   "id": "T1.act.fn",
+   "group": "Table 1",
+   "quantity": "actuator natural frequency",
+   "value": 8.4,
+   "unit": "Hz",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "proof-mass actuator resonance; sqrt(2785.6)/(2 pi) = 8.40 Hz",
+   "compare_with": "params.WP/(2*pi)",
+   "suggested_tolerance": "0.05 Hz",
+   "status": "stated"
+  },
+  {
+   "id": "T1.act.zeta",
+   "group": "Table 1",
+   "quantity": "actuator damping ratio",
+   "value": 15,
+   "unit": "%",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "15.834/(2 sqrt(2785.6)) = 0.150",
+   "compare_with": "params.ZETA_P",
+   "suggested_tolerance": "0.1 %",
+   "status": "stated"
+  },
+  {
+   "id": "T1.act.k",
+   "group": "Table 1",
+   "quantity": "actuator 'stiffness'",
+   "value": 2785.6,
+   "unit": "N/m (as printed)",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Table 1",
+   "source": "table",
+   "context": "same number as the constant term of Eq. (3)",
+   "notes": "dimensionally this is omega_p^2 in rad^2/s^2, not a stiffness (ambiguity A11)",
+   "status": "ambiguous"
+  },
+  {
+   "id": "T2.01",
+   "group": "Table 2",
+   "quantity": "tool diameter",
+   "value": 16,
+   "unit": "mm",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.02",
+   "group": "Table 2",
+   "quantity": "number of teeth",
+   "value": 4,
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.03",
+   "group": "Table 2",
+   "quantity": "helix angle",
+   "value": 45,
+   "unit": "deg",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.04",
+   "group": "Table 2",
+   "quantity": "workpiece material",
+   "value": "Al-7075-T6",
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.05",
+   "group": "Table 2",
+   "quantity": "cutting coefficient Krc",
+   "value": 180000000.0,
+   "unit": "N/m^2",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.06",
+   "group": "Table 2",
+   "quantity": "cutting coefficient Ktc",
+   "value": 660000000.0,
+   "unit": "N/m^2",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.07",
+   "group": "Table 2",
+   "quantity": "milling type",
+   "value": "down milling",
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.08",
+   "group": "Table 2",
+   "quantity": "radial depth of cut",
+   "value": "half immersion",
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.09",
+   "group": "Table 2",
+   "quantity": "feed per tooth",
+   "value": 0.05,
+   "unit": "mm",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.10",
+   "group": "Table 2",
+   "quantity": "time-domain steps per revolution",
+   "value": 512,
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.11",
+   "group": "Table 2",
+   "quantity": "time-domain number of revolutions",
+   "value": 50,
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T2.12",
+   "group": "Table 2",
+   "quantity": "time-domain axial layers",
+   "value": 30,
+   "unit": "-",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Table 2",
+   "source": "table",
+   "context": "cutting and simulation conditions (repeated in Sec. 3 text, Krc=180 MPa, Ktc=660 MPa)",
+   "compare_with": "params",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "T3.500",
+   "group": "Table 3",
+   "quantity": "a_lim at 500 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 15.2,
+    "proposed": 14.9
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 14.87 mm (difference +0.03 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.560",
+   "group": "Table 3",
+   "quantity": "a_lim at 560 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 8.7,
+    "proposed": 8.0
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 7.98 mm (difference +0.02 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.600",
+   "group": "Table 3",
+   "quantity": "a_lim at 600 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 12.2,
+    "proposed": 11.8
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 11.70 mm (difference +0.10 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.800",
+   "group": "Table 3",
+   "quantity": "a_lim at 800 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 11.2,
+    "proposed": 10.8
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 10.77 mm (difference +0.03 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.1300",
+   "group": "Table 3",
+   "quantity": "a_lim at 1300 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 12.1,
+    "proposed": 12.0
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 11.49 mm (difference +0.51 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.2300",
+   "group": "Table 3",
+   "quantity": "a_lim at 2300 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 4.5,
+    "proposed": 4.9
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 4.66 mm (difference +0.24 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.2500",
+   "group": "Table 3",
+   "quantity": "a_lim at 2500 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 4.7,
+    "proposed": 5.3
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 5.27 mm (difference +0.03 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.2800",
+   "group": "Table 3",
+   "quantity": "a_lim at 2800 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 5.8,
+    "proposed": 6.6
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 6.34 mm (difference +0.26 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "T3.3000",
+   "group": "Table 3",
+   "quantity": "a_lim at 3000 rpm: clipped DVF / proposed saturation-aware",
+   "value": {
+    "clipped_DVF": 6.2,
+    "proposed": 7.1
+   },
+   "unit": "mm",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Table 3",
+   "source": "table",
+   "context": "clipped-DVF baseline (gain tuned ignoring limits, force clipped at 27 N in simulation) vs proposed method",
+   "compare_with": "a_lim of clipped-DVF controller and of the SADE gain at this speed",
+   "suggested_tolerance": "0.1 mm (table resolution)",
+   "notes": "Fig. 9 mapped-gain curve at this speed: 6.86 mm (difference +0.24 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "E3",
+   "group": "Equations",
+   "quantity": "actuator transfer function f_act/V_in (Eq. 3)",
+   "value": "3 s^2 / (s^2 + 15.834 s + 2785.6)",
+   "unit": "N/V",
+   "journal_page": 250,
+   "pdf_page": 5,
+   "where": "Eq. (3)",
+   "source": "equation",
+   "context": "force per volt of the proof-mass actuator; wn = sqrt(2785.6) rad/s (about 8.4 Hz), zeta about 0.15",
+   "compare_with": "structure.Ga",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "E1",
+   "group": "Equations",
+   "quantity": "DVF control law (Eq. 1)",
+   "value": "f_act = -g_dvf * xdot_m",
+   "unit": "-",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Eq. (1)",
+   "source": "equation",
+   "context": "actuator force proportional to measured structural velocity",
+   "compare_with": "structure.Gcl",
+   "status": "stated"
+  },
+  {
+   "id": "E2",
+   "group": "Equations",
+   "quantity": "fitness (Eq. 2)",
+   "value": "a_lim if max|F_d| <= F_max else 0",
+   "unit": "mm",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Eq. (2)",
+   "source": "equation",
+   "context": "feasibility rule of the gain search",
+   "compare_with": "objective.fitness",
+   "status": "stated"
+  },
+  {
+   "id": "E4",
+   "group": "Equations",
+   "quantity": "closed-loop characteristic equation (Eq. 4)",
+   "value": "1 + g_dvf s * g_a s^2/(s^2 + 2 zeta wp s + wp^2) * G(s) = 0",
+   "unit": "-",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Eq. (4)",
+   "source": "equation",
+   "context": "loop with actuator dynamics",
+   "compare_with": "structure.Gcl",
+   "status": "stated"
+  },
+  {
+   "id": "S2.Fmax",
+   "group": "Method",
+   "quantity": "actuator force capacity F_max",
+   "value": 27,
+   "unit": "N",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 2; Sec. 2.2",
+   "source": "text",
+   "context": "peak force of the Micromega ADD-45; candidates whose peak demanded force exceeds it are rejected",
+   "compare_with": "objective.F_MAX",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "S2.Fd",
+   "group": "Method",
+   "quantity": "demanded force definition",
+   "value": "F_d(t) = g_dvf * xdot_m(t)",
+   "unit": "N",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 2",
+   "source": "text",
+   "context": "peak of this quantity over the time-domain run is compared with F_max",
+   "notes": "the paper's F_d has no actuator dynamics: kind='volt' in objective.py is g|xdot| (V), kind='force' 3 g|xdot| (N). The stated units of g (V s/m) make g*xdot a voltage; which one the paper compared with 27 N is not stated explicitly (ambiguity A12).",
+   "status": "ambiguous"
+  },
+  {
+   "id": "S2.grid",
+   "group": "Method",
+   "quantity": "spindle speed grid of the optimisation",
+   "value": {
+    "start": 500,
+    "stop": 3000,
+    "step": 10
+   },
+   "unit": "rpm",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 and Sec. 3",
+   "source": "text",
+   "context": "per-speed gain search on a 10 rpm grid",
+   "compare_with": "params.RPM_GRID",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "S2.act.bw",
+   "group": "Method",
+   "quantity": "actuator usable bandwidth",
+   "value": 2000,
+   "unit": "Hz (approx.)",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.2",
+   "source": "text",
+   "context": "ADD-45 data; not used in the model",
+   "status": "stated"
+  },
+  {
+   "id": "S2.act.kf",
+   "group": "Method",
+   "quantity": "actuator force constant",
+   "value": 3,
+   "unit": "N/V",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.2",
+   "source": "text",
+   "context": "scaling of Eq. (3)",
+   "compare_with": "params.GA_GAIN",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "S2.act.fn",
+   "group": "Method",
+   "quantity": "actuator resonance",
+   "value": 8.4,
+   "unit": "Hz",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.2",
+   "source": "text",
+   "context": "ADD-45 resonance",
+   "status": "stated"
+  },
+  {
+   "id": "S2.preload",
+   "group": "Method",
+   "quantity": "static preload beam -> workpiece during identification",
+   "value": 350,
+   "unit": "N",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Sec. 2.2",
+   "source": "text",
+   "context": "contact preload; not a model input",
+   "status": "stated"
+  },
+  {
+   "id": "S2.guard",
+   "group": "Method",
+   "quantity": "suggested guard band below F_max",
+   "value": [
+    10,
+    20
+   ],
+   "unit": "% of F_max",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "optional safety margin in the feasibility check (not applied in the paper's results)",
+   "status": "stated"
+  },
+  {
+   "id": "X1.rpm",
+   "group": "Worked example",
+   "quantity": "spindle speed of worked example",
+   "value": 1300,
+   "unit": "rpm",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 3",
+   "source": "text",
+   "context": "illustration of the feasibility rule",
+   "compare_with": "objective at 1300 rpm",
+   "suggested_tolerance": "exact",
+   "status": "stated"
+  },
+  {
+   "id": "X1.g",
+   "group": "Worked example",
+   "quantity": "candidate gain",
+   "value": 1240,
+   "unit": "V s/m",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 3",
+   "source": "text",
+   "context": "a randomly drawn candidate from the search set (bounds of the set are not given)",
+   "status": "stated"
+  },
+  {
+   "id": "X1.alim",
+   "group": "Worked example",
+   "quantity": "ZOA a_lim at 1300 rpm, g=1240",
+   "value": 11.8,
+   "unit": "mm",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 3",
+   "source": "text",
+   "context": "frequency-domain limit for this candidate",
+   "compare_with": "zoa.a_lim(1300, 1240)",
+   "suggested_tolerance": "0.1 mm",
+   "notes": "Table 3 gives 12.0 mm at 1300 rpm for the optimised (smaller, ~1160) gain and Fig. 9 shows 11.50 mm; see ambiguity A10",
+   "status": "ambiguous"
+  },
+  {
+   "id": "X1.Fd",
+   "group": "Worked example",
+   "quantity": "peak demanded force at a_lim (time domain)",
+   "value": 29,
+   "unit": "N",
+   "journal_page": 249,
+   "pdf_page": 4,
+   "where": "Sec. 2.1 Step 3",
+   "source": "text",
+   "context": "exceeds 27 N, so the candidate gets zero fitness",
+   "compare_with": "tdsim.simulate(1300, 11.8e-3, 1240) max demand",
+   "suggested_tolerance": "~1 N (integer in text)",
+   "status": "stated"
+  },
+  {
+   "id": "R.grange",
+   "group": "Gain map",
+   "quantity": "range of optimised gains over 500-3000 rpm",
+   "value": {
+    "min": 237,
+    "max": 1487
+   },
+   "unit": "V s/m",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Sec. 3, para. on Fig. 8",
+   "source": "text",
+   "context": "spread of the per-speed SADE gains",
+   "compare_with": "min/max of the reproduced gain map",
+   "suggested_tolerance": "~1 %",
+   "notes": "Fig. 8 (vector) max 1487.0 at 740 rpm agrees; Fig. 8 min is 256.9 at 1940 rpm, not 237 (237 is the single-gain value) - ambiguity A2",
+   "status": "ambiguous"
+  },
+  {
+   "id": "R.lowgain",
+   "group": "Gain map",
+   "quantity": "region of smallest gains",
+   "value": 1950,
+   "unit": "rpm (approx.)",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Sec. 3",
+   "source": "text",
+   "context": "gains are lowest around the dominant (first) lobe, about 1950 rpm",
+   "compare_with": "location of gain-map minimum",
+   "suggested_tolerance": "+-50 rpm",
+   "notes": "Fig. 8 minimum at 1940 rpm; uncontrolled lobe peak at 1952 rpm (Fig. 9)",
+   "status": "stated"
+  },
+  {
+   "id": "R.base",
+   "group": "Experiments",
+   "quantity": "speeds where uncontrolled stability was measured",
+   "value": [
+    1200,
+    2800
+   ],
+   "unit": "rpm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Sec. 3",
+   "source": "text",
+   "context": "uncontrolled baseline tests",
+   "notes": "Fig. 9 also shows an uncontrolled chatter point at 700 rpm, 4 mm (ambiguity A15)",
+   "status": "stated"
+  },
+  {
+   "id": "R.13x",
+   "group": "Headline",
+   "quantity": "max improvement of a_lim, mapped gains",
+   "value": 13,
+   "unit": "x",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Sec. 3; Sec. 4; Sec. 5; abstract",
+   "source": "text",
+   "context": "near 730 rpm, controlled / uncontrolled limiting depth",
+   "compare_with": "ratio of mapped-gain SLD to uncontrolled SLD near 730 rpm",
+   "suggested_tolerance": "rounded",
+   "notes": "Fig. 9 curves: ratio 12.15 at 730 rpm, maximum 12.65 at 710 rpm (15.39/1.217 mm)",
+   "status": "stated"
+  },
+  {
+   "id": "R.13x.rpm",
+   "group": "Headline",
+   "quantity": "speed of the maximum improvement",
+   "value": 730,
+   "unit": "rpm (approx.)",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Sec. 3",
+   "source": "text",
+   "context": "location of the 13x improvement",
+   "compare_with": "argmax of ratio",
+   "suggested_tolerance": "+-30 rpm",
+   "status": "stated"
+  },
+  {
+   "id": "R.worst",
+   "group": "Headline",
+   "quantity": "worst case a_lim uncontrolled -> controlled",
+   "value": {
+    "uncontrolled": 1.2,
+    "controlled": 3.6
+   },
+   "unit": "mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Sec. 3; Sec. 4 (p.253, p.255); Sec. 5",
+   "source": "text",
+   "context": "the least favourable speed still triples the limit",
+   "compare_with": "global minima of uncontrolled and mapped-gain SLDs",
+   "suggested_tolerance": "0.1 mm",
+   "notes": "uncontrolled minima in Fig. 9 are 1.212 mm (matches); no 3.6 mm minimum is visible on the Fig. 9 controlled curve - ambiguity A6",
+   "status": "ambiguous"
+  },
+  {
+   "id": "R.range3to13",
+   "group": "Headline",
+   "quantity": "range of depth increases",
+   "value": [
+    3,
+    13
+   ],
+   "unit": "x",
+   "journal_page": 255,
+   "pdf_page": 10,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "productivity statement (MRR proportional to axial depth)",
+   "status": "stated"
+  },
+  {
+   "id": "R.single",
+   "group": "Single gain",
+   "quantity": "single speed-independent SADE gain",
+   "value": 237,
+   "unit": "V s/m",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "one gain optimised over the whole range under the same 27 N constraint",
+   "compare_with": "SADE run with a single gain over all speeds",
+   "suggested_tolerance": "~2 %",
+   "status": "stated"
+  },
+  {
+   "id": "R.1300",
+   "group": "Single gain",
+   "quantity": "1300 rpm: mapped vs single-gain stable depth",
+   "value": {
+    "mapped": 10,
+    "single_gain": 3
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4; Sec. 5",
+   "source": "text",
+   "context": "more than threefold difference claimed",
+   "notes": "Fig. 9/10 classify 10 mm at 1300 rpm as chatter (cut B) and 8 mm as stable; Fig. 11 single-gain curve at 1300 rpm is ~5.1 mm and the single-gain tests are at 1200 rpm (3 mm stable, 4 mm chatter) - ambiguity A8",
+   "status": "ambiguous"
+  },
+  {
+   "id": "R.T3.low",
+   "group": "Table 3 discussion",
+   "quantity": "speed band where saturation is rarely active",
+   "value": [
+    500,
+    800
+   ],
+   "unit": "rpm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "clipped and proposed controllers give similar limits there",
+   "status": "stated"
+  },
+  {
+   "id": "R.T3.500",
+   "group": "Table 3 discussion",
+   "quantity": "a_lim at 500 rpm clipped vs proposed",
+   "value": {
+    "clipped_DVF": 15.2,
+    "proposed": 14.9
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "clipped slightly higher because of its slightly larger gain",
+   "compare_with": "Table 3 row 500",
+   "status": "stated"
+  },
+  {
+   "id": "R.T3.1300",
+   "group": "Table 3 discussion",
+   "quantity": "a_lim at 1300 rpm clipped vs proposed",
+   "value": {
+    "clipped_DVF": 12.1,
+    "proposed": 12.0
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "nearly identical",
+   "compare_with": "Table 3 row 1300",
+   "status": "stated"
+  },
+  {
+   "id": "R.T3.2500",
+   "group": "Table 3 discussion",
+   "quantity": "a_lim at 2500 rpm clipped -> proposed",
+   "value": {
+    "clipped_DVF": 4.7,
+    "proposed": 5.3
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "saturation-dominated region; +12.8 %",
+   "compare_with": "Table 3 row 2500",
+   "status": "stated"
+  },
+  {
+   "id": "R.T3.3000",
+   "group": "Table 3 discussion",
+   "quantity": "a_lim at 3000 rpm clipped -> proposed",
+   "value": {
+    "clipped_DVF": 6.2,
+    "proposed": 7.1
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "saturation-dominated region; +14.5 %",
+   "compare_with": "Table 3 row 3000",
+   "status": "stated"
+  },
+  {
+   "id": "R.T3.pct",
+   "group": "Table 3 discussion",
+   "quantity": "improvement of proposed over clipped at high speed",
+   "value": [
+    10,
+    15
+   ],
+   "unit": "%",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Sec. 4",
+   "source": "text",
+   "context": "approximate gain in the saturation-dominated region",
+   "notes": "Table 3 gives +8.9 % (2300), +12.8 % (2500), +13.8 % (2800), +14.5 % (3000)",
+   "status": "stated"
+  },
+  {
+   "id": "F6.g500",
+   "group": "Fig. 6 legend",
+   "quantity": "gain shown for 500 rpm",
+   "value": 1487,
+   "unit": "V s/m",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a) legend and 6(b) labels",
+   "source": "legend",
+   "context": "closed-loop FRF and pole of the optimised gain at this speed",
+   "compare_with": "gain map at 500 rpm",
+   "suggested_tolerance": "~1 %",
+   "notes": "Fig. 8 at 500 rpm: 1479.0; gain implied by the plotted Fig. 6a peak (1-DOF model, zeta 1.34 %): 1543",
+   "status": "ambiguous"
+  },
+  {
+   "id": "F6.g1300",
+   "group": "Fig. 6 legend",
+   "quantity": "gain shown for 1300 rpm",
+   "value": 1162,
+   "unit": "V s/m",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a) legend and 6(b) labels",
+   "source": "legend",
+   "context": "closed-loop FRF and pole of the optimised gain at this speed",
+   "compare_with": "gain map at 1300 rpm",
+   "suggested_tolerance": "~1 %",
+   "notes": "Fig. 8 at 1300 rpm: 1158.0; gain implied by the plotted Fig. 6a peak (1-DOF model, zeta 1.34 %): 1162",
+   "status": "stated"
+  },
+  {
+   "id": "F6.g2500",
+   "group": "Fig. 6 legend",
+   "quantity": "gain shown for 2500 rpm",
+   "value": 585,
+   "unit": "V s/m",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a) legend and 6(b) labels",
+   "source": "legend",
+   "context": "closed-loop FRF and pole of the optimised gain at this speed",
+   "compare_with": "gain map at 2500 rpm",
+   "suggested_tolerance": "~1 %",
+   "notes": "Fig. 8 at 2500 rpm: 543.0; gain implied by the plotted Fig. 6a peak (1-DOF model, zeta 1.34 %): 685",
+   "status": "ambiguous"
+  },
+  {
+   "id": "F6.g3000",
+   "group": "Fig. 6 legend",
+   "quantity": "gain shown for 3000 rpm",
+   "value": 797,
+   "unit": "V s/m",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a) legend and 6(b) labels",
+   "source": "legend",
+   "context": "closed-loop FRF and pole of the optimised gain at this speed",
+   "compare_with": "gain map at 3000 rpm",
+   "suggested_tolerance": "~1 %",
+   "notes": "Fig. 8 at 3000 rpm: 794.5; gain implied by the plotted Fig. 6a peak (1-DOF model, zeta 1.34 %): 830",
+   "status": "ambiguous"
+  },
+  {
+   "id": "F6.fn",
+   "group": "Fig. 6 legend",
+   "quantity": "marked natural frequency",
+   "value": 129.3,
+   "unit": "Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a) legend",
+   "source": "legend",
+   "context": "dashed vertical line at the open-loop mode",
+   "status": "stated"
+  },
+  {
+   "id": "F5.peak.id",
+   "group": "Fig. 5 (vector)",
+   "quantity": "identified FRF peak",
+   "value": 2.5735729e-06,
+   "unit": "m/N",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Fig. 5, red curve",
+   "source": "figure_vector",
+   "context": "peak of the identified 1-DOF FRF; equals 1/(2 zeta k) with zeta=1.45 %",
+   "compare_with": "|G| peak with Table 1 values",
+   "suggested_tolerance": "0.5 %",
+   "status": "derived"
+  },
+  {
+   "id": "F5.peak.meas",
+   "group": "Fig. 5 (vector)",
+   "quantity": "measured FRF peak",
+   "value": 2.5705852e-06,
+   "unit": "m/N",
+   "journal_page": 251,
+   "pdf_page": 6,
+   "where": "Fig. 5, blue dashed",
+   "source": "figure_vector",
+   "context": "measured receptance peak at 129.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6a.uncontrolled",
+   "group": "Fig. 6a (vector)",
+   "quantity": "closed-loop FRF peak: uncontrolled",
+   "value": {
+    "peak_dB": -111.1,
+    "peak_Hz": 129.01
+   },
+   "unit": "dB re m/N, Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a)",
+   "source": "figure_vector",
+   "context": "maximum of the plotted curve (equivalent 1-DOF damping 1.34 %)",
+   "compare_with": "20 log10 |Gcl| peak for the legend gain",
+   "suggested_tolerance": "0.1 dB, 0.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6a.500rpm_g1487",
+   "group": "Fig. 6a (vector)",
+   "quantity": "closed-loop FRF peak: 500rpm_g1487",
+   "value": {
+    "peak_dB": -132.2,
+    "peak_Hz": 125.51
+   },
+   "unit": "dB re m/N, Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a)",
+   "source": "figure_vector",
+   "context": "maximum of the plotted curve (equivalent 1-DOF damping 15.20 %)",
+   "compare_with": "20 log10 |Gcl| peak for the legend gain",
+   "suggested_tolerance": "0.1 dB, 0.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6a.1300rpm_g1162",
+   "group": "Fig. 6a (vector)",
+   "quantity": "closed-loop FRF peak: 1300rpm_g1162",
+   "value": {
+    "peak_dB": -130.03,
+    "peak_Hz": 126.89
+   },
+   "unit": "dB re m/N, Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a)",
+   "source": "figure_vector",
+   "context": "maximum of the plotted curve (equivalent 1-DOF damping 11.84 %)",
+   "compare_with": "20 log10 |Gcl| peak for the legend gain",
+   "suggested_tolerance": "0.1 dB, 0.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6a.2500rpm_g585",
+   "group": "Fig. 6a (vector)",
+   "quantity": "closed-loop FRF peak: 2500rpm_g585",
+   "value": {
+    "peak_dB": -126.14,
+    "peak_Hz": 128.07
+   },
+   "unit": "dB re m/N, Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a)",
+   "source": "figure_vector",
+   "context": "maximum of the plotted curve (equivalent 1-DOF damping 7.57 %)",
+   "compare_with": "20 log10 |Gcl| peak for the legend gain",
+   "suggested_tolerance": "0.1 dB, 0.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6a.3000rpm_g797",
+   "group": "Fig. 6a (vector)",
+   "quantity": "closed-loop FRF peak: 3000rpm_g797",
+   "value": {
+    "peak_dB": -127.52,
+    "peak_Hz": 127.76
+   },
+   "unit": "dB re m/N, Hz",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(a)",
+   "source": "figure_vector",
+   "context": "maximum of the plotted curve (equivalent 1-DOF damping 8.87 %)",
+   "compare_with": "20 log10 |Gcl| peak for the legend gain",
+   "suggested_tolerance": "0.1 dB, 0.5 Hz",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.open_loop.struct",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): open_loop, structural mode",
+   "value": {
+    "real": -10.89,
+    "imag": 812.3,
+    "zeta_percent": 1.341
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.500rpm_g1487.struct",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 500rpm_g1487, structural mode",
+   "value": {
+    "real": -125.35,
+    "imag": 800.3,
+    "zeta_percent": 15.474
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.500rpm_g1487.act",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 500rpm_g1487, actuator mode",
+   "value": {
+    "real": -7.43,
+    "imag": 53.1,
+    "zeta_percent": 13.855
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.1300rpm_g1162.struct",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 1300rpm_g1162, structural mode",
+   "value": {
+    "real": -97.03,
+    "imag": 805.4,
+    "zeta_percent": 11.961
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.1300rpm_g1162.act",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 1300rpm_g1162, actuator mode",
+   "value": {
+    "real": -7.62,
+    "imag": 53.1,
+    "zeta_percent": 14.217
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.2500rpm_g585.struct",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 2500rpm_g585, structural mode",
+   "value": {
+    "real": -61.68,
+    "imag": 808.8,
+    "zeta_percent": 7.604
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.2500rpm_g585.act",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 2500rpm_g585, actuator mode",
+   "value": {
+    "real": -7.72,
+    "imag": 53.1,
+    "zeta_percent": 14.398
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.3000rpm_g797.struct",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 3000rpm_g797, structural mode",
+   "value": {
+    "real": -72.48,
+    "imag": 808.8,
+    "zeta_percent": 8.925
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F6b.3000rpm_g797.act",
+   "group": "Fig. 6b (vector)",
+   "quantity": "closed-loop pole (upper half plane): 3000rpm_g797, actuator mode",
+   "value": {
+    "real": -7.72,
+    "imag": 53.1,
+    "zeta_percent": 14.398
+   },
+   "unit": "rad/s",
+   "journal_page": 252,
+   "pdf_page": 7,
+   "where": "Fig. 6(b)",
+   "source": "figure_vector",
+   "context": "marker centre read from the vector plot",
+   "compare_with": "roots of the closed-loop characteristic polynomial",
+   "suggested_tolerance": "0.3 rad/s",
+   "status": "derived"
+  },
+  {
+   "id": "F8.max",
+   "group": "Fig. 8 (vector)",
+   "quantity": "largest optimised gain",
+   "value": {
+    "rpm": 740.0,
+    "gain": 1487.0
+   },
+   "unit": "rpm, V s/m",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 8",
+   "source": "figure_vector",
+   "context": "maximum of the plotted gain map",
+   "compare_with": "gain map",
+   "suggested_tolerance": "1 %",
+   "status": "derived"
+  },
+  {
+   "id": "F8.min",
+   "group": "Fig. 8 (vector)",
+   "quantity": "smallest optimised gain",
+   "value": {
+    "rpm": 1940.0,
+    "gain": 256.9
+   },
+   "unit": "rpm, V s/m",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 8",
+   "source": "figure_vector",
+   "context": "minimum of the plotted gain map",
+   "compare_with": "gain map",
+   "suggested_tolerance": "1 %",
+   "status": "derived"
+  },
+  {
+   "id": "F8.at",
+   "group": "Fig. 8 (vector)",
+   "quantity": "gain map at selected speeds",
+   "value": {
+    "500": 1479.0,
+    "560": 752.5,
+    "600": 1179.3,
+    "700": 1455.7,
+    "730": 1479.2,
+    "760": 869.6,
+    "800": 1078.9,
+    "1000": 1152.9,
+    "1200": 770.0,
+    "1300": 1158.0,
+    "1950": 260.1,
+    "2300": 445.4,
+    "2500": 543.0,
+    "2700": 623.8,
+    "2800": 679.5,
+    "3000": 794.5
+   },
+   "unit": "V s/m",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 8",
+   "source": "figure_vector",
+   "context": "linear interpolation of the plotted polyline (10 rpm vertices)",
+   "compare_with": "gain map",
+   "suggested_tolerance": "2 %",
+   "status": "derived"
+  },
+  {
+   "id": "F8.straight",
+   "group": "Fig. 8 (vector)",
+   "quantity": "straight-line stretches of the gain map",
+   "value": [
+    {
+     "rpm_from": 500.0,
+     "gain_from": 1479.0,
+     "rpm_to": 550.0,
+     "gain_to": 1136.0,
+     "slope_per_rpm": -6.86,
+     "n_vertices": 5
+    },
+    {
+     "rpm_from": 560.0,
+     "gain_from": 752.0,
+     "rpm_to": 620.0,
+     "gain_to": 1393.0,
+     "slope_per_rpm": 10.69,
+     "n_vertices": 6
+    },
+    {
+     "rpm_from": 620.0,
+     "gain_from": 1393.0,
+     "rpm_to": 740.0,
+     "gain_to": 1487.0,
+     "slope_per_rpm": 0.783,
+     "n_vertices": 2
+    },
+    {
+     "rpm_from": 1410.0,
+     "gain_from": 1162.0,
+     "rpm_to": 1860.0,
+     "gain_to": 328.5,
+     "slope_per_rpm": -1.853,
+     "n_vertices": 25
+    }
+   ],
+   "unit": "-",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 8",
+   "source": "figure_vector",
+   "context": "constant-slope runs >= 40 rpm; probably interpolated, not optimised",
+   "notes": "ambiguity A5",
+   "status": "ambiguous"
+  },
+  {
+   "id": "F9.unc.min",
+   "group": "Fig. 9 (vector)",
+   "quantity": "uncontrolled SLD minima",
+   "value": [
+    {
+     "rpm": 413.0,
+     "depth_mm": 1.213
+    },
+    {
+     "rpm": 524.0,
+     "depth_mm": 1.212
+    },
+    {
+     "rpm": 714.0,
+     "depth_mm": 1.212
+    },
+    {
+     "rpm": 1121.0,
+     "depth_mm": 1.212
+    },
+    {
+     "rpm": 2607.0,
+     "depth_mm": 1.212
+    }
+   ],
+   "unit": "rpm, mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9 dashed",
+   "source": "figure_vector",
+   "context": "lobe minima of the uncontrolled ZOA SLD",
+   "compare_with": "zoa.sld(rpm, 0)",
+   "suggested_tolerance": "0.01 mm",
+   "status": "derived"
+  },
+  {
+   "id": "F9.unc.peak",
+   "group": "Fig. 9 (vector)",
+   "quantity": "uncontrolled SLD lobe peaks",
+   "value": [
+    {
+     "rpm": 488.0,
+     "depth_mm": 6.781
+    },
+    {
+     "rpm": 651.0,
+     "depth_mm": 8.993
+    },
+    {
+     "rpm": 977.0,
+     "depth_mm": 13.635
+    },
+    {
+     "rpm": 1952.0,
+     "depth_mm": 29.269
+    }
+   ],
+   "unit": "rpm, mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9 dashed",
+   "source": "figure_vector",
+   "context": "lobe peaks of the uncontrolled ZOA SLD",
+   "compare_with": "zoa.sld(rpm, 0)",
+   "suggested_tolerance": "0.1 mm, 2 rpm",
+   "status": "derived"
+  },
+  {
+   "id": "F9.ctrl.at",
+   "group": "Fig. 9 (vector)",
+   "quantity": "mapped-gain SLD and uncontrolled SLD at selected speeds",
+   "value": [
+    {
+     "rpm": 500,
+     "controlled_mm": 14.867,
+     "uncontrolled_mm": 1.985,
+     "ratio": 7.49,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 560,
+     "controlled_mm": 7.977,
+     "uncontrolled_mm": 2.055,
+     "ratio": 3.88,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 600,
+     "controlled_mm": 11.697,
+     "uncontrolled_mm": 4.633,
+     "ratio": 2.52,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 700,
+     "controlled_mm": 15.355,
+     "uncontrolled_mm": 1.266,
+     "ratio": 12.13,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 730,
+     "controlled_mm": 15.419,
+     "uncontrolled_mm": 1.269,
+     "ratio": 12.15,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 760,
+     "controlled_mm": 8.374,
+     "uncontrolled_mm": 1.68,
+     "ratio": 4.98,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 800,
+     "controlled_mm": 10.772,
+     "uncontrolled_mm": 2.933,
+     "ratio": 3.67,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 1200,
+     "controlled_mm": 11.346,
+     "uncontrolled_mm": 1.471,
+     "ratio": 7.71,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 1300,
+     "controlled_mm": 11.495,
+     "uncontrolled_mm": 2.747,
+     "ratio": 4.18,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 1950,
+     "controlled_mm": 3.243,
+     "uncontrolled_mm": 29.165,
+     "ratio": 0.11,
+     "controlled_visible": false
+    },
+    {
+     "rpm": 2300,
+     "controlled_mm": 4.659,
+     "uncontrolled_mm": 1.483,
+     "ratio": 3.14,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 2500,
+     "controlled_mm": 5.273,
+     "uncontrolled_mm": 1.238,
+     "ratio": 4.26,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 2700,
+     "controlled_mm": 5.904,
+     "uncontrolled_mm": 1.225,
+     "ratio": 4.82,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 2800,
+     "controlled_mm": 6.34,
+     "uncontrolled_mm": 1.268,
+     "ratio": 5.0,
+     "controlled_visible": true
+    },
+    {
+     "rpm": 3000,
+     "controlled_mm": 6.856,
+     "uncontrolled_mm": 1.439,
+     "ratio": 4.76,
+     "controlled_visible": true
+    }
+   ],
+   "unit": "mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9 solid/dashed",
+   "source": "figure_vector",
+   "context": "curve values at the speeds of Table 3 / tests",
+   "compare_with": "zoa.sld with the reproduced gain map",
+   "suggested_tolerance": "0.1 mm",
+   "status": "derived"
+  },
+  {
+   "id": "F9.ctrl.max",
+   "group": "Fig. 9 (vector)",
+   "quantity": "mapped-gain SLD maximum",
+   "value": {
+    "rpm": 740.0,
+    "depth_mm": 15.436
+   },
+   "unit": "rpm, mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9",
+   "source": "figure_vector",
+   "context": "highest point of the controlled curve",
+   "status": "derived"
+  },
+  {
+   "id": "F9.ratio.max",
+   "group": "Fig. 9 (vector)",
+   "quantity": "maximum ratio mapped/uncontrolled",
+   "value": {
+    "rpm": 710.0,
+    "ratio": 12.65,
+    "controlled_mm": 15.391,
+    "uncontrolled_mm": 1.217
+   },
+   "unit": "-",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9",
+   "source": "figure_vector",
+   "context": "basis of the 13x statement",
+   "status": "derived"
+  },
+  {
+   "id": "F9.ctrl.hidden",
+   "group": "Fig. 9 (vector)",
+   "quantity": "controlled-curve portions covered by white rectangles",
+   "value": {
+    "rpm_ranges": [
+     [
+      960.0,
+      970.0
+     ],
+     [
+      1500.0,
+      2050.0
+     ]
+    ],
+    "min_in_hidden": {
+     "rpm": 1940.0,
+     "depth_mm": 3.225
+    },
+    "min_visible": {
+     "rpm": 2070.0,
+     "depth_mm": 3.821
+    }
+   },
+   "unit": "rpm, mm",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 9",
+   "source": "figure_vector",
+   "context": "the vector path continues under opaque white boxes; there the controlled curve lies below the uncontrolled one",
+   "notes": "ambiguity A4",
+   "status": "ambiguous"
+  },
+  {
+   "id": "F11.ctrl.min",
+   "group": "Fig. 11 (raster)",
+   "quantity": "single-gain SLD minima",
+   "value": [
+    {
+     "rpm": 423.1,
+     "depth_mm": 3.52
+    },
+    {
+     "rpm": 533.0,
+     "depth_mm": 3.52
+    },
+    {
+     "rpm": 724.0,
+     "depth_mm": 3.52
+    },
+    {
+     "rpm": 1126.3,
+     "depth_mm": 3.52
+    },
+    {
+     "rpm": 2576.2,
+     "depth_mm": 3.52
+    }
+   ],
+   "unit": "rpm, mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 11 solid",
+   "source": "figure_raster",
+   "context": "lobe minima of the g=237 controlled SLD",
+   "compare_with": "zoa.sld(rpm, 237)",
+   "suggested_tolerance": "0.1 mm",
+   "status": "derived"
+  },
+  {
+   "id": "F11.ctrl.peak",
+   "group": "Fig. 11 (raster)",
+   "quantity": "single-gain SLD lobe peaks",
+   "value": [
+    {
+     "rpm": 492.5,
+     "depth_mm": 8.65
+    },
+    {
+     "rpm": 657.5,
+     "depth_mm": 10.91
+    },
+    {
+     "rpm": 987.4,
+     "depth_mm": 15.63
+    },
+    {
+     "rpm": 1971.4,
+     "depth_mm": 31.79
+    }
+   ],
+   "unit": "rpm, mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 11 solid",
+   "source": "figure_raster",
+   "context": "cusp heights (top pixel + half line width)",
+   "compare_with": "zoa.sld(rpm, 237)",
+   "suggested_tolerance": "0.15 mm, 5 rpm",
+   "status": "derived"
+  },
+  {
+   "id": "F11.ctrl.at",
+   "group": "Fig. 11 (raster)",
+   "quantity": "single-gain and uncontrolled SLD at selected speeds",
+   "value": [
+    {
+     "rpm": 500,
+     "controlled_mm": 6.74,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 1.82
+    },
+    {
+     "rpm": 560,
+     "controlled_mm": 3.99,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 2.0
+    },
+    {
+     "rpm": 600,
+     "controlled_mm": 6.14,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 4.74
+    },
+    {
+     "rpm": 700,
+     "controlled_mm": 3.97,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 1.25
+    },
+    {
+     "rpm": 730,
+     "controlled_mm": 3.52,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 1.28
+    },
+    {
+     "rpm": 800,
+     "controlled_mm": 4.89,
+     "controlled_how": "direct",
+     "uncontrolled_mm": null
+    },
+    {
+     "rpm": 1000,
+     "controlled_mm": 11.54,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 3.58
+    },
+    {
+     "rpm": 1200,
+     "controlled_mm": 3.87,
+     "controlled_how": "interpolated 1152-1245 rpm",
+     "uncontrolled_mm": null
+    },
+    {
+     "rpm": 1300,
+     "controlled_mm": 5.1,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 2.77
+    },
+    {
+     "rpm": 1500,
+     "controlled_mm": 10.68,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 9.09
+    },
+    {
+     "rpm": 2300,
+     "controlled_mm": 4.41,
+     "controlled_how": "direct",
+     "uncontrolled_mm": null
+    },
+    {
+     "rpm": 2500,
+     "controlled_mm": 3.64,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 1.25
+    },
+    {
+     "rpm": 2700,
+     "controlled_mm": 3.52,
+     "controlled_how": "interpolated 2654-2744 rpm",
+     "uncontrolled_mm": 1.25
+    },
+    {
+     "rpm": 2800,
+     "controlled_mm": 3.58,
+     "controlled_how": "direct",
+     "uncontrolled_mm": 1.31
+    },
+    {
+     "rpm": 3000,
+     "controlled_mm": 3.91,
+     "controlled_how": "interpolated 2952-3045 rpm",
+     "uncontrolled_mm": null
+    }
+   ],
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 11",
+   "source": "figure_raster",
+   "context": "column read-out (interpolated where a marker hides the line)",
+   "compare_with": "zoa.sld(rpm, 237)",
+   "suggested_tolerance": "0.1 mm",
+   "status": "derived"
+  },
+  {
+   "id": "F11.cal",
+   "group": "Fig. 11 (raster)",
+   "quantity": "raster calibration check vs Fig. 9 dashed curve",
+   "value": {
+    "n_flat": 218,
+    "depth_bias_mm": 0.023,
+    "depth_mad_mm": 0.012,
+    "depth_p95_abs_mm": 0.049,
+    "best_rpm_shift": 0.0,
+    "n_sloped": 238,
+    "median_abs_mm_at_best_shift": 0.03,
+    "median_abs_mm_at_zero_shift": 0.03
+   },
+   "unit": "mm",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 11",
+   "source": "derived",
+   "context": "same uncontrolled SLD drawn in both figures; residual of the raster read-out",
+   "status": "derived"
+  },
+  {
+   "id": "FFT.Fig10.B",
+   "group": "Chatter frequency (raster)",
+   "quantity": "chatter frequency, Fig10 cut B (1300 rpm, 10.0 mm)",
+   "value": 149.5,
+   "unit": "Hz",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "where": "Fig. 10 FFT panel",
+   "source": "figure_raster",
+   "context": "~149 Hz line marked with a diamond in the figure; separate from spindle harmonic 7 (151.7 Hz), which appears as its own line ~3 Hz higher",
+   "compare_with": "ZOA chatter frequency at the boundary / time-domain spectrum",
+   "suggested_tolerance": "+-2 Hz (digitisation)",
+   "status": "derived"
+  },
+  {
+   "id": "FFT.Fig12.B",
+   "group": "Chatter frequency (raster)",
+   "quantity": "chatter frequency, Fig12 cut B (2800 rpm, 1.5 mm)",
+   "value": 133.3,
+   "unit": "Hz",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 12 FFT panel",
+   "source": "figure_raster",
+   "context": "dominant non-synchronous line",
+   "compare_with": "ZOA chatter frequency at the boundary / time-domain spectrum",
+   "suggested_tolerance": "+-2 Hz (digitisation)",
+   "status": "derived"
+  },
+  {
+   "id": "FFT.Fig12.D",
+   "group": "Chatter frequency (raster)",
+   "quantity": "chatter frequency, Fig12 cut D (2700 rpm, 4.0 mm)",
+   "value": 138.1,
+   "unit": "Hz",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "where": "Fig. 12 FFT panel",
+   "source": "figure_raster",
+   "context": "non-synchronous line next to spindle harmonic 3 (135 Hz)",
+   "compare_with": "ZOA chatter frequency at the boundary / time-domain spectrum",
+   "suggested_tolerance": "+-2 Hz (digitisation)",
+   "status": "derived"
+  }
+ ],
+ "experimental_points": [
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "chatter",
+   "rpm": 760,
+   "depth_mm": 10.0,
+   "rpm_read": 760.03,
+   "depth_read_mm": 10.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "red x (2 strokes)",
+   "caption_check": null,
+   "predicted_boundary_mm": 8.37,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": "B",
+   "control": "mapped gain",
+   "state": "chatter",
+   "rpm": 1300,
+   "depth_mm": 10.0,
+   "rpm_read": 1300.01,
+   "depth_read_mm": 10.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "red x (2 strokes)",
+   "caption_check": "Fig. 10 caption: cut B, chatter, 1300 rpm, 10 mm",
+   "predicted_boundary_mm": 11.49,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": false
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "chatter",
+   "rpm": 2800,
+   "depth_mm": 5.5,
+   "rpm_read": 2799.98,
+   "depth_read_mm": 5.5,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "red x (2 strokes)",
+   "caption_check": null,
+   "predicted_boundary_mm": 6.34,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": false
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "stable",
+   "rpm": 700,
+   "depth_mm": 8.0,
+   "rpm_read": 700.02,
+   "depth_read_mm": 8.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 15.35,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "stable",
+   "rpm": 760,
+   "depth_mm": 8.0,
+   "rpm_read": 760.02,
+   "depth_read_mm": 8.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 8.37,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "stable",
+   "rpm": 1200,
+   "depth_mm": 8.0,
+   "rpm_read": 1200.02,
+   "depth_read_mm": 8.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 11.35,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": "A",
+   "control": "mapped gain",
+   "state": "stable",
+   "rpm": 1300,
+   "depth_mm": 8.0,
+   "rpm_read": 1300.02,
+   "depth_read_mm": 8.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "green circle",
+   "caption_check": "Fig. 10 caption: cut A, stable, 1300 rpm, 8 mm",
+   "predicted_boundary_mm": 11.49,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "mapped gain",
+   "state": "stable",
+   "rpm": 2800,
+   "depth_mm": 4.5,
+   "rpm_read": 2799.99,
+   "depth_read_mm": 4.5,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 6.34,
+   "boundary_source": "Fig. 9 solid (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "none",
+   "state": "chatter",
+   "rpm": 700,
+   "depth_mm": 4.0,
+   "rpm_read": 700.03,
+   "depth_read_mm": 4.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "diamond (stroke (0.0, 0.0, 0.0))",
+   "caption_check": null,
+   "predicted_boundary_mm": 1.27,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "none",
+   "state": "chatter",
+   "rpm": 1200,
+   "depth_mm": 2.0,
+   "rpm_read": 1200.01,
+   "depth_read_mm": 2.0,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "diamond (stroke (0.149, 0.149, 0.149))",
+   "caption_check": null,
+   "predicted_boundary_mm": 1.47,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "none",
+   "state": "chatter",
+   "rpm": 2800,
+   "depth_mm": 1.5,
+   "rpm_read": 2799.98,
+   "depth_read_mm": 1.5,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "diamond (stroke (0.0, 0.0, 0.0))",
+   "caption_check": null,
+   "predicted_boundary_mm": 1.27,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "none",
+   "state": "stable",
+   "rpm": 1200,
+   "depth_mm": 0.5,
+   "rpm_read": 1200.02,
+   "depth_read_mm": 0.5,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "black +",
+   "caption_check": null,
+   "predicted_boundary_mm": 1.47,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig9",
+   "journal_page": 253,
+   "pdf_page": 8,
+   "label": null,
+   "control": "none",
+   "state": "stable",
+   "rpm": 2800,
+   "depth_mm": 0.5,
+   "rpm_read": 2799.98,
+   "depth_read_mm": 0.5,
+   "uncertainty": "vector: +-0.05 rpm, +-0.002 mm",
+   "glyph": "black +",
+   "caption_check": null,
+   "predicted_boundary_mm": 1.27,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": null,
+   "control": "single gain 237",
+   "state": "chatter",
+   "rpm": 1200,
+   "depth_mm": 4.0,
+   "rpm_read": 1201.6,
+   "depth_read_mm": 3.995,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "red x",
+   "caption_check": null,
+   "predicted_boundary_mm": 3.87,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": "D",
+   "control": "single gain 237",
+   "state": "chatter",
+   "rpm": 2700,
+   "depth_mm": 4.0,
+   "rpm_read": 2700.7,
+   "depth_read_mm": 3.995,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "red x",
+   "caption_check": "Fig. 12 caption: cut D, chatter, 2700 rpm, 4 mm",
+   "predicted_boundary_mm": 3.52,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": null,
+   "control": "single gain 237",
+   "state": "chatter",
+   "rpm": 3000,
+   "depth_mm": 4.0,
+   "rpm_read": 3000.2,
+   "depth_read_mm": 3.995,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "red x",
+   "caption_check": null,
+   "predicted_boundary_mm": 3.91,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": null,
+   "control": "single gain 237",
+   "state": "stable",
+   "rpm": 1200,
+   "depth_mm": 3.0,
+   "rpm_read": 1200.1,
+   "depth_read_mm": 3.011,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 3.87,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": "C",
+   "control": "single gain 237",
+   "state": "stable",
+   "rpm": 2700,
+   "depth_mm": 3.0,
+   "rpm_read": 2700.7,
+   "depth_read_mm": 2.981,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "green circle",
+   "caption_check": "Fig. 12 caption: cut C, stable, 2700 rpm, 3 mm",
+   "predicted_boundary_mm": 3.52,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": null,
+   "control": "single gain 237",
+   "state": "stable",
+   "rpm": 3000,
+   "depth_mm": 3.0,
+   "rpm_read": 3000.2,
+   "depth_read_mm": 3.011,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "green circle",
+   "caption_check": null,
+   "predicted_boundary_mm": 3.91,
+   "boundary_source": "Fig. 11 solid (raster)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": "B",
+   "control": "none",
+   "state": "chatter",
+   "rpm": 2800,
+   "depth_mm": 1.5,
+   "rpm_read": 2802.0,
+   "depth_read_mm": 1.549,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "diamond",
+   "caption_check": "Fig. 12 caption: cut B, chatter, 2800 rpm, 1.5 mm",
+   "predicted_boundary_mm": 1.27,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  },
+  {
+   "figure": "Fig11",
+   "journal_page": 254,
+   "pdf_page": 9,
+   "label": "A",
+   "control": "none",
+   "state": "stable",
+   "rpm": 2800,
+   "depth_mm": 0.5,
+   "rpm_read": 2800.5,
+   "depth_read_mm": 0.535,
+   "uncertainty": "raster: +-4.1 rpm, +-0.07 mm",
+   "glyph": "black +",
+   "caption_check": "Fig. 12 caption: cut A, stable, 2800 rpm, 0.5 mm",
+   "predicted_boundary_mm": 1.27,
+   "boundary_source": "Fig. 9 dashed (vector)",
+   "consistent_with_published_curve": true
+  }
+ ],
+ "chatter_frequencies": [
+  {
+   "figure": "Fig10",
+   "cut": "B",
+   "rpm": 1300,
+   "depth_mm": 10.0,
+   "chatter_freq_Hz": 149.5,
+   "uncertainty_Hz": 1.9,
+   "note": "~149 Hz line marked with a diamond in the figure; separate from spindle harmonic 7 (151.7 Hz), which appears as its own line ~3 Hz higher"
+  },
+  {
+   "figure": "Fig12",
+   "cut": "B",
+   "rpm": 2800,
+   "depth_mm": 1.5,
+   "chatter_freq_Hz": 133.3,
+   "uncertainty_Hz": 1.9,
+   "note": "dominant non-synchronous line"
+  },
+  {
+   "figure": "Fig12",
+   "cut": "D",
+   "rpm": 2700,
+   "depth_mm": 4.0,
+   "chatter_freq_Hz": 138.1,
+   "uncertainty_Hz": 1.9,
+   "note": "non-synchronous line next to spindle harmonic 3 (135 Hz)"
+  }
+ ],
+ "ambiguities": [
+  {
+   "id": "A1",
+   "topic": "Damping ratio",
+   "description": "Table 1 and Sec. 2.2 give 1.45 %; the Fig. 5 identified curve peaks at 2.574e-6 m/N (= 1/(2*0.0145*1.34e7)). But the Fig. 6a uncontrolled peak (-111.10 dB -> 1.339 %), the Fig. 6b open-loop pole (-10.89 +- 812.2j rad/s -> 1.341 %) and the uncontrolled SLD minima (1.212 mm; model with 1.34 %: 1.213 mm) all imply 1.34 %. The computed curves of the paper use 1.34 %."
+  },
+  {
+   "id": "A2",
+   "topic": "Gain range",
+   "description": "Text: gains between 237 and 1487 V s/m. Fig. 8 maximum 1487 (740 rpm) agrees, but the Fig. 8 minimum is 256.9 V s/m at 1940 rpm. 237 is the single-gain result of Sec. 4."
+  },
+  {
+   "id": "A3",
+   "topic": "Fig. 6 legend gains",
+   "description": "Legend: 500 rpm g=1487, 1300 rpm g=1162, 2500 rpm g=585, 3000 rpm g=797. Fig. 8 gives 1479 / 1158 / 543 / 794.5 at these speeds (1487 is the Fig. 8 maximum at 740 rpm, not the 500 rpm value). The plotted Fig. 6a peaks and Fig. 6b poles are mutually consistent and, with the 1-DOF + Eq. (3) loop at zeta=1.34 %, correspond to g ~ 1543 / 1162 / 685 / 830. Only the 1300 rpm case is consistent across legend, Fig. 8 and curves."
+  },
+  {
+   "id": "A4",
+   "topic": "Hidden part of the Fig. 9 controlled SLD",
+   "description": "The controlled curve is one vector path sampled every 10 rpm from 500 to 3000 rpm. Opaque white rectangles drawn after it cover 1500-2050 rpm and 960-970 rpm - exactly the speeds where the controlled curve lies below the uncontrolled one. In the hidden band it falls to 3.23 mm at 1940 rpm while the uncontrolled SLD there is ~29 mm. In print the solid line seems to stop at 1500 and restart at 2050 rpm."
+  },
+  {
+   "id": "A5",
+   "topic": "Interpolated parts of the gain map",
+   "description": "Fig. 8 has constant-slope stretches 500-550, 560-620, 620-740 (a single segment) and 1410-1860 rpm (25 collinear vertices). These look like linear interpolation rather than per-speed optima; 1410-1860 overlaps the hidden band of Fig. 9."
+  },
+  {
+   "id": "A6",
+   "topic": "Worst case 1.2 -> 3.6 mm",
+   "description": "1.2 mm matches the uncontrolled minima (1.212 mm). No 3.6 mm minimum exists on the Fig. 9 controlled curve: the visible minimum is 3.82 mm at 2070 rpm and the hidden one 3.23 mm at 1940 rpm. The Fig. 11 single-gain minima are 3.52 mm. Model context (zeta 1.34 %): global minimum of the ZOA SLD is 3.24 mm for g=237 and 3.41 mm for g=257 (smallest Fig. 8 gain)."
+  },
+  {
+   "id": "A7",
+   "topic": "13x near 730 rpm",
+   "description": "From the Fig. 9 curves the ratio is 12.15 at 730 rpm and peaks at 12.65 (710 rpm). '13' is a rounded value; experimentally only 8 mm (stable) was cut at 700 and 760 rpm, so the 13x is a prediction."
+  },
+  {
+   "id": "A8",
+   "topic": "1300 rpm: 10 mm vs 3 mm",
+   "description": "Sec. 4/5 say the mapped gain allows stable cutting up to 10 mm at 1300 rpm; Fig. 9 and Fig. 10 classify 1300 rpm / 10 mm as chatter (cut B), with 8 mm stable (cut A). The single-gain curve of Fig. 11 is ~5.1 mm at 1300 rpm; the single-gain tests are at 1200 rpm (3 mm stable, 4 mm chatter). The '3 mm' therefore seems to be the 1200 rpm experiment and '10 mm' the boundary bracket 8-10 mm."
+  },
+  {
+   "id": "A9",
+   "topic": "Table 3 vs Fig. 9",
+   "description": "Table 3 'proposed' a_lim differs from the Fig. 9 controlled curve by +0.5 mm at 1300 (12.0 vs 11.50), +0.24 at 2300, +0.26 at 2800 and +0.24 at 3000 rpm; the other rows agree within 0.1 mm."
+  },
+  {
+   "id": "A10",
+   "topic": "Worked example vs optimum at 1300 rpm",
+   "description": "g=1240 gives a_lim=11.8 mm (text), the optimum g~1160 gives 12.0 mm (Table 3) and Fig. 9 shows 11.50 mm. A larger gain giving a smaller a_lim is possible (actuator-mode interaction) but the three numbers cannot all be on the same curve unless the a_lim(g) relation is non-monotonic near 1160-1240."
+  },
+  {
+   "id": "A11",
+   "topic": "Actuator stiffness in Table 1",
+   "description": "2785.6 'N/m' equals the Eq. (3) constant wp^2 (rad^2/s^2); it is not a stiffness. The beam modes of Table 1 (23, 47 Hz) are not part of the model (rigid interface)."
+  },
+  {
+   "id": "A12",
+   "topic": "Units of the demanded-force check",
+   "description": "g is in V s/m, so g*xdot is a voltage; Eq. (3) gives 3 N/V. The text writes F_d = g xdot and compares it with 27 N. Whether the check used g|xdot| (V), 3 g|xdot| (N) or the actuator output force is not stated; the worked example (29 N at g=1240, a=11.8 mm, 1300 rpm) can discriminate."
+  },
+  {
+   "id": "A13",
+   "topic": "Experimental points vs predicted boundary",
+   "description": "Two mapped-gain chatter points fall below the published controlled curve: 1300 rpm/10 mm (curve 11.50 mm) and 2800 rpm/5.5 mm (curve 6.34 mm). All other points are on the predicted side. The 1200/4 and 3000/4 mm single-gain chatter points lie only ~0.1 mm above the Fig. 11 curve."
+  },
+  {
+   "id": "A14",
+   "topic": "Fig. 12 control state",
+   "description": "The Fig. 12 caption gives no control state. From the Fig. 11 glyphs: A (+) and B (diamond) are uncontrolled cuts at 2800 rpm - the same points as the uncontrolled 2800 rpm points of Fig. 9 - while C (circle) and D (x) are single-gain controlled cuts at 2700 rpm."
+  },
+  {
+   "id": "A15",
+   "topic": "Uncontrolled test speeds",
+   "description": "Sec. 3 says uncontrolled stability was characterised at 1200 and 2800 rpm, but Fig. 9 also has an uncontrolled chatter marker at 700 rpm, 4 mm."
+  },
+  {
+   "id": "A16",
+   "topic": "Unstated optimiser settings",
+   "description": "SADE population size, F/CR initialisation, learning period, generation cap, stagnation tolerance and the bounds of the gain search set are not given (the set is only named)."
+  },
+  {
+   "id": "A17",
+   "topic": "Fig. 10 chatter line",
+   "description": "The diamond-marked line of Fig. 10 cut B is at ~149.5 Hz (raw read-out), only ~2-3 Hz below spindle harmonic 7 (151.7 Hz) which shows as a separate smaller line; digitisation resolution is ~1.24 Hz/px."
+  },
+  {
+   "id": "A18",
+   "topic": "Fig. 9 legend",
+   "description": "The legend's marker swatch is painted over by a white box; the legend shows only the two curve styles (cosmetic)."
+  }
+ ]
+}

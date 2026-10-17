@@ -1,0 +1,44 @@
+[
+ {
+  "rpm": 1000,
+  "g_opt": 205.54999999999967,
+  "a_opt": 9.148773106037085,
+  "g_opt_grid5": 205.0,
+  "a_opt_grid5": 9.132435549711913,
+  "a_unc": 3.4875477499349965,
+  "feasible_frac_grid5": 0.06988352745424292,
+  "gmax_feasible_grid5": 205.0,
+  "n_feasible_intervals_grid1": 1,
+  "feasible_frac_of_G": 0.06866666666666667,
+  "n_eval": 866,
+  "seconds": 20.156989336013794
+ },
+ {
+  "rpm": 1950,
+  "g_opt": 67.48750000000008,
+  "a_opt": 29.496624149055098,
+  "g_opt_grid5": 65.0,
+  "a_opt_grid5": 29.48394489122496,
+  "a_unc": 29.15665202047861,
+  "feasible_frac_grid5": 0.02329450915141431,
+  "gmax_feasible_grid5": 65.0,
+  "n_feasible_intervals_grid1": 1,
+  "feasible_frac_of_G": 0.02266666666666667,
+  "n_eval": 772,
+  "seconds": 18.989162921905518
+ },
+ {
+  "rpm": 2500,
+  "g_opt": 533.2375000000011,
+  "a_opt": 6.196013988516253,
+  "g_opt_grid5": 530.0,
+  "a_opt_grid5": 6.163574506214551,
+  "a_unc": 1.2382153366082755,
+  "feasible_frac_grid5": 0.17803660565723795,
+  "gmax_feasible_grid5": 530.0,
+  "n_feasible_intervals_grid1": 1,
+  "feasible_frac_of_G": 0.178,
+  "n_eval": 1153,
+  "seconds": 21.646827697753906
+ }
+]

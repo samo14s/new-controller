@@ -1,0 +1,997 @@
+{
+ "n_checked": 99,
+ "n_inconsistent": 0,
+ "inconsistent": [],
+ "rows": [
+  {
+   "rpm": 500,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 1.8677559512920274,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12415611015636592
+  },
+  {
+   "rpm": 500,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 1.8677559512920274,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13476462622998797
+  },
+  {
+   "rpm": 500,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 1.9579801440347198,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13079651075884524
+  },
+  {
+   "rpm": 500,
+   "g": 0.0,
+   "config": "a_td8192_n300",
+   "a_mm": 1.9840393410856578,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11681544197278362
+  },
+  {
+   "rpm": 650,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 8.452137364370403,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13820545969812578
+  },
+  {
+   "rpm": 650,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 8.475787056980174,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16334951674721176
+  },
+  {
+   "rpm": 650,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 8.7880725009775,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11897090921982997
+  },
+  {
+   "rpm": 800,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 2.6750886662798794,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15419651357035988
+  },
+  {
+   "rpm": 800,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 2.6701217679361755,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1378886439348082
+  },
+  {
+   "rpm": 800,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 2.878184416850236,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1279547686222191
+  },
+  {
+   "rpm": 1100,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 1.1977949858852506,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12607654971838397
+  },
+  {
+   "rpm": 1100,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 1.1977949858852506,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.14698967214662806
+  },
+  {
+   "rpm": 1100,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 1.2312885811452594,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.14819418094860953
+  },
+  {
+   "rpm": 1300,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 2.5661278598478505,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.18120492119806467
+  },
+  {
+   "rpm": 1300,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 2.5590074187383607,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15768220069274916
+  },
+  {
+   "rpm": 1300,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 2.7194797987679915,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15532860473821228
+  },
+  {
+   "rpm": 1300,
+   "g": 0.0,
+   "config": "a_td8192_n300",
+   "a_mm": 2.7717849521902926,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.18655975196715627
+  },
+  {
+   "rpm": 1600,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 12.274654350219121,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.14036917237912674
+  },
+  {
+   "rpm": 1600,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 12.251714644222758,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12191495705929532
+  },
+  {
+   "rpm": 1600,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 12.646994580099276,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12410923837185867
+  },
+  {
+   "rpm": 1950,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 28.614069859731444,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.19694584632367532
+  },
+  {
+   "rpm": 1950,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 28.37476991046313,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11764951938325934
+  },
+  {
+   "rpm": 1950,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 28.966032651392677,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11242943267349385
+  },
+  {
+   "rpm": 2300,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 1.4798935548484176,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15860781423410275
+  },
+  {
+   "rpm": 2300,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 1.478519678733751,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1753871418051307
+  },
+  {
+   "rpm": 2300,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 1.4918699679880807,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.17847734806982343
+  },
+  {
+   "rpm": 2600,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 1.2030212832542273,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13608541243019315
+  },
+  {
+   "rpm": 2600,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 1.2030212832542273,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16966428278343187
+  },
+  {
+   "rpm": 2600,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 1.2194086610445263,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16873004875546777
+  },
+  {
+   "rpm": 2600,
+   "g": 0.0,
+   "config": "a_td8192_n300",
+   "a_mm": 1.2236066690352685,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1363807560673059
+  },
+  {
+   "rpm": 3000,
+   "g": 0.0,
+   "config": "a_td512_n300",
+   "a_mm": 1.4221349700563237,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15351283894983342
+  },
+  {
+   "rpm": 3000,
+   "g": 0.0,
+   "config": "a_td512_n1000",
+   "a_mm": 1.420822028092893,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.17639021315406922
+  },
+  {
+   "rpm": 3000,
+   "g": 0.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 1.4515184330957343,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1803789305557109
+  },
+  {
+   "rpm": 500,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 10.058741556013443,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15349085980179777
+  },
+  {
+   "rpm": 500,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 10.030648872071124,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12638017952411423
+  },
+  {
+   "rpm": 500,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 10.564702593813756,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12094006305412311
+  },
+  {
+   "rpm": 500,
+   "g": 600.0,
+   "config": "a_td8192_n300",
+   "a_mm": 10.750923792565809,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1496350692263269
+  },
+  {
+   "rpm": 650,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 11.033650965190668,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15473170150397766
+  },
+  {
+   "rpm": 650,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 10.992525383087147,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11870603553738694
+  },
+  {
+   "rpm": 650,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 11.504580469715995,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12265637474320375
+  },
+  {
+   "rpm": 800,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 6.934501239483918,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16602958293103426
+  },
+  {
+   "rpm": 800,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 6.908750345201446,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13038270143215408
+  },
+  {
+   "rpm": 800,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 7.25001916458364,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12991366154114287
+  },
+  {
+   "rpm": 1100,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 7.010974652700805,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15214523497497073
+  },
+  {
+   "rpm": 1100,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 7.004447756204885,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1443880394419142
+  },
+  {
+   "rpm": 1100,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 7.2366087725647645,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13821134456861608
+  },
+  {
+   "rpm": 1300,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 7.463958937908222,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16131213980661532
+  },
+  {
+   "rpm": 1300,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 7.443151866376187,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13579112328006818
+  },
+  {
+   "rpm": 1300,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 7.701080556952975,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1310231839458552
+  },
+  {
+   "rpm": 1300,
+   "g": 600.0,
+   "config": "a_td8192_n300",
+   "a_mm": 7.80617145878039,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.17580841920968154
+  },
+  {
+   "rpm": 1600,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 16.105295532079456,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16830767376910638
+  },
+  {
+   "rpm": 1600,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 16.03032906722881,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12584651936084237
+  },
+  {
+   "rpm": 1600,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 16.49345970776496,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12584630492604693
+  },
+  {
+   "rpm": 1950,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 31.64698650887425,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1467357738326491
+  },
+  {
+   "rpm": 1950,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 31.558353280749184,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.11905758729118461
+  },
+  {
+   "rpm": 1950,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 32.24873682022541,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12130128653405854
+  },
+  {
+   "rpm": 2300,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 8.510745117088925,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.26821108559397633
+  },
+  {
+   "rpm": 2300,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 8.416804652819355,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.17140206400398697
+  },
+  {
+   "rpm": 2300,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 8.520036706495523,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16405874213708233
+  },
+  {
+   "rpm": 2600,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 6.612091934528143,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.2576859488159135
+  },
+  {
+   "rpm": 2600,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 6.539309390683772,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16252564242742595
+  },
+  {
+   "rpm": 2600,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 6.631092194916751,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16318605302693645
+  },
+  {
+   "rpm": 2600,
+   "g": 600.0,
+   "config": "a_td8192_n300",
+   "a_mm": 6.734794614119757,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.266320223327991
+  },
+  {
+   "rpm": 3000,
+   "g": 600.0,
+   "config": "a_td512_n300",
+   "a_mm": 6.924034335135599,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.26544799007970105
+  },
+  {
+   "rpm": 3000,
+   "g": 600.0,
+   "config": "a_td512_n1000",
+   "a_mm": 6.841693326118891,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16222246574850233
+  },
+  {
+   "rpm": 3000,
+   "g": 600.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 6.955346809727271,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16389210855134984
+  },
+  {
+   "rpm": 500,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 13.404315597864516,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1501785067002897
+  },
+  {
+   "rpm": 500,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 13.366844300961025,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12182921835398236
+  },
+  {
+   "rpm": 500,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 14.234929644291107,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12241892411245453
+  },
+  {
+   "rpm": 500,
+   "g": 1200.0,
+   "config": "a_td8192_n300",
+   "a_mm": 14.526113065039906,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15111108190476408
+  },
+  {
+   "rpm": 650,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 14.496284972447373,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1554939576103486
+  },
+  {
+   "rpm": 650,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 14.455761113229475,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12935619906286194
+  },
+  {
+   "rpm": 650,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 15.2174891085512,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13017083075240793
+  },
+  {
+   "rpm": 800,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 11.691672776842744,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.18690753765830512
+  },
+  {
+   "rpm": 800,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 11.637301333143272,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1266581346161763
+  },
+  {
+   "rpm": 800,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 12.23923125515849,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13274049735876525
+  },
+  {
+   "rpm": 1100,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 14.500484023602034,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.19845952742553122
+  },
+  {
+   "rpm": 1100,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 14.419713882050173,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.147111554149208
+  },
+  {
+   "rpm": 1100,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 15.065693999555101,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.14749464778225133
+  },
+  {
+   "rpm": 1300,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 12.390475221075125,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1830461183147245
+  },
+  {
+   "rpm": 1300,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 12.321329800526575,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13056095193051961
+  },
+  {
+   "rpm": 1300,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 12.74141323132391,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1328510644406981
+  },
+  {
+   "rpm": 1300,
+   "g": 1200.0,
+   "config": "a_td8192_n300",
+   "a_mm": 12.923118431756711,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.18528834007852665
+  },
+  {
+   "rpm": 1600,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 20.248592194783505,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.17031880350566514
+  },
+  {
+   "rpm": 1600,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 20.15433963220111,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12518916973096822
+  },
+  {
+   "rpm": 1600,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 20.726649575435207,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12759131384713288
+  },
+  {
+   "rpm": 1950,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 35.396114427705115,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15758727302346406
+  },
+  {
+   "rpm": 1950,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 35.29707353547774,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.13021340117618485
+  },
+  {
+   "rpm": 1950,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 36.07232149695045,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.12350493885312532
+  },
+  {
+   "rpm": 2300,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 16.930440663290344,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.24258005533008178
+  },
+  {
+   "rpm": 2300,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 16.77413562562341,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15959742767079504
+  },
+  {
+   "rpm": 2300,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 17.071995478388732,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.16083243795796445
+  },
+  {
+   "rpm": 2600,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 12.691066366002607,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.22510709314453398
+  },
+  {
+   "rpm": 2600,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 12.585323797916796,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15161845732639856
+  },
+  {
+   "rpm": 2600,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 12.780371499716322,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.1508402105131919
+  },
+  {
+   "rpm": 2600,
+   "g": 1200.0,
+   "config": "a_td8192_n300",
+   "a_mm": 12.92608902032901,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.2179808593592676
+  },
+  {
+   "rpm": 3000,
+   "g": 1200.0,
+   "config": "a_td512_n300",
+   "a_mm": 12.45350695315651,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.23305579614378752
+  },
+  {
+   "rpm": 3000,
+   "g": 1200.0,
+   "config": "a_td512_n1000",
+   "a_mm": 12.338321132717263,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15022187286671024
+  },
+  {
+   "rpm": 3000,
+   "g": 1200.0,
+   "config": "a_td2048_n1000",
+   "a_mm": 12.535552664622973,
+   "stable_at_0p99": true,
+   "stable_at_1p01": false,
+   "consistent": true,
+   "dx_end_over_fz_1p01": 0.15050589868376904
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "n_flat": 218,
+ "depth_bias_mm": 0.023,
+ "depth_mad_mm": 0.012,
+ "depth_p95_abs_mm": 0.049,
+ "best_rpm_shift": 0.0,
+ "n_sloped": 238,
+ "median_abs_mm_at_best_shift": 0.03,
+ "median_abs_mm_at_zero_shift": 0.03
+}

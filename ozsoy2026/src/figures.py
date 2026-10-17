@@ -164,19 +164,18 @@ def table3(tag):
     if not os.path.exists(path):
         return
     t = np.genfromtxt(path, delimiter=",", names=True)
-    paper_clip = [15.2, 8.7, 12.2, 11.2, 12.1, 4.5, 4.7, 5.8, 6.2]
-    paper_prop = [14.9, 8.0, 11.8, 10.8, 12.0, 4.9, 5.3, 6.6, 7.1]
     x = np.arange(len(t))
-    w = 0.2
-    fig, ax = plt.subplots(figsize=(8, 3.4))
-    ax.bar(x - 1.5 * w, paper_clip, w, color=PAPER, alpha=0.45, label="paper: clipped DVF")
-    ax.bar(x - 0.5 * w, paper_prop, w, color=PAPER, label="paper: proposed")
-    ax.bar(x + 0.5 * w, t["a_clip_td"], w, color=OURS, alpha=0.45, label="reproduction: clipped DVF (TD)")
-    ax.bar(x + 1.5 * w, t["a_prop_td"], w, color=OURS, label="reproduction: proposed (TD)")
+    w = 0.16
+    fig, ax = plt.subplots(figsize=(9, 3.6))
+    ax.bar(x - 2 * w, t["paper_clip"], w, color=PAPER, alpha=0.45, label="paper: clipped DVF")
+    ax.bar(x - w, t["paper_prop"], w, color=PAPER, label="paper: proposed")
+    ax.bar(x, t["a_clip1500_td"], w, color="#7aa6d6", label="reproduction: clipped DVF, g = 1500 (TD, 9 V limit)")
+    ax.bar(x + w, t["a_clip3000_td"], w, color="#9ec5ea", label="reproduction: clipped DVF, g = 3000 (TD, 9 V limit)")
+    ax.bar(x + 2 * w, t["a_prop_td"], w, color=OURS, label="reproduction: proposed gain (TD, 9 V limit)")
     ax.set_xticks(x, [f"{int(r)}" for r in t["rpm"]])
     ax.set(xlabel="Spindle speed (rpm)", ylabel="Limiting depth (mm)",
            title="Table 3: clipped DVF vs saturation-aware gain")
-    ax.legend(fontsize=7)
+    ax.legend(fontsize=6.5, ncol=2)
     fig.savefig(os.path.join(FIG, f"r06_table3_{tag}.png"))
     plt.close(fig)
 
@@ -187,27 +186,63 @@ def cuts(tag):
         return
     c = np.load(path)
     with open(os.path.join(RES, f"cuts_{tag}.json")) as fh:
-        summ = {r["label"]: r for r in json.load(fh)}
-    labs = list(summ)
-    fig, ax = plt.subplots(len(labs), 2, figsize=(9, 1.7 * len(labs)),
+        rows = sorted([r for r in json.load(fh) if r["cut"]], key=lambda r: r["cut"])
+    fig, ax = plt.subplots(len(rows), 2, figsize=(9, 1.75 * len(rows)),
                            gridspec_kw={"width_ratios": [2.2, 1]})
-    for k, lab in enumerate(labs):
-        r = summ[lab]
+    for k, r in enumerate(rows):
+        lab = r["cut"]
         ax[k, 0].plot(c[f"{lab}_t"], c[f"{lab}_acc"], color="#4a90c2", lw=0.4)
         ax[k, 0].plot(c[f"{lab}_opr_t"], c[f"{lab}_opr"], "k.", ms=2)
         ax[k, 0].set_ylabel("acc (m/s2)", fontsize=7)
-        ax[k, 0].set_title(f"{lab}: {r['rpm']} rpm, {r['depth_mm']} mm, {r['controller']} "
-                           f"(g = {r['gain']:.0f}) -> simulated {r['predicted']}, paper {r['measured']}",
-                           fontsize=7.5)
-        ax[k, 1].plot(c[f"{lab}_f"], c[f"{lab}_S"], color="#4a90c2", lw=0.8)
-        ftp = float(c[f"{lab}_ftp"])
-        for h in range(1, 5):
+        tag_d = " (diverges)" if r.get("diverged_td") else ""
+        ax[k, 0].set_title(f"Cut {lab}: {r['rpm']:.0f} rpm, {r['depth_mm']} mm, {r['controller']} "
+                           f"(g = {r['g_ours']:.0f}) -> simulated {r['pred_ours_td']}{tag_d}; "
+                           f"measured {r['measured']}", fontsize=7.5)
+        ax[k, 1].semilogy(c[f"{lab}_f"], c[f"{lab}_S"] + 1e-12, color="#4a90c2", lw=0.8)
+        ftp = 4 * r["rpm"] / 60.0
+        for h in range(1, 4):
             ax[k, 1].axvline(h * ftp, color="k", lw=0.5, ls=":")
         ax[k, 1].set_xlim(0, 420)
-    ax[-1, 0].set_xlabel("Time (s)")
-    ax[-1, 1].set_xlabel("Frequency (Hz); dotted: tooth-passing harmonics")
+    ax[-1, 0].set_xlabel("Time (s); dots: once per revolution")
+    ax[-1, 1].set_xlabel("Frequency (Hz); dotted: tooth passing")
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, f"r07_cuts_{tag}.png"))
+    plt.close(fig)
+
+
+def points(tag):
+    path = os.path.join(RES, f"cuts_{tag}.json")
+    if not os.path.exists(path):
+        return
+    with open(path) as fh:
+        rows = json.load(fh)
+    d = np.load(os.path.join(RES, f"gainmap_{tag}.npz"))
+    sg = np.load(os.path.join(RES, f"single_gain_{tag}.npz"))
+    fine = np.arange(400, 3051, 5.0)
+    fig, ax = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
+    ax[0].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1, label="uncontrolled")
+    ax[0].plot(d["rpm"], d["a_best"], color=OURS, lw=1.4, label="reproduced gain map")
+    cp = np.loadtxt(os.path.join(DIG, "fig9_controlled_points.csv"), delimiter=",", skiprows=1)
+    ax[0].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1, alpha=0.7, label="paper Fig. 9 controlled")
+    ax[1].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1)
+    ax[1].plot(fine, sld(fine, float(sg["g_ref"])) * 1e3, color=OURS, lw=1.4,
+               label=f"reproduced single gain {float(sg['g_ref']):.0f}")
+    ax[1].plot(fine, sld(fine, 237.0) * 1e3, color=PAPER, lw=1, alpha=0.7, label="paper single gain 237 (our model)")
+    for r in rows:
+        k = 0 if r["figure"] == "Fig9" else 1
+        mk = {"none": "s", "map": "o", "single": "o"}[r["controller"]]
+        ok = r["pred_ours_td"] == r["measured"]
+        col = "g" if r["measured"] == "stable" else "r"
+        ax[k].plot(r["rpm"], r["depth_mm"], mk, mfc=col if ok else "none", mec=col, ms=6)
+    for k in range(2):
+        ax[k].plot([], [], "o", mfc="g", mec="g", label="measured stable, predicted stable")
+        ax[k].plot([], [], "o", mfc="r", mec="r", label="measured chatter, predicted chatter")
+        ax[k].plot([], [], "o", mfc="none", mec="k", label="open: prediction disagrees")
+        ax[k].set(xlabel="Spindle speed (rpm)", xlim=(400, 3050), ylim=(0, 20))
+        ax[k].legend(fontsize=6.3, loc="upper right")
+    ax[0].set(ylabel="Depth of cut (mm)", title="Mapped gain: published test points")
+    ax[1].set(title="Single gain: published test points")
+    fig.savefig(os.path.join(FIG, f"r09_test_points_{tag}.png"))
     plt.close(fig)
 
 
@@ -256,6 +291,7 @@ def main():
             fig11(a.tag)
         table3(a.tag)
         cuts(a.tag)
+        points(a.tag)
         sensitivity(a.tag)
 
 

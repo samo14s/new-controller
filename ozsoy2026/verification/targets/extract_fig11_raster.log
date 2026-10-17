@@ -1,0 +1,253 @@
+{
+ "image_px": [
+  1035,
+  653
+ ],
+ "placed_on_pdf_page_rect": [
+  38.93000030517578,
+  55.509033203125,
+  287.33001708984375,
+  212.1810302734375
+ ],
+ "x_grid_px": [
+  132.4929245283019,
+  305.0359550561798,
+  478.49001996007985,
+  651.0367965367965,
+  823.9599198396794,
+  996.0060851926978
+ ],
+ "y_grid_px": [
+  78.99870801033592,
+  162.98324607329843,
+  246.50241286863272,
+  330.49835345773874,
+  414.4871501998858,
+  498.03678160919543,
+  582.0010493179433
+ ],
+ "rpm_per_px": 2.8940493531682723,
+ "mm_per_px": 0.059648079340129605,
+ "x_fit_resid_rpm": 1.210560608927608,
+ "y_fit_resid_mm": 0.010360367575778184
+}
+kind,glyph,label,rpm,depth_mm,u_rpm,u_mm,nominal_rpm,nominal_depth_mm,x_px,y_px
+controlled_chatter,red x,,1201.6,3.995,4.1,0.07,1200,4.0,375.0,515.0
+controlled_chatter,red x,D,2700.7,3.995,4.1,0.07,2700,4.0,893.0,515.0
+controlled_chatter,red x,,3000.2,3.995,4.1,0.07,3000,4.0,996.5,515.0
+controlled_stable,green circle,,1200.1,3.011,4.1,0.07,1200,3.0,374.5,531.5
+controlled_stable,green circle,C,2700.7,2.981,4.1,0.07,2700,3.0,893.0,532.0
+controlled_stable,green circle,,3000.2,3.011,4.1,0.07,3000,3.0,996.5,531.5
+uncontrolled_chatter,diamond,B,2802.0,1.549,4.1,0.07,2800,1.5,928.0,556.0
+uncontrolled_stable,black +,A,2800.5,0.535,4.1,0.07,2800,0.5,927.5,573
+
+[
+ {
+  "x_px": 862.0,
+  "y_px": 512.0,
+  "w": 13,
+  "h": 15,
+  "npx": 98,
+  "letter": "D"
+ },
+ {
+  "x_px": 864.5,
+  "y_px": 535.0,
+  "w": 12,
+  "h": 15,
+  "npx": 79,
+  "letter": "C"
+ },
+ {
+  "x_px": 905.5,
+  "y_px": 554.0,
+  "w": 12,
+  "h": 15,
+  "npx": 115,
+  "letter": "B"
+ },
+ {
+  "x_px": 905.5,
+  "y_px": 573.5,
+  "w": 14,
+  "h": 14,
+  "npx": 87,
+  "letter": "A"
+ }
+]
+{
+ "controlled_peaks": [
+  {
+   "rpm": 492.5,
+   "depth_mm": 8.65
+  },
+  {
+   "rpm": 657.5,
+   "depth_mm": 10.91
+  },
+  {
+   "rpm": 987.4,
+   "depth_mm": 15.63
+  },
+  {
+   "rpm": 1971.4,
+   "depth_mm": 31.79
+  }
+ ],
+ "controlled_minima": [
+  {
+   "rpm": 423.1,
+   "depth_mm": 3.52
+  },
+  {
+   "rpm": 533.0,
+   "depth_mm": 3.52
+  },
+  {
+   "rpm": 724.0,
+   "depth_mm": 3.52
+  },
+  {
+   "rpm": 1126.3,
+   "depth_mm": 3.52
+  },
+  {
+   "rpm": 2576.2,
+   "depth_mm": 3.52
+  }
+ ],
+ "uncontrolled_peaks": [
+  {
+   "rpm": 475.2,
+   "depth_mm": 5.84
+  },
+  {
+   "rpm": 640.1,
+   "depth_mm": 8.23
+  },
+  {
+   "rpm": 964.3,
+   "depth_mm": 12.94
+  },
+  {
+   "rpm": 1948.2,
+   "depth_mm": 29.17
+  }
+ ],
+ "uncontrolled_minima": [
+  {
+   "rpm": 411.5,
+   "depth_mm": 1.25
+  },
+  {
+   "rpm": 512.8,
+   "depth_mm": 1.46
+  },
+  {
+   "rpm": 703.8,
+   "depth_mm": 1.25
+  },
+  {
+   "rpm": 1091.6,
+   "depth_mm": 1.25
+  },
+  {
+   "rpm": 2773.0,
+   "depth_mm": 1.19
+  }
+ ],
+ "at_speeds": [
+  {
+   "rpm": 500,
+   "controlled_mm": 6.74,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 1.82
+  },
+  {
+   "rpm": 560,
+   "controlled_mm": 3.99,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 2.0
+  },
+  {
+   "rpm": 600,
+   "controlled_mm": 6.14,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 4.74
+  },
+  {
+   "rpm": 700,
+   "controlled_mm": 3.97,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 1.25
+  },
+  {
+   "rpm": 730,
+   "controlled_mm": 3.52,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 1.28
+  },
+  {
+   "rpm": 800,
+   "controlled_mm": 4.89,
+   "controlled_how": "direct",
+   "uncontrolled_mm": null
+  },
+  {
+   "rpm": 1000,
+   "controlled_mm": 11.54,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 3.58
+  },
+  {
+   "rpm": 1200,
+   "controlled_mm": 3.87,
+   "controlled_how": "interpolated 1152-1245 rpm",
+   "uncontrolled_mm": null
+  },
+  {
+   "rpm": 1300,
+   "controlled_mm": 5.1,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 2.77
+  },
+  {
+   "rpm": 1500,
+   "controlled_mm": 10.68,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 9.09
+  },
+  {
+   "rpm": 2300,
+   "controlled_mm": 4.41,
+   "controlled_how": "direct",
+   "uncontrolled_mm": null
+  },
+  {
+   "rpm": 2500,
+   "controlled_mm": 3.64,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 1.25
+  },
+  {
+   "rpm": 2700,
+   "controlled_mm": 3.52,
+   "controlled_how": "interpolated 2654-2744 rpm",
+   "uncontrolled_mm": 1.25
+  },
+  {
+   "rpm": 2800,
+   "controlled_mm": 3.58,
+   "controlled_how": "direct",
+   "uncontrolled_mm": 1.31
+  },
+  {
+   "rpm": 3000,
+   "controlled_mm": 3.91,
+   "controlled_how": "interpolated 2952-3045 rpm",
+   "uncontrolled_mm": null
+  }
+ ],
+ "uncontrolled_peaks_note": "raster dash gaps miss the cusps: use the Fig. 9 vector peaks (6.78 mm @488, 8.99 @651, 13.64 @977, 29.27 @1952 rpm) instead",
+ "notes": "depth values are coarse (raster, ~0.06 mm/px, ~2.9 rpm/px); peaks use the top pixel of the 3-px line plus half a line width, minima use the run centre; dashed-curve values are missing in dash gaps."
+}

@@ -1,0 +1,73 @@
+{
+ "fig5": {
+  "measured": {
+   "peak_freq_Hz": 129.5,
+   "peak_value": 2.570585225400375e-06,
+   "n_points": 322,
+   "zeta_equiv_percent": 1.452
+  },
+  "identified": {
+   "peak_freq_Hz": 129.29,
+   "peak_value": 2.573572918134434e-06,
+   "n_points": 1699,
+   "zeta_equiv_percent": 1.45
+  }
+ },
+ "fig6a": {
+  "uncontrolled": {
+   "peak_freq_Hz": 129.01,
+   "peak_value": -111.1,
+   "n_points": 3841,
+   "value_at_129.3Hz_dB": -111.23,
+   "zeta_equiv_percent": 1.339
+  },
+  "500rpm_g1487": {
+   "peak_freq_Hz": 125.51,
+   "peak_value": -132.2,
+   "n_points": 3846,
+   "value_at_129.3Hz_dB": -132.35,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -141.94,
+    "rise_dB": 0.33
+   },
+   "zeta_equiv_percent": 15.201
+  },
+  "1300rpm_g1162": {
+   "peak_freq_Hz": 126.89,
+   "peak_value": -130.03,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -130.13,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.09,
+    "rise_dB": 0.2
+   },
+   "zeta_equiv_percent": 11.84
+  },
+  "2500rpm_g585": {
+   "peak_freq_Hz": 128.07,
+   "peak_value": -126.14,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -126.2,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.26,
+    "rise_dB": 0.04
+   },
+   "zeta_equiv_percent": 7.566
+  },
+  "3000rpm_g797": {
+   "peak_freq_Hz": 127.76,
+   "peak_value": -127.52,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -127.59,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.21,
+    "rise_dB": 0.09
+   },
+   "zeta_equiv_percent": 8.869
+  }
+ }
+}

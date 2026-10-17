@@ -1,0 +1,47 @@
+[
+ {
+  "case": "uncontrolled",
+  "legend_gain": 0,
+  "model_peak_dB": -111.1,
+  "model_peak_Hz": 129.28,
+  "digitised_peak_dB": -111.1,
+  "digitised_peak_Hz": 129.01,
+  "gain_matching_digitised_peak": 0.0
+ },
+ {
+  "case": "500rpm_g1487",
+  "legend_gain": 1487,
+  "model_peak_dB": -131.92,
+  "model_peak_Hz": 126.06,
+  "digitised_peak_dB": -132.2,
+  "digitised_peak_Hz": 125.51,
+  "gain_matching_digitised_peak": 1542.9
+ },
+ {
+  "case": "1300rpm_g1162",
+  "legend_gain": 1162,
+  "model_peak_dB": -130.03,
+  "model_peak_Hz": 127.18,
+  "digitised_peak_dB": -130.03,
+  "digitised_peak_Hz": 126.89,
+  "gain_matching_digitised_peak": 1162.2
+ },
+ {
+  "case": "2500rpm_g585",
+  "legend_gain": 585,
+  "model_peak_dB": -125.03,
+  "model_peak_Hz": 128.59,
+  "digitised_peak_dB": -126.14,
+  "digitised_peak_Hz": 128.07,
+  "gain_matching_digitised_peak": 685.4
+ },
+ {
+  "case": "3000rpm_g797",
+  "legend_gain": 797,
+  "model_peak_dB": -127.22,
+  "model_peak_Hz": 128.16,
+  "digitised_peak_dB": -127.52,
+  "digitised_peak_Hz": 127.76,
+  "gain_matching_digitised_peak": 830.0
+ }
+]

@@ -1,0 +1,35 @@
+{
+ "folder": "/home/user/new-controller/ozsoy2026/verification/critic",
+ "zeta": 0.0134,
+ "spot_checks": {
+  "gain_map_vs_fig8_by_demand_definition": {
+   "file": "gainmap_identification.csv/json",
+   "result": "volt (g|xdot|) gives 2.1-2.7x Fig 8 at 2300-3000 rpm -> excluded; force (3g|xdot|) and actual |f_act| (full 50 rev) match Fig 8 at 2300-3000 rpm within 1-11 % (2500 rpm: demand at the Fig 8 gain = 27.5 N); below 2000 rpm no definition matches (force at >=2048 spr: 0.55-0.95 of Fig 8; 1940 rpm: about 100 vs 257)"
+  },
+  "gain_map_step_convergence": {
+   "file": "gainmap_spr_convergence.csv/json",
+   "g_opt_force_spr512": {"500": 537.5, "740": 495.3, "800": 570.3, "1000": 205.5, "1300": 646.1, "1940": 95.3, "2500": 532.8},
+   "g_opt_force_spr8192": {"500": 828.1, "740": 1012.5, "800": 1025.8, "1000": 629.7, "1300": 990.6, "1940": 101.6, "2500": 535.2},
+   "g_fig8": {"500": 1479.0, "740": 1487.0, "800": 1078.8, "1000": 1152.9, "1300": 1158.0, "1940": 256.9, "2500": 543.0},
+   "force_demand_at_fig8_gain_spr8192_N": {"500": 53.0, "740": 54.9, "800": 30.5, "1000": 54.6, "1300": 38.6, "1940": 49.6, "2500": 27.5}
+  },
+  "tdboundary_detector": {
+   "file": "tdboundary_check.json",
+   "result": "vs D1/1000-rev reference (30 cases): median -0.0004 but 7/30 off by >10 % (range -64 % to +87 %); false chatter when the rev-to-rev difference reaches round-off (slope of noise > 0), false stable for saturated chatter with level < 0.25"
+  },
+  "clipped_dvf": {
+   "files": ["table3_clip_probe.json", "clipped_depth_scan.json"],
+   "result": "with a 9 V command limit and D1 at 2048 spr, stability is monotone in depth and the clipped high-gain DVF is stable to 13.0-13.5 mm (2500), 13.0 (3000), 15.5 (1300), 20.5 (500) for g=3000, vs paper clipped 4.7/6.2/12.1/15.2 mm; the proposed (Fig 8) gain gives 6.4-6.5/8.8/12.4/16.4 mm. The model does not reproduce the paper's claim that clipped DVF is 10-15 % worse at 2300-3000 rpm."
+  },
+  "fig11_constant_gain_fit": {
+   "file": "fig11_gain_fit.json",
+   "result": "Fig 11 controlled SLD = ZOA at constant g = 270 V s/m (rms log 0.84 %, 667 points, minima 3.518 vs 3.525 mm); at the stated 237 V s/m the model is 7.3 % lower (median)"
+  },
+  "chatter_frequencies": {
+   "file": "chatter_freq_and_points.json",
+   "result": "ZOA vs FFT: Fig10B 149.0 vs 149.5 Hz; Fig12B 131.6 vs 133.3 Hz; Fig12D 134.0-134.4 vs 138.1 Hz; experimental points 19/21 agree with ZOA at paper gains (same two misses as the published curve)"
+  },
+  "spurious_pole_root_confirmed": "zeta 1.45 %, g=300, 1983 rpm: zoa.a_lim = 29.296875 mm at 132.21 Hz (= tooth harmonic), residual of characteristic equation 1.003",
+  "feasible_set_fragmented_at_spr512": "650 rpm (g 590-615) and 1310 rpm (g 630-650): feasibility flips several times near 27 N (demand fluctuates +-0.5 N); main-run SADE beats the scan+bisection reference at 650 and 1310 rpm"
+ }
+}

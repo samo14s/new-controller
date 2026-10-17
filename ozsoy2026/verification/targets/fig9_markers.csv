@@ -1,0 +1,14 @@
+kind,glyph,label,rpm,depth_mm,marker_halfwidth_rpm,marker_halfheight_mm,x_pt,y_pt,drawing_index
+controlled_chatter,red x (2 strokes),,760.03,10.0,22.8,0.44,88.677,529.531,546
+controlled_chatter,red x (2 strokes),B,1300.01,10.0,22.8,0.44,135.068,529.531,556
+controlled_chatter,red x (2 strokes),,2799.98,5.5,22.8,0.44,263.935,549.406,562
+controlled_stable,green circle,,700.02,8.0,35.5,0.69,83.521,538.365,564
+controlled_stable,green circle,,760.02,8.0,35.5,0.69,88.677,538.365,545
+controlled_stable,green circle,,1200.02,8.0,35.5,0.69,126.479,538.365,552
+controlled_stable,green circle,A,1300.02,8.0,35.5,0.69,135.07,538.365,555
+controlled_stable,green circle,,2799.99,4.5,35.5,0.69,263.936,553.824,561
+uncontrolled_chatter,"diamond (stroke (0.0, 0.0, 0.0))",,700.03,4.0,32.3,0.63,83.523,556.031,551
+uncontrolled_chatter,"diamond (stroke (0.149, 0.149, 0.149))",,1200.01,2.0,32.3,0.63,126.478,564.865,550
+uncontrolled_chatter,"diamond (stroke (0.0, 0.0, 0.0))",,2799.98,1.5,32.3,0.63,263.935,567.074,560
+uncontrolled_stable,black +,,1200.02,0.5,32.7,0.64,126.478,571.49,553
+uncontrolled_stable,black +,,2799.98,0.5,32.7,0.64,263.935,571.49,558

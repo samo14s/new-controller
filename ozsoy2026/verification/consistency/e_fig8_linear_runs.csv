@@ -1,0 +1,7 @@
+rpm_from,rpm_to,span_rpm,g_from,g_to,slope_per_rpm,kind,n_vertices,grid_speeds,grid_speeds_with_vertex,max_dev_from_chord,nearest_tooth_k,nearest_tooth_rpm,unc_depth_min_mm,unc_depth_max_mm,related
+500,550,50,1478.98,1135.99,-6.85994,sloped straight line,5,6,5,0.00665375,4,484.875,1.21242,1.982,tooth-passing k=4 at 484.9 rpm | uncontrolled lobe peak 6.8 mm at 488 rpm (Fig 9 dashed)
+560,610,50,751.987,1286.27,10.6857,sloped straight line,5,6,5,0.000271582,3,646.5,2.05627,5.34746,
+620,740,120,1392.98,1486.98,0.783309,sloped straight line,2,13,2,0,3,646.5,1.21242,8.99253,tooth-passing k=3 at 646.5 rpm | uncontrolled lobe peak 9.0 mm at 651 rpm (Fig 9 dashed)
+1210,1230,20,849.989,1049.99,9.99991,sloped straight line,2,3,2,0,2,969.75,1.55136,1.71076,
+1250,1280,30,1119.98,1149.98,1.00003,sloped straight line,2,4,2,0,2,969.75,1.94532,2.36691,
+1410,1860,450,1161.98,328.508,-1.85217,sloped straight line,25,46,25,0.00735534,1,1939.5,5.66737,24.558,overlaps Fig 9 white rectangle seqno 613 (1655-1906 rpm) | overlaps Fig 9 white rectangle seqno 615 (1748-1999 rpm) | overlaps Fig 9 white rectangle seqno 621 (1495-1746 rpm)

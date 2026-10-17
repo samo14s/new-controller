@@ -1,0 +1,25 @@
+{
+ "note": "hypothesis test",
+ "linearity_range": [
+  0.4903247472513727,
+  0.563322247831023
+ ],
+ "force": {
+  "median_abs_rel_pct": 33.170654088315096,
+  "within_5pct": 56,
+  "n": 250,
+  "median_abs_rel_pct_1880_2100": 4.154847571021081
+ },
+ "volt": {
+  "median_abs_rel_pct": 20.402328168780514,
+  "within_5pct": 23,
+  "n": 250,
+  "median_abs_rel_pct_1880_2100": 64.79024230724612
+ },
+ "actual": {
+  "median_abs_rel_pct": 33.17425560367876,
+  "within_5pct": 59,
+  "n": 250,
+  "median_abs_rel_pct_1880_2100": 4.342442346631437
+ }
+}

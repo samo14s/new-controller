@@ -1,0 +1,640 @@
+{
+ "fig9": {
+  "x_ticks_nominal": [
+   66.34,
+   109.29,
+   152.25,
+   195.21,
+   238.16,
+   281.12
+  ],
+  "x_ticks_detected": [
+   66.34,
+   109.29,
+   152.25,
+   195.21,
+   238.16,
+   281.12
+  ],
+  "y_ticks_nominal": [
+   573.7,
+   551.61,
+   529.53,
+   507.45,
+   485.36,
+   463.28,
+   441.2
+  ],
+  "y_ticks_detected": [
+   441.2,
+   463.28,
+   485.36,
+   507.45,
+   529.53,
+   551.61,
+   573.7
+  ],
+  "x_fit_resid_rpm": 0.045449440270090236,
+  "y_fit_resid_mm": 0.0008894730458059996,
+  "rpm_per_pt": 11.639740052871279,
+  "mm_per_pt": 0.22641631402445164
+ },
+ "fig6b": {
+  "x_fit_resid": 1.1368683772161603e-13,
+  "y_fit_resid": 0.0732797575569748
+ },
+ "fig8": {
+  "x_ticks": [
+   61.38,
+   105.45,
+   149.51,
+   193.57,
+   237.64,
+   281.7
+  ],
+  "y_ticks": [
+   384.68,
+   366.7,
+   348.72,
+   330.74,
+   312.76,
+   294.78,
+   276.8,
+   258.83
+  ],
+  "x_fit_resid_rpm": 0.044309058801104584,
+  "y_fit_resid": 0.06489292625292364
+ }
+}
+kind,glyph,label,rpm,depth_mm,marker_halfwidth_rpm,marker_halfheight_mm,x_pt,y_pt,drawing_index
+controlled_chatter,red x (2 strokes),,760.03,10.0,22.8,0.44,88.677,529.531,546
+controlled_chatter,red x (2 strokes),B,1300.01,10.0,22.8,0.44,135.068,529.531,556
+controlled_chatter,red x (2 strokes),,2799.98,5.5,22.8,0.44,263.935,549.406,562
+controlled_stable,green circle,,700.02,8.0,35.5,0.69,83.521,538.365,564
+controlled_stable,green circle,,760.02,8.0,35.5,0.69,88.677,538.365,545
+controlled_stable,green circle,,1200.02,8.0,35.5,0.69,126.479,538.365,552
+controlled_stable,green circle,A,1300.02,8.0,35.5,0.69,135.07,538.365,555
+controlled_stable,green circle,,2799.99,4.5,35.5,0.69,263.936,553.824,561
+uncontrolled_chatter,"diamond (stroke (0.0, 0.0, 0.0))",,700.03,4.0,32.3,0.63,83.523,556.031,551
+uncontrolled_chatter,"diamond (stroke (0.149, 0.149, 0.149))",,1200.01,2.0,32.3,0.63,126.478,564.865,550
+uncontrolled_chatter,"diamond (stroke (0.0, 0.0, 0.0))",,2799.98,1.5,32.3,0.63,263.935,567.074,560
+uncontrolled_stable,black +,,1200.02,0.5,32.7,0.64,126.478,571.49,553
+uncontrolled_stable,black +,,2799.98,0.5,32.7,0.64,263.935,571.49,558
+
+drawing_index,rpm_from,rpm_to,depth_from_mm,depth_to_mm,where
+571,1655.1,1905.6,4.59,6.56,plot
+572,1748.2,1998.8,2.78,4.75,plot
+573,958.5,975.4,11.69,12.47,plot
+574,1926.1,2050.8,3.27,4.07,plot
+575,1495.4,1746.0,6.38,8.35,plot
+576,2401.6,2481.3,25.98,27.44,legend
+
+case,real_rad_s,imag_rad_s,wn_Hz,zeta_percent,n_copies
+open_loop,-10.89,812.3,129.29,1.341,4
+open_loop,-10.89,-812.1,129.26,1.341,4
+500rpm_g1487,-125.35,800.3,128.92,15.474,8
+500rpm_g1487,-125.35,-800.1,128.9,15.477,8
+500rpm_g1487,-7.43,53.1,8.53,13.855,8
+500rpm_g1487,-7.43,-52.9,8.51,13.893,8
+1300rpm_g1162,-97.03,805.4,129.11,11.961,8
+1300rpm_g1162,-97.03,-805.3,129.09,11.963,8
+1300rpm_g1162,-7.62,53.1,8.53,14.217,8
+1300rpm_g1162,-7.62,-52.9,8.51,14.256,8
+2500rpm_g585,-61.68,808.8,129.1,7.604,8
+2500rpm_g585,-61.68,-808.7,129.08,7.605,8
+2500rpm_g585,-7.72,53.1,8.54,14.398,8
+2500rpm_g585,-7.72,-52.9,8.51,14.437,8
+3000rpm_g797,-72.48,808.8,129.25,8.925,8
+3000rpm_g797,-72.48,-808.7,129.22,8.926,8
+3000rpm_g797,-7.72,53.1,8.54,14.398,8
+3000rpm_g797,-7.72,-52.9,8.51,14.437,8
+
+{
+ "straight_stretches": [
+  {
+   "rpm_from": 500.0,
+   "gain_from": 1479.0,
+   "rpm_to": 550.0,
+   "gain_to": 1136.0,
+   "slope_per_rpm": -6.86,
+   "n_vertices": 5
+  },
+  {
+   "rpm_from": 560.0,
+   "gain_from": 752.0,
+   "rpm_to": 620.0,
+   "gain_to": 1393.0,
+   "slope_per_rpm": 10.69,
+   "n_vertices": 6
+  },
+  {
+   "rpm_from": 620.0,
+   "gain_from": 1393.0,
+   "rpm_to": 740.0,
+   "gain_to": 1487.0,
+   "slope_per_rpm": 0.783,
+   "n_vertices": 2
+  },
+  {
+   "rpm_from": 1410.0,
+   "gain_from": 1162.0,
+   "rpm_to": 1860.0,
+   "gain_to": 328.5,
+   "slope_per_rpm": -1.853,
+   "n_vertices": 25
+  }
+ ],
+ "n_vertices": 214,
+ "median_step_rpm": 10.0,
+ "max": {
+  "rpm": 740.0,
+  "gain": 1487.0
+ },
+ "min": {
+  "rpm": 1940.0,
+  "gain": 256.9
+ },
+ "at_speeds": {
+  "500": 1479.0,
+  "560": 752.5,
+  "600": 1179.3,
+  "700": 1455.7,
+  "730": 1479.2,
+  "760": 869.6,
+  "800": 1078.9,
+  "1000": 1152.9,
+  "1200": 770.0,
+  "1300": 1158.0,
+  "1950": 260.1,
+  "2300": 445.4,
+  "2500": 543.0,
+  "2700": 623.8,
+  "2800": 679.5,
+  "3000": 794.5
+ },
+ "long_segments": [
+  [
+   510.0,
+   1410.4,
+   530.0,
+   1273.2,
+   20.0
+  ],
+  [
+   570.0,
+   858.8,
+   590.0,
+   1072.6,
+   20.0
+  ],
+  [
+   620.0,
+   1393.0,
+   740.0,
+   1487.0,
+   120.0
+  ],
+  [
+   1210.0,
+   850.0,
+   1230.0,
+   1050.0,
+   20.0
+  ],
+  [
+   1250.0,
+   1120.0,
+   1280.0,
+   1150.0,
+   30.0
+  ],
+  [
+   1410.0,
+   1162.0,
+   1440.0,
+   1106.4,
+   30.0
+  ],
+  [
+   1450.0,
+   1087.9,
+   1470.0,
+   1050.9,
+   20.0
+  ],
+  [
+   1480.0,
+   1032.3,
+   1510.0,
+   976.8,
+   30.0
+  ],
+  [
+   1520.0,
+   958.2,
+   1550.0,
+   902.7,
+   30.0
+  ],
+  [
+   1560.0,
+   884.2,
+   1590.0,
+   828.6,
+   30.0
+  ],
+  [
+   1600.0,
+   810.1,
+   1620.0,
+   773.0,
+   20.0
+  ],
+  [
+   1630.0,
+   754.5,
+   1660.0,
+   698.9,
+   30.0
+  ],
+  [
+   1670.0,
+   680.4,
+   1700.0,
+   624.9,
+   30.0
+  ],
+  [
+   1710.0,
+   606.3,
+   1740.0,
+   550.8,
+   30.0
+  ],
+  [
+   1750.0,
+   532.2,
+   1770.0,
+   495.2,
+   20.0
+  ],
+  [
+   1780.0,
+   476.7,
+   1810.0,
+   421.1,
+   30.0
+  ],
+  [
+   1820.0,
+   402.6,
+   1850.0,
+   347.0,
+   30.0
+  ]
+ ]
+}
+{
+ "uncontrolled_minima": [
+  {
+   "rpm": 413.0,
+   "depth_mm": 1.213
+  },
+  {
+   "rpm": 524.0,
+   "depth_mm": 1.212
+  },
+  {
+   "rpm": 714.0,
+   "depth_mm": 1.212
+  },
+  {
+   "rpm": 1121.0,
+   "depth_mm": 1.212
+  },
+  {
+   "rpm": 2607.0,
+   "depth_mm": 1.212
+  }
+ ],
+ "uncontrolled_peaks": [
+  {
+   "rpm": 488.0,
+   "depth_mm": 6.781
+  },
+  {
+   "rpm": 651.0,
+   "depth_mm": 8.993
+  },
+  {
+   "rpm": 977.0,
+   "depth_mm": 13.635
+  },
+  {
+   "rpm": 1952.0,
+   "depth_mm": 29.269
+  }
+ ],
+ "uncontrolled_clipped_at_top_rpm_range": [
+  1947.0,
+  1952.0
+ ],
+ "controlled_rpm_range": [
+  500.0,
+  3000.0
+ ],
+ "controlled_rpm_step": 9.999,
+ "controlled_max": {
+  "rpm": 740.0,
+  "depth_mm": 15.436
+ },
+ "controlled_min_all": {
+  "rpm": 1940.0,
+  "depth_mm": 3.225
+ },
+ "controlled_min_visible": {
+  "rpm": 2070.0,
+  "depth_mm": 3.821
+ },
+ "controlled_hidden_rpm_ranges": [
+  [
+   960.0,
+   970.0
+  ],
+  [
+   1500.0,
+   2050.0
+  ]
+ ],
+ "controlled_hidden_min": {
+  "rpm": 1940.0,
+  "depth_mm": 3.225
+ },
+ "at_speeds": [
+  {
+   "rpm": 500,
+   "controlled_mm": 14.867,
+   "uncontrolled_mm": 1.985,
+   "ratio": 7.49,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 560,
+   "controlled_mm": 7.977,
+   "uncontrolled_mm": 2.055,
+   "ratio": 3.88,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 600,
+   "controlled_mm": 11.697,
+   "uncontrolled_mm": 4.633,
+   "ratio": 2.52,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 700,
+   "controlled_mm": 15.355,
+   "uncontrolled_mm": 1.266,
+   "ratio": 12.13,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 730,
+   "controlled_mm": 15.419,
+   "uncontrolled_mm": 1.269,
+   "ratio": 12.15,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 760,
+   "controlled_mm": 8.374,
+   "uncontrolled_mm": 1.68,
+   "ratio": 4.98,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 800,
+   "controlled_mm": 10.772,
+   "uncontrolled_mm": 2.933,
+   "ratio": 3.67,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 1200,
+   "controlled_mm": 11.346,
+   "uncontrolled_mm": 1.471,
+   "ratio": 7.71,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 1300,
+   "controlled_mm": 11.495,
+   "uncontrolled_mm": 2.747,
+   "ratio": 4.18,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 1950,
+   "controlled_mm": 3.243,
+   "uncontrolled_mm": 29.165,
+   "ratio": 0.11,
+   "controlled_visible": false
+  },
+  {
+   "rpm": 2300,
+   "controlled_mm": 4.659,
+   "uncontrolled_mm": 1.483,
+   "ratio": 3.14,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 2500,
+   "controlled_mm": 5.273,
+   "uncontrolled_mm": 1.238,
+   "ratio": 4.26,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 2700,
+   "controlled_mm": 5.904,
+   "uncontrolled_mm": 1.225,
+   "ratio": 4.82,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 2800,
+   "controlled_mm": 6.34,
+   "uncontrolled_mm": 1.268,
+   "ratio": 5.0,
+   "controlled_visible": true
+  },
+  {
+   "rpm": 3000,
+   "controlled_mm": 6.856,
+   "uncontrolled_mm": 1.439,
+   "ratio": 4.76,
+   "controlled_visible": true
+  }
+ ],
+ "max_ratio": {
+  "rpm": 710.0,
+  "ratio": 12.65,
+  "controlled_mm": 15.391,
+  "uncontrolled_mm": 1.217
+ },
+ "controlled_below_uncontrolled_rpm": [
+  960.0,
+  970.0,
+  1500.0,
+  1510.0,
+  1520.0,
+  1530.0,
+  1540.0,
+  1550.0,
+  1560.0,
+  1570.0,
+  1580.0,
+  1590.0,
+  1600.0,
+  1610.0,
+  1620.0,
+  1630.0,
+  1640.0,
+  1650.0,
+  1660.0,
+  1670.0,
+  1680.0,
+  1690.0,
+  1700.0,
+  1710.0,
+  1720.0,
+  1730.0,
+  1740.0,
+  1750.0,
+  1760.0,
+  1770.0,
+  1780.0,
+  1790.0,
+  1800.0,
+  1810.0,
+  1820.0,
+  1830.0,
+  1840.0,
+  1850.0,
+  1860.0,
+  1870.0,
+  1880.0,
+  1890.0,
+  1900.0,
+  1910.0,
+  1920.0,
+  1930.0,
+  1940.0,
+  1950.0,
+  1960.0,
+  1970.0,
+  1980.0,
+  1990.0,
+  2000.0,
+  2010.0,
+  2020.0,
+  2030.0,
+  2040.0
+ ]
+}
+[
+ {
+  "path": 548,
+  "glyph_block": "upper",
+  "x_pt": 131.4705047607422,
+  "y_pt": 529.35400390625,
+  "n_vertices": 19,
+  "rpm": 1258.1298602162428,
+  "depth_mm": 10.039929269415353,
+  "letter": "B"
+ },
+ {
+  "path": 548,
+  "glyph_block": "lower",
+  "x_pt": 130.8290023803711,
+  "y_pt": 538.1875,
+  "n_vertices": 12,
+  "rpm": 1250.662939265425,
+  "depth_mm": 8.039881643919088,
+  "letter": "A"
+ }
+]
+{
+ "fig5": {
+  "measured": {
+   "peak_freq_Hz": 129.5,
+   "peak_value": 2.570585225400375e-06,
+   "n_points": 322,
+   "zeta_equiv_percent": 1.452
+  },
+  "identified": {
+   "peak_freq_Hz": 129.29,
+   "peak_value": 2.573572918134434e-06,
+   "n_points": 1699,
+   "zeta_equiv_percent": 1.45
+  }
+ },
+ "fig6a": {
+  "uncontrolled": {
+   "peak_freq_Hz": 129.01,
+   "peak_value": -111.1,
+   "n_points": 3841,
+   "value_at_129.3Hz_dB": -111.23,
+   "zeta_equiv_percent": 1.339
+  },
+  "500rpm_g1487": {
+   "peak_freq_Hz": 125.51,
+   "peak_value": -132.2,
+   "n_points": 3846,
+   "value_at_129.3Hz_dB": -132.35,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -141.94,
+    "rise_dB": 0.33
+   },
+   "zeta_equiv_percent": 15.201
+  },
+  "1300rpm_g1162": {
+   "peak_freq_Hz": 126.89,
+   "peak_value": -130.03,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -130.13,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.09,
+    "rise_dB": 0.2
+   },
+   "zeta_equiv_percent": 11.84
+  },
+  "2500rpm_g585": {
+   "peak_freq_Hz": 128.07,
+   "peak_value": -126.14,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -126.2,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.26,
+    "rise_dB": 0.04
+   },
+   "zeta_equiv_percent": 7.566
+  },
+  "3000rpm_g797": {
+   "peak_freq_Hz": 127.76,
+   "peak_value": -127.52,
+   "n_points": 3988,
+   "value_at_129.3Hz_dB": -127.59,
+   "actuator_bump": {
+    "freq_Hz": 8.61,
+    "dB": -142.21,
+    "rise_dB": 0.09
+   },
+   "zeta_equiv_percent": 8.869
+  }
+ }
+}

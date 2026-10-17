@@ -1,0 +1,142 @@
+500 rpm done (9s)
+    force 512 full 537.89 10.4327 fig8 1479.0 0.364
+    force 512 ss 551.95 10.5055 fig8 1479.0 0.373
+    volt 512 full 1282.81 15.1647 fig8 1479.0 0.867
+    volt 512 ss 1282.81 15.1647 fig8 1479.0 0.867
+    actual 512 full 537.89 10.4327 fig8 1479.0 0.364
+    actual 512 ss 550.0 10.4954 fig8 1479.0 0.372
+    force 2048 full 827.34 12.0607 fig8 1479.0 0.559
+    force 2048 ss 1119.53 13.9759 fig8 1479.0 0.757
+    volt 2048 full 1917.97 20.6008 fig8 1479.0 1.297
+    volt 2048 ss 2376.17 25.3333 fig8 1479.0 1.607
+    actual 2048 full 836.33 12.1155 fig8 1479.0 0.565
+    actual 2048 ss 1118.75 13.9705 fig8 1479.0 0.756
+740 rpm done (16s)
+    force 512 full 495.7 5.5417 fig8 1487.0 0.333
+    force 512 ss 495.7 5.5417 fig8 1487.0 0.333
+    volt 512 full 1063.67 11.5156 fig8 1487.0 0.715
+    volt 512 ss 1063.67 11.5156 fig8 1487.0 0.715
+    actual 512 full 492.19 5.5094 fig8 1487.0 0.331
+    actual 512 ss 492.19 5.5094 fig8 1487.0 0.331
+    force 2048 full 975.39 10.4839 fig8 1487.0 0.656
+    force 2048 ss 975.39 10.4839 fig8 1487.0 0.656
+    volt 2048 full 1787.5 21.5029 fig8 1487.0 1.202
+    volt 2048 ss 3000.0 37.2245 fig8 1487.0 2.018
+    actual 2048 full 975.0 10.4794 fig8 1487.0 0.656
+    actual 2048 ss 975.0 10.4794 fig8 1487.0 0.656
+800 rpm done (24s)
+    force 512 full 570.7 7.1123 fig8 1078.8 0.529
+    force 512 ss 570.7 7.1123 fig8 1078.8 0.529
+    volt 512 full 1349.22 13.8698 fig8 1078.8 1.251
+    volt 512 ss 1349.22 13.8698 fig8 1078.8 1.251
+    actual 512 full 569.53 7.1034 fig8 1078.8 0.528
+    actual 512 ss 569.53 7.1034 fig8 1078.8 0.528
+    force 2048 full 1025.39 10.8369 fig8 1078.8 0.95
+    force 2048 ss 1294.92 13.3374 fig8 1078.8 1.2
+    volt 2048 full 1953.91 20.4796 fig8 1078.8 1.811
+    volt 2048 ss 2415.62 26.3992 fig8 1078.8 2.239
+    actual 2048 full 1033.98 10.913 fig8 1078.8 0.958
+    actual 2048 ss 1294.53 13.3337 fig8 1078.8 1.2
+1000 rpm done (32s)
+    force 512 full 205.47 9.1464 fig8 1152.9 0.178
+    force 512 ss 661.72 18.3249 fig8 1152.9 0.574
+    volt 512 full 1492.19 23.4831 fig8 1152.9 1.294
+    volt 512 ss 1807.81 25.8256 fig8 1152.9 1.568
+    actual 512 full 205.08 9.1348 fig8 1152.9 0.178
+    actual 512 ss 648.44 18.2543 fig8 1152.9 0.562
+    force 2048 full 628.91 18.1513 fig8 1152.9 0.546
+    force 2048 ss 1756.64 25.4315 fig8 1152.9 1.524
+    volt 2048 full 1507.03 23.5885 fig8 1152.9 1.307
+    volt 2048 ss 3000.0 36.5858 fig8 1152.9 2.602
+    actual 2048 full 640.62 18.213 fig8 1152.9 0.556
+    actual 2048 ss 1756.25 25.4285 fig8 1152.9 1.523
+1300 rpm done (41s)
+    force 512 full 646.09 8.1254 fig8 1158.0 0.558
+    force 512 ss 646.09 8.1254 fig8 1158.0 0.558
+    volt 512 full 1615.62 16.8274 fig8 1158.0 1.395
+    volt 512 ss 1615.62 16.8274 fig8 1158.0 1.395
+    actual 512 full 631.25 8.0052 fig8 1158.0 0.545
+    actual 512 ss 631.25 8.0052 fig8 1158.0 0.545
+    force 2048 full 990.62 11.003 fig8 1158.0 0.855
+    force 2048 ss 1343.36 14.1819 fig8 1158.0 1.16
+    volt 2048 full 1945.7 20.2787 fig8 1158.0 1.68
+    volt 2048 ss 2811.33 30.6911 fig8 1158.0 2.428
+    actual 2048 full 998.44 11.0706 fig8 1158.0 0.862
+    actual 2048 ss 1341.8 14.1672 fig8 1158.0 1.159
+1940 rpm done (48s)
+    force 512 full 95.7 29.1248 fig8 256.9 0.373
+    force 512 ss 135.55 29.3314 fig8 256.9 0.528
+    volt 512 full 1002.73 34.4641 fig8 256.9 3.904
+    volt 512 ss 1744.14 39.7864 fig8 256.9 6.79
+    actual 512 full 94.92 29.1207 fig8 256.9 0.37
+    actual 512 ss 135.55 29.3314 fig8 256.9 0.528
+    force 2048 full 99.61 29.1449 fig8 256.9 0.388
+    force 2048 ss 1558.59 38.3745 fig8 256.9 6.067
+    volt 2048 full 1027.73 34.6296 fig8 256.9 4.001
+    volt 2048 ss 3000.0 50.7515 fig8 256.9 11.679
+    actual 2048 full 98.83 29.1409 fig8 256.9 0.385
+    actual 2048 ss 1558.59 38.3745 fig8 256.9 6.067
+2300 rpm done (56s)
+    force 512 full 395.7 5.9364 fig8 445.4 0.888
+    force 512 ss 447.27 6.566 fig8 445.4 1.004
+    volt 512 full 1175.0 16.6816 fig8 445.4 2.638
+    volt 512 ss 1214.06 17.2899 fig8 445.4 2.726
+    actual 512 full 392.19 5.8939 fig8 445.4 0.88
+    actual 512 ss 445.31 6.542 fig8 445.4 1.0
+    force 2048 full 398.05 5.9648 fig8 445.4 0.894
+    force 2048 ss 953.12 13.3531 fig8 445.4 2.14
+    volt 2048 full 1180.47 16.7664 fig8 445.4 2.65
+    volt 2048 ss 1808.2 27.3679 fig8 445.4 4.059
+    actual 2048 full 392.97 5.9033 fig8 445.4 0.882
+    actual 2048 ss 952.34 13.3417 fig8 445.4 2.138
+2500 rpm done (65s)
+    force 512 full 533.2 6.1956 fig8 543.0 0.982
+    force 512 ss 621.88 7.0949 fig8 543.0 1.145
+    volt 512 full 1455.08 16.6612 fig8 543.0 2.68
+    volt 512 ss 2083.98 25.272 fig8 543.0 3.838
+    actual 512 full 533.98 6.2035 fig8 543.0 0.983
+    actual 512 ss 619.14 7.0668 fig8 543.0 1.14
+    force 2048 full 535.16 6.2152 fig8 543.0 0.986
+    force 2048 ss 1180.08 13.2761 fig8 543.0 2.173
+    volt 2048 full 1458.59 16.7059 fig8 543.0 2.686
+    volt 2048 ss 2240.23 27.6017 fig8 543.0 4.126
+    actual 2048 full 536.33 6.227 fig8 543.0 0.988
+    actual 2048 ss 1178.12 13.2528 fig8 543.0 2.17
+2800 rpm done (73s)
+    force 512 full 665.23 7.1323 fig8 679.6 0.979
+    force 512 ss 805.86 8.4432 fig8 679.6 1.186
+    volt 512 full 1637.11 16.9269 fig8 679.6 2.409
+    volt 512 ss 2399.22 25.9591 fig8 679.6 3.531
+    actual 512 full 662.5 7.1071 fig8 679.6 0.975
+    actual 512 ss 804.3 8.4285 fig8 679.6 1.184
+    force 2048 full 667.19 7.1503 fig8 679.6 0.982
+    force 2048 ss 1321.88 13.5517 fig8 679.6 1.945
+    volt 2048 full 1642.58 16.9873 fig8 679.6 2.417
+    volt 2048 ss 2603.12 28.5943 fig8 679.6 3.831
+    actual 2048 full 680.08 7.2692 fig8 679.6 1.001
+    actual 2048 ss 1321.88 13.5517 fig8 679.6 1.945
+3000 rpm done (81s)
+    force 512 full 706.64 7.8818 fig8 794.5 0.889
+    force 512 ss 1205.86 12.6072 fig8 794.5 1.518
+    volt 512 full 1668.75 17.3031 fig8 794.5 2.1
+    volt 512 ss 2491.41 26.5589 fig8 794.5 3.136
+    actual 512 full 723.83 8.0398 fig8 794.5 0.911
+    actual 512 ss 1205.08 12.5995 fig8 794.5 1.517
+    force 2048 full 710.55 7.9177 fig8 794.5 0.894
+    force 2048 ss 1344.14 13.9749 fig8 794.5 1.692
+    volt 2048 full 1673.83 17.3565 fig8 794.5 2.107
+    volt 2048 ss 2770.7 29.9897 fig8 794.5 3.487
+    actual 2048 full 733.59 8.1297 fig8 794.5 0.923
+    actual 2048 ss 1343.36 13.9671 fig8 794.5 1.691
+actual_spr2048_full      median g/g_fig8 0.872  rms log 0.425
+force_spr2048_full       median g/g_fig8 0.874  rms log 0.428
+force_spr512_ss          median g/g_fig8 0.566  rms log 0.622
+actual_spr512_ss         median g/g_fig8 0.553  rms log 0.627
+volt_spr512_full         median g/g_fig8 1.712  rms log 0.738
+actual_spr2048_ss        median g/g_fig8 1.605  rms log 0.751
+force_spr2048_ss         median g/g_fig8 1.606  rms log 0.751
+volt_spr2048_full        median g/g_fig8 1.953  rms log 0.773
+force_spr512_full        median g/g_fig8 0.543  rms log 0.834
+actual_spr512_full       median g/g_fig8 0.536  rms log 0.837
+volt_spr512_ss           median g/g_fig8 2.067  rms log 0.994
+volt_spr2048_ss          median g/g_fig8 3.012  rms log 1.282

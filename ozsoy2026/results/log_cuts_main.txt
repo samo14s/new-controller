@@ -1,0 +1,22 @@
+21 test points; agreement with the measured outcome: ZOA at the paper's gains 19, ZOA at reproduced gains 15, time domain at reproduced gains 15
+Fig9  - map       760 rpm  10.0 mm  measured chatter | paper g=   870 a_lim=  9.04 -> chatter | ours g=  1041 a_lim= 10.78 -> stable  TD stable
+Fig9  B map      1300 rpm  10.0 mm  measured chatter | paper g=  1158 a_lim= 12.48 -> stable  | ours g=   992 a_lim= 11.01 -> stable  TD stable | non-sync 174.3 Hz (5.28e-05) vs sync 86.7 Hz (1.33)
+Fig9  - map      2800 rpm   5.5 mm  measured chatter | paper g=   680 a_lim=  7.26 -> stable  | ours g=   668 a_lim=  7.16 -> stable  TD stable
+Fig9  - map       700 rpm   8.0 mm  measured stable  | paper g=  1456 a_lim= 21.04 -> stable  | ours g=   854 a_lim= 11.91 -> stable  TD stable
+Fig9  - map       760 rpm   8.0 mm  measured stable  | paper g=   870 a_lim=  9.04 -> stable  | ours g=  1041 a_lim= 10.78 -> stable  TD stable
+Fig9  - map      1200 rpm   8.0 mm  measured stable  | paper g=   770 a_lim=  8.10 -> stable  | ours g=  1044 a_lim= 10.75 -> stable  TD stable
+Fig9  A map      1300 rpm   8.0 mm  measured stable  | paper g=  1158 a_lim= 12.48 -> stable  | ours g=   992 a_lim= 11.01 -> stable  TD stable | non-sync 87.7 Hz (4.76e-05) vs sync 86.7 Hz (2.02)
+Fig9  - map      2800 rpm   4.5 mm  measured stable  | paper g=   680 a_lim=  7.26 -> stable  | ours g=   668 a_lim=  7.16 -> stable  TD stable
+Fig9  - none      700 rpm   4.0 mm  measured chatter | paper g=     0 a_lim=  1.27 -> chatter | ours g=     0 a_lim=  1.27 -> chatter TD chatter
+Fig9  - none     1200 rpm   2.0 mm  measured chatter | paper g=     0 a_lim=  1.47 -> chatter | ours g=     0 a_lim=  1.47 -> chatter TD chatter
+Fig9  - none     2800 rpm   1.5 mm  measured chatter | paper g=     0 a_lim=  1.27 -> chatter | ours g=     0 a_lim=  1.27 -> chatter TD chatter
+Fig9  - none     1200 rpm   0.5 mm  measured stable  | paper g=     0 a_lim=  1.47 -> stable  | ours g=     0 a_lim=  1.47 -> stable  TD stable
+Fig9  - none     2800 rpm   0.5 mm  measured stable  | paper g=     0 a_lim=  1.27 -> stable  | ours g=     0 a_lim=  1.27 -> stable  TD stable
+Fig11 - single   1200 rpm   4.0 mm  measured chatter | paper g=   237 a_lim=  3.48 -> chatter | ours g=    60 a_lim=  2.00 -> chatter TD chatter
+Fig11 D single   2700 rpm   4.0 mm  measured chatter | paper g=   237 a_lim=  3.24 -> chatter | ours g=    60 a_lim=  1.73 -> chatter TD chatter | non-sync 132.6 Hz (1.85e+03) vs sync 134.8 Hz (914)
+Fig11 - single   3000 rpm   4.0 mm  measured chatter | paper g=   237 a_lim=  3.62 -> chatter | ours g=    60 a_lim=  2.01 -> chatter TD chatter
+Fig11 - single   1200 rpm   3.0 mm  measured stable  | paper g=   237 a_lim=  3.48 -> stable  | ours g=    60 a_lim=  2.00 -> chatter TD chatter
+Fig11 C single   2700 rpm   3.0 mm  measured stable  | paper g=   237 a_lim=  3.24 -> stable  | ours g=    60 a_lim=  1.73 -> chatter TD chatter | non-sync 132.0 Hz (1.47e+03) vs sync 180.3 Hz (41.1)
+Fig11 - single   3000 rpm   3.0 mm  measured stable  | paper g=   237 a_lim=  3.62 -> stable  | ours g=    60 a_lim=  2.01 -> chatter TD chatter
+Fig11 B none     2800 rpm   1.5 mm  measured chatter | paper g=     0 a_lim=  1.27 -> chatter | ours g=     0 a_lim=  1.27 -> chatter TD chatter | non-sync 131.6 Hz (25) vs sync 186.7 Hz (1.65)
+Fig11 A none     2800 rpm   0.5 mm  measured stable  | paper g=     0 a_lim=  1.27 -> stable  | ours g=     0 a_lim=  1.27 -> stable  TD stable | non-sync 187.9 Hz (8.79e-05) vs sync 186.7 Hz (0.667)

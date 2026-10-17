@@ -1,0 +1,301 @@
+{
+ "tolerance_Vs_per_m": 0.05,
+ "n_vertices": 214,
+ "grid_speeds": 251,
+ "speeds_without_vertex": 37,
+ "missing_speed_list": [
+  520.0,
+  580.0,
+  630.0,
+  640.0,
+  650.0,
+  660.0,
+  670.0,
+  680.0,
+  690.0,
+  700.0,
+  710.0,
+  720.0,
+  730.0,
+  1220.0,
+  1260.0,
+  1270.0,
+  1420.0,
+  1430.0,
+  1460.0,
+  1490.0,
+  1500.0,
+  1530.0,
+  1540.0,
+  1570.0,
+  1580.0,
+  1610.0,
+  1640.0,
+  1650.0,
+  1680.0,
+  1690.0,
+  1720.0,
+  1730.0,
+  1760.0,
+  1790.0,
+  1800.0,
+  1830.0,
+  1840.0
+ ],
+ "tooth_passing_speeds": {
+  "1": 1939.5000000000002,
+  "2": 969.7500000000001,
+  "3": 646.5000000000001,
+  "4": 484.87500000000006,
+  "5": 387.90000000000003
+ },
+ "uncontrolled_lobe_peaks": [
+  [
+   488.0272100751332,
+   6.781352974594938
+  ],
+  [
+   651.0195365038185,
+   8.9925327073706
+  ],
+  [
+   977.0242591034065,
+   13.63520033199039
+  ],
+  [
+   1952.0037220313611,
+   29.269016032148542
+  ]
+ ],
+ "fig8_min": {
+  "rpm": 1940.0,
+  "g": 256.88062450426696
+ },
+ "fig8_max": {
+  "rpm": 740.0,
+  "g": 1486.9820549808492
+ },
+ "long_runs": [
+  {
+   "i0": 0,
+   "i1": 4,
+   "rpm_from": 500.0,
+   "rpm_to": 550.0,
+   "g_from": 1478.9839741925025,
+   "g_to": 1135.9868227476377,
+   "span": 50.0,
+   "slope": -6.8599430288972965,
+   "n_vertices": 5,
+   "max_dev": 0.0066537514196625125,
+   "grid_speeds": 6,
+   "grid_speeds_with_vertex": 5,
+   "missing_grid_speeds": [
+    520.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 4,
+    "rpm": 484.87500000000006,
+    "inside": false
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    1.2124154354172276,
+    1.982001501805641
+   ],
+   "related": [
+    "tooth-passing k=4 at 484.9 rpm",
+    "uncontrolled lobe peak 6.8 mm at 488 rpm (Fig 9 dashed)"
+   ],
+   "fig9_runs_inside": 3,
+   "fig9_longest_straight_inside_rpm": 30.0
+  },
+  {
+   "i0": 5,
+   "i1": 9,
+   "rpm_from": 560.0,
+   "rpm_to": 610.0,
+   "g_from": 751.9872860864189,
+   "g_to": 1286.2719828782788,
+   "span": 50.0,
+   "slope": 10.685693935837199,
+   "n_vertices": 5,
+   "max_dev": 0.00027158169041285873,
+   "grid_speeds": 6,
+   "grid_speeds_with_vertex": 5,
+   "missing_grid_speeds": [
+    580.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 3,
+    "rpm": 646.5000000000001,
+    "inside": false
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    2.056266716134715,
+    5.347456689000637
+   ],
+   "related": [],
+   "fig9_runs_inside": 5,
+   "fig9_longest_straight_inside_rpm": 10.0
+  },
+  {
+   "i0": 10,
+   "i1": 11,
+   "rpm_from": 620.0,
+   "rpm_to": 740.0,
+   "g_from": 1392.9849160452072,
+   "g_to": 1486.9820549808492,
+   "span": 120.0,
+   "slope": 0.7833094911303495,
+   "n_vertices": 2,
+   "max_dev": 0.0,
+   "grid_speeds": 13,
+   "grid_speeds_with_vertex": 2,
+   "missing_grid_speeds": [
+    630.0,
+    640.0,
+    650.0,
+    660.0,
+    670.0,
+    680.0,
+    690.0,
+    700.0,
+    710.0,
+    720.0,
+    730.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 3,
+    "rpm": 646.5000000000001,
+    "inside": true
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    1.2124154354172276,
+    8.9925327073706
+   ],
+   "related": [
+    "tooth-passing k=3 at 646.5 rpm",
+    "uncontrolled lobe peak 9.0 mm at 651 rpm (Fig 9 dashed)"
+   ],
+   "fig9_runs_inside": 6,
+   "fig9_longest_straight_inside_rpm": 40.0
+  },
+  {
+   "i0": 58,
+   "i1": 59,
+   "rpm_from": 1210.0,
+   "rpm_to": 1230.0,
+   "g_from": 849.9888970500465,
+   "g_to": 1049.9870856461157,
+   "span": 20.0,
+   "slope": 9.999909429803461,
+   "n_vertices": 2,
+   "max_dev": 0.0,
+   "grid_speeds": 3,
+   "grid_speeds_with_vertex": 2,
+   "missing_grid_speeds": [
+    1220.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 2,
+    "rpm": 969.7500000000001,
+    "inside": false
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    1.5513627580538127,
+    1.7107551998237227
+   ],
+   "related": [],
+   "fig9_runs_inside": 2,
+   "fig9_longest_straight_inside_rpm": 10.0
+  },
+  {
+   "i0": 61,
+   "i1": 62,
+   "rpm_from": 1250.0,
+   "rpm_to": 1280.0,
+   "g_from": 1119.97979790332,
+   "g_to": 1149.9807483103382,
+   "span": 30.0,
+   "slope": 1.000031680233936,
+   "n_vertices": 2,
+   "max_dev": 0.0,
+   "grid_speeds": 4,
+   "grid_speeds_with_vertex": 2,
+   "missing_grid_speeds": [
+    1260.0,
+    1270.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 2,
+    "rpm": 969.7500000000001,
+    "inside": false
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    1.9453249333595437,
+    2.366911999518237
+   ],
+   "related": [],
+   "fig9_runs_inside": 3,
+   "fig9_longest_straight_inside_rpm": 10.0
+  },
+  {
+   "i0": 75,
+   "i1": 99,
+   "rpm_from": 1410.0,
+   "rpm_to": 1860.0,
+   "g_from": 1161.9836406037834,
+   "g_to": 328.5082585389191,
+   "span": 450.0,
+   "slope": -1.8521675156996986,
+   "n_vertices": 25,
+   "max_dev": 0.007355337453759603,
+   "grid_speeds": 46,
+   "grid_speeds_with_vertex": 25,
+   "missing_grid_speeds": [
+    1420.0,
+    1430.0,
+    1460.0,
+    1490.0,
+    1500.0,
+    1530.0,
+    1540.0,
+    1570.0,
+    1580.0,
+    1610.0,
+    1640.0,
+    1650.0,
+    1680.0,
+    1690.0,
+    1720.0,
+    1730.0,
+    1760.0,
+    1790.0,
+    1800.0,
+    1830.0,
+    1840.0
+   ],
+   "kind": "sloped straight line",
+   "nearest_tooth_passing": {
+    "k": 1,
+    "rpm": 1939.5000000000002,
+    "inside": false
+   },
+   "uncontrolled_plot_depth_range_mm": [
+    5.667374759658969,
+    24.557970238474
+   ],
+   "related": [
+    "overlaps Fig 9 white rectangle seqno 613 (1655-1906 rpm)",
+    "overlaps Fig 9 white rectangle seqno 615 (1748-1999 rpm)",
+    "overlaps Fig 9 white rectangle seqno 621 (1495-1746 rpm)"
+   ],
+   "fig9_runs_inside": 15,
+   "fig9_longest_straight_inside_rpm": 140.0
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+figure,cut,rpm,depth_mm,caption_state,freq_Hz_raw,freq_Hz_offset_corrected,u_freq_Hz,height_frac_of_panel,height_rel_to_tallest,freq_over_spindle_freq,class,width_px
+Fig10,A,1300,8.0,stable,86.3,86.4,1.9,0.536,0.7,3.99,spindle harmonic 4 (tooth-passing x1),2
+Fig10,A,1300,8.0,stable,108.1,108.2,1.9,0.106,0.139,4.99,spindle harmonic 5,3
+Fig10,A,1300,8.0,stable,151.6,151.7,1.9,0.765,1.0,7.0,spindle harmonic 7,3
+Fig10,A,1300,8.0,stable,173.3,173.4,1.9,0.189,0.247,8.0,spindle harmonic 8 (tooth-passing x2),2
+Fig10,A,1300,8.0,stable,260.2,260.3,1.9,0.072,0.094,12.02,spindle harmonic 12 (tooth-passing x3),2
+Fig10,B,1300,10.0,chatter,86.8,87.7,1.9,0.109,0.142,4.05,spindle harmonic 4 (tooth-passing x1),2
+Fig10,B,1300,10.0,chatter,149.5,150.3,1.9,0.768,1.0,6.94,spindle harmonic 7,3
+Fig10,B,1300,10.0,chatter,152.6,153.4,1.9,0.152,0.198,7.08,spindle harmonic 7,2
+Fig10,B,1300,10.0,chatter,171.2,172.0,1.9,0.046,0.06,7.94,spindle harmonic 8 (tooth-passing x2),2
+Fig10,B,1300,10.0,chatter,173.6,174.5,1.9,0.066,0.086,8.05,spindle harmonic 8 (tooth-passing x2),2
+Fig10,B,1300,10.0,chatter,236.3,237.1,1.9,0.054,0.071,10.94,spindle harmonic 11,3
+Fig12,A,2800,0.5,stable,140.0,139.9,1.9,0.684,0.891,3.0,spindle harmonic 3,2
+Fig12,A,2800,0.5,stable,186.5,186.3,1.9,0.767,1.0,3.99,spindle harmonic 4 (tooth-passing x1),2
+Fig12,A,2800,0.5,stable,233.5,233.4,1.9,0.09,0.117,5.0,spindle harmonic 5,3
+Fig12,A,2800,0.5,stable,327.1,327.0,1.9,0.107,0.14,7.01,spindle harmonic 7,2
+Fig12,A,2800,0.5,stable,373.5,373.4,1.9,0.191,0.249,8.0,spindle harmonic 8 (tooth-passing x2),2
+Fig12,B,2800,1.5,chatter,133.3,133.4,1.9,0.764,1.0,2.86,non-synchronous (chatter candidate),3
+Fig12,B,2800,1.5,chatter,139.8,139.8,1.9,0.176,0.23,3.0,spindle harmonic 3,3
+Fig12,B,2800,1.5,chatter,186.8,186.8,1.9,0.146,0.191,4.0,spindle harmonic 4 (tooth-passing x1),2
+Fig12,C,2700,3.0,stable,134.8,134.8,1.9,0.767,1.0,2.99,spindle harmonic 3,3
+Fig12,C,2700,3.0,stable,180.0,179.9,1.9,0.328,0.428,4.0,spindle harmonic 4 (tooth-passing x1),3
+Fig12,C,2700,3.0,stable,314.8,314.8,1.9,0.078,0.101,6.99,spindle harmonic 7,2
+Fig12,C,2700,3.0,stable,360.6,360.6,1.9,0.048,0.062,8.01,spindle harmonic 8 (tooth-passing x2),3
+Fig12,D,2700,4.0,chatter,134.8,134.8,1.9,0.764,1.0,2.99,spindle harmonic 3,2
+Fig12,D,2700,4.0,chatter,138.1,138.0,1.9,0.525,0.688,3.07,non-synchronous (chatter candidate),3
+Fig12,D,2700,4.0,chatter,142.6,142.5,1.9,0.06,0.078,3.17,non-synchronous (chatter candidate),2
+Fig12,D,2700,4.0,chatter,180.0,179.9,1.9,0.496,0.648,4.0,spindle harmonic 4 (tooth-passing x1),2
+Fig12,D,2700,4.0,chatter,315.5,315.4,1.9,0.081,0.105,7.01,spindle harmonic 7,2
+Fig12,D,2700,4.0,chatter,318.7,318.6,1.9,0.048,0.062,7.08,non-synchronous (chatter candidate),3
+Fig12,D,2700,4.0,chatter,360.0,359.9,1.9,0.051,0.066,8.0,spindle harmonic 8 (tooth-passing x2),3

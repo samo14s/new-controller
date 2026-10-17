@@ -1,0 +1,638 @@
+{
+ "page_index": 7,
+ "journal_page": 253,
+ "axis_fit_err": {
+  "x_rpm": 0.045449440270090236,
+  "y_mm": 0.0008894730458059996
+ },
+ "solid_curve": {
+  "seqno": 586,
+  "n_items": 249,
+  "width_pt": 0.831000030040741
+ },
+ "dashed_curve": {
+  "seqno": 591,
+  "n_items": 2047,
+  "dashes": "[ 3.3256002 3.3256002 ] 0"
+ },
+ "white_fills": [
+  {
+   "seqno": 538,
+   "type": "f",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": null,
+   "stroke_width": null,
+   "rect_pt": [
+    53.45,
+    441.2,
+    285.41,
+    573.7
+   ],
+   "rpm": [
+    350.02757378255546,
+    3049.981843398415
+   ],
+   "depth_mm": [
+    -0.0004955427085064912,
+    30.000564323613105
+   ],
+   "after_solid_curve": false,
+   "after_dashed_curve": false,
+   "role": "axes background"
+  },
+  {
+   "seqno": 607,
+   "type": "f",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": null,
+   "stroke_width": null,
+   "rect_pt": [
+    224.93,
+    445.98,
+    283.23,
+    459.38
+   ],
+   "rpm": [
+    2345.962460479778,
+    3024.573194534222
+   ],
+   "depth_mm": [
+    25.882728167134218,
+    28.918045870571447
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "legend box"
+  },
+  {
+   "seqno": 613,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    165.57,
+    544.7,
+    187.1,
+    553.43
+   ],
+   "rpm": [
+    1655.0972839139222,
+    1905.642795116979
+   ],
+   "depth_mm": [
+    4.588055487323899,
+    6.5644167381718574
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": {
+    "rpm": [
+     1659.762532164627,
+     1817.431331013212
+    ],
+    "depth_mm": [
+     4.588055487323899,
+     6.5644167381718574
+    ],
+    "length_pt": 16.143906636349918
+   },
+   "hides_uncontrolled": null,
+   "other_paths_overlapped": [
+    {
+     "seqno": 546,
+     "kind": "grid line",
+     "type": "s",
+     "color": [
+      0.875,
+      0.875,
+      0.875
+     ],
+     "fill": null,
+     "rect_pt": [
+      53.45,
+      551.61,
+      285.41,
+      551.61
+     ]
+    }
+   ]
+  },
+  {
+   "seqno": 615,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    173.58,
+    552.71,
+    195.1,
+    561.44
+   ],
+   "rpm": [
+    1748.2386486375358,
+    1998.7839822322549
+   ],
+   "depth_mm": [
+    2.7760340073730845,
+    4.752671645323119
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": {
+    "rpm": [
+     1805.2249763585419,
+     1998.7839822322549
+    ],
+    "depth_mm": [
+     3.224803745021404,
+     4.752671645323119
+    ],
+    "length_pt": 18.82287296369856
+   },
+   "hides_uncontrolled": null,
+   "other_paths_overlapped": []
+  },
+  {
+   "seqno": 617,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    105.73,
+    518.62,
+    107.18,
+    522.05
+   ],
+   "rpm": [
+    958.4822150068843,
+    975.4189461385037
+   ],
+   "depth_mm": [
+    11.694133714078134,
+    12.470670916083861
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": {
+    "rpm": [
+     958.4822150068843,
+     975.4189461385037
+    ],
+    "depth_mm": [
+     12.278277854325538,
+     12.28922729512972
+    ],
+    "length_pt": 1.4605631925741926
+   },
+   "hides_uncontrolled": {
+    "rpm": [
+     958.4822150068843,
+     960.5107043352722
+    ],
+    "depth_mm": [
+     12.329955824358905,
+     12.470670916083861
+    ],
+    "length_pt": 0.6454612540195032
+   },
+   "other_paths_overlapped": []
+  },
+  {
+   "seqno": 619,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    188.85,
+    555.72,
+    199.57,
+    559.25
+   ],
+   "rpm": [
+    1926.0588735941146,
+    2050.8043988436693
+   ],
+   "depth_mm": [
+    3.2703108813789754,
+    4.070285709641155
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": {
+    "rpm": [
+     1959.6063721533183,
+     2050.8043988436693
+    ],
+    "depth_mm": [
+     3.2703108813789754,
+     3.7960279070648255
+    ],
+    "length_pt": 8.205741625418637
+   },
+   "hides_uncontrolled": {
+    "rpm": [
+     2040.4114285279934,
+     2050.8043988436693
+    ],
+    "depth_mm": [
+     3.7205662879722468,
+     4.070285709641155
+    ],
+    "length_pt": 1.7847156666299548
+   },
+   "other_paths_overlapped": [
+    {
+     "seqno": 542,
+     "kind": "grid line",
+     "type": "s",
+     "color": [
+      0.875,
+      0.875,
+      0.875
+     ],
+     "fill": null,
+     "rect_pt": [
+      195.21,
+      441.2,
+      195.21,
+      573.7
+     ]
+    }
+   ]
+  },
+  {
+   "seqno": 621,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    151.86,
+    536.81,
+    173.38,
+    545.54
+   ],
+   "rpm": [
+    1495.4233028721665,
+    1745.9688140752237
+   ],
+   "depth_mm": [
+    6.376280037785577,
+    8.352738024119262
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": {
+    "rpm": [
+     1498.4979803606047,
+     1675.7395229390859
+    ],
+    "depth_mm": [
+     6.376280037785577,
+     8.352738024119262
+    ],
+    "length_pt": 17.717809204767267
+   },
+   "hides_uncontrolled": null,
+   "other_paths_overlapped": [
+    {
+     "seqno": 541,
+     "kind": "grid line",
+     "type": "s",
+     "color": [
+      0.875,
+      0.875,
+      0.875
+     ],
+     "fill": null,
+     "rect_pt": [
+      152.25,
+      441.2,
+      152.25,
+      573.7
+     ]
+    }
+   ]
+  },
+  {
+   "seqno": 623,
+   "type": "fs",
+   "fill": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "stroke_width": 0.20000000298023224,
+   "rect_pt": [
+    229.71,
+    452.52,
+    236.56,
+    458.97
+   ],
+   "rpm": [
+    2401.6005813321744,
+    2481.296462028345
+   ],
+   "depth_mm": [
+    25.976920891523292,
+    27.435802571145686
+   ],
+   "after_solid_curve": true,
+   "after_dashed_curve": true,
+   "role": "overlay rectangle",
+   "hides_controlled": null,
+   "hides_uncontrolled": null,
+   "other_paths_overlapped": [
+    {
+     "seqno": 611,
+     "kind": "marker/glyph",
+     "type": "f",
+     "color": null,
+     "fill": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "rect_pt": [
+      229.9,
+      453.08,
+      235.44,
+      458.62
+     ]
+    },
+    {
+     "seqno": 612,
+     "kind": "marker/glyph",
+     "type": "s",
+     "color": [
+      0.1489260047674179,
+      0.1489260047674179,
+      0.1489260047674179
+     ],
+     "fill": null,
+     "rect_pt": [
+      224.93,
+      445.98,
+      283.23,
+      459.38
+     ]
+    }
+   ]
+  }
+ ],
+ "painted_after_overlays": [
+  {
+   "seqno": 625,
+   "type": "s",
+   "color": [
+    0.0,
+    0.4470210075378418,
+    0.7402340173721313
+   ],
+   "dashes": "[ 2.0785 2.0785 ] 0",
+   "rect_pt": [
+    228.67,
+    456.37,
+    235.94,
+    456.53
+   ]
+  }
+ ],
+ "hidden_summary": {
+  "controlled": {
+   "hidden_length_fraction": 0.17531240830256423,
+   "hidden_rpm_intervals": [
+    [
+     958.4822150068843,
+     975.4189461385037
+    ],
+    [
+     1498.4979803606047,
+     2050.8043988436693
+    ]
+   ],
+   "hidden_depth_range_mm": [
+    3.224803745021404,
+    12.28922729512972
+   ]
+  },
+  "uncontrolled": {
+   "hidden_length_fraction": 0.0036689008716776802,
+   "hidden_rpm_intervals": [
+    [
+     958.4822150068843,
+     960.5107043352722
+    ],
+    [
+     2040.4114285279934,
+     2050.8043988436693
+    ]
+   ],
+   "hidden_depth_range_mm": [
+    3.7205662879722468,
+    12.470670916083861
+   ]
+  }
+ },
+ "controlled_vertices_total": 250,
+ "controlled_vertices_hidden": 58,
+ "controlled_vertices_hidden_rpm": [
+  960.0302492827149,
+  2049.998767421553
+ ],
+ "controlled_vertices_hidden_depth_mm": [
+  3.224803745021404,
+  12.280544228562604
+ ],
+ "visible_neighbours": {
+  "before": [
+   [
+    930.0229653256116,
+    12.252242189309541
+   ],
+   [
+    940.0099709872783,
+    12.277144667207011
+   ],
+   [
+    950.020065732912,
+    12.336692268350276
+   ]
+  ],
+  "after": [
+   [
+    2060.0089509713557,
+    3.8372499245218705
+   ],
+   [
+    2069.9958678288535,
+    3.8209569048542136
+   ],
+   [
+    2079.9945068366724,
+    3.9001970870207288
+   ]
+  ]
+ },
+ "document_scan_white_over_curves": [
+  {
+   "page_index": 7,
+   "seqno": 613,
+   "type": "fs",
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rect_pt": [
+    165.57,
+    544.7,
+    187.1,
+    553.43
+   ],
+   "curves_under": [
+    586
+   ]
+  },
+  {
+   "page_index": 7,
+   "seqno": 615,
+   "type": "fs",
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rect_pt": [
+    173.58,
+    552.71,
+    195.1,
+    561.44
+   ],
+   "curves_under": [
+    586
+   ]
+  },
+  {
+   "page_index": 7,
+   "seqno": 617,
+   "type": "fs",
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rect_pt": [
+    105.73,
+    518.62,
+    107.18,
+    522.05
+   ],
+   "curves_under": [
+    586,
+    591
+   ]
+  },
+  {
+   "page_index": 7,
+   "seqno": 619,
+   "type": "fs",
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rect_pt": [
+    188.85,
+    555.72,
+    199.57,
+    559.25
+   ],
+   "curves_under": [
+    586,
+    591
+   ]
+  },
+  {
+   "page_index": 7,
+   "seqno": 621,
+   "type": "fs",
+   "stroke": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "rect_pt": [
+    151.86,
+    536.81,
+    173.38,
+    545.54
+   ],
+   "curves_under": [
+    586
+   ]
+  }
+ ]
+}

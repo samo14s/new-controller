@@ -1,0 +1,7 @@
++ python3 run_single_gain.py --tag main --sade
++ python3 run_table3.py --tag main
++ python3 run_cuts.py --tag main
++ python3 run_gain_map.py --tag zeta145 --zeta 0.0145
++ python3 run_gain_map.py --tag volt --kind volt
++ python3 run_gain_map.py --tag hold512 --fmode 0
++ touch ../results/chain.done
