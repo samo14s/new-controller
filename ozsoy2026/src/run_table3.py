@@ -50,7 +50,7 @@ def main():
     a = ap.parse_args()
     d = np.load(os.path.join(RES, f"gainmap_{a.tag}.npz"))
     zeta = float(d["zeta"])
-    gmap = d["g_sade"] if "g_sade" in d else d["g_ref"]
+    gmap = d["g_best"] if "g_best" in d else d["g_ref"]
     jobs = [(n, float(np.interp(n, d["rpm"], gmap)), zeta) for n in SPEEDS]
     with Pool(a.workers) as pool:
         rows = pool.map(work, jobs)

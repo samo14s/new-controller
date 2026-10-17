@@ -56,7 +56,7 @@ def main():
     zeta, kind = float(d["zeta"]), str(d["kind"])
     rpms, gs = d["rpm"], d["scan_g"]
     feas = d["scan_f"] > 0
-    order = np.argsort(d["g_ref"])          # most restrictive speeds first
+    order = np.argsort(d["g_best"] if "g_best" in d else d["g_ref"])          # most restrictive speeds first
     all_ok = feas.all(axis=0)
     mean_a = d["scan_alim"].mean(axis=0)
     obj = np.where(all_ok, mean_a, 0.0)

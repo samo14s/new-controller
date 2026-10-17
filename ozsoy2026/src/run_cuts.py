@@ -80,7 +80,7 @@ def main():
     d = np.load(os.path.join(RES, f"gainmap_{a.tag}.npz"))
     sg = np.load(os.path.join(RES, f"single_gain_{a.tag}.npz"))
     zeta = float(d["zeta"])
-    gmap = d["g_sade"] if "g_sade" in d else d["g_ref"]
+    gmap = d["g_best"] if "g_best" in d else d["g_ref"]
     g8 = np.loadtxt(os.path.join(DIG, "fig8_gain_points.csv"), delimiter=",", skiprows=1)
     jobs = []
     with open(POINTS) as fh:

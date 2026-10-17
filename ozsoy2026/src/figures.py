@@ -90,9 +90,10 @@ def fig8_9(tag):
     up = np.loadtxt(os.path.join(DIG, "fig9_uncontrolled_points.csv"), delimiter=",", skiprows=1)
     fig, ax = plt.subplots(figsize=(7.5, 3.4))
     ax.plot(gp[:, 0], gp[:, 1], color=PAPER, lw=1.4, label="paper Fig. 8")
-    ax.plot(rpm, d["g_ref"], color=OURS, lw=1.4, label="reproduction (reference optimum)")
+    ax.plot(rpm, d["g_best"], color=OURS, lw=1.4, label="reproduction (best of SADE and reference)")
     if "g_sade" in d:
-        ax.plot(rpm, d["g_sade"], ".", color="k", ms=2.5, label="reproduction (SADE, best of 3 seeds)")
+        ax.plot(rpm, d["g_sade"], ".", color="k", ms=2.5, label="SADE, best of 3 seeds")
+    ax.plot(rpm, d["g_ref"], "x", color="0.5", ms=2.5, label="reference scan + edge bisection")
     ax.set(xlabel="Spindle speed (rpm)", ylabel="g_dvf (V s/m)", xlim=(500, 3000),
            title="Spindle-speed dependent optimised gain")
     ax.legend(fontsize=7)
@@ -101,7 +102,7 @@ def fig8_9(tag):
 
     fine = np.arange(380, 3101, 2.0)
     a0 = sld(fine, 0.0) * 1e3
-    a_map = d["a_sade"] if "a_sade" in d else d["a_ref"]
+    a_map = d["a_best"] if "a_best" in d else d["a_ref"]
     fig, ax = plt.subplots(figsize=(7.5, 3.8))
     ax.plot(fine, a0, "--", color=UNC, lw=1, label="reproduction: uncontrolled")
     ax.plot(up[:, 0], up[:, 1], ":", color=PAPER, lw=1.2, label="paper Fig. 9: uncontrolled")
@@ -210,6 +211,35 @@ def cuts(tag):
     plt.close(fig)
 
 
+def sensitivity(tag="main"):
+    fig, ax = plt.subplots(1, 2, figsize=(10, 3.6))
+    styles = [("main", "reproduction (zeta 1.34 %, force, stage-wise force)", OURS, "-"),
+              ("zeta145", "zeta 1.45 % (Table 1)", "C2", "--"),
+              ("volt", "demand read as g|xdot| (volts) <= 27", "C1", ":"),
+              ("hold512", "force held per step (512 steps/rev)", "C4", "-.")]
+    gp = np.loadtxt(os.path.join(DIG, "fig8_gain_points.csv"), delimiter=",", skiprows=1)
+    cp = np.loadtxt(os.path.join(DIG, "fig9_controlled_points.csv"), delimiter=",", skiprows=1)
+    ax[0].plot(gp[:, 0], gp[:, 1], color=PAPER, lw=1.6, label="paper Fig. 8")
+    ax[1].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1.6, label="paper Fig. 9 (incl. covered part)")
+    for t, lab, col, ls in styles:
+        p = os.path.join(RES, f"gainmap_{t}.npz")
+        if not os.path.exists(p):
+            continue
+        d = np.load(p)
+        g = d["g_best"] if "g_best" in d else d["g_ref"]
+        a = d["a_best"] if "a_best" in d else d["a_ref"]
+        ax[0].plot(d["rpm"], g, ls, color=col, lw=1.1, label=lab)
+        ax[1].plot(d["rpm"], a, ls, color=col, lw=1.1, label=lab)
+    ax[0].set(xlabel="Spindle speed (rpm)", ylabel="g_dvf (V s/m)", xlim=(500, 3000),
+              title="Gain map: sensitivity to unstated choices")
+    ax[1].set(xlabel="Spindle speed (rpm)", ylabel="a_lim (mm)", xlim=(500, 3000), ylim=(0, 40),
+              title="Controlled limit: same cases")
+    ax[0].legend(fontsize=6.5)
+    ax[1].legend(fontsize=6.5)
+    fig.savefig(os.path.join(FIG, "r08_sensitivity.png"))
+    plt.close(fig)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", default="main")
@@ -226,6 +256,7 @@ def main():
             fig11(a.tag)
         table3(a.tag)
         cuts(a.tag)
+        sensitivity(a.tag)
 
 
 if __name__ == "__main__":
