@@ -35,8 +35,10 @@ def alpha_matrix(milling="down", ae_ratio=0.5):
 
 ALPHA = alpha_matrix()[1, 1] if FLEX_DIR == "y" else alpha_matrix()[0, 0]
 
-# chatter-frequency grid: covers the actuator mode (8 Hz) and the structure
-F_GRID = np.concatenate([np.linspace(0.5, 60, 6000), np.linspace(60, 600, 54001)[1:]])
+# chatter-frequency grid: covers the actuator mode (8 Hz) and the structure.
+# Below 60 Hz no root exists for g < ~2.4e4 V s/m (verification/zoa_sdm), so a
+# coarse safeguard band is enough there; 60-600 Hz at 0.02 Hz.
+F_GRID = np.concatenate([np.linspace(0.5, 60, 1200), np.linspace(60, 600, 27001)[1:]])
 W_GRID = 2 * np.pi * F_GRID
 
 
@@ -55,6 +57,12 @@ def a_lim(rpm, g, gcl=None, w=W_GRID, return_freq=False):
     im = a.imag
     sgn = np.sign(im)
     idx = np.nonzero(sgn[:-1] * sgn[1:] < 0)[0]
+    # a(w) has poles at the tooth-passing harmonics (1 - e^{-iwT} = 0); a sign
+    # change bracketing or touching one is a pole, not a root
+    ph = w * T / (2 * np.pi)
+    near = np.abs(ph - np.round(ph)) < 1e-6
+    keep = (np.floor(ph[idx]) == np.floor(ph[idx + 1])) & ~near[idx] & ~near[idx + 1]
+    idx = idx[keep]
     if idx.size == 0:
         return (np.inf, np.nan) if return_freq else np.inf
     # linear interpolation of the root of Im a(w)
@@ -62,8 +70,6 @@ def a_lim(rpm, g, gcl=None, w=W_GRID, return_freq=False):
     are = a.real[idx] + t * (a.real[idx + 1] - a.real[idx])
     wc = w[idx] + t * (w[idx + 1] - w[idx])
     ok = are > 0
-    # discard spurious sign flips at the poles of a(w) (tooth-passing harmonics)
-    ok &= np.abs(a.imag[idx]) < 0.5 * np.abs(a[idx]) + 1e-30
     if not np.any(ok):
         return (np.inf, np.nan) if return_freq else np.inf
     j = np.argmin(np.where(ok, are, np.inf))

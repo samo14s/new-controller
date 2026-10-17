@@ -17,7 +17,7 @@ DEMANDS = ("force", "volt", "actual")
 def demand(rpm, a, g, kind="force", skip_revs=0, nrev=P.N_REVS):
     if skip_revs:
         r = simulate(rpm, a, g, store=True, nrev=nrev)
-        i0 = skip_revs * P.STEPS_PER_REV
+        i0 = skip_revs * r["spr"]
         v = np.abs(r["v"][i0:]).max()
         if kind == "force":
             return P.GA_GAIN * g * v

@@ -93,7 +93,10 @@ def sade(fun, lo, hi, np_=20, max_gen=40, lp=5, window=8, tol=1e-6, seed=0,
                 if vals:
                     crm[k] = float(np.median(vals))
         best_hist.append(fit.max())
-        if gen >= window and best_hist[-1] - best_hist[-1 - window] <= tol:
+        # stagnation stop; a population that has not yet found a feasible
+        # member (best = 0) is not converged and keeps searching
+        if (gen >= window and best_hist[-1] > 0
+                and best_hist[-1] - best_hist[-1 - window] <= tol):
             break
     ib = int(np.argmax(fit))
     return dict(x=pop[ib].copy(), f=float(fit[ib]), history=np.array(best_hist),

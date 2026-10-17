@@ -25,10 +25,24 @@ def _feas_alim(args):
     return f > 0, al * 1e3, fd
 
 
-def joint(g, rpms, zeta, kind, pool):
-    res = pool.map(_feas_alim, [(n, g, zeta, kind) for n in rpms])
-    ok = np.array([r[0] for r in res])
-    al = np.array([r[1] for r in res])
+def joint(g, rpms, zeta, kind, pool, order=None, early_exit=False):
+    """Feasibility and a_lim of one gain at every speed.
+
+    With early_exit, speeds are visited in `order` (most restrictive first) in
+    chunks, and the call returns as soon as one speed is infeasible; the
+    remaining entries are then reported infeasible with a_lim = nan.
+    """
+    order = np.arange(len(rpms)) if order is None else order
+    ok = np.zeros(len(rpms), bool)
+    al = np.full(len(rpms), np.nan)
+    chunk = 8 if early_exit else len(rpms)
+    for i in range(0, len(order), chunk):
+        idx = order[i:i + chunk]
+        res = pool.map(_feas_alim, [(rpms[j], g, zeta, kind) for j in idx])
+        ok[idx] = [r[0] for r in res]
+        al[idx] = [r[1] for r in res]
+        if early_exit and not ok[idx].all():
+            break
     return ok, al
 
 
@@ -42,6 +56,7 @@ def main():
     zeta, kind = float(d["zeta"]), str(d["kind"])
     rpms, gs = d["rpm"], d["scan_g"]
     feas = d["scan_f"] > 0
+    order = np.argsort(d["g_ref"])          # most restrictive speeds first
     all_ok = feas.all(axis=0)
     mean_a = d["scan_alim"].mean(axis=0)
     obj = np.where(all_ok, mean_a, 0.0)
@@ -52,7 +67,7 @@ def main():
         lo, hi = gs[j], gs[j + 1] if j + 1 < len(gs) else gs[j]
         while hi - lo > 0.25:
             mid = 0.5 * (lo + hi)
-            ok, _ = joint(mid, rpms, zeta, kind, pool)
+            ok, _ = joint(mid, rpms, zeta, kind, pool, order, early_exit=True)
             lo, hi = (mid, hi) if ok.all() else (lo, mid)
         g_ref = lo
         ok, al = joint(g_ref, rpms, zeta, kind, pool)
@@ -64,14 +79,14 @@ def main():
             from sade import sade
 
             def fun(x):
-                okx, alx = joint(x[0], rpms, zeta, kind, pool)
-                return alx.mean() if okx.all() else 0.0
+                okx, alx = joint(x[0], rpms, zeta, kind, pool, order, early_exit=True)
+                return float(np.mean(alx)) if okx.all() else 0.0
             runs = []
-            for s in (1, 2, 3):
+            for s in (1, 2):
                 rng = np.random.default_rng(2000 + s)
-                npop = 10
+                npop = 20
                 init = (np.arange(npop) + rng.random(npop)) / npop * 3000.0
-                r = sade(fun, 0.0, 3000.0, np_=npop, max_gen=30, lp=5, window=8,
+                r = sade(fun, 0.0, 3000.0, np_=npop, max_gen=40, lp=5, window=25,
                          tol=1e-4, seed=s, init=init[:, None])
                 runs.append((float(r["x"][0]), r["f"], r["n_eval"], r["gens"]))
                 print(f"SADE seed {s}: g={r['x'][0]:.2f} mean a={r['f']:.3f} "

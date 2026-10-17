@@ -12,17 +12,22 @@ from objective import fitness
 from sade import sade
 
 G_LO, G_HI = 0.0, 3000.0      # search interval G (V s/m); the paper does not state it
-DG = 10.0                     # reference scan step
+DG = 20.0                     # reference scan step
 
 
 def reference(rpm, kind="force", g_lo=G_LO, g_hi=G_HI, dg=DG, tol=0.25):
+    """Dense scan, then bisection on the upper edge of every feasible interval.
+
+    The feasible set can be fragmented (the demand at a_lim wanders around
+    F_max), so each feasible->infeasible switch of the scan is refined and the
+    best refined point is kept.
+    """
     gs = np.arange(g_lo, g_hi + 0.5 * dg, dg)
     rows = np.array([fitness(rpm, g, kind, detail=True) for g in gs])
     f, al, fd = rows[:, 0], rows[:, 1] * 1e3, rows[:, 2]
     j = int(np.argmax(f))
     g_best, f_best = gs[j], f[j]
-    # refine on the feasibility edge just above the best grid point
-    if j + 1 < len(gs) and f[j + 1] == 0.0 and f_best > 0:
+    for j in np.nonzero((f[:-1] > 0) & (f[1:] == 0))[0]:
         lo, hi = gs[j], gs[j + 1]
         while hi - lo > tol:
             mid = 0.5 * (lo + hi)
@@ -36,8 +41,10 @@ def reference(rpm, kind="force", g_lo=G_LO, g_hi=G_HI, dg=DG, tol=0.25):
     return dict(g=g_best, a=f_best, scan_g=gs, scan_f=f, scan_alim=al, scan_fd=fd)
 
 
-def run_sade(rpm, kind="force", seeds=(1, 2, 3), np_=20, max_gen=50, lp=5,
-             window=12, tol=1e-4, g_lo=G_LO, g_hi=G_HI):
+def run_sade(rpm, kind="force", seeds=(1, 2, 3), np_=20, max_gen=60, lp=5,
+             window=25, tol=1e-4, g_lo=G_LO, g_hi=G_HI):
+    """Settings follow verification/sade: window >= 25 reached the brute-force
+    optimum in every test run; shorter windows stopped short of the edge."""
     out = []
     for s in seeds:
         # stratified uniform initial population over G (Step 1)
