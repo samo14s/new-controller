@@ -1,0 +1,36 @@
+{
+ "fig5_frf": {
+  "x_fit_err": 0.0020671217380083817,
+  "y_fit_err": 7.409602773170851e-11,
+  "curves": {
+   "measured_dashed": 322,
+   "identified": 1699
+  }
+ },
+ "fig6a_closed_loop_frf": {
+  "x_fit_err": 1.7053025658242404e-13,
+  "y_fit_err": 0.001203480583342298,
+  "curves": {
+   "uncontrolled": 3841,
+   "500rpm_g1487": 3846,
+   "1300rpm_g1162_dashed": 3988,
+   "2500rpm_g585_dashed": 3988,
+   "3000rpm_g797_dashed": 3988
+  }
+ },
+ "fig8_gains": {
+  "x_fit_err": 0.044309058801104584,
+  "y_fit_err": 0.06489292625292364,
+  "curves": {
+   "gain": 214
+  }
+ },
+ "fig9_sld": {
+  "x_fit_err": 0.045449440270090236,
+  "y_fit_err": 0.0008894730458059996,
+  "curves": {
+   "blue": 250,
+   "blue_dashed": 2048
+  }
+ }
+}
