@@ -1,0 +1,4 @@
+1090 rpm: forced orbit saturates below a_lim for g >= 3000
+1090 rpm: step-entry clipped limit peaks at g = 3000 (19.88 mm); map gain 1500
+2500 rpm: forced orbit saturates below a_lim for g >= 1650
+2500 rpm: step-entry clipped limit peaks at g = 2850 (13.18 mm); map gain 1500

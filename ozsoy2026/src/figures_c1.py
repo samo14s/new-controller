@@ -149,19 +149,24 @@ def c1_04_basin():
 
 def c1_05_gainplane():
     d = load("c1_gainplane.npz")
-    fig, ax = plt.subplots(1, 2, figsize=(9, 3.4))
+    fig, ax = plt.subplots(1, 2, figsize=(9.5, 3.6))
     for i, n in enumerate(d["rpm"]):
         g = d["gains"]
-        ax[i].fill_between(g, d["a_step_clip"][i], d["a_step_free"][i], color=BAD, alpha=0.18, lw=0)
-        ax[i].plot(g, d["a_lim"][i], color="k", lw=1.1, label="a_lim(g)")
-        ax[i].plot(g, d["a_step_free"][i], color=GREY, ls="--", lw=0.9, label="step, no limit")
-        ax[i].plot(g, d["a_step_clip"][i], color=BAD, lw=1.1, label="step, |V| <= 9 V")
-        ax[i].plot(g, d["a_edge_clip"][i], color=GOOD, lw=1.0, label="face entry, |V| <= 9 V")
+        sat = d["orbit_peak_V"][i] > VMAX
+        if sat.any():
+            ax[i].axvspan(g[sat].min() - 75, g.max() + 40, color=GREY, alpha=0.12, lw=0,
+                          label="forced orbit itself > 9 V")
+        ax[i].fill_between(g, d["a_step_clip"][i], d["a_lim"][i], color=BAD, alpha=0.15, lw=0,
+                           label="unsafe zone (step entry)")
+        ax[i].plot(g, d["a_lim"][i], color="k", lw=1.1, label="a_lim(g), linear")
+        ax[i].plot(g, d["a_step_clip"][i], "o-", color=BAD, ms=2.5, lw=1.1, label="step entry, |V| <= 9 V")
+        ax[i].plot(g, d["a_edge_clip"][i], "s-", color=GOOD, ms=2.5, lw=1.0, label="face entry, |V| <= 9 V")
         ax[i].axvline(d["g_map"][i], color=OURS, lw=0.8, ls=":", label="gain of the map")
-        ax[i].set(title=f"{n:.0f} rpm", xlabel="g (V s/m)", ylim=(0, None))
+        ax[i].set(title=f"{n:.0f} rpm", xlabel="g (V s/m)", ylim=(0, 45), xlim=(0, 3040))
     ax[0].set(ylabel="depth limit (mm)")
-    ax[0].legend(fontsize=7)
-    fig.suptitle("C1-5  The zone widens with the gain: a hard entry caps the useful gain", fontsize=9)
+    ax[0].legend(fontsize=6.8, loc="upper left")
+    fig.suptitle("C1-5  A hard entry caps the depth whatever the gain; a soft entry follows a_lim "
+                 "until the forced orbit saturates", fontsize=9, y=1.03)
     save(fig, "c1_05_gain_plane.png")
 
 
