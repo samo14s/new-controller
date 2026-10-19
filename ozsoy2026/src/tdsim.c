@@ -20,9 +20,11 @@
  * option off the run is bit-identical to the plain step entry):
  *   opt[0] ramp_a   axial depth ramped from 0 to a over this many revolutions;
  *                   layer j is engaged over the fraction of [j dz, (j+1) dz]
- *                   below the current depth
+ *                   below the current depth (idealised: uniform depth around
+ *                   the arc with the delay kept at T)
  *   opt[1] ramp_f   feed per tooth ramped over this many revolutions,
- *   opt[2] f0       starting from f0 * fz
+ *   opt[2] f0       starting from f0 * fz (and fed at f0 * fz before t = 0);
+ *                   the chip is the advance over the last tooth period
  *   opt[3] edge     1: straight entry through a workpiece face normal to the
  *                   feed, touched by the tool periphery at t = 0; an edge
  *                   point at angle phi is in the material once the tool
@@ -76,6 +78,10 @@ static inline double advance_at(const Ctx *C, double t) {
     if (t < C->Tf) return u * (C->f0 * t + (1.0 - C->f0) * t * t / (2.0 * C->Tf));
     return u * (C->f0 * C->Tf + (1.0 - C->f0) * C->Tf / 2.0 + (t - C->Tf));
 }
+/* advance extended to t < 0: feeding at f0 * fz before the ramp starts */
+static inline double advance_ext(const Ctx *C, double t) {
+    return t < 0.0 ? C->f0 * C->fz / C->Tt * t : advance_at(C, t);
+}
 static inline double layer_frac(double depth, int j, double dz) {
     double w = (depth - j * dz) / dz;
     return w < 0.0 ? 0.0 : (w > 1.0 ? 1.0 : w);
@@ -111,7 +117,9 @@ static double fcut(const Ctx *C, double x, double tau) {
     }
     {
         double t = (n + r) * C->dt, tp = t - C->nd * C->dt;
-        double dep = depth_at(C, t), depp = depth_at(C, tp), fz = feed_at(C, t);
+        double dep = depth_at(C, t), depp = depth_at(C, tp);
+        /* under a feed ramp the chip is the advance over the last tooth period */
+        double fz = C->Tf > 0.0 ? advance_ext(C, t) - advance_ext(C, tp) : C->fz;
         double rs = C->edge ? 1.0 - advance_at(C, t) / C->R : -1.0;
         double rsp = C->edge ? (tp > 0.0 ? 1.0 - advance_at(C, tp) / C->R : 1.0) : -1.0;
         for (e = 0; e < C->nel; e++) {

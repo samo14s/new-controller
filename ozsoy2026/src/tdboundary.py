@@ -51,9 +51,13 @@ def classify_run(x, spr, diverged=False, N=P.N_TEETH, delta=2e-5, nblocks=25):
 def classify(rpm, a, g, vmax=0.0, nrev=NREV, spr=P.STEPS_PER_REV, **entry):
     """Classify one cut.  With a soft entry (ramp_a, ramp_f, edge; see
     tdsim.simulate) the run is lengthened by the entry and only the nrev
-    revolutions after it are judged, so the window always starts at full
-    engagement; a cut that chatters during the entry stays chatter."""
+    revolutions after it are judged, so the window starts at full
+    engagement; a cut that chatters during the entry stays chatter.  A kick
+    or a delayed clip-on moves the window to the revolution after it."""
     start = int(np.ceil(entry_revs(**entry)))
+    for k in ("kick_step", "clip_on"):
+        if entry.get(k, -1) > 0:
+            start = max(start, -(-(int(entry[k]) + 1) // spr))
     r = simulate(rpm, a, g, vmax=vmax, store=True, nrev=start + nrev, spr=spr, **entry)
     c = classify_run(r["x"][start * spr:], spr, r["diverged"])
     c["chatter"] = not c["stable"]

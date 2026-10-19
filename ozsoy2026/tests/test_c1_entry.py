@@ -64,10 +64,37 @@ def test_face_entry_follows_engaged_arc():
     assert entry_revs(edge=True) == pytest.approx(R / (P.FZ * P.N_TEETH))
 
 
-def test_feed_ramp_force_is_linear():
-    r = simulate(RPM, A, G, store=True, nrev=60, ramp_f=10, f0=0.0)
-    assert mean_force(r, 4, 6) == pytest.approx(0.5, abs=5e-3)
+def test_feed_ramp_chip_is_advance_over_one_tooth():
+    """Chip = s(t) - s(t - T).  At a negligible depth (no dynamics) the
+    force under the ramp is the step-entry force waveform times the chip
+    ratio, pointwise, after the first tooth period; during the ramp that
+    ratio is (t - T/2) / T_f."""
+    a, nrev, Tf = 1e-6, 12, 10
+    st = simulate(RPM, a, 0.0, store=True, nrev=nrev)
+    ra = simulate(RPM, a, 0.0, store=True, nrev=nrev, ramp_f=Tf, f0=0.0)
+    trev = np.arange(len(st["fcut"])) / SPR
+    nd = SPR // P.N_TEETH
+    T = 1.0 / P.N_TEETH
+    s = lambda u: np.where(u < 0, 0.0, np.where(u < Tf, u * u / (2 * Tf), u - Tf / 2))   # advance, rev units
+    chip = (s(trev) - s(trev - T)) / T
+    k = slice(nd, nrev * SPR)
+    assert np.abs(ra["fcut"][k] - chip[k] * st["fcut"][k]).max() < 1e-5 * np.abs(st["fcut"]).max()
+    r = simulate(RPM, A, G, store=True, nrev=60, ramp_f=Tf, f0=0.0)
     assert mean_force(r, 30, 60) == pytest.approx(1.0, abs=1e-4)
+
+
+def test_entry_length_follows_the_kinematics():
+    assert entry_revs(edge=True) == pytest.approx(40.0)
+    assert entry_revs(edge=True, ramp_f=40) == pytest.approx(60.0)      # s(Tf) = R/2 at the end of the ramp
+    assert entry_revs(edge=True, ramp_f=10, f0=0.2) == pytest.approx(44.0)
+    assert entry_revs(edge=True, fz=0.5 * P.FZ) == pytest.approx(80.0)
+
+
+def test_classify_window_starts_after_a_kick():
+    """A kick late in the run must be inside the judged window."""
+    from tdboundary import classify
+    c = classify(2500, 15e-3, 1500.0, vmax=9.0, nrev=300, edge=True, kick_step=310 * SPR, kick_dv=30e-3)
+    assert not c["stable"]
 
 
 def test_kick_sets_velocity_and_free_decay():

@@ -11,8 +11,11 @@ _SRC = os.path.join(_HERE, "tdsim.c")
 _LIB = os.path.join(_HERE, "_tdsim.so")
 
 if (not os.path.exists(_LIB)) or os.path.getmtime(_LIB) < os.path.getmtime(_SRC):
+    # build beside and rename, so running processes keep their mapped copy
+    _tmp = f"{_LIB}.{os.getpid()}.tmp"
     subprocess.check_call(["gcc", "-O3", "-march=native", "-shared", "-fPIC",
-                           "-o", _LIB, _SRC, "-lm"])
+                           "-o", _tmp, _SRC, "-lm"])
+    os.replace(_tmp, _LIB)
 _lib = ctypes.CDLL(_LIB)
 _d = ctypes.c_double
 _i = ctypes.c_int
@@ -37,6 +40,9 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     fmode selects how the cutting force enters the integrator (see tdsim.c).
     Entry (default: full depth and feed at t = 0):
       ramp_a  revolutions over which the axial depth rises from 0 to a
+              (idealised: the depth is uniform around the arc and the delay
+              stays T; a real ramp-in descends axially, which shifts the
+              delay by a tan(beta) / (2 pi R ramp_a) of T; not used in C1)
       ramp_f  revolutions over which the feed rises from f0*fz to fz
       edge    straight entry through a workpiece face normal to the feed
               (full radial engagement after R/fz teeth, 40 rev here)
@@ -65,10 +71,26 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     return out
 
 
-def entry_revs(ramp_a=0.0, ramp_f=0.0, edge=False, **_):
-    """Revolutions until the entry is complete (depth, feed and width at nominal)."""
-    edge_revs = 0.5 * P.D_TOOL / (P.FZ * P.N_TEETH) if edge else 0.0
-    return float(max(ramp_a, ramp_f, edge_revs))
+def entry_revs(ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False, fz=P.FZ, **_):
+    """Revolutions until the entry is complete (depth, feed and width at nominal).
+
+    The face is fully engaged when the tool centre has advanced R, with the
+    advance integrated over the feed ramp (same kinematics as tdsim.c).
+    The last fresh sliver is cut within one tooth period after that.
+    """
+    t_edge = 0.0
+    if edge:
+        R, u = 0.5 * P.D_TOOL, fz * P.N_TEETH          # advance per revolution
+        if ramp_f > 0:
+            s_f = u * ramp_f * (1 + f0) / 2               # advance at the end of the ramp
+            if R <= s_f:
+                qa, qb = (1 - f0) / (2 * ramp_f), f0      # u (qb t + qa t^2) = R
+                t_edge = R / u / qb if qa == 0 else (-qb + np.sqrt(qb * qb + 4 * qa * R / u)) / (2 * qa)
+            else:
+                t_edge = ramp_f + (R - s_f) / u
+        else:
+            t_edge = R / u
+    return float(max(ramp_a, ramp_f, t_edge))
 
 
 def simulate_exact_python(rpm, a, g, nrev=P.N_REVS, spr=P.STEPS_PER_REV,

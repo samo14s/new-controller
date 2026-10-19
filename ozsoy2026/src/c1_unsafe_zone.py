@@ -8,9 +8,10 @@ cut softly and it settles onto the forced periodic orbit.  The cut is
 bistable, and this script maps that zone and its basin of attraction.
 
   map        per speed, with the gain map of run_feasibility_map.py, the
-             depth limit for five entries: step (clipped and unclipped),
-             face entry, depth ramp and feed ramp (clipped).  Also stores
-             a_lim(g) and a_lim(0).
+             depth limit for four entries: step (clipped and unclipped),
+             face entry and feed ramp (clipped).  Also stores a_lim(g) and
+             a_lim(0).  (The idealised depth ramp of tdsim is left out: a
+             real ramp-in shifts the regeneration delay.)
   gainplane  the same limits as a function of the gain, at two speeds
   basin      critical velocity kick on the settled cut versus depth.  The
              cut is reached by a face entry and kicked at 16 phases per
@@ -33,7 +34,6 @@ ENTRIES = {
     "step_clip": (VMAX, {}),
     "step_free": (0.0, {}),
     "edge_clip": (VMAX, {"edge": True}),
-    "ramp_clip": (VMAX, {"ramp_a": 10.0}),
     "feed_clip": (VMAX, {"ramp_f": 10.0, "f0": 0.0}),
 }
 # depth ladder of every boundary: 8 % steps from a quarter of a_lim, and
@@ -84,6 +84,8 @@ def run_map(a):
         a_lim=np.array([a_lim(n, gg) for n, gg in zip(rpm, g)]) * 1e3,
         a_lim0=np.array([a_lim(n, 0.0) for n in rpm]) * 1e3)
     data.update({f"a_{k}": lim[:, i] for i, k in enumerate(todo)})
+    data = {k: v for k, v in data.items()                    # drop retired entries
+            if not k.startswith("a_") or k in ("a_lim", "a_lim0") or k[2:] in ENTRIES}
     np.savez_compressed(fn, **data)
     keys = ["rpm", "g", "a_lim", "a_lim0"] + [f"a_{k}" for k in names]
     np.savetxt(os.path.join(RES, "c1_map.csv"), np.column_stack([data[k] for k in keys]),
@@ -106,12 +108,19 @@ def run_gainplane(a):
     jobs = [(n, gg, k, zeta) for n in speeds for gg in gains for k in names]
     with Pool(a.workers) as pool:
         lim = np.array(pool.map(_limit, jobs, chunksize=2)).reshape(len(speeds), len(gains), len(names))
+    from feasibility import demand_envelope
     data = dict(rpm=np.array(speeds), gains=gains, zeta=zeta,
                 g_map=np.interp(speeds, rpm_map, g_map),
-                a_lim=np.array([[a_lim(n, gg) for gg in gains] for n in speeds]) * 1e3)
+                a_lim=np.array([[a_lim(n, gg) for gg in gains] for n in speeds]) * 1e3,
+                # peak command of the settled forced orbit over all depths up to a_lim:
+                # above 9 V the orbit itself saturates and a soft entry cannot avoid it
+                orbit_peak_V=np.array([[demand_envelope(n, gg, kappa=1.0)[1] / P.GA_GAIN
+                                        for gg in gains] for n in speeds]))
     data.update({f"a_{k}": lim[:, :, i] for i, k in enumerate(names)})
     np.savez_compressed(os.path.join(RES, "c1_gainplane.npz"), **data)
     for i, n in enumerate(speeds):
+        sat = gains[data["orbit_peak_V"][i] > VMAX]
+        print(f"{n:.0f} rpm: forced orbit saturates below a_lim for g >= {sat.min() if sat.size else np.nan:.0f}")
         j = int(np.nanargmax(data["a_step_clip"][i]))
         print(f"{n:.0f} rpm: step-entry clipped limit peaks at g = {gains[j]:.0f} "
               f"({data['a_step_clip'][i, j]:.2f} mm); map gain {data['g_map'][i]:.0f}")
