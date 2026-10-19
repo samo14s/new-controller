@@ -275,6 +275,56 @@ def sensitivity(tag="main"):
     plt.close(fig)
 
 
+def feasibility_figs(tag="g1500"):
+    """Gain map and limit under the reformulated condition, with the paper's and Eq. (2)'s."""
+    p = os.path.join(RES, f"feas_{tag}.npz")
+    if not os.path.exists(p):
+        return
+    d = np.load(p)
+    old = np.load(os.path.join(RES, "gainmap_main.npz"))
+    gp = np.loadtxt(os.path.join(DIG, "fig8_gain_points.csv"), delimiter=",", skiprows=1)
+    cp = np.loadtxt(os.path.join(DIG, "fig9_controlled_points.csv"), delimiter=",", skiprows=1)
+    kappa = float(d["kappa"])
+    fig, ax = plt.subplots(1, 2, figsize=(10.5, 3.8))
+    ax[0].plot(gp[:, 0], gp[:, 1], color=PAPER, lw=1.4, label="paper Fig. 8")
+    ax[0].plot(old["rpm"], old["g_best"], color=UNC, lw=1, ls="--", label="Eq. (2) as written")
+    ax[0].plot(d["rpm"], d["g_best"], color=OURS, lw=1.6, label=f"reformulated, G <= {float(d['gmax']):.0f}")
+    p3 = os.path.join(RES, "feas_g3000.npz")
+    if os.path.exists(p3):
+        d3 = np.load(p3)
+        ax[0].plot(d3["rpm"], d3["g_best"], color=OURS, lw=0.9, ls=":", label="reformulated, G <= 3000")
+    ax[0].set(xlabel="Spindle speed (rpm)", ylabel="g_dvf (V s/m)", xlim=(500, 3000),
+              title="Gain map")
+    ax[0].legend(fontsize=7)
+    fine = np.arange(500, 3001, 5.0)
+    ax[1].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1, label="uncontrolled")
+    ax[1].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1.2, label="paper Fig. 9")
+    ax[1].plot(old["rpm"], old["a_best"], color=UNC, lw=1, label="Eq. (2) as written")
+    ax[1].plot(d["rpm"], d["a_best"], color=OURS, lw=1.6, label="reformulated: a_lim")
+    ax[1].plot(d["rpm"], kappa * d["a_best"], color=OURS, lw=1, ls="-.",
+               label=f"reformulated: operating depth ({kappa:g} a_lim)")
+    ax[1].set(xlabel="Spindle speed (rpm)", ylabel="Depth of cut (mm)", xlim=(500, 3000),
+              ylim=(0, 45), title="Controlled limit")
+    ax[1].legend(fontsize=6.5, loc="upper left")
+    fig.savefig(os.path.join(FIG, f"r10_feasibility_{tag}.png"))
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7.5, 3.4))
+    for t, lab, col, ls in [(tag, "main (kappa 0.9, guard 1.0, G <= 1500)", OURS, "-"),
+                            ("k095", "kappa 0.95", "C1", "--"),
+                            ("guard085", "guard 0.85 (F <= 23 N)", "C2", ":"),
+                            ("g3000", "G <= 3000", "C4", "-.")]:
+        q = os.path.join(RES, f"feas_{t}.npz")
+        if os.path.exists(q):
+            e = np.load(q)
+            ax.plot(e["rpm"], e["g_best"] if "g_best" in e else e["g_ref"], ls, color=col, lw=1.2, label=lab)
+    ax.set(xlabel="Spindle speed (rpm)", ylabel="g_dvf (V s/m)", xlim=(500, 3000),
+           title="Reformulated condition: sensitivity")
+    ax.legend(fontsize=7)
+    fig.savefig(os.path.join(FIG, "r11_feasibility_sensitivity.png"))
+    plt.close(fig)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", default="main")
@@ -293,6 +343,7 @@ def main():
         cuts(a.tag)
         points(a.tag)
         sensitivity(a.tag)
+        feasibility_figs()
 
 
 if __name__ == "__main__":
