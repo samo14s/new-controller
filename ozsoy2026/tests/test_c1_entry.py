@@ -146,3 +146,20 @@ def test_bistable_cut_at_2500_rpm():
         r = simulate(2500, a, g, vmax=vmax, store=True, nrev=400, edge=True, kick_step=ks, kick_dv=30e-3)
         st = (ks // nd + 1) * nd
         assert (not classify_run(r["x"][st:], SPR, r["diverged"])["stable"]) == chatter
+
+
+def test_multiple_regeneration_matches_single_without_separation():
+    """With a face entry nothing leaves the cut, so remembering four passes
+    gives the single-pass result to round-off."""
+    a = simulate(RPM, A, G, store=True, nrev=60, edge=True)
+    b = simulate(RPM, A, G, store=True, nrev=60, edge=True, nreg=4)
+    assert np.abs(a["x"] - b["x"]).max() < 1e-12 * np.abs(a["x"]).max()
+
+
+def test_multiple_regeneration_bounds_clipped_chatter():
+    """2500 rpm, 15 mm, g = 1500, |V| <= 9 V, step entry: a single pass runs
+    away past 1 cm; four passes settle on a bounded chatter cycle."""
+    r1 = simulate(2500, 15e-3, 1500.0, vmax=9.0, nrev=150)
+    r4 = simulate(2500, 15e-3, 1500.0, vmax=9.0, nrev=150, nreg=4)
+    assert r1["diverged"]
+    assert not r4["diverged"] and 2e-4 < r4["max_x"] < 1e-3

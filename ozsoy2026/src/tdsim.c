@@ -32,6 +32,12 @@
  *   opt[4] kick_step, opt[5] kick_dv
  *                   velocity kick added to x' at the start of that step
  *   opt[6] clip_on  the command limit vmax applies from this step on
+ *   opt[7] nreg     passes remembered by the chip (default 1).  With nreg > 1
+ *                   the chip is the least over the last nreg passes,
+ *                   h = min_k [k fz sin(phi) - (x - x(t - kT)) cos(phi)],
+ *                   so a pass that left the cut does not count as having
+ *                   removed material (multiple regeneration, needed once
+ *                   the tool leaves the cut, i.e. for chatter amplitudes)
  * Any part of a chip whose surface the previous tooth did not cut (newly
  * engaged depth, or material just reached through the face) is fresh: its
  * thickness is fz sin(phi) - x cos(phi), with no regeneration.
@@ -51,9 +57,11 @@ typedef struct {
     int n;                          /* current step index */
     double fhold;                   /* held force (fmode 0) */
     /* entry options (soft = 0: plain step entry) */
-    int soft, nlay, edge;
+    int soft, nlay, edge, nreg;
     double a, Ta, Tf, f0, R, Tt, vmax_now;
 } Ctx;
+
+#define NREG_MAX 8
 
 static inline double sat(double v, double lim) {
     if (lim <= 0.0) return v;
@@ -87,8 +95,64 @@ static inline double layer_frac(double depth, int j, double dz) {
     return w < 0.0 ? 0.0 : (w > 1.0 ? 1.0 : w);
 }
 
+/* x at step j + r (0 <= r <= 1) from the cubic Hermite interpolant of the
+ * stored history; zero before t = 0 */
+static inline double xhist(const Ctx *C, int j, double r) {
+    if (j + 1 <= 0) return 0.0;
+    double x0 = j >= 0 ? C->xh[j] : 0.0, v0 = j >= 0 ? C->vh[j] : 0.0;
+    double x1 = C->xh[j + 1], v1 = C->vh[j + 1], h = C->dt;
+    double r2 = r * r, r3 = r2 * r;
+    return (2 * r3 - 3 * r2 + 1) * x0 + (r3 - 2 * r2 + r) * h * v0
+         + (-2 * r3 + 3 * r2) * x1 + (r3 - r2) * h * v1;
+}
+
+/* cutting force with multiple regeneration (nreg > 1) */
+static double fcut_multi(const Ctx *C, double x, double tau) {
+    int n = C->n, s0 = n % C->spr, e, k, K = C->nreg;
+    double r = tau / C->dt, f = 0.0, xd[NREG_MAX + 1], S[NREG_MAX + 1];
+    double dep[NREG_MAX + 1], rs[NREG_MAX + 1];
+    double T = C->nd * C->dt, t = (n + r) * C->dt;
+    for (k = 0; k <= K; k++) {
+        double tk = t - k * T;
+        xd[k] = k ? xhist(C, n - k * C->nd, r) : x;
+        S[k] = C->Tf > 0.0 ? advance_ext(C, t) - advance_ext(C, tk) : k * C->fz;
+        dep[k] = C->soft ? depth_at(C, tk) : C->a;
+        rs[k] = C->edge ? (tk > 0.0 ? 1.0 - advance_at(C, tk) / C->R : 1.0) : -1.0;
+    }
+    double del = C->dth * r, cd = cos(del), sd = sin(del);
+    const double *ph = C->ph + s0 * C->nel, *sn = C->sn + s0 * C->nel, *cs = C->cs + s0 * C->nel;
+    for (e = 0; e < C->nel; e++) {
+        double phi = ph[e] + del;
+        if (phi < C->phist || phi > C->phiex) continue;
+        double s = sn[e] * cd + cs[e] * sd;
+        double c = cs[e] * cd - sn[e] * sd;
+        int j = e % C->nlay;
+        double w = C->soft ? layer_frac(dep[0], j, C->dz) : 1.0;
+        if (C->edge && !(s >= rs[0])) w = 0.0;
+        if (w <= 0.0) continue;
+        double wp = C->soft ? layer_frac(dep[1], j, C->dz) : 1.0;
+        if (C->edge && !(s >= rs[1])) wp = 0.0;
+        if (wp > w) wp = w;
+        double hr = S[1] * s - (x - xd[1]) * c, q = 0.0;
+        for (k = 2; k <= K; k++) {             /* only passes that were in the material */
+            if (C->soft && layer_frac(dep[k], j, C->dz) <= 0.0) break;
+            if (C->edge && !(s >= rs[k])) break;
+            double hk = S[k] * s - (x - xd[k]) * c;
+            if (hk < hr) hr = hk;
+        }
+        if (hr > 0) q += wp * hr;
+        if (w > wp) {
+            double hf = S[1] * s - x * c;     /* fresh surface */
+            if (hf > 0) q += (w - wp) * hf;
+        }
+        f -= (C->Kt * s - C->Kr * c) * C->dz * q;
+    }
+    return f;
+}
+
 /* cutting force at time t_n + tau, with current displacement x */
 static double fcut(const Ctx *C, double x, double tau) {
+    if (C->nreg > 1) return fcut_multi(C, x, tau);
     int n = C->n, s0 = n % C->spr, e;
     int j = n - C->nd;                       /* delayed interval [j, j+1] */
     double r = tau / C->dt, xd;
@@ -208,7 +272,7 @@ int simulate(double rpm, double a, double g,
     int kick_step = -1, clip_on = 0;
     double kick_dv = 0.0;
     C.nlay = nlay; C.a = a; C.R = R; C.Tt = Trev / N; C.f0 = 0.0;
-    C.Ta = 0.0; C.Tf = 0.0; C.edge = 0;
+    C.Ta = 0.0; C.Tf = 0.0; C.edge = 0; C.nreg = 1;
     if (opt) {
         C.Ta = opt[0] > 0.0 ? opt[0] * Trev : 0.0;
         C.Tf = opt[1] > 0.0 ? opt[1] * Trev : 0.0;
@@ -217,6 +281,7 @@ int simulate(double rpm, double a, double g,
         kick_step = (int)opt[4];
         kick_dv = opt[5];
         clip_on = (int)opt[6];
+        C.nreg = (int)opt[7] < 1 ? 1 : ((int)opt[7] > NREG_MAX ? NREG_MAX : (int)opt[7]);
     }
     C.soft = C.Ta > 0.0 || C.Tf > 0.0 || C.edge;
 

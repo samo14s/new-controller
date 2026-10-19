@@ -1,0 +1,3 @@
+== df 19:29:18
+df done: 1090 rpm, 1420 rpm, 2500 rpm, 2870 rpm
+== basin 19:29:43

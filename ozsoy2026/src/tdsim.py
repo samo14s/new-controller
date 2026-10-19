@@ -33,7 +33,7 @@ FMODE = 1          # 1: force re-evaluated at every RK4 stage; 0: held per step
 def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
              spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None,
              ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False,
-             kick_step=-1, kick_dv=0.0, clip_on=0):
+             kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1):
     """Run one cut.  Returns a dict with the peak demand and, if store, histories.
 
     vmax > 0 limits the applied command |V| (clipped DVF); 0 means no limit.
@@ -48,6 +48,8 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
               (full radial engagement after R/fz teeth, 40 rev here)
     Perturbation: kick_dv (m/s) added to x' at step kick_step (< 0: none);
     clip_on: first step at which the command limit vmax applies.
+    nreg: passes the chip remembers (1: x(t - T) only; > 1: least chip over
+    the last nreg passes, so the tool leaving the cut is handled; max 8).
     """
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
     fmode = FMODE if fmode is None else fmode
@@ -56,7 +58,7 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     bufs = [np.zeros(nbuf) for _ in range(5)]
     summ = np.zeros(5)
     opt = np.array([ramp_a, ramp_f, f0, 1.0 if edge else 0.0,
-                    kick_step, kick_dv, clip_on, 0.0], dtype=np.float64)
+                    kick_step, kick_dv, clip_on, nreg], dtype=np.float64)
     _lib.simulate(float(rpm), float(a), float(g),
                   P.M, P.C, P.K, P.GA_GAIN, P.GA_A1, P.GA_A0,
                   P.K_TC, P.K_RC, fz, P.D_TOOL, P.N_TEETH, P.HELIX,
