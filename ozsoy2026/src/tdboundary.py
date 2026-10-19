@@ -58,22 +58,24 @@ def classify(rpm, a, g, vmax=0.0, nrev=NREV, spr=P.STEPS_PER_REV):
 
 def boundary(rpm, g, vmax=0.0, a_lo=0.2e-3, a_hi=40e-3, growth=1.25, rtol=3e-3,
              nrev=NREV):
-    """Largest stable depth (m): upward scan from a shallow cut, then bisection.
+    """Largest depth (m) below which every scanned depth is stable.
 
-    Returns a_hi if no chatter is found up to a_hi.
+    Upward scan from a_lo by `growth`, with a_hi itself always tested last,
+    then bisection between the last stable and the first chattering depth.
+    Returns a_hi when no chatter is found up to it.  The scan matters with a
+    saturating actuator, where stability need not be monotone in depth.
     """
-    lo = 0.0
-    a = a_lo
-    while a <= a_hi:
-        if classify(rpm, a, g, vmax, nrev)["stable"]:
-            lo, a = a, a * growth
+    lo, a = 0.0, a_lo
+    while True:
+        at = min(a, a_hi)
+        if classify(rpm, at, g, vmax, nrev)["stable"]:
+            lo = at
+            if at >= a_hi:
+                return a_hi
+            a *= growth
         else:
+            hi = at
             break
-    else:
-        return a_hi
-    hi = a
-    if lo == 0.0:
-        lo = 0.0
     while hi - lo > rtol * hi:
         mid = 0.5 * (lo + hi)
         if classify(rpm, mid, g, vmax, nrev)["stable"]:
