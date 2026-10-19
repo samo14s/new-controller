@@ -1,0 +1,473 @@
+<title>إعادة إنتاج Ozsoy 2026</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+
+<style>
+/* Layout: one reading column (≈72ch) inside a 1120px wrap; figures and tables
+   break out to the full wrap width. Tokens follow the repository's earlier report. */
+:root{
+  --ground:#EFF2F3; --surface:#FFFFFF; --surface-2:#F6F8F9;
+  --ink:#0F1719; --ink-2:#31434A; --muted:#57666C;
+  --rule:#D8DEE0; --rule-soft:#E7ECED;
+  --accent:#0E7490; --accent-soft:#E2F1F5;
+  --good:#15803D; --good-soft:#E6F4EA;
+  --warn:#B45309; --warn-soft:#FAF0E2;
+  --bad:#9F1239;  --bad-soft:#FBE9EE;
+  --plate:#FFFFFF;
+  --shadow:0 1px 2px rgba(15,23,25,.05), 0 8px 24px -16px rgba(15,23,25,.28);
+  --f-display:Amiri,"Times New Roman",serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+    --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+    --rule:#243033; --rule-soft:#1C2629;
+    --accent:#22A7C4; --accent-soft:#10303A;
+    --good:#4ADE80; --good-soft:#0F2A1B;
+    --warn:#F59E0B; --warn-soft:#2E2107;
+    --bad:#FB7185;  --bad-soft:#33111C;
+    --plate:#F4F6F7;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+  --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+  --rule:#243033; --rule-soft:#1C2629;
+  --accent:#22A7C4; --accent-soft:#10303A;
+  --good:#4ADE80; --good-soft:#0F2A1B;
+  --warn:#F59E0B; --warn-soft:#2E2107;
+  --bad:#FB7185;  --bad-soft:#33111C;
+  --plate:#F4F6F7;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0; direction:rtl;
+  background:var(--ground); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:1120px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 96px;
+}
+.col{max-width:72ch}
+a{color:var(--accent); text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+strong{font-weight:600}
+code,.mono{font-family:var(--f-mono); font-size:.86em}
+code{background:var(--surface-2); border:1px solid var(--rule-soft); border-radius:3px; padding:0 .3em; direction:ltr; unicode-bidi:isolate}
+.m{direction:ltr; unicode-bidi:isolate; font-family:"Times New Roman",var(--f-display); font-size:1.08em; white-space:nowrap}
+.m i{font-style:italic}
+.num{font-variant-numeric:tabular-nums}
+
+/* masthead */
+header.mast{padding-block:56px 36px; border-bottom:1px solid var(--rule); margin-bottom:48px}
+.eyebrow{font-family:var(--f-mono); font-size:12px; color:var(--accent); margin:0 0 16px; font-weight:600; letter-spacing:.04em; direction:ltr; text-align:right}
+h1{font-family:var(--f-display); font-size:clamp(36px,6vw,60px); line-height:1.15; font-weight:700; margin:0 0 18px; text-wrap:balance}
+.dek{font-size:clamp(17px,2vw,19px); color:var(--ink-2); max-width:64ch; margin:0 0 26px; font-weight:300}
+.meta{display:flex; flex-wrap:wrap; gap:8px 10px; font-family:var(--f-mono); font-size:12px}
+.meta span{border:1px solid var(--rule); border-radius:2px; padding:4px 10px; color:var(--muted); background:var(--surface)}
+.cite{margin:22px 0 0; font-size:13.5px; color:var(--muted); max-width:80ch; direction:ltr; text-align:left; line-height:1.6}
+.cite em{font-style:italic}
+
+/* verdict board */
+.board{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:14px; margin:0 0 72px}
+.v{background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:18px 20px; display:flex; flex-direction:column; gap:8px; min-width:0}
+.v h3{margin:0; font-size:16px; font-weight:600; line-height:1.5}
+.v p{margin:0; font-size:14.5px; color:var(--ink-2); line-height:1.7}
+.v .big{font-family:var(--f-mono); font-size:22px; font-weight:500; color:var(--ink); direction:ltr; text-align:right; font-variant-numeric:tabular-nums}
+.pill{align-self:flex-start; font-size:12px; font-weight:600; padding:2px 10px; border-radius:999px; border:1px solid currentColor}
+.pill.good{color:var(--good); background:var(--good-soft)}
+.pill.warn{color:var(--warn); background:var(--warn-soft)}
+.pill.bad{color:var(--bad); background:var(--bad-soft)}
+
+/* sections */
+section{margin:0 0 72px; scroll-margin-top:24px}
+h2{font-family:var(--f-display); font-size:clamp(26px,3.4vw,34px); font-weight:700; line-height:1.3; margin:0 0 6px; text-wrap:balance; display:flex; align-items:baseline; gap:14px}
+h2 .sn{font-family:var(--f-mono); font-size:13px; font-weight:500; color:var(--accent); flex:none}
+h3.sub3{font-size:18px; font-weight:600; margin:34px 0 8px; text-wrap:balance}
+.lead{color:var(--muted); font-size:15px; margin:0 0 26px}
+p{margin:0 0 14px}
+ul.tight{margin:0 0 16px; padding-inline-start:22px}
+ul.tight li{margin:0 0 8px}
+
+/* tables */
+.tbl{overflow-x:auto; margin:8px 0 24px; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14.5px}
+th,td{padding:10px 14px; text-align:right; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+th{font-weight:600; background:var(--surface-2); color:var(--ink-2); font-size:13px; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.n,th.n{font-variant-numeric:tabular-nums; font-family:var(--f-mono); font-size:13px; text-align:left; direction:ltr; white-space:nowrap}
+td.hl{font-weight:600}
+tr.flag td{background:var(--bad-soft)}
+.st{font-size:12px; font-weight:600; white-space:nowrap}
+.st.good{color:var(--good)} .st.warn{color:var(--warn)} .st.bad{color:var(--bad)}
+
+/* figures */
+figure{margin:12px 0 30px; background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:14px; box-shadow:var(--shadow)}
+figure .plate{background:var(--plate); border-radius:2px; padding:6px; overflow-x:auto}
+figure img{display:block; width:100%; height:auto; max-width:100%; direction:ltr}
+figure.narrow{max-width:820px}
+figcaption{font-size:13.5px; color:var(--muted); margin-top:10px; line-height:1.65}
+figcaption b{color:var(--ink-2); font-weight:600}
+
+/* callouts */
+.note{border-inline-start:3px solid var(--accent); background:var(--accent-soft); padding:14px 18px; border-radius:2px; margin:6px 0 22px; font-size:15px}
+.note.bad{border-color:var(--bad); background:var(--bad-soft)}
+.note.warn{border-color:var(--warn); background:var(--warn-soft)}
+.note p:last-child{margin-bottom:0}
+
+pre.run{direction:ltr; text-align:left; background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:16px 18px; overflow-x:auto; font-family:var(--f-mono); font-size:12.5px; line-height:1.7; margin:8px 0 18px}
+pre.run .c{color:var(--muted)}
+
+footer{border-top:1px solid var(--rule); padding-top:24px; font-size:13px; color:var(--muted)}
+footer p{max-width:90ch}
+
+@media (max-width:560px){
+  body{font-size:15.5px}
+  th,td{padding:8px 10px}
+  figure{padding:10px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">COMPUTATIONAL REPRODUCTION · J. MANUF. PROCESSES 171 (2026) 247–257</p>
+  <h1>إعادة إنتاج Ozsoy 2026 من الصفر</h1>
+  <p class="dek">تحكّم DVF في ارتجاج التفريز بكسبٍ يتغيّر مع سرعة المغزل ويحترم حدّ قوّة المشغّل (27 N).
+  أُعيد بناء النموذج والطريقة والمُحسِّن بكود جديد، وقورنت كلّ نتيجة ببيانات الورقة المرسومة نفسها،
+  المسترجَعة من مسارات ملف الـ PDF المتّجهية.</p>
+  <div class="meta">
+    <span>251 سرعة مغزل</span>
+    <span>3 بذور SADE لكلّ سرعة</span>
+    <span>5 فحوص مستقلّة + ناقد</span>
+    <span>188 ادّعاءً مُدقَّقًا</span>
+    <span>21 نقطة تجريبية</span>
+  </div>
+  <p class="cite">M. Ozsoy, N. D. Sims, E. Ozturk, <em>Robust active control of milling chatter under actuator constraints: a spindle speed mapped framework with experimental validation</em>, J. Manufacturing Processes 171 (2026) 247–257, doi:10.1016/j.jmapro.2026.05.009. CC BY-NC-ND: no text of the article is reproduced here; numbers and curves taken from it are labelled.</p>
+</header>
+
+<!-- verdict board -->
+<div class="board" aria-label="الخلاصة">
+  <div class="v">
+    <span class="pill good">مُعاد</span>
+    <h3>حدّ الاستقرار غير المتحكَّم فيه</h3>
+    <div class="big">0.04 %</div>
+    <p>وسيط الفرق عن منحنى الورقة، لكن بتخميد <b>1.34 %</b> لا 1.45 % المذكور في الجدول 1.</p>
+  </div>
+  <div class="v">
+    <span class="pill good">مُعاد</span>
+    <h3>الكسب في 2320–3000 rpm</h3>
+    <div class="big">0.97×</div>
+    <p>نسبة الوسيط لكسب الورقة (المدى 0.90–1.04)؛ 536 مقابل 543 V·s/m عند 2500 rpm.</p>
+  </div>
+  <div class="v">
+    <span class="pill warn">جزئيًّا</span>
+    <h3>العمق المتحكَّم فيه تحت 1500 rpm</h3>
+    <div class="big">0.97–1.02×</div>
+    <p>المستوى يطابق (وسيطًا) لا الشكل: النسبة لكلّ سرعة 0.71–1.49، بكسوب أصغر بـ 12–26 %.</p>
+  </div>
+  <div class="v">
+    <span class="pill bad">لم يُعَد</span>
+    <h3>الكسب الثابت</h3>
+    <div class="big">60 ≠ 237</div>
+    <p>نحصل على 60.3 V·s/m؛ والكسب 237 يتخطّى حدّ القوّة عند 18 سرعة قرب الرنين القسري.</p>
+  </div>
+  <div class="v">
+    <span class="pill bad">معكوس</span>
+    <h3>الجدول 3: DVF المقصوص</h3>
+    <div class="big">9 / 9</div>
+    <p>DVF المقصوص يتفوّق عند السرعات التسع كلّها، بخلاف الورقة عند 2300–3000 rpm.</p>
+  </div>
+  <div class="v">
+    <span class="pill bad">مغطّى في الـ PDF</span>
+    <h3>الشكل 9، 1498–2051 rpm</h3>
+    <div class="big">−25.9 mm</div>
+    <p>تحت المنحنى غير المتحكَّم فيه عند 1950 rpm، ومستطيلات بيضاء تغطّي هذا الجزء.</p>
+  </div>
+</div>
+
+<section id="scope">
+  <h2><span class="sn">01</span>ما الذي يُعاد إنتاجه</h2>
+  <p class="lead">الحسابات كلّها أُعيدت؛ التجارب لا يمكن إعادتها، فصُنِّفت نقاطها المنشورة بالنموذج وحوكيت قطوعها الموسومة.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>عنصر الورقة</th><th>الحالة</th><th>التفصيل</th></tr></thead>
+    <tbody>
+      <tr><td>النموذج: نمط واحد + مشغّل الكتلة الخاملة (المعادلة 3) + DVF (المعادلة 1)</td><td><span class="st good">مُعاد</span></td><td>مبنيّ ومتحقَّق منه</td></tr>
+      <tr><td>الشكل 6: FRF الحلقة المغلقة والأقطاب</td><td><span class="st good">مُعاد</span></td><td>مطابق عند 1300 rpm؛ منحنيات الورقة فوقه</td></tr>
+      <tr><td>حدّ الاستقرار الترددي (ZOA)</td><td><span class="st good">مُعاد</span></td><td>متحقَّق منه بحلّالَي SDM مستقلّين</td></tr>
+      <tr><td>المحاكاة الزمنية (512 خطوة/دورة، 50 دورة، 30 شريحة)</td><td><span class="st good">مُعادة</span></td><td>بلغة C؛ الصيغة النهائية تنحرف 0.10–0.63 % عن حلّ ZOH الدقيق المتقارب</td></tr>
+      <tr><td>SADE ودالّة اللياقة (المعادلة 2)</td><td><span class="st good">مُعادان</span></td><td>مع مرجع حتمي يكشف إن بلغ SADE القيمة المثلى</td></tr>
+      <tr><td>الشكل 8: خريطة الكسب على 251 سرعة</td><td><span class="st warn">جزئيًّا</span></td><td>§5.2</td></tr>
+      <tr><td>الشكل 9: حدّ الاستقرار المتحكَّم فيه</td><td><span class="st warn">جزئيًّا</span></td><td>§5.3</td></tr>
+      <tr><td>الشكل 11 والكسب الثابت 237 V·s/m</td><td><span class="st bad">لم يطابق</span></td><td>الكسب الثابت 60.3 V·s/m (§5.4)</td></tr>
+      <tr><td>الجدول 3: DVF المقصوص مقابل الطريقة المقترحة</td><td><span class="st bad">معكوس</span></td><td>المقصوص أفضل عند السرعات التسع (§5.5)</td></tr>
+      <tr><td>التجارب (الأشكال 7، 10، 12)</td><td><span class="st warn">بديل</span></td><td>تصنيف النقاط الـ 21 ومحاكاة القطوع الستّ (§5.6)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="model">
+  <h2><span class="sn">02</span>النموذج كما بُني</h2>
+  <p class="lead">كلّ رقم من الورقة، إلّا ما يُذكر أنّه اختيار.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>الكمية</th><th>القيمة</th><th>المصدر</th></tr></thead>
+    <tbody>
+      <tr><td>النمط المهيمن</td><td><span class="m"><i>f</i><sub>n</sub> = 129.3 Hz, <i>k</i> = 1.34×10<sup>7</sup> N/m, <i>m</i> = 20.30 kg</span></td><td>الجدول 1</td></tr>
+      <tr><td>التخميد</td><td><b>1.34 %</b> في كلّ الحسابات (الجدول 1 يقول 1.45 %)</td><td>§4.1</td></tr>
+      <tr><td>المشغّل</td><td><span class="m"><i>G</i><sub>a</sub>(<i>s</i>) = 3<i>s</i><sup>2</sup> / (<i>s</i><sup>2</sup> + 15.834<i>s</i> + 2785.6) N/V</span>، والحدّ 27 N</td><td>المعادلة 3</td></tr>
+      <tr><td>القانون والحلقة</td><td><span class="m"><i>V</i> = −<i>g ẋ</i></span>، و<span class="m"><i>G</i><sub>cl</sub> = <i>G</i> / (1 + <i>g s G</i><sub>a</sub><i>G</i>)</span>، <span class="m"><i>g</i></span> بـ V·s/m</td><td>المعادلتان 1 و4</td></tr>
+      <tr><td>القطع</td><td>Ø16 mm، 4 أسنان، حلزون 45°، <span class="m"><i>K</i><sub>tc</sub> = 660</span>، <span class="m"><i>K</i><sub>rc</sub> = 180</span> MPa، تفريز نازل بنصف غمر، 0.05 mm/سن</td><td>الجدول 2</td></tr>
+      <tr><td>اتجاه المرونة</td><td>عمودي على التغذية؛ <span class="m"><i>α</i><sub>yy</sub> = −1 − (π/2)·<i>K</i><sub>rc</sub>/<i>K</i><sub>tc</sub> = −1.428</span></td><td>اختيار، تؤكّده مطابقة الشكل 9</td></tr>
+    </tbody>
+  </table></div>
+  <div class="col">
+    <p><b>حدّ الاستقرار.</b> لكلّ سرعة يُحلّ
+    <span class="m">1 − (<i>N K</i><sub>tc</sub><i>a</i> / 4π) <i>α</i><sub>yy</sub> (1 − e<sup>−<i>iωT</i></sup>) <i>G</i><sub>cl</sub>(<i>iω</i>) = 0</span>
+    مباشرةً: مسحٌ على التردد، وكلّ جذر حقيقي موجب لـ <span class="m"><i>a</i></span> هو عبور للحدّ، وأصغرها هو الحدّ. لا حاجة إلى تقاطع الفصوص.</p>
+    <p><b>المحاكاة الزمنية.</b> سماكة رقاقة تجديدية لكلّ شريحة وسنّ، وقوّة صفر عند انفصال الأداة، والحلقة كلّها
+    (بنية + مشغّل + DVF + حدّ جهد اختياري) تُكامَل بـ RK4، وقوّة القطع <b>تُعاد عند كلّ مرحلة من مراحل RK4</b>.
+    الصيغة المعتادة، أي قوّة ثابتة على الخطوة، تؤخّر القوّة نصف خطوة: عند 512 خطوة/دورة تُخفّض حدّ الاستقرار حتى 9 %
+    وتُضخّم الطلب تحت 1300 rpm بعامل وسيطه 1.6×. بالصيغة الجديدة يطابق الطلب عند 512 خطوة نتيجةَ 8192 إلى 0.18 %.</p>
+    <p><b>اللياقة والمُحسِّن.</b> اللياقة هي الحدّ الترددي إن بقيت القوّة المطلوبة <span class="m">3<i>g</i>|<i>ẋ</i>|</span> تحت 27 N
+    طوال المحاكاة عند ذلك العمق نفسه، وإلّا صفر. SADE بأربع استراتيجيات، 20 فردًا، حتى 60 جيلًا، ثلاث بذور لكلّ سرعة؛
+    ومعه مرجع حتمي (مسح بخطوة 20 ثم تنصيف على حافّة كلّ مجال جدوى). المعتمد هو الأفضل من الاثنين.</p>
+  </div>
+</section>
+
+<section id="verification">
+  <h2><span class="sn">03</span>التحقّق المستقلّ</h2>
+  <p class="lead">خمسة فحوص بأكواد مستقلّة، ثم ناقد، ثم تدقيق لكلّ ادّعاء في التقرير.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>الفحص</th><th>النتيجة</th></tr></thead>
+    <tbody>
+      <tr><td>ZOA مقابل SDM لنفس النموذج المتوسَّط</td><td>فرق أقصى 2×10⁻⁵؛ مقابل مسح الفصوص 1.6×10⁻⁶؛ لا جذور مفقودة</td></tr>
+      <tr><td>ZOA مقابل النموذج الدوري الكامل بالحلزون</td><td>ZOA محافظ بـ 0–1.04 %</td></tr>
+      <tr><td>نمط المشغّل (8.4 Hz)</td><td>لا جذور منخفضة التردد ما دام الكسب تحت 2.4×10⁴ V·s/m</td></tr>
+      <tr><td>الصيغة القديمة مقابل ZOH دقيق بالخطوة نفسها</td><td>≤ 4.5×10⁻⁵ (10⁻³ في ارتجاج سريع النموّ)؛ القوّة المتوسّطة والحلزون والقصّ صحيحة</td></tr>
+      <tr><td>الصيغة النهائية مقابل ZOH دقيق متقارب (8192 خطوة)</td><td>0.10–0.63 % عند 512 خطوة (القديمة 1.7–7.8 %)؛ الطلب ضمن 0.18 %</td></tr>
+      <tr><td>الحدّ الزمني مقابل ZOA (الصيغة النهائية، 8 حالات)</td><td>+0.4 % إلى +2.2 %</td></tr>
+      <tr><td>SADE مقابل القوّة الغاشمة</td><td>مطابق للخوارزمية؛ بلغ الحلّ الأمثل في 30/30 تشغيلة</td></tr>
+      <tr><td>تدقيق ادّعاءات التقرير</td><td>188 ادّعاءً: 149 صحيحة، و29 صُحِّحت بعد تأكيد مستقلّ</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><p>الفحوص كشفت ثلاثة عيوب عددية في كودنا أُصلحت قبل التشغيل النهائي: تأخّر نصف الخطوة في القوّة،
+  وكاشف ارتجاج يخطئ في الحالات الحدّية، ونافذة توقّف قصيرة توقف SADE قبل حافّة الجدوى.</p></div>
+</section>
+
+<section id="paper">
+  <h2><span class="sn">04</span>ما كشفته إعادة الإنتاج في الورقة</h2>
+  <p class="lead">أرقام مقيسة من بيانات الورقة المتّجهية. لا يُستنتج منها قصد.</p>
+
+  <h3 class="sub3">التخميد المستعمل في الحسابات 1.34 % لا 1.45 %</h3>
+  <div class="col"><p>منحنى «المُعرَّف» في الشكل 5 هو الجدول 1 بالضبط (1.4499 %). لكنّ كلّ منحنى محسوب يلائم 1.34 %:
+  قمّة FRF في الشكل 6a (−111.10 dB، مقابل −111.79 لو كانت 1.45 %)، والقطب في الشكل 6b (1.3405 %)،
+  والحدّ غير المتحكَّم فيه في الشكل 9 (1.3394 %). بـ 1.34 % يطابق نموذجنا الشكل 9 بوسيط 0.04 %.
+  و1.34 هي أيضًا مانتيسا الصلابة <span class="m">1.34×10<sup>7</sup></span>.</p></div>
+
+  <h3 class="sub3">تسميات الكسب في الشكل 6 لا توافق منحنياته</h3>
+  <div class="col"><p>اللوحتان متّفقتان فيما بينهما، وتوافقان الكسب المكتوب عند 1300 rpm فقط (1162).
+  المنحنيات الأخرى تقابل <span class="num">1543 و685 و830</span> V·s/m مقابل التسميات 1487 و585 و797.</p></div>
+
+  <h3 class="sub3">جزءٌ من الشكل 9 مغطّى، وهو تحت المنحنى غير المتحكَّم فيه</h3>
+  <div class="col">
+    <p>في ملف الـ PDF رُسمت ستّة مستطيلات بيضاء بعد المنحنيين؛ خمسةٌ منها تغطّي المنحنى المتحكَّم فيه على
+    <b>1498.5–2050.8 rpm</b> و<b>958.5–975.4 rpm</b>. هذان المجالان يطابقان، في حدود 8 rpm، المواضعَ التي ينزل فيها
+    المنحنى المتحكَّم فيه <b>تحت</b> غير المتحكَّم فيه، بفارق يبلغ 25.9 mm عند 1950 rpm (3.24 مقابل 29.17 mm).</p>
+    <div class="note bad"><p>تحت معادلة الورقة (2) هذا مستحيل: الكسب صفر لا يطلب أيّ قوّة فهو مقبول دائمًا، ولياقته هي الحدّ غير المتحكَّم فيه.</p></div>
+    <p>وخارج المجالين أيضًا لا يساوي المنحنى المتحكَّم فيه الحدَّ الترددي عند كسب الشكل 8 نفسه: على 192 سرعة، وسيط
+    الانحراف 18 %، و2 فقط ضمن 2 %.</p>
+  </div>
+
+  <h3 class="sub3">مقاطع مستقيمة في خريطة الكسب، وأرقام لا تتّسق</h3>
+  <ul class="tight col">
+    <li>37 من 251 سرعة في الشكل 8 بلا رأس؛ المنحنى خطّي حرفيًّا على 1410–1860 و620–740 و500–550 و560–610 rpm. الفرضية: استيفاء، لا نتائج تحسين.</li>
+    <li>عند 1300 rpm تعطي الورقة أربعة أعماق: 10 و11.49 و11.8 و12.0 mm، والمثال المحلول يتعارض مع الجدول 3 ما دام الحدّ يزيد مع الكسب.</li>
+    <li>«أسوأ حالة 3.6 mm» لا تطابق أيّ قيمة دنيا مرسومة (المغطّاة 3.22، الظاهرة 3.80).</li>
+    <li>منحنى الشكل 11 «بالكسب 237» يلائمه في نموذجنا كسبٌ ثابت ≈270.</li>
+  </ul>
+
+  <h3 class="sub3">ما لا تذكره الورقة واخترناه</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>الغموض</th><th>الاختيار</th><th>أثره</th></tr></thead>
+    <tbody>
+      <tr><td>وحدة الطلب: <span class="m"><i>g ẋ</i></span> بالفولت يُقارَن بـ 27 N</td><td>القوّة <span class="m">3<i>g</i>|<i>ẋ</i>|</span></td><td>قراءة الفولت تضاعف الكسب 2–3×</td></tr>
+      <tr><td>مجال البحث</td><td>[0, 3000] V·s/m</td><td>الحدّ الأدنى صفر يمنع النزول تحت غير المتحكَّم فيه</td></tr>
+      <tr><td>إعدادات SADE</td><td>20 فردًا، ≤ 60 جيلًا، توقّف بعد 25 جيلًا راكدًا، 3 بذور</td><td>متحقَّق منها بالقوّة الغاشمة</td></tr>
+      <tr><td>كيف تدخل القوّة المحاكاة</td><td>عند كلّ مرحلة RK4</td><td>الصيغة الثابتة تُخفّض الكسب منخفض السرعة حتى 3×</td></tr>
+      <tr><td>كسب DVF المقصوص</td><td>1500 و3000 V·s/m</td><td>§5.5</td></tr>
+      <tr><td>مرجع SADE</td><td>SaDE لـ Qin وآخرين 2009</td><td>لا أثر في بُعد واحد</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="results">
+  <h2><span class="sn">05</span>النتائج مقابل الورقة</h2>
+  <p class="lead">في كلّ شكل: خطّ الورقة أحمر (من بياناتها المتّجهية)، وخطّنا أزرق.</p>
+
+  <h3 class="sub3">5.1 الحلقة المفتوحة والمغلقة</h3>
+  <div class="col"><p>بـ 1.34 % تطابق قممُ الفصوص قممَ الورقة: في الورقة 6.78 / 8.99 / 13.64 / 29.27 mm عند
+  488 / 651 / 977 / 1952 rpm، ونموذجنا عند السرعات نفسها 6.78 / 8.99 / 13.63 / 29.26 mm؛ وأدنى الحدّ 1.213 mm.</p></div>
+  <figure class="narrow">
+    <div class="plate"><img src="figures/r02_fig6_frf_poles.png" alt="FRF الحلقة المغلقة ومواقع الأقطاب بكسوب الورقة، مع منحنيات الورقة منقّطة" loading="lazy"></div>
+    <figcaption><b>الشكل 6 مُعادًا.</b> مطابق عند 1300 rpm (كسب 1162)؛ عند السرعات الأخرى تقابل منحنياتُ الورقة كسوبًا غير المكتوبة.</figcaption>
+  </figure>
+
+  <h3 class="sub3">5.2 خريطة الكسب</h3>
+  <figure>
+    <div class="plate"><img src="figures/r03_fig8_gain_map_main.png" alt="خريطة الكسب المعادة مقابل الشكل 8" loading="lazy"></div>
+    <figcaption><b>الشكل 8 مُعادًا.</b> SADE يبلغ القيمة المثلى في 250 من 251 سرعة. القفزة قرب 2300 rpm حقيقية: مجال الجدوى متشظٍّ هناك، والطلب يهبط تحت 27 N في جيب ضيّق من الكسب.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>المجال (rpm)</th><th class="n">الكسب: نحن/الورقة</th><th class="n">العمق: نحن/الورقة</th><th>ملاحظة</th></tr></thead>
+    <tbody>
+      <tr><td>500–1150</td><td class="n">0.74</td><td class="n hl">1.02</td><td>العمق نفسه بكسب أصغر</td></tr>
+      <tr><td>1160–1490</td><td class="n">0.88</td><td class="n hl">0.97</td><td></td></tr>
+      <tr><td>1500–2050</td><td class="n">—</td><td class="n">—</td><td>منحنى الورقة هنا هو الجزء المغطّى</td></tr>
+      <tr><td>2060–2310</td><td class="n">1.83</td><td class="n">—</td><td>كسبنا أكبر (849 مقابل 445 عند 2300)</td></tr>
+      <tr><td>2320–3000</td><td class="n hl">0.97</td><td class="n">1.17</td><td>الكسب نفسه تقريبًا (المدى 0.90–1.04)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="col"><p>مدى الكسب عندنا 71–1046 V·s/m (الورقة 257–1487). أدناه 71 عند 1950 rpm، حيث تردّد مرور الأسنان
+  (130 Hz) يكاد يساوي تردّد النمط (129.3 Hz): الاهتزاز القسري رنّان فلا يحتمل المشغّل إلّا كسبًا صغيرًا.</p></div>
+
+  <h3 class="sub3">5.3 حدّ الاستقرار المتحكَّم فيه</h3>
+  <figure>
+    <div class="plate"><img src="figures/r04_fig9_sld_main.png" alt="حدّ الاستقرار المتحكَّم فيه المعاد مقابل الشكل 9، مع الجزء المغطّى مظلّلًا" loading="lazy"></div>
+    <figcaption><b>الشكل 9 مُعادًا.</b> الجزء المظلّل من منحنى الورقة موجود في ملفّها لكنه مغطّى بمستطيلات بيضاء.</figcaption>
+  </figure>
+  <ul class="tight col">
+    <li>تحت 1500 rpm يتّفق منحنانا مع الورقة في المستوى (≈11–12 mm) لا في الشكل: منحنى الورقة هضبات مسطّحة، أطولها في 810–1150 rpm بكسب شبه ثابت (1147–1156)، وبكسب ثابت قريب يتراوح حدّنا الترددي هناك بين 12 و23 mm.</li>
+    <li>في 2320–3000 rpm منحنانا أعلى بـ 17 % بالكسب نفسه تقريبًا، لأنّ منحنى الورقة أدنى من الحدّ الترددي عند كسوبها هي.</li>
+    <li>أسوأ حالة عندنا 5.97 mm عند 2330 rpm (الورقة: 3.6). أقصى تحسين 9.7× عند 520 rpm، و8.7× عند 730 rpm (الورقة ≈13×).</li>
+  </ul>
+
+  <h3 class="sub3">5.4 الكسب الثابت</h3>
+  <figure class="narrow">
+    <div class="plate"><img src="figures/r05_fig11_single_gain_main.png" alt="حدّ الاستقرار بالكسب الثابت المعاد 60 مقابل 237" loading="lazy"></div>
+    <figcaption><b>الشكل 11 مُعادًا.</b> الكسب الثابت المعاد 60.3 V·s/m (SADE: 56.3 و59.1). تحكمه السرعة 1970 rpm قرب الرنين القسري.</figcaption>
+  </figure>
+  <div class="col"><p>الكسب 237 يتخطّى حدّ القوّة في نموذجنا عند <b>18 سرعة</b> (1910–2010 و2060–2120 rpm). لذلك البديل الثابت عندنا
+  أضعف منه في الورقة: متوسّط الحدّ 6.5 mm مقابل 12.75 mm للخريطة.</p></div>
+
+  <h3 class="sub3">5.5 الجدول 3: DVF المقصوص مقابل الطريقة المقترحة</h3>
+  <div class="tbl"><table>
+    <thead><tr><th class="n">rpm</th><th class="n">الورقة: مقصوص</th><th class="n">الورقة: مقترحة</th><th class="n">نحن: مقصوص 1500</th><th class="n">نحن: مقصوص 3000</th><th class="n">نحن: مقترحة (زمني)</th><th class="n">نحن: مقترحة (ترددي)</th></tr></thead>
+    <tbody>
+      <tr><td class="n">500</td><td class="n">15.2</td><td class="n">14.9</td><td class="n">16.97</td><td class="n">20.40</td><td class="n">12.10</td><td class="n">12.07</td></tr>
+      <tr><td class="n">560</td><td class="n">8.7</td><td class="n">8.0</td><td class="n">16.18</td><td class="n">20.36</td><td class="n">10.84</td><td class="n">10.78</td></tr>
+      <tr><td class="n">600</td><td class="n">12.2</td><td class="n">11.8</td><td class="n">15.64</td><td class="n">20.16</td><td class="n">11.10</td><td class="n">11.06</td></tr>
+      <tr><td class="n">800</td><td class="n">11.2</td><td class="n">10.8</td><td class="n">15.31</td><td class="n">18.91</td><td class="n">10.91</td><td class="n">10.85</td></tr>
+      <tr><td class="n">1300</td><td class="n">12.1</td><td class="n">12.0</td><td class="n">14.15</td><td class="n">15.21</td><td class="n">11.08</td><td class="n">11.01</td></tr>
+      <tr><td class="n">2300</td><td class="n">4.5</td><td class="n">4.9</td><td class="n">13.66</td><td class="n">13.77</td><td class="n">12.01</td><td class="n">11.87</td></tr>
+      <tr><td class="n">2500</td><td class="n">4.7</td><td class="n">5.3</td><td class="n">12.95</td><td class="n">13.18</td><td class="n">6.36</td><td class="n">6.22</td></tr>
+      <tr><td class="n">2800</td><td class="n">5.8</td><td class="n">6.6</td><td class="n">12.45</td><td class="n">12.86</td><td class="n">7.31</td><td class="n">7.16</td></tr>
+      <tr><td class="n">3000</td><td class="n">6.2</td><td class="n">7.1</td><td class="n">12.60</td><td class="n">12.99</td><td class="n">8.08</td><td class="n">7.93</td></tr>
+    </tbody>
+  </table></div>
+  <div class="col">
+    <p>الأعماق بالمليمتر؛ الحدود الزمنية بكاشف التلاشي ومع حدّ جهد 9 V (أي 27 N).</p>
+    <div class="note warn"><p><b>لماذا ينعكس.</b> عند 2500 rpm و10 mm وبكسب 3000 يُشبَع المشغّل أثناء دخول الأداة فقط؛ في الحالة
+    المستقرّة يُخمد الكسبُ الكبير الاهتزازَ حتى لا يبلغ حدّ 9 V أبدًا، والقطع مستقرّ، بينما يرتجّ الكسب المقترح (536) عند العمق نفسه.
+    شرط الورقة يُقيَّم عند الحدّ بالضبط، حيث لا يتلاشى نمط الارتجاج، فيبقى أثر الدخول ويُرفَض كلّ كسب يُشبع المشغّل ولو لحظة.</p></div>
+    <p>والنتيجة لا تتوقّف على قيمة كسب القصّ: حدّ DVF المقصوص يزيد رتيبًا مع الكسب. عند 2500 rpm:
+    <span class="num">6.36 (536) ← 6.43 (543) ← 8.38 (800) ← 12.95 (1500) ← 13.18 mm (3000)</span>.
+    فأيّ كسب قصّ لا يقلّ عن الكسب المقترح لا يُضعف DVF في نموذجنا.</p>
+  </div>
+
+  <h3 class="sub3">5.6 النقاط التجريبية والقطوع الموسومة</h3>
+  <figure>
+    <div class="plate"><img src="figures/r09_test_points_main.png" alt="النقاط التجريبية المنشورة مصنّفة بنموذجنا" loading="lazy"></div>
+    <figcaption><b>النقاط الـ 21 المنشورة.</b> مملوءة: النموذج يوافق المقيس؛ مفرّغة: يخالفه.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>المصنِّف</th><th class="n">يوافق المقيس</th></tr></thead>
+    <tbody>
+      <tr><td>الحدّ الترددي بكسوب الورقة (الشكل 8، 237، أو بلا تحكّم)</td><td class="n hl">19 / 21</td></tr>
+      <tr><td>الحدّ الترددي بكسوبنا</td><td class="n">15 / 21</td></tr>
+      <tr><td>المحاكاة الزمنية بكسوبنا (حدّ 9 V)</td><td class="n">15 / 21</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="tight col">
+    <li>النقطتان اللتان يخطئهما الجميع (1300 rpm/10 mm و2800 rpm/5.5 mm، ارتجاج مقيس) تقعان تحت منحنى الورقة نفسه أيضًا.</li>
+    <li>الفرق بين 19 و15 ثلاث قطوع مستقرّة بالكسب الثابت يتنبّأ لها كسبنا (60) بالارتجاج، ونقطة 760 rpm/10 mm.</li>
+    <li>القطع 12B بلا تحكّم يرتجّ في المحاكاة عند 131.6 Hz، والمقيس ≈133.3 Hz.</li>
+  </ul>
+  <figure>
+    <div class="plate"><img src="figures/r07_cuts_main.png" alt="محاكاة القطوع الستّ الموسومة: إشارة مرّة لكلّ دورة وطيفها" loading="lazy"></div>
+    <figcaption><b>نظائر الشكلين 10 و12 بالمحاكاة.</b> النقاط السوداء عيّنة مرّة لكلّ دورة؛ الخطوط المنقّطة توافقيات مرور الأسنان.</figcaption>
+  </figure>
+</section>
+
+<section id="sensitivity">
+  <h2><span class="sn">06</span>الحساسية للاختيارات غير المذكورة</h2>
+  <figure>
+    <div class="plate"><img src="figures/r08_sensitivity.png" alt="حساسية خريطة الكسب والحدّ المتحكَّم فيه لأربعة اختيارات" loading="lazy"></div>
+    <figcaption><b>أربع حالات.</b> الأساسية، وتخميد 1.45 %، وقراءة الطلب بالفولت، وقوّة ثابتة على الخطوة.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <thead><tr><th>الحالة</th><th class="n">مدى الكسب</th><th class="n">الكسب/الورقة</th><th class="n">العمق/الورقة</th></tr></thead>
+    <tbody>
+      <tr><td><b>الأساسية</b></td><td class="n">71–1046</td><td class="n">0.74 · 0.88 · 1.01</td><td class="n">1.02 · 0.97 · 1.18</td></tr>
+      <tr><td>تخميد 1.45 %</td><td class="n">64–1039</td><td class="n">0.74 · 0.87 · 1.01</td><td class="n">1.03 · 0.98 · 1.20</td></tr>
+      <tr><td>الطلب بالفولت</td><td class="n">780–1971</td><td class="n">1.54 · 1.68 · 2.66</td><td class="n">1.81 · 1.82 · 3.14</td></tr>
+      <tr><td>قوّة ثابتة على الخطوة</td><td class="n">67–813</td><td class="n">0.50 · 0.57 · 0.98</td><td class="n">0.69 · 0.72 · 1.17</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="tight col">
+    <li>النسب لثلاثة مجالات: 500–1150 · 1160–1490 · 2060–3000 rpm. وسيط المجال الأخير (1.01) يجمع فرعين: 2320–3000 (0.97) و2060–2310 (1.83).</li>
+    <li>التخميد لا يحرّك الخريطة (الكسب نفسه بوسيط 1.00)؛ أثره على الحدّ غير المتحكَّم فيه وحده.</li>
+    <li>قراءة الفولت مرفوضة: تضاعف الكسب 2.7× حيث تطابق القراءة الأساسية الورقة.</li>
+    <li>صيغة القوّة الثابتة تُخفّض الكسب تحت 1500 rpm بوسيط 0.63 (حتى 0.30): اختيار عددي غير مذكور يحرّك الخريطة بعامل 3، فمقارنة السرعات المنخفضة محدودة الدلالة.</li>
+  </ul>
+</section>
+
+<section id="conclusion">
+  <h2><span class="sn">07</span>الخلاصة والحدود</h2>
+  <div class="col">
+    <p><b>أُعيد بثقة:</b> النموذج ومنحناه غير المتحكَّم فيه (0.04 %)، حلقة DVF (الشكل 6 عند 1300 rpm)، الطريقة كلّها
+    على 251 سرعة، والكسب في 2320–3000 rpm (وسيط 0.97)، ومستوى العمق المتحكَّم فيه تحت 1500 rpm.</p>
+    <p><b>لم يُعَد، ولماذا:</b></p>
+    <ol class="tight">
+      <li>منحنى الشكل 9 في 1500–2050 rpm: يقع تحت الحدّ غير المتحكَّم فيه، وهو مغطّى في الـ PDF.</li>
+      <li>الكسب الثابت 237: نحصل على 60، و237 يتخطّى حدّ القوّة عند 18 سرعة.</li>
+      <li>الكسب في 2060–2310 rpm: كسبنا أكبر بـ 1.2–1.9×.</li>
+      <li>تفوّق الطريقة على DVF المقصوص: ينعكس، لأنّ شرط الجدوى عند الحدّ يعاقب إشباع لحظة الدخول.</li>
+      <li>الكسوب تحت 1500 rpm أصغر بـ 12–26 % مع العمق نفسه، وهي حسّاسة بعامل 3 لطريقة إدخال القوّة.</li>
+    </ol>
+    <p><b>حدود هذا العمل:</b> لا تجارب؛ نمط واحد كما في الورقة (أنماط العارضة 23 و47 Hz مُهمَلة مثلها)؛ تجديد لمرّة
+    واحدة، فتتباعد بعض القطوع المرتجّة بدل أن تستقرّ؛ ومجال البحث وإعدادات SADE وكسب القصّ اختيارات موثّقة.</p>
+  </div>
+</section>
+
+<section id="run">
+  <h2><span class="sn">08</span>التشغيل</h2>
+  <p class="lead">الكود والنتائج في المستودع، في المجلّد <code>ozsoy2026/</code>، وتعليمات التشغيل الكاملة في <code>ozsoy2026/README.md</code>.</p>
+<pre class="run">cd ozsoy2026/src
+python extract_vector_figs.py &lt;paper.pdf&gt; ../digitized   <span class="c"># curves recovered from the PDF</span>
+python run_gain_map.py --tag main --sade                  <span class="c"># Figs 8, 9 (~3 h on 4 cores)</span>
+python run_single_gain.py --tag main --sade
+python run_table3.py --tag main
+python run_cuts.py --tag main
+python figures.py --tag main</pre>
+</section>
+
+<footer>
+  <p>كلّ الكود والنصّ هنا مكتوبان من جديد؛ لم يُنسخ شيء من نصّ الورقة. الأرقام والمنحنيات المأخوذة منها مُسمّاة المصدر،
+  والمنحنيات مسترجَعة من مسارات ملفّها المتّجهية. التدقيق الكامل لكلّ ادّعاء في <code>ozsoy2026/verification/claim_audit/</code>.</p>
+</footer>
+
+</div>
