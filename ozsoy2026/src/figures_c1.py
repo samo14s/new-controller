@@ -121,29 +121,35 @@ def c1_03_kicks(rpm=2500, a=15e-3, g=1500.0):
 def c1_04_basin():
     b, d = load("c1_basin.npz"), load("c1_df.npz")
     speeds = sorted(set(b["rpm"].tolist()))
-    fig, ax = plt.subplots(1, len(speeds), figsize=(11, 3.3), sharey=True)
+    top = 700.0                                    # where "no chatter up to 1 m/s" is drawn
+    fig, ax = plt.subplots(1, len(speeds), figsize=(11, 3.4), sharey=True)
     for i, n in enumerate(speeds):
-        m = (b["rpm"] == n) & (b["vmax"] > 0)
-        f, dv = b["frac"][m], b["dv"][m] * 1e3
-        med = np.array([np.nanmedian(np.where(np.isinf(r), np.nan, r)) for r in dv])
-        lo = np.array([np.nanmin(np.where(np.isinf(r), np.nan, r)) for r in dv])
-        hi = np.array([np.nanmax(np.where(np.isinf(r), np.nan, r)) for r in dv])
-        ax[i].fill_between(f, lo, hi, color=BAD, alpha=0.2, lw=0)
-        ax[i].plot(f, med, "o-", color=BAD, ms=3, lw=1, label="critical kick (TD, 16 phases)")
         j = int(np.argmin(np.abs(d["rpm"] - n)))
         g = d["g"][j]
-        ax[i].plot(d["frac"], d["A_single"][j] / g * 1e3, color=GREY, ls="--", lw=1, label="DF, single input")
-        ax[i].plot(d["frac"], d["A_dual"][j] / g * 1e3, color=OURS, lw=1, label="DF, with forced command")
+        m = (b["rpm"] == n) & (b["vmax"] > 0)
+        f, dv = b["frac"][m], b["dv"][m] * 1e3
+        fin = np.all(np.isfinite(dv), axis=1)
+        med, lo, hi = np.median(dv, axis=1), dv.min(axis=1), dv.max(axis=1)
+        ax[i].fill_between(f[fin], lo[fin], hi[fin], color=BAD, alpha=0.2, lw=0)
+        ax[i].plot(f[fin], med[fin], "o-", color=BAD, ms=3, lw=1, label="critical kick, |V| <= 9 V (TD, 16 phases)")
+        if (~fin).any():
+            ax[i].plot(f[~fin], np.full((~fin).sum(), top), "^", color=BAD, mfc="none", ms=5,
+                       label="|V| <= 9 V: no chatter up to 1 m/s")
         mf = (b["rpm"] == n) & (b["vmax"] == 0)
-        for fr, r in zip(b["frac"][mf], b["dv"][mf]):
-            if np.all(np.isinf(r)):
-                ax[i].annotate("no limit: no chatter\nup to 1 m/s", (fr, 300), fontsize=6.5, ha="center")
-        ax[i].set(yscale="log", ylim=(0.3, 1000), xlim=(0.45, 1.0), title=f"{n:.0f} rpm, g = {g:.0f}",
+        ax[i].plot(b["frac"][mf], np.full(mf.sum(), top), "^", color=GREY, ms=5,
+                   label="no limit: no chatter up to 1 m/s")
+        A2 = d["A_dual"][j] / g * 1e3
+        ax[i].plot(d["frac"], d["A_single"][j] / g * 1e3, color=GREY, ls="--", lw=1, label="DF, single input")
+        ax[i].plot(d["frac"], A2, color=OURS, lw=1, label="DF, with the forced command")
+        r = med[fin] / np.interp(f[fin], d["frac"], A2)
+        ax[i].text(0.04, 0.04, f"TD / DF: {r.min():.1f}-{r.max():.1f}", transform=ax[i].transAxes, fontsize=7.5)
+        ax[i].set(yscale="log", ylim=(0.3, 1500), xlim=(0.45, 1.0), title=f"{n:.0f} rpm, g = {g:.0f}",
                   xlabel="depth / a_lim(g)")
     ax[0].set(ylabel="velocity amplitude (mm/s)")
-    ax[0].legend(fontsize=6.5, loc="lower left")
-    fig.suptitle("C1-4  Basin of the stable cut shrinks to zero at a_lim; describing function vs simulation",
-                 fontsize=9)
+    h, l = ax[1].get_legend_handles_labels()
+    fig.legend(h, l, fontsize=7, loc="lower center", ncol=5, bbox_to_anchor=(0.5, -0.1))
+    fig.suptitle("C1-4  The basin of the stable cut shrinks to zero at a_lim; the describing function "
+                 "is a conservative estimate of it", fontsize=9, y=1.03)
     save(fig, "c1_04_basin_vs_depth.png")
 
 
