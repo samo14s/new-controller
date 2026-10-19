@@ -28,7 +28,8 @@ Directions certified here:
 Every solution is re-checked in the original P-form with exact eigenvalues.
 If the check fails, the problem is solved again with a larger margin.
     python c2_certificate.py validate      -> ../results/c2_validate.npz
-    python c2_certificate.py stepmap       -> ../results/c2_stepmap.npz/.csv
+    python c2_certificate.py surface       -> ../results/c2_surface.npz (kick, 40 rpm x 7 depths)
+    python c2_certificate.py step          -> ../results/c2_step.npz (step entry, C1 basin speeds)
 """
 import argparse
 import os
@@ -46,6 +47,7 @@ VMAX = P.F_MAX / P.GA_GAIN
 KAPPA = P.N_TEETH * P.K_TC * ALPHA / (4 * np.pi)      # dynamic force = KAPPA a (x - x(t - T))
 R2 = np.sqrt(2.0)
 TIGHT = dict(tol_gap_abs=1e-10, tol_gap_rel=1e-10, tol_feas=1e-10, max_iter=400)
+FAST = {}                                   # solver defaults: ~2x faster, 3-5 % smaller certificates
 
 
 # --------------------------------------------------------------- model ----
@@ -272,7 +274,7 @@ def check(A, B, K, u0, e, d, W, Y, S, rel=1e-9):
 LAM_FRAC = (0.05, 0.2, 0.5)                    # decay-rate margins tried, as fractions of the linear rate
 
 
-def certify(A, B, K, u0, e, rpm):
+def certify(A, B, K, u0, e, rpm, settings=TIGHT):
     """Certified size along e, checked in the P-form; the decay-rate margin
     is raised until the check passes."""
     sigma = -np.linalg.eigvals(A).real.max()
@@ -282,7 +284,7 @@ def certify(A, B, K, u0, e, rpm):
         return 0.0, "orbit saturates"
     d = scaling(A, rpm)
     for f in LAM_FRAC:
-        beta, (W, Y, S), status = lmi(A, B, K, u0, e, d, lam=f * sigma)
+        beta, (W, Y, S), status = lmi(A, B, K, u0, e, d, lam=f * sigma, settings=settings)
         size, msg = check(A, B, K, u0, e, d, W, Y, S)
         if size > 0:
             return min(size, beta), f"{status}; checked, lam = {f:g} sigma"
@@ -419,19 +421,19 @@ def certify_periodic(A, B, K, b, e, rpm, Kp=16, kick_all_phases=True):
     return 0.0, f"{status}; {msg}"
 
 
-def certify_kick(rpm, a, g, N=None):
+def certify_kick(rpm, a, g, N=None, settings=TIGHT):
     A, B, K = model(rpm, a, g, N)
     _, b = orbit(rpm, g, a, N)
     e = np.zeros(len(B))
     e[1] = 1.0
-    return certify(A, B, K, VMAX - np.abs(b).max(), e, rpm)
+    return certify(A, B, K, VMAX - np.abs(b).max(), e, rpm, settings)
 
 
-def certify_step(rpm, a, g, N=None):
+def certify_step(rpm, a, g, N=None, settings=TIGHT):
     """beta >= 1: the cut entered at rest on a fresh surface is certified."""
     A, B, K = model(rpm, a, g, N)
     x0, b = orbit(rpm, g, a, N)
-    return certify(A, B, K, VMAX - np.abs(b).max(), -x0, rpm)
+    return certify(A, B, K, VMAX - np.abs(b).max(), -x0, rpm, settings)
 
 
 def certify_kick_periodic(rpm, a, g, N=None, Kp=16):
@@ -507,13 +509,69 @@ def run_stepmap(a):
     print(f"certified step-entry depth at {len(rpm)} speeds: {cert.min():.2f}-{cert.max():.2f} mm")
 
 
+SURF_FRAC = (0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.98)
+
+
+def _surface(args):
+    rpm, g, frac, zeta = args
+    P.set_damping(zeta)
+    a = frac * a_lim(rpm, g)
+    beta, msg = certify_kick(rpm, a, g, settings=FAST)
+    _, b = orbit(rpm, g, a)
+    return beta, VMAX - np.abs(b).max(), msg
+
+
+def run_surface(a):
+    """Certified kick on a grid of speeds and depths (solver defaults)."""
+    d = np.load(os.path.join(RES, "feas_g1500.npz"))
+    rpm, g = d["rpm"], d["g_best"]
+    sel = (rpm - rpm[0]) % a.step == 0
+    rpm, g = rpm[sel], g[sel]
+    jobs = [(float(n), float(gg), f, float(d["zeta"])) for n, gg in zip(rpm, g) for f in SURF_FRAC]
+    with Pool(a.workers) as pool:
+        res = pool.map(_surface, jobs, chunksize=1)
+    shape = (len(rpm), len(SURF_FRAC))
+    beta = np.array([r[0] for r in res]).reshape(shape)
+    u0 = np.array([r[1] for r in res]).reshape(shape)
+    al = np.array([a_lim(n, gg) for n, gg in zip(rpm, g)]) * 1e3
+    np.savez_compressed(os.path.join(RES, "c2_surface.npz"), rpm=rpm, g=g, frac=np.array(SURF_FRAC), a_lim=al,
+                        cert=beta, u0=u0, msg=np.array([r[2] for r in res]).reshape(shape))
+    print(f"surface: {len(rpm)} speeds x {len(SURF_FRAC)} depths, checked {np.sum(beta > 0)}/{beta.size}; "
+          f"certified kick at 0.9 a_lim {np.nanmin(beta[:, 4])*1e3:.2f}-{np.nanmax(beta[:, 4])*1e3:.2f} mm/s")
+
+
+STEP_FRAC = (0.3, 0.5, 0.6, 0.7, 0.8, 0.9)
+
+
+def _step(args):
+    rpm, g, frac, zeta = args
+    P.set_damping(zeta)
+    return certify_step(rpm, frac * a_lim(rpm, g), g)
+
+
+def run_step(a):
+    """Step-entry certificate at the C1 basin speeds (beta >= 1 certifies)."""
+    from c1_unsafe_zone import BASIN_RPM
+    d = np.load(os.path.join(RES, "feas_g1500.npz"))
+    jobs = [(float(n), float(np.interp(n, d["rpm"], d["g_best"])), f, float(d["zeta"]))
+            for n in BASIN_RPM for f in STEP_FRAC]
+    with Pool(a.workers) as pool:
+        res = pool.map(_step, jobs, chunksize=1)
+    beta = np.array([r[0] for r in res]).reshape(len(BASIN_RPM), len(STEP_FRAC))
+    np.savez_compressed(os.path.join(RES, "c2_step.npz"), rpm=np.array(BASIN_RPM, float),
+                        frac=np.array(STEP_FRAC), beta=beta)
+    for n, row in zip(BASIN_RPM, beta):
+        print(f"{n} rpm: step-entry beta " + " ".join(f"{f:.1f}:{b:.3f}" for f, b in zip(STEP_FRAC, row)))
+    print(f"largest step-entry beta {beta.max():.3f} (>= 1 would certify the entry)")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["validate", "stepmap"])
+    ap.add_argument("command", choices=["validate", "stepmap", "surface", "step"])
     ap.add_argument("--workers", type=int, default=4)
-    ap.add_argument("--step", type=int, default=20, help="stepmap: rpm spacing")
+    ap.add_argument("--step", type=int, default=40, help="stepmap/surface: rpm spacing")
     a = ap.parse_args()
-    dict(validate=run_validate, stepmap=run_stepmap)[a.command](a)
+    dict(validate=run_validate, stepmap=run_stepmap, surface=run_surface, step=run_step)[a.command](a)
 
 
 if __name__ == "__main__":
