@@ -1,23 +1,32 @@
 """C2: certified basin of the clipped DVF cut (saturated-LMI certificate).
 
-Model.  The deviation from the forced periodic orbit obeys the averaged
-(ZOA) milling DDE with the DVF loop (verification/zoa_sdm: ZOA and SDM agree to
-2e-5 here).  The delayed displacement is carried by its values at N Chebyshev
-nodes on [-T, 0] (pseudospectral collocation, Breda-Maset-Vermiglio), which
-gives an ODE of order 4 + N with spectral accuracy; N is chosen per speed.
-The clipped command is u = K x - psi(K x), where psi is the deadzone of the
-command around the forced orbit's command b(t).  The linear part K x stays
-inside the dynamics:  x' = A x - B psi(K x).
+What is proved, and for which model.  The certificate is a theorem about
+the averaged model below, not about the time-domain simulator.  The averaged
+model is validated against the simulator separately (run_validate: its
+critical kick against the simulated one).
 
-Sector.  For |b(t)| <= b_max < V, the deadzone of sat(b + w) - b satisfies the
-generalised sector condition with level u0 = V - b_max, at every t (see
-docs in the report, section 12): if |w - v| <= u0 then psi (psi - v) <= 0.
+Model.  The deviation from the forced periodic orbit obeys the averaged
+(ZOA) milling DDE with the DVF loop (verification/zoa_sdm: ZOA and SDM agree
+to 2e-5 on the stability limit here).  The delayed displacement is carried
+by its values at N Chebyshev nodes on [-T, 0] (pseudospectral collocation,
+Breda-Maset-Vermiglio).  This gives an ODE of order 4 + N whose rightmost
+eigenvalues match the DDE's to 3e-8; N is chosen per speed.  The clipped
+command is u = K x - psi(K x), where psi is the deadzone of the command
+around the forced orbit's command b(t).  The linear part K x stays inside the
+dynamics:  x' = A x - B psi(K x).  Left out (the simulator has them): the
+time-periodic cutting coefficient (+-12 % around its average) and the chip
+going to zero near the exit angle.
+
+Sector.  Let b_max bound |b(t)| over the whole period (dense samples plus an
+inter-sample bound from the orbit's harmonics).  For |b(t)| <= b_max < V,
+the deadzone of sat(b + w) - b satisfies the generalised sector condition
+with level u0 = V - b_max at every t: if |w - v| <= u0 then psi (psi - v) <= 0.
 With v = G x, a quadratic V(x) = x' P x and T > 0 this gives the LMIs
 (W = P^-1, Y = G W, S = 1/T; Gomes da Silva & Tarbouriech 2005):
-    [[-(A W + W A'), B S - Y'], [S B' - Y, 2 S]] > 0
-    [[W, W K' - Y'], [K W - Y, u0^2]] >= 0
-so E(P) = {x' P x <= 1} is contractive and invariant, and every deviation
-inside it returns to the orbit.  The size of E(P) along a direction e is
+    M1 = [[-(A W + W A') - 2 lam W, B S - Y'], [S B' - Y, 2 S]] > 0
+    M2 = [[W, W K' - Y'], [K W - Y, u0^2]] >= 0
+so E(P) = {x' P x <= 1} is invariant and every deviation inside it returns
+to the orbit (V' <= -2 lam V).  The size of E(P) along a direction e is
 maximised through [[1, beta e'], [beta e, W]] >= 0.
 
 Directions certified here:
@@ -25,8 +34,12 @@ Directions certified here:
   step   e = minus the orbit's state at t = 0, history included (the cut
          starting at rest on a fresh surface): beta >= 1 certifies the entry
 
-Every solution is re-checked in the original P-form with exact eigenvalues.
-If the check fails, the problem is solved again with a larger margin.
+Numerics.  Clarabel stops short of the optimum on these problems, so each
+problem is solved again in the coordinates whitened by the previous W
+(re-centring).  Every candidate is then checked independently of the solver:
+  * M1 at lam = 0 must have its smallest eigenvalue above a round-off bound;
+  * the inclusion and the size are computed through a Cholesky factor of W;
+  * an inclusion that is exceeded is repaired by shrinking (W, Y).
     python c2_certificate.py validate      -> ../results/c2_validate.npz
     python c2_certificate.py surface       -> ../results/c2_surface.npz (kick, 40 rpm x 7 depths)
     python c2_certificate.py step          -> ../results/c2_step.npz (step entry, C1 basin speeds)
@@ -36,7 +49,7 @@ import os
 from multiprocessing import Pool
 import numpy as np
 import scipy.sparse as sp
-from scipy.linalg import expm
+from scipy.linalg import expm, cholesky, solve_triangular
 import clarabel
 import params as P
 from zoa import a_lim, ALPHA
@@ -47,7 +60,7 @@ VMAX = P.F_MAX / P.GA_GAIN
 KAPPA = P.N_TEETH * P.K_TC * ALPHA / (4 * np.pi)      # dynamic force = KAPPA a (x - x(t - T))
 R2 = np.sqrt(2.0)
 TIGHT = dict(tol_gap_abs=1e-10, tol_gap_rel=1e-10, tol_feas=1e-10, max_iter=400)
-FAST = {}                                   # solver defaults: ~2x faster, 3-5 % smaller certificates
+FAST = {}                                   # solver defaults (faster; re-centring recovers most of the gap)
 
 
 # --------------------------------------------------------------- model ----
@@ -102,11 +115,17 @@ def history_nodes(rpm, N=None):
 
 
 # ------------------------------------------------------------ forced orbit ----
+N_DENSE = 4096
+
+
 def orbit(rpm, g, a, N=None, n_t=256):
     """Forced periodic orbit of the cut (regeneration vanishes on it).
 
-    Returns the model state at t = 0 (history at the collocation nodes) and
-    the command b(t) = -g v(t) over one tooth period.
+    Returns the model state at t = 0 (history at the collocation nodes), the
+    command b(t) = -g v(t) on n_t samples of one tooth period, and b_max, a
+    bound on |b(t)| over the whole period: the largest of N_DENSE samples plus
+    max|b''| dt^2 / 8, with |b''| <= 2 g sum_m w_m^3 |X_m|.  The orbit is
+    truncated to the N_HARM tooth-passing harmonics of feasibility.py.
     """
     from feasibility import force_harmonics, N_HARM
     from structure import Gcl
@@ -128,9 +147,12 @@ def orbit(rpm, g, a, N=None, n_t=256):
 
     th = history_nodes(rpm, N)
     state = np.concatenate([at(X, 0.0), at(X, 0.0, 1), at(Q, 0.0), at(Q, 0.0, 1), at(X, th)])
-    tt = np.arange(n_t) / n_t * 2 * np.pi / wT
-    b = -g * at(X, tt, 1)
-    return state, b
+    Tp = 2 * np.pi / wT
+    b = -g * at(X, np.arange(n_t) / n_t * Tp, 1)
+    bd = -g * at(X, np.arange(N_DENSE) / N_DENSE * Tp, 1)
+    b2 = 2 * g * np.sum(w[1:] ** 3 * np.abs(X[1:]))
+    bmax = np.abs(bd).max() + b2 * (Tp / N_DENSE) ** 2 / 8
+    return state, b, bmax
 
 
 # ----------------------------------------------------------------- SDP ----
@@ -198,14 +220,20 @@ def scaling(A, rpm, steps=4000, revs=50):
     return mx
 
 
-def lmi(A, B, K, u0, e, d, eps=1e-9, lam=0.0, settings=TIGHT):
+def transform(A, B, K, e, Tm):
+    """Coordinates x = Tm z (Tm a vector means diag(Tm))."""
+    Tm = np.diag(Tm) if np.ndim(Tm) == 1 else Tm
+    Ti = np.linalg.inv(Tm)
+    return Ti @ A @ Tm, Ti @ B, K @ Tm, Ti @ e
+
+
+def lmi(A, B, K, u0, e, Tm, eps=1e-9, lam=0.0, settings=TIGHT):
     """Largest beta with beta e in a certified ellipsoid.  Returns beta and
-    (W, Y, S) in the scaled coordinates x = diag(d) xs.  lam > 0 asks for the
-    decay rate V' <= -2 lam V inside the ellipsoid (a margin that scales with
-    W, so the solution stays strictly feasible after round-off)."""
+    (W, Y, S) in the coordinates x = Tm z.  lam > 0 asks for the decay rate
+    V' <= -2 lam V inside the ellipsoid; it is a margin that scales with W,
+    so the solution stays strictly feasible after round-off."""
     n = len(B)
-    Di = 1 / d
-    As, Bs, Ks, es = Di[:, None] * A * d[None, :], Di * B, K * d, Di * e
+    As, Bs, Ks, es = transform(A, B, K, e, Tm)
     I, J = np.triu_indices(n)
     nw = len(I)
     vW, vY, vS, vb = np.arange(nw), nw + np.arange(n), nw + n, nw + n + 1
@@ -244,210 +272,171 @@ def lmi(A, B, K, u0, e, d, eps=1e-9, lam=0.0, settings=TIGHT):
     return x[vb], (W, x[nw:nw + n], x[nw + n]), status
 
 
-def check(A, B, K, u0, e, d, W, Y, S, rel=1e-9):
-    """Re-check the certificate from (W, Y, S) in the P-form, exactly.
+def check(A, B, K, u0, e, Tm, W, Y, S):
+    """Check a candidate (W, Y, S) independently of the solver.
 
-    Returns the certified size along e (0 if a condition fails):
-    decrease  [[A'P + P A, -P B + G' T], [-B' P + T G, -2 T]] < 0 by a
-              relative margin rel (the decay-rate margin of lmi() supplies it),
-    inclusion (K - G) P^-1 (K - G)' <= u0^2, with P = W^-1, G = Y P, T = 1/S.
+    Decrease: M1 at lam = 0 must be positive definite.  The test is its
+    smallest computed eigenvalue against 1e3 n eps ||M1|| (eigvalsh is
+    backward stable, so this is beyond round-off).  W must be positive
+    definite, with condition number below 1e10.
+    Inclusion: q = (K W - Y) W^-1 (K W - Y)' <= u0^2; if not, (W, Y) is
+    scaled by c = u0^2 / q, which keeps M1 > 0.
+    Size: beta = sqrt(c / e' W^-1 e).  Both quadratic forms come from a
+    Cholesky factor of W and lose 1e-9 for safety.
+    Returns (size, message); size 0 means the candidate is rejected.
     """
-    Di = 1 / d
-    As, Bs, Ks, es = Di[:, None] * A * d[None, :], Di * B, K * d, Di * e
+    As, Bs, Ks, es = transform(A, B, K, e, Tm)
+    n = len(Bs)
+    W = (W + W.T) / 2
     lw = np.linalg.eigvalsh(W)
-    if lw.min() <= 0:
-        return 0.0, "W not positive"
-    Pm = np.linalg.inv(W)
-    Pm = (Pm + Pm.T) / 2
-    G = Y @ Pm
-    T = 1.0 / S
-    M = np.block([[As.T @ Pm + Pm @ As, (-Pm @ Bs + G * T)[:, None]],
-                  [(-Bs @ Pm + T * G)[None, :], np.array([[-2 * T]])]])
-    ev = np.linalg.eigvalsh((M + M.T) / 2)
-    if ev.max() >= -rel * np.abs(ev).max():
-        return 0.0, f"decrease fails ({ev.max() / np.abs(ev).max():+.1e})"
-    incl = (Ks - G) @ W @ (Ks - G) / u0 ** 2
-    shrink = 1.0 / np.sqrt(incl) if incl > 1 else 1.0          # shrink E(P) if it pokes out
-    return shrink / np.sqrt(es @ Pm @ es), "ok"
+    if lw.min() <= 0 or lw.max() / lw.min() > 1e10:
+        return 0.0, "W not positive definite or too ill-conditioned"
+    M1 = np.block([[-(As @ W + W @ As.T), (Bs * S - Y)[:, None]],
+                   [(Bs * S - Y)[None, :], np.array([[2.0 * S]])]])
+    M1 = (M1 + M1.T) / 2
+    ev = np.linalg.eigvalsh(M1)
+    tol = 1e3 * (n + 1) * np.finfo(float).eps * np.abs(ev).max()
+    if ev.min() <= tol:
+        return 0.0, f"decrease not strict ({ev.min() / np.abs(ev).max():+.1e})"
+    L = cholesky(W, lower=True)
+    z = solve_triangular(L, W @ Ks - Y, lower=True)
+    q = z @ z
+    c = min(1.0, (1 - 1e-9) * u0 ** 2 / q) if q > 0 else 1.0
+    y = solve_triangular(L, es, lower=True)
+    return float(np.sqrt(c / (y @ y)) * (1 - 1e-9)), ("ok" if c == 1.0 else f"ok, shrunk by {c:.12g}")
 
 
-LAM_FRAC = (0.05, 0.2, 0.5)                    # decay-rate margins tried, as fractions of the linear rate
+LAM_FRAC = (0.05, 0.2)                         # decay-rate margins tried, as fractions of the linear rate
+N_PASS = 3                                      # solves per margin: the first, then re-centred ones
 
 
-def certify(A, B, K, u0, e, rpm, settings=TIGHT):
-    """Certified size along e, checked in the P-form; the decay-rate margin
-    is raised until the check passes."""
+def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False):
+    """Largest checked size along e, over re-centred solves.  With full=True
+    also returns the certificate (Tm, P) with V(x) = z' P z, z = Tm^-1 x."""
     sigma = -np.linalg.eigvals(A).real.max()
     if sigma <= 0:
-        return 0.0, "linearly unstable"
+        return (0.0, "linearly unstable", None) if full else (0.0, "linearly unstable")
     if u0 <= 0:
-        return 0.0, "orbit saturates"
-    d = scaling(A, rpm)
+        return (0.0, "orbit saturates", None) if full else (0.0, "orbit saturates")
+    best, note, cert = 0.0, "no candidate passed the check", None
     for f in LAM_FRAC:
-        beta, (W, Y, S), status = lmi(A, B, K, u0, e, d, lam=f * sigma, settings=settings)
-        size, msg = check(A, B, K, u0, e, d, W, Y, S)
-        if size > 0:
-            return min(size, beta), f"{status}; checked, lam = {f:g} sigma"
-    return 0.0, f"{status}; {msg}"
-
-
-def lmi_periodic(A, B, K, u0s, e, d, Tp, lam=0.0, kick_all_phases=True, settings=TIGHT):
-    """Periodic certificate: W(t), Y(t), S(t) piecewise linear over the tooth
-    period on len(u0s) intervals, W(Tp) = W(0).  Interval i has the margin
-    u0s[i] = V - max |b(t)| over that interval.  Decrease on interval i:
-        [[Wdot - (A W + W A') - 2 lam W, B S - Y'], [S B' - Y, 2 S]] >= 0
-    with Wdot = (W_{i+1} - W_i) / dt; affine in t, so it is imposed at both
-    ends.  The size along e is imposed at every knot (a kick at any phase) or
-    only at t = 0 (the entry).  Returns beta and the knot values (scaled)."""
-    n, Kp = len(B), len(u0s)
-    dt = Tp / Kp
-    Di = 1 / d
-    As, Bs, Ks, es = Di[:, None] * A * d[None, :], Di * B, K * d, Di * e
-    I, J = np.triu_indices(n)
-    nw = len(I)
-    per = nw + n + 1                                   # W, Y, S per knot
-    vb = Kp * per
-    off = I != J
-    Io = I[off]
-    C = np.arange(n)
-    rr = np.concatenate([np.tile(C, nw), np.tile(C, len(Io))])
-    cc = np.concatenate([np.repeat(J, n), np.repeat(Io, n)])
-    idx = np.concatenate([np.repeat(np.arange(nw), n), np.repeat(np.arange(nw)[off], n)])
-    uu = np.concatenate([As[:, I].T.ravel(), As[:, J[off]].T.ravel()])
-
-    def vW(k): return (k % Kp) * per + np.arange(nw)
-    def vY(k): return (k % Kp) * per + nw + np.arange(n)
-    def vS(k): return (k % Kp) * per + nw + n
-
-    blocks = []
-    for i in range(Kp):
-        for k in (i, i + 1):                           # both ends of interval i
-            M1 = LMIBlock(n + 1)
-            M1.add(rr, cc, vW(k)[idx], -uu)
-            M1.add(cc, rr, vW(k)[idx], -uu)
-            M1.add(I, J, vW(i + 1), 1.0 / dt)           # Wdot
-            M1.add(I, J, vW(i), -1.0 / dt)
-            if lam > 0:
-                M1.add(I, J, vW(k), -2 * lam)
-            M1.add(C, n, vS(k), Bs)
-            M1.add(C, n, vY(k), -1.0)
-            M1.add(n, n, vS(k), 2.0)
-            blocks.append(M1)
-            M2 = LMIBlock(n + 1)
-            M2.add(I, J, vW(k), 1.0)
-            M2.add(I, n, vW(k), Ks[J])
-            M2.add(J[off], n, vW(k)[off], Ks[Io])
-            M2.add(C, n, vY(k), -1.0)
-            M2.add(n, n, -1, u0s[i] ** 2)
-            blocks.append(M2)
-    for k in (range(Kp) if kick_all_phases else (0,)):
-        M3 = LMIBlock(n + 1)
-        M3.add(0, 0, -1, 1.0)
-        M3.add(0, 1 + C, vb, es)
-        M3.add(1 + I, 1 + J, vW(k), 1.0)
-        blocks.append(M3)
-    nvar = vb + 1
-    c = np.zeros(nvar)
-    c[vb] = 1.0
-    x, status = solve_sdp(nvar, c, blocks, nonneg=[(vS(k), 1e-12) for k in range(Kp)] + [(vb, 0.0)],
-                          settings=settings)
-    knots = []
-    for k in range(Kp):
-        W = np.zeros((n, n))
-        W[I, J] = x[vW(k)]
-        W[J, I] = x[vW(k)]
-        knots.append((W, x[vY(k)], x[vS(k)]))
-    return x[vb], knots, status
-
-
-def check_periodic(A, B, K, u0s, e, d, Tp, knots, lam, kick_all_phases=True, rel=1e-9, nsub=8):
-    """Exact re-check of the periodic certificate.  On each interval the
-    decrease matrix is affine in t; it is checked at the ends and at nsub
-    interior points in the P-form P(t) = W(t)^-1 with Pdot = -P Wdot P.
-    Returns the certified size along e (0 if a check fails)."""
-    Kp = len(u0s)
-    dt = Tp / Kp
-    Di = 1 / d
-    As, Bs, Ks, es = Di[:, None] * A * d[None, :], Di * B, K * d, Di * e
-    size = np.inf
-    for i in range(Kp):
-        W0, Y0, S0 = knots[i]
-        W1, Y1, S1 = knots[(i + 1) % Kp]
-        Wd = (W1 - W0) / dt
-        for s in np.linspace(0, 1, nsub + 2):
-            W = (1 - s) * W0 + s * W1
-            Y = (1 - s) * Y0 + s * Y1
-            S = (1 - s) * S0 + s * S1
-            if np.linalg.eigvalsh(W).min() <= 0 or S <= 0:
-                return 0.0, "W or S not positive"
-            Pm = np.linalg.inv(W)
-            Pm = (Pm + Pm.T) / 2
-            G, T = Y @ Pm, 1.0 / S
-            Pd = -Pm @ Wd @ Pm
-            M = np.block([[Pd + As.T @ Pm + Pm @ As, (-Pm @ Bs + G * T)[:, None]],
-                          [(-Bs @ Pm + T * G)[None, :], np.array([[-2 * T]])]])
-            ev = np.linalg.eigvalsh((M + M.T) / 2)
-            if ev.max() >= -rel * np.abs(ev).max():
-                return 0.0, f"decrease fails on interval {i} ({ev.max() / np.abs(ev).max():+.1e})"
-            incl = (Ks - G) @ W @ (Ks - G) / u0s[i] ** 2
-            if incl > 1 + 1e-9:
-                return 0.0, f"inclusion fails on interval {i} ({incl:.6f})"
-            if kick_all_phases or (i == 0 and s == 0):
-                size = min(size, 1.0 / np.sqrt(es @ Pm @ es))
-    return size, "ok"
-
-
-def margins(b, Kp):
-    """Margin per interval: V - max |b| over each of Kp equal parts of the period."""
-    parts = np.array_split(np.abs(b), Kp)
-    return np.array([VMAX - p.max() for p in parts])
-
-
-def certify_periodic(A, B, K, b, e, rpm, Kp=16, kick_all_phases=True):
-    sigma = -np.linalg.eigvals(A).real.max()
-    if sigma <= 0:
-        return 0.0, "linearly unstable"
-    u0s = margins(b, Kp)
-    if u0s.min() <= 0:
-        return 0.0, "orbit saturates"
-    d = scaling(A, rpm)
-    Tp = 60.0 / (rpm * P.N_TEETH)
-    for f in LAM_FRAC:
-        beta, knots, status = lmi_periodic(A, B, K, u0s, e, d, Tp, lam=f * sigma,
-                                           kick_all_phases=kick_all_phases)
-        size, msg = check_periodic(A, B, K, u0s, e, d, Tp, knots, f * sigma, kick_all_phases)
-        if size > 0:
-            return min(size, beta), f"{status}; checked, lam = {f:g} sigma"
-    return 0.0, f"{status}; {msg}"
+        Tm = np.diag(scaling(A, rpm))
+        for p in range(N_PASS):
+            beta, (W, Y, S), status = lmi(A, B, K, u0, e, Tm, lam=f * sigma, settings=settings)
+            size, msg = check(A, B, K, u0, e, Tm, W, Y, S)
+            if size > best:
+                best = min(size, beta) if beta > 0 else size
+                note = f"{status}; pass {p}, lam {f:g} sigma; {msg}"
+                c = float(msg.split("by ")[1].rstrip(")")) if "shrunk" in msg else 1.0
+                cert = (Tm.copy(), np.linalg.inv(c * (W + W.T) / 2))
+            try:
+                Tm = Tm @ cholesky((W + W.T) / 2, lower=True)
+            except np.linalg.LinAlgError:
+                break
+        if best > 0:
+            break
+    return (best, note, cert) if full else (best, note)
 
 
 def certify_kick(rpm, a, g, N=None, settings=TIGHT):
     A, B, K = model(rpm, a, g, N)
-    _, b = orbit(rpm, g, a, N)
+    _, _, bmax = orbit(rpm, g, a, N)
     e = np.zeros(len(B))
     e[1] = 1.0
-    return certify(A, B, K, VMAX - np.abs(b).max(), e, rpm, settings)
+    return certify(A, B, K, VMAX - bmax, e, rpm, settings)
 
 
 def certify_step(rpm, a, g, N=None, settings=TIGHT):
     """beta >= 1: the cut entered at rest on a fresh surface is certified."""
     A, B, K = model(rpm, a, g, N)
-    x0, b = orbit(rpm, g, a, N)
-    return certify(A, B, K, VMAX - np.abs(b).max(), -x0, rpm, settings)
+    x0, _, bmax = orbit(rpm, g, a, N)
+    return certify(A, B, K, VMAX - bmax, -x0, rpm, settings)
 
 
-def certify_kick_periodic(rpm, a, g, N=None, Kp=16):
-    A, B, K = model(rpm, a, g, N)
-    _, b = orbit(rpm, g, a, N)
-    e = np.zeros(len(B))
+# ------------------------------------------------- simulating the model ----
+def _zoh(A, B, h):
+    n = len(B)
+    Mx = np.zeros((n + 1, n + 1))
+    Mx[:n, :n] = A
+    Mx[:n, n] = B
+    E = expm(Mx * h)
+    return E[:n, :n], E[:n, n]
+
+
+def run_model(A, B, K, b, Tp, X0, k0, nper, record=False):
+    """Simulate the averaged model with the true deadzone around b(t).
+
+    b holds len(b) samples of one tooth period Tp; the step is Tp/len(b),
+    the linear part is integrated exactly and the deadzone is held over a
+    step.  X0: n x m start deviations, k0: phase index of each.  Runs nper
+    periods; returns the final states, and every state if record.
+    """
+    L = len(b)
+    Ad, Bd = _zoh(A, B, Tp / L)
+    X = np.array(X0, float)
+    idx = np.array(k0, int) % L
+    hist = [X.copy()] if record else None
+    for _ in range(nper * L):
+        w = K @ X
+        bb = b[idx]
+        psi = w - (np.clip(bb + w, -VMAX, VMAX) - bb)
+        X = Ad @ X - np.outer(Bd, psi)
+        idx = (idx + 1) % L
+        if record:
+            hist.append(X.copy())
+    return (X, np.array(hist)) if record else X
+
+
+def proof_check(A, B, K, b, Tp, cert, nruns=48, nper=40, seed=0):
+    """Start on the boundary of the certified ellipsoid (0.999 of it) in
+    random directions and phases; return the largest V reached and the
+    largest final V.  The theorem says max V <= 1 (up to the step) and
+    V -> 0."""
+    Tm, Pz = cert
+    rng = np.random.default_rng(seed)
+    n = len(B)
+    Lp = cholesky(np.linalg.inv(Pz), lower=True)                    # Wz = Lp Lp'
+    U = rng.standard_normal((n, nruns))
+    U /= np.linalg.norm(U, axis=0)
+    X0 = 0.999 * Tm @ Lp @ U
+    k0 = rng.integers(0, len(b), nruns)
+    _, H = run_model(A, B, K, b, Tp, X0, k0, nper, record=True)
+    Ti = np.linalg.inv(Tm)
+    Z = np.einsum("ij,tjk->tik", Ti, H)
+    V = np.einsum("tik,ij,tjk->tk", Z, Pz, Z)
+    return float(V.max()), float(V[-1].max())
+
+
+def model_critical_kick(A, B, K, b, Tp, nphase=4, nper=1200, lo=1e-4, hi=3.0, nbis=9):
+    """Smallest velocity kick on the orbit that makes the averaged model
+    diverge, minimum over nphase phases (log bisection, all phases at once).
+    Diverged: the state norm (velocity-dominated, so comparable with the
+    kick) is not finite or above 10 dv after nper periods; a decaying run is
+    far below dv by then (the linear decay per tooth is <= 0.994 up to
+    0.98 a_lim, 0.994^1200 < 1e-3)."""
+    n, L = len(B), len(b)
+    e = np.zeros(n)
     e[1] = 1.0
-    return certify_periodic(A, B, K, b, e, rpm, Kp)
+    k0 = (np.arange(nphase) * L) // nphase
 
+    def diverges(dv):
+        with np.errstate(over="ignore", invalid="ignore"):
+            X = run_model(A, B, K, b, Tp, np.outer(e, np.full(nphase, dv)), k0, nper)
+            nrm = np.linalg.norm(X, axis=0)
+        return ~np.isfinite(nrm) | (nrm > 10 * dv)
 
-def certify_step_periodic(rpm, a, g, N=None, Kp=16):
-    A, B, K = model(rpm, a, g, N)
-    x0, b = orbit(rpm, g, a, N)
-    return certify_periodic(A, B, K, b, -x0, rpm, Kp, kick_all_phases=False)
+    if np.all(diverges(lo)):
+        return lo
+    if not np.any(diverges(hi)):
+        return np.inf
+    a, c = np.log(lo), np.log(hi)
+    for _ in range(nbis):
+        m = 0.5 * (a + c)
+        if np.any(diverges(np.exp(m))):
+            c = m
+        else:
+            a = m
+    return float(np.exp(c))
 
 
 # ------------------------------------------------------------ campaigns ----
@@ -455,27 +444,42 @@ def _validate(args):
     rpm, g, frac, zeta = args
     P.set_damping(zeta)
     a = frac * a_lim(rpm, g)
-    beta, msg = certify_kick(rpm, a, g)
-    return beta, msg
+    A, B, K = model(rpm, a, g)
+    _, b, bmax = orbit(rpm, g, a)
+    e = np.zeros(len(B))
+    e[1] = 1.0
+    size, note, cert = certify(A, B, K, VMAX - bmax, e, rpm, full=True)
+    Tp = 60.0 / (rpm * P.N_TEETH)
+    vmax, vend = proof_check(A, B, K, b, Tp, cert) if cert is not None else (np.nan, np.nan)
+    return size, note, vmax, vend, model_critical_kick(A, B, K, b, Tp)
 
 
 def run_validate(a):
-    """Certified kick at the C1 basin points, against the simulated one."""
+    """At the C1 basin points: the certified kick, the proof checked on its
+    own model (boundary starts), the averaged model's critical kick, and the
+    simulated (time-domain) critical kick."""
     b = np.load(os.path.join(RES, "c1_basin.npz"))
     m = b["vmax"] > 0
     jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
     with Pool(a.workers) as pool:
         res = pool.map(_validate, jobs, chunksize=1)
-    cert = np.array([r[0] for r in res])
+    cert, vmax, vend, mk = (np.array([r[k] for r in res]) for k in (0, 2, 3, 4))
     td_min = b["dv"][m].min(axis=1)
     np.savez_compressed(os.path.join(RES, "c2_validate.npz"), rpm=b["rpm"][m], g=b["g"][m], frac=b["frac"][m],
-                        cert=cert, td_min=td_min, td_median=np.median(b["dv"][m], axis=1),
-                        msg=np.array([r[1] for r in res]))
-    for (n, g, f, _), c, t, (_, msg) in zip(jobs, cert, td_min, res):
-        print(f"{n:.0f} rpm {f:.2f} a_lim: certified {c*1e3:7.3f} mm/s, TD min {t*1e3:8.2f} mm/s, "
-              f"ratio {t / c if c > 0 else np.inf:6.2f}  [{msg}]")
+                        cert=cert, model_kick=mk, td_min=td_min, td_median=np.median(b["dv"][m], axis=1),
+                        proof_vmax=vmax, proof_vend=vend, msg=np.array([r[1] for r in res]))
+    for (n, g, f, _), c, k, t, v, (_, msg, *_) in zip(jobs, cert, mk, td_min, vmax, res):
+        print(f"{n:.0f} rpm {f:.2f} a_lim: certified {c*1e3:7.3f}, model {k*1e3:8.2f}, TD min {t*1e3:8.2f} mm/s; "
+              f"max V {v:.5f}  [{msg}]")
+    fin = np.isfinite(mk) & (cert > 0)
+    print(f"certificate below the model's critical kick at {np.sum(cert[fin] <= mk[fin])}/{fin.sum()} points; "
+          f"proof check max V {np.nanmax(vmax):.5f}")
+    both = np.isfinite(mk) & np.isfinite(td_min)
+    r = mk[both] / td_min[both]
+    print(f"averaged model vs simulation (critical kick): {r.min():.2f}-{r.max():.2f}, median {np.median(r):.2f}")
     ok = np.isfinite(td_min) & (cert > 0)
-    print(f"sound (certified <= TD min) at {np.sum(cert[ok] <= td_min[ok])}/{ok.sum()} points")
+    print(f"certificate below the simulated critical kick at {np.sum(cert[ok] <= td_min[ok])}/{ok.sum()} points; "
+          f"TD / certificate {np.min(td_min[ok] / cert[ok]):.2f}-{np.max(td_min[ok] / cert[ok]):.2f}")
 
 
 def _step_depth(args):
@@ -517,8 +521,7 @@ def _surface(args):
     P.set_damping(zeta)
     a = frac * a_lim(rpm, g)
     beta, msg = certify_kick(rpm, a, g, settings=FAST)
-    _, b = orbit(rpm, g, a)
-    return beta, VMAX - np.abs(b).max(), msg
+    return beta, VMAX - orbit(rpm, g, a)[2], msg
 
 
 def run_surface(a):
