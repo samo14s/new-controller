@@ -52,9 +52,10 @@ def c1_01_map():
     a.plot(n, d["a_step_free"], color=GREY, lw=0.8, ls="--", label="step entry, no limit")
     a.plot(bd["rpm"], bd["a_band_low"], ".", color=SOFT, ms=3, label="lower edge of the bistable band")
     a.plot(n, d["a_lim0"], color=GREY, lw=0.8, label="a_lim, no control")
-    a.set(ylabel="depth (mm)", ylim=(0, None),
-          title="C1-1  Where the clipped DVF cut is bistable, gain map of the reformulated condition")
-    a.legend(fontsize=6.8, ncol=2, loc="upper left")
+    a.set(ylabel="depth (mm)", ylim=(0, None))
+    a.legend(fontsize=6.8, ncol=3, loc="lower center", bbox_to_anchor=(0.5, 1.01), frameon=False)
+    fig.suptitle("C1-1  Where the clipped DVF cut is bistable (gain map of the reformulated condition)",
+                 fontsize=9.5, y=1.0)
     b = ax[1]
     for k, col, ls in [("step_clip", BAD, "-"), ("edge_clip", GOOD, "-"), ("feed_clip", OURS, ":"),
                        ("step_free", GREY, "--")]:

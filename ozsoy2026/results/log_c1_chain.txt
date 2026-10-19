@@ -10,3 +10,7 @@ band lower edge found at 108/126 speeds, 4.59-23.44 mm
 1090 rpm: forced orbit saturates below a_lim for g >= 3000; step-entry clipped limit peaks at g = 2550 (20.47 mm); map gain 1500
 2500 rpm: forced orbit saturates below a_lim for g >= 1650; step-entry clipped limit peaks at g = 2850 (13.46 mm); map gain 1500
 == map 20:12:16
+  step_free  a/a_lim: min 1.001 median 1.010, < 0.97 at 0/251 speeds
+  edge_clip  a/a_lim: min 0.985 median 1.001, < 0.97 at 0/251 speeds
+  feed_clip  a/a_lim: min 0.957 median 1.001, < 0.97 at 1/251 speeds
+== done 21:15:03

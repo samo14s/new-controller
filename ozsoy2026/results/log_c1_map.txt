@@ -1,0 +1,4 @@
+  step_clip  a/a_lim: min 0.749 median 0.934, < 0.97 at 154/251 speeds
+  step_free  a/a_lim: min 1.001 median 1.010, < 0.97 at 0/251 speeds
+  edge_clip  a/a_lim: min 0.985 median 1.001, < 0.97 at 0/251 speeds
+  feed_clip  a/a_lim: min 0.957 median 1.001, < 0.97 at 1/251 speeds
