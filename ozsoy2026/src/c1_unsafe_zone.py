@@ -69,18 +69,22 @@ def _limit(args):
 
 
 def run_map(a):
+    """--entries recomputes only those columns of an existing c1_map.npz."""
     from zoa import a_lim
     rpm, g, zeta = gain_map(a.tag)
     P.set_damping(zeta)
     names = list(ENTRIES)
-    jobs = [(float(n), float(gg), k, zeta) for n, gg in zip(rpm, g) for k in names]
+    todo = a.entries.split(",") if a.entries else names
+    fn = os.path.join(RES, "c1_map.npz")
+    jobs = [(float(n), float(gg), k, zeta) for n, gg in zip(rpm, g) for k in todo]
     with Pool(a.workers) as pool:
-        lim = np.array(pool.map(_limit, jobs, chunksize=4)).reshape(len(rpm), len(names))
-    data = dict(rpm=rpm, g=g, zeta=zeta,
-                a_lim=np.array([a_lim(n, gg) for n, gg in zip(rpm, g)]) * 1e3,
-                a_lim0=np.array([a_lim(n, 0.0) for n in rpm]) * 1e3)
-    data.update({f"a_{k}": lim[:, i] for i, k in enumerate(names)})
-    np.savez_compressed(os.path.join(RES, "c1_map.npz"), **data)
+        lim = np.array(pool.map(_limit, jobs, chunksize=4)).reshape(len(rpm), len(todo))
+    data = dict(np.load(fn)) if a.entries and os.path.exists(fn) else dict(
+        rpm=rpm, g=g, zeta=zeta,
+        a_lim=np.array([a_lim(n, gg) for n, gg in zip(rpm, g)]) * 1e3,
+        a_lim0=np.array([a_lim(n, 0.0) for n in rpm]) * 1e3)
+    data.update({f"a_{k}": lim[:, i] for i, k in enumerate(todo)})
+    np.savez_compressed(fn, **data)
     keys = ["rpm", "g", "a_lim", "a_lim0"] + [f"a_{k}" for k in names]
     np.savetxt(os.path.join(RES, "c1_map.csv"), np.column_stack([data[k] for k in keys]),
                delimiter=",", header=",".join(keys), comments="", fmt="%.4f")
@@ -278,6 +282,7 @@ def main():
     ap.add_argument("command", choices=["map", "gainplane", "basin", "df"])
     ap.add_argument("--tag", default="g1500")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--entries", default="", help="map: comma-separated subset of ENTRIES")
     a = ap.parse_args()
     dict(map=run_map, gainplane=run_gainplane, basin=run_basin, df=run_df)[a.command](a)
 
