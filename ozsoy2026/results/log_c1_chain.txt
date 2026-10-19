@@ -1,3 +1,12 @@
 == df 19:29:18
 df done: 1090 rpm, 1420 rpm, 2500 rpm, 2870 rpm
 == basin 19:29:43
+2870 rpm 0.60 a_lim free: dv* min inf median inf mm/s (inf 16, nan 0), p_mode nan
+2870 rpm 0.90 a_lim free: dv* min inf median inf mm/s (inf 16, nan 0), p_mode nan
+2870 rpm 0.98 a_lim free: dv* min inf median inf mm/s (inf 16, nan 0), p_mode nan
+== band 19:54:51
+band lower edge found at 108/126 speeds, 4.59-23.44 mm
+== gainplane 20:05:23
+1090 rpm: forced orbit saturates below a_lim for g >= 3000; step-entry clipped limit peaks at g = 2550 (20.47 mm); map gain 1500
+2500 rpm: forced orbit saturates below a_lim for g >= 1650; step-entry clipped limit peaks at g = 2850 (13.46 mm); map gain 1500
+== map 20:12:16
