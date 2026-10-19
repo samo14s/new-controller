@@ -15,7 +15,7 @@ or when e_k has reached round-off.  Any sustained limit cycle is chatter.
 """
 import numpy as np
 import params as P
-from tdsim import simulate
+from tdsim import simulate, entry_revs
 
 NREV = 300
 
@@ -48,16 +48,21 @@ def classify_run(x, spr, diverged=False, N=P.N_TEETH, delta=2e-5, nblocks=25):
     return dict(stable=stable, mu=mu, q=q, dx_end_over_fz=dx_end)
 
 
-def classify(rpm, a, g, vmax=0.0, nrev=NREV, spr=P.STEPS_PER_REV):
-    r = simulate(rpm, a, g, vmax=vmax, store=True, nrev=nrev, spr=spr)
-    c = classify_run(r["x"], spr, r["diverged"])
+def classify(rpm, a, g, vmax=0.0, nrev=NREV, spr=P.STEPS_PER_REV, **entry):
+    """Classify one cut.  With a soft entry (ramp_a, ramp_f, edge; see
+    tdsim.simulate) the run is lengthened by the entry and only the nrev
+    revolutions after it are judged, so the window always starts at full
+    engagement; a cut that chatters during the entry stays chatter."""
+    start = int(np.ceil(entry_revs(**entry)))
+    r = simulate(rpm, a, g, vmax=vmax, store=True, nrev=start + nrev, spr=spr, **entry)
+    c = classify_run(r["x"][start * spr:], spr, r["diverged"])
     c["chatter"] = not c["stable"]
     c["run"] = r
     return c
 
 
 def boundary(rpm, g, vmax=0.0, a_lo=0.2e-3, a_hi=40e-3, growth=1.25, rtol=3e-3,
-             nrev=NREV):
+             nrev=NREV, **entry):
     """Largest depth (m) below which every scanned depth is stable.
 
     Upward scan from a_lo by `growth`, with a_hi itself always tested last,
@@ -68,7 +73,7 @@ def boundary(rpm, g, vmax=0.0, a_lo=0.2e-3, a_hi=40e-3, growth=1.25, rtol=3e-3,
     lo, a = 0.0, a_lo
     while True:
         at = min(a, a_hi)
-        if classify(rpm, at, g, vmax, nrev)["stable"]:
+        if classify(rpm, at, g, vmax, nrev, **entry)["stable"]:
             lo = at
             if at >= a_hi:
                 return a_hi
@@ -78,7 +83,7 @@ def boundary(rpm, g, vmax=0.0, a_lo=0.2e-3, a_hi=40e-3, growth=1.25, rtol=3e-3,
             break
     while hi - lo > rtol * hi:
         mid = 0.5 * (lo + hi)
-        if classify(rpm, mid, g, vmax, nrev)["stable"]:
+        if classify(rpm, mid, g, vmax, nrev, **entry)["stable"]:
             lo = mid
         else:
             hi = mid

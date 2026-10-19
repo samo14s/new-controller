@@ -73,17 +73,22 @@ def force_harmonics(depths, n_harm=N_HARM):
     return _W[None, : n_harm + 1] * integ
 
 
-def forced_demand(rpm, g, depths, n_harm=N_HARM, n_t=N_T):
-    """Settled peak demand K_a g max|xdot| (N) at each depth, from the forced response."""
-    if g == 0:
-        return np.zeros(np.size(depths))
+def forced_velocity(rpm, g, depths, n_harm=N_HARM, n_t=N_T):
+    """Settled workpiece velocity (m/s) over one tooth period, shape (len(depths), n_t)."""
     wT = 2 * np.pi * P.N_TEETH * rpm / 60.0
     m = np.arange(1, n_harm + 1)
     H = 1j * m * wT * Gcl(1j * m * wT, g)                      # velocity per force
     F = force_harmonics(depths, n_harm)[:, 1:]                  # (nd, nh)
     t = np.arange(n_t) / n_t                                    # fraction of a tooth period
     E = np.exp(2j * np.pi * np.outer(m, t))                     # (nh, nt)
-    v = 2 * np.real((F * H[None, :]) @ E)                       # (nd, nt)
+    return 2 * np.real((F * H[None, :]) @ E)                    # (nd, nt)
+
+
+def forced_demand(rpm, g, depths, n_harm=N_HARM, n_t=N_T):
+    """Settled peak demand K_a g max|xdot| (N) at each depth, from the forced response."""
+    if g == 0:
+        return np.zeros(np.size(depths))
+    v = forced_velocity(rpm, g, depths, n_harm, n_t)
     return P.GA_GAIN * g * np.abs(v).max(axis=1)
 
 

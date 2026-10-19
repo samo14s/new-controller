@@ -1,0 +1,131 @@
+{
+ "note": "Outputs of the simulator before the entry options were added (commit 530a4e8), 40 rev, 512 steps/rev.",
+ "cases": [
+  {
+   "rpm": 500,
+   "a": 0.0015,
+   "g": 0.0,
+   "vmax": 0.0,
+   "fmode": 0,
+   "nrev": 40,
+   "summary": [
+    0.0,
+    0.0,
+    9.586068557609457e-06,
+    0.0,
+    0.0
+   ],
+   "sha256_x": "220dcfa9acbeab9e4dcedc2e0de1a5adb177f07845daf93f0a3440763e3b97fb",
+   "sha256_v": "fa1077e4ccfc0df1f8cd184c6340a243b99cf0dd353a60416ea1d66b4c75c437",
+   "sha256_fact": "7d761a00a5294f6fc502bac4566153ab06b1f95e8baf111e29af66ff2867e2a7",
+   "sha256_fcut": "917eb4162ffebf39eb431b0f9be83016bac71d379857b5728b4fa49777100bda",
+   "sha256_vcmd": "7d761a00a5294f6fc502bac4566153ab06b1f95e8baf111e29af66ff2867e2a7",
+   "fact_absmax": 0.0
+  },
+  {
+   "rpm": 1300,
+   "a": 0.005,
+   "g": 600.0,
+   "vmax": 0.0,
+   "fmode": 1,
+   "nrev": 40,
+   "summary": [
+    3.07085484983172,
+    9.847927417166778,
+    1.5716697789494768e-05,
+    3.07085484983172,
+    0.0
+   ],
+   "sha256_x": "47bd6ebb12a00504ac11154769db62a8ea932a44d1b9a7458e50e386421444bb",
+   "sha256_v": "6bdac3a450e79f24f2b4cb81950f5c7c44469d724778d89794f2d30be2959a9c",
+   "sha256_fact": "aaa763063bbd36f017d5f0b2e2052e81ee75df0a09a845449d88f0b16033de2c",
+   "sha256_fcut": "99af2a3d1e0623cc6f53f3eafc364af9b504c14d5b4324e1d8e260b1fc77b26c",
+   "sha256_vcmd": "c1bcead829be6cbf64fe68b2fd562bdecddb4a67c9cbf46dc327432cf68d7a17",
+   "fact_absmax": 9.847927417166778
+  },
+  {
+   "rpm": 2500,
+   "a": 0.014,
+   "g": 1500.0,
+   "vmax": 9.0,
+   "fmode": 1,
+   "nrev": 40,
+   "summary": [
+    14747.602945631366,
+    29.59672962118869,
+    0.009912075245427308,
+    9.0,
+    1.0
+   ],
+   "sha256_x": "4c2cab232ec511f495cff61a78581e27738eee48a7e999792c13571462bbd545",
+   "sha256_v": "f44cbeda4ebad0c0de21373d1128ad9142527ff121f28c8802294f5b63ca019f",
+   "sha256_fact": "000c90c4f8b9ebe12f5e5bade7b57514e10d037866829f819935711c30e55dd5",
+   "sha256_fcut": "3b801dcc537a2f1bdb9a68fb656cd87aa07fe691644030730c8180fed555ea18",
+   "sha256_vcmd": "fac4b4da07f2e50fad382219aeaaf8cec899408b20e8bd1ca7b969008428cdab",
+   "fact_absmax": 29.59672962118869
+  },
+  {
+   "rpm": 2500,
+   "a": 0.012,
+   "g": 1500.0,
+   "vmax": 9.0,
+   "fmode": 1,
+   "nrev": 40,
+   "summary": [
+    15.89642565171008,
+    29.49355313419014,
+    2.5976994079079886e-05,
+    9.0,
+    0.0
+   ],
+   "sha256_x": "3289911ef483c4bc1ebaca66b565616d0d1a89b003e5943b5fee684127001766",
+   "sha256_v": "5c3f0589b443d5a6aad6063589ffca27db782f737aad01d1901e6016e780aa6f",
+   "sha256_fact": "fc6337a9d268e142aff608345bdfdff45a0864e734628c4b6713cfa1df709094",
+   "sha256_fcut": "e6e337694878758633e3e970b94c0e1fbe4c67421539d481e6efe808510959b0",
+   "sha256_vcmd": "a468720fa603e2a6c7a9dcd581ee797b3c784358dc68505c185975c1b1988d84",
+   "fact_absmax": 29.49355313419014
+  },
+  {
+   "rpm": 3000,
+   "a": 0.01,
+   "g": 1200.0,
+   "vmax": 9.0,
+   "fmode": 0,
+   "nrev": 40,
+   "summary": [
+    12.285256948574554,
+    29.382594300476544,
+    2.5023338021489086e-05,
+    9.0,
+    0.0
+   ],
+   "sha256_x": "4921338193c6a00bfd98810c0c348df556bcd3149e98dfde9514b1d05b01c305",
+   "sha256_v": "10aa3b6694974737067e15e887b4ee178c9f085a32aaf46855d1af24e0e4ca1c",
+   "sha256_fact": "2c161e5f0aea73c920f8e116e15231eaa3d9eb9f1cc3fe91b8e68bf556185870",
+   "sha256_fcut": "f47cb403513b3ccdd118883b4176b3f6089e5693689ce2c3ee9f1471f07c6482",
+   "sha256_vcmd": "1be2147877ce88991683aace8801dd8a28ee455f993825078e46ea200251da24",
+   "fact_absmax": 29.382594300476544
+  },
+  {
+   "rpm": 1090,
+   "a": 0.018,
+   "g": 1500.0,
+   "vmax": 9.0,
+   "fmode": 1,
+   "nrev": 40,
+   "summary": [
+    20.99712064672581,
+    29.216016351383296,
+    3.942299808464175e-05,
+    9.0,
+    0.0
+   ],
+   "sha256_x": "e7bbf9e7f07c9671955808467aee70acdbd8ad96f1d2aeb268eae2f9132eafb9",
+   "sha256_v": "bc34ffab8d06b9c983404ef2f952267e77ac0a2980425725da4db7f681f0a69f",
+   "sha256_fact": "146df29364f99ee8bed7df0b9d2445c0e4e73f2bae21ed524d48d000257013a6",
+   "sha256_fcut": "5597c75ab92ed1e1bab4bbf8969cea4800b552acb465fab7923ce76b223aa095",
+   "sha256_vcmd": "56f375ef2cc2b7ee081bff35d54a33f3d2629e8d9263af3b53a5f39ba5ce1677",
+   "fact_absmax": 29.216016351383296
+  }
+ ]
+}

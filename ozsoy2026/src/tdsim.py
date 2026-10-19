@@ -18,7 +18,7 @@ _d = ctypes.c_double
 _i = ctypes.c_int
 _p = np.ctypeslib.ndpointer(dtype=np.float64, flags="C_CONTIGUOUS")
 _lib.simulate.argtypes = [_d] * 3 + [_d] * 3 + [_d] * 3 + [_d] * 4 + [_i, _d, _d, _d] \
-    + [_i] * 4 + [_d, _i, _i] + [_p] * 6
+    + [_i] * 4 + [_d, _i, _i] + [_p] * 6 + [_p]
 _lib.simulate.restype = _i
 
 PHI_ST, PHI_EX = P.immersion_angles()
@@ -28,11 +28,20 @@ FMODE = 1          # 1: force re-evaluated at every RK4 stage; 0: held per step
 
 
 def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
-             spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None):
+             spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None,
+             ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False,
+             kick_step=-1, kick_dv=0.0, clip_on=0):
     """Run one cut.  Returns a dict with the peak demand and, if store, histories.
 
     vmax > 0 limits the applied command |V| (clipped DVF); 0 means no limit.
     fmode selects how the cutting force enters the integrator (see tdsim.c).
+    Entry (default: full depth and feed at t = 0):
+      ramp_a  revolutions over which the axial depth rises from 0 to a
+      ramp_f  revolutions over which the feed rises from f0*fz to fz
+      edge    straight entry through a workpiece face normal to the feed
+              (full radial engagement after R/fz teeth, 40 rev here)
+    Perturbation: kick_dv (m/s) added to x' at step kick_step (< 0: none);
+    clip_on: first step at which the command limit vmax applies.
     """
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
     fmode = FMODE if fmode is None else fmode
@@ -40,11 +49,13 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     nbuf = nsteps + 1 if store else 1
     bufs = [np.zeros(nbuf) for _ in range(5)]
     summ = np.zeros(5)
+    opt = np.array([ramp_a, ramp_f, f0, 1.0 if edge else 0.0,
+                    kick_step, kick_dv, clip_on, 0.0], dtype=np.float64)
     _lib.simulate(float(rpm), float(a), float(g),
                   P.M, P.C, P.K, P.GA_GAIN, P.GA_A1, P.GA_A0,
                   P.K_TC, P.K_RC, fz, P.D_TOOL, P.N_TEETH, P.HELIX,
                   PHI_ST, PHI_EX, spr, nrev, nlay, nsub, float(vmax), int(fmode),
-                  int(store), *bufs, summ)
+                  int(store), *bufs, summ, opt)
     out = dict(max_demand=summ[0], max_fact=summ[1], max_x=summ[2],
                max_v=summ[3], diverged=bool(summ[4]))
     if store:
@@ -52,6 +63,12 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
         out.update(t=np.arange(nsteps + 1) * dt, x=bufs[0], v=bufs[1],
                    fact=bufs[2], fcut=bufs[3], vcmd=bufs[4], spr=spr)
     return out
+
+
+def entry_revs(ramp_a=0.0, ramp_f=0.0, edge=False, **_):
+    """Revolutions until the entry is complete (depth, feed and width at nominal)."""
+    edge_revs = 0.5 * P.D_TOOL / (P.FZ * P.N_TEETH) if edge else 0.0
+    return float(max(ramp_a, ramp_f, edge_revs))
 
 
 def simulate_exact_python(rpm, a, g, nrev=P.N_REVS, spr=P.STEPS_PER_REV,
