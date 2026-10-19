@@ -66,9 +66,12 @@ def main():
     with Pool(a.workers) as pool:
         t3 = pool.map(_td_limit, jobs)
     old = np.genfromtxt(os.path.join(RES, "table3_main.csv"), delimiter=",", names=True)
+    cert = np.load(os.path.join(RES, f"feas_cert_{a.tag}.npz"))
     rows = []
     for (n, gn, td, zo), o in zip(t3, old):
+        ac = float(np.interp(n, cert["rpm"], cert["a_cert"]))
         rows.append(dict(rpm=n, g_new=gn, a_new_td=td, a_new_zoa=zo, a_new_operating=kappa * zo,
+                         a_new_certified=ac,
                          a_paper_criterion_td=float(o["a_prop_td"]),
                          a_clip1500_td=float(o["a_clip1500_td"]),
                          a_clip3000_td=float(o["a_clip3000_td"]),
@@ -103,10 +106,10 @@ def main():
     s = out["single_gain"]
     print(f"single gain {s['g']:.1f} V s/m (binding {s['binding_rpm']:.0f} rpm), mean a_lim "
           f"{s['mean_alim']:.2f} mm vs map {s['mean_alim_map']:.2f} mm, min {s['min_alim']:.2f}")
-    print(" rpm | g_new  new TD  new ZOA  op(k)| paper-crit TD | clip1500 clip3000 | paper prop clip")
+    print(" rpm | g_new  new TD  new ZOA  cert | paper-crit TD | clip1500 clip3000 | paper prop clip")
     for r in rows:
         print(f"{r['rpm']:4d} | {r['g_new']:6.0f} {r['a_new_td']:6.2f} {r['a_new_zoa']:7.2f} "
-              f"{r['a_new_operating']:6.2f} | {r['a_paper_criterion_td']:12.2f} | "
+              f"{r['a_new_certified']:6.2f} | {r['a_paper_criterion_td']:12.2f} | "
               f"{r['a_clip1500_td']:8.2f} {r['a_clip3000_td']:8.2f} | {r['paper_prop']:9.1f} {r['paper_clip']:5.1f}")
     print(f"test points: ZOA {out['agreement']['zoa']}/{len(pts)}, TD {out['agreement']['td']}/{len(pts)}")
     for p in pts:

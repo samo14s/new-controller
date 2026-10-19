@@ -1,0 +1,4 @@
++ python3 run_feasibility_map.py --tag g3000 --gmax 3000 --certify
++ python3 run_feasibility_map.py --tag k095 --gmax 1500 --kappa 0.95
++ python3 run_feasibility_map.py --tag guard085 --gmax 1500 --guard 0.85
++ touch ../results/feas_chain.done

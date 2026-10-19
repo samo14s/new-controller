@@ -300,11 +300,14 @@ def feasibility_figs(tag="g1500"):
     ax[1].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1, label="uncontrolled")
     ax[1].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1.2, label="paper Fig. 9")
     ax[1].plot(old["rpm"], old["a_best"], color=UNC, lw=1, label="Eq. (2) as written")
-    ax[1].plot(d["rpm"], d["a_best"], color=OURS, lw=1.6, label="reformulated: a_lim")
-    ax[1].plot(d["rpm"], kappa * d["a_best"], color=OURS, lw=1, ls="-.",
-               label=f"reformulated: operating depth ({kappa:g} a_lim)")
+    ax[1].plot(d["rpm"], d["a_best"], color=OURS, lw=0.9, ls=":", label="reformulated: a_lim (linear)")
+    cpath = os.path.join(RES, f"feas_cert_{tag}.npz")
+    if os.path.exists(cpath):
+        c = np.load(cpath)
+        ax[1].plot(c["rpm"], c["a_cert"], color=OURS, lw=1.8,
+                   label=f"reformulated: certified depth (min of {kappa:g} a_lim, clipped TD)")
     ax[1].set(xlabel="Spindle speed (rpm)", ylabel="Depth of cut (mm)", xlim=(500, 3000),
-              ylim=(0, 45), title="Controlled limit")
+              ylim=(0, 32), title="Controlled limit")
     ax[1].legend(fontsize=6.5, loc="upper left")
     fig.savefig(os.path.join(FIG, f"r10_feasibility_{tag}.png"))
     plt.close(fig)
