@@ -8,6 +8,7 @@ PyMuPDF reports, then every polyline of the wanted colour is converted.
 Usage:  python extract_vector_figs.py <paper.pdf> <out_dir>
 """
 import json
+import os
 import sys
 import numpy as np
 import pymupdf
@@ -110,6 +111,7 @@ FIGS = {
 
 
 def main(pdf, outdir, probe=False):
+    os.makedirs(outdir, exist_ok=True)
     doc = pymupdf.open(pdf)
     report = {}
     for name, f in FIGS.items():
@@ -146,6 +148,14 @@ def main(pdf, outdir, probe=False):
     if not probe:
         with open(f"{outdir}/axis_fits.json", "w") as fh:
             json.dump(report, fh, indent=1)
+        # flat, rpm-sorted point lists used by the comparison scripts
+        for out, src, key, head in [("fig8_gain_points", "fig8_gains", "gain", "rpm,gain_Vs_per_m"),
+                                    ("fig9_controlled_points", "fig9_sld", "blue", "rpm,depth_mm"),
+                                    ("fig9_uncontrolled_points", "fig9_sld", "blue_dashed", "rpm,depth_mm")]:
+            with open(f"{outdir}/{src}.json") as fh:
+                pts = np.array([p for seg in json.load(fh)[key] for p in seg])
+            np.savetxt(f"{outdir}/{out}.csv", pts[np.argsort(pts[:, 0])], delimiter=",",
+                       header=head, comments="")
         print(json.dumps(report, indent=1))
 
 

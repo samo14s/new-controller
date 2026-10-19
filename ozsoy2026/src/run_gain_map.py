@@ -67,6 +67,10 @@ def main():
         data[k] = np.array([r[k] for r in rows])
     if a.sade:
         data["sade_runs"] = np.array([r["sade_runs"] for r in rows])
+        # both answers optimise the same objective: keep the better one per speed
+        use_sade = data["a_sade"] > data["a_ref"]
+        data["g_best"] = np.where(use_sade, data["g_sade"], data["g_ref"])
+        data["a_best"] = np.where(use_sade, data["a_sade"], data["a_ref"])
     data["zeta"] = a.zeta
     data["kind"] = a.kind
     data["fmode"] = a.fmode
