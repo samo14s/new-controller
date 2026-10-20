@@ -11,3 +11,9 @@ feasible p1e6   (g2     0, kd -1000000): g1    135-  3000, a_lim 23.80-49.20 mm,
 2870 rpm: best certified kick (mm/s) 2:12.2 4:11.3 6:10.8 8:9.5 10:8.0 12:8.7 14:6.8 16:5.1 18:4.2 20:3.7 22:3.7 24:4.5 26:4.6 28:2.9 30:2.3 32:2.1 34:2.2
          best DVF (g2 = 0)        2:11.4 4:11.0 6:8.6 8:7.8 10:7.5 12:8.3 14:6.5 16:2.6 18:1.3 20:1.2 22:0.8 24:4.0 26:4.3 28:1.0 30:0.0 32:0.0 34:0.0
 == entry 10:14:34
+paper+2000 edge_clip: 29.48-43.84 mm, a/a_lim min 0.919 median 0.999
+feas_dvf   step_clip: 13.19-27.73 mm, a/a_lim min 0.450 median 0.675
+feas_dvf   edge_clip: 14.07-40.56 mm, a/a_lim min 0.974 median 0.999
+feas_d2000 step_clip: 13.11-38.27 mm, a/a_lim min 0.257 median 0.411
+feas_d2000 edge_clip: 29.48-60.81 mm, a/a_lim min 0.849 median 0.999
+== robust 10:27:09

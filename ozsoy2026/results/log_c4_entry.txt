@@ -1,0 +1,8 @@
+paper+1000 step_clip: 13.09-36.00 mm, a/a_lim min 0.513 median 0.736
+paper+1000 edge_clip: 22.01-35.83 mm, a/a_lim min 0.997 median 0.999
+paper+2000 step_clip: 12.85-38.27 mm, a/a_lim min 0.392 median 0.586
+paper+2000 edge_clip: 29.48-43.84 mm, a/a_lim min 0.919 median 0.999
+feas_dvf   step_clip: 13.19-27.73 mm, a/a_lim min 0.450 median 0.675
+feas_dvf   edge_clip: 14.07-40.56 mm, a/a_lim min 0.974 median 0.999
+feas_d2000 step_clip: 13.11-38.27 mm, a/a_lim min 0.257 median 0.411
+feas_d2000 edge_clip: 29.48-60.81 mm, a/a_lim min 0.849 median 0.999
