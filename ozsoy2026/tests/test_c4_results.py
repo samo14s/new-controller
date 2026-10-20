@@ -11,12 +11,9 @@ def s():
 
 
 def test_summary_is_current(s):
-    v = np.load(path("results", "c4_validate.npz"))
-    assert s["validate"]["points"] == len(v["cert"])
-    comb = v["kind"] == "comb"
-    assert s["validate"]["offaxis_runs"] == int(v["offaxis_runs"][comb].sum())
-    L = np.load(path("results", "c4_limits.npz"))
-    assert s["limits"]["speeds"] == len(L["rpm"])
+    """The stored summary is what c4_summary.build() gives from the stored results."""
+    import c4_summary
+    assert json.loads(json.dumps(c4_summary.build())) == s
 
 
 def test_feasible_dvf_is_the_gmax3000_optimum():
@@ -56,7 +53,11 @@ def test_certificate_below_the_simulation_and_its_model(s):
 def test_closed_form_matches_the_simulator(s):
     rb = s["robust"]
     assert 0.98 < rb["td_limit_ratio"]["min"] and rb["td_limit_ratio"]["max"] < 1.02
-    assert rb["td_orbit_ratio"]["median"] == pytest.approx(1.0, abs=0.02)
+    R = np.load(path("results", "c4_robust.npz"))
+    ratio = R["td_orbit"][:, 0] / R["td_orbit"][:, 1]
+    small = R["td_orbit"][:, 1] < 2.0          # a command of ~1 V (helix cancellation): absolute error instead
+    assert np.all(np.abs(ratio[~small] - 1) < 0.02)
+    assert np.all(np.abs(R["td_orbit"][small, 0] - R["td_orbit"][small, 1]) < 0.3)
     for e, (td, lin) in rb["td_face_eps"].items():
         assert td == pytest.approx(lin, rel=0.01), e
 

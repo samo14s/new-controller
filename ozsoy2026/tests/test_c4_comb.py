@@ -116,11 +116,26 @@ def test_feasible_dvf_gain_is_the_feasibility_optimum(rpm):
 
 
 # --------------------------------------------- comb delay and runout options ----
-def test_comb_delay_of_one_and_zero_runout_are_the_comb_path():
+def test_comb_delay_near_one_is_continuous_with_the_exact_delay():
+    """The fractional-delay path (rho != 1) at rho = 1 + 1e-9 reproduces the
+    exact-delay path to the size of the perturbation."""
     a = simulate(2500, 20e-3, 1500.0, vmax=9.0, store=True, nrev=30, edge=True, nreg=4, g2=2000.0)
     b = simulate(2500, 20e-3, 1500.0, vmax=9.0, store=True, nrev=30, edge=True, nreg=4, g2=2000.0,
-                 comb_delay=1.0, runout=0.0)
-    assert np.array_equal(a["x"], b["x"])
+                 comb_delay=1.0 + 1e-9)
+    assert not np.array_equal(a["x"], b["x"])
+    assert np.abs(b["x"] - a["x"]).max() < 1e-6 * np.abs(a["x"]).max()
+
+
+def test_loop_delay_uses_the_motion_one_delay_back():
+    """With a loop delay of exactly k steps the logged command at a step is
+    -g1 x'(t - tau) - g2 (x'(t - tau) - x'(t - tau - T)) from the stored velocity."""
+    rpm, g1, g2, k = 2500.0, 1200.0, 800.0, 3
+    dt = 60.0 / (rpm * SPR)
+    r = simulate(rpm, 8e-3, g1, store=True, nrev=6, edge=True, nreg=4, g2=g2, loop_delay=k * dt)
+    v, u = r["v"], r["vcmd"]
+    n = np.arange(2 * SPR, 6 * SPR)
+    ref = -g1 * v[n - k] - g2 * (v[n - k] - v[n - k - ND])
+    assert np.allclose(u[n], ref, rtol=1e-6, atol=1e-9 * np.abs(ref).max())
 
 
 def test_spindle_comb_vanishes_on_the_runout_orbit():
