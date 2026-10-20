@@ -458,6 +458,7 @@ def check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=None):
 LAM_FRAC = (0.05, 0.02, 0.01)                   # decay margins, fractions of the Floquet rate; an
 #                                                  infeasible problem is retried with a smaller one
 SOLVER = dict(direct_solve_method="faer", max_threads=1, max_iter=120)   # defaults otherwise; the check decides
+REG_RETRY = 1e-7                                # static regularisation of the retry (default 1e-8)
 N_PASS = 1                                      # solves per margin: the warm start (a re-centred second
 #                                                 pass added 0.4 % at 2500 rpm, 0.9 a_lim)
 
@@ -511,12 +512,18 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
     for f in LAM_FRAC:
         Tm = start if start is not None else np.diag(c2.scaling(Abar, rpm))
         for p in range(n_pass):
-            beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
-                                          settings=settings, valid=valid)
-            size, c, msg = check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=valid)
+            for reg in (None, REG_RETRY):         # the first KKT solve can fail; retry regularised
+                st = dict(SOLVER if settings is None else settings)
+                if reg is not None:
+                    st["static_regularization_constant"] = reg
+                beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
+                                              settings=st, valid=valid)
+                size, c, msg = check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=valid)
+                if size > 0:
+                    break
             if size > best:
                 best = min(size, beta) if beta > 0 else size
-                note = f"{status}; pass {p}, lam {f:g} sigma; {msg}"
+                note = f"{status}; pass {p}, lam {f:g} sigma{', regularised' if reg else ''}; {msg}"
                 cert = (Tm.copy(), c * W, c * Y, c * S)
             try:
                 Tm = Tm @ cholesky(np.mean((W + W.transpose(0, 2, 1)) / 2, axis=0), lower=True)
