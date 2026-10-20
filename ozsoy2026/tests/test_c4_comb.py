@@ -183,3 +183,14 @@ def test_closed_form_orbit_command_matches_the_simulator(case):
     (time-varying cut, 30 layers) and the closed form agree to 2 %."""
     td, cf, drift = R._td_orbit(case)
     assert drift < 1e-8 and td == pytest.approx(cf, rel=0.02)
+
+
+def test_comb_fragility_to_delay_is_its_phase_not_its_gain():
+    """2500 rpm, 300 us loop delay and an assumed 400 Hz mode: the delayed
+    design (g1 = 1396, g2 = 2000) loses most of its limit, while a plain DVF
+    with the comb's peak gain g1 + 2 g2 stays stable much deeper; so the loss
+    comes from the phase of 1 - exp(-sT), not from the gain magnitude."""
+    g1, g2, mode = 1395.8, 2000.0, (400.0, 6.0, 0.01)
+    comb = R.a_lim_cf(2500.0, g1, g2, tau=300e-6, mode2=mode)
+    flat = R.a_lim_cf(2500.0, g1 + 2 * g2, tau=300e-6, mode2=mode)
+    assert comb < 0.5 * R.a_lim_cf(2500.0, g1, g2) and flat > 3 * comb
