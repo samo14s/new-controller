@@ -1,0 +1,13 @@
+paper g1 + g2 =     0: a_lim 13.96-30.47 mm, ratio to DVF 1.00-1.00 (median 1.00)
+paper g1 + g2 =   500: a_lim 18.01-35.56 mm, ratio to DVF 1.15-1.37 (median 1.28)
+paper g1 + g2 =  1000: a_lim 21.85-39.38 mm, ratio to DVF 1.27-1.69 (median 1.54)
+paper g1 + g2 =  2000: a_lim 29.19-46.30 mm, ratio to DVF 1.47-2.29 (median 2.00)
+paper g1 + g2 =  4000: a_lim 43.18-57.66 mm, ratio to DVF 1.75-3.26 (median 2.83)
+paper g1: orbit command >= 9 V on 0.5 % of the speed x depth grid
+without the 3000 bound at the 56 speeds where DVF sits on it: DVF g1 3008-8761, d2000 / DVF 1.31-1.68 (median 1.47)
+feasible dvf    (g2     0, kd        0): g1    135-  3000, a_lim 13.96-42.75 mm, ratio to feasible DVF 1.00-1.00 (median 1.00)
+feasible d1000  (g2  1000, kd        0): g1    135-  3000, a_lim 21.85-54.26 mm, ratio to feasible DVF 1.23-1.57 (median 1.43)
+feasible d2000  (g2  2000, kd        0): g1    135-  3000, a_lim 29.18-64.08 mm, ratio to feasible DVF 1.44-2.10 (median 1.78)
+feasible d4000  (g2  4000, kd        0): g1    135-  3000, a_lim 43.17-81.60 mm, ratio to feasible DVF 1.75-3.15 (median 2.40)
+feasible p3e5   (g2     0, kd  -300000): g1    135-  3000, a_lim 16.91-45.71 mm, ratio to feasible DVF 1.07-1.21 (median 1.12)
+feasible p1e6   (g2     0, kd -1000000): g1    135-  3000, a_lim 23.80-52.65 mm, ratio to feasible DVF 1.23-1.70 (median 1.40)
