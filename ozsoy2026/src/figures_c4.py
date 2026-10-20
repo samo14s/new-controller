@@ -86,8 +86,7 @@ def c4_02_gainmap():
         a = ax[0, i]
         for y, col, mk, lab in [(ref, GREY, "s", "DVF g = 1500 (C2)"), (dvf, "k", "^", "DVF, best g1 of the grid"),
                                 (comb, OURS, "D", "DVF + D term, best (g1, g2 > 0)")]:
-            fin = y > 0
-            a.plot(dep[fin], y[fin], mk + "-", color=col, ms=3.5, lw=1, label=lab)
+            a.plot(dep, np.where(y > 0, y, np.nan), mk + "-", color=col, ms=3.5, lw=1, label=lab)   # gaps: nothing certified
         a.axvline(G["a_lim_ref"][i], color="k", lw=0.7, ls="--")
         a.set(yscale="log", ylim=(0.3, 100), title=f"{n:.0f} rpm")
         k = kick[i].reshape(len(dep), -1)
@@ -179,15 +178,19 @@ def c4_04_robust():
         for k, (ls, mlab) in enumerate(zip(("-", "--", ":"), ("one mode", "+ 400 Hz mode", "+ 800 Hz mode"))):
             ax[0, 2].plot(R["tau"] * 1e6, R["tau_a_lim"][i25, jj, k], ls, color=cols[lab], lw=1.1,
                           label=f"{lab}, {mlab}")
-    ax[0, 2].set(xlabel="loop delay (us)", ylabel="a_lim (mm)", title=f"loop delay, {R['rpm'][i25]:.0f} rpm", ylim=(0, None))
+    ax[0, 2].set(xlabel="loop delay (us)", ylabel="a_lim (mm)", ylim=(0, 50),
+                 title=f"loop delay, {R['rpm'][i25]:.0f} rpm (spindle comb partly off scale)")
     ax[0, 2].legend(fontsize=5.8)
-    for lab in labels:
+    it = [int(np.argmin(np.abs(R["tau"] - t))) for t in (200e-6, 300e-6)]
+    for lab, mk in (("DVF", "s"), ("tooth comb", "D")):
         jj = labels.index(lab)
-        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, 1, -1], "o-", color=cols[lab], ms=4, lw=1,
-                      label=f"{lab}: tau = {R['tau'][-1] * 1e6:.0f} us, + 400 Hz mode")
-        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, 0, 0], "o:", color=cols[lab], ms=3, lw=0.8,
+        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, 0, 0], mk + ":", color=cols[lab], ms=3, lw=0.8,
                       label=f"{lab}: ideal loop")
-    ax[1, 2].set(xlabel="Spindle speed (rpm)", ylabel="a_lim (mm)", ylim=(0, None))
+        for k, ls in zip(it, ("-", "--")):
+            ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, 1, k], mk + ls, color=cols[lab], ms=4, lw=1,
+                          label=f"{lab}: tau = {R['tau'][k] * 1e6:.0f} us, + 400 Hz mode")
+    ax[1, 2].set(xlabel="Spindle speed (rpm)", ylabel="a_lim (mm)", ylim=(0, None),
+                 title="loop delay with an unmodelled 400 Hz mode (0: unstable)")
     ax[1, 2].legend(fontsize=5.8)
     fig.suptitle("C4-4  Robustness of the delayed design (closed form, ZOA; feasible g1 at each speed; "
                  "checked against the simulator, see README 13)", fontsize=9, y=1.0)
@@ -211,9 +214,11 @@ def c4_05_timeseries():
     for j, (lab, kw) in enumerate(runs):
         r = simulate(rpm, a, g1, vmax=VMAX, store=True, nrev=nrev, edge=True, nreg=4, **kw)
         t = r["t"] * rpm / 60.0
-        ax[0, j].plot(t, r["x"] * 1e6, lw=0.4, color=OURS)
-        ax[0, j].set(title=lab, ylabel="x (um)")
-        ax[1, j].plot(t, r["vcmd"], lw=0.4, color=SOFT)
+        end = int(np.flatnonzero(r["x"])[-1]) + 1 if r["diverged"] else len(t)      # the run stops at |x| = 1 cm
+        ax[0, j].plot(t[:end], r["x"][:end] * 1e6, lw=0.4, color=OURS)
+        ax[0, j].set(title=lab + (": chatter, run stopped at |x| = 1 cm" if r["diverged"] else ": settles"),
+                     ylabel="x (um)", xlim=(0, nrev))
+        ax[1, j].plot(t[:end], r["vcmd"][:end], lw=0.4, color=SOFT)
         for s in (1, -1):
             ax[1, j].axhline(s * VMAX, color=BAD, lw=0.7, ls="--")
         ax[1, j].set(xlabel="revolutions", ylabel="command V (V)", ylim=(-10, 10))

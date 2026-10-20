@@ -17,3 +17,9 @@ feas_dvf   edge_clip: 14.07-40.56 mm, a/a_lim min 0.974 median 0.999
 feas_d2000 step_clip: 13.11-38.27 mm, a/a_lim min 0.257 median 0.411
 feas_d2000 edge_clip: 29.48-60.81 mm, a/a_lim min 0.849 median 0.999
 == robust 10:27:09
+face entry, 9 V, 2500 rpm, comb-delay error -2 %: 36.22 mm (linear limit 36.25 mm)
+face entry, 9 V, 2500 rpm, comb-delay error -1 %: 34.07 mm (linear limit 34.10 mm)
+face entry, 9 V, 2500 rpm, comb-delay error +0 %: 32.12 mm (linear limit 32.15 mm)
+face entry, 9 V, 2500 rpm, comb-delay error +1 %: 30.35 mm (linear limit 30.38 mm)
+face entry, 9 V, 2500 rpm, comb-delay error +2 %: 28.74 mm (linear limit 28.77 mm)
+== validate 10:37:38
