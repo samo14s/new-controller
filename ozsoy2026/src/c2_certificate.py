@@ -512,9 +512,10 @@ def boundary_directions(cert, n, nrand=6, seed=0):
     return pts
 
 
-def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300):
+def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300, g2=0.0):
     """Apply scale x each boundary point at nphase phases with the C1 protocol
-    (face entry, nreg 4, |V| <= 9 V, 300-rev window); return (chattering, runs)."""
+    (face entry, nreg 4, |V| <= 9 V, 300-rev window); return (chattering, runs).
+    g2: comb term of C4."""
     from tdsim import simulate
     from tdboundary import classify_run
     spr = P.STEPS_PER_REV
@@ -526,7 +527,7 @@ def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300):
         for p in range(nphase):
             ks = kick_rev * spr + (p * nd) // nphase
             r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=4,
-                         kick_step=ks, pert=pert)
+                         kick_step=ks, pert=pert, g2=g2)
             st = (ks // nd + 1) * nd
             bad += not classify_run(r["x"][st:], spr, r["diverged"])["stable"]
             runs += 1

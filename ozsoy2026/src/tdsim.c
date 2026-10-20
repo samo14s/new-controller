@@ -42,10 +42,22 @@
  *                   so a pass that left the cut does not count as having
  *                   removed material (multiple regeneration, needed once
  *                   the tool leaves the cut, i.e. for chatter amplitudes)
+ *   opt[8] g2, opt[9] kd   (only in the build with COMB = 1, see below)
+ *                   comb terms of the command (C4):
+ *                   V = sat(-g x' - g2 (x' - x'(t-T)) - kd (x - x(t-T)), vmax),
+ *                   with x(t-T), x'(t-T) from the cubic Hermite interpolant
+ *                   of the stored history (the measured motion, zero before
+ *                   t = 0).  Both terms vanish on a tooth-periodic motion.
  * Any part of a chip whose surface the previous tooth did not cut (newly
  * engaged depth, or material just reached through the face) is fresh: its
  * thickness is fz sin(phi) - x cos(phi), with no regeneration.
  */
+/* Built twice: COMB = 0 (default; preprocesses to the plain-DVF code, so the
+ * default run stays bit-identical to the build before C4) and COMB = 1 (the
+ * comb terms; used by tdsim.py only when g2 or kd is non-zero). */
+#ifndef COMB
+#define COMB 0
+#endif
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -63,6 +75,9 @@ typedef struct {
     /* entry options (soft = 0: plain step entry) */
     int soft, nlay, edge, nreg;
     double a, Ta, Tf, f0, R, Tt, vmax_now;
+#if COMB
+    double g2, kd;
+#endif
 } Ctx;
 
 #define NREG_MAX 8
@@ -109,6 +124,25 @@ static inline double xhist(const Ctx *C, int j, double r) {
     return (2 * r3 - 3 * r2 + 1) * x0 + (r3 - 2 * r2 + r) * h * v0
          + (-2 * r3 + 3 * r2) * x1 + (r3 - r2) * h * v1;
 }
+
+#if COMB
+/* x' at step j + r from the same interpolant (its derivative) */
+static inline double vhist(const Ctx *C, int j, double r) {
+    if (j + 1 <= 0) return 0.0;
+    double x0 = j >= 0 ? C->xh[j] : 0.0, v0 = j >= 0 ? C->vh[j] : 0.0;
+    double x1 = C->xh[j + 1], v1 = C->vh[j + 1], h = C->dt;
+    double r2 = r * r;
+    return ((6 * r2 - 6 * r) * x0 + (3 * r2 - 4 * r + 1) * h * v0
+          + (-6 * r2 + 6 * r) * x1 + (3 * r2 - 2 * r) * h * v1) / h;
+}
+
+/* command before the limit at t_n + tau */
+static inline double command(const Ctx *C, const double *z, double tau) {
+    int j = C->n - C->nd;
+    double r = tau / C->dt;
+    return -C->g * z[1] - C->g2 * (z[1] - vhist(C, j, r)) - C->kd * (z[0] - xhist(C, j, r));
+}
+#endif
 
 /* cutting force with multiple regeneration (nreg > 1) */
 static double fcut_multi(const Ctx *C, double x, double tau) {
@@ -213,7 +247,11 @@ static double fcut(const Ctx *C, double x, double tau) {
 }
 
 static inline void deriv(const Ctx *C, const double *z, double tau, double *dz, double *fact) {
+#if COMB
+    double V = sat(command(C, z, tau), C->vmax_now);
+#else
     double V = sat(-C->g * z[1], C->vmax_now);
+#endif
     double fa = C->ga * (V - C->a1 * z[3] - C->a0 * z[2]);
     double fc = C->fmode ? fcut(C, z[0], tau) : C->fhold;
     dz[0] = z[1];
@@ -236,7 +274,8 @@ static void rk4(const Ctx *C, double *z, double tau, double h) {
     for (i = 0; i < 4; i++) z[i] += h / 6.0 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
 }
 
-/* summary[0] = max |g x'|  (demanded command, units of g * m/s)
+/* summary[0] = max |g x'|  (demanded command before the limit; with COMB the
+ *              comb terms are included)
  * summary[1] = max |f_act| (actuator force produced, N)
  * summary[2] = max |x|     (m)
  * summary[3] = max |V|     (applied command after the limit)
@@ -286,6 +325,10 @@ int simulate(double rpm, double a, double g,
         kick_dv = opt[5];
         clip_on = (int)opt[6];
         C.nreg = (int)opt[7] < 1 ? 1 : ((int)opt[7] > NREG_MAX ? NREG_MAX : (int)opt[7]);
+#if COMB
+        C.g2 = opt[8];
+        C.kd = opt[9];
+#endif
     }
     C.soft = C.Ta > 0.0 || C.Tf > 0.0 || C.edge;
 
@@ -326,8 +369,13 @@ int simulate(double rpm, double a, double g,
         C.fhold = f;
         deriv(&C, z, 0.0, dzz, &fa);
         {
+#if COMB
+            double dem = fabs(command(&C, z, 0.0));
+            double V = sat(command(&C, z, 0.0), C.vmax_now);
+#else
             double dem = fabs(g * z[1]);
             double V = sat(-g * z[1], C.vmax_now);
+#endif
             if (dem > maxd) maxd = dem;
             if (fabs(fa) > maxfa) maxfa = fabs(fa);
             if (fabs(z[0]) > maxx) maxx = fabs(z[0]);
@@ -350,7 +398,11 @@ int simulate(double rpm, double a, double g,
         deriv(&C, z, 0.0, dzz, &fa);
         x_out[nsteps] = z[0]; v_out[nsteps] = z[1]; fact_out[nsteps] = fa;
         fcut_out[nsteps] = nsteps >= nd ? fcut(&C, z[0], 0.0) : 0.0;
+#if COMB
+        vcmd_out[nsteps] = sat(command(&C, z, 0.0), C.vmax_now);
+#else
         vcmd_out[nsteps] = sat(-g * z[1], C.vmax_now);
+#endif
     }
     summary[0] = maxd; summary[1] = maxfa; summary[2] = maxx; summary[3] = maxv;
     summary[4] = diverged;

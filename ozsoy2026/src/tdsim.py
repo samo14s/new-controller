@@ -8,21 +8,30 @@ from structure import state_space
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SRC = os.path.join(_HERE, "tdsim.c")
-_LIB = os.path.join(_HERE, "_tdsim.so")
-
-if (not os.path.exists(_LIB)) or os.path.getmtime(_LIB) < os.path.getmtime(_SRC):
-    # build beside and rename, so running processes keep their mapped copy
-    _tmp = f"{_LIB}.{os.getpid()}.tmp"
-    subprocess.check_call(["gcc", "-O3", "-march=native", "-shared", "-fPIC",
-                           "-o", _tmp, _SRC, "-lm"])
-    os.replace(_tmp, _LIB)
-_lib = ctypes.CDLL(_LIB)
 _d = ctypes.c_double
 _i = ctypes.c_int
 _p = np.ctypeslib.ndpointer(dtype=np.float64, flags="C_CONTIGUOUS")
-_lib.simulate.argtypes = [_d] * 3 + [_d] * 3 + [_d] * 3 + [_d] * 4 + [_i, _d, _d, _d] \
-    + [_i] * 4 + [_d, _i, _i] + [_p] * 6 + [_p] + [ctypes.c_void_p]
-_lib.simulate.restype = _i
+
+
+def _load(name, comb):
+    """Build (if stale) and load one variant: comb = 0 is the plain-DVF build,
+    comb = 1 adds the comb terms of the command (see tdsim.c)."""
+    lib = os.path.join(_HERE, name)
+    if (not os.path.exists(lib)) or os.path.getmtime(lib) < os.path.getmtime(_SRC):
+        # build beside and rename, so running processes keep their mapped copy
+        tmp = f"{lib}.{os.getpid()}.tmp"
+        subprocess.check_call(["gcc", "-O3", "-march=native", "-shared", "-fPIC", f"-DCOMB={comb}",
+                               "-o", tmp, _SRC, "-lm"])
+        os.replace(tmp, lib)
+    so = ctypes.CDLL(lib)
+    so.simulate.argtypes = [_d] * 3 + [_d] * 3 + [_d] * 3 + [_d] * 4 + [_i, _d, _d, _d] \
+        + [_i] * 4 + [_d, _i, _i] + [_p] * 6 + [_p] + [ctypes.c_void_p]
+    so.simulate.restype = _i
+    return so
+
+
+_lib = _load("_tdsim.so", 0)
+_lib_comb = _load("_tdsim_comb.so", 1)
 
 PHI_ST, PHI_EX = P.immersion_angles()
 
@@ -33,7 +42,7 @@ FMODE = 1          # 1: force re-evaluated at every RK4 stage; 0: held per step
 def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
              spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None,
              ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False,
-             kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1, pert=None):
+             kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1, pert=None, g2=0.0, kd=0.0):
     """Run one cut.  Returns a dict with the peak demand and, if store, histories.
 
     vmax > 0 limits the applied command |V| (clipped DVF); 0 means no limit.
@@ -52,6 +61,9 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     the last nreg passes, so the tool leaving the cut is handled; max 8).
     pert: full-state deviation added at kick_step, a dict with x, v, q, qd
     and hx, hv (x and x' at 0, 1, ..., nd steps back, nd = spr / N).
+    g2, kd: comb terms of the command (C4): V = sat(-g x' - g2 (x' - x'(t - T))
+    - kd (x - x(t - T)), vmax), which vanish on a tooth-periodic motion; run
+    by the COMB build, so the default path is untouched.
     """
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
     fmode = FMODE if fmode is None else fmode
@@ -60,14 +72,15 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     bufs = [np.zeros(nbuf) for _ in range(5)]
     summ = np.zeros(5)
     opt = np.array([ramp_a, ramp_f, f0, 1.0 if edge else 0.0,
-                    kick_step, kick_dv, clip_on, nreg], dtype=np.float64)
+                    kick_step, kick_dv, clip_on, nreg, g2, kd], dtype=np.float64)
     pbuf = None
     if pert is not None:
         nd = spr // P.N_TEETH
         hx, hv = np.asarray(pert["hx"], float), np.asarray(pert["hv"], float)
         assert len(hx) == len(hv) == nd + 1
         pbuf = np.concatenate([[pert["x"], pert["v"], pert["q"], pert["qd"]], hx, hv]).astype(np.float64)
-    _lib.simulate(float(rpm), float(a), float(g),
+    lib = _lib_comb if (g2 != 0.0 or kd != 0.0) else _lib
+    lib.simulate(float(rpm), float(a), float(g),
                   P.M, P.C, P.K, P.GA_GAIN, P.GA_A1, P.GA_A0,
                   P.K_TC, P.K_RC, fz, P.D_TOOL, P.N_TEETH, P.HELIX,
                   PHI_ST, PHI_EX, spr, nrev, nlay, nsub, float(vmax), int(fmode),

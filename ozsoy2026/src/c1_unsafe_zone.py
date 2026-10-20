@@ -117,13 +117,13 @@ def run_map(a):
 
 
 # ---------------------------------------------------------- kick tools ----
-def _kick_chatters(rpm, a, g, vmax, ks, dv):
+def _kick_chatters(rpm, a, g, vmax, ks, dv, g2=0.0):
     """Settle the cut with a face entry, kick x' by dv at step ks, and judge
-    the 300 revolutions after the kick."""
+    the 300 revolutions after the kick (g2: comb term of C4)."""
     from tdsim import simulate
     from tdboundary import classify_run
     r = simulate(rpm, a, g, vmax=vmax, store=True, nrev=KICK_REV + WINDOW, edge=True,
-                 kick_step=ks, kick_dv=dv, nreg=NREG)
+                 kick_step=ks, kick_dv=dv, nreg=NREG, g2=g2)
     st = (ks // ND + 1) * ND
     return not classify_run(r["x"][st:], SPR, r["diverged"])["stable"]
 
@@ -131,18 +131,19 @@ def _kick_chatters(rpm, a, g, vmax, ks, dv):
 def _critical_kick(args):
     """Smallest kick (m/s) that turns the settled cut into chatter, by
     bisection in log(dv); inf if DV_HI does not, nan if the unkicked cut
-    does not settle."""
-    rpm, a, g, vmax, phase, zeta = args
+    does not settle.  args: (rpm, a, g, vmax, phase, zeta[, g2])."""
+    rpm, a, g, vmax, phase, zeta = args[:6]
+    g2 = args[6] if len(args) > 6 else 0.0
     P.set_damping(zeta)
     ks = KICK_REV * SPR + (phase * ND) // N_PHASE
-    if _kick_chatters(rpm, a, g, vmax, ks, DV_LO):
+    if _kick_chatters(rpm, a, g, vmax, ks, DV_LO, g2):
         return np.nan
-    if not _kick_chatters(rpm, a, g, vmax, ks, DV_HI):
+    if not _kick_chatters(rpm, a, g, vmax, ks, DV_HI, g2):
         return np.inf
     lo, hi = np.log(DV_LO), np.log(DV_HI)
     for _ in range(N_BISECT):
         mid = 0.5 * (lo + hi)
-        if _kick_chatters(rpm, a, g, vmax, ks, np.exp(mid)):
+        if _kick_chatters(rpm, a, g, vmax, ks, np.exp(mid), g2):
             hi = mid
         else:
             lo = mid
