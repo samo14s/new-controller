@@ -243,11 +243,11 @@ def orbit(rpm, g, a, cut=HALF, N=None, mc=M_C, n_t=256):
     state = np.concatenate([at(X, 0.0), at(X, 0.0, 1), at(Q, 0.0), at(Q, 0.0, 1), at(X, th)])
     Tp = 2 * np.pi / wT
     b = -g * at(X, np.arange(n_t) / n_t * Tp, 1)
-    bd = np.abs(-g * at(X, np.arange(N_DENSE + 1) / N_DENSE * Tp, 1))
-    pad = 2 * g * np.sum(w[1:] ** 3 * np.abs(X[1:])) * (Tp / N_DENSE) ** 2 / 8
-    q = N_DENSE // mc
-    bk = np.array([bd[k * q:(k + 1) * q + 1].max() for k in range(mc)]) + pad
-    return state, b, bk
+    q = -(-N_DENSE // mc)                                          # samples per subinterval
+    s = (np.arange(mc)[:, None] + np.linspace(0.0, 1.0, q + 1)[None, :]) * (Tp / mc)
+    bd = np.abs(-g * at(X, s.ravel(), 1)).reshape(s.shape)
+    pad = 2 * g * np.sum(w[1:] ** 3 * np.abs(X[1:])) * (Tp / (mc * q)) ** 2 / 8
+    return state, b, bd.max(axis=1) + pad
 
 
 # ----------------------------------------------------------------- SDP ----
@@ -359,7 +359,9 @@ def check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=None):
                 off = (Bs * S[k] - Y[node])[:, None]
                 M1 = np.block([[Wd - As @ W[node] - W[node] @ As.T, off], [off.T, np.array([[2.0 * S[k]]])]])
                 ev = np.linalg.eigvalsh((M1 + M1.T) / 2)
-                tol = 1e3 * (n + 1) * np.finfo(float).eps * np.abs(ev).max()
+                scale = max(np.abs(ev).max(), np.linalg.norm(As, 2) * np.linalg.norm(W[node], 2),
+                            (np.linalg.norm(W[k], 2) + np.linalg.norm(W[k1], 2)) / tau)
+                tol = 1e3 * (n + 1) * np.finfo(float).eps * scale    # also covers rounding in W' and A W
                 if ev.min() <= tol:
                     return 0.0, 0.0, f"decrease not strict on subinterval {k} ({ev.min() / np.abs(ev).max():+.1e})"
                 worst = min(worst, ev.min() / np.abs(ev).max())
