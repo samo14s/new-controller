@@ -48,6 +48,17 @@
  *                   with x(t-T), x'(t-T) from the cubic Hermite interpolant
  *                   of the stored history (the measured motion, zero before
  *                   t = 0).  Both terms vanish on a tooth-periodic motion.
+ *                   kd < 0 opposes the regenerative force (KAPPA < 0 in
+ *                   c2_certificate.py), kd > 0 adds to it.
+ *   opt[10] rho     (COMB = 1) the comb's delay is rho T instead of T (0 or 1:
+ *                   exact): a controller set for a speed off by the factor
+ *                   rho, or rho = N for a spindle-period comb
+ *   opt[11] runout, opt[12] psi
+ *                   (COMB = 1, nreg > 1) eccentric radial runout: tooth i
+ *                   sits r_i = runout cos(2 pi i / N + psi) further out, and
+ *                   a regenerated chip cut by tooth i over the surface of the
+ *                   tooth k passes earlier (i + k mod N in this numbering)
+ *                   grows by r_i - r_(i+k); fresh chips are left unchanged
  * Any part of a chip whose surface the previous tooth did not cut (newly
  * engaged depth, or material just reached through the face) is fresh: its
  * thickness is fz sin(phi) - x cos(phi), with no regeneration.
@@ -76,7 +87,9 @@ typedef struct {
     int soft, nlay, edge, nreg;
     double a, Ta, Tf, f0, R, Tt, vmax_now;
 #if COMB
-    double g2, kd;
+    double g2, kd, cdel;            /* cdel: comb delay in steps (0: exactly nd) */
+    int runout, ntooth;
+    double ro[16];                  /* radial runout of each tooth */
 #endif
 } Ctx;
 
@@ -140,6 +153,11 @@ static inline double vhist(const Ctx *C, int j, double r) {
 static inline double command(const Ctx *C, const double *z, double tau) {
     int j = C->n - C->nd;
     double r = tau / C->dt;
+    if (C->cdel > 0.0) {                     /* t - rho T in steps: interval j, fraction r */
+        double sj = C->n + tau / C->dt - C->cdel;
+        j = (int)floor(sj);
+        r = sj - j;
+    }
     return -C->g * z[1] - C->g2 * (z[1] - vhist(C, j, r)) - C->kd * (z[0] - xhist(C, j, r));
 }
 #endif
@@ -172,10 +190,17 @@ static double fcut_multi(const Ctx *C, double x, double tau) {
         if (C->edge && !(s >= rs[1])) wp = 0.0;
         if (wp > w) wp = w;
         double hr = S[1] * s - (x - xd[1]) * c, q = 0.0;
+#if COMB
+        int it = e / C->nlay;                  /* tooth of this element */
+        if (C->runout) hr += C->ro[it] - C->ro[(it + 1) % C->ntooth];
+#endif
         for (k = 2; k <= K; k++) {             /* only passes that were in the material */
             if (C->soft && layer_frac(dep[k], j, C->dz) <= 0.0) break;
             if (C->edge && !(s >= rs[k])) break;
             double hk = S[k] * s - (x - xd[k]) * c;
+#if COMB
+            if (C->runout) hk += C->ro[it] - C->ro[(it + k) % C->ntooth];
+#endif
             if (hk < hr) hr = hk;
         }
         if (hr > 0) q += wp * hr;
@@ -328,6 +353,10 @@ int simulate(double rpm, double a, double g,
 #if COMB
         C.g2 = opt[8];
         C.kd = opt[9];
+        C.cdel = opt[10] > 0.0 && opt[10] != 1.0 ? opt[10] * nd : 0.0;
+        C.ntooth = N;
+        C.runout = opt[11] != 0.0 && N <= 16;
+        for (i = 0; i < N && i < 16; i++) C.ro[i] = opt[11] * cos(twopi * i / N + opt[12]);
 #endif
     }
     C.soft = C.Ta > 0.0 || C.Tf > 0.0 || C.edge;

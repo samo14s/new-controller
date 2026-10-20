@@ -96,3 +96,75 @@ def test_comb_limit_matches_the_simulator(rpm, g1, g2):
     am = c4.a_lim_ctrl(rpm, g1, g2)
     at = boundary(rpm, g1, a_lo=0.8 * am, a_hi=1.3 * am, growth=1.04, g2=g2)
     assert at == pytest.approx(am, rel=0.015)
+
+
+def test_negative_kd_opposes_regeneration():
+    """KAPPA < 0: kd < 0 raises the stability limit (about 1 mm per 1e5 V/m
+    at 2500 rpm), kd > 0 lowers it."""
+    base = c4.a_lim_ctrl(2500.0, 1500.0)
+    assert c4.a_lim_ctrl(2500.0, 1500.0, kd=-1e5) - base == pytest.approx(0.98e-3, rel=0.05)
+    assert c4.a_lim_ctrl(2500.0, 1500.0, kd=1e5) < base
+
+
+@pytest.mark.parametrize("rpm", [1090.0, 2500.0])
+def test_feasible_dvf_gain_is_the_feasibility_optimum(rpm):
+    """With the delayed terms off, the authority rule gives feas_g3000's gain."""
+    from conftest import path
+    d = np.load(path("results", "feas_g3000.npz"))
+    k = int(np.argmin(np.abs(d["rpm"] - rpm)))
+    assert c4.feasible_g1(rpm) == pytest.approx(float(d["g_best"][k]), abs=0.5)
+
+
+# --------------------------------------------- comb delay and runout options ----
+def test_comb_delay_of_one_and_zero_runout_are_the_comb_path():
+    a = simulate(2500, 20e-3, 1500.0, vmax=9.0, store=True, nrev=30, edge=True, nreg=4, g2=2000.0)
+    b = simulate(2500, 20e-3, 1500.0, vmax=9.0, store=True, nrev=30, edge=True, nreg=4, g2=2000.0,
+                 comb_delay=1.0, runout=0.0)
+    assert np.array_equal(a["x"], b["x"])
+
+
+def test_spindle_comb_vanishes_on_the_runout_orbit():
+    """With runout the settled motion is spindle-periodic: the tooth comb acts
+    on it, the spindle-period comb (delay N T) does not."""
+    rpm, a, g1, g2, ro = 2500, 10e-3, 1500.0, 2000.0, 2e-6
+    k = slice(-SPR, None)
+    t = simulate(rpm, a, g1, store=True, nrev=300, edge=True, nreg=4, g2=g2, runout=ro)
+    s = simulate(rpm, a, g1, store=True, nrev=300, edge=True, nreg=4, g2=g2, runout=ro, comb_delay=P.N_TEETH)
+    res = lambda r: np.abs(r["vcmd"][k] + g1 * r["v"][k]).max()
+    assert res(s) < 1e-6 * np.abs(s["vcmd"][k]).max()
+    assert res(t) > 0.05 * np.abs(t["vcmd"][k]).max()
+
+
+# ------------------------------------------------- closed form (c4_robust) ----
+import c4_robust as R
+
+
+@pytest.mark.parametrize("rpm,g1,g2,kd", [(2500.0, 1500.0, 0.0, 0.0), (2500.0, 1500.0, 2000.0, 0.0),
+                                          (1090.0, 1500.0, 1000.0, 0.0), (2500.0, 1500.0, 0.0, -3e5)])
+def test_closed_form_limit_is_the_collocated_limit(rpm, g1, g2, kd):
+    assert R.a_lim_cf(rpm, g1, g2, kd) == pytest.approx(c4.a_lim_ctrl(rpm, g1, g2, kd), rel=2e-4)
+
+
+def test_closed_form_orbit_is_the_c2_orbit():
+    for rpm, g1, a in [(2500.0, 1500.0, 20e-3), (1420.0, 1500.0, 10e-3)]:
+        assert R.orbit_command(rpm, a, g1)[0] == pytest.approx(c2.orbit(rpm, g1, a)[2], abs=1e-4)
+        assert R.orbit_command(rpm, a, g1, 2000.0)[0] == pytest.approx(R.orbit_command(rpm, a, g1)[0], rel=1e-12)
+
+
+def test_runout_force_has_only_tooth_harmonics_without_runout():
+    W = R.slice_force_revolution()
+    k = np.arange(len(W))
+    assert np.abs(W[k % P.N_TEETH != 0]).max() < 1e-12 * np.abs(W).max()
+    Wr = R.slice_force_revolution(2e-6)
+    assert np.abs(Wr[1]) > 1e-3 * np.abs(W[P.N_TEETH])
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("case", [(2500.0, 20e-3, 1500.0, 2000.0, 1.0, 2e-6, 0.0),
+                                  (2500.0, 20e-3, 1500.0, 2000.0, 0.99, 0.0, 0.0),
+                                  (1420.0, 15e-3, 1500.0, 2000.0, 0.98, 2e-6, 2.0)])
+def test_closed_form_orbit_command_matches_the_simulator(case):
+    """Runout and comb-delay error: the settled peak command of the simulator
+    (time-varying cut, 30 layers) and the closed form agree to 2 %."""
+    td, cf, drift = R._td_orbit(case)
+    assert drift < 1e-8 and td == pytest.approx(cf, rel=0.02)

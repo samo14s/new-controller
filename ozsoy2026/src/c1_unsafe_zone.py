@@ -63,8 +63,10 @@ F_HP = 40.0                                  # Hz, high-pass for the kick-to-mod
 
 
 def build_id():
-    """Hash of the simulator source, stored with every result."""
-    return hashlib.sha256(open(os.path.join(HERE, "tdsim.c"), "rb").read()).hexdigest()[:12]
+    """Hash of the simulator source the loaded library was built from, stored
+    with every result (taken when tdsim is first imported)."""
+    from tdsim import SOURCE_SHA
+    return SOURCE_SHA[:12]
 
 
 def gain_map(tag="g1500"):
