@@ -1,0 +1,4 @@
+== floquet 22:51:17
+ae/D 0.5: Floquet / ZOA 1.0000-1.0011 (median 1.0007); flip at 0 speeds; |rho(N+8) - 1| <= 4.9e-06
+ae/D 0.1: Floquet / ZOA 1.0000-1.0028 (median 1.0011); flip at 0 speeds; |rho(N+8) - 1| <= 5.5e-06
+== basin 22:52:40
