@@ -458,7 +458,8 @@ def check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=None):
 LAM_FRAC = (0.05, 0.02, 0.01)                   # decay margins, fractions of the Floquet rate; an
 #                                                  infeasible problem is retried with a smaller one
 SOLVER = dict(direct_solve_method="faer", max_threads=1, max_iter=120)   # defaults otherwise; the check decides
-N_PASS = 2                                      # solves per margin: the warm start, then one re-centred
+N_PASS = 1                                      # solves per margin: the warm start (a re-centred second
+#                                                 pass added 0.4 % at 2500 rpm, 0.9 a_lim)
 
 
 def floquet_rate(A0, E, h_of_t, Tp, L=200):
