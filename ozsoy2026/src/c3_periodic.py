@@ -144,15 +144,47 @@ def aH_rate_bound(rpm, cut=HALF):
     return 2 * np.pi * rpm / 60.0 * P.N_TEETH * 2 * f / KAPZ
 
 
-def enclosure(rpm, a, cut=HALF, mc=M_C, n_enc=N_ENC):
-    """[h_k-, h_k+] containing a H(t) on each of the mc subintervals."""
+def enclosure(rpm, a, cut=HALF, mc=M_C, n_enc=N_ENC, order=2):
+    """Per subinterval k (local time s in [0, 1]): a H = alpha_k + beta_k s + r
+    with |r| <= eps_k.  order 1: a box (beta = 0); order 2: least-squares
+    line plus the largest residual.  Samples at the midpoints of n_enc cells,
+    widened by the rate bound of the residual times half a cell."""
     Tp = 60.0 / (rpm * P.N_TEETH)
-    s = np.arange(mc * n_enc + 1) / (mc * n_enc) * Tp
-    h = aH(s, rpm, a, cut)
-    pad = aH_rate_bound(rpm, cut) * (Tp / (mc * n_enc)) / 2
-    lo = np.array([h[k * n_enc:(k + 1) * n_enc + 1].min() for k in range(mc)]) - pad
-    hi = np.array([h[k * n_enc:(k + 1) * n_enc + 1].max() for k in range(mc)]) + pad
-    return lo, hi
+    tau = Tp / mc
+    sj = (np.arange(n_enc) + 0.5) / n_enc
+    h = aH(((np.arange(mc)[:, None] + sj[None, :]) * tau).ravel(), rpm, a, cut).reshape(mc, n_enc)
+    L = aH_rate_bound(rpm, cut)
+    if order == 1:
+        lo, hi = h.min(axis=1), h.max(axis=1)
+        alpha, beta = 0.5 * (lo + hi), np.zeros(mc)
+        eps = 0.5 * (hi - lo) + L * tau / n_enc / 2
+    else:
+        V = np.column_stack([np.ones(n_enc), sj])
+        coef = np.linalg.lstsq(V, h.T, rcond=None)[0]
+        alpha, beta = coef[0], coef[1]
+        eps = np.abs(h - alpha[:, None] - beta[:, None] * sj[None, :]).max(axis=1) \
+            + (L + np.abs(beta) / tau) * tau / n_enc / 2
+    return alpha, beta, eps
+
+
+def corners(alpha, beta, eps):
+    """Corners of the decrease LMI on each subinterval: tuples (s, c_k, c_k1)
+    with A W(s) replaced by (1 - s) A0 W_k + s A0 W_k1 + c_k E W_k + c_k1 E W_k1.
+    With h = alpha + beta s + r and W(s) = (1 - s) W_k + s W_k1, h W(s) is
+    multi-affine in ((s, sigma = s^2), r), (s, s^2) lies in the triangle
+    (0, 0), (1/2, 0), (1, 1) and r in [-eps, eps]: the corners are the
+    3 x 2 products (2 x 2 when beta = 0, where sigma does not enter)."""
+    out = []
+    for al, be, ep in zip(alpha, beta, eps):
+        pts = ((0.0, 0.0), (1.0, 1.0)) if be == 0 else ((0.0, 0.0), (0.5, 0.0), (1.0, 1.0))
+        out.append([(sv, (al + r) * (1 - sv) + be * (sv - sg), (al + r) * sv + be * sg)
+                    for sv, sg in pts for r in (-ep, ep)])
+    return out
+
+
+def h_range(alpha, beta, eps):
+    """Bounds of a H on each subinterval implied by the enclosure."""
+    return np.minimum(alpha, alpha + beta) - eps, np.maximum(alpha, alpha + beta) + eps
 
 
 # --------------------------------------------------------------- model ----
@@ -273,13 +305,13 @@ def _sym(x, I, J, n):
     return W
 
 
-def lmi(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=TIGHT, valid=None):
+def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, valid=None):
     """Largest beta with beta e in E(P(t)) for all t, P periodic piecewise
-    affine as in the module docstring.  hlo, hhi: enclosure of a H on each
-    subinterval; u0n: sector level at each node (the smaller of the two
-    subintervals meeting there).  Returns beta and (W_k, Y_k, S_k) in the
-    coordinates x = Tm z."""
-    mc, n = len(hlo), len(B)
+    affine as in the module docstring.  enc: (alpha, beta, eps) of a H on
+    each subinterval (enclosure); u0n: sector level at each node (the smaller
+    of the two subintervals meeting there).  Returns beta and (W_k, Y_k, S_k)
+    in the coordinates x = Tm z."""
+    mc, n = len(enc[0]), len(B)
     Ti = np.linalg.inv(Tm)
     A0s, Es, Bs, Ks, es = Ti @ A0 @ Tm, Ti @ E @ Tm, Ti @ B, K @ Tm, Ti @ e
     I, J = np.triu_indices(n)
@@ -291,56 +323,58 @@ def lmi(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=TIGHT
     vb = mc * per
     tau = Tp / mc
     C = np.arange(n)
-    blocks = []
-    for k in range(mc):
-        k1 = (k + 1) % mc
-        for node in (k, k1):
-            for h in (hlo[k], hhi[k]):
-                M1 = LMIBlock(n + 1)
-                M1.add(I, J, vW[k1], 1.0 / tau)                     # W' = (W_k1 - W_k) / tau
-                M1.add(I, J, vW[k], -1.0 / tau)
-                _add_sym(M1, A0s + h * Es, vW[node], I, J, -1.0)
-                if lam > 0:
-                    M1.add(I, J, vW[node], -2 * lam)
-                M1.add(C, n, vS[k], Bs)
-                M1.add(C, n, vY[node], -1.0)
-                M1.add(n, n, vS[k], 2.0)
-                M1.add(np.arange(n + 1), np.arange(n + 1), -1, -eps)
-                blocks.append(M1)
     off = I != J
+    blocks = []
+    for k, cks in enumerate(corners(*enc)):
+        k1 = (k + 1) % mc
+        for sv, ck, ck1 in cks:
+            M1 = LMIBlock(n + 1)
+            M1.add(I, J, vW[k1], 1.0 / tau)                         # W' = (W_k1 - W_k) / tau
+            M1.add(I, J, vW[k], -1.0 / tau)
+            for v, wgt, c in ((vW[k], 1 - sv, ck), (vW[k1], sv, ck1)):
+                if wgt or c:
+                    _add_sym(M1, wgt * A0s + c * Es, v, I, J, -1.0)
+                if lam > 0 and wgt:
+                    M1.add(I, J, v, -2 * lam * wgt)
+            M1.add(C, n, vS[k], Bs)
+            for v, wgt in ((vY[k], 1 - sv), (vY[k1], sv)):
+                if wgt:
+                    M1.add(C, n, v, -wgt)
+            M1.add(n, n, vS[k], 2.0)
+            M1.add(np.arange(n + 1), np.arange(n + 1), -1, -eps)
+            blocks.append(M1)
+    cs = valid[0] @ Tm if valid is not None else None
     for k in range(mc):
-        M2 = LMIBlock(n + 1)
+        M2 = LMIBlock(n + 1)                                         # [[W, W K' - Y'], [K W - Y, u0^2]]
         M2.add(I, J, vW[k], 1.0)
         M2.add(I, n, vW[k], Ks[J])
         M2.add(J[off], n, vW[k][off], Ks[I[off]])
         M2.add(C, n, vY[k], -1.0)
         M2.add(n, n, -1, u0n[k] ** 2)
-        M3 = LMIBlock(n + 1)
+        M3 = LMIBlock(n + 1)                                         # [[1, beta e'], [beta e, W]]
         M3.add(0, 0, -1, 1.0)
         M3.add(0, 1 + C, vb, es)
         M3.add(1 + I, 1 + J, vW[k], 1.0)
         blocks += [M2, M3]
-        if valid is not None:
-            cs = valid[0] @ Tm
-            M4 = LMIBlock(n + 1)
-            M4.add(I, J, vW[k], 1.0)
-            M4.add(I, n, vW[k], cs[J])
-            M4.add(J[off], n, vW[k][off], cs[I[off]])
-            M4.add(n, n, -1, valid[1] ** 2)
+        if cs is not None:                                           # c W c' <= h^2 (scalar, W > 0)
+            M4 = LMIBlock(1)
+            M4.add(0, 0, vW[k], -cs[I] * cs[J] * np.where(off, 2.0, 1.0))
+            M4.add(0, 0, -1, valid[1] ** 2)
             blocks.append(M4)
     c = np.zeros(vb + 1)
     c[vb] = 1.0
-    x, status = solve_sdp(len(c), c, blocks, nonneg=[(v, eps) for v in vS] + [(vb, 0.0)], settings=settings)
+    x, status = solve_sdp(len(c), c, blocks, nonneg=[(v, eps) for v in vS] + [(vb, 0.0)],
+                          settings=SOLVER if settings is None else settings)
     W = np.array([_sym(x[v], I, J, n) for v in vW])
     Y = np.array([x[v] for v in vY])
     S = np.array([x[v] for v in vS])
     return x[vb], (W, Y, S), status
 
 
-def check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=None):
+def check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=None):
     """Check a candidate independently of the solver (as c2.check, at every
     corner of every subinterval and at every node).  Returns (size, scale c, message)."""
-    mc, n = len(hlo), len(B)
+    mc, n = len(enc[0]), len(B)
     Ti = np.linalg.inv(Tm)
     A0s, Es, Bs, Ks, es = Ti @ A0 @ Tm, Ti @ E @ Tm, Ti @ B, K @ Tm, Ti @ e
     W = (W + W.transpose(0, 2, 1)) / 2
@@ -350,21 +384,22 @@ def check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=None):
         if lw.min() <= 0 or lw.max() / lw.min() > 1e10:
             return 0.0, 0.0, f"W_{k} not positive definite or too ill-conditioned"
     worst = np.inf
-    for k in range(mc):
+    nA, nE = np.linalg.norm(A0s, 2), np.linalg.norm(Es, 2)
+    for k, cks in enumerate(corners(*enc)):
         k1 = (k + 1) % mc
         Wd = (W[k1] - W[k]) / tau
-        for node in (k, k1):
-            for h in (hlo[k], hhi[k]):
-                As = A0s + h * Es
-                off = (Bs * S[k] - Y[node])[:, None]
-                M1 = np.block([[Wd - As @ W[node] - W[node] @ As.T, off], [off.T, np.array([[2.0 * S[k]]])]])
-                ev = np.linalg.eigvalsh((M1 + M1.T) / 2)
-                scale = max(np.abs(ev).max(), np.linalg.norm(As, 2) * np.linalg.norm(W[node], 2),
-                            (np.linalg.norm(W[k], 2) + np.linalg.norm(W[k1], 2)) / tau)
-                tol = 1e3 * (n + 1) * np.finfo(float).eps * scale    # also covers rounding in W' and A W
-                if ev.min() <= tol:
-                    return 0.0, 0.0, f"decrease not strict on subinterval {k} ({ev.min() / np.abs(ev).max():+.1e})"
-                worst = min(worst, ev.min() / np.abs(ev).max())
+        for sv, ck, ck1 in cks:
+            AW = ((1 - sv) * A0s + ck * Es) @ W[k] + (sv * A0s + ck1 * Es) @ W[k1]
+            Ys = (1 - sv) * Y[k] + sv * Y[k1]
+            off = (Bs * S[k] - Ys)[:, None]
+            M1 = np.block([[Wd - AW - AW.T, off], [off.T, np.array([[2.0 * S[k]]])]])
+            ev = np.linalg.eigvalsh((M1 + M1.T) / 2)
+            terms = max(np.abs(ev).max(), (nA + (abs(ck) + abs(ck1)) * nE) * max(np.linalg.norm(W[k], 2),
+                        np.linalg.norm(W[k1], 2)), (np.linalg.norm(W[k], 2) + np.linalg.norm(W[k1], 2)) / tau)
+            tol = 1e3 * (n + 1) * np.finfo(float).eps * terms      # covers rounding in W' and A W
+            if ev.min() <= tol:
+                return 0.0, 0.0, f"decrease not strict on subinterval {k} ({ev.min() / np.abs(ev).max():+.1e})"
+            worst = min(worst, ev.min() / np.abs(ev).max())
     c = 1.0
     sizes = []
     cv = valid[0] @ Tm if valid is not None else None
@@ -384,7 +419,9 @@ def check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=None):
     return size, c, ("ok" if c == 1.0 else f"ok, shrunk by {c:.12g}") + f"; min eig ratio {worst:.1e}"
 
 
-LAM_FRAC = c2.LAM_FRAC
+LAM_FRAC = (0.05, 0.02, 0.01)                   # decay margins, fractions of the Floquet rate; an
+#                                                  infeasible problem is retried with a smaller one
+SOLVER = dict(direct_solve_method="faer", max_threads=1, max_iter=120)   # defaults otherwise; the check decides
 N_PASS = 2                                      # solves per margin: the warm start, then one re-centred
 
 
@@ -395,8 +432,8 @@ def floquet_rate(A0, E, h_of_t, Tp, L=200):
     return -np.log(np.abs(np.linalg.eigvals(Phi)).max()) / Tp
 
 
-def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolved=True,
-            settings=TIGHT, delta=DELTA, full=False, n_pass=N_PASS):
+def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolved=True, order=2,
+            settings=None, delta=DELTA, full=False, n_pass=N_PASS):
     """Certified size along e (default: unit velocity, the kick of C1) on the
     periodic model.  averaged=True replaces a H(t) by its mean (C2's model,
     with the periodic W and the time-resolved margin); resolved=False uses
@@ -416,10 +453,10 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
         e[1] = 1.0
     Abar = A0 + cut.kappa * a * E
     if averaged:
-        hlo = hhi = np.full(mc, cut.kappa * a)
+        enc = (np.full(mc, cut.kappa * a), np.zeros(mc), np.zeros(mc))
         sigma = -np.linalg.eigvals(Abar).real.max()
     else:
-        hlo, hhi = enclosure(rpm, a, cut, mc)
+        enc = enclosure(rpm, a, cut, mc, order=order)
         sigma = floquet_rate(A0, E, lambda t: aH(t, rpm, a, cut), Tp)
     _, _, bk = orbit(rpm, g, a, cut, N, mc)
     u0k = VMAX - (bk if resolved else np.full(mc, bk.max()))
@@ -430,16 +467,16 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
         out.update(note="linearly unstable" if sigma <= 0 else "orbit saturates")
         return out if full else (0.0, out["note"])
     valid = c2.validity(n, delta) if delta is not None else None
-    s2, _, cert2 = c2.certify(Abar, B, K, u0k.min(), e, rpm, settings, full=True, delta=delta)
+    s2, _, cert2 = c2.certify(Abar, B, K, u0k.min(), e, rpm, TIGHT, full=True, delta=delta)
     out["c2_size"] = s2
     start = cert2[0] @ cholesky(np.linalg.inv(cert2[1]), lower=True) if cert2 is not None else None
     best, note, cert = 0.0, "no candidate passed the check", None
     for f in LAM_FRAC:
         Tm = start if start is not None else np.diag(c2.scaling(Abar, rpm))
         for p in range(n_pass):
-            beta, (W, Y, S), status = lmi(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, lam=f * sigma,
+            beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
                                           settings=settings, valid=valid)
-            size, c, msg = check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=valid)
+            size, c, msg = check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=valid)
             if size > best:
                 best = min(size, beta) if beta > 0 else size
                 note = f"{status}; pass {p}, lam {f:g} sigma; {msg}"
@@ -526,33 +563,6 @@ def proof_check(Ad, Bd, K, b, cert, nruns=48, nper=40, seed=0):
     return float(vmax), float(vend)
 
 
-def model_critical_kick(Ad, Bd, K, b, nphase=4, nper=1200, lo=1e-4, hi=3.0, nbis=9):
-    """c2.model_critical_kick on the periodic model."""
-    n, L = Bd.shape[1], len(b)
-    e = np.zeros(n)
-    e[1] = 1.0
-    k0 = (np.arange(nphase) * L) // nphase
-
-    def diverges(dv):
-        with np.errstate(over="ignore", invalid="ignore"):
-            X = run_model(Ad, Bd, K, b, np.outer(e, np.full(nphase, dv)), k0, nper)
-            nrm = np.linalg.norm(X, axis=0)
-        return ~np.isfinite(nrm) | (nrm > 10 * dv)
-
-    if np.all(diverges(lo)):
-        return lo
-    if not np.any(diverges(hi)):
-        return np.inf
-    a, c = np.log(lo), np.log(hi)
-    for _ in range(nbis):
-        m = 0.5 * (a + c)
-        if np.any(diverges(np.exp(m))):
-            c = m
-        else:
-            a = m
-    return float(np.exp(c))
-
-
 # ------------------------------------------ off-axis test in the simulator ----
 def td_offaxis(rpm, a, g, cert, nodes=(0, 4, 8, 12), kick_rev=100, window=300):
     """c2.td_offaxis with the periodic certificate: the boundary points of
@@ -626,7 +636,8 @@ def run_floquet(a):
 
 
 def model_kick_by_phase(Ad, Bd, K, b, phases, nper=1200, lo=1e-4, hi=3.0, nbis=9):
-    """model_critical_kick at each phase index separately (bisection per phase)."""
+    """c2.model_critical_kick on the given step maps, at each phase index
+    separately (log bisection per phase)."""
     n, L = Bd.shape[1], len(b)
     e = np.zeros(n)
     e[1] = 1.0
@@ -658,29 +669,80 @@ def model_kick_by_phase(Ad, Bd, K, b, phases, nper=1200, lo=1e-4, hi=3.0, nbis=9
 L_SIM = 256                                       # steps per tooth period of the model runs
 
 
+def set_immersion(cut):
+    """The simulator's engagement window (tdsim reads it at each call)."""
+    import tdsim
+    tdsim.PHI_ST, tdsim.PHI_EX = cut.st, cut.ex
+
+
+def _point(rpm, g, a, cut, offaxis=True):
+    """Certificate and model checks at one cut: the periodic certificate,
+    C2's (warm start), the proof on the periodic model, the critical kick of
+    the periodic and of the averaged model at the M_C node phases, and the
+    off-axis simulator test of E(P(t_k)) at 4 phases."""
+    r = certify(rpm, a, g, cut, full=True)
+    A0, E, B, K = model(rpm, g)
+    Tp = 60.0 / (rpm * P.N_TEETH)
+    _, b, _ = orbit(rpm, g, a, cut, n_t=L_SIM)
+    ph = np.arange(M_C) * L_SIM // M_C
+    Ad, Bd = step_maps(A0, E, B, lambda t: aH(t, rpm, a, cut), Tp, L_SIM)
+    Aa, Ba = step_maps(A0, E, B, lambda t: np.full(np.size(t), cut.kappa * a), Tp, L_SIM)
+    cert = r["cert"]
+    proof = proof_check(Ad, Bd, K, b, cert) if cert is not None else (np.nan, np.nan)
+    set_immersion(cut)
+    off = td_offaxis(rpm, a, g, cert) if (cert is not None and offaxis) else (0, 0)
+    return dict(cert=r["size"], c2_cert=r["c2_size"], phase_cert=r["phase_size"], u0_min=r["u0_min"],
+                u0_max=r["u0_max"], sigma=r["sigma"], proof_vmax=proof[0], proof_vend=proof[1],
+                model_kick=model_kick_by_phase(Ad, Bd, K, b, ph), avg_kick=model_kick_by_phase(Aa, Ba, K, b, ph),
+                offaxis_bad=off[0], offaxis_runs=off[1], msg=r["note"])
+
+
+def _stack(res, keys):
+    return {k: np.array([r[k] for r in res]) for k in keys}
+
+
+KEYS = ("cert", "c2_cert", "phase_cert", "u0_min", "u0_max", "sigma", "proof_vmax", "proof_vend", "model_kick",
+        "avg_kick", "offaxis_bad", "offaxis_runs", "msg")
+
+
+def _report(out, td):
+    for i in range(len(out["cert"])):
+        print(f"{out['rpm'][i]:.0f} rpm {out['frac'][i]:.2f} a_lim: C3 {out['cert'][i]*1e3:7.3f} (C2 {out['c2_cert'][i]*1e3:7.3f}) "
+              f"mm/s; per phase {out['phase_cert'][i].min()*1e3:.3f}-{out['phase_cert'][i].max()*1e3:.3f}; model periodic "
+              f"{np.nanmin(out['model_kick'][i])*1e3:8.2f}, averaged {np.nanmin(out['avg_kick'][i])*1e3:8.2f}, "
+              f"TD {np.nanmin(td[i])*1e3:8.2f}; max V {out['proof_vmax'][i]:.5f}; off-axis "
+              f"{out['offaxis_bad'][i]}/{out['offaxis_runs'][i]}  [{out['msg'][i]}]", flush=True)
+    c, c2s, ph = out["cert"], out["c2_cert"], out["phase_cert"]
+    ok = c > 0
+    q = c[ok] / c2s[ok]
+    print(f"C3 / C2: {q.min():.3f}-{q.max():.3f} (median {np.median(q):.3f}) at {ok.sum()}/{len(c)} points")
+    mk, ak = out["model_kick"], out["avg_kick"]
+    both = np.isfinite(mk) & np.isfinite(ak)
+    print(f"periodic / averaged model critical kick, phase by phase: {np.min(mk[both] / ak[both]):.3f}-"
+          f"{np.max(mk[both] / ak[both]):.3f} (median {np.median(mk[both] / ak[both]):.3f})")
+    print(f"per-phase certificate below the periodic model's kick at the same phase: {np.sum((ph <= mk)[ok])}/{ok.sum() * M_C}")
+    print(f"C2 certificate below the periodic model's smallest kick: {np.sum(c2s <= np.nanmin(mk, axis=1))}/{len(c2s)}")
+    fin = np.isfinite(td) & ok[:, None]
+    tdp = td if td.shape[1] == M_C else None
+    if tdp is not None:
+        print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}")
+    print(f"certificate below the simulated smallest kick: {np.sum(c[ok] <= np.nanmin(td[ok], axis=1))}/{ok.sum()}")
+    print(f"proof check max V {np.nanmax(out['proof_vmax']):.5f}; off-axis chatter {out['offaxis_bad'].sum()}/"
+          f"{out['offaxis_runs'].sum()}")
+
+
 def _basin(args):
     rpm, g, frac, zeta = args
     P.set_damping(zeta)
-    a = frac * a_lim(rpm, g)
-    r = certify(rpm, a, g, full=True)
-    A0, E, B, K = model(rpm, g)
-    Tp = 60.0 / (rpm * P.N_TEETH)
-    Ad, Bd = step_maps(A0, E, B, lambda t: aH(t, rpm, a), Tp, L_SIM)
-    _, b, _ = orbit(rpm, g, a, n_t=L_SIM)
-    cert = r["cert"]
-    proof = proof_check(Ad, Bd, K, b, cert) if cert is not None else (np.nan, np.nan)
-    mk = model_kick_by_phase(Ad, Bd, K, b, np.arange(M_C) * L_SIM // M_C)
-    off = td_offaxis(rpm, a, g, cert) if cert is not None else (0, 0)
-    return (r["size"], r["c2_size"], r["phase_size"], r["u0_min"], r["u0_max"], r["sigma"], proof[0], proof[1],
-            mk, off[0], off[1], r["note"])
+    return _point(rpm, g, frac * a_lim(rpm, g), HALF)
 
 
 def run_basin(a):
-    """At the C1 basin points: the periodic certificate (any phase and per
-    phase), C2's certificate from the warm start, the proof checked on the
-    periodic model, the periodic model's critical kick at the 16 kick phases
-    of C1, the simulated critical kick at those phases (C1), and boundary
-    points of E(P(t_k)) at 4 phases in the simulator."""
+    """At the C1 basin points (half immersion): the periodic certificate (any
+    phase and per phase), C2's from the warm start, the proof checked on the
+    periodic model, the periodic and averaged models' critical kicks at the
+    16 kick phases of C1, the simulated critical kick at those phases (C1),
+    and boundary points of E(P(t_k)) at 4 phases in the simulator."""
     b = np.load(os.path.join(RES, "c1_basin.npz"))
     assert int(b["n_phase"]) == M_C, "the nodes are C1's kick phases"
     m = b["vmax"] > 0
@@ -689,27 +751,53 @@ def run_basin(a):
         jobs = jobs[:a.limit]
     with Pool(a.workers) as pool:
         res = pool.map(_basin, jobs, chunksize=1)
-    col = lambda k: np.array([r[k] for r in res])
-    td = b["dv"][m][:len(jobs)]
-    out = dict(rpm=np.array([j[0] for j in jobs]), g=np.array([j[1] for j in jobs]),
-               frac=np.array([j[2] for j in jobs]), cert=col(0), c2_cert=col(1), phase_cert=col(2),
-               u0_min=col(3), u0_max=col(4), sigma=col(5), proof_vmax=col(6), proof_vend=col(7),
-               model_kick=col(8), td_kick=td, offaxis_bad=col(9), offaxis_runs=col(10),
-               msg=np.array([r[11] for r in res]), m_c=M_C, delta=DELTA)
+    out = _stack(res, KEYS)
+    out.update(rpm=np.array([j[0] for j in jobs]), g=np.array([j[1] for j in jobs]),
+               frac=np.array([j[2] for j in jobs]), td_kick=b["dv"][m][:len(jobs)], m_c=M_C, delta=DELTA)
     np.savez_compressed(os.path.join(RES, "c3_basin.npz"), **out)
-    for j, r, t in zip(jobs, res, td):
-        print(f"{j[0]:.0f} rpm {j[2]:.2f} a_lim: C3 {r[0]*1e3:7.3f} (C2 {r[1]*1e3:7.3f}) mm/s; per phase "
-              f"{r[2].min()*1e3:.3f}-{r[2].max()*1e3:.3f}; model {np.nanmin(r[8])*1e3:8.2f}, TD {np.nanmin(t)*1e3:8.2f}; "
-              f"max V {r[6]:.5f}; off-axis {r[9]}/{r[10]}  [{r[11]}]", flush=True)
-    c, c2s, ph = out["cert"], out["c2_cert"], out["phase_cert"]
-    ok = c > 0
-    print(f"C3 / C2: {np.min(c[ok] / c2s[ok]):.3f}-{np.max(c[ok] / c2s[ok]):.3f} (median {np.median(c[ok] / c2s[ok]):.3f}) "
-          f"at {ok.sum()}/{len(c)} points")
-    fin = np.isfinite(td) & ok[:, None]
-    print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}; "
-          f"below the periodic model's: {np.sum((ph <= out['model_kick'])[ok])}/{ok.sum() * M_C}")
-    print(f"proof check max V {np.nanmax(out['proof_vmax']):.5f}; off-axis chatter {out['offaxis_bad'].sum()}/"
-          f"{out['offaxis_runs'].sum()}")
+    _report(out, out["td_kick"])
+
+
+LOW_AE = 0.1
+LOW_FRAC = (0.5, 0.8, 0.9, 0.98)
+LOW_PHASES = (0, 4, 8, 12)                        # of C1's 16 kick phases
+
+
+def _low_td(args):
+    """C1's simulated critical kick at low immersion."""
+    from c1_unsafe_zone import _critical_kick
+    set_immersion(Cut(LOW_AE))
+    return _critical_kick(args)
+
+
+def _low(args):
+    rpm, g, frac, zeta = args
+    P.set_damping(zeta)
+    cut = Cut(LOW_AE)
+    return _point(rpm, g, frac * cut.a_lim(rpm, g), cut)
+
+
+def run_lowimm(a):
+    """Low radial immersion (ae/D = LOW_AE), where a H(t) swings much more
+    (0.5-1.3 of its mean at 10 mm): the same checks as run_basin at the C1
+    speeds, with the simulated critical kick at 4 of C1's 16 phases."""
+    from c1_unsafe_zone import BASIN_RPM
+    rpm_map, g_map, zeta = gain_map()
+    cut = Cut(LOW_AE)
+    pts = [(float(n), float(np.interp(n, rpm_map, g_map)), f, zeta) for n in BASIN_RPM for f in LOW_FRAC]
+    tdj = [(n, f * cut.a_lim(n, g), g, VMAX, p, z) for (n, g, f, z) in pts for p in LOW_PHASES]
+    with Pool(a.workers) as pool:
+        td = np.array(pool.map(_low_td, tdj, chunksize=1)).reshape(len(pts), len(LOW_PHASES))
+        res = pool.map(_low, pts, chunksize=1)
+    out = _stack(res, KEYS)
+    out.update(rpm=np.array([p[0] for p in pts]), g=np.array([p[1] for p in pts]), frac=np.array([p[2] for p in pts]),
+               a=np.array([p[2] * cut.a_lim(p[0], p[1]) for p in pts]), td_kick=td, td_phases=np.array(LOW_PHASES),
+               ae=LOW_AE, m_c=M_C, delta=DELTA)
+    np.savez_compressed(os.path.join(RES, "c3_lowimm.npz"), **out)
+    _report(out, td)
+    ph = out["phase_cert"][:, list(LOW_PHASES)]
+    fin = np.isfinite(td) & (out["cert"] > 0)[:, None]
+    print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}")
 
 
 DEC_RPM = (1090, 1420, 2500, 2870)
@@ -747,12 +835,12 @@ def run_decomp(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["floquet", "basin", "decomp"])
+    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm"])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
     ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
     a = ap.parse_args()
-    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp)[a.command](a)
+    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm)[a.command](a)
 
 
 if __name__ == "__main__":
