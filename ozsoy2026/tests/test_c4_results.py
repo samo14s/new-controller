@@ -69,3 +69,36 @@ def test_robustness_limits_of_the_tooth_comb(s):
         assert row["tooth comb"]["runout_tolerance_um"] <= row["DVF"]["runout_tolerance_um"], n
         assert row["tooth comb"]["tau_a_lim_mm"]["mode_400Hz"][-1] == 0.0, n
         assert row["DVF"]["tau_a_lim_mm"]["mode_400Hz"][-1] > 10.0, n
+
+
+def test_gain_map_against_the_fine_dvf_grid(s):
+    """DVF gets 26 gains; the delayed designs are certified without a gap to
+    the end of the grid at every speed, and never shallower than DVF."""
+    g = s["gainmap"]
+    assert g["dvf_g1_grid"] == 26
+    for n, row in g["by_rpm"].items():
+        c = row["certified_without_gap_mm"]
+        assert c["comb_1"] == 34.0, n
+        for D in ("1", "2", "4"):
+            assert c[f"comb_{D}"] >= c[f"dvf_{D}"], (n, D)
+    assert [g["by_rpm"][n]["certified_without_gap_mm"]["dvf_1"] for n in ("1090", "1420", "2500", "2870")] == \
+        [34.0, 18.0, 16.0, 28.0]
+
+
+def test_uncapped_comparison_keeps_the_gain(s):
+    u = s["limits"]["uncapped"]
+    assert u["speeds"] == 56 and u["d2000_over_dvf"]["min"] > 1.3
+    assert u["d2000_over_dvf"]["median"] == pytest.approx(1.47, abs=0.01)
+
+
+def test_supplementary_validation(s):
+    """All certificates below the simulation (89) and the averaged model (97);
+    the deep 30-34 mm points are validated; at the same g1 (same orbit command
+    and budget) the delayed term widens the simulated basin near DVF's limit."""
+    v = s["validate2"]
+    assert v["all_cert_below_td"] == v["all_td_points"] == 89
+    assert v["all_cert_below_model"] == v["all_model_points"] == 97
+    assert v["offaxis_bad"] == 0 and v["offaxis_runs"] == 576
+    assert v["deep_points"] == 8 and v["deep_td_over_cert"]["min"] > 2.0
+    assert v["same_g1_better"] == 19 and v["same_g1_over_dvf"]["max"] > 2.5
+    assert v["same_g1_over_dvf"]["min"] > 0.95

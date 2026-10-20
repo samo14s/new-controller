@@ -29,3 +29,4 @@ face entry, 9 V, 2500 rpm, comb-delay error +2 %: 28.74 mm (linear limit 28.77 m
   2870 rpm 22 mm: simulated critical kick DVF 5.84, delayed 6.86 mm/s
   2870 rpm 26 mm: simulated critical kick DVF 7.29, delayed 7.44 mm/s
 == done 11:41:52
+== limits rerun 11:4x for the P-term designs and 15:17 (chain 2: uncapped check): see log_c4_limits.txt and log_c4_chain2.txt
