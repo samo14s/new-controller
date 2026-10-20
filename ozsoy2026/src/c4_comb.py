@@ -160,7 +160,13 @@ def feasible_g1(rpm, g2=0.0, kd=0.0, g_hi=G1_MAX, tol=0.25, guard=1.0):
         return g_hi
     lo, hi = 0.0, g_hi
     if not feasible(rpm, lo, g2, kd, guard):
-        return np.nan
+        # without DVF the loop itself can be unstable (P term): the feasible
+        # gains then start above 0; take the largest feasible point of a
+        # 100 V s/m grid and bisect above it
+        grid = [g for g in np.arange(g_hi - 100.0, 0.0, -100.0) if feasible(rpm, g, g2, kd, guard)]
+        if not grid:
+            return np.nan
+        lo, hi = grid[0], grid[0] + 100.0
     while hi - lo > tol:
         mid = 0.5 * (lo + hi)
         if feasible(rpm, mid, g2, kd, guard):
