@@ -31,6 +31,10 @@
  *                   centre has advanced s(t) >= R (1 - sin phi)
  *   opt[4] kick_step, opt[5] kick_dv
  *                   velocity kick added to x' at the start of that step
+ *   pert            (separate argument, NULL = none) a full-state deviation
+ *                   added at kick_step: pert[0..3] to x, x', q, q', and
+ *                   pert[4 + j], pert[5 + nd + j] (j = 0..nd) to the stored
+ *                   x and x' j steps back, i.e. over the last tooth period
  *   opt[6] clip_on  the command limit vmax applies from this step on
  *   opt[7] nreg     passes remembered by the chip (default 1).  With nreg > 1
  *                   the chip is the least over the last nreg passes,
@@ -248,7 +252,7 @@ int simulate(double rpm, double a, double g,
              int spr, int nrev, int nlay, int nsub, double vmax, int fmode,
              int store, double *x_out, double *v_out, double *fact_out,
              double *fcut_out, double *vcmd_out, double *summary,
-             const double *opt)
+             const double *opt, const double *pert)
 {
     const double twopi = 2.0 * M_PI;
     int nsteps = spr * nrev;
@@ -305,7 +309,19 @@ int simulate(double rpm, double a, double g,
         double f, fa, dzz[4];
         C.n = n;
         C.vmax_now = n >= clip_on ? vmax : 0.0;
-        if (n == kick_step) { z[1] += kick_dv; vh[n] = z[1]; }
+        if (n == kick_step) {
+            z[1] += kick_dv;
+            if (pert) {
+                int jj;
+                for (jj = 0; jj < 4; jj++) z[jj] += pert[jj];
+                for (jj = 1; jj <= nd && n - jj >= 0; jj++) {
+                    xh[n - jj] += pert[4 + jj];
+                    vh[n - jj] += pert[5 + nd + jj];
+                }
+            }
+            xh[n] = z[0];
+            vh[n] = z[1];
+        }
         f = fcut(&C, z[0], 0.0);
         C.fhold = f;
         deriv(&C, z, 0.0, dzz, &fa);

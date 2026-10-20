@@ -21,7 +21,7 @@ _d = ctypes.c_double
 _i = ctypes.c_int
 _p = np.ctypeslib.ndpointer(dtype=np.float64, flags="C_CONTIGUOUS")
 _lib.simulate.argtypes = [_d] * 3 + [_d] * 3 + [_d] * 3 + [_d] * 4 + [_i, _d, _d, _d] \
-    + [_i] * 4 + [_d, _i, _i] + [_p] * 6 + [_p]
+    + [_i] * 4 + [_d, _i, _i] + [_p] * 6 + [_p] + [ctypes.c_void_p]
 _lib.simulate.restype = _i
 
 PHI_ST, PHI_EX = P.immersion_angles()
@@ -33,7 +33,7 @@ FMODE = 1          # 1: force re-evaluated at every RK4 stage; 0: held per step
 def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
              spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None,
              ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False,
-             kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1):
+             kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1, pert=None):
     """Run one cut.  Returns a dict with the peak demand and, if store, histories.
 
     vmax > 0 limits the applied command |V| (clipped DVF); 0 means no limit.
@@ -50,6 +50,8 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     clip_on: first step at which the command limit vmax applies.
     nreg: passes the chip remembers (1: x(t - T) only; > 1: least chip over
     the last nreg passes, so the tool leaving the cut is handled; max 8).
+    pert: full-state deviation added at kick_step, a dict with x, v, q, qd
+    and hx, hv (x and x' at 0, 1, ..., nd steps back, nd = spr / N).
     """
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
     fmode = FMODE if fmode is None else fmode
@@ -59,11 +61,18 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     summ = np.zeros(5)
     opt = np.array([ramp_a, ramp_f, f0, 1.0 if edge else 0.0,
                     kick_step, kick_dv, clip_on, nreg], dtype=np.float64)
+    pbuf = None
+    if pert is not None:
+        nd = spr // P.N_TEETH
+        hx, hv = np.asarray(pert["hx"], float), np.asarray(pert["hv"], float)
+        assert len(hx) == len(hv) == nd + 1
+        pbuf = np.concatenate([[pert["x"], pert["v"], pert["q"], pert["qd"]], hx, hv]).astype(np.float64)
     _lib.simulate(float(rpm), float(a), float(g),
                   P.M, P.C, P.K, P.GA_GAIN, P.GA_A1, P.GA_A0,
                   P.K_TC, P.K_RC, fz, P.D_TOOL, P.N_TEETH, P.HELIX,
                   PHI_ST, PHI_EX, spr, nrev, nlay, nsub, float(vmax), int(fmode),
-                  int(store), *bufs, summ, opt)
+                  int(store), *bufs, summ, opt,
+                  None if pbuf is None else pbuf.ctypes.data_as(ctypes.c_void_p))
     out = dict(max_demand=summ[0], max_fact=summ[1], max_x=summ[2],
                max_v=summ[3], diverged=bool(summ[4]))
     if store:

@@ -29,6 +29,14 @@ so E(P) = {x' P x <= 1} is invariant and every deviation inside it returns
 to the orbit (V' <= -2 lam V).  The size of E(P) along a direction e is
 maximised through [[1, beta e'], [beta e, W]] >= 0.
 
+Validity.  The averaged model cuts linearly; the real chip clips at zero.  A
+large deviation lifts the tool out of the cut, and then the model no longer
+describes the cut.  The review found such states inside an unconstrained
+E(P) (history deviations of 5 fz) that chatter in the simulator.  So E(P) is
+also kept inside |x - x(t - T)| <= DELTA fz:
+    M4 = [[W, W c'], [c W, (DELTA fz)^2]] >= 0,   c = e_x - e_phi_N.
+E(P) is invariant, so the bound holds along the whole trajectory.
+
 Directions certified here:
   kick   e = unit velocity (the kick of C1): beta is a certified kick (m/s)
   step   e = minus the orbit's state at t = 0, history included (the cut
@@ -60,6 +68,7 @@ VMAX = P.F_MAX / P.GA_GAIN
 KAPPA = P.N_TEETH * P.K_TC * ALPHA / (4 * np.pi)      # dynamic force = KAPPA a (x - x(t - T))
 R2 = np.sqrt(2.0)
 TIGHT = dict(tol_gap_abs=1e-10, tol_gap_rel=1e-10, tol_feas=1e-10, max_iter=400)
+DELTA = 0.5          # validity of the linear cutting model: |x - x(t - T)| <= DELTA fz inside E(P)
 FAST = {}                                   # solver defaults (faster; re-centring recovers most of the gap)
 
 
@@ -227,11 +236,12 @@ def transform(A, B, K, e, Tm):
     return Ti @ A @ Tm, Ti @ B, K @ Tm, Ti @ e
 
 
-def lmi(A, B, K, u0, e, Tm, eps=1e-9, lam=0.0, settings=TIGHT):
+def lmi(A, B, K, u0, e, Tm, eps=1e-9, lam=0.0, settings=TIGHT, valid=None):
     """Largest beta with beta e in a certified ellipsoid.  Returns beta and
     (W, Y, S) in the coordinates x = Tm z.  lam > 0 asks for the decay rate
     V' <= -2 lam V inside the ellipsoid; it is a margin that scales with W,
-    so the solution stays strictly feasible after round-off."""
+    so the solution stays strictly feasible after round-off.  valid = (c, h)
+    adds c x <= h on E(P) (the validity bound)."""
     n = len(B)
     As, Bs, Ks, es = transform(A, B, K, e, Tm)
     I, J = np.triu_indices(n)
@@ -263,16 +273,25 @@ def lmi(A, B, K, u0, e, Tm, eps=1e-9, lam=0.0, settings=TIGHT):
     M3.add(0, 0, -1, 1.0)
     M3.add(0, 1 + C, vb, es)
     M3.add(1 + I, 1 + J, vW, 1.0)
+    blocks = [M1, M2, M3]
+    if valid is not None:
+        cs = valid[0] @ (np.diag(Tm) if np.ndim(Tm) == 1 else Tm)
+        M4 = LMIBlock(n + 1)                   # [[W, W c'], [c W, h^2]]
+        M4.add(I, J, vW, 1.0)
+        M4.add(I, n, vW, cs[J])
+        M4.add(J[off], n, vo, cs[Io])
+        M4.add(n, n, -1, valid[1] ** 2)
+        blocks.append(M4)
     c = np.zeros(nw + n + 2)
     c[vb] = 1.0
-    x, status = solve_sdp(len(c), c, [M1, M2, M3], nonneg=[(vS, eps), (vb, 0.0)], settings=settings)
+    x, status = solve_sdp(len(c), c, blocks, nonneg=[(vS, eps), (vb, 0.0)], settings=settings)
     W = np.zeros((n, n))
     W[I, J] = x[:nw]
     W[J, I] = x[:nw]
     return x[vb], (W, x[nw:nw + n], x[nw + n]), status
 
 
-def check(A, B, K, u0, e, Tm, W, Y, S):
+def check(A, B, K, u0, e, Tm, W, Y, S, valid=None):
     """Check a candidate (W, Y, S) independently of the solver.
 
     Decrease: M1 at lam = 0 must be positive definite.  The test is its
@@ -280,7 +299,8 @@ def check(A, B, K, u0, e, Tm, W, Y, S):
     backward stable, so this is beyond round-off).  W must be positive
     definite, with condition number below 1e10.
     Inclusion: q = (K W - Y) W^-1 (K W - Y)' <= u0^2; if not, (W, Y) is
-    scaled by c = u0^2 / q, which keeps M1 > 0.
+    scaled by c = u0^2 / q, which keeps M1 > 0.  The validity bound
+    c_v W c_v' <= h^2 is enforced the same way.
     Size: beta = sqrt(c / e' W^-1 e).  Both quadratic forms come from a
     Cholesky factor of W and lose 1e-9 for safety.
     Returns (size, message); size 0 means the candidate is rejected.
@@ -302,6 +322,11 @@ def check(A, B, K, u0, e, Tm, W, Y, S):
     z = solve_triangular(L, W @ Ks - Y, lower=True)
     q = z @ z
     c = min(1.0, (1 - 1e-9) * u0 ** 2 / q) if q > 0 else 1.0
+    if valid is not None:
+        cv = valid[0] @ (np.diag(Tm) if np.ndim(Tm) == 1 else Tm)
+        qv = cv @ W @ cv
+        if qv > 0:
+            c = min(c, (1 - 1e-9) * valid[1] ** 2 / qv)
     y = solve_triangular(L, es, lower=True)
     return float(np.sqrt(c / (y @ y)) * (1 - 1e-9)), ("ok" if c == 1.0 else f"ok, shrunk by {c:.12g}")
 
@@ -310,9 +335,18 @@ LAM_FRAC = (0.05, 0.2)                         # decay-rate margins tried, as fr
 N_PASS = 3                                      # solves per margin: the first, then re-centred ones
 
 
-def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False):
-    """Largest checked size along e, over re-centred solves.  With full=True
-    also returns the certificate (Tm, P) with V(x) = z' P z, z = Tm^-1 x."""
+def validity(n, delta=DELTA):
+    """(c, h): the regenerative chip deviation x - x(t - T) bounded by delta fz."""
+    c = np.zeros(n)
+    c[0], c[n - 1] = 1.0, -1.0
+    return c, delta * P.FZ
+
+
+def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False, delta=DELTA):
+    """Largest checked size along e, over re-centred solves, with E(P) kept
+    inside the validity bound (delta = None drops it).  With full=True also
+    returns the certificate (Tm, P) with V(x) = z' P z, z = Tm^-1 x."""
+    valid = validity(len(B), delta) if delta is not None else None
     sigma = -np.linalg.eigvals(A).real.max()
     if sigma <= 0:
         return (0.0, "linearly unstable", None) if full else (0.0, "linearly unstable")
@@ -322,8 +356,8 @@ def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False):
     for f in LAM_FRAC:
         Tm = np.diag(scaling(A, rpm))
         for p in range(N_PASS):
-            beta, (W, Y, S), status = lmi(A, B, K, u0, e, Tm, lam=f * sigma, settings=settings)
-            size, msg = check(A, B, K, u0, e, Tm, W, Y, S)
+            beta, (W, Y, S), status = lmi(A, B, K, u0, e, Tm, lam=f * sigma, settings=settings, valid=valid)
+            size, msg = check(A, B, K, u0, e, Tm, W, Y, S, valid=valid)
             if size > best:
                 best = min(size, beta) if beta > 0 else size
                 note = f"{status}; pass {p}, lam {f:g} sigma; {msg}"
@@ -338,19 +372,19 @@ def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False):
     return (best, note, cert) if full else (best, note)
 
 
-def certify_kick(rpm, a, g, N=None, settings=TIGHT):
+def certify_kick(rpm, a, g, N=None, settings=TIGHT, delta=DELTA):
     A, B, K = model(rpm, a, g, N)
     _, _, bmax = orbit(rpm, g, a, N)
     e = np.zeros(len(B))
     e[1] = 1.0
-    return certify(A, B, K, VMAX - bmax, e, rpm, settings)
+    return certify(A, B, K, VMAX - bmax, e, rpm, settings, delta=delta)
 
 
-def certify_step(rpm, a, g, N=None, settings=TIGHT):
+def certify_step(rpm, a, g, N=None, settings=TIGHT, delta=DELTA):
     """beta >= 1: the cut entered at rest on a fresh surface is certified."""
     A, B, K = model(rpm, a, g, N)
     x0, _, bmax = orbit(rpm, g, a, N)
-    return certify(A, B, K, VMAX - bmax, -x0, rpm, settings)
+    return certify(A, B, K, VMAX - bmax, -x0, rpm, settings, delta=delta)
 
 
 # ------------------------------------------------- simulating the model ----
@@ -439,6 +473,66 @@ def model_critical_kick(A, B, K, b, Tp, nphase=4, nper=1200, lo=1e-4, hi=3.0, nb
     return float(np.exp(c))
 
 
+# ------------------------------------------ off-axis test in the simulator ----
+def deviation_to_pert(rpm, X, N=None, spr=P.STEPS_PER_REV):
+    """A model deviation (x, x', q, q', phi_1..phi_N) as a tdsim full-state
+    perturbation: the history is the Chebyshev interpolant of the nodes,
+    sampled at the simulator's steps over the last tooth period, with its
+    derivative as the past velocity."""
+    from numpy.polynomial import chebyshev as ch
+    N = N or nodes_for(rpm)
+    T = 60.0 / (rpm * P.N_TEETH)
+    nd = spr // P.N_TEETH
+    _, xc = cheb(N)
+    coef = ch.chebfit(xc, np.concatenate([[X[0]], X[4:4 + N]]), N)
+    u = 1 - 2 * np.arange(nd + 1) / nd                  # theta = -k T / nd  ->  xc = 1 + 2 theta / T
+    return dict(x=X[0], v=X[1], q=X[2], qd=X[3], hx=ch.chebval(u, coef),
+                hv=ch.chebval(u, ch.chebder(coef)) * 2 / T)
+
+
+def boundary_directions(cert, n, nrand=6, seed=0):
+    """Boundary points of E(P): those maximising x, x', q, q', x(t-T) and
+    x - x(t-T) (both signs), and nrand random ones."""
+    Tm, Pz = cert
+    Wz = np.linalg.inv(Pz)
+    pts = []
+    for idx in ([0], [1], [2], [3], [n - 1], [0, n - 1]):
+        c = np.zeros(n)
+        c[idx[0]] = 1.0
+        if len(idx) == 2:
+            c[idx[1]] = -1.0
+        cz = c @ Tm
+        z = Wz @ cz / np.sqrt(cz @ Wz @ cz)
+        pts += [Tm @ z, -(Tm @ z)]
+    rng = np.random.default_rng(seed)
+    L = cholesky(Wz, lower=True)
+    for _ in range(nrand):
+        u = rng.standard_normal(n)
+        pts.append(Tm @ L @ (u / np.linalg.norm(u)))
+    return pts
+
+
+def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300):
+    """Apply scale x each boundary point at nphase phases with the C1 protocol
+    (face entry, nreg 4, |V| <= 9 V, 300-rev window); return (chattering, runs)."""
+    from tdsim import simulate
+    from tdboundary import classify_run
+    spr = P.STEPS_PER_REV
+    nd = spr // P.N_TEETH
+    n = cert[0].shape[0]
+    bad = runs = 0
+    for X in boundary_directions(cert, n):
+        pert = deviation_to_pert(rpm, scale * X)
+        for p in range(nphase):
+            ks = kick_rev * spr + (p * nd) // nphase
+            r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=4,
+                         kick_step=ks, pert=pert)
+            st = (ks // nd + 1) * nd
+            bad += not classify_run(r["x"][st:], spr, r["diverged"])["stable"]
+            runs += 1
+    return bad, runs
+
+
 # ------------------------------------------------------------ campaigns ----
 def _validate(args):
     rpm, g, frac, zeta = args
@@ -451,26 +545,30 @@ def _validate(args):
     size, note, cert = certify(A, B, K, VMAX - bmax, e, rpm, full=True)
     Tp = 60.0 / (rpm * P.N_TEETH)
     vmax, vend = proof_check(A, B, K, b, Tp, cert) if cert is not None else (np.nan, np.nan)
-    return size, note, vmax, vend, model_critical_kick(A, B, K, b, Tp)
+    off = td_offaxis(rpm, a, g, cert) if cert is not None else (0, 0)
+    return size, note, vmax, vend, model_critical_kick(A, B, K, b, Tp), off[0], off[1]
 
 
 def run_validate(a):
     """At the C1 basin points: the certified kick, the proof checked on its
-    own model (boundary starts), the averaged model's critical kick, and the
-    simulated (time-domain) critical kick."""
+    own model (boundary starts), the averaged model's critical kick, the
+    simulated (time-domain) critical kick, and boundary points of E(P) in
+    18 directions x 4 phases applied as full-state deviations in the
+    simulator (off-axis test)."""
     b = np.load(os.path.join(RES, "c1_basin.npz"))
     m = b["vmax"] > 0
     jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
     with Pool(a.workers) as pool:
         res = pool.map(_validate, jobs, chunksize=1)
-    cert, vmax, vend, mk = (np.array([r[k] for r in res]) for k in (0, 2, 3, 4))
+    cert, vmax, vend, mk, obad, oruns = (np.array([r[k] for r in res]) for k in (0, 2, 3, 4, 5, 6))
     td_min = b["dv"][m].min(axis=1)
     np.savez_compressed(os.path.join(RES, "c2_validate.npz"), rpm=b["rpm"][m], g=b["g"][m], frac=b["frac"][m],
                         cert=cert, model_kick=mk, td_min=td_min, td_median=np.median(b["dv"][m], axis=1),
-                        proof_vmax=vmax, proof_vend=vend, msg=np.array([r[1] for r in res]))
-    for (n, g, f, _), c, k, t, v, (_, msg, *_) in zip(jobs, cert, mk, td_min, vmax, res):
+                        proof_vmax=vmax, proof_vend=vend, offaxis_bad=obad, offaxis_runs=oruns,
+                        delta=DELTA, msg=np.array([r[1] for r in res]))
+    for (n, g, f, _), c, k, t, v, ob, orr, (_, msg, *_) in zip(jobs, cert, mk, td_min, vmax, obad, oruns, res):
         print(f"{n:.0f} rpm {f:.2f} a_lim: certified {c*1e3:7.3f}, model {k*1e3:8.2f}, TD min {t*1e3:8.2f} mm/s; "
-              f"max V {v:.5f}  [{msg}]")
+              f"max V {v:.5f}; off-axis chatter {ob}/{orr}  [{msg}]")
     fin = np.isfinite(mk) & (cert > 0)
     print(f"certificate below the model's critical kick at {np.sum(cert[fin] <= mk[fin])}/{fin.sum()} points; "
           f"proof check max V {np.nanmax(vmax):.5f}")
@@ -480,6 +578,8 @@ def run_validate(a):
     ok = np.isfinite(td_min) & (cert > 0)
     print(f"certificate below the simulated critical kick at {np.sum(cert[ok] <= td_min[ok])}/{ok.sum()} points; "
           f"TD / certificate {np.min(td_min[ok] / cert[ok]):.2f}-{np.max(td_min[ok] / cert[ok]):.2f}")
+    print(f"off-axis boundary points chattering in the simulator: {obad.sum()}/{oruns.sum()} runs "
+          f"(at {np.sum(obad > 0)} of {len(obad)} points)")
 
 
 def _step_depth(args):
