@@ -66,17 +66,17 @@ def c2_02_step():
     fig, ax = plt.subplots(1, len(s["rpm"]), figsize=(11.5, 3.2), sharey=True)
     for i, n in enumerate(s["rpm"]):
         j = int(np.argmin(np.abs(m["rpm"] - n)))
-        beta = np.minimum(s["beta"][i], 1e3)
+        beta = np.minimum(s["beta"][i], 10.0)
         ax[i].semilogy(s["frac"], beta, "D-", color=OURS, ms=4, lw=1, label="step-entry certificate beta")
         ax[i].axhline(1.0, color="k", lw=0.8)
-        ax[i].fill_between([0, 1], 1, 1e3, color=GOOD, alpha=0.08, lw=0)
+        ax[i].fill_between([0, 1], 1, 10, color=GOOD, alpha=0.08, lw=0)
         ax[i].axvline(m["a_step_clip"][j] / m["a_lim"][j], color=BAD, lw=1, ls="--",
                       label="simulated step-entry limit (C1)")
-        ax[i].set(title=f"{n:.0f} rpm", xlabel="depth / a_lim(g)", xlim=(0.25, 0.95), ylim=(0.1, 1e3))
+        ax[i].set(title=f"{n:.0f} rpm", xlabel="depth / a_lim(g)", xlim=(0.25, 0.95), ylim=(0.1, 10))
     ax[0].set(ylabel="beta (>= 1: entry certified)")
     ax[0].legend(fontsize=7, loc="upper right")
-    fig.suptitle("C2-2  Certifying the hard entry without a clipped simulation: certified where beta >= 1 "
-                 "(green), always left of the simulated limit", fontsize=9, y=1.03)
+    fig.suptitle("C2-2  Hard entry certified without a clipped simulation where beta >= 1 (green): only at 0.3 a_lim "
+                 "once the chip-validity bound is imposed; never past the simulated limit", fontsize=9, y=1.03)
     save(fig, "c2_02_step_entry.png")
 
 

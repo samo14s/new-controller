@@ -1,0 +1,1 @@
+surface: 42 speeds x 7 depths, checked 287/294; certified kick at 0.9 a_lim 0.00-16.02 mm/s

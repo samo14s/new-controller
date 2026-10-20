@@ -1,1 +1,15 @@
 == validate 00:27:35
+2870 rpm 0.98 a_lim: certified   4.827, model     7.14, TD min     8.22 mm/s; max V 0.99800; off-axis chatter 0/72  [Solved; pass 2, lam 0.05 sigma; ok]
+certificate below the model's critical kick at 44/44 points; proof check max V 0.99800
+averaged model vs simulation (critical kick): 0.68-0.98, median 0.92
+certificate below the simulated critical kick at 29/29 points; TD / certificate 1.50-27.51
+off-axis boundary points chattering in the simulator: 0/3456 runs (at 0 of 48 points)
+== step 01:03:27
+1090 rpm: step-entry beta 0.3:1.477 0.5:0.595 0.6:0.706 0.7:0.430 0.8:0.347 0.9:0.358
+1420 rpm: step-entry beta 0.3:1.615 0.5:0.724 0.6:0.672 0.7:0.717 0.8:0.522 0.9:0.270
+2500 rpm: step-entry beta 0.3:0.157 0.5:0.184 0.6:0.421 0.7:0.646 0.8:0.441 0.9:0.157
+2870 rpm: step-entry beta 0.3:1.039 0.5:0.476 0.6:0.484 0.7:0.568 0.8:0.643 0.9:0.447
+largest step-entry beta 1.615 (>= 1 would certify the entry)
+== surface 01:10:12
+surface: 42 speeds x 7 depths, checked 287/294; certified kick at 0.9 a_lim 0.00-16.02 mm/s
+== done 01:33:03

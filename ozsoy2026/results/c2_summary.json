@@ -1,0 +1,96 @@
+{
+ "validate": {
+  "points": 48,
+  "checked": 48,
+  "delta": 0.5,
+  "below_model": 44,
+  "model_points": 44,
+  "below_td": 29,
+  "td_points": 29,
+  "td_over_cert_min": 1.5,
+  "td_over_cert_max": 27.51,
+  "td_over_cert_median_ge07": 2.32,
+  "model_over_td_min": 0.68,
+  "model_over_td_max": 0.98,
+  "model_over_td_median": 0.92,
+  "proof_vmax": 0.998,
+  "offaxis_bad": 0,
+  "offaxis_runs": 3456
+ },
+ "step": {
+  "fracs": [
+   0.3,
+   0.5,
+   0.6,
+   0.7,
+   0.8,
+   0.9
+  ],
+  "by_rpm": {
+   "1090": {
+    "beta": [
+     1.477,
+     0.595,
+     0.706,
+     0.43,
+     0.347,
+     0.358
+    ],
+    "certified_fracs": [
+     0.3
+    ],
+    "td_step_limit_frac": 0.932
+   },
+   "1420": {
+    "beta": [
+     1.615,
+     0.724,
+     0.672,
+     0.717,
+     0.522,
+     0.27
+    ],
+    "certified_fracs": [
+     0.3
+    ],
+    "td_step_limit_frac": 0.914
+   },
+   "2500": {
+    "beta": [
+     0.157,
+     0.184,
+     0.421,
+     0.646,
+     0.441,
+     0.157
+    ],
+    "certified_fracs": [],
+    "td_step_limit_frac": 0.769
+   },
+   "2870": {
+    "beta": [
+     1.039,
+     0.476,
+     0.484,
+     0.568,
+     0.643,
+     0.447
+    ],
+    "certified_fracs": [
+     0.3
+    ],
+    "td_step_limit_frac": 0.841
+   }
+  },
+  "beta_max": 1.615
+ },
+ "surface": {
+  "speeds": 42,
+  "depths": 7,
+  "checked": 287,
+  "zero": 7,
+  "kick_090_min_mmps": 0.0,
+  "kick_090_median_mmps": 6.58,
+  "kick_090_max_mmps": 16.02
+ }
+}

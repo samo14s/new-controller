@@ -19,12 +19,26 @@ def test_summary_file_is_current(s):
     assert stored["band"]["found"] == s["band"]["found"]
 
 
-def test_results_come_from_the_current_simulator():
+def test_results_are_reproduced_by_the_current_simulator():
+    """The C1 results carry the hash of the simulator they came from
+    (7b5ced7072ce).  The source has since gained an option that is off by
+    default (a full-state perturbation for C2; the default path stays
+    bit-identical, see test_c1_entry and test_c2_certificate).  So instead
+    of the hash, one stored critical kick is re-derived: the kick at the
+    stored value chatters and one bisection step below does not."""
     import c1_unsafe_zone as c
+    import params as P
     for name in ("c1_map.npz", "c1_band.npz", "c1_basin.npz", "c1_gainplane.npz"):
         d = np.load(path("results", name))
-        assert str(d["build"]) == c.build_id(), name
         assert int(d["nreg"]) == 4, name
+    b = np.load(path("results", "c1_basin.npz"))
+    k = int(np.where((b["rpm"] == 2500) & np.isclose(b["frac"], 0.9) & (b["vmax"] > 0))[0][0])
+    dv = float(b["dv"][k, 0])
+    step = np.exp(np.log(c.DV_HI / c.DV_LO) / 2 ** c.N_BISECT)
+    a = float(b["frac"][k]) * float(b["a_lim"][k]) * 1e-3
+    ks = c.KICK_REV * P.STEPS_PER_REV
+    assert c._kick_chatters(2500.0, a, float(b["g"][k]), c.VMAX, ks, dv)
+    assert not c._kick_chatters(2500.0, a, float(b["g"][k]), c.VMAX, ks, dv / step)
 
 
 def test_step_entry_zone(s):
