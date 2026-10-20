@@ -1,4 +1,0 @@
-g2 1000 step_clip: 13.09-36.00 mm, a/a_lim min 0.513 median 0.736
-g2 1000 edge_clip: 22.01-35.83 mm, a/a_lim min 0.997 median 0.999
-g2 2000 step_clip: 12.85-38.27 mm, a/a_lim min 0.392 median 0.586
-g2 2000 edge_clip: 29.48-43.84 mm, a/a_lim min 0.919 median 0.999
