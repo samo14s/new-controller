@@ -23,3 +23,9 @@ face entry, 9 V, 2500 rpm, comb-delay error +0 %: 32.12 mm (linear limit 32.15 m
 face entry, 9 V, 2500 rpm, comb-delay error +1 %: 30.35 mm (linear limit 30.38 mm)
 face entry, 9 V, 2500 rpm, comb-delay error +2 %: 28.74 mm (linear limit 28.77 mm)
 == validate 10:37:38
+  2870 rpm 10 mm: simulated critical kick DVF 15.66, delayed 14.45 mm/s
+  2870 rpm 14 mm: simulated critical kick DVF 11.35, delayed 11.35 mm/s
+  2870 rpm 18 mm: simulated critical kick DVF 4.15, delayed 7.29 mm/s
+  2870 rpm 22 mm: simulated critical kick DVF 5.84, delayed 6.86 mm/s
+  2870 rpm 26 mm: simulated critical kick DVF 7.29, delayed 7.44 mm/s
+== done 11:41:52

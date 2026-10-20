@@ -66,12 +66,16 @@ def main():
         d_best = kick[i, :, :, 0].max(axis=1)
         c_best = kick[i, :, :, 1:].reshape(len(G["depth"]), -1).max(axis=1)
         both = (d_best > 0) & (c_best > 0)
-        reach = {}
+        reach, cont = {}, {}
         for D in (1.0, 2.0, 4.0):
             for lab, y in (("dvf", d_best), ("comb", c_best)):
                 ok = np.where(y >= D)[0]
                 reach[f"{lab}_{D:g}"] = float(G["depth"][ok].max()) if ok.size else None
-        gm[f"{n:.0f}"] = dict(deepest_certified_mm=reach, comb_over_dvf=stats(c_best[both] / d_best[both]),
+                # every grid depth up to this one certified at >= D (no gap)
+                bad = np.where(y < D)[0]
+                last = (bad[0] - 1) if bad.size else len(y) - 1
+                cont[f"{lab}_{D:g}"] = float(G["depth"][last]) if last >= 0 else None
+        gm[f"{n:.0f}"] = dict(deepest_certified_mm=reach, certified_without_gap_mm=cont, comb_over_dvf=stats(c_best[both] / d_best[both]),
                               dvf_last_mm=float(G["depth"][d_best > 0].max()) if (d_best > 0).any() else None,
                               comb_last_mm=float(G["depth"][c_best > 0].max()) if (c_best > 0).any() else None)
     out["gainmap"] = dict(points=int(kick.size), checked=int(np.sum(kick > 0)), by_rpm=gm)
@@ -90,6 +94,7 @@ def main():
                               float(mk[sd & ~comb][0]), float(mk[sd & comb][0]),
                               float(cert[sd & ~comb][0]), float(cert[sd & comb][0])))
     pr = np.array(pairs) if pairs else np.zeros((0, 8))
+    np.seterr(invalid="ignore")                   # inf / inf (no divergence up to 3 m/s) -> nan, dropped
     fin = np.isfinite(pr[:, 2]) & np.isfinite(pr[:, 3]) & (pr[:, 2] > 0) if len(pr) else np.zeros(0, bool)
     out["validate"] = dict(
         points=int(len(cert)), unsettled=int(V["unsettled"].sum()),
@@ -99,7 +104,7 @@ def main():
         offaxis_bad=int(V["offaxis_bad"][comb].sum()), offaxis_runs=int(V["offaxis_runs"][comb].sum()),
         paired_depths=int(len(pr)),
         td_comb_over_dvf=stats(pr[fin, 3] / pr[fin, 2]) if fin.any() else None,
-        model_comb_over_dvf=stats(pr[:, 5] / pr[:, 4]) if len(pr) else None,
+        model_comb_over_dvf=stats(pr[:, 5] / np.where(pr[:, 4] > 0, pr[:, 4], np.nan)) if len(pr) else None,
         cert_comb_over_dvf=stats(pr[:, 7] / pr[:, 6]) if len(pr) else None,
         td_comb_better=int(np.sum(pr[fin, 3] > pr[fin, 2])) if fin.any() else 0,
         td_pairs=int(fin.sum()))

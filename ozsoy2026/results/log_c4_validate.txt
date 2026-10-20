@@ -1,0 +1,69 @@
+1090 rpm    6 mm dvf  g1   500 g2     0: cert  12.967, model    32.99, TD    42.01 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm    6 mm comb g1   500 g2   500: cert  13.597, model    37.23, TD    42.01 mm/s; max V 0.9980; off-axis 0/72
+1090 rpm   10 mm dvf  g1  1000 g2     0: cert  10.221, model    22.96, TD    24.89 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm   10 mm comb g1   500 g2  1000: cert  11.278, model    23.90, TD    24.89 mm/s; max V 0.9980; off-axis 0/72
+1090 rpm   14 mm dvf  g1  1500 g2     0: cert   9.155, model    19.94, TD    20.76 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm   14 mm comb g1  1000 g2  1000: cert   9.892, model    21.61, TD    21.61 mm/s; max V 0.9980; off-axis 0/72
+1090 rpm   18 mm dvf  g1  1500 g2     0: cert   5.954, model    14.74, TD    15.66 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm   18 mm comb g1  1000 g2  1000: cert   6.985, model    17.67, TD    18.40 mm/s; max V 0.9980; off-axis 0/72
+1090 rpm   22 mm dvf  g1  2000 g2     0: cert   2.886, model    13.33, TD    13.88 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm   22 mm comb g1  1000 g2  1000: cert   5.460, model    12.81, TD    13.60 mm/s; max V 0.9980; off-axis 0/72
+1090 rpm   26 mm dvf  g1  2000 g2     0: cert   6.531, model    13.33, TD    13.60 mm/s; max V 0.9980; off-axis 0/0
+1090 rpm   26 mm comb g1  1500 g2   500: cert   6.737, model    13.07, TD    13.33 mm/s; max V 0.9980; off-axis 0/72
+1420 rpm    6 mm dvf  g1   500 g2     0: cert  12.520, model      inf, TD      inf mm/s; max V 0.9980; off-axis 0/0
+1420 rpm    6 mm comb g1   500 g2   500: cert  12.778, model      inf, TD      inf mm/s; max V 0.9980; off-axis 0/72
+1420 rpm   10 mm dvf  g1  1000 g2     0: cert  10.999, model    32.33, TD      inf mm/s; max V 0.9980; off-axis 0/0
+1420 rpm   10 mm comb g1   500 g2   500: cert  11.956, model    30.44, TD      inf mm/s; max V 0.9980; off-axis 0/72
+1420 rpm   14 mm dvf  g1  1500 g2     0: cert   8.694, model    18.03, TD    22.50 mm/s; max V 0.9980; off-axis 0/0
+1420 rpm   14 mm comb g1   500 g2   500: cert   9.644, model    14.74, TD    18.03 mm/s; max V 0.9980; off-axis 0/72
+1420 rpm   18 mm comb g1   500 g2  2000: cert   5.389, model    11.58, TD    12.05 mm/s; max V 0.9980; off-axis 0/72
+1420 rpm   22 mm dvf  g1  2000 g2     0: cert   1.185, model     3.13, TD     3.53 mm/s; max V 0.9980; off-axis 0/0
+1420 rpm   22 mm comb g1   500 g2  2000: cert   4.446, model     8.22, TD     8.73 mm/s; max V 0.9980; off-axis 0/72
+1420 rpm   26 mm dvf  g1  3000 g2     0: cert   4.545, model     9.47, TD     9.47 mm/s; max V 0.9980; off-axis 0/0
+1420 rpm   26 mm comb g1  2000 g2  1000: cert   5.136, model     9.47, TD     9.66 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm    6 mm dvf  g1  1000 g2     0: cert   6.574, model    24.89, TD    35.76 mm/s; max V 0.9980; off-axis 0/0
+2500 rpm    6 mm comb g1   500 g2   500: cert  10.750, model    24.89, TD    31.06 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm   10 mm dvf  g1  1000 g2     0: cert   7.221, model    13.33, TD    15.35 mm/s; max V 0.9980; off-axis 0/0
+2500 rpm   10 mm comb g1   500 g2  1000: cert   8.353, model    14.74, TD    15.66 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm   14 mm dvf  g1  1500 g2     0: cert   6.467, model    11.81, TD    12.30 mm/s; max V 0.9980; off-axis 0/0
+2500 rpm   14 mm comb g1  1000 g2  1000: cert   6.931, model    12.55, TD    13.07 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm   18 mm comb g1   500 g2  4000: cert   3.699, model     8.73, TD     8.91 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm   22 mm dvf  g1  2000 g2     0: cert   0.926, model     3.07, TD     3.26 mm/s; max V 0.9980; off-axis 0/0
+2500 rpm   22 mm comb g1   500 g2  4000: cert   3.562, model     7.74, TD     7.74 mm/s; max V 0.9980; off-axis 0/72
+2500 rpm   26 mm dvf  g1  3000 g2     0: cert   4.759, model     8.56, TD     8.56 mm/s; max V 0.9980; off-axis 0/0
+2500 rpm   26 mm comb g1  2000 g2  1000: cert   5.075, model     9.09, TD     9.09 mm/s; max V 0.9980; off-axis 0/72
+2870 rpm    6 mm dvf  g1  1000 g2     0: cert   9.364, model    24.89, TD      inf mm/s; max V 0.9980; off-axis 0/0
+2870 rpm    6 mm comb g1   500 g2   500: cert  10.808, model    23.90, TD      inf mm/s; max V 0.9980; off-axis 0/72
+2870 rpm   10 mm dvf  g1  1000 g2     0: cert   8.061, model    12.05, TD    15.66 mm/s; max V 0.9980; off-axis 0/0
+2870 rpm   10 mm comb g1   500 g2  1000: cert   8.372, model    13.33, TD    14.45 mm/s; max V 0.9980; off-axis 0/72
+2870 rpm   14 mm dvf  g1  1500 g2     0: cert   6.616, model    10.47, TD    11.35 mm/s; max V 0.9980; off-axis 0/0
+2870 rpm   14 mm comb g1  1000 g2  1000: cert   6.708, model    10.90, TD    11.35 mm/s; max V 0.9980; off-axis 0/72
+2870 rpm   18 mm dvf  g1  2000 g2     0: cert   1.264, model     3.90, TD     4.15 mm/s; max V 0.9980; off-axis 0/0
+2870 rpm   18 mm comb g1   500 g2  2000: cert   4.172, model     7.14, TD     7.29 mm/s; max V 0.9980; off-axis 0/72
+2870 rpm   22 mm dvf  g1  3000 g2     0: cert   0.785, model     5.84, TD     5.84 mm/s; max V 0.9980; off-axis 0/0
+2870 rpm   22 mm comb g1   500 g2  4000: cert   3.664, model     6.72, TD     6.86 mm/s; max V 0.9980; off-axis 0/72
+2870 rpm   26 mm dvf  g1  3000 g2     0: cert   4.352, model     7.29, TD     7.29 mm/s; max V 0.9980; off-axis 0/0
+2870 rpm   26 mm comb g1  2000 g2  1000: cert   4.611, model     7.29, TD     7.44 mm/s; max V 0.9980; off-axis 0/72
+certificate below the simulated critical kick at 40/40 points; below the model's at 44/44; unsettled 0; off-axis chatter 0/1728
+  1090 rpm 6 mm: simulated critical kick DVF 42.01, delayed 42.01 mm/s
+  1090 rpm 10 mm: simulated critical kick DVF 24.89, delayed 24.89 mm/s
+  1090 rpm 14 mm: simulated critical kick DVF 20.76, delayed 21.61 mm/s
+  1090 rpm 18 mm: simulated critical kick DVF 15.66, delayed 18.40 mm/s
+  1090 rpm 22 mm: simulated critical kick DVF 13.88, delayed 13.60 mm/s
+  1090 rpm 26 mm: simulated critical kick DVF 13.60, delayed 13.33 mm/s
+  1420 rpm 6 mm: simulated critical kick DVF inf, delayed inf mm/s
+  1420 rpm 10 mm: simulated critical kick DVF inf, delayed inf mm/s
+  1420 rpm 14 mm: simulated critical kick DVF 22.50, delayed 18.03 mm/s
+  1420 rpm 22 mm: simulated critical kick DVF 3.53, delayed 8.73 mm/s
+  1420 rpm 26 mm: simulated critical kick DVF 9.47, delayed 9.66 mm/s
+  2500 rpm 6 mm: simulated critical kick DVF 35.76, delayed 31.06 mm/s
+  2500 rpm 10 mm: simulated critical kick DVF 15.35, delayed 15.66 mm/s
+  2500 rpm 14 mm: simulated critical kick DVF 12.30, delayed 13.07 mm/s
+  2500 rpm 22 mm: simulated critical kick DVF 3.26, delayed 7.74 mm/s
+  2500 rpm 26 mm: simulated critical kick DVF 8.56, delayed 9.09 mm/s
+  2870 rpm 6 mm: simulated critical kick DVF inf, delayed inf mm/s
+  2870 rpm 10 mm: simulated critical kick DVF 15.66, delayed 14.45 mm/s
+  2870 rpm 14 mm: simulated critical kick DVF 11.35, delayed 11.35 mm/s
+  2870 rpm 18 mm: simulated critical kick DVF 4.15, delayed 7.29 mm/s
+  2870 rpm 22 mm: simulated critical kick DVF 5.84, delayed 6.86 mm/s
+  2870 rpm 26 mm: simulated critical kick DVF 7.29, delayed 7.44 mm/s

@@ -112,15 +112,15 @@ def c4_03_validation():
     top = 2000.0
     fig, ax = plt.subplots(1, len(speeds), figsize=(12, 3.8), sharey=True)
     for i, n in enumerate(speeds):
-        for kind, col, lab in (("dvf", "k", "best DVF"), ("comb", OURS, "best DVF + D term")):
+        for kind, col, lab, dx in (("dvf", "k", "best DVF", -0.4), ("comb", OURS, "best DVF + D term", 0.4)):
             m = (V["rpm"] == n) & (V["kind"] == kind)
             d = V["depth"][m]
             t, u = V["td_min"][m] * 1e3, V["unsettled"][m]
             fin = np.isfinite(t)
             ax[i].plot(d[fin], t[fin], "o-", color=col, ms=4, lw=1.2, label=f"simulated, {lab} (min over 16 phases)")
             inf = np.isinf(t)
-            ax[i].plot(d[inf], np.full(inf.sum(), top), "^", color=col, mfc="none", ms=5)
-            ax[i].plot(d[u], np.full(u.sum(), 0.7), "x", color=col, ms=6)
+            ax[i].plot(d[inf] + dx, np.full(inf.sum(), top), "^", color=col, mfc="none", ms=5)   # offset: both may be there
+            ax[i].plot(d[u] + dx, np.full(u.sum(), 0.7), "x", color=col, ms=6)
             ax[i].plot(d, V["cert"][m] * 1e3, "D--", color=col, ms=3, lw=0.8, mfc="none", label=f"certificate, {lab}")
             mk = V["model_kick"][m] * 1e3
             ax[i].plot(d, mk, ":", color=col, lw=0.8, label=f"averaged model, {lab}")
