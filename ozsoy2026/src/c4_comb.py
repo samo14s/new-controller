@@ -103,7 +103,9 @@ def certify_step(rpm, a, g1, g2=0.0, settings=c2.TIGHT, delta=c2.DELTA):
 def orbit_saturation_depth(rpm, g1, a_max=50e-3, da=0.25e-3):
     """Smallest depth (m) on a da grid at which the forced orbit's command
     bound b_max reaches the limit (the orbit itself saturates); inf if none
-    up to a_max.  Independent of g2."""
+    up to a_max.  Independent of g2.  b_max is not monotone in depth (the
+    helix cancels tooth harmonics at some depths), so the orbit may fit
+    again deeper down; run_limits also stores b_max on a depth grid."""
     for a in np.arange(da, a_max + da / 2, da):
         if c2.orbit(rpm, g1, a)[2] >= VMAX:
             return float(a)
@@ -121,10 +123,14 @@ def paper_gains():
     return d["rpm"], d["g_best"], float(d["zeta"])
 
 
+LIM_DEPTH = np.arange(0.5e-3, 50.01e-3, 0.5e-3)  # depth grid of the orbit-command map (m)
+
+
 def _limits(args):
     rpm, g1, zeta = args
     P.set_damping(zeta)
-    return [a_lim_ctrl(rpm, g1, g2) for g2 in LIM_G2], orbit_saturation_depth(rpm, g1)
+    bmax = [c2.orbit(rpm, g1, a)[2] for a in LIM_DEPTH]
+    return [a_lim_ctrl(rpm, g1, g2) for g2 in LIM_G2], orbit_saturation_depth(rpm, g1), bmax
 
 
 def run_limits(a):
@@ -136,15 +142,18 @@ def run_limits(a):
         res = pool.map(_limits, [(float(n), float(g), zeta) for n, g in zip(rpm, g1)], chunksize=4)
     al = np.array([r[0] for r in res]) * 1e3
     sat = np.array([r[1] for r in res]) * 1e3
+    bmax = np.array([r[2] for r in res])
     np.savez_compressed(os.path.join(RES, "c4_limits.npz"), rpm=rpm, g1=g1, g2=np.array(LIM_G2), a_lim=al,
-                        a_sat=sat, a_lim_zoa=np.array([a_lim(n, g) for n, g in zip(rpm, g1)]) * 1e3, zeta=zeta)
+                        a_sat=sat, depth=LIM_DEPTH * 1e3, bmax=bmax,
+                        a_lim_zoa=np.array([a_lim(n, g) for n, g in zip(rpm, g1)]) * 1e3, zeta=zeta)
     for j, g2 in enumerate(LIM_G2):
         r = al[:, j] / al[:, 0]
         print(f"g2 = {g2:5.0f}: a_lim {np.nanmin(al[:, j]):.2f}-{np.nanmax(al[:, j]):.2f} mm, "
               f"ratio to DVF {np.nanmin(r):.2f}-{np.nanmax(r):.2f} (median {np.nanmedian(r):.2f})")
     fin = np.isfinite(sat)
     print(f"orbit saturates below 50 mm at {fin.sum()}/{len(rpm)} speeds"
-          + (f", from {sat[fin].min():.2f} mm" if fin.any() else ""))
+          + (f", from {sat[fin].min():.2f} mm" if fin.any() else "")
+          + f"; on {np.mean(bmax >= VMAX) * 100:.1f} % of the speed x depth grid")
 
 
 GM_RPM = (1090.0, 1420.0, 2500.0, 2870.0)        # the C1 basin speeds
