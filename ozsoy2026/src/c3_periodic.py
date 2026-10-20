@@ -840,7 +840,7 @@ def run_lowimm(a):
 
 
 DEC_RPM = (1090, 1420, 2500, 2870)
-DEC_FRAC = (0.5, 0.8, 0.9, 0.98)
+DEC_FRAC = (0.5, 0.9, 0.98)
 DEC_VARIANTS = (("averaged, resolved", dict(averaged=True)),
                 ("periodic, single level", dict(resolved=False)),
                 ("periodic, resolved, m_c 8", dict(mc=8)),
