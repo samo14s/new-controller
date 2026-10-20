@@ -71,6 +71,7 @@ RES = os.path.join(HERE, "..", "results")
 KAPZ = np.tan(P.HELIX) / (0.5 * P.D_TOOL)          # helix lag, rad per metre of depth
 M_C = 16                                           # subintervals of the tooth period
 N_ENC = 128                                        # samples per subinterval for the enclosures
+N_PHASE = 16                                       # C1's kick phases per tooth period
 
 
 # -------------------------------------------------------------- the cut ----
@@ -305,12 +306,20 @@ def _sym(x, I, J, n):
     return W
 
 
-def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, valid=None):
+def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, valid=None, merged=True):
     """Largest beta with beta e in E(P(t)) for all t, P periodic piecewise
     affine as in the module docstring.  enc: (alpha, beta, eps) of a H on
     each subinterval (enclosure); u0n: sector level at each node (the smaller
     of the two subintervals meeting there).  Returns beta and (W_k, Y_k, S_k)
-    in the coordinates x = Tm z."""
+    in the coordinates x = Tm z.
+
+    merged: the two corners r = -eps, +eps of each (s, sigma) are one LMI.
+    E has rank one, E = p q' in these coordinates, so the r-term of the
+    decrease matrix is -r (p v' + v p') with v = W(s) q, and Petersen's lemma
+    (exact for a scalar |r| <= eps) gives
+        M0 - r (p v' + v p') > 0 for all |r| <= eps
+        <=>  exists mu > 0:  [[M0 - mu p p', eps v], [eps v', mu]] > 0.
+    It halves the decrease blocks; check() still tests all corners."""
     mc, n = len(enc[0]), len(B)
     Ti = np.linalg.inv(Tm)
     A0s, Es, Bs, Ks, es = Ti @ A0 @ Tm, Ti @ E @ Tm, Ti @ B, K @ Tm, Ti @ e
@@ -325,10 +334,35 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
     C = np.arange(n)
     off = I != J
     blocks = []
-    for k, cks in enumerate(corners(*enc)):
+    if merged:
+        p = Ti[:, 1]
+        q = Tm.T @ E[1]                                              # E = e_2 E[1], so Es = p q'
+        assert np.allclose(np.outer(p, q), Es, atol=1e-12 * np.abs(Es).max())
+        mus = []
+        alpha, beta, rad = enc
+        cks_all = [[(sv, al * (1 - sv) + be * (sv - sg), al * sv + be * sg, ep) for sv, sg in
+                    (((0.0, 0.0), (1.0, 1.0)) if be == 0 else ((0.0, 0.0), (0.5, 0.0), (1.0, 1.0)))]
+                   for al, be, ep in zip(alpha, beta, rad)]
+    else:
+        cks_all = [[c + (0.0,) for c in cc] for cc in corners(*enc)]
+    nvar = vb + 1
+    for k, cks in enumerate(cks_all):
         k1 = (k + 1) % mc
-        for sv, ck, ck1 in cks:
-            M1 = LMIBlock(n + 1)
+        for sv, ck, ck1, ep in cks:
+            big = merged and ep > 0
+            M1 = LMIBlock(n + 2 if big else n + 1)
+            if big:                                                   # [[M0 - mu p p', ep v], [ep v', mu]]
+                vmu = nvar
+                nvar += 1
+                mus.append(vmu)
+                Ip, Jp = np.triu_indices(n)
+                M1.add(Ip, Jp, vmu, -p[Ip] * p[Jp])
+                M1.add(n + 1, n + 1, vmu, 1.0)
+                for v, wgt in ((vW[k], 1 - sv), (vW[k1], sv)):
+                    if wgt:
+                        M1.add(I, n + 1, v, ep * wgt * q[J])
+                        M1.add(J[off], n + 1, v[off], ep * wgt * q[I[off]])
+                M1.add(n + 1, n + 1, -1, -eps)
             M1.add(I, J, vW[k1], 1.0 / tau)                         # W' = (W_k1 - W_k) / tau
             M1.add(I, J, vW[k], -1.0 / tau)
             for v, wgt, c in ((vW[k], 1 - sv, ck), (vW[k1], sv, ck1)):
@@ -361,10 +395,10 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
             M4.add(0, 0, vW[k], -cs[I] * cs[J] * np.where(off, 2.0, 1.0))
             M4.add(0, 0, -1, valid[1] ** 2)
             blocks.append(M4)
-    c = np.zeros(vb + 1)
+    c = np.zeros(nvar)
     c[vb] = 1.0
-    x, status = solve_sdp(len(c), c, blocks, nonneg=[(v, eps) for v in vS] + [(vb, 0.0)],
-                          settings=SOLVER if settings is None else settings)
+    nonneg = [(v, eps) for v in vS] + [(vb, 0.0)] + ([(v, eps) for v in mus] if merged else [])
+    x, status = solve_sdp(len(c), c, blocks, nonneg=nonneg, settings=SOLVER if settings is None else settings)
     W = np.array([_sym(x[v], I, J, n) for v in vW])
     Y = np.array([x[v] for v in vY])
     S = np.array([x[v] for v in vS])
@@ -462,7 +496,7 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
     u0k = VMAX - (bk if resolved else np.full(mc, bk.max()))
     u0n = np.minimum(u0k, np.roll(u0k, 1))                       # node k closes subinterval k-1
     out = dict(sigma=sigma, u0_min=float(u0k.min()), u0_max=float(u0k.max()), c2_size=np.nan,
-               phase_size=np.zeros(mc), size=0.0, cert=None)
+               phase_size=np.zeros(N_PHASE), size=0.0, cert=None)
     if sigma <= 0 or u0k.min() <= 0:
         out.update(note="linearly unstable" if sigma <= 0 else "orbit saturates")
         return out if full else (0.0, out["note"])
@@ -487,9 +521,10 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
                 break
         if best > 0:
             break
-    if cert is not None:
+    if cert is not None:                       # size at the N_PHASE kick phases of C1 (W(t) is affine between nodes)
         es = np.linalg.solve(cert[0], e)
-        out["phase_size"] = np.array([(1 - 1e-9) / np.sqrt(es @ np.linalg.solve(Wk, es)) for Wk in cert[1]])
+        Wt = W_at(cert, np.arange(N_PHASE), N_PHASE)
+        out["phase_size"] = np.array([(1 - 1e-9) / np.sqrt(es @ np.linalg.solve(Wk, es)) for Wk in Wt])
     out.update(size=best, note=note, cert=cert)
     return out if full else (best, note)
 
@@ -564,11 +599,11 @@ def proof_check(Ad, Bd, K, b, cert, nruns=48, nper=40, seed=0):
 
 
 # ------------------------------------------ off-axis test in the simulator ----
-def td_offaxis(rpm, a, g, cert, nodes=(0, 4, 8, 12), kick_rev=100, window=300):
+def td_offaxis(rpm, a, g, cert, nodes=None, kick_rev=100, window=300):
     """c2.td_offaxis with the periodic certificate: the boundary points of
     E(P(t_k)) (c2.boundary_directions) applied as full-state deviations at
-    the phase t_k of node k (C1's kick protocol; with M_C = 16 the nodes are
-    C1's 16 kick phases).  Returns (chattering, runs)."""
+    the phase t_k of node k (C1's kick protocol), at 4 nodes a quarter
+    period apart by default.  Returns (chattering, runs)."""
     from tdsim import simulate
     from tdboundary import classify_run
     Tm, W = cert[0], cert[1]
@@ -576,6 +611,7 @@ def td_offaxis(rpm, a, g, cert, nodes=(0, 4, 8, 12), kick_rev=100, window=300):
     spr = P.STEPS_PER_REV
     nd = spr // P.N_TEETH
     assert nd % mc == 0, "nodes must fall on simulator steps"
+    nodes = range(0, mc, max(1, mc // 4)) if nodes is None else nodes
     bad = runs = 0
     for k in nodes:
         ks = kick_rev * spr + k * nd // mc
@@ -678,13 +714,13 @@ def set_immersion(cut):
 def _point(rpm, g, a, cut, offaxis=True):
     """Certificate and model checks at one cut: the periodic certificate,
     C2's (warm start), the proof on the periodic model, the critical kick of
-    the periodic and of the averaged model at the M_C node phases, and the
+    the periodic and of the averaged model at C1's N_PHASE kick phases, and the
     off-axis simulator test of E(P(t_k)) at 4 phases."""
     r = certify(rpm, a, g, cut, full=True)
     A0, E, B, K = model(rpm, g)
     Tp = 60.0 / (rpm * P.N_TEETH)
     _, b, _ = orbit(rpm, g, a, cut, n_t=L_SIM)
-    ph = np.arange(M_C) * L_SIM // M_C
+    ph = np.arange(N_PHASE) * L_SIM // N_PHASE
     Ad, Bd = step_maps(A0, E, B, lambda t: aH(t, rpm, a, cut), Tp, L_SIM)
     Aa, Ba = step_maps(A0, E, B, lambda t: np.full(np.size(t), cut.kappa * a), Tp, L_SIM)
     cert = r["cert"]
@@ -720,10 +756,10 @@ def _report(out, td):
     both = np.isfinite(mk) & np.isfinite(ak)
     print(f"periodic / averaged model critical kick, phase by phase: {np.min(mk[both] / ak[both]):.3f}-"
           f"{np.max(mk[both] / ak[both]):.3f} (median {np.median(mk[both] / ak[both]):.3f})")
-    print(f"per-phase certificate below the periodic model's kick at the same phase: {np.sum((ph <= mk)[ok])}/{ok.sum() * M_C}")
+    print(f"per-phase certificate below the periodic model's kick at the same phase: {np.sum((ph <= mk)[ok])}/{ok.sum() * N_PHASE}")
     print(f"C2 certificate below the periodic model's smallest kick: {np.sum(c2s <= np.nanmin(mk, axis=1))}/{len(c2s)}")
     fin = np.isfinite(td) & ok[:, None]
-    tdp = td if td.shape[1] == M_C else None
+    tdp = td if td.shape[1] == N_PHASE else None
     if tdp is not None:
         print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}")
     print(f"certificate below the simulated smallest kick: {np.sum(c[ok] <= np.nanmin(td[ok], axis=1))}/{ok.sum()}")
@@ -744,7 +780,7 @@ def run_basin(a):
     16 kick phases of C1, the simulated critical kick at those phases (C1),
     and boundary points of E(P(t_k)) at 4 phases in the simulator."""
     b = np.load(os.path.join(RES, "c1_basin.npz"))
-    assert int(b["n_phase"]) == M_C, "the nodes are C1's kick phases"
+    assert int(b["n_phase"]) == N_PHASE, "C1's kick phases"
     m = b["vmax"] > 0
     jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
     if a.limit:
