@@ -190,14 +190,23 @@ def paper_gains():
     return d["rpm"], d["g_best"], float(d["zeta"])
 
 
+G1_UNCAPPED = 20000.0                          # gain bound of the check without the 3000 cap
+
+
 def _limits(args):
     rpm, g1, zeta = args
     P.set_damping(zeta)
     paper = [a_lim_ctrl(rpm, g1, g2) for g2 in LIM_G2]
     bmax = [c2.orbit(rpm, g1, a)[2] for a in LIM_DEPTH]
     gf = [feasible_g1(rpm, g2, kd) for _, g2, kd in FEAS_DESIGNS]
-    af = [a_lim_ctrl(rpm, g, g2, kd) if np.isfinite(g) else np.nan for g, (_, g2, kd) in zip(gf, FEAS_DESIGNS)]
-    return paper, orbit_saturation_depth(rpm, g1), bmax, gf, af
+    af = [a_lim_ctrl(rpm, g, g2, kd, a_max=0.5) if np.isfinite(g) else np.nan
+          for g, (_, g2, kd) in zip(gf, FEAS_DESIGNS)]
+    # where DVF sits on the 3000 bound, the same rule without the bound for DVF and d2000
+    unc = [np.nan] * 4
+    if gf[0] >= G1_MAX:
+        gu = [feasible_g1(rpm, g2, g_hi=G1_UNCAPPED) for g2 in (0.0, 2000.0)]
+        unc = gu + [a_lim_ctrl(rpm, g, g2, a_max=0.5) for g, g2 in zip(gu, (0.0, 2000.0))]
+    return paper, orbit_saturation_depth(rpm, g1), bmax, gf, af, unc
 
 
 def run_limits(a):
@@ -213,17 +222,24 @@ def run_limits(a):
     bmax = np.array([r[2] for r in res])
     gf = np.array([r[3] for r in res])
     af = np.array([r[4] for r in res]) * 1e3
+    unc = np.array([r[5] for r in res])
     np.savez_compressed(os.path.join(RES, "c4_limits.npz"), rpm=rpm, g1=g1, g2=np.array(LIM_G2), a_lim=al,
                         a_sat=sat, depth=LIM_DEPTH * 1e3, bmax=bmax,
                         a_lim_zoa=np.array([a_lim(n, g) for n, g in zip(rpm, g1)]) * 1e3,
                         feas_names=np.array([d[0] for d in FEAS_DESIGNS]), feas_g2=np.array([d[1] for d in FEAS_DESIGNS]),
                         feas_kd=np.array([d[2] for d in FEAS_DESIGNS]), feas_g1=gf, feas_a_lim=af, g1_max=G1_MAX,
-                        zeta=zeta)
+                        uncapped_g1=unc[:, :2], uncapped_a_lim=unc[:, 2:] * 1e3, zeta=zeta)
     for j, g2 in enumerate(LIM_G2):
         r = al[:, j] / al[:, 0]
         print(f"paper g1 + g2 = {g2:5.0f}: a_lim {np.nanmin(al[:, j]):.2f}-{np.nanmax(al[:, j]):.2f} mm, "
               f"ratio to DVF {np.nanmin(r):.2f}-{np.nanmax(r):.2f} (median {np.nanmedian(r):.2f})")
     print(f"paper g1: orbit command >= 9 V on {np.mean(bmax >= VMAX) * 100:.1f} % of the speed x depth grid")
+    m = np.isfinite(unc[:, 2])
+    if m.any():
+        r = unc[m, 3] / unc[m, 2]
+        print(f"without the 3000 bound at the {m.sum()} speeds where DVF sits on it: DVF g1 "
+              f"{np.nanmin(unc[m, 0]):.0f}-{np.nanmax(unc[m, 0]):.0f}, d2000 / DVF {r.min():.2f}-{r.max():.2f} "
+              f"(median {np.median(r):.2f})")
     for j, (name, g2, kd) in enumerate(FEAS_DESIGNS):
         r = af[:, j] / af[:, 0]
         print(f"feasible {name:6s} (g2 {g2:5.0f}, kd {kd:8.0f}): g1 {np.nanmin(gf[:, j]):6.0f}-{np.nanmax(gf[:, j]):6.0f}, "
@@ -235,6 +251,7 @@ GM_RPM = (1090.0, 1420.0, 2500.0, 2870.0)        # the C1 basin speeds
 GM_DEPTH = tuple(np.arange(2.0, 34.1, 2.0))       # mm
 GM_G1 = (500.0, 1000.0, G_REF, 2000.0, G1_MAX)
 GM_G2 = (0.0, 500.0, 1000.0, 2000.0, 4000.0)
+GM_G1_DVF = tuple(np.arange(500.0, G1_MAX + 1.0, 100.0))   # DVF alone on a finer g1 grid (26 gains vs 20 delayed pairs)
 
 
 def _gainmap(args):
@@ -253,7 +270,10 @@ def _gainmap(args):
 def run_gainmap(a):
     """Certified kick (FAST solver settings, checked) at the basin speeds on
     an absolute depth grid, for every (g1, g2) of the gain grid.  Points
-    already in c4_gainmap.npz are reused (the certificate is deterministic)."""
+    already in c4_gainmap.npz are reused (the certificate is deterministic).
+    DVF alone is also mapped on the finer grid GM_G1_DVF, so that the DVF
+    baseline is not handicapped by having fewer candidates than the delayed
+    designs."""
     zeta = float(np.load(os.path.join(RES, "feas_g1500.npz"))["zeta"])
     fn = os.path.join(RES, "c4_gainmap.npz")
     old = {}
@@ -266,7 +286,14 @@ def run_gainmap(a):
                         old[(float(n), float(d), float(g1), float(g2))] = (
                             o["kick"][i, j, p, q], o["sigma"][i, j, p, q], o["bmax"][i, j, p, q], str(o["msg"][i, j, p, q]))
     keys = [(n, float(d), g1, g2) for n in GM_RPM for d in GM_DEPTH for g1 in GM_G1 for g2 in GM_G2]
-    todo = [k for k in keys if k not in old]
+    dkeys = [(n, float(d), float(g1), 0.0) for n in GM_RPM for d in GM_DEPTH for g1 in GM_G1_DVF]
+    if os.path.exists(fn) and "g1_dvf" in o.files:
+        for i, n in enumerate(o["rpm"]):
+            for j, d in enumerate(o["depth"]):
+                for p, g1 in enumerate(o["g1_dvf"]):
+                    old[(float(n), float(d), float(g1), 0.0)] = (
+                        o["kick_dvf"][i, j, p], o["sigma_dvf"][i, j, p], o["bmax_dvf"][i, j, p], str(o["msg_dvf"][i, j, p]))
+    todo = [k for k in dict.fromkeys(keys + dkeys) if k not in old]
     print(f"{len(keys)} points, {len(keys) - len(todo)} reused, {len(todo)} to compute", flush=True)
     with Pool(a.workers) as pool:
         new = pool.map(_gainmap, [(n, d * 1e-3, g1, g2, zeta) for (n, d, g1, g2) in todo], chunksize=1)
@@ -275,14 +302,19 @@ def run_gainmap(a):
     shape = (len(GM_RPM), len(GM_DEPTH), len(GM_G1), len(GM_G2))
     kick, sigma, bmax = (np.array([r[k] for r in res], float).reshape(shape) for k in range(3))
     msg = np.array([r[3] for r in res]).reshape(shape)
+    dres = [old[k] for k in dkeys]
+    dshape = (len(GM_RPM), len(GM_DEPTH), len(GM_G1_DVF))
+    kd_, sd_, bd_ = (np.array([r[k] for r in dres], float).reshape(dshape) for k in range(3))
     np.savez_compressed(fn, rpm=np.array(GM_RPM), depth=np.array(GM_DEPTH),
                         g1=np.array(GM_G1), g2=np.array(GM_G2), kick=kick, sigma=sigma, bmax=bmax, msg=msg,
+                        g1_dvf=np.array(GM_G1_DVF), kick_dvf=kd_, sigma_dvf=sd_, bmax_dvf=bd_,
+                        msg_dvf=np.array([r[3] for r in dres]).reshape(dshape),
                         a_lim_ref=np.array([a_lim(n, G_REF) for n in GM_RPM]) * 1e3, zeta=zeta)
     for i, n in enumerate(GM_RPM):
         best = kick[i].reshape(len(GM_DEPTH), -1).max(axis=1)
-        dvf = kick[i, :, :, 0].max(axis=1)
+        dvf = kd_[i].max(axis=1)
         print(f"{n:.0f} rpm: best certified kick (mm/s) " + " ".join(f"{d:.0f}:{b*1e3:.1f}" for d, b in zip(GM_DEPTH, best)))
-        print(f"{'':9s}best DVF (g2 = 0)        " + " ".join(f"{d:.0f}:{b*1e3:.1f}" for d, b in zip(GM_DEPTH, dvf)))
+        print(f"{'':9s}best DVF, fine g1 grid   " + " ".join(f"{d:.0f}:{b*1e3:.1f}" for d, b in zip(GM_DEPTH, dvf)))
 
 
 ENT_RPM = tuple(np.arange(600.0, 3000.1, 100.0))
@@ -415,12 +447,81 @@ def run_validate(a):
                       f"delayed {sel[1][1]*1e3:.2f} mm/s")
 
 
+VAL2_DEEP = (30.0, 34.0)                        # mm: the deepest certified depths, delayed designs only
+
+
+def _same_g1(args):
+    """Best g2 > 0 (by the certificate) at a given g1: the delayed design with
+    the same orbit command, hence the same authority budget, as that DVF."""
+    rpm, a, g1, zeta = args
+    best = (0.0, np.nan)
+    for g2 in GM_G2[1:]:
+        k = _gainmap((rpm, a, g1, g2, zeta))[0]
+        if k > best[0]:
+            best = (k, g2)
+    return best
+
+
+def run_validate2(a):
+    """Supplement to run_validate after the second review.
+      dvf_fine  the best DVF of the fine g1 grid, where it differs from run_validate's
+      same_g1   that DVF's g1 plus its best g2 > 0: same orbit command and authority
+                budget, so a change of the simulated basin is due to the delayed term
+      comb      the best delayed design at VAL2_DEEP (certificate with its checks,
+                averaged model, off-axis test), where only delayed designs are certified
+    Each with the simulated critical kick (C1 protocol, 16 phases)."""
+    import tdsim
+    from c1_unsafe_zone import _critical_kick, N_PHASE
+    gm = np.load(os.path.join(RES, "c4_gainmap.npz"))
+    v1 = np.load(os.path.join(RES, "c4_validate.npz"))
+    zeta = float(gm["zeta"])
+    pts, sjobs = [], []
+    for i, n in enumerate(gm["rpm"]):
+        for d in VAL_DEPTH + VAL2_DEEP:
+            j = int(np.argmin(np.abs(gm["depth"] - d)))
+            kd_ = gm["kick_dvf"][i, j]
+            if kd_.max() > 0:
+                g1 = float(gm["g1_dvf"][int(np.argmax(kd_))])
+                old = (v1["rpm"] == n) & (v1["depth"] == d) & (v1["kind"] == "dvf")
+                if not (old.any() and float(v1["g1"][old][0]) == g1):
+                    pts.append((float(n), d, g1, 0.0, "dvf_fine"))
+                sjobs.append((float(n), d, g1))
+            if d in VAL2_DEEP:
+                g1, g2, k = best_gains(gm, i, j, True)
+                if k > 0:
+                    pts.append((float(n), d, g1, g2, "comb"))
+    with Pool(a.workers) as pool:
+        sg = pool.map(_same_g1, [(n, d * 1e-3, g1, zeta) for n, d, g1 in sjobs], chunksize=1)
+        pts += [(n, d, g1, g2, "same_g1") for (n, d, g1), (k, g2) in zip(sjobs, sg) if k > 0]
+        td_jobs = [(n, d * 1e-3, g1, VMAX, p, zeta, g2) for (n, d, g1, g2, _) in pts for p in range(N_PHASE)]
+        dv = np.array(pool.map(_critical_kick, td_jobs, chunksize=1)).reshape(len(pts), N_PHASE)
+        res = pool.map(_validate, [(n, d * 1e-3, g1, g2, zeta, kind == "comb") for (n, d, g1, g2, kind) in pts],
+                       chunksize=1)
+    cert, vmax, vend, mk, obad, oruns = (np.array([r[k] for r in res], float) for k in (0, 2, 3, 4, 5, 6))
+    unsettled = np.isnan(dv).any(axis=1)
+    td_min = np.where(unsettled, np.nan, np.nanmin(np.where(np.isnan(dv), np.inf, dv), axis=1))
+    np.savez_compressed(os.path.join(RES, "c4_validate2.npz"), rpm=np.array([p[0] for p in pts]),
+                        depth=np.array([p[1] for p in pts]), g1=np.array([p[2] for p in pts]),
+                        g2=np.array([p[3] for p in pts]), kind=np.array([p[4] for p in pts]), dv=dv, td_min=td_min,
+                        unsettled=unsettled, cert=cert, model_kick=mk, proof_vmax=vmax, proof_vend=vend,
+                        offaxis_bad=obad, offaxis_runs=oruns, msg=np.array([r[1] for r in res]), zeta=zeta,
+                        build=tdsim.SOURCE_SHA[:12])
+    for (n, d, g1, g2, kind), c, m, t, u, ob, orr in zip(pts, cert, mk, td_min, unsettled, obad, oruns):
+        ts = "chatters unkicked" if u else f"{t*1e3:8.2f}"
+        print(f"{n:.0f} rpm {d:4.0f} mm {kind:8s} g1 {g1:5.0f} g2 {g2:5.0f}: cert {c*1e3:7.3f}, model {m*1e3:8.2f}, "
+              f"TD {ts} mm/s; off-axis {ob:.0f}/{orr:.0f}")
+    ok = np.isfinite(td_min) & (cert > 0)
+    print(f"certificate below the simulated critical kick at {np.sum(cert[ok] <= td_min[ok])}/{ok.sum()} points; "
+          f"off-axis chatter {obad.sum():.0f}/{oruns.sum():.0f}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["limits", "gainmap", "entry", "validate"])
+    ap.add_argument("command", choices=["limits", "gainmap", "entry", "validate", "validate2"])
     ap.add_argument("--workers", type=int, default=4)
     a = ap.parse_args()
-    dict(limits=run_limits, gainmap=run_gainmap, entry=run_entry, validate=run_validate)[a.command](a)
+    dict(limits=run_limits, gainmap=run_gainmap, entry=run_entry, validate=run_validate,
+         validate2=run_validate2)[a.command](a)
 
 
 if __name__ == "__main__":

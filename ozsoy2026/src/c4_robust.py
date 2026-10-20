@@ -152,12 +152,14 @@ def orbit_command(rpm, a, g1, g2=0.0, kd=0.0, tau=0.0, rho=1.0, runout=0.0, psi=
 
 
 def worst_orbit_command(rpm, depths, g1, g2=0.0, kd=0.0, rho=1.0, runout=0.0, n_psi=8, tau=0.0, mode2=None):
-    """Largest peak command over depths and n_psi runout phases."""
+    """Largest peak command over depths and n_psi runout phases.  Phases that
+    differ by a tooth pitch 2 pi / N only relabel the teeth (same force up to a
+    time shift), so the phases sample [0, 2 pi / N)."""
     best = 0.0
-    for psi in (np.arange(n_psi) * 2 * np.pi / n_psi if runout else [0.0]):
+    for psi in (np.arange(n_psi) * 2 * np.pi / (P.N_TEETH * n_psi) if runout else [0.0]):
         W = slice_force_revolution(runout, psi)
         for a in depths:
-            best = max(best, orbit_command(rpm, a, g1, g2, kd, tau, rho, W=W)[0])
+            best = max(best, orbit_command(rpm, a, g1, g2, kd, tau, rho, mode2=mode2, W=W)[0])
     return best
 
 
@@ -166,7 +168,7 @@ ROB_RPM = (1090.0, 1420.0, 2500.0, 2870.0)      # the C1 basin speeds
 EPS = (-0.03, -0.02, -0.01, -0.005, 0.0, 0.005, 0.01, 0.02, 0.03)    # comb-delay error Tc / T - 1
 RUNOUT = (0.0, 0.5e-6, 1e-6, 2e-6, 3e-6, 5e-6)  # eccentric radial runout (m)
 TAU = (0.0, 50e-6, 100e-6, 200e-6, 300e-6, 400e-6)                   # loop delay (s)
-MODE2 = (None, (400.0, 6.0, 0.01), (800.0, 40.0, 0.01))              # second mode: f2 (Hz), K2 / K, zeta2
+MODE2 = (None, (400.0, 6.0, 0.01), (600.0, 6.0, 0.01), (800.0, 40.0, 0.01))   # assumed second mode: f2 (Hz), K2 / K, zeta2
 N_DEPTH = 40                                    # depths in (0, 0.9 a_lim] for the worst orbit command
 
 
@@ -174,16 +176,19 @@ GUARD = 0.9            # the designs keep 10 % of the limit free (forced demand 
 
 
 def designs(rpm):
-    """(label, g1, g2, rho) at a speed: DVF and DVF + g2 = 2000 with the largest
-    g1 <= 3000 whose forced demand stays below GUARD x 9 V up to 0.9 a_lim
-    (the authority rule of c4_comb with a guard band; at GUARD = 1 the
-    demand would sit exactly at 9 V and any perturbation would saturate), and
-    the same gains with a spindle-period comb."""
+    """(label, g1, g2, rho) at a speed: DVF and DVF + g2 (1000, 2000, 4000)
+    with the largest g1 <= 3000 whose forced demand stays below GUARD x 9 V up
+    to 0.9 a_lim (the authority rule of c4_comb with a guard band; at GUARD = 1
+    the demand would sit exactly at 9 V and any perturbation would saturate),
+    and the g2 = 2000 gains with a spindle-period comb."""
     from c4_comb import feasible_g1
     g_dvf = feasible_g1(rpm, guard=GUARD)
     g_c = feasible_g1(rpm, 2000.0, guard=GUARD)
+    g_1 = feasible_g1(rpm, 1000.0, guard=GUARD)
+    g_4 = feasible_g1(rpm, 4000.0, guard=GUARD)
     return [("DVF", g_dvf, 0.0, 1.0), ("tooth comb", g_c, 2000.0, 1.0),
-            ("spindle comb", g_c, 2000.0, float(P.N_TEETH))]
+            ("spindle comb", g_c, 2000.0, float(P.N_TEETH)), ("tooth comb 1000", g_1, 1000.0, 1.0),
+            ("tooth comb 4000", g_4, 4000.0, 1.0)]
 
 
 def _robust(args):
