@@ -70,7 +70,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
 KAPZ = np.tan(P.HELIX) / (0.5 * P.D_TOOL)          # helix lag, rad per metre of depth
 M_C = 16                                           # subintervals of the tooth period
-N_ENC = 128                                        # samples per subinterval for the enclosures
+N_ENC = 2048                                       # samples per subinterval for the enclosures (the pad
+#                                                  L dt / 2 dominates the residual below about 1000)
 N_PHASE = 16                                       # C1's kick phases per tooth period
 
 
