@@ -754,7 +754,8 @@ def _report(out, td):
     c, c2s, ph = out["cert"], out["c2_cert"], out["phase_cert"]
     ok = c > 0
     q = c[ok] / c2s[ok]
-    print(f"C3 / C2: {q.min():.3f}-{q.max():.3f} (median {np.median(q):.3f}) at {ok.sum()}/{len(c)} points")
+    print(f"C3 / C2: {q.min():.3f}-{q.max():.3f} (median {np.median(q):.3f})" if ok.any() else "C3 / C2: -",
+          f"at {ok.sum()}/{len(c)} points")
     mk, ak = out["model_kick"], out["avg_kick"]
     both = np.isfinite(mk) & np.isfinite(ak)
     print(f"periodic / averaged model critical kick, phase by phase: {np.min(mk[both] / ak[both]):.3f}-"
@@ -765,7 +766,8 @@ def _report(out, td):
     tdp = td if td.shape[1] == N_PHASE else None
     if tdp is not None:
         print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}")
-    print(f"certificate below the simulated smallest kick: {np.sum(c[ok] <= np.nanmin(td[ok], axis=1))}/{ok.sum()}")
+    tdmin = np.array([np.min(r[np.isfinite(r)]) if np.isfinite(r).any() else np.inf for r in td])
+    print(f"certificate below the simulated smallest kick: {np.sum(c[ok] <= tdmin[ok])}/{ok.sum()}")
     print(f"proof check max V {np.nanmax(out['proof_vmax']):.5f}; off-axis chatter {out['offaxis_bad'].sum()}/"
           f"{out['offaxis_runs'].sum()}")
 
