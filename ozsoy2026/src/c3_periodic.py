@@ -385,7 +385,7 @@ def check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=None):
 
 
 LAM_FRAC = c2.LAM_FRAC
-N_PASS = c2.N_PASS
+N_PASS = 2                                      # solves per margin: the warm start, then one re-centred
 
 
 def floquet_rate(A0, E, h_of_t, Tp, L=200):
@@ -396,35 +396,47 @@ def floquet_rate(A0, E, h_of_t, Tp, L=200):
 
 
 def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolved=True,
-            settings=TIGHT, delta=DELTA, full=False):
+            settings=TIGHT, delta=DELTA, full=False, n_pass=N_PASS):
     """Certified size along e (default: unit velocity, the kick of C1) on the
     periodic model.  averaged=True replaces a H(t) by its mean (C2's model,
     with the periodic W and the time-resolved margin); resolved=False uses
-    C2's single level V - max|b| at every phase."""
+    C2's single level V - max|b| at every phase.
+
+    The first solve starts in the coordinates of C2's certificate on the
+    averaged model (it is feasible for the periodic LMIs of the averaged
+    model with the single level, so it is a well-conditioned start), then
+    re-centres n_pass - 1 times.  With full=True returns a dict with the
+    size, C2's size from the warm start, the size at each node (a kick at
+    phase t_k), the margins and the certificate (Tm, W_k, Y_k, S_k)."""
     A0, E, B, K = model(rpm, g, N)
     n = len(B)
     Tp = 60.0 / (rpm * P.N_TEETH)
     if e is None:
         e = np.zeros(n)
         e[1] = 1.0
+    Abar = A0 + cut.kappa * a * E
     if averaged:
         hlo = hhi = np.full(mc, cut.kappa * a)
-        sigma = -np.linalg.eigvals(A0 + cut.kappa * a * E).real.max()
+        sigma = -np.linalg.eigvals(Abar).real.max()
     else:
         hlo, hhi = enclosure(rpm, a, cut, mc)
         sigma = floquet_rate(A0, E, lambda t: aH(t, rpm, a, cut), Tp)
     _, _, bk = orbit(rpm, g, a, cut, N, mc)
     u0k = VMAX - (bk if resolved else np.full(mc, bk.max()))
     u0n = np.minimum(u0k, np.roll(u0k, 1))                       # node k closes subinterval k-1
-    out = dict(sigma=sigma, u0_min=float(u0k.min()), u0_max=float(u0k.max()))
+    out = dict(sigma=sigma, u0_min=float(u0k.min()), u0_max=float(u0k.max()), c2_size=np.nan,
+               phase_size=np.zeros(mc), size=0.0, cert=None)
     if sigma <= 0 or u0k.min() <= 0:
-        out.update(size=0.0, note="linearly unstable" if sigma <= 0 else "orbit saturates", cert=None)
+        out.update(note="linearly unstable" if sigma <= 0 else "orbit saturates")
         return out if full else (0.0, out["note"])
     valid = c2.validity(n, delta) if delta is not None else None
+    s2, _, cert2 = c2.certify(Abar, B, K, u0k.min(), e, rpm, settings, full=True, delta=delta)
+    out["c2_size"] = s2
+    start = cert2[0] @ cholesky(np.linalg.inv(cert2[1]), lower=True) if cert2 is not None else None
     best, note, cert = 0.0, "no candidate passed the check", None
     for f in LAM_FRAC:
-        Tm = np.diag(c2.scaling(A0 + cut.kappa * a * E, rpm))
-        for p in range(N_PASS):
+        Tm = start if start is not None else np.diag(c2.scaling(Abar, rpm))
+        for p in range(n_pass):
             beta, (W, Y, S), status = lmi(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, lam=f * sigma,
                                           settings=settings, valid=valid)
             size, c, msg = check(A0, E, B, K, hlo, hhi, u0n, e, Tm, Tp, W, Y, S, valid=valid)
@@ -438,6 +450,9 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
                 break
         if best > 0:
             break
+    if cert is not None:
+        es = np.linalg.solve(cert[0], e)
+        out["phase_size"] = np.array([(1 - 1e-9) / np.sqrt(es @ np.linalg.solve(Wk, es)) for Wk in cert[1]])
     out.update(size=best, note=note, cert=cert)
     return out if full else (best, note)
 
@@ -536,3 +551,209 @@ def model_critical_kick(Ad, Bd, K, b, nphase=4, nper=1200, lo=1e-4, hi=3.0, nbis
         else:
             a = m
     return float(np.exp(c))
+
+
+# ------------------------------------------ off-axis test in the simulator ----
+def td_offaxis(rpm, a, g, cert, nodes=(0, 4, 8, 12), kick_rev=100, window=300):
+    """c2.td_offaxis with the periodic certificate: the boundary points of
+    E(P(t_k)) (c2.boundary_directions) applied as full-state deviations at
+    the phase t_k of node k (C1's kick protocol; with M_C = 16 the nodes are
+    C1's 16 kick phases).  Returns (chattering, runs)."""
+    from tdsim import simulate
+    from tdboundary import classify_run
+    Tm, W = cert[0], cert[1]
+    mc, n = len(W), Tm.shape[0]
+    spr = P.STEPS_PER_REV
+    nd = spr // P.N_TEETH
+    assert nd % mc == 0, "nodes must fall on simulator steps"
+    bad = runs = 0
+    for k in nodes:
+        ks = kick_rev * spr + k * nd // mc
+        for X in c2.boundary_directions((Tm, np.linalg.inv(W[k])), n):
+            r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=4,
+                         kick_step=ks, pert=c2.deviation_to_pert(rpm, X))
+            st = (ks // nd + 1) * nd
+            bad += not classify_run(r["x"][st:], spr, r["diverged"])["stable"]
+            runs += 1
+    return bad, runs
+
+
+# ------------------------------------------------------------ campaigns ----
+def gain_map():
+    d = np.load(os.path.join(RES, "feas_g1500.npz"))
+    return d["rpm"], d["g_best"], float(d["zeta"])
+
+
+def critical_multiplier(rpm, a, g, cut=HALF, N=None):
+    ev = np.linalg.eigvals(monodromy(rpm, a, g, cut, N))
+    return ev[np.argmax(np.abs(ev))]
+
+
+FLOQ_AE = (0.5, 0.1)
+
+
+def _floquet(args):
+    rpm, g, ae, zeta = args
+    P.set_damping(zeta)
+    cut = Cut(ae)
+    az = cut.a_lim(rpm, g)
+    af = floquet_a_lim(rpm, g, cut)
+    if not np.isfinite(af):
+        return az, af, np.nan, np.nan, np.nan
+    mu = critical_multiplier(rpm, af * (1 + 1e-4), g, cut)
+    N = c2.nodes_for(rpm)
+    rho8 = spectral_radius(rpm, af, g, cut, N=N + 8)               # node convergence at the limit
+    return az, af, mu.real, mu.imag, rho8
+
+
+def run_floquet(a):
+    """Stability limit of the periodic collocated model (Floquet) against the
+    ZOA on the gain map of C2, at half and low radial immersion."""
+    rpm_map, g_map, zeta = gain_map()
+    rpm = np.arange(rpm_map[0], rpm_map[-1] + 1, a.step)
+    g = np.interp(rpm, rpm_map, g_map)
+    jobs = [(float(n), float(gg), ae, zeta) for ae in FLOQ_AE for n, gg in zip(rpm, g)]
+    with Pool(a.workers) as pool:
+        res = np.array(pool.map(_floquet, jobs, chunksize=1)).reshape(len(FLOQ_AE), len(rpm), 5)
+    np.savez_compressed(os.path.join(RES, "c3_floquet.npz"), rpm=rpm, g=g, ae=np.array(FLOQ_AE),
+                        a_zoa=res[..., 0], a_floquet=res[..., 1], mu=res[..., 2] + 1j * res[..., 3],
+                        rho_n8=res[..., 4], zeta=zeta)
+    for i, ae in enumerate(FLOQ_AE):
+        r = res[i, :, 1] / res[i, :, 0]
+        flip = (res[i, :, 2] < 0) & (np.abs(res[i, :, 3]) < 1e-6 * np.abs(res[i, :, 2]))
+        print(f"ae/D {ae}: Floquet / ZOA {np.nanmin(r):.4f}-{np.nanmax(r):.4f} (median {np.nanmedian(r):.4f}); "
+              f"flip at {np.sum(flip)} speeds; |rho(N+8) - 1| <= {np.nanmax(np.abs(res[i, :, 4] - 1)):.1e}")
+
+
+def model_kick_by_phase(Ad, Bd, K, b, phases, nper=1200, lo=1e-4, hi=3.0, nbis=9):
+    """model_critical_kick at each phase index separately (bisection per phase)."""
+    n, L = Bd.shape[1], len(b)
+    e = np.zeros(n)
+    e[1] = 1.0
+    k0 = np.asarray(phases, int) % L
+
+    def diverges(dv):
+        with np.errstate(over="ignore", invalid="ignore"):
+            X = run_model(Ad, Bd, K, b, e[:, None] * dv[None, :], k0, nper)
+            nrm = np.linalg.norm(X, axis=0)
+        return ~np.isfinite(nrm) | (nrm > 10 * dv)
+
+    m = len(k0)
+    out = np.full(m, np.nan)
+    at_lo = diverges(np.full(m, lo))
+    at_hi = diverges(np.full(m, hi))
+    out[at_lo] = lo
+    out[~at_hi] = np.inf
+    todo = ~at_lo & at_hi
+    a_, c_ = np.full(m, np.log(lo)), np.full(m, np.log(hi))
+    for _ in range(nbis):
+        mid = 0.5 * (a_ + c_)
+        d = diverges(np.exp(mid))
+        c_ = np.where(d, mid, c_)
+        a_ = np.where(d, a_, mid)
+    out[todo] = np.exp(c_[todo])
+    return out
+
+
+L_SIM = 256                                       # steps per tooth period of the model runs
+
+
+def _basin(args):
+    rpm, g, frac, zeta = args
+    P.set_damping(zeta)
+    a = frac * a_lim(rpm, g)
+    r = certify(rpm, a, g, full=True)
+    A0, E, B, K = model(rpm, g)
+    Tp = 60.0 / (rpm * P.N_TEETH)
+    Ad, Bd = step_maps(A0, E, B, lambda t: aH(t, rpm, a), Tp, L_SIM)
+    _, b, _ = orbit(rpm, g, a, n_t=L_SIM)
+    cert = r["cert"]
+    proof = proof_check(Ad, Bd, K, b, cert) if cert is not None else (np.nan, np.nan)
+    mk = model_kick_by_phase(Ad, Bd, K, b, np.arange(M_C) * L_SIM // M_C)
+    off = td_offaxis(rpm, a, g, cert) if cert is not None else (0, 0)
+    return (r["size"], r["c2_size"], r["phase_size"], r["u0_min"], r["u0_max"], r["sigma"], proof[0], proof[1],
+            mk, off[0], off[1], r["note"])
+
+
+def run_basin(a):
+    """At the C1 basin points: the periodic certificate (any phase and per
+    phase), C2's certificate from the warm start, the proof checked on the
+    periodic model, the periodic model's critical kick at the 16 kick phases
+    of C1, the simulated critical kick at those phases (C1), and boundary
+    points of E(P(t_k)) at 4 phases in the simulator."""
+    b = np.load(os.path.join(RES, "c1_basin.npz"))
+    assert int(b["n_phase"]) == M_C, "the nodes are C1's kick phases"
+    m = b["vmax"] > 0
+    jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
+    if a.limit:
+        jobs = jobs[:a.limit]
+    with Pool(a.workers) as pool:
+        res = pool.map(_basin, jobs, chunksize=1)
+    col = lambda k: np.array([r[k] for r in res])
+    td = b["dv"][m][:len(jobs)]
+    out = dict(rpm=np.array([j[0] for j in jobs]), g=np.array([j[1] for j in jobs]),
+               frac=np.array([j[2] for j in jobs]), cert=col(0), c2_cert=col(1), phase_cert=col(2),
+               u0_min=col(3), u0_max=col(4), sigma=col(5), proof_vmax=col(6), proof_vend=col(7),
+               model_kick=col(8), td_kick=td, offaxis_bad=col(9), offaxis_runs=col(10),
+               msg=np.array([r[11] for r in res]), m_c=M_C, delta=DELTA)
+    np.savez_compressed(os.path.join(RES, "c3_basin.npz"), **out)
+    for j, r, t in zip(jobs, res, td):
+        print(f"{j[0]:.0f} rpm {j[2]:.2f} a_lim: C3 {r[0]*1e3:7.3f} (C2 {r[1]*1e3:7.3f}) mm/s; per phase "
+              f"{r[2].min()*1e3:.3f}-{r[2].max()*1e3:.3f}; model {np.nanmin(r[8])*1e3:8.2f}, TD {np.nanmin(t)*1e3:8.2f}; "
+              f"max V {r[6]:.5f}; off-axis {r[9]}/{r[10]}  [{r[11]}]", flush=True)
+    c, c2s, ph = out["cert"], out["c2_cert"], out["phase_cert"]
+    ok = c > 0
+    print(f"C3 / C2: {np.min(c[ok] / c2s[ok]):.3f}-{np.max(c[ok] / c2s[ok]):.3f} (median {np.median(c[ok] / c2s[ok]):.3f}) "
+          f"at {ok.sum()}/{len(c)} points")
+    fin = np.isfinite(td) & ok[:, None]
+    print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}; "
+          f"below the periodic model's: {np.sum((ph <= out['model_kick'])[ok])}/{ok.sum() * M_C}")
+    print(f"proof check max V {np.nanmax(out['proof_vmax']):.5f}; off-axis chatter {out['offaxis_bad'].sum()}/"
+          f"{out['offaxis_runs'].sum()}")
+
+
+DEC_RPM = (1090, 1420, 2500, 2870)
+DEC_FRAC = (0.5, 0.8, 0.9, 0.98)
+DEC_VARIANTS = (("averaged, resolved", dict(averaged=True)),
+                ("periodic, single level", dict(resolved=False)),
+                ("periodic, resolved, m_c 8", dict(mc=8)),
+                ("periodic, resolved, m_c 32", dict(mc=32)))
+
+
+def _decomp(args):
+    rpm, g, frac, zeta, kw = args
+    P.set_damping(zeta)
+    r = certify(rpm, frac * a_lim(rpm, g), g, full=True, **kw)
+    return r["size"], r["c2_size"]
+
+
+def run_decomp(a):
+    """What each ingredient adds: the time-resolved margin on the averaged
+    model, the periodic coefficient with C2's single level, and the number
+    of subintervals (8, 16 from run_basin, 32)."""
+    b = np.load(os.path.join(RES, "c1_basin.npz"))
+    pts = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f, v in zip(b["rpm"], b["g"], b["frac"], b["vmax"])
+           if v > 0 and int(n) in DEC_RPM and any(abs(f - x) < 1e-9 for x in DEC_FRAC)]
+    jobs = [p + (kw,) for p in pts for _, kw in DEC_VARIANTS]
+    with Pool(a.workers) as pool:
+        res = np.array(pool.map(_decomp, jobs, chunksize=1)).reshape(len(pts), len(DEC_VARIANTS), 2)
+    np.savez_compressed(os.path.join(RES, "c3_decomp.npz"), rpm=np.array([p[0] for p in pts]),
+                        frac=np.array([p[2] for p in pts]), variants=np.array([v for v, _ in DEC_VARIANTS]),
+                        size=res[..., 0], c2_size=res[:, 0, 1])
+    for p, row in zip(pts, res):
+        print(f"{p[0]:.0f} rpm {p[2]:.2f}: C2 {row[0, 1]*1e3:.3f}; " +
+              "; ".join(f"{v} {s*1e3:.3f}" for (v, _), s in zip(DEC_VARIANTS, row[:, 0])), flush=True)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("command", choices=["floquet", "basin", "decomp"])
+    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
+    ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
+    a = ap.parse_args()
+    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp)[a.command](a)
+
+
+if __name__ == "__main__":
+    main()
