@@ -337,6 +337,8 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
     if merged:
         p = Ti[:, 1]
         q = Tm.T @ E[1]                                              # E = e_2 E[1], so Es = p q'
+        rho = np.sqrt(np.linalg.norm(p) / (np.linalg.norm(q) * max(np.max(enc[2]), 1e-300)))
+        p, q = p / rho, q * rho                                      # balance mu (about 1) against the rest
         assert np.allclose(np.outer(p, q), Es, atol=1e-12 * np.abs(Es).max())
         mus = []
         alpha, beta, rad = enc
