@@ -1,13 +1,1 @@
-== validate 22:55:42
-2870 rpm 0.95 a_lim: certified   5.666, model     8.73, TD min     9.66 mm/s; max V 0.99800  [AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999950469]
-2870 rpm 0.98 a_lim: certified   4.891, model     7.14, TD min     8.22 mm/s; max V 0.99800  [AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999975271]
-certificate below the model's critical kick at 44/44 points; proof check max V 0.99800
-averaged model vs simulation (critical kick): 0.68-0.98, median 0.92
-certificate below the simulated critical kick at 29/29 points; TD / certificate 1.38-27.48
-== step 23:45:43
-1090 rpm: step-entry beta 0.3:4.464 0.5:0.747 0.6:1.242 0.7:0.496 0.8:0.383 0.9:0.407
-1420 rpm: step-entry beta 0.3:22293999.078 0.5:1.019 0.6:1.002 0.7:1.296 0.8:0.636 0.9:0.281
-2500 rpm: step-entry beta 0.3:0.157 0.5:0.186 0.6:0.449 0.7:0.799 0.8:0.482 0.9:0.159
-2870 rpm: step-entry beta 0.3:1.311 0.5:0.505 0.6:0.523 0.7:0.646 0.8:0.785 0.9:0.484
-largest step-entry beta 22293999.078 (>= 1 would certify the entry)
-== surface 23:51:50
+== validate 00:27:35

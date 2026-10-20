@@ -3,8 +3,9 @@
 cd "$(dirname "$0")/../src" || exit 1
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 for cmd in validate step surface; do
+    extra=""; [ "$cmd" = surface ] && extra="--step 60"
     echo "== $cmd $(date -u +%H:%M:%S)"
-    python3 c2_certificate.py $cmd --workers 4 > ../results/log_c2_$cmd.txt 2>&1 || echo "FAILED $cmd"
+    python3 c2_certificate.py $cmd --workers 4 $extra > ../results/log_c2_$cmd.txt 2>&1 || echo "FAILED $cmd"
     tail -5 ../results/log_c2_$cmd.txt
 done
 echo "== done $(date -u +%H:%M:%S)"

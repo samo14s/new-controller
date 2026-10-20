@@ -115,3 +115,38 @@ def test_check_size_scales_with_the_margin(small):
     full = c2.check(s["A"], s["B"], s["K"], s["u0"], s["e"], Tm, W, Y, S)[0]
     half = c2.check(s["A"], s["B"], s["K"], s["u0"] / 2, s["e"], Tm, W, Y, S)[0]
     assert full > 0 and half == pytest.approx(full / 2, rel=1e-6)
+
+
+def test_certified_set_respects_the_validity_bound(small):
+    """|x - x(t - T)| <= DELTA fz everywhere in the certified ellipsoid."""
+    s = small
+    Tm, Pz = s["cert"]
+    n = len(s["B"])
+    c, h = c2.validity(n)
+    cz = c @ Tm
+    assert np.sqrt(cz @ np.linalg.inv(Pz) @ cz) <= h * (1 + 1e-9)
+
+
+def test_full_state_perturbation_reduces_to_the_kick():
+    from tdsim import simulate
+    rpm, a, g = 2500.0, 12e-3, 1500.0
+    X = np.zeros(4 + c2.nodes_for(rpm))
+    X[1] = 5e-3
+    ks = 100 * P.STEPS_PER_REV + 17
+    r1 = simulate(rpm, a, g, vmax=9.0, store=True, nrev=110, edge=True, nreg=4, kick_step=ks, kick_dv=5e-3)
+    r2 = simulate(rpm, a, g, vmax=9.0, store=True, nrev=110, edge=True, nreg=4, kick_step=ks,
+                  pert=c2.deviation_to_pert(rpm, X))
+    assert np.array_equal(r1["x"], r2["x"])
+
+
+def test_history_of_a_deviation_is_interpolated_exactly():
+    rpm = 2500.0
+    T = 60.0 / (rpm * P.N_TEETH)
+    w = 2 * np.pi * 130.0
+    th = c2.history_nodes(rpm)
+    X = np.concatenate([[1e-6, 0.0, 0.0, 0.0], 1e-6 * np.cos(w * th)])
+    p = c2.deviation_to_pert(rpm, X)
+    nd = P.STEPS_PER_REV // P.N_TEETH
+    tt = -np.arange(nd + 1) * T / nd
+    assert np.abs(p["hx"] - 1e-6 * np.cos(w * tt)).max() < 1e-12
+    assert np.abs(p["hv"] + 1e-6 * w * np.sin(w * tt)).max() < 1e-9 * w

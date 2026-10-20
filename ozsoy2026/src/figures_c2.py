@@ -52,10 +52,12 @@ def c2_01_validation():
     ax[0].set(ylabel="critical kick (mm/s)")
     h, l = ax[0].get_legend_handles_labels()
     fig.legend(h, l, fontsize=7.5, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.08))
-    sound = np.sum(v["cert"][np.isfinite(v["td_min"])] <= v["td_min"][np.isfinite(v["td_min"])])
-    fig.suptitle(f"C2-1  Certified kick vs the averaged model and the simulated cut "
-                 f"(certificate below both at every point; proof check max V = {np.nanmax(v['proof_vmax']):.3f})",
-                 fontsize=9, y=1.02)
+    off = ""
+    if "offaxis_bad" in v.files:
+        off = (f"; off-axis boundary points in the simulator: {int(v['offaxis_bad'].sum())}/"
+               f"{int(v['offaxis_runs'].sum())} chatter")
+    fig.suptitle(f"C2-1  Certified kick vs the averaged model and the simulated cut (certificate below both at every "
+                 f"point; proof check max V = {np.nanmax(v['proof_vmax']):.3f}{off})", fontsize=8.5, y=1.02)
     save(fig, "c2_01_validation.png")
 
 
