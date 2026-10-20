@@ -11,3 +11,8 @@ orbit saturates below 50 mm at 88/251 speeds, from 6.00 mm
 2870 rpm: best certified kick (mm/s) 2:12.2 4:11.3 6:10.8 8:9.5 10:8.0 12:8.7 14:6.8 16:5.1 18:4.2 20:3.7 22:3.7 24:4.5 26:4.5 28:2.9 30:2.3 32:2.1 34:2.2
          DVF 1500               2:11.2 4:9.7 6:6.4 8:5.5 10:6.7 12:8.2 14:6.5 16:0.0 18:0.0 20:0.0 22:0.0 24:0.0 26:0.0 28:0.0 30:0.0 32:0.0 34:0.0
 == entry 08:19:26
+g2 1000 step_clip: 13.09-36.00 mm, a/a_lim min 0.513 median 0.736
+g2 1000 edge_clip: 22.01-35.83 mm, a/a_lim min 0.997 median 0.999
+g2 2000 step_clip: 12.85-38.27 mm, a/a_lim min 0.392 median 0.586
+g2 2000 edge_clip: 29.48-43.84 mm, a/a_lim min 0.919 median 0.999
+== validate 08:27:32
