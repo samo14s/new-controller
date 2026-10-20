@@ -59,6 +59,9 @@
  *                   a regenerated chip cut by tooth i over the surface of the
  *                   tooth k passes earlier (i + k mod N in this numbering)
  *                   grows by r_i - r_(i+k); fresh chips are left unchanged
+ *   opt[13] tau     (COMB = 1) loop delay (s, at least one step): the command
+ *                   uses the motion at t - tau (its delayed terms at
+ *                   t - tau - rho T), from the stored history
  * Any part of a chip whose surface the previous tooth did not cut (newly
  * engaged depth, or material just reached through the face) is fresh: its
  * thickness is fz sin(phi) - x cos(phi), with no regeneration.
@@ -88,6 +91,7 @@ typedef struct {
     double a, Ta, Tf, f0, R, Tt, vmax_now;
 #if COMB
     double g2, kd, cdel;            /* cdel: comb delay in steps (0: exactly nd) */
+    double ldel;                    /* loop delay in steps (0: none) */
     int runout, ntooth;
     double ro[16];                  /* radial runout of each tooth */
 #endif
@@ -153,10 +157,16 @@ static inline double vhist(const Ctx *C, int j, double r) {
 static inline double command(const Ctx *C, const double *z, double tau) {
     int j = C->n - C->nd;
     double r = tau / C->dt;
-    if (C->cdel > 0.0) {                     /* t - rho T in steps: interval j, fraction r */
-        double sj = C->n + tau / C->dt - C->cdel;
+    if (C->cdel > 0.0 || C->ldel > 0.0) {    /* t - tau - rho T in steps: interval j, fraction r */
+        double sj = C->n + tau / C->dt - C->ldel - (C->cdel > 0.0 ? C->cdel : C->nd);
         j = (int)floor(sj);
         r = sj - j;
+    }
+    if (C->ldel > 0.0) {                     /* the motion itself at t - tau */
+        double s0 = C->n + tau / C->dt - C->ldel;
+        int j0 = (int)floor(s0);
+        double r0 = s0 - j0, x0 = xhist(C, j0, r0), v0 = vhist(C, j0, r0);
+        return -C->g * v0 - C->g2 * (v0 - vhist(C, j, r)) - C->kd * (x0 - xhist(C, j, r));
     }
     return -C->g * z[1] - C->g2 * (z[1] - vhist(C, j, r)) - C->kd * (z[0] - xhist(C, j, r));
 }
@@ -354,6 +364,7 @@ int simulate(double rpm, double a, double g,
         C.g2 = opt[8];
         C.kd = opt[9];
         C.cdel = opt[10] > 0.0 && opt[10] != 1.0 ? opt[10] * nd : 0.0;
+        C.ldel = opt[13] > 0.0 ? opt[13] / dt : 0.0;
         C.ntooth = N;
         C.runout = opt[11] != 0.0 && N <= 16;
         for (i = 0; i < N && i < 16; i++) C.ro[i] = opt[11] * cos(twopi * i / N + opt[12]);

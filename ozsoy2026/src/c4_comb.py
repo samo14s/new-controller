@@ -146,22 +146,24 @@ def demand_envelope_ctrl(rpm, g1, g2=0.0, kd=0.0, kappa=FEAS_KAPPA, n_depth=80):
     return al, float(forced_demand(rpm, g1, depths).max())
 
 
-def feasible(rpm, g1, g2=0.0, kd=0.0):
+def feasible(rpm, g1, g2=0.0, kd=0.0, guard=1.0):
     al, d = demand_envelope_ctrl(rpm, g1, g2, kd)
-    return bool(np.isfinite(al) and al > 0 and d <= P.F_MAX)
+    return bool(np.isfinite(al) and al > 0 and d <= guard * P.F_MAX)
 
 
-def feasible_g1(rpm, g2=0.0, kd=0.0, g_hi=G1_MAX, tol=0.25):
+def feasible_g1(rpm, g2=0.0, kd=0.0, g_hi=G1_MAX, tol=0.25, guard=1.0):
     """Largest authority-feasible g1 <= g_hi (bisection, as
-    feasibility.edge_gain); with g2 = kd = 0 it is the DVF optimum."""
-    if feasible(rpm, g_hi, g2, kd):
+    feasibility.edge_gain); with g2 = kd = 0 it is the DVF optimum.  guard < 1
+    keeps a band of the limit free (the design's forced demand then peaks at
+    guard x 9 V instead of exactly 9 V)."""
+    if feasible(rpm, g_hi, g2, kd, guard):
         return g_hi
     lo, hi = 0.0, g_hi
-    if not feasible(rpm, lo, g2, kd):
+    if not feasible(rpm, lo, g2, kd, guard):
         return np.nan
     while hi - lo > tol:
         mid = 0.5 * (lo + hi)
-        if feasible(rpm, mid, g2, kd):
+        if feasible(rpm, mid, g2, kd, guard):
             lo = mid
         else:
             hi = mid

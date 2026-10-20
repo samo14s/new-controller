@@ -170,14 +170,20 @@ MODE2 = (None, (400.0, 6.0, 0.01), (800.0, 40.0, 0.01))              # second mo
 N_DEPTH = 40                                    # depths in (0, 0.9 a_lim] for the worst orbit command
 
 
+GUARD = 0.9            # the designs keep 10 % of the limit free (forced demand <= 8.1 V)
+
+
 def designs(rpm):
-    """(label, g1, g2, rho) at a speed: the authority-feasible DVF and d2000
-    designs of c4_limits.npz, and d2000 with a spindle-period comb."""
-    L = np.load(os.path.join(RES, "c4_limits.npz"))
-    names = list(L["feas_names"])
-    g = lambda name: float(np.interp(rpm, L["rpm"], L["feas_g1"][:, names.index(name)]))
-    return [("DVF", g("dvf"), 0.0, 1.0), ("tooth comb", g("d2000"), 2000.0, 1.0),
-            ("spindle comb", g("d2000"), 2000.0, float(P.N_TEETH))]
+    """(label, g1, g2, rho) at a speed: DVF and DVF + g2 = 2000 with the largest
+    g1 <= 3000 whose forced demand stays below GUARD x 9 V up to 0.9 a_lim
+    (the authority rule of c4_comb with a guard band; at GUARD = 1 the
+    demand would sit exactly at 9 V and any perturbation would saturate), and
+    the same gains with a spindle-period comb."""
+    from c4_comb import feasible_g1
+    g_dvf = feasible_g1(rpm, guard=GUARD)
+    g_c = feasible_g1(rpm, 2000.0, guard=GUARD)
+    return [("DVF", g_dvf, 0.0, 1.0), ("tooth comb", g_c, 2000.0, 1.0),
+            ("spindle comb", g_c, 2000.0, float(P.N_TEETH))]
 
 
 def _robust(args):
@@ -212,16 +218,17 @@ def _td_orbit(c):
     return float(np.abs(r["vcmd"][-spr:]).max()), orbit_command(rpm, a, g1, g2, rho=rho, runout=ro, psi=psi)[0], drift
 
 
-TD_LIMIT = [(2500.0, 1500.0, 2000.0, 4.0), (1090.0, 1500.0, 2000.0, 4.0), (2500.0, 1500.0, 2000.0, 0.98),
-            (2500.0, 1500.0, 2000.0, 1.02)]
+TD_LIMIT = [(2500.0, 1500.0, 2000.0, 4.0, 0.0), (1090.0, 1500.0, 2000.0, 4.0, 0.0), (2500.0, 1500.0, 2000.0, 0.98, 0.0),
+            (2500.0, 1500.0, 2000.0, 1.02, 0.0), (2500.0, 1600.0, 0.0, 1.0, 200e-6), (2500.0, 1600.0, 2000.0, 1.0, 300e-6),
+            (1420.0, 1700.0, 2000.0, 1.0, 400e-6)]                 # (rpm, g1, g2, rho, loop delay)
 
 
 def _td_limit(c):
     """Unclipped step-entry stability limit in the simulator against a_lim_cf."""
     from tdboundary import boundary
-    rpm, g1, g2, rho = c
-    am = a_lim_cf(rpm, g1, g2, rho=rho)
-    return boundary(rpm, g1, a_lo=0.8 * am, a_hi=1.3 * am, growth=1.04, g2=g2, comb_delay=rho), am
+    rpm, g1, g2, rho, tau = c
+    am = a_lim_cf(rpm, g1, g2, tau=tau, rho=rho)
+    return boundary(rpm, g1, a_lo=0.8 * am, a_hi=1.3 * am, growth=1.04, g2=g2, comb_delay=rho, loop_delay=tau), am
 
 
 TD_FACE_EPS = (-0.02, -0.01, 0.0, 0.01, 0.02)
@@ -272,8 +279,9 @@ def run(a):
             tol = np.interp(VMAX, rc, RUNOUT) * 1e6 if rc[-1] >= VMAX and rc[0] < VMAX else (
                 np.inf if rc[-1] < VMAX else 0.0)
             line = (f"{n:.0f} rpm {lab:12s} g1 {out['g1'][i, j]:6.0f} g2 {out['g2'][i, j]:5.0f}: a_lim {out['a_lim'][i, j]:6.2f} mm; "
-                    f"runout tolerance {tol:.2f} um; a_lim at tau = 400 us: {out['tau_a_lim'][i, j, 0, -1]:.2f} "
-                    f"(mode 400 Hz: {out['tau_a_lim'][i, j, 1, -1]:.2f}, 800 Hz: {out['tau_a_lim'][i, j, 2, -1]:.2f})")
+                    f"runout tolerance {tol:.2f} um; a_lim at tau = {TAU[-1] * 1e6:.0f} us: "
+                    + ", ".join(f"{'one mode' if m is None else f'+ {m[0]:.0f} Hz'} {v:.2f}"
+                                for m, v in zip(MODE2, out["tau_a_lim"][i, j, :, -1])))
             if out["g2"][i, j] > 0:
                 line += (f"; eps -2/+2 %: a_lim {out['eps_a_lim'][i, j, 1]:.2f}/{out['eps_a_lim'][i, j, -2]:.2f}, "
                          f"worst orbit {out['eps_cmd'][i, j, 1]:.2f}/{out['eps_cmd'][i, j, -2]:.2f} V")

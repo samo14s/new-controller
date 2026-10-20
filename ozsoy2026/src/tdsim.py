@@ -47,7 +47,7 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
              spr=P.STEPS_PER_REV, nlay=P.N_LAYERS, fz=P.FZ, fmode=None,
              ramp_a=0.0, ramp_f=0.0, f0=0.0, edge=False,
              kick_step=-1, kick_dv=0.0, clip_on=0, nreg=1, pert=None, g2=0.0, kd=0.0,
-             comb_delay=1.0, runout=0.0, runout_phase=0.0):
+             comb_delay=1.0, runout=0.0, runout_phase=0.0, loop_delay=0.0):
     """Run one cut.  Returns a dict with the peak demand and, if store, histories.
 
     vmax > 0 limits the applied command |V| (clipped DVF); 0 means no limit.
@@ -71,10 +71,13 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     (kd < 0 opposes the regenerative force).  comb_delay: the comb's delay in
     tooth periods (1: exact; N: spindle-period comb).  runout (m),
     runout_phase (rad): eccentric radial runout of the teeth (needs nreg > 1).
+    loop_delay (s, >= one step): the command uses the motion at t - loop_delay.
     All of these run in the COMB build, so the default path is untouched.
     """
     if runout != 0.0:
         assert nreg > 1, "runout is modelled in the multiple-regeneration chip only"
+    if loop_delay:
+        assert loop_delay >= 60.0 / (rpm * spr), "the loop delay must be at least one step"
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
     fmode = FMODE if fmode is None else fmode
     nsteps = spr * nrev
@@ -82,7 +85,8 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     bufs = [np.zeros(nbuf) for _ in range(5)]
     summ = np.zeros(5)
     opt = np.array([ramp_a, ramp_f, f0, 1.0 if edge else 0.0,
-                    kick_step, kick_dv, clip_on, nreg, g2, kd, comb_delay, runout, runout_phase],
+                    kick_step, kick_dv, clip_on, nreg, g2, kd, comb_delay, runout, runout_phase,
+                    loop_delay],
                    dtype=np.float64)
     pbuf = None
     if pert is not None:
@@ -90,7 +94,7 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
         hx, hv = np.asarray(pert["hx"], float), np.asarray(pert["hv"], float)
         assert len(hx) == len(hv) == nd + 1
         pbuf = np.concatenate([[pert["x"], pert["v"], pert["q"], pert["qd"]], hx, hv]).astype(np.float64)
-    comb = g2 != 0.0 or kd != 0.0 or comb_delay not in (0.0, 1.0) or runout != 0.0
+    comb = g2 != 0.0 or kd != 0.0 or comb_delay not in (0.0, 1.0) or runout != 0.0 or loop_delay != 0.0
     lib = _lib_comb if comb else _lib
     lib.simulate(float(rpm), float(a), float(g),
                   P.M, P.C, P.K, P.GA_GAIN, P.GA_A1, P.GA_A0,
