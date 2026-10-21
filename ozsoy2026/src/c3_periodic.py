@@ -1053,14 +1053,16 @@ def run_counter(a):
         finally:
             P.HELIX = keep
         cls = classify_run(sim["x"][101 * P.STEPS_PER_REV:], P.STEPS_PER_REV, sim["diverged"])
-        out[lab] = (abs(mu), np.angle(mu), r["c2_size"], r["size"], r["note"], cls["stable"])
+        nd = P.STEPS_PER_REV // P.N_TEETH
+        out[lab] = (abs(mu), np.angle(mu), r["c2_size"], r["size"], r["note"], cls["stable"], sim["x"][::nd].copy())
         print(f"{lab}: |mu| {abs(mu):.4f} (arg {np.degrees(np.angle(mu)):.0f} deg); averaged certificate (C2) "
               f"{r['c2_size']*1e3:.3f} mm/s; periodic (C3) {r['size']*1e3:.3f} mm/s [{r['note']}]; "
               f"simulator after a 0.1 mm/s kick: {'settles' if cls['stable'] else 'chatters'}", flush=True)
     np.savez_compressed(os.path.join(RES, "c3_counter.npz"), rpm=rpm, g=g, frac=frac, a=a_,
                         labels=np.array(list(out)), mu_abs=np.array([v[0] for v in out.values()]),
                         mu_arg=np.array([v[1] for v in out.values()]), c2_size=np.array([v[2] for v in out.values()]),
-                        c3_size=np.array([v[3] for v in out.values()]), sim_stable=np.array([v[5] for v in out.values()]))
+                        c3_size=np.array([v[3] for v in out.values()]), sim_stable=np.array([v[5] for v in out.values()]),
+                        x_tooth=np.array([v[6] for v in out.values()]), kick_tooth=100 * P.N_TEETH)
 
 
 EDGE_FRAC = 0.98
