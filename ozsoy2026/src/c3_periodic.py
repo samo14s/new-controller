@@ -96,8 +96,9 @@ class Cut:
     """Radial immersion: entry/exit angles, mean directional coefficient
     (C2's KAPPA at this immersion) and the static slice-force harmonics."""
 
-    def __init__(self, ae=P.RADIAL_IMMERSION):
+    def __init__(self, ae=P.RADIAL_IMMERSION, helix=P.HELIX):
         self.ae = ae
+        self.kz = np.tan(helix) / (0.5 * P.D_TOOL)                  # helix lag (0: straight teeth)
         self.st, self.ex = P.immersion_angles(P.MILLING, ae)
         self.alpha = alpha_matrix(P.MILLING, ae)[1, 1]
         self.kappa = P.N_TEETH * P.K_TC * self.alpha / (4 * np.pi)
@@ -127,12 +128,12 @@ class Cut:
         return a_lim(rpm, g) * ALPHA / self.alpha
 
     def force_harmonics(self, a, m=None):
-        """F_m(a) = W_m int_0^a e^(-i m N KAPZ z) dz (C2's, at m = 0..N_HARM by default)."""
+        """F_m(a) = W_m int_0^a e^(-i m N kz z) dz (C2's, at m = 0..N_HARM by default)."""
         W = self.W if m is None else self.slice_force_harmonics(m)
         m = np.arange(len(self.W)) if m is None else np.asarray(m)
-        q = m * P.N_TEETH * KAPZ
+        q = m * P.N_TEETH * self.kz
         with np.errstate(invalid="ignore", divide="ignore"):
-            integ = np.where(m == 0, a, (1 - np.exp(-1j * q * a)) / (1j * q))
+            integ = np.where(q == 0, a, (1 - np.exp(-1j * q * a)) / (1j * q))
         return W * integ
 
 
@@ -146,10 +147,18 @@ def _prim(p):
 
 def aH(t, rpm, a, cut=HALF):
     """a H(t) (N/m): dynamic force per unit x - x(t - T), exact in z.
-    Tooth i of the slice at height z sits at Omega t + i 2 pi / N - KAPZ z
-    (the simulator's convention)."""
+    Tooth i of the slice at height z sits at Omega t + i 2 pi / N - kz z
+    (the simulator's convention).  Straight teeth (kz = 0): a f(phi) summed
+    over the engaged teeth, which jumps where a tooth enters or leaves."""
     th = 2 * np.pi * rpm / 60.0 * np.atleast_1d(np.asarray(t, float))
     out = np.zeros_like(th)
+    if cut.kz == 0:
+        for j in range(P.N_TEETH):
+            ph = np.mod(th + j * 2 * np.pi / P.N_TEETH, 2 * np.pi)
+            on = (ph >= cut.st) & (ph < cut.ex)
+            out += np.where(on, P.K_TC * np.sin(ph) * np.cos(ph) - P.K_RC * np.cos(ph) ** 2, 0.0)
+        return a * out
+    KAPZ = cut.kz
     for j in range(P.N_TEETH):
         hi = th + j * 2 * np.pi / P.N_TEETH
         lo = hi - KAPZ * a
@@ -165,9 +174,10 @@ def aH(t, rpm, a, cut=HALF):
 def aH_rate_bound(rpm, cut=HALF):
     """L >= |d(a H)/dt|: each tooth contributes (f(phi_top) - f(phi_bottom)) / KAPZ
     times the spindle rate, f bounded on the window."""
+    assert cut.kz > 0, "the enclosure assumes a continuous coefficient (helical teeth)"
     ph = np.linspace(cut.st, cut.ex, 4001)
     f = np.abs(P.K_TC * np.sin(ph) * np.cos(ph) - P.K_RC * np.cos(ph) ** 2).max() * 1.001
-    return 2 * np.pi * rpm / 60.0 * P.N_TEETH * 2 * f / KAPZ
+    return 2 * np.pi * rpm / 60.0 * P.N_TEETH * 2 * f / cut.kz
 
 
 def enclosure(rpm, a, cut=HALF, mc=M_C, n_enc=N_ENC, order=2):
@@ -312,7 +322,8 @@ def velocity_tail(rpm, g, a, cut=HALF):
     """sup_t of the forced velocity carried by the harmonics above N_HARM:
     sum over m of 2 |w_m Gcl(i w_m) F_m| up to M_TAIL, plus a bound on the
     rest from |W_m| <= V_w / (pitch m N) (integration by parts, V_w the
-    jumps plus the variation of w on the window), |F_m| <= |W_m| 2 / (m N KAPZ)
+    jumps plus the variation of w on the window), |F_m| <= |W_m| 2 / (m N kz)
+    (|W_m| a for straight teeth)
     and |w Gcl(i w)| <= 2 / (M w) there (checked at M_TAIL)."""
     from structure import Gcl
     wT = 2 * np.pi * P.N_TEETH * rpm / 60.0
@@ -323,8 +334,11 @@ def velocity_tail(rpm, g, a, cut=HALF):
     ph = np.linspace(cut.st, cut.ex, 20001)
     f = -P.FZ * (P.K_TC * np.sin(ph) ** 2 - P.K_RC * np.sin(ph) * np.cos(ph))
     Vw = abs(f[0]) + abs(f[-1]) + np.sum(np.abs(np.diff(f))) * 1.001
-    c = 2 * (2 / (P.M * wT)) * (Vw / (2 * np.pi / P.N_TEETH * P.N_TEETH)) * (2 / (P.N_TEETH * KAPZ))
-    return head + c / (2 * M_TAIL ** 2)                              # sum_{m > M} 1/m^3 <= 1 / (2 M^2)
+    if cut.kz > 0:
+        c = 2 * (2 / (P.M * wT)) * (Vw / (2 * np.pi / P.N_TEETH * P.N_TEETH)) * (2 / (P.N_TEETH * cut.kz))
+        return head + c / (2 * M_TAIL ** 2)                          # sum_{m > M} 1/m^3 <= 1 / (2 M^2)
+    c = 2 * (2 / (P.M * wT)) * (Vw / (2 * np.pi / P.N_TEETH * P.N_TEETH)) * a
+    return head + c / M_TAIL                                         # sum_{m > M} 1/m^2 <= 1 / M
 
 
 # ----------------------------------------------------------------- SDP ----
@@ -955,6 +969,60 @@ def run_decomp(a):
               "; ".join(f"{v} {s*1e3:.3f}" for (v, _), s in zip(DEC_VARIANTS, row[:, 0])), flush=True)
 
 
+STRAIGHT_RPM = np.arange(1600.0, 2101.0, 25.0)
+STRAIGHT_G = (0.0, 100.0, 250.0, 500.0, -1.0)     # -1: C2's gain map
+STRAIGHT_FRAC = np.round(np.arange(0.80, 1.0501, 0.01), 2)
+
+
+def _straight(args):
+    """Straight teeth at half immersion: spectral radius on a grid of depths
+    (fractions of the ZOA limit, which is the same for any helix), the first
+    unstable depth refined by bisection, and the forced command at 0.98 of
+    the ZOA limit (C2 claims nothing where it reaches 9 V)."""
+    rpm, g, zeta = args
+    P.set_damping(zeta)
+    cut = Cut(helix=0.0)
+    az = cut.a_lim(rpm, g)
+    rho = np.array([spectral_radius(rpm, f * az, g, cut, L=256) for f in STRAIGHT_FRAC])
+    first = np.nan
+    bad = np.nonzero(rho >= 1)[0]
+    if bad.size:
+        hi = STRAIGHT_FRAC[bad[0]]
+        lo = STRAIGHT_FRAC[bad[0] - 1] if bad[0] > 0 else 0.5
+        for _ in range(12):
+            mid = 0.5 * (lo + hi)
+            if spectral_radius(rpm, mid * az, g, cut, L=256) >= 1:
+                hi = mid
+            else:
+                lo = mid
+        first = hi
+    return az, first, rho, orbit(rpm, g, 0.98 * az, cut)[2].max()
+
+
+def run_straight(a):
+    """Where the averaged model is not conservative: straight teeth (flip
+    lobes), against the forced command that C2's premise needs."""
+    rpm_map, g_map, zeta = gain_map()
+    gs = [(float(np.interp(n, rpm_map, g_map)) if g < 0 else g) for g in STRAIGHT_G for n in STRAIGHT_RPM]
+    jobs = [(float(n), gg, zeta) for gg, n in zip(gs, np.tile(STRAIGHT_RPM, len(STRAIGHT_G)))]
+    with Pool(a.workers) as p:
+        res = p.map(_straight, jobs, chunksize=1)
+    shape = (len(STRAIGHT_G), len(STRAIGHT_RPM))
+    first = np.array([r[1] for r in res]).reshape(shape)
+    bmax = np.array([r[3] for r in res]).reshape(shape)
+    np.savez_compressed(os.path.join(RES, "c3_straight.npz"), rpm=STRAIGHT_RPM, g=np.array(gs).reshape(shape),
+                        gain_labels=np.array(["0", "100", "250", "500", "map"]), frac=STRAIGHT_FRAC,
+                        a_zoa=np.array([r[0] for r in res]).reshape(shape), first_unstable=first,
+                        rho=np.array([r[2] for r in res]).reshape(shape + (len(STRAIGHT_FRAC),)), bmax_098=bmax)
+    for i, lab in enumerate(["0", "100", "250", "500", "map"]):
+        m = np.isfinite(first[i]) & (first[i] < 1.0)
+        print(f"g {lab:>4}: unstable below the ZOA limit at {m.sum()}/{len(STRAIGHT_RPM)} speeds"
+              + (f" ({STRAIGHT_RPM[m].min():.0f}-{STRAIGHT_RPM[m].max():.0f} rpm, from {np.min(first[i][m]):.3f} of it)"
+                 if m.any() else "")
+              + f"; forced command at 0.98 a_lim {np.nanmin(bmax[i]):.1f}-{np.nanmax(bmax[i]):.1f} V"
+              + (f" ({np.nanmin(bmax[i][m]):.1f}-{np.nanmax(bmax[i][m]):.1f} V where unstable)" if m.any() else ""))
+
+
 EDGE_FRAC = 0.98
 EDGE_MC = (16, 32)
 
@@ -986,12 +1054,13 @@ def run_edge(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge"])
+    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge", "straight"])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
     ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
     a = ap.parse_args()
-    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm, edge=run_edge)[a.command](a)
+    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm, edge=run_edge,
+         straight=run_straight)[a.command](a)
 
 
 if __name__ == "__main__":
