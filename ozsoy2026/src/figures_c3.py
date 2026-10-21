@@ -123,7 +123,7 @@ def c3_02_basin():
 def c3_03_phase():
     """Phase-resolved: certificate, models and simulation at the kick phases of C1."""
     B = load("c3_basin.npz")
-    pts = [(2500, 0.9), (2500, 0.98), (1420, 0.95), (1090, 0.7)]
+    pts = [(2500, 0.4), (2500, 0.9), (1420, 0.95), (1090, 0.7)]
     fig, ax = plt.subplots(1, len(pts), figsize=(12, 3.6))
     for a, (n, f) in zip(ax, pts):
         i = np.nonzero((B["rpm"] == n) & np.isclose(B["frac"], f))[0]
@@ -131,7 +131,8 @@ def c3_03_phase():
             continue
         i = i[0]
         ph = np.arange(c3.N_PHASE) / c3.N_PHASE
-        a.plot(ph, B["phase_cert"][i] * 1e3, "o-", color=OURS, ms=3, lw=1.1, label="C3 at the kick phase")
+        a.plot(ph, np.where(B["phase_cert"][i] > 0, B["phase_cert"][i], np.nan) * 1e3, "o-", color=OURS, ms=3, lw=1.1,
+               label="C3 at the kick phase")
         a.axhline(B["c2_cert"][i] * 1e3, color=GREY, ls="--", lw=0.9, label="C2 (any phase)")
         a.plot(ph, B["model_kick"][i] * 1e3, "-", color=GOOD, lw=1, label="periodic model")
         a.plot(ph, B["avg_kick"][i] * 1e3, ":", color="k", lw=1, label="averaged model")
@@ -139,7 +140,8 @@ def c3_03_phase():
         a.set(title=f"{n} rpm, {f:.2f} a_lim", xlabel="kick phase / tooth period", ylim=(0, None))
     ax[0].set_ylabel("kick (mm/s)")
     ax[0].legend(fontsize=6.3)
-    fig.suptitle("C3-3  Phase by phase", fontsize=9.5)
+    fig.suptitle("C3-3  Phase by phase: the any-phase certificate evaluated at each kick phase of C1, "
+                 "the two models' critical kicks and the simulation", fontsize=9.5)
     fig.tight_layout()
     save(fig, "c3_03_phase.png")
 
