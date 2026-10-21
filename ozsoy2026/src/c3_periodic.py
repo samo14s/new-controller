@@ -381,8 +381,6 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
     if merged:
         p = Ti[:, 1]
         q = Tm.T @ E[1]                                              # E = e_2 E[1], so Es = p q'
-        rho = np.sqrt(np.linalg.norm(p) / (np.linalg.norm(q) * max(np.max(enc[2]), 1e-300)))
-        p, q = p / rho, q * rho                                      # balance mu (about 1) against the rest
         assert np.allclose(np.outer(p, q), Es, atol=1e-12 * np.abs(Es).max())
         mus = []
         alpha, beta, rad = enc
@@ -401,13 +399,15 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
                 vmu = nvar
                 nvar += 1
                 mus.append(vmu)
+                rho = np.sqrt(np.linalg.norm(p) / (np.linalg.norm(q) * ep))  # split p q' so that mu is about 1
+                pk, qk = p / rho, q * rho
                 Ip, Jp = np.triu_indices(n)
-                M1.add(Ip, Jp, vmu, -p[Ip] * p[Jp])
+                M1.add(Ip, Jp, vmu, -pk[Ip] * pk[Jp])
                 M1.add(n + 1, n + 1, vmu, 1.0)
                 for v, wgt in ((vW[k], 1 - sv), (vW[k1], sv)):
                     if wgt:
-                        M1.add(I, n + 1, v, ep * wgt * q[J])
-                        M1.add(J[off], n + 1, v[off], ep * wgt * q[I[off]])
+                        M1.add(I, n + 1, v, ep * wgt * qk[J])
+                        M1.add(J[off], n + 1, v[off], ep * wgt * qk[I[off]])
                 M1.add(n + 1, n + 1, -1, -eps)
             M1.add(I, J, vW[k1], 1.0 / tau)                         # W' = (W_k1 - W_k) / tau
             M1.add(I, J, vW[k], -1.0 / tau)
