@@ -955,14 +955,43 @@ def run_decomp(a):
               "; ".join(f"{v} {s*1e3:.3f}" for (v, _), s in zip(DEC_VARIANTS, row[:, 0])), flush=True)
 
 
+EDGE_FRAC = 0.98
+EDGE_MC = (16, 32)
+
+
+def _edge(args):
+    rpm, g, mc, zeta = args
+    P.set_damping(zeta)
+    r = certify(rpm, EDGE_FRAC * a_lim(rpm, g), g, mc=mc, full=True)
+    return r["size"], r["c2_size"], r["note"]
+
+
+def run_edge(a):
+    """Near the limit (0.98 a_lim), where 16 subintervals certify less than C2
+    or nothing: the certificate with 32."""
+    from c1_unsafe_zone import BASIN_RPM
+    b = np.load(os.path.join(RES, "c1_basin.npz"))
+    zeta = float(b["zeta"])
+    g = {float(n): float(gg) for n, gg in zip(b["rpm"], b["g"])}
+    jobs = [(float(n), g[float(n)], mc, zeta) for n in BASIN_RPM for mc in EDGE_MC]
+    with pool(a.workers) as p:
+        res = p.map(_edge, jobs, chunksize=1)
+    size = np.array([r[0] for r in res]).reshape(len(BASIN_RPM), len(EDGE_MC))
+    np.savez_compressed(os.path.join(RES, "c3_edge.npz"), rpm=np.array(BASIN_RPM, float), m_c=np.array(EDGE_MC),
+                        frac=EDGE_FRAC, size=size, c2_size=np.array([r[1] for r in res]).reshape(size.shape)[:, 0],
+                        msg=np.array([r[2] for r in res]).reshape(size.shape))
+    for j, r in zip(jobs, res):
+        print(f"{j[0]:.0f} rpm {EDGE_FRAC} a_lim, m_c {j[2]}: C3 {r[0]*1e3:.3f} (C2 {r[1]*1e3:.3f}) mm/s  [{r[2]}]", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm"])
+    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge"])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
     ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
     a = ap.parse_args()
-    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm)[a.command](a)
+    dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm, edge=run_edge)[a.command](a)
 
 
 if __name__ == "__main__":
