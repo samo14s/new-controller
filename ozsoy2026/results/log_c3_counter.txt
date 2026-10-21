@@ -1,1 +1,2 @@
 straight: |mu| 1.0342 (arg 180 deg); averaged certificate (C2) 13.201 mm/s; periodic (C3) 0.000 mm/s [linearly unstable]; simulator after a 0.1 mm/s kick: chatters
+helical: |mu| 0.9767 (arg 177 deg); averaged certificate (C2) 13.201 mm/s; periodic (C3) 13.090 mm/s [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.997997994604; min eig ratio 2.8e-05]; simulator after a 0.1 mm/s kick: settles
