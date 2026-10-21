@@ -9,52 +9,66 @@ periodic Lyapunov function and a time-resolved saturation margin.
 
 Model.  The deviation from the forced orbit obeys
     x' = A(t) x - B psi(K x, t),   A(t) = A0 + a H(t) E,
-A0 the collocated loop of C2 without cutting, E = (e_2 e_1' - e_2 e_N') / m
-(regeneration x - x(t - T) on the velocity row), a H(t) the exact helical
-integral over the depth of Kt sin(phi) cos(phi) - Kr cos(phi)^2 on the engaged
-teeth.  Its mean is C2's KAPPA a.  The forced orbit is the same as in C2: the
-regenerative term vanishes on any tooth-periodic motion.  The collocation of
-the delay is the same as C2's (the history moves with the clock whatever A(t)).
-Its Floquet multipliers match the semi-discretisation of verification/zoa_sdm
-(floquet_check).
+A0 the collocated loop of C2 without cutting, E = (e_2 e_1' - e_2 e_n') / m
+(regeneration x - x(t - T) on the velocity row, e_n the last history node),
+a H(t) the exact helical integral over the depth of Kt sin(phi) cos(phi) -
+Kr cos(phi)^2 on the engaged teeth.  Its mean is C2's KAPPA a.  The forced
+orbit is C2's (the regenerative term vanishes on any tooth-periodic motion),
+with the slice-force harmonics in closed form and a bound on the harmonics
+above N_HARM.  The collocation of the delay is C2's (the history moves with
+the clock whatever A(t)); its Floquet multipliers match the semi-
+discretisation of verification/zoa_sdm (tests/test_c3_periodic.py).
 
 Certificate.  P(t) = W(t)^-1 with W continuous, periodic and affine on each
 of M_C subintervals of the tooth period (node values W_k, W_M_C = W_0);
 Y(t) = G(t) W(t) affine between node values Y_k; S_k > 0 constant on each.
-V = x' P(t) x satisfies V' + 2 lam V < 0 with the generalised sector condition
-at level u0(t) (pointwise in t) when, with z = P x,
+V = x' P(t) x decreases with the generalised sector condition at level u0(t)
+(pointwise in t) when, with z = P x,
     M1(t) = [[W' - A(t) W - W A(t)' - 2 lam W, B S - Y'], [S B' - Y, 2 S]] > 0
-(x' P' x = -z' W' z gives the sign of W').  On subinterval k, W' is constant;
-W(t), Y(t) are affine in the local time s in [0, 1], and A(t) = A0 + h(t) E
-with h(t) in a proven enclosure [h_k-, h_k+].  M1 is affine in s for fixed h
-and affine in h for fixed s, so on the box it is the bilinear interpolation of
-its four corner values: a convex combination.  M1 > 0 at the two endpoints
-times the two enclosure vertices therefore gives M1 > 0 on the whole
-subinterval.  The sector condition: the deadzone of sat(b(t) + w) - b(t)
-satisfies psi (psi - v) <= 0 whenever |w - v| <= V - |b(t)|; on subinterval k
-the level u0_k = V - max |b| over it is used, and the inclusion of E(P(t))
-in the sector region,
+(x' P' x = -z' W' z gives the sign of W').  On subinterval k, W' is constant
+and W(t), Y(t) are affine in the local time s in [0, 1].  The coefficient is
+enclosed as a H = alpha_k + beta_k s + r, |r| <= eps_k.  Then A(t) W(s)
+contains s, s^2 and r s: M1 is affine in (s, sigma = s^2) for fixed r and
+affine in r for fixed (s, sigma).  (s, s^2) lies in the triangle (0, 0),
+(1/2, 0), (1, 1) and r in [-eps_k, eps_k], so M1 at any time of the
+subinterval is a convex combination of its values at the 3 x 2 corners:
+M1 > 0 at the corners gives M1 > 0 on the subinterval (order 1, a box with
+beta = 0, needs only s = 0, 1: 4 corners).  The sector condition: the
+deadzone of sat(b(t) + w) - b(t) satisfies psi (psi - v) <= 0 whenever
+|w - v| <= V - |b(t)|; on subinterval k the level u0_k = V - max |b| over it
+is used, and the inclusion of E(P(t)) in the sector region,
     M2 = [[W, W K' - Y'], [K W - Y, u0_k^2]] >= 0,
 is affine in s, so it holds on the subinterval when it holds at both nodes.
 The validity bound of C2, |x - x(t - T)| <= DELTA fz, and the size of
 E(P(t)) along e, [[1, beta e'], [beta e, W]] >= 0, are affine too: nodes
-suffice.  Then E(P(t0)) is a certified basin for a deviation applied at any
-phase t0: the trajectory stays in E(P(t)) and V decays as e^(-2 lam t).
-The certified kick is the smallest size over the phases.
+suffice.  Then the tube {(t, x): x' P(t) x <= 1} is forward invariant and V
+decreases strictly along trajectories in it, so a deviation in E(P(t0)) at
+phase t0 returns to the orbit.  The certified kick is the smallest size over
+the phases; the size at a phase t0 (W(t0) by interpolation) is reported too.
+lam = f sigma (sigma the Floquet rate) is a margin asked of the solver; the
+independent check tests strict decrease (lam = 0), so no decay rate is claimed.
 
-Enclosure.  h(t) is sampled densely on each subinterval and widened by
-L dt / 2, L a bound on |dh/dt| (the window of each tooth enters through the
-two ends of the z-integral only).  b(t) is bounded as in C2: samples plus
-max|b''| dt^2 / 8.
+Enclosures.  a H is sampled at the midpoints of N_ENC cells of each
+subinterval; the residual of the least-squares line is widened by
+(L + |beta|/tau) dt / 2, L a bound on |d(aH)/dt| (the window of each tooth
+enters through the two ends of the z-integral only).  b(t) is bounded as in
+C2: samples plus max|b''| dt^2 / 8, plus the harmonics above N_HARM.
 
-Numerics.  As C2: re-centred solves (constant coordinate change by the
-Cholesky factor of the mean W), and every candidate is checked independently
-of the solver at all 4 M_C corners (eigenvalues), the inclusion and validity
-at every node (Cholesky; exceeded bounds repaired by scaling (W, Y, S)), and
-the size at every node.
+Numerics.  The first solve starts in the coordinates of C2's certificate on
+the averaged model (constant coordinate change; a time-varying one would add
+a term to A(t)).  E has rank one, so the two corners r = -eps, +eps of each
+(s, sigma) are merged by Petersen's lemma (exact for a scalar) into one LMI
+with a multiplier mu.  A first KKT solve that fails is retried with stronger
+static regularisation.  Every candidate is checked independently of the
+solver: all 6 M_C corners (eigenvalues against a round-off bound), W_k > 0,
+the inclusion and validity at every node (Cholesky; an exceeded bound is
+repaired by one global scaling of all (W_k, Y_k, S_k), which keeps every
+decrease LMI), and the size at every node.
 
     python c3_periodic.py floquet     -> ../results/c3_floquet.npz
     python c3_periodic.py basin       -> ../results/c3_basin.npz
+    python c3_periodic.py lowimm      -> ../results/c3_lowimm.npz
+    python c3_periodic.py decomp      -> ../results/c3_decomp.npz
 """
 import argparse
 import os
@@ -71,8 +85,10 @@ RES = os.path.join(HERE, "..", "results")
 KAPZ = np.tan(P.HELIX) / (0.5 * P.D_TOOL)          # helix lag, rad per metre of depth
 M_C = 16                                           # subintervals of the tooth period
 N_ENC = 2048                                       # samples per subinterval for the enclosures (the pad
-#                                                  L dt / 2 dominates the residual below about 1000)
+#                                                  (L + |beta|/tau) dt / 2 dominates the residual below about 1000)
 N_PHASE = 16                                       # C1's kick phases per tooth period
+N_HARM = 40                                        # tooth-passing harmonics of the forced orbit (as C2)
+M_TAIL = 20000                                     # harmonics summed for the bound on the rest
 
 
 # -------------------------------------------------------------- the cut ----
@@ -85,31 +101,39 @@ class Cut:
         self.st, self.ex = P.immersion_angles(P.MILLING, ae)
         self.alpha = alpha_matrix(P.MILLING, ae)[1, 1]
         self.kappa = P.N_TEETH * P.K_TC * self.alpha / (4 * np.pi)
-        self.W = self._slice_force_harmonics()
+        self.W = self.slice_force_harmonics(np.arange(N_HARM + 1))
 
-    def _slice_force_harmonics(self, n_theta=4096, n_harm=40):
-        """feasibility.slice_force_harmonics at this immersion."""
-        pitch = 2 * np.pi / P.N_TEETH
-        th = np.arange(n_theta) / n_theta * pitch
-        w = np.zeros(n_theta)
-        for i in range(P.N_TEETH):
-            phi = np.mod(th + i * pitch, 2 * np.pi)
-            cut = (phi >= self.st) & (phi <= self.ex)
-            h = P.FZ * np.sin(phi)
-            w += np.where(cut & (h > 0), -(P.K_TC * np.sin(phi) - P.K_RC * np.cos(phi)) * h, 0.0)
-        return (np.fft.rfft(w) / n_theta)[: n_harm + 1]
+    def slice_force_harmonics(self, m):
+        """W_m, the Fourier coefficients over the tooth pitch of the static
+        force per unit depth of one axial slice (all teeth), in closed form:
+        the teeth tile the angle, so W_m = (1 / pitch) int_st^ex w(phi)
+        e^(-i m N phi) dphi with w = -fz (Kt sin^2 - Kr sin cos), a
+        trigonometric polynomial.  (feasibility.slice_force_harmonics takes a
+        4096-point DFT of the same force; the entry jump on a sample makes
+        each of its coefficients off by up to 4 N/m.)"""
+        q = np.asarray(m) * P.N_TEETH
+
+        def I(k):                                                      # int_st^ex e^(i (k - q) phi)
+            d = k - q
+            with np.errstate(divide="ignore", invalid="ignore"):
+                v = (np.exp(1j * d * self.ex) - np.exp(1j * d * self.st)) / (1j * d)
+            return np.where(d == 0, self.ex - self.st, v)
+
+        Kt, Kr = P.K_TC, P.K_RC
+        return -P.FZ * (Kt / 2 * I(0) - Kt / 4 * (I(2) + I(-2)) - Kr / (4j) * (I(2) - I(-2))) / (2 * np.pi / P.N_TEETH)
 
     def a_lim(self, rpm, g):
         """ZOA limit: the characteristic equation scales with alpha only."""
         return a_lim(rpm, g) * ALPHA / self.alpha
 
-    def force_harmonics(self, a):
-        n = len(self.W)
-        m = np.arange(n)
+    def force_harmonics(self, a, m=None):
+        """F_m(a) = W_m int_0^a e^(-i m N KAPZ z) dz (C2's, at m = 0..N_HARM by default)."""
+        W = self.W if m is None else self.slice_force_harmonics(m)
+        m = np.arange(len(self.W)) if m is None else np.asarray(m)
         q = m * P.N_TEETH * KAPZ
         with np.errstate(invalid="ignore", divide="ignore"):
             integ = np.where(m == 0, a, (1 - np.exp(-1j * q * a)) / (1j * q))
-        return self.W * integ
+        return W * integ
 
 
 HALF = Cut()
@@ -281,7 +305,26 @@ def orbit(rpm, g, a, cut=HALF, N=None, mc=M_C, n_t=256):
     s = (np.arange(mc)[:, None] + np.linspace(0.0, 1.0, q + 1)[None, :]) * (Tp / mc)
     bd = np.abs(-g * at(X, s.ravel(), 1)).reshape(s.shape)
     pad = 2 * g * np.sum(w[1:] ** 3 * np.abs(X[1:])) * (Tp / (mc * q)) ** 2 / 8
-    return state, b, bd.max(axis=1) + pad
+    return state, b, bd.max(axis=1) + pad + g * velocity_tail(rpm, g, a, cut)
+
+
+def velocity_tail(rpm, g, a, cut=HALF):
+    """sup_t of the forced velocity carried by the harmonics above N_HARM:
+    sum over m of 2 |w_m Gcl(i w_m) F_m| up to M_TAIL, plus a bound on the
+    rest from |W_m| <= V_w / (pitch m N) (integration by parts, V_w the
+    jumps plus the variation of w on the window), |F_m| <= |W_m| 2 / (m N KAPZ)
+    and |w Gcl(i w)| <= 2 / (M w) there (checked at M_TAIL)."""
+    from structure import Gcl
+    wT = 2 * np.pi * P.N_TEETH * rpm / 60.0
+    m = np.arange(N_HARM + 1, M_TAIL + 1)
+    w = m * wT
+    head = 2 * np.sum(np.abs(w * Gcl(1j * w, g) * cut.force_harmonics(a, m)))
+    assert np.abs(w[-1] * Gcl(1j * w[-1], g)) <= 2 / (P.M * w[-1])
+    ph = np.linspace(cut.st, cut.ex, 20001)
+    f = -P.FZ * (P.K_TC * np.sin(ph) ** 2 - P.K_RC * np.sin(ph) * np.cos(ph))
+    Vw = abs(f[0]) + abs(f[-1]) + np.sum(np.abs(np.diff(f))) * 1.001
+    c = 2 * (2 / (P.M * wT)) * (Vw / (2 * np.pi / P.N_TEETH * P.N_TEETH)) * (2 / (P.N_TEETH * KAPZ))
+    return head + c / (2 * M_TAIL ** 2)                              # sum_{m > M} 1/m^3 <= 1 / (2 M^2)
 
 
 # ----------------------------------------------------------------- SDP ----
@@ -714,6 +757,7 @@ def model_kick_by_phase(Ad, Bd, K, b, phases, nper=1200, lo=1e-4, hi=3.0, nbis=9
 
 
 L_SIM = 256                                       # steps per tooth period of the model runs
+NBIS = 14                                         # log bisections of the model kicks: 0.06 % resolution
 
 
 def set_immersion(cut):
@@ -740,7 +784,7 @@ def _point(rpm, g, a, cut, offaxis=True):
     off = td_offaxis(rpm, a, g, cert) if (cert is not None and offaxis) else (0, 0)
     return dict(cert=r["size"], c2_cert=r["c2_size"], phase_cert=r["phase_size"], u0_min=r["u0_min"],
                 u0_max=r["u0_max"], sigma=r["sigma"], proof_vmax=proof[0], proof_vend=proof[1],
-                model_kick=model_kick_by_phase(Ad, Bd, K, b, ph), avg_kick=model_kick_by_phase(Aa, Ba, K, b, ph),
+                model_kick=model_kick_by_phase(Ad, Bd, K, b, ph, nbis=NBIS), avg_kick=model_kick_by_phase(Aa, Ba, K, b, ph, nbis=NBIS),
                 offaxis_bad=off[0], offaxis_runs=off[1], msg=r["note"])
 
 

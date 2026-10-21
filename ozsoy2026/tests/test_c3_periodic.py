@@ -11,18 +11,42 @@ from conftest import path
 
 
 def test_half_immersion_cut_is_c2s():
-    """At the paper's immersion the cut, the forced orbit and its command
-    are C2's (same mean coefficient, same force harmonics)."""
+    """At the paper's immersion the cut and the forced orbit are C2's: the
+    same mean coefficient, the slice-force harmonics in closed form (C2's
+    4096-point DFT is off by at most 4.1 N/m, the entry jump falling on a
+    sample), and a command at most 4 mV from C2's (that error plus
+    the harmonics above N_HARM)."""
     import feasibility as fe
     assert c3.HALF.kappa == c2.KAPPA
-    assert np.array_equal(c3.HALF.W, fe._W)
+    assert np.abs(c3.HALF.W - fe._W).max() < 4.1
     rpm, g = 2500.0, 1500.0
     a = 0.6 * a_lim(rpm, g)
     s0, b0, bmax = c2.orbit(rpm, g, a)
     s1, b1, bk = c3.orbit(rpm, g, a)
-    assert np.array_equal(s0, s1) and np.array_equal(b0, b1)
-    assert bk.max() == pytest.approx(bmax, rel=1e-6)
-    assert np.all(bk >= np.abs(b1).reshape(len(bk), -1).max(axis=1) - 1e-12)
+    assert np.allclose(s1, s0, rtol=1e-3, atol=1e-3 * np.abs(s0).max())
+    assert np.abs(b1 - b0).max() < 4e-3
+    assert bmax < bk.max() < bmax + 4e-3
+    assert np.all(bk >= np.abs(b1).reshape(len(bk), -1).max(axis=1))
+
+
+def test_slice_force_harmonics_in_closed_form():
+    """Against a 2^20-point midpoint quadrature of the same force (all teeth),
+    at half and low immersion; and the bound on the harmonics above N_HARM is
+    below 2 mV of command at g = 1500."""
+    for ae in (0.5, 0.1):
+        cut = c3.Cut(ae)
+        n, pitch = 2 ** 20, 2 * np.pi / P.N_TEETH
+        th = (np.arange(n) + 0.5) / n * pitch
+        w = np.zeros(n)
+        for i in range(P.N_TEETH):
+            phi = np.mod(th + i * pitch, 2 * np.pi)
+            on = (phi >= cut.st) & (phi <= cut.ex)
+            w += np.where(on, -(P.K_TC * np.sin(phi) - P.K_RC * np.cos(phi)) * P.FZ * np.sin(phi), 0.0)
+        m = np.arange(c3.N_HARM + 1)
+        W = (np.fft.rfft(w) / n)[:len(m)] * np.exp(1j * m * P.N_TEETH * 0.5 / n * pitch)
+        assert np.abs(W - cut.W).max() < 0.1
+        for rpm in (1090.0, 2870.0):
+            assert 0 < 1500.0 * c3.velocity_tail(rpm, 1500.0, 0.9 * cut.a_lim(rpm, 1500.0), cut) < 2e-3
 
 
 def test_coefficient_is_the_independent_helical_integral():
