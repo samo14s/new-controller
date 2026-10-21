@@ -13,3 +13,8 @@ certificate below the simulated smallest kick: 8/8
 proof check max V 0.99639; off-axis chatter 0/576
 per-phase certificate below the simulated kick at the same phase: 19/19
 == decomp 10:09:31
+1090 rpm 0.90: C2 6.191; averaged, resolved 6.563; periodic, single level 5.813; periodic, resolved, m_c 8 5.741; periodic, resolved, m_c 32 6.859
+1420 rpm 0.90: C2 3.837; averaged, resolved 4.172; periodic, single level 3.653; periodic, resolved, m_c 8 3.743; periodic, resolved, m_c 32 4.600
+2500 rpm 0.90: C2 3.057; averaged, resolved 3.526; periodic, single level 2.923; periodic, resolved, m_c 8 3.161; periodic, resolved, m_c 32 3.715
+2870 rpm 0.90: C2 6.891; averaged, resolved 7.278; periodic, single level 6.776; periodic, resolved, m_c 8 6.998; periodic, resolved, m_c 32 7.421
+== done 11:11:13
