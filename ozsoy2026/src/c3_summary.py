@@ -52,6 +52,11 @@ def floquet(F):
 
 def basin(B, phases=None):
     """Statistics of a basin-type campaign (run_basin or run_lowimm)."""
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return _basin(B, phases)
+
+
+def _basin(B, phases):
     c, c2s, ph = B["cert"], B["c2_cert"], B["phase_cert"]
     mk, ak, td = B["model_kick"], B["avg_kick"], B["td_kick"]
     cols = np.arange(ph.shape[1]) if phases is None else np.asarray(phases)
@@ -69,11 +74,13 @@ def basin(B, phases=None):
         phase_spread=stats(np.max(ph[ok], axis=1) / np.min(ph[ok], axis=1)),
         phase_cert_below_model=[int(np.sum((ph <= mk)[ok])), int(ok.sum() * ph.shape[1])],
         phase_cert_below_td=[int(np.sum((phc <= td)[fin_td])), int(fin_td.sum())],
-        cert_below_td_min=[int(np.sum(c[ok] <= tdmin[ok])), int(np.sum(ok & np.isfinite(tdmin)))],
+        cert_below_td_min=[int(np.sum((c <= tdmin)[ok & np.isfinite(tdmin)])), int(np.sum(ok & np.isfinite(tdmin)))],
         c2_below_periodic_model=[int(np.sum(c2s <= mkmin)), int(len(c2s))],
         periodic_over_averaged_model=stats(mk[both] / ak[both], 4),
-        model_over_td=stats(mkmin / tdmin),
+        model_over_td=stats((mkmin / tdmin)[np.isfinite(mkmin) & np.isfinite(tdmin)]),
         td_over_cert=stats(tdmin[ok] / c[ok]), td_over_c2=stats(tdmin[ok] / c2s[ok]),
+        td_over_cert_from_07=stats((tdmin / c)[ok & (B["frac"] >= 0.7)]),
+        td_over_c2_from_07=stats((tdmin / c2s)[ok & (B["frac"] >= 0.7)]),
         proof_vmax=r(np.nanmax(B["proof_vmax"]), 5), proof_vend=r(np.nanmax(B["proof_vend"]), 5),
         offaxis=[int(B["offaxis_bad"].sum()), int(B["offaxis_runs"].sum())],
         u0_min=stats(B["u0_min"]), u0_max=stats(B["u0_max"]),
