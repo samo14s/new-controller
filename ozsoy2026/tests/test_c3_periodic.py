@@ -175,7 +175,13 @@ def test_reduces_to_c2_with_one_subinterval_and_the_mean_coefficient():
     a = 0.5 * a_lim(rpm, g)
     r = c3.certify(rpm, a, g, mc=1, averaged=True, resolved=False, full=True)
     assert r["size"] == pytest.approx(r["c2_size"], rel=0.02)
-    assert r["c2_size"] == pytest.approx(c2.certify_kick(rpm, a, g)[0], rel=1e-9)
+    # the warm start is C2 at C3's command bound (closed-form harmonics, a few mV above C2's)
+    A, B, K = c2.model(rpm, a, g)
+    e = np.zeros(len(B))
+    e[1] = 1.0
+    u0 = c3.VMAX - c3.orbit(rpm, g, a)[2].max()
+    assert r["c2_size"] == pytest.approx(c2.certify(A, B, K, u0, e, rpm)[0], rel=1e-4)   # A0 + KAPPA a E: round-off
+    assert r["c2_size"] == pytest.approx(c2.certify_kick(rpm, a, g)[0], rel=2e-3)
 
 
 @pytest.mark.slow
