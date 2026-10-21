@@ -1,0 +1,1 @@
+straight: |mu| 1.0342 (arg 180 deg); averaged certificate (C2) 13.201 mm/s; periodic (C3) 0.000 mm/s [linearly unstable]; simulator after a 0.1 mm/s kick: chatters
