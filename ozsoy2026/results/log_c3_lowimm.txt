@@ -1,0 +1,15 @@
+1090 rpm 0.50 a_lim: C3  12.134 (C2  11.678) mm/s; per phase 12.134-12.134; model periodic    23.87, averaged    23.77, TD    28.08; max V 0.99505; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.998963702323; min eig ratio 9.6e-07]
+1090 rpm 0.90 a_lim: C3   8.830 (C2   8.721) mm/s; per phase 8.830-8.830; model periodic    15.64, averaged    15.90, TD    17.32; max V 0.98984; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999967536479; min eig ratio 2.0e-08]
+1420 rpm 0.50 a_lim: C3  12.463 (C2  12.422) mm/s; per phase 12.463-12.463; model periodic    43.79, averaged    44.76, TD      inf; max V 0.99639; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.998388211657; min eig ratio 1.5e-06]
+1420 rpm 0.90 a_lim: C3   8.632 (C2   8.305) mm/s; per phase 8.632-8.632; model periodic    13.98, averaged    14.16, TD      inf; max V 0.98745; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999768604598; min eig ratio 4.6e-08]
+2500 rpm 0.50 a_lim: C3   9.270 (C2   9.454) mm/s; per phase 9.270-9.270; model periodic    18.62, averaged    18.67, TD    26.97; max V 0.99321; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.99962984842; min eig ratio 3.8e-07]
+2500 rpm 0.90 a_lim: C3   6.638 (C2   6.687) mm/s; per phase 6.638-6.638; model periodic    10.38, averaged    10.46, TD    11.81; max V 0.99005; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.99997371883; min eig ratio 1.2e-08]
+2870 rpm 0.50 a_lim: C3  10.250 (C2  10.587) mm/s; per phase 10.250-10.250; model periodic    19.46, averaged    19.82, TD      inf; max V 0.99253; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999370665404; min eig ratio 6.3e-07]
+2870 rpm 0.90 a_lim: C3   6.812 (C2   7.215) mm/s; per phase 6.812-6.812; model periodic    10.44, averaged    10.60, TD    12.55; max V 0.99075; off-axis 0/72  [Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 1.1e-08]
+C3 / C2: 0.944-1.039 (median 0.998) at 8/8 points
+periodic / averaged model critical kick, phase by phase: 0.974-1.052 (median 1.004)
+per-phase certificate below the periodic model's kick at the same phase: 128/128
+C2 certificate below the periodic model's smallest kick: 8/8
+certificate below the simulated smallest kick: 8/8
+proof check max V 0.99639; off-axis chatter 0/576
+per-phase certificate below the simulated kick at the same phase: 19/19

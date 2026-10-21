@@ -1,0 +1,5 @@
+g    0: unstable below the ZOA limit at 12/21 speeds (1675-1950 rpm, from 0.947 of it); forced command at 0.98 a_lim 0.0-0.0 V (0.0-0.0 V where unstable)
+g  100: unstable below the ZOA limit at 4/21 speeds (1875-1950 rpm, from 0.956 of it); forced command at 0.98 a_lim 2.5-54.0 V (27.1-54.0 V where unstable)
+g  250: unstable below the ZOA limit at 0/21 speeds; forced command at 0.98 a_lim 8.5-88.2 V
+g  500: unstable below the ZOA limit at 0/21 speeds; forced command at 0.98 a_lim 18.3-115.1 V
+g  map: unstable below the ZOA limit at 1/21 speeds (1950-1950 rpm, from 0.970 of it); forced command at 0.98 a_lim 31.9-66.3 V (66.3-66.3 V where unstable)

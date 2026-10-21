@@ -6,3 +6,10 @@ per-phase certificate below the simulated kick at the same phase: 448/448
 certificate below the simulated smallest kick: 47/47
 proof check max V 0.99690; off-axis chatter 0/3384
 == lowimm 09:26:58
+periodic / averaged model critical kick, phase by phase: 0.974-1.052 (median 1.004)
+per-phase certificate below the periodic model's kick at the same phase: 128/128
+C2 certificate below the periodic model's smallest kick: 8/8
+certificate below the simulated smallest kick: 8/8
+proof check max V 0.99639; off-axis chatter 0/576
+per-phase certificate below the simulated kick at the same phase: 19/19
+== decomp 10:09:31

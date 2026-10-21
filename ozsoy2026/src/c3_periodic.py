@@ -576,22 +576,25 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
         e[1] = 1.0
     Abar = A0 + cut.kappa * a * E
     if averaged:
-        enc = (np.full(mc, cut.kappa * a), np.zeros(mc), np.zeros(mc))
         sigma = -np.linalg.eigvals(Abar).real.max()
     else:
-        enc = enclosure(rpm, a, cut, mc, order=order)
         sigma = floquet_rate(A0, E, lambda t: aH(t, rpm, a, cut), Tp)
     _, _, bk = orbit(rpm, g, a, cut, N, mc)
     u0k = VMAX - (bk if resolved else np.full(mc, bk.max()))
     u0n = np.minimum(u0k, np.roll(u0k, 1))                       # node k closes subinterval k-1
     out = dict(sigma=sigma, u0_min=float(u0k.min()), u0_max=float(u0k.max()), c2_size=np.nan,
                phase_size=np.zeros(N_PHASE), size=0.0, cert=None)
-    if sigma <= 0 or u0k.min() <= 0:
-        out.update(note="linearly unstable" if sigma <= 0 else "orbit saturates")
+    if u0k.min() <= 0:
+        out.update(note="orbit saturates")
         return out if full else (0.0, out["note"])
     valid = c2.validity(n, delta) if delta is not None else None
     s2, _, cert2 = c2.certify(Abar, B, K, u0k.min(), e, rpm, TIGHT, full=True, delta=delta)
-    out["c2_size"] = s2
+    out["c2_size"] = s2                                            # C2 on the averaged model, for comparison
+    if sigma <= 0:
+        out.update(note="linearly unstable")
+        return out if full else (0.0, out["note"])
+    enc = (np.full(mc, cut.kappa * a), np.zeros(mc), np.zeros(mc)) if averaged else \
+        enclosure(rpm, a, cut, mc, order=order)
     start = cert2[0] @ cholesky(np.linalg.inv(cert2[1]), lower=True) if cert2 is not None else None
     best, note, cert = 0.0, "no candidate passed the check", None
     for f in LAM_FRAC:
@@ -1023,6 +1026,43 @@ def run_straight(a):
               + (f" ({np.nanmin(bmax[i][m]):.1f}-{np.nanmax(bmax[i][m]):.1f} V where unstable)" if m.any() else ""))
 
 
+COUNTER = (1850.0, 0.0, 0.98)                      # rpm, g, fraction of the ZOA limit
+
+
+def run_counter(a):
+    """One cut where averaging is wrong: straight teeth, no controller, 0.98 of
+    the ZOA limit (the ZOA and C2's averaged model do not depend on the helix).
+    The averaged certificate (C2's method) certifies a kick; the periodic
+    model is flip-unstable, so C3 certifies nothing; the simulator chatters
+    with straight teeth and settles with the paper's 45 deg helix."""
+    import tdsim
+    from tdboundary import classify_run
+    rpm, g, frac = COUNTER
+    _, _, zeta = gain_map()
+    P.set_damping(zeta)
+    a_ = frac * a_lim(rpm, g)
+    out = {}
+    for lab, helix in (("straight", 0.0), ("helical", P.HELIX)):
+        cut = Cut(helix=helix)
+        mu = critical_multiplier(rpm, a_, g, cut)
+        r = certify(rpm, a_, g, cut, full=True)
+        P.HELIX, keep = helix, P.HELIX
+        try:
+            sim = tdsim.simulate(rpm, a_, g, vmax=VMAX, store=True, nrev=400, edge=True, nreg=4,
+                                 kick_step=100 * P.STEPS_PER_REV, kick_dv=1e-4)
+        finally:
+            P.HELIX = keep
+        cls = classify_run(sim["x"][101 * P.STEPS_PER_REV:], P.STEPS_PER_REV, sim["diverged"])
+        out[lab] = (abs(mu), np.angle(mu), r["c2_size"], r["size"], r["note"], cls["stable"])
+        print(f"{lab}: |mu| {abs(mu):.4f} (arg {np.degrees(np.angle(mu)):.0f} deg); averaged certificate (C2) "
+              f"{r['c2_size']*1e3:.3f} mm/s; periodic (C3) {r['size']*1e3:.3f} mm/s [{r['note']}]; "
+              f"simulator after a 0.1 mm/s kick: {'settles' if cls['stable'] else 'chatters'}", flush=True)
+    np.savez_compressed(os.path.join(RES, "c3_counter.npz"), rpm=rpm, g=g, frac=frac, a=a_,
+                        labels=np.array(list(out)), mu_abs=np.array([v[0] for v in out.values()]),
+                        mu_arg=np.array([v[1] for v in out.values()]), c2_size=np.array([v[2] for v in out.values()]),
+                        c3_size=np.array([v[3] for v in out.values()]), sim_stable=np.array([v[5] for v in out.values()]))
+
+
 EDGE_FRAC = 0.98
 EDGE_MC = (16, 32)
 
@@ -1054,13 +1094,13 @@ def run_edge(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge", "straight"])
+    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge", "straight", "counter"])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
     ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
     a = ap.parse_args()
     dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm, edge=run_edge,
-         straight=run_straight)[a.command](a)
+         straight=run_straight, counter=run_counter)[a.command](a)
 
 
 if __name__ == "__main__":
