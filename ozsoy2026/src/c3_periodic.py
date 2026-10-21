@@ -359,6 +359,24 @@ REG_RETRY = 1e-7                                # static regularisation of the r
 # problem fails at the first step at some points: its multiplier block mixes
 # the small residual term with the O(|A|) rest of the decrease matrix).
 ATTEMPTS = ((True, None), (True, REG_RETRY), (False, None))
+HEAVY = None                                    # pool workers: one all-corner solve at n >= 28 at a time (~5 GB)
+
+
+def _nolock():
+    import contextlib
+    return contextlib.nullcontext()
+
+
+def _init_pool(sem):
+    global HEAVY
+    HEAVY = sem
+
+
+def pool(workers):
+    import multiprocessing as mp
+    return Pool(workers, initializer=_init_pool, initargs=(mp.BoundedSemaphore(1),))
+
+
 P_SCALE = 10.0                                  # p q' split of the merged block: mu about 1 / P_SCALE^2 (at 1
 #                                                 the first step failed at 2500 rpm 0.7 and 2870 rpm 0.9 a_lim)
 
@@ -569,8 +587,9 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
                 st = dict(SOLVER if settings is None else settings)
                 if reg is not None:
                     st["static_regularization_constant"] = reg
-                beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
-                                              settings=st, valid=valid, merged=merged)
+                with (HEAVY if (HEAVY is not None and not merged and n >= 28) else _nolock()):
+                    beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
+                                                  settings=st, valid=valid, merged=merged)
                 size, c, msg = check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=valid)
                 if size > 0:
                     break
@@ -852,8 +871,8 @@ def run_basin(a):
     jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
     if a.limit:
         jobs = jobs[:a.limit]
-    with Pool(a.workers) as pool:
-        res = pool.map(_basin, jobs, chunksize=1)
+    with pool(a.workers) as p:
+        res = p.map(_basin, jobs, chunksize=1)
     out = _stack(res, KEYS)
     out.update(rpm=np.array([j[0] for j in jobs]), g=np.array([j[1] for j in jobs]),
                frac=np.array([j[2] for j in jobs]), td_kick=b["dv"][m][:len(jobs)], m_c=M_C, delta=DELTA)
@@ -889,9 +908,9 @@ def run_lowimm(a):
     cut = Cut(LOW_AE)
     pts = [(float(n), float(np.interp(n, rpm_map, g_map)), f, zeta) for n in BASIN_RPM for f in LOW_FRAC]
     tdj = [(n, f * cut.a_lim(n, g), g, VMAX, p, z) for (n, g, f, z) in pts for p in LOW_PHASES]
-    with Pool(a.workers) as pool:
-        td = np.array(pool.map(_low_td, tdj, chunksize=1)).reshape(len(pts), len(LOW_PHASES))
-        res = pool.map(_low, pts, chunksize=1)
+    with pool(a.workers) as p:
+        td = np.array(p.map(_low_td, tdj, chunksize=1)).reshape(len(pts), len(LOW_PHASES))
+        res = p.map(_low, pts, chunksize=1)
     out = _stack(res, KEYS)
     out.update(rpm=np.array([p[0] for p in pts]), g=np.array([p[1] for p in pts]), frac=np.array([p[2] for p in pts]),
                a=np.array([p[2] * cut.a_lim(p[0], p[1]) for p in pts]), td_kick=td, td_phases=np.array(LOW_PHASES),
@@ -926,8 +945,8 @@ def run_decomp(a):
     pts = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f, v in zip(b["rpm"], b["g"], b["frac"], b["vmax"])
            if v > 0 and int(n) in DEC_RPM and any(abs(f - x) < 1e-9 for x in DEC_FRAC)]
     jobs = [p + (kw,) for p in pts for _, kw in DEC_VARIANTS]
-    with Pool(a.workers) as pool:
-        res = np.array(pool.map(_decomp, jobs, chunksize=1)).reshape(len(pts), len(DEC_VARIANTS), 2)
+    with pool(a.workers) as p:
+        res = np.array(p.map(_decomp, jobs, chunksize=1)).reshape(len(pts), len(DEC_VARIANTS), 2)
     np.savez_compressed(os.path.join(RES, "c3_decomp.npz"), rpm=np.array([p[0] for p in pts]),
                         frac=np.array([p[2] for p in pts]), variants=np.array([v for v, _ in DEC_VARIANTS]),
                         size=res[..., 0], c2_size=res[:, 0, 1])
