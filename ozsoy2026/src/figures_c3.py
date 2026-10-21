@@ -1,8 +1,8 @@
 """C3 figures: the certified basin on the time-periodic model.
 
     python figures_c3.py      -> ../figures/c3_01_*.png ... c3_05_*.png
-Needs ../results/c3_floquet.npz, c3_basin.npz, c3_lowimm.npz, c3_decomp.npz
-(c3_periodic.py) and the C1/C2 results.
+Needs ../results/c3_floquet.npz, c3_basin.npz, c3_lowimm.npz, c3_decomp.npz,
+c3_edge.npz, c3_straight.npz, c3_counter.npz (c3_periodic.py).
 """
 import os
 import numpy as np
@@ -147,33 +147,98 @@ def c3_03_phase():
 
 
 def c3_04_decomp():
+    """What each ingredient adds (0.9 a_lim), the edge (0.98 a_lim), and low immersion."""
     D, B = load("c3_decomp.npz"), load("c3_basin.npz")
-    variants = list(D["variants"])
-    labels = ["C2"] + variants[:2] + ["periodic, resolved, m_c 16"] + variants[2:]
-    fig, ax = plt.subplots(figsize=(11, 3.8))
-    x = np.arange(len(D["rpm"]))
-    w = 0.8 / len(labels)
+    fig, ax = plt.subplots(1, 3, figsize=(13, 3.9), gridspec_kw={"width_ratios": [1.6, 1, 1.4]})
+    a = ax[0]
+    variants = [str(v) for v in D["variants"]]
     full = np.array([B["cert"][(B["rpm"] == r) & np.isclose(B["frac"], f)][0] for r, f in zip(D["rpm"], D["frac"])])
-    vals = [D["c2_size"]] + [D["size"][:, 0], D["size"][:, 1], full] + [D["size"][:, j] for j in range(2, len(variants))]
-    cols = [GREY, "#9ecae1", SOFT, OURS, "#c6dbef", "#08306b"]
-    for j, (lab, v) in enumerate(zip(labels, vals)):
-        ax.bar(x + (j - len(labels) / 2 + 0.5) * w, v / D["c2_size"], w, color=cols[j % len(cols)], label=lab)
-    ax.axhline(1.0, color="k", lw=0.6)
-    ax.set_xticks(x, [f"{r:.0f}\n{f:.2f}" for r, f in zip(D["rpm"], D["frac"])], fontsize=7)
-    ax.set(ylabel="certified kick / C2", title="C3-4  What each ingredient adds (rpm, depth / a_lim)")
-    ax.legend(fontsize=6.5, ncol=3)
+    cols = {"averaged, resolved": "#9ecae1", "periodic, single level": SOFT, "periodic, resolved, m_c 8": "#c6dbef",
+            "periodic, resolved, m_c 32": "#08306b"}
+    bars = [(v, D["size"][:, j]) for j, v in enumerate(variants) if "m_c" not in v] + \
+           [("periodic, resolved, m_c 16 (C3)", full)] + [(v, D["size"][:, j]) for j, v in enumerate(variants) if "m_c" in v]
+    x = np.arange(len(D["rpm"]))
+    w = 0.8 / len(bars)
+    for j, (lab, v) in enumerate(bars):
+        a.bar(x + (j - len(bars) / 2 + 0.5) * w, v / D["c2_size"], w, color=cols.get(lab, OURS), label=lab)
+    a.axhline(1.0, color="k", lw=0.6)
+    a.set_xticks(x, [f"{r:.0f} rpm" for r in D["rpm"]])
+    a.set(ylabel="certified kick / C2", title=f"C3-4a  Ingredients at {float(D['frac'][0]):.2f} a_lim")
+    a.legend(fontsize=6, loc="lower left")
+    a = ax[1]
+    if os.path.exists(os.path.join(RES, "c3_edge.npz")):
+        G = load("c3_edge.npz")
+        for j, mc in enumerate(G["m_c"]):
+            a.plot(G["rpm"], G["size"][:, j] * 1e3, "o-", ms=4, lw=1, color=OURS if mc == 16 else "#08306b",
+                   label=f"C3, {mc} subintervals")
+        a.plot(G["rpm"], G["c2_size"] * 1e3, "s--", ms=4, mfc="none", lw=0.9, color=GREY, label="C2")
+        a.set(xlabel="Spindle speed (rpm)", ylabel="certified kick (mm/s)", ylim=(0, None),
+              title=f"C3-4b  At {float(G['frac']):.2f} a_lim")
+        a.legend(fontsize=6.5)
+    a = ax[2]
+    L = load("c3_lowimm.npz")
+    o = np.lexsort((L["frac"], L["rpm"]))
+    x = np.arange(len(o))
+    a.semilogy(x, L["c2_cert"][o] * 1e3, "s", color=GREY, mfc="none", label="C2 (averaged)")
+    a.semilogy(x, np.where(L["cert"][o] > 0, L["cert"][o], np.nan) * 1e3, "o", color=OURS, label="C3 (periodic)")
+    a.semilogy(x, np.array([_fmin(r) for r in L["model_kick"][o]]) * 1e3, "_", ms=12, mew=2, color=GOOD,
+               label="periodic model, critical kick")
+    a.semilogy(x, np.array([_fmin(r) for r in L["avg_kick"][o]]) * 1e3, "_", ms=8, mew=1, color="k",
+               label="averaged model, critical kick")
+    a.semilogy(x, np.array([_fmin(r) for r in L["td_kick"][o]]) * 1e3, "^", color=BAD, mfc="none", label="simulated")
+    a.set_xticks(x, [f"{r:.0f}\n{f:.1f}" for r, f in zip(L["rpm"][o], L["frac"][o])], fontsize=7)
+    a.set(ylabel="kick (mm/s), smallest over the phases",
+          title=f"C3-4c  ae/D = {float(L['ae']):g} (rpm, depth / a_lim)")
+    a.legend(fontsize=6, loc="lower left")
+    fig.tight_layout()
     save(fig, "c3_04_decomp.png")
 
 
-def c3_05_lowimm():
-    L = load("c3_lowimm.npz")
-    _basin_panels(L, f"C3-5  Low radial immersion (ae/D = {float(L['ae']):g}): certificates, models and simulation",
-                  "simulated (C1 protocol, 4 phases)", "c3_05_lowimm.png")
+def c3_05_averaging():
+    """Where the averaged model is wrong: straight teeth."""
+    S, C = load("c3_straight.npz"), load("c3_counter.npz")
+    fig, ax = plt.subplots(1, 3, figsize=(13, 3.8))
+    labs = list(S["gain_labels"])
+    style = {"0": ("k", "g = 0 (no control)"), "100": (SOFT, "g = 100"), "250": (GOOD, "g = 250"),
+             "500": ("#9ecae1", "g = 500"), "map": (OURS, "C2's gain map")}
+    a = ax[0]
+    for i, lab in enumerate(labs):
+        f = np.where(S["first_unstable"][i] < 1, S["first_unstable"][i], np.nan)
+        a.plot(S["rpm"], f, "o-", ms=3, lw=1, color=style[lab][0], label=style[lab][1])
+    a.axhline(1.0, color="k", lw=0.6)
+    a.set(xlabel="Spindle speed (rpm)", ylabel="first unstable depth / ZOA limit", ylim=(0.9, 1.01),
+          title="C3-5a  Straight teeth: flip lobes below the ZOA limit")
+    a.legend(fontsize=6.5, loc="lower left")
+    a = ax[1]
+    for i, lab in enumerate(labs):
+        if lab == "0":
+            continue
+        a.semilogy(S["rpm"], S["bmax_098"][i], "-", lw=1, color=style[lab][0], label=style[lab][1])
+        un = S["first_unstable"][i] < 1
+        a.semilogy(S["rpm"][un], S["bmax_098"][i][un], "o", ms=5, color=style[lab][0])
+    a.axhline(9.0, color=BAD, lw=1, label="9 V")
+    a.set(xlabel="Spindle speed (rpm)", ylabel="forced command at 0.98 a_lim (V)",
+          title="C3-5b  ... where the forced orbit alone needs > 9 V (dots)")
+    a.legend(fontsize=6.5)
+    a = ax[2]
+    kt = int(C["kick_tooth"])
+    for i, lab in enumerate(C["labels"]):
+        xt = C["x_tooth"][i]
+        dev = np.diff(xt)[kt:]                                   # x - x(t - T) once per tooth
+        a.semilogy(np.arange(len(dev)) / P.N_TEETH, np.abs(dev) * 1e6 + 1e-9, lw=0.8,
+                   color=BAD if lab == "straight" else OURS,
+                   label=f"{lab}: C2's method {C['c2_size'][i]*1e3:.1f} mm/s, C3 "
+                         + (f"{C['c3_size'][i]*1e3:.1f} mm/s" if C["c3_size"][i] > 0 else "none (|mu| > 1)"))
+    a.set(xlabel="revolutions after a 0.1 mm/s kick", ylabel="|x(t) - x(t - T)| at the teeth (um)",
+          title=f"C3-5c  {float(C['rpm']):.0f} rpm, no control, {float(C['frac']):.2f} a_lim")
+    a.legend(fontsize=6.3, loc="lower right")
+    fig.tight_layout()
+    save(fig, "c3_05_averaging.png")
 
 
 def main():
     for f, need in ((c3_01_coefficient, "c3_floquet.npz"), (c3_02_basin, "c3_basin.npz"), (c3_03_phase, "c3_basin.npz"),
-                    (c3_04_decomp, "c3_decomp.npz"), (c3_05_lowimm, "c3_lowimm.npz")):
+                    (c3_04_decomp, "c3_decomp.npz"), (c3_05_averaging, "c3_counter.npz")):
         if os.path.exists(os.path.join(RES, need)):
             f()
 
