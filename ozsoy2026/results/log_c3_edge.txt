@@ -1,0 +1,8 @@
+1090 rpm 0.98 a_lim, m_c 16: C3 4.601 (C2 4.843) mm/s  [Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 1.2e-09]
+1090 rpm 0.98 a_lim, m_c 32: C3 5.152 (C2 4.843) mm/s  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999625725389; min eig ratio 1.2e-09]
+1420 rpm 0.98 a_lim, m_c 16: C3 2.046 (C2 2.081) mm/s  [AlmostSolved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 2.6e-10]
+1420 rpm 0.98 a_lim, m_c 32: C3 2.313 (C2 2.081) mm/s  [Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 4.0e-10]
+2500 rpm 0.98 a_lim, m_c 16: C3 0.000 (C2 1.139) mm/s  [no candidate passed the check]
+2500 rpm 0.98 a_lim, m_c 32: C3 0.000 (C2 1.139) mm/s  [no candidate passed the check]
+2870 rpm 0.98 a_lim, m_c 16: C3 1.700 (C2 4.826) mm/s  [AlmostSolved; pass 0, lam 0.05 sigma, corners; ok, shrunk by 0.997217572584; min eig ratio 9.6e-08]
+2870 rpm 0.98 a_lim, m_c 32: C3 5.013 (C2 4.826) mm/s  [Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999824201592; min eig ratio 4.5e-10]

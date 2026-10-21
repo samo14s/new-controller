@@ -106,3 +106,14 @@ def test_command_bound_errata_change_no_quoted_number(s):
     assert e["c2_step"]["certified"][0] == e["c2_step"]["certified"][1]
     v = e["c4_validate"]
     assert v["cert_below_td"][0] == v["cert_below_td"][1] == v["cert_below_td"][2] == 89
+
+
+def test_near_the_limit_more_subintervals_recover_the_certificate(s):
+    """At 0.98 a_lim 16 subintervals certify less than C2 (or nothing); 32 exceed
+    C2 at 1090, 1420 and 2870 rpm; 2500 rpm stays uncertified (candidates on the
+    round-off bound)."""
+    e = s["edge"]
+    c2v, m16, m32 = (np.array(e[k], float) for k in ("c2_mm_s", "m_c_16_mm_s", "m_c_32_mm_s"))
+    assert e["rpm"] == [1090.0, 1420.0, 2500.0, 2870.0]
+    assert np.all(m16 < c2v)
+    assert np.all(m32[[0, 1, 3]] > c2v[[0, 1, 3]]) and m32[2] == 0.0

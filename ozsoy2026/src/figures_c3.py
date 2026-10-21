@@ -155,25 +155,31 @@ def c3_04_decomp():
     full = np.array([B["cert"][(B["rpm"] == r) & np.isclose(B["frac"], f)][0] for r, f in zip(D["rpm"], D["frac"])])
     cols = {"averaged, resolved": "#9ecae1", "periodic, single level": SOFT, "periodic, resolved, m_c 8": "#c6dbef",
             "periodic, resolved, m_c 32": "#08306b"}
-    bars = [(v, D["size"][:, j]) for j, v in enumerate(variants) if "m_c" not in v] + \
-           [("periodic, resolved, m_c 16 (C3)", full)] + [(v, D["size"][:, j]) for j, v in enumerate(variants) if "m_c" in v]
+    col = {v: D["size"][:, j] for j, v in enumerate(variants)}
+    bars = [(v, col[v]) for v in variants if "m_c" not in v] + [("periodic, resolved, m_c 8", col["periodic, resolved, m_c 8"]),
+                                                                  ("periodic, resolved, m_c 16 (C3)", full),
+                                                                  ("periodic, resolved, m_c 32", col["periodic, resolved, m_c 32"])]
     x = np.arange(len(D["rpm"]))
     w = 0.8 / len(bars)
     for j, (lab, v) in enumerate(bars):
         a.bar(x + (j - len(bars) / 2 + 0.5) * w, v / D["c2_size"], w, color=cols.get(lab, OURS), label=lab)
     a.axhline(1.0, color="k", lw=0.6)
     a.set_xticks(x, [f"{r:.0f} rpm" for r in D["rpm"]])
-    a.set(ylabel="certified kick / C2", title=f"C3-4a  Ingredients at {float(D['frac'][0]):.2f} a_lim")
+    a.set(ylabel="certified kick / C2", ylim=(0.8, 1.27), title=f"C3-4a  Ingredients at {float(D['frac'][0]):.2f} a_lim")
     a.legend(fontsize=6, loc="lower left")
     a = ax[1]
     if os.path.exists(os.path.join(RES, "c3_edge.npz")):
         G = load("c3_edge.npz")
+        x = np.arange(len(G["rpm"]))
         for j, mc in enumerate(G["m_c"]):
-            a.plot(G["rpm"], G["size"][:, j] * 1e3, "o-", ms=4, lw=1, color=OURS if mc == 16 else "#08306b",
-                   label=f"C3, {mc} subintervals")
-        a.plot(G["rpm"], G["c2_size"] * 1e3, "s--", ms=4, mfc="none", lw=0.9, color=GREY, label="C2")
-        a.set(xlabel="Spindle speed (rpm)", ylabel="certified kick (mm/s)", ylim=(0, None),
-              title=f"C3-4b  At {float(G['frac']):.2f} a_lim")
+            a.plot(x + (j - 0.5) * 0.18, np.where(G["size"][:, j] > 0, G["size"][:, j], np.nan) * 1e3, "o", ms=6,
+                   color=OURS if mc == 16 else "#08306b", label=f"C3, {mc} subintervals")
+        a.plot(x, G["c2_size"] * 1e3, "s", ms=6, mfc="none", color=GREY, label="C2")
+        for i in np.nonzero(np.all(G["size"] <= 0, axis=1))[0]:
+            a.annotate("not certified", (x[i], G["c2_size"][i] * 1e3), textcoords="offset points", xytext=(0, -16),
+                       ha="center", fontsize=6.5, color=BAD)
+        a.set_xticks(x, [f"{r:.0f} rpm" for r in G["rpm"]])
+        a.set(ylabel="certified kick (mm/s)", ylim=(0, None), title=f"C3-4b  At {float(G['frac']):.2f} a_lim")
         a.legend(fontsize=6.5)
     a = ax[2]
     L = load("c3_lowimm.npz")
