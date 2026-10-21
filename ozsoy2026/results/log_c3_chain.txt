@@ -1,1 +1,8 @@
 == basin 00:12:34
+periodic / averaged model critical kick, phase by phase: 0.973-1.052 (median 1.001)
+per-phase certificate below the periodic model's kick at the same phase: 256/256
+C2 certificate below the periodic model's smallest kick: 48/48
+per-phase certificate below the simulated kick at the same phase: 208/208
+certificate below the simulated smallest kick: 16/16
+proof check max V 0.99294; off-axis chatter 0/1152
+== lowimm 03:40:34
