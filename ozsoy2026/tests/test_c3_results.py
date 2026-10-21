@@ -39,7 +39,7 @@ def test_basin_certified_on_the_periodic_model(s):
     b = s["basin"]
     assert b["points"] == 48 and b["certified"] == 47
     assert b["failed"] == ["2500 rpm 0.98: no candidate passed the check"]
-    assert b["phase_cert_below_model"][0] == b["phase_cert_below_model"][1] == 752
+    assert b["phase_cert_below_model"][0] == b["phase_cert_below_model"][1] == 688      # finite model kicks only
     assert b["phase_cert_below_td"][0] == b["phase_cert_below_td"][1] == 448
     assert b["cert_below_td_min"][0] == b["cert_below_td_min"][1] == 28
     assert b["offaxis"] == [0, 3384]
@@ -103,3 +103,6 @@ def test_command_bound_errata_change_no_quoted_number(s):
     assert e["c2_surface"]["kick_090_mmps"][0] == e["c2_surface"]["kick_090_mmps"][1]
     a, b = e["c4_gainmap"]["certified_without_gap_mm"]
     assert a == b
+    assert e["c2_step"]["certified"][0] == e["c2_step"]["certified"][1]
+    v = e["c4_validate"]
+    assert v["cert_below_td"][0] == v["cert_below_td"][1] == v["cert_below_td"][2] == 89

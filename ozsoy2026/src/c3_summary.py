@@ -72,10 +72,12 @@ def _basin(B, phases):
                            for n in np.unique(B["rpm"])},
         cert_mm_s=stats(c[ok] * 1e3), c2_mm_s=stats(c2s * 1e3),
         phase_spread=stats(np.max(ph[ok], axis=1) / np.min(ph[ok], axis=1)),
-        phase_cert_below_model=[int(np.sum((ph <= mk)[ok])), int(ok.sum() * ph.shape[1])],
+        phase_cert_below_model=[int(np.sum((ph <= mk)[ok[:, None] & np.isfinite(mk)])),
+                                int(np.sum(ok[:, None] & np.isfinite(mk)))],          # finite kicks only
         phase_cert_below_td=[int(np.sum((phc <= td)[fin_td])), int(fin_td.sum())],
         cert_below_td_min=[int(np.sum((c <= tdmin)[ok & np.isfinite(tdmin)])), int(np.sum(ok & np.isfinite(tdmin)))],
-        c2_below_periodic_model=[int(np.sum(c2s <= mkmin)), int(len(c2s))],
+        c2_below_periodic_model=[int(np.sum((c2s <= mkmin)[np.isfinite(mkmin)])), int(np.sum(np.isfinite(mkmin)))],
+        td_finite_points=int(np.sum(ok & np.isfinite(tdmin))), proof_starts=int(48 * ok.sum()),
         periodic_over_averaged_model=stats(mk[both] / ak[both], 4),
         model_over_td=stats((mkmin / tdmin)[np.isfinite(mkmin) & np.isfinite(tdmin)]),
         td_over_cert=stats(tdmin[ok] / c[ok]), td_over_c2=stats(tdmin[ok] / c2s[ok]),
@@ -156,7 +158,52 @@ def margin_errata():
             bk = c3.orbit(n, g, a)[2].max()
             d.append(bk - bm)
             f.append((VMAX - bk) / (VMAX - bm))
-        out["c2_validate"] = dict(points=len(d), extra_mV=stats(np.array(d) * 1e3), size_factor=stats(f, 5))
+        f = np.array(f)
+        fin = np.isfinite(V["td_min"]) & (V["cert"] > 0)
+        near = fin & (V["frac"] >= 0.7)
+        q = lambda c: [r(np.min(V["td_min"][fin] / c[fin]), 2), r(np.max(V["td_min"][fin] / c[fin]), 2),
+                       r(np.median(V["td_min"][near] / c[near]), 2)]
+        out["c2_validate"] = dict(points=len(d), extra_mV=stats(np.array(d) * 1e3), size_factor=stats(f, 5),
+                                  td_over_cert_min_max_median07=[q(V["cert"]), q(V["cert"] * f)])
+    St = load("c2_step.npz")
+    if St is not None:
+        from c1_unsafe_zone import BASIN_RPM
+        d1 = np.load(os.path.join(RES, "feas_g1500.npz"))
+        P.set_damping(float(d1["zeta"]))
+        f = np.ones_like(St["beta"])
+        for i, n in enumerate(St["rpm"]):
+            g = float(np.interp(n, d1["rpm"], d1["g_best"]))
+            for j, fr in enumerate(St["frac"]):
+                a = fr * a_lim(n, g)
+                bm, bk = c2.orbit(n, g, a)[2], c3.orbit(n, g, a)[2].max()
+                f[i, j] = (VMAX - bk) / (VMAX - bm)
+        P.set_damping(P.ZETA_PAPER_CURVES)
+        out["c2_step"] = dict(size_factor=stats(f, 5), beta=[np.round(St["beta"], 2).tolist(),
+                                                             np.round(St["beta"] * f, 2).tolist()],
+                              certified=[int(np.sum(St["beta"] >= 1)), int(np.sum(St["beta"] * f >= 1))])
+    V1, V2 = load("c4_validate.npz"), load("c4_validate2.npz")
+    if V1 is not None and V2 is not None:
+        fs = []
+        for X in (V1, V2):
+            f = np.ones(len(X["cert"]))
+            for k, (n, dep, g1) in enumerate(zip(X["rpm"], X["depth"], X["g1"])):
+                if X["cert"][k] > 0:
+                    a = dep * 1e-3
+                    bm, bk = c2.orbit(n, g1, a)[2], c3.orbit(n, g1, a)[2].max()
+                    f[k] = (VMAX - bk) / (VMAX - bm)
+            fs.append(f)
+        allc = np.concatenate([V1["cert"], V2["cert"]])
+        allf = np.concatenate(fs)
+        allt = np.concatenate([V1["td_min"], V2["td_min"]])
+        ok = np.isfinite(allt) & (allc > 0)
+        deep = np.concatenate([np.zeros(len(V1["cert"]), bool), (V2["kind"] == "comb") & np.isin(V2["depth"], (30.0, 34.0))])
+        okd = deep & ok
+        out["c4_validate"] = dict(size_factor=stats(allf[allc > 0], 5),
+                                  cert_below_td=[int(np.sum((allc <= allt)[ok])), int(np.sum((allc * allf <= allt)[ok])),
+                                                 int(ok.sum())],
+                                  td_over_cert=[stats(allt[ok] / allc[ok], 2), stats(allt[ok] / (allc * allf)[ok], 2)],
+                                  deep_td_over_cert=[stats(allt[okd] / allc[okd], 2),
+                                                     stats(allt[okd] / (allc * allf)[okd], 2)])
     S = load("c2_surface.npz")
     if S is not None:
         d, f = [], []
