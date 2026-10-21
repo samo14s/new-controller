@@ -114,6 +114,32 @@ def _c4_gap(G, kick, kdvf):
     return out
 
 
+def edge(G):
+    return dict(frac=float(G["frac"]), rpm=[float(x) for x in G["rpm"]],
+                c2_mm_s=[r(x * 1e3) for x in G["c2_size"]],
+                **{f"m_c_{int(m)}_mm_s": [r(x * 1e3) for x in G["size"][:, j]] for j, m in enumerate(G["m_c"])})
+
+
+def straight(S):
+    out = {}
+    for i, lab in enumerate(S["gain_labels"]):
+        f = S["first_unstable"][i]
+        m = np.isfinite(f) & (f < 1.0)
+        out[str(lab)] = dict(unstable_speeds=int(m.sum()), speeds=int(len(f)),
+                             rpm=[float(S["rpm"][m].min()), float(S["rpm"][m].max())] if m.any() else None,
+                             from_frac=r(np.min(f[m])) if m.any() else None,
+                             bmax_where_unstable_V=[r(S["bmax_098"][i][m].min(), 1), r(S["bmax_098"][i][m].max(), 1)]
+                             if m.any() else None)
+    return out
+
+
+def counter(C):
+    return {str(lab): dict(mu_abs=r(C["mu_abs"][i], 4), mu_arg_deg=r(np.degrees(C["mu_arg"][i]), 1),
+                           c2_mm_s=r(C["c2_size"][i] * 1e3), c3_mm_s=r(C["c3_size"][i] * 1e3),
+                           simulated_stable=bool(C["sim_stable"][i]))
+            for i, lab in enumerate(C["labels"])} | dict(rpm=float(C["rpm"]), g=float(C["g"]), frac=float(C["frac"]))
+
+
 def margin_errata():
     """C2's and C4's certificates rescaled to the closed-form command bound."""
     import c2_certificate as c2
@@ -179,6 +205,11 @@ def build(errata=True):
         out["lowimm"]["ae"] = float(L["ae"])
     if D is not None and B is not None:
         out["decomp"] = decomp(D, B)
+    for name, key, fn in (("c3_edge.npz", "edge", edge), ("c3_straight.npz", "straight", straight),
+                          ("c3_counter.npz", "counter", counter)):
+        X = load(name)
+        if X is not None:
+            out[key] = fn(X)
     if errata:
         out["errata"] = margin_errata()
     return out
