@@ -350,7 +350,7 @@ def _sym(x, I, J, n):
     return W
 
 
-def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, valid=None, merged=True):
+def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, valid=None, merged=True, pscale=1.0):
     """Largest beta with beta e in E(P(t)) for all t, P periodic piecewise
     affine as in the module docstring.  enc: (alpha, beta, eps) of a H on
     each subinterval (enclosure); u0n: sector level at each node (the smaller
@@ -399,7 +399,7 @@ def lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, eps=1e-9, lam=0.0, settings=None, vali
                 vmu = nvar
                 nvar += 1
                 mus.append(vmu)
-                rho = np.sqrt(np.linalg.norm(p) / (np.linalg.norm(q) * ep))  # split p q' so that mu is about 1
+                rho = pscale * np.sqrt(np.linalg.norm(p) / (np.linalg.norm(q) * ep))  # split p q' (mu about 1 at pscale 1)
                 pk, qk = p / rho, q * rho
                 Ip, Jp = np.triu_indices(n)
                 M1.add(Ip, Jp, vmu, -pk[Ip] * pk[Jp])
@@ -503,6 +503,11 @@ LAM_FRAC = (0.05, 0.02, 0.01)                   # decay margins, fractions of th
 #                                                  infeasible problem is retried with a smaller one
 SOLVER = dict(direct_solve_method="faer", max_threads=1, max_iter=120)   # defaults otherwise; the check decides
 REG_RETRY = 1e-7                                # static regularisation of the retry (default 1e-8)
+# Solves tried in turn until one passes the check: merged corners, the same
+# regularised, then all corners separately (3-4 x slower, but the merged
+# problem fails at the first step at some points: its multiplier block mixes
+# the small residual term with the O(|A|) rest of the decrease matrix).
+ATTEMPTS = ((True, None), (True, REG_RETRY), (False, None))
 N_PASS = 1                                      # solves per margin: the warm start (a re-centred second
 #                                                 pass added 0.4 % at 2500 rpm, 0.9 a_lim)
 
@@ -556,18 +561,19 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
     for f in LAM_FRAC:
         Tm = start if start is not None else np.diag(c2.scaling(Abar, rpm))
         for p in range(n_pass):
-            for reg in (None, REG_RETRY):         # the first KKT solve can fail; retry regularised
+            for merged, reg in ATTEMPTS:          # the merged problem can fail at its first step
                 st = dict(SOLVER if settings is None else settings)
                 if reg is not None:
                     st["static_regularization_constant"] = reg
                 beta, (W, Y, S), status = lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=f * sigma,
-                                              settings=st, valid=valid)
+                                              settings=st, valid=valid, merged=merged)
                 size, c, msg = check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=valid)
                 if size > 0:
                     break
             if size > best:
                 best = min(size, beta) if beta > 0 else size
-                note = f"{status}; pass {p}, lam {f:g} sigma{', regularised' if reg else ''}; {msg}"
+                how = ("merged" if merged else "corners") + (", regularised" if reg else "")
+                note = f"{status}; pass {p}, lam {f:g} sigma, {how}; {msg}"
                 cert = (Tm.copy(), c * W, c * Y, c * S)
             try:
                 Tm = Tm @ cholesky(np.mean((W + W.transpose(0, 2, 1)) / 2, axis=0), lower=True)
@@ -852,7 +858,7 @@ def run_basin(a):
 
 
 LOW_AE = 0.1
-LOW_FRAC = (0.5, 0.8, 0.9, 0.98)
+LOW_FRAC = (0.5, 0.9)
 LOW_PHASES = (0, 4, 8, 12)                        # of C1's 16 kick phases
 
 
@@ -894,7 +900,7 @@ def run_lowimm(a):
 
 
 DEC_RPM = (1090, 1420, 2500, 2870)
-DEC_FRAC = (0.5, 0.9, 0.98)
+DEC_FRAC = (0.9,)
 DEC_VARIANTS = (("averaged, resolved", dict(averaged=True)),
                 ("periodic, single level", dict(resolved=False)),
                 ("periodic, resolved, m_c 8", dict(mc=8)),
