@@ -1,0 +1,435 @@
+{
+ "p01": {
+  "median_abs_pct_table1": 0.045,
+  "max_abs_pct_table1": 0.21,
+  "peak_pct_134": 8.21
+ },
+ "p02": {
+  "uncontrolled": {
+   "g_legend": 0.0,
+   "g_fit": 0.0,
+   "rms_db_legend": 0.002,
+   "rms_db_fit": 0.002,
+   "peak_db_paper": -111.1
+  },
+  "500 rpm, g = 1487": {
+   "g_legend": 1487.0,
+   "g_fit": 1542.9,
+   "rms_db_legend": 0.103,
+   "rms_db_fit": 0.0,
+   "peak_db_paper": -132.2
+  },
+  "1300 rpm, g = 1162": {
+   "g_legend": 1162.0,
+   "g_fit": 1162.2,
+   "rms_db_legend": 0.001,
+   "rms_db_fit": 0.001,
+   "peak_db_paper": -130.03
+  },
+  "2500 rpm, g = 585": {
+   "g_legend": 585.0,
+   "g_fit": 685.4,
+   "rms_db_legend": 0.268,
+   "rms_db_fit": 0.002,
+   "peak_db_paper": -126.14
+  },
+  "3000 rpm, g = 797": {
+   "g_legend": 797.0,
+   "g_fit": 830.0,
+   "rms_db_legend": 0.08,
+   "rms_db_fit": 0.001,
+   "peak_db_paper": -127.52
+  }
+ },
+ "p03": {
+  "cases": {
+   "open loop": {
+    "structural": {
+     "paper": [
+      -10.89,
+      812.29
+     ],
+     "legend_gain": [
+      -10.89,
+      812.34
+     ],
+     "fit_gain": [
+      -10.89,
+      812.34
+     ],
+     "fit_minus_paper": 0.053
+    }
+   },
+   "500 rpm, g = 1487": {
+    "structural": {
+     "paper": [
+      -125.33,
+      800.55
+     ],
+     "legend_gain": [
+      -121.18,
+      801.27
+     ],
+     "fit_gain": [
+      -125.33,
+      800.56
+     ],
+     "fit_minus_paper": 0.013
+    },
+    "actuator": {
+     "paper": [
+      -7.47,
+      52.37
+     ],
+     "legend_gain": [
+      -7.49,
+      52.38
+     ],
+     "fit_gain": [
+      -7.47,
+      52.39
+     ],
+     "fit_minus_paper": 0.012
+    }
+   },
+   "1300 rpm, g = 1162": {
+    "structural": {
+     "paper": [
+      -97.07,
+      804.96
+     ],
+     "legend_gain": [
+      -97.07,
+      804.98
+     ],
+     "fit_gain": [
+      -97.09,
+      804.97
+     ],
+     "fit_minus_paper": 0.024
+    },
+    "actuator": {
+     "paper": [
+      -7.58,
+      52.34
+     ],
+     "legend_gain": [
+      -7.58,
+      52.34
+     ],
+     "fit_gain": [
+      -7.58,
+      52.34
+     ],
+     "fit_minus_paper": 0.003
+    }
+   },
+   "2500 rpm, g = 585": {
+    "structural": {
+     "paper": [
+      -61.69,
+      809.09
+     ],
+     "legend_gain": [
+      -54.28,
+      809.77
+     ],
+     "fit_gain": [
+      -61.72,
+      809.1
+     ],
+     "fit_minus_paper": 0.034
+    },
+    "actuator": {
+     "paper": [
+      -7.72,
+      52.27
+     ],
+     "legend_gain": [
+      -7.75,
+      52.26
+     ],
+     "fit_gain": [
+      -7.72,
+      52.27
+     ],
+     "fit_minus_paper": 0.01
+    }
+   },
+   "3000 rpm, g = 797": {
+    "structural": {
+     "paper": [
+      -72.45,
+      808.01
+     ],
+     "legend_gain": [
+      -70.0,
+      808.27
+     ],
+     "fit_gain": [
+      -72.45,
+      808.01
+     ],
+     "fit_minus_paper": 0.003
+    },
+    "actuator": {
+     "paper": [
+      -7.68,
+      52.29
+     ],
+     "legend_gain": [
+      -7.69,
+      52.29
+     ],
+     "fit_gain": [
+      -7.68,
+      52.29
+     ],
+     "fit_minus_paper": 0.004
+    }
+   }
+  },
+  "worst_fit_gain_distance_rad_s": 0.053
+ },
+ "p04": {
+  "band_median_ratio": {
+   "500-1150": 0.74,
+   "1160-1490": 0.88,
+   "1500-2050": null,
+   "2060-2310": 1.83,
+   "2320-3000": 0.97
+  },
+  "band_1870_2050_range": [
+   0.27,
+   1.3
+  ],
+  "band_note": "paper's straight segments excluded; 500-1150 is 750-1150 and 1160-1490 is 1160-1400",
+  "paper_range": [
+   256.9,
+   1487.0
+  ],
+  "ours_range": [
+   71.1,
+   1045.7
+  ],
+  "ours_min_rpm": 1950.0,
+  "g_2500": [
+   543.0,
+   535.6
+  ],
+  "g_2300": [
+   445.4,
+   849.3
+  ]
+ },
+ "p05": {
+  "zeta_0.0134": {
+   "median_abs_pct": 0.037,
+   "min_mm": 1.213
+  },
+  "zeta_0.0145": {
+   "median_abs_pct": 7.993,
+   "min_mm": 1.314
+  },
+  "paper_min_mm": 1.212
+ },
+ "p06": {
+  "band_median_ours_over_paper": {
+   "500-1150": 1.02,
+   "1160-1490": 0.97,
+   "1500-2050": null,
+   "2060-2310": 3.07,
+   "2320-3000": 1.17
+  },
+  "band_median_model_at_paper_gains_over_paper": {
+   "500-1150": 1.2,
+   "1160-1490": 1.08,
+   "1500-2050": null,
+   "2060-2310": 1.79,
+   "2320-3000": 1.19
+  },
+  "band_note": "straight Fig. 8 segments excluded; the ours/paper medians keep the covered speeds (as README 5.2)",
+  "covered_ratio_range": [
+   1.28,
+   9.1
+  ],
+  "paper_vs_model_at_paper_gains": {
+   "visible_vertices": 192,
+   "median_dev_pct": 18.0,
+   "within_2pct": 2,
+   "within_5pct": 14
+  },
+  "worst_ours": [
+   5.97,
+   2330.0
+  ],
+  "paper_visible_min": [
+   3.8,
+   2050.8
+  ],
+  "paper_covered_min": [
+   3.22
+  ],
+  "ratio_730": [
+   12.15,
+   8.72
+  ],
+  "max_ratio_ours": [
+   9.69,
+   520.0
+  ],
+  "mean_paper": 7.92,
+  "mean_ours": 12.75,
+  "a_1300": [
+   11.49,
+   11.01
+  ]
+ },
+ "p07": {
+  "g237.0_median_pct": -7.05,
+  "g270.0_median_pct": 0.23,
+  "g60.3_median_pct": -48.95,
+  "g_paper": 237.0,
+  "g_ours": 60.3,
+  "mean_ours": 6.52,
+  "min_ours": 1.72,
+  "paper_min": 3.52,
+  "median_selection": "500-3000 rpm, 0.5-30 mm, columns whose run is under 0.6 mm (as verification/critic/fig11_gain_fit.py)",
+  "median_columns": 667
+ },
+ "p08": {
+  "rpm": [
+   500,
+   560,
+   600,
+   800,
+   1300,
+   2300,
+   2500,
+   2800,
+   3000
+  ],
+  "paper_prop_minus_clip": [
+   -0.3,
+   -0.7,
+   -0.4,
+   -0.4,
+   -0.1,
+   0.4,
+   0.6,
+   0.8,
+   0.9
+  ],
+  "ours_prop_minus_clip1500": [
+   -4.85,
+   -5.36,
+   -4.54,
+   -4.6,
+   -3.19,
+   -1.61,
+   -6.64,
+   -5.27,
+   -4.68
+  ]
+ },
+ "p09": {
+  "n": 19,
+  "agree_paper_gains": 17,
+  "agree_our_gains": 13,
+  "agree_our_gains_td": 13
+ },
+ "p10": {
+  "10B": {
+   "measured": 149.5,
+   "onset_paper_gain": 149.03,
+   "onset_our_gain": 147.93,
+   "simulated": null
+  },
+  "12B": {
+   "measured": 133.3,
+   "onset_paper_gain": 131.63,
+   "onset_our_gain": 131.63,
+   "simulated": 131.91
+  },
+  "12D": {
+   "measured": 138.1,
+   "onset_paper_gain": 134.02,
+   "onset_our_gain": 132.03,
+   "simulated": 133.5
+  }
+ },
+ "p11": [
+  {
+   "quantity": "largest gain on the map (V s/m)",
+   "paper": 1487.0,
+   "ours": 1045.7,
+   "source": "text and Fig. 8"
+  },
+  {
+   "quantity": "smallest gain on the map (V s/m)",
+   "paper": 256.9,
+   "ours": 71.1,
+   "source": "Fig. 8; the text prints 237"
+  },
+  {
+   "quantity": "single fixed gain (V s/m)",
+   "paper": 237.0,
+   "ours": 60.3,
+   "source": "text; ours with the force reading (about 290 with the volt reading)"
+  },
+  {
+   "quantity": "improvement over no control near 730 rpm (x)",
+   "paper": 13.0,
+   "ours": 8.72,
+   "source": "text; Fig. 9 gives 12.15"
+  },
+  {
+   "quantity": "worst-case controlled depth (mm)",
+   "paper": 3.6,
+   "ours": 5.97,
+   "source": "text; Fig. 9: 3.80 visible, 3.22 covered"
+  },
+  {
+   "quantity": "uncontrolled minimum depth (mm)",
+   "paper": 1.2,
+   "ours": 1.213,
+   "source": "text; Fig. 9 gives 1.212"
+  },
+  {
+   "quantity": "controlled limit at 1300 rpm (mm)",
+   "paper": 11.49,
+   "ours": 11.01,
+   "source": "Fig. 9; the text says 10, Table 3 12.0"
+  },
+  {
+   "quantity": "worked example: a_lim, 1300 rpm, g = 1240 (mm)",
+   "paper": 11.8,
+   "ours": 13.223,
+   "source": "text"
+  },
+  {
+   "quantity": "worked example: peak demand (N)",
+   "paper": 29.0,
+   "ours": 45.019,
+   "source": "text; ours with the force reading"
+  },
+  {
+   "quantity": "test points on the predicted side (of 19)",
+   "paper": 17.0,
+   "ours": 17.0,
+   "source": "counted on Figs. 9 and 11; ours: model at the paper's gains"
+  }
+ ],
+ "p12": {
+  "mean_checked_mm": 15.87,
+  "mean_paper_mm": 7.92,
+  "mean_paper_visible_mm": 8.63,
+  "median_ratio": 2.06,
+  "median_ratio_visible": 1.89,
+  "max_ratio_visible": 3.45,
+  "min_checked": [
+   12.57,
+   2140.0
+  ]
+ }
+}

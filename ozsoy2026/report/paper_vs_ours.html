@@ -1,0 +1,305 @@
+<title>الورقة مقابل إعادة الإنتاج</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap">
+
+<style>
+/* Layout: the report's reading column; each published figure gets one card with
+   the comparison plate, a verdict and the difference in numbers. Tokens are the report's. */
+:root{
+  --ground:#EFF2F3; --surface:#FFFFFF; --surface-2:#F6F8F9;
+  --ink:#0F1719; --ink-2:#31434A; --muted:#57666C;
+  --rule:#D8DEE0; --rule-soft:#E7ECED;
+  --accent:#0E7490; --accent-soft:#E2F1F5;
+  --good:#15803D; --good-soft:#E6F4EA;
+  --warn:#B45309; --warn-soft:#FAF0E2;
+  --bad:#9F1239;  --bad-soft:#FBE9EE;
+  --paper:#D1495B; --ours:#1F5FA8;
+  --plate:#FFFFFF;
+  --shadow:0 1px 2px rgba(15,23,25,.05), 0 8px 24px -16px rgba(15,23,25,.28);
+  --f-display:Amiri,"Times New Roman",serif;
+  --f-body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+    --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+    --rule:#243033; --rule-soft:#1C2629;
+    --accent:#22A7C4; --accent-soft:#10303A;
+    --good:#4ADE80; --good-soft:#0F2A1B;
+    --warn:#F59E0B; --warn-soft:#2E2107;
+    --bad:#FB7185;  --bad-soft:#33111C;
+    --paper:#F2788A; --ours:#6EA8EC;
+    --plate:#F4F6F7;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1315; --surface:#151D20; --surface-2:#101819;
+  --ink:#E6EDEF; --ink-2:#BFCDD2; --muted:#8FA0A6;
+  --rule:#243033; --rule-soft:#1C2629;
+  --accent:#22A7C4; --accent-soft:#10303A;
+  --good:#4ADE80; --good-soft:#0F2A1B;
+  --warn:#F59E0B; --warn-soft:#2E2107;
+  --bad:#FB7185;  --bad-soft:#33111C;
+  --paper:#F2788A; --ours:#6EA8EC;
+  --plate:#F4F6F7;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0; direction:rtl; background:var(--ground); color:var(--ink);
+  font-family:var(--f-body); font-size:16px; line-height:1.8; -webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px; margin:0 auto;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:0 96px}
+.col{max-width:72ch}
+a{color:var(--accent); text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+.m{direction:ltr; unicode-bidi:isolate; font-family:"Times New Roman",var(--f-display); font-size:1.06em; white-space:nowrap}
+.m i{font-style:italic}
+.num{font-variant-numeric:tabular-nums; direction:ltr; unicode-bidi:isolate}
+
+header.mast{padding-block:52px 32px; border-bottom:1px solid var(--rule); margin-bottom:36px}
+.eyebrow{font-family:var(--f-mono); font-size:12px; color:var(--accent); margin:0 0 16px; font-weight:600; letter-spacing:.04em; direction:ltr; text-align:right}
+h1{font-family:var(--f-display); font-size:clamp(34px,5.6vw,56px); line-height:1.15; font-weight:700; margin:0 0 16px; text-wrap:balance}
+.dek{font-size:clamp(16.5px,2vw,18.5px); color:var(--ink-2); max-width:66ch; margin:0 0 22px; font-weight:300}
+.key{display:flex; flex-wrap:wrap; gap:10px 22px; font-size:14px; color:var(--ink-2)}
+.key span{display:inline-flex; align-items:center; gap:8px}
+.sw{display:inline-block; width:26px; height:4px; border-radius:2px}
+.sw.paper{background:var(--paper); opacity:.85}
+.sw.ours{background:var(--ours)}
+.sw.diff{background:linear-gradient(90deg,var(--muted) 0 40%,transparent 40% 60%,var(--muted) 60%)}
+
+/* summary table */
+h2{font-family:var(--f-display); font-size:clamp(25px,3.2vw,32px); font-weight:700; line-height:1.3; margin:0 0 8px; text-wrap:balance}
+.lead{color:var(--muted); font-size:15px; margin:0 0 20px; max-width:72ch}
+.tbl{overflow-x:auto; margin:8px 0 56px; border:1px solid var(--rule); border-radius:4px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14.5px}
+th,td{padding:10px 14px; text-align:right; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
+th{font-weight:600; background:var(--surface-2); color:var(--ink-2); font-size:13px; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.code{font-family:var(--f-mono); font-size:12.5px; color:var(--accent); white-space:nowrap; direction:ltr}
+td a{text-decoration:none}
+td a:hover{text-decoration:underline}
+.pill{display:inline-block; font-size:12px; font-weight:600; padding:1px 10px; border-radius:999px; border:1px solid currentColor; white-space:nowrap}
+.pill.good{color:var(--good); background:var(--good-soft)}
+.pill.warn{color:var(--warn); background:var(--warn-soft)}
+.pill.bad{color:var(--bad); background:var(--bad-soft)}
+.pill.info{color:var(--accent); background:var(--accent-soft)}
+
+/* one card per published result */
+article.cmp{margin:0 0 44px; scroll-margin-top:20px}
+.cmp-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin:0 0 10px}
+.cmp-head h3{font-family:var(--f-display); font-size:clamp(21px,2.6vw,26px); font-weight:700; margin:0; line-height:1.35; text-wrap:balance}
+.cmp-head .code{font-family:var(--f-mono); font-size:12.5px; color:var(--accent); direction:ltr}
+figure{margin:0; background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:14px; box-shadow:var(--shadow)}
+figure .plate{background:var(--plate); border-radius:2px; padding:6px; overflow-x:auto}
+figure img{display:block; width:100%; height:auto; max-width:100%; direction:ltr}
+figcaption{font-size:14.5px; color:var(--ink-2); margin-top:12px; line-height:1.75}
+figcaption p{margin:0 0 8px; max-width:80ch}
+figcaption p:last-child{margin-bottom:0}
+figcaption b{font-weight:600; color:var(--ink)}
+.why{font-size:13.5px; color:var(--muted)}
+hr.part{border:none; border-top:1px solid var(--rule); margin:12px 0 40px}
+.beyond{border-inline-start:3px solid var(--accent); background:var(--accent-soft); padding:12px 16px; border-radius:2px; margin:0 0 18px; font-size:15px; max-width:80ch}
+
+footer{border-top:1px solid var(--rule); padding-top:22px; font-size:13px; color:var(--muted)}
+footer p{max-width:90ch; margin:0 0 10px}
+.cite{direction:ltr; text-align:left; line-height:1.6}
+
+@media (max-width:560px){
+  body{font-size:15.5px}
+  th,td{padding:8px 10px}
+  figure{padding:9px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">OZSOY, SIMS &amp; OZTURK 2026 · PAPER VS REPRODUCTION · 12 COMPARISONS</p>
+  <h1>الورقة مقابل إعادة الإنتاج</h1>
+  <p class="dek">كلّ شكل وجدول منشور في المقال، مرسومًا فوق ما أعطته إعادة الإنتاج، ومع لوحة للفرق تحته. بيانات الورقة مستخرجة من مسارات ملف الـ PDF المتّجهية، لا مرسومة باليد؛ والشكل 11 وحده نقطيّ، فاستُخرجت منحنياته بالألوان.</p>
+  <div class="key" aria-label="مفتاح الألوان">
+    <span><i class="sw paper"></i>الورقة (المنشور)</span>
+    <span><i class="sw ours"></i>إعادة الإنتاج</span>
+    <span><i class="sw diff"></i>اللوحة السفلى: الفرق أو النسبة</span>
+  </div>
+</header>
+
+<section aria-labelledby="sum">
+  <h2 id="sum">الحكم في سطر لكلّ شكل</h2>
+  <p class="lead">«مطابق» يعني أنّ الفرق في حدود دقّة الاستخراج. الفروق كلّها محسوبة من الملفات المخزّنة في المستودع (<span class="num">results/paper_vs_ours.json</span>).</p>
+  <div class="tbl"><table>
+    <thead><tr><th>المقارنة</th><th>في الورقة</th><th>الحكم</th><th>الفرق باختصار</th></tr></thead>
+    <tbody>
+      <tr><td class="code"><a href="#p01">P01</a></td><td>الشكل 5: FRF البنية</td><td><span class="pill good">مطابق</span></td><td>وسيط الفرق 0.04 % بقيم الجدول 1</td></tr>
+      <tr><td class="code"><a href="#p02">P02</a></td><td>الشكل 6a: FRF الحلقة المغلقة</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>مطابق تمامًا (≤ 0.002 dB) بكسوبٍ غير المكتوبة في مفتاح الشكل عند 3 سرعات من 4</td></tr>
+      <tr><td class="code"><a href="#p03">P03</a></td><td>الشكل 6b: الأقطاب</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>ضمن 0.05 rad/s بكسوب 1543 و685 و830، لا بكسوب المفتاح 1487 و585 و797</td></tr>
+      <tr><td class="code"><a href="#p04">P04</a></td><td>الشكل 8: خريطة الكسب</td><td><span class="pill bad">يختلف</span></td><td>كسوبنا 0.74 و0.88 من الورقة تحت 1500 rpm، و0.97 في 2320–3000؛ و1.83 في 2060–2310 حيث أمثلنا جيبٌ معزول</td></tr>
+      <tr><td class="code"><a href="#p05">P05</a></td><td>الشكل 9: بلا تحكّم</td><td><span class="pill good">مطابق</span></td><td>وسيط 0.04 %، لكن بتخميد 1.34 % لا 1.45 % المذكور</td></tr>
+      <tr><td class="code"><a href="#p06">P06</a></td><td>الشكل 9: بالتحكّم</td><td><span class="pill bad">يختلف</span></td><td>منحنى الورقة لا يعيده نموذجها نفسه بكسوبها؛ وجزؤه المغطّى ينزل تحت غير المتحكَّم فيه</td></tr>
+      <tr><td class="code"><a href="#p07">P07</a></td><td>الشكل 11: الكسب الثابت</td><td><span class="pill bad">يختلف</span></td><td>كسبنا الثابت 60.3 لا 237؛ ونموذجنا بـ 237 أدنى من منحنى الورقة بنحو 7 %</td></tr>
+      <tr><td class="code"><a href="#p08">P08</a></td><td>الجدول 3</td><td><span class="pill bad">معكوس</span></td><td>DVF المقصوص يتفوّق عندنا في السرعات التسع؛ الورقة تجد العكس عند 2300–3000 rpm</td></tr>
+      <tr><td class="code"><a href="#p09">P09</a></td><td>نقاط الاختبار (الشكلان 9 و11)</td><td><span class="pill good">17 من 19</span></td><td>بكسوب الورقة كما بمنحنياتها؛ وبكسوبنا 13 من 19</td></tr>
+      <tr><td class="code"><a href="#p10">P10</a></td><td>الشكلان 10 و12: تردّد الارتجاج</td><td><span class="pill warn">قريب</span></td><td>ضمن 1–2 Hz عند 10B و12B؛ وأدنى بنحو 4 Hz عند 12D</td></tr>
+      <tr><td class="code"><a href="#p11">P11</a></td><td>أرقام النصّ الرئيسة</td><td><span class="pill info">عشرة أرقام</span></td><td>من 0.25× (الكسب الثابت) إلى 1.66× (أسوأ عمق)</td></tr>
+      <tr><td class="code"><a href="#p12">P12</a></td><td>الشكلان 8 و9، بالشرط المُعاد صياغته</td><td><span class="pill info">خارج إعادة الإنتاج</span></td><td>العمق المفحوص 15.87 mm وسطيًّا مقابل 8.63 للجزء الظاهر من منحنى الورقة</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<hr class="part">
+
+<article class="cmp" id="p01">
+  <div class="cmp-head"><span class="code">P01</span><h3>الشكل 5: دالّة استجابة البنية</h3><span class="pill good">مطابق</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p01_fig5_structure_frf.png" alt="FRF البنية في الشكل 5 للورقة مقابل نموذج الجدول 1، مع لوحة الفرق" loading="lazy"></div>
+    <figcaption>
+      <p>منحنى «المُعرَّف» في الورقة هو الجدول 1 بالضبط: نموذجنا بالقيم نفسها (<span class="num">129.3 Hz</span>، <span class="num">1.45 %</span>، <span class="num">1.34×10⁷ N/m</span>) يطابقه بوسيط فرق <b>0.04 %</b> وأقصى 0.21 %.</p>
+      <p class="why">الخطّ المتقطّع نموذجنا بتخميد 1.34 %، وهو ما تستعمله منحنيات الورقة الأخرى (الأشكال 6 و9): قمّته أعلى بـ 8.2 %. فالورقة تذكر 1.45 % وترسم بقيّة منحنياتها بـ 1.34 %.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p02">
+  <div class="cmp-head"><span class="code">P02</span><h3>الشكل 6a: استجابة الحلقة المغلقة</h3><span class="pill warn">مطابق مع ملاحظة</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p02_fig6a_closed_loop_frf.png" alt="منحنيات الحلقة المغلقة الخمسة للشكل 6a مقابل النموذج، مع الفرق بكسوب المفتاح وبالكسوب الملائمة" loading="lazy"></div>
+    <figcaption>
+      <p>بكسوب مفتاح الشكل يطابق نموذجنا منحنى 1300 rpm (<span class="num">g = 1162</span>) والمنحنى بلا تحكّم ضمن <b>0.002 dB</b>، ويختلف عند السرعات الثلاث الأخرى حتى 1.1 dB عند القمّة (2500 rpm). أمّا بالكسوب <span class="num">1543 و685 و830</span> فتنطبق المنحنيات الخمسة ضمن 0.002 dB.</p>
+      <p class="why">أي أنّ المنحنيات المرسومة صحيحة لنموذج الورقة، لكنّ الأرقام المكتوبة في مفتاحها (1487 و585 و797) لا تطابقها. ومحور التردّد في هذه اللوحة مزاحٌ 0.21 %: منحنياتها تبلغ قمّتها عند 129.02 Hz لا 129.3، فصُحّح قبل حساب الفرق.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p03">
+  <div class="cmp-head"><span class="code">P03</span><h3>الشكل 6b: أقطاب الحلقة المغلقة</h3><span class="pill warn">مطابق مع ملاحظة</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p03_fig6b_poles.png" alt="أقطاب البنية والمشغّل في الشكل 6b مقابل أقطاب النموذج" loading="lazy"></div>
+    <figcaption>
+      <p>مواضع أقطاب الورقة مقروءة من مراكز علاماتها في مسارات الـ PDF المتّجهية، بلا تقريب. بلا تحكّم وعند 1300 rpm: <span class="num">−10.89</span> و<span class="num">−97.07</span> في الورقة وعندنا. وعند 500 و2500 و3000 rpm تقع أقطاب الورقة (<span class="num">−125.33، −61.69، −72.45</span>) على كسوب 1543 و685 و830 (<span class="num">−125.33، −61.72، −72.45</span>)، لا على كسوب المفتاح (<span class="num">−121.18، −54.28، −70.00</span>). وكلّ الأقطاب، أقطاب المشغّل (8.4 Hz) معها، تنطبق ضمن <b>0.05 rad/s</b>.</p>
+      <p class="why">قراءةٌ سابقة في المستودع (<span class="num">fig6b_poles.csv</span>) قرّبت مراكز العلامات إلى 0.1 نقطة، أي نحو 1.7 rad/s، فأظهرت فرقًا ليس في الورقة؛ صُحّحت المقارنة والاختبار.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p04">
+  <div class="cmp-head"><span class="code">P04</span><h3>الشكل 8: خريطة الكسب</h3><span class="pill bad">يختلف</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p04_fig8_gain_map.png" alt="خريطة الكسب في الشكل 8 مقابل خريطتنا، مع نسبة الكسبين" loading="lazy"></div>
+    <figcaption>
+      <p>نسبة كسبنا إلى كسب الورقة (الوسيط): <b>0.74</b> في 500–1150 rpm، و<b>0.88</b> في 1160–1490، و<b>1.83</b> في 2060–2310، و<b>0.97</b> في 2320–3000 rpm (536 مقابل 543 عند 2500 rpm). مدى كسوبنا <span class="num">71–1046</span> مقابل <span class="num">257–1487</span> في الورقة، وأدناه عند 1950 rpm حيث تردّد مرور الأسنان يساوي تقريبًا تردّد النمط.</p>
+      <p>في 2060–2310 rpm يقع أمثلنا في <b>جيبٍ مقبول معزول</b> فوق مجالٍ من الكسوب المرفوضة: الطلب لا يتغيّر رتيبًا مع الكسب، فيعود تحت 27 N عند كسوب أعلى. وعلى المجال المتّصل من <span class="num">g = 0</span> تصير النسبة هناك 0.72.</p>
+      <p class="why">المناطق الرمادية مقاطع مستقيمة تمامًا في خريطة الورقة (رؤوس على خطّ واحد، أطولها 1410–1860 rpm بخمسة وعشرين رأسًا)، فهي على الأرجح استيفاء، واستُبعدت من الوسيط. وتتوقّف المقارنة على اختيارات لا تذكرها الورقة: الدخول الحادّ من السكون، وقراءة الطلب قوّةً (3 N/V)؛ وتحت 1500 rpm تغيّر طريقةُ حساب القوّة في المحاكي الكسبَ حتى 3 مرّات.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p05">
+  <div class="cmp-head"><span class="code">P05</span><h3>الشكل 9: حدّ الاستقرار بلا تحكّم</h3><span class="pill good">مطابق</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p05_fig9_uncontrolled_sld.png" alt="فصوص الاستقرار بلا تحكّم في الشكل 9 مقابل النموذج بتخميدين" loading="lazy"></div>
+    <figcaption>
+      <p>بتخميد <b>1.34 %</b> يطابق نموذجنا منحنى الورقة بوسيط <b>0.04 %</b> على 400–3000 rpm، وقمم الفصوص كلّها (<span class="num">6.78 / 8.99 / 13.64 / 29.27 mm</span> في الورقة، و<span class="num">6.78 / 8.99 / 13.63 / 29.26</span> عندنا)، وأدنى الحدّ <span class="num">1.213 mm</span> مقابل <span class="num">1.212</span>.</p>
+      <p class="why">بالتخميد المذكور في الجدول 1 (1.45 %) يصير الفرق 8 % وسيطًا. لذلك اعتُمد 1.34 % في كلّ الحسابات.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p06">
+  <div class="cmp-head"><span class="code">P06</span><h3>الشكل 9: حدّ الاستقرار بالتحكّم</h3><span class="pill bad">يختلف</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p06_fig9_controlled_sld.png" alt="حدّ الاستقرار بالتحكّم في الشكل 9 مقابل خريطتنا ونموذجنا بكسوب الورقة، مع النسب" loading="lazy"></div>
+    <figcaption>
+      <p><b>الخطّ الأزرق</b> نتيجتنا الكاملة: النسبة إلى الورقة 1.02 تحت 1160 rpm، و0.97 في 1160–1490، و1.17 في 2320–3000 rpm (مع استبعاد المقاطع المستقيمة، كما في التقرير). وفي 2060–2310 rpm تبلغ 3.07 لأنّ أمثلنا هناك جيبٌ معزول؛ ومن <span class="num">g = 0</span> يكون العمق 5.8–7.5 mm، أي 1.4 من الورقة. أسوأ عمق عندنا <span class="num">5.97 mm</span> (عند 2330 rpm)، والورقة تقول 3.6.</p>
+      <p><b>الخطّ البنفسجي</b> نموذجنا نفسه بكسوب الشكل 8 للورقة: لو كان منحنى الورقة حدَّ الاستقرار بكسوبها لانطبقا. لكنّهما يبتعدان بوسيط <b>18 %</b>، و14 فقط من 192 سرعة ظاهرة ضمن 5 %، مع أنّ النموذج نفسه يطابق الشكلين 6 و9 بلا تحكّم.</p>
+      <p class="why">المنطقتان الورديّتان غطّتهما الورقة بمستطيلات بيضاء في ملف الـ PDF: هناك ينزل منحنى «التحكّم» تحت منحنى «بلا تحكّم» (3.24 مقابل 29.17 mm عند 1950 rpm)، وهذا لا يسمح به شرطها نفسه؛ ونسبتنا إليه هناك 1.3–9.1. وأقصى تحسين عندنا 9.7× (520 rpm)، و8.7× عند 730 rpm، والورقة تقول نحو 13×.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p07">
+  <div class="cmp-head"><span class="code">P07</span><h3>الشكل 11: الكسب الثابت الواحد</h3><span class="pill bad">يختلف</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p07_fig11_single_gain.png" alt="منحنى الكسب الثابت في الشكل 11 مقابل نموذجنا بكسب 237 و270 وكسبنا الثابت 60.3" loading="lazy"></div>
+    <figcaption>
+      <p>الكسب الثابت الذي يعطيه شرط الورقة في نموذجنا <b>60.3</b> V·s/m، لا 237: الكسب 237 يتجاوز حدّ القوّة عند 18 سرعة قرب الرنين القسري (1910–2010 و2060–2120 rpm). فمنحنانا (الأزرق) أدنى من منحنى الورقة بـ <b>49 %</b> وسيطًا، ومتوسّطه 6.5 mm. وهذا بقراءة الطلب قوّةً؛ أمّا بقراءته «فولتًا» فالكسب الثابت نحو 290.</p>
+      <p>وحتّى بالكسب نفسه 237 يقع نموذجنا أدنى من منحنى الورقة بـ <b>7.0 %</b> (الخطّ البنفسجي)، ويلائمه كسبٌ قدره <b>≈270</b> بفرق وسيط 0.2 %.</p>
+      <p class="why">الشكل 11 صورة نقطية، فاستُخرج منحناه بالألوان (نحو ±0.07 mm و±4 rpm)؛ القفزات القصيرة في لوحة الفرق عند حوافّ الفصوص من هذا الاستخراج.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p08">
+  <div class="cmp-head"><span class="code">P08</span><h3>الجدول 3: DVF المقصوص مقابل الكسب المقترح</h3><span class="pill bad">معكوس</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p08_table3.png" alt="أعمدة الجدول 3 للورقة مقابل حدودنا الزمنية، مع فرق المقترح ناقص المقصوص" loading="lazy"></div>
+    <figcaption>
+      <p>في الورقة يتفوّق الكسب المقترح على DVF المقصوص عند 2300–3000 rpm بـ <span class="num">+0.4</span> إلى <span class="num">+0.9 mm</span>. عندنا العكس عند السرعات التسع كلّها: DVF المقصوص (بكسب 1500) أعمق بـ <b>1.6–6.6 mm</b>، وبكسب 3000 أعمق أيضًا.</p>
+      <p class="why">السبب أنّ المشغّل يُشبَع عند دخول الأداة فقط، ثم يبقى الأمر دون 9 V والقطع مستقرّ؛ وشرط الورقة يأخذ أقصى الطلب على المحاكاة كلّها، وهو عابر الدخول، فيرفض كلّ كسب يُشبع المشغّل لحظةً. وهذا يتوقّف على الدخول الحادّ من السكون، وهو اختيارٌ لا تذكره الورقة. حدودنا هنا زمنية بحدّ الجهد 9 V وذاكرة السطح الكاملة.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p09">
+  <div class="cmp-head"><span class="code">P09</span><h3>نقاط الاختبار المنشورة</h3><span class="pill good">17 من 19</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p09_test_points.png" alt="نقاط الاختبار التسع عشرة مصنّفة بنموذجنا بكسوب الورقة وبكسوبنا" loading="lazy"></div>
+    <figcaption>
+      <p>التجارب أُجريت بكسوب الورقة، فاليسار هو مقياس التحقّق من النموذج: <b>17 من 19</b> قطعًا في الجانب الصحيح، وهي النتيجة نفسها التي تعطيها منحنيات الورقة. القطعان الخاطئان (1300 rpm/10 mm و2800 rpm/5.5 mm، كلاهما ارتجاج مقيس) يقعان تحت منحنى الورقة نفسه أيضًا.</p>
+      <p class="why">باليمين كسوبنا: 13 من 19، لأنّ كسبنا الثابت (60) يتنبّأ بالارتجاج لثلاثة قطوع مستقرّة. وهذا فحص اتّساق لا تحقّق، فكسوبنا لم تُجرَّب. 19 قطعًا مختلفًا من 21 علامة (قطعا 2800 rpm بلا تحكّم مرسومان في الشكلين).</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p10">
+  <div class="cmp-head"><span class="code">P10</span><h3>الشكلان 10 و12: تردّد الارتجاج المقيس</h3><span class="pill warn">قريب</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p10_chatter_frequencies.png" alt="تردّدات الارتجاج المقيسة في الشكلين 10 و12 مقابل تردّدات النموذج" loading="lazy"></div>
+    <figcaption>
+      <p>12B (بلا تحكّم): المقيس <span class="num">133.3 Hz</span>، والمحاكى <span class="num">131.9</span>. 10B: المقيس <span class="num">149.5</span>، وتردّد بداية الارتجاج في نموذجنا <span class="num">149.0</span> بكسب الورقة. 12D: المقيس <span class="num">138.1</span>، ونموذجنا <span class="num">134.0</span> بكسب الورقة و<span class="num">133.5</span> محاكًى بكسبنا، فيبقى نحو <b>4 Hz</b> خطأً من النموذج.</p>
+      <p class="why">10B مرتجّ قياسًا، لكنّ نموذجنا يتنبّأ باستقراره بالكسبين (حدّه 12.48 و11.01 mm، فوق 10 mm)، فعلامتاه تردّد الحدّ لا ارتجاجًا محاكًى؛ وخطّه المقيس يقع على بعد 2 Hz تحت التوافقي السابع للمغزل (151.7 Hz). التردّدات المقيسة مقروءة من لوحات FFT النقطية بدقّة نحو ±1.9 Hz. أمّا الإشارات الزمنية المقيسة في الشكلين 10 و12 فصورٌ لقياسات لا بيانات، فتُقارن بتردّدها هنا وبتصنيفها (مستقرّ أو مرتجّ) في P09.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<article class="cmp" id="p11">
+  <div class="cmp-head"><span class="code">P11</span><h3>أرقام النصّ الرئيسة</h3><span class="pill info">عشرة أرقام</span></div>
+  <figure>
+    <div class="plate"><img src="figures/p11_headline_numbers.png" alt="عشرة أرقام من نصّ الورقة مقابل قيمها في إعادة الإنتاج، على محور لوغاريتمي" loading="lazy"></div>
+    <figcaption>
+      <p>أكبر الفروق في الكسوب: الكسب الثابت 60.3 مقابل 237 (0.25×)، وأدنى كسب على الخريطة 71 مقابل 257 (0.28×). وأسوأ عمق مضبوط 5.97 مقابل 3.6 mm (1.66×)، والتحسين قرب 730 rpm 8.7× مقابل 13×.</p>
+      <p class="why">في المثال المحلول (1300 rpm و<span class="num">g = 1240</span>) يعطي نموذجنا <span class="num">a<sub>lim</sub> = 13.2 mm</span> وطلبًا 45 N، والورقة 11.8 mm و29 N. وتحت كلّ سطر مصدرُ رقم الورقة: بعضها مطبوع في النصّ، وبعضها مقروء من أشكالها حيث تختلف عن النصّ (أدنى كسب 256.9 في الشكل 8 والنصّ يقول 237؛ وعند 1300 rpm 11.49 في الشكل 9 والنصّ 10 والجدول 3 12.0).</p>
+    </figcaption>
+  </figure>
+</article>
+
+<hr class="part">
+
+<article class="cmp" id="p12">
+  <div class="cmp-head"><span class="code">P12</span><h3>خارج إعادة الإنتاج: الشرط المُعاد صياغته</h3><span class="pill info">ليس في الورقة</span></div>
+  <p class="beyond">هذه المقارنة ليست إعادة إنتاج: هي طريقتنا المصحّحة (§8 من التقرير)، مرسومة فوق الشكلين 8 و9 للورقة لترى أين تختلف النتيجة حين يُصاغ شرط الجدوى صياغة سليمة.</p>
+  <figure>
+    <div class="plate"><img src="figures/p12_reformulated_vs_paper.png" alt="خريطة الكسب والعمق المفحوص بالشرط المعاد صياغته مقابل الشكلين 8 و9" loading="lazy"></div>
+    <figcaption>
+      <p>العمق المفحوص بالمحاكاة (مع حدّ الجهد 9 V وهامش 10 % تحت الحدّ) <b>15.87 mm</b> وسطيًّا، وأدناه 12.57 mm عند 2140 rpm. ومنحنى الورقة 8.63 mm متوسّطًا على الجزء الظاهر (7.92 بالجزء المغطّى)، فوسيط النسبة 1.89 على الظاهر.</p>
+      <p class="why">الكسب هنا على حدّ البحث 1500 عند 157 من 251 سرعة، فنسبة الكسب في اللوحة السفلى اليسرى تعكس هذا الحدّ أكثر ممّا تعكس الورقة. وينخفض على شكل V حول 1940 rpm حيث الاهتزاز القسري رنّان، كما في الشكل 8 للورقة في الموضع نفسه.</p>
+    </figcaption>
+  </figure>
+</article>
+
+<footer>
+  <p>أبحاث C1–C4 (ثنائيّة الاستقرار، والشهادات، والحدّ المتأخّر) ليس لها نظير في الورقة، فلا تظهر هنا؛ هي في التقرير الكامل.</p>
+  <p>الأشكال من <span class="num">src/figures_paper_vs_ours.py</span>، والأرقام في <span class="num">results/paper_vs_ours.json</span>. لا يُعاد هنا أيّ نصّ أو شكل من المقال؛ ما أُخذ منه أرقام ومنحنيات مستخرجة، معلَّمة بـ «paper» في كلّ شكل.</p>
+  <p class="cite">M. Ozsoy, N. D. Sims, E. Ozturk, Robust active control of milling chatter under actuator constraints, J. Manufacturing Processes 171 (2026) 247–257 (CC BY-NC-ND).</p>
+</footer>
+
+</div>

@@ -52,11 +52,13 @@ def test_closed_loop_at_1300rpm_matches_fig6():
     p = p[(p[:, 0] > 1) & (p[:, 0] < 250)]
     err = p[:, 1] - 20 * np.log10(np.abs(Gcl(2j * np.pi * p[:, 0], 1162.0)))
     assert np.sqrt(np.mean(err ** 2)) < 0.1
-    # pole read from the vector Fig. 6b (verification/targets/fig6b_poles.csv)
+    # pole read from the vector Fig. 6b, marker centre unrounded (verification/consistency/b_fig6.json:
+    # -97.07 + 804.96j; targets/fig6b_poles.csv rounds the centres to 0.1 pt, about 1.7 rad/s)
     s = closed_loop_poles(1162.0)
     dom = s[np.argmax(s.imag)]
-    assert dom.real == pytest.approx(-97.03, abs=0.1)
-    assert dom.imag == pytest.approx(805.4, abs=0.5)
+    mk = json.load(open(path("verification", "consistency", "b_fig6.json")))["fig6b_markers"]["1300rpm"]["structural"]
+    assert dom.real == pytest.approx(mk[0], abs=0.03)
+    assert dom.imag == pytest.approx(mk[1], abs=0.05)
 
 
 def test_state_space_has_the_closed_loop_poles():
