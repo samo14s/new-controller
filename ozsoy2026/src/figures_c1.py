@@ -21,7 +21,7 @@ RES = os.path.join(ROOT, "results")
 OURS, PAPER, GREY, GOOD, BAD, SOFT = "#1f5fa8", "#d1495b", "#6c757d", "#2e7d32", "#c62828", "#e09f3e"
 VMAX = P.F_MAX / P.GA_GAIN
 SPR = P.STEPS_PER_REV
-NREG = 4
+from c1_unsafe_zone import NREG          # full surface memory, as the campaigns
 plt.rcParams.update({"font.size": 9, "axes.grid": True, "grid.alpha": 0.3,
                      "figure.dpi": 150, "savefig.bbox": "tight"})
 
@@ -147,8 +147,13 @@ def c1_04_basin():
             a0.plot(f[~fin], np.full((~fin).sum(), top), "^", color=BAD, mfc="none", ms=5,
                     label=f"|V| <= 9 V: no chatter up to {b['dv_hi']:.0f} m/s")
         mf = (b["rpm"] == n) & (b["vmax"] == 0)
-        a0.plot(b["frac"][mf], np.full(mf.sum(), top), "^", color=GREY, ms=5,
+        fmin = b["dv"][mf].min(axis=1) * 1e3                    # smallest kick over the phases (inf: none)
+        none = ~np.isfinite(fmin)
+        a0.plot(b["frac"][mf][none], np.full(none.sum(), top), "^", color=GREY, ms=5,
                 label=f"no limit: no chatter up to {b['dv_hi']:.0f} m/s")
+        if (~none).any():
+            a0.plot(b["frac"][mf][~none], fmin[~none], "v", color=GREY, ms=5,
+                    label="no limit: smallest kick that ends in chatter (one phase of 16)")
         # describing function in kick units: A* / (g p), p from the linear kicked cut
         p = b["p_mode"][m]
         ok = np.isfinite(p) & fin
@@ -166,9 +171,15 @@ def c1_04_basin():
         a1.set(yscale="log", xlabel="depth / a_lim(g)", xlim=(0.1, 1.0), ylim=(0.5, 5000))
     ax[0, 0].set(ylabel="critical kick (mm/s)")
     ax[1, 0].set(ylabel="kick impulse / tooth\ncutting impulse (%)")
-    h, l = ax[0, 1].get_legend_handles_labels()
-    fig.legend(h, l, fontsize=7, loc="lower center", ncol=5, bbox_to_anchor=(0.5, -0.06))
-    fig.suptitle("C1-4  The basin of the stable cut narrows towards a_lim; without the limit no chatter up to 3 m/s",
+    h, l = [], []
+    for a_ in ax[0]:                                   # labels from all panels (some markers occur in a few)
+        for hh, ll in zip(*a_.get_legend_handles_labels()):
+            if ll not in l:
+                h.append(hh)
+                l.append(ll)
+    fig.legend(h, l, fontsize=7, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.1))
+    fig.suptitle("C1-4  The basin of the stable cut narrows towards a_lim; without the limit only kicks of "
+                 "0.8-3 m/s, if any, end in chatter",
                  fontsize=9, y=1.0)
     save(fig, "c1_04_basin_vs_depth.png")
 
