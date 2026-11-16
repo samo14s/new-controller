@@ -22,7 +22,10 @@ inside the window and such a run is called stable.  Boundaries near the
 linear limit are therefore up to 1.5 % high: with 2000-revolution runs the
 onset lies 0.1-0.7 % above the ZOA limit, the 300-revolution boundary
 0.4-2.2 % (verification/tdsim/check8).
-Kicked or saturated runs (C1-C4), where chatter is large, are not affected.
+Kick-based limits and clipped limits far below the linear limit are not
+affected; step-entry limits near the linear limit are (the check7 rows, the
+Table 3 TD column and table3_clip_gain_sweep.csv, C1's c1_map a_step_free,
+C4's c4_robust td_limit and test_comb_limit_matches_the_simulator).
 """
 import numpy as np
 import params as P

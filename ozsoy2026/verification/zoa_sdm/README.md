@@ -48,7 +48,7 @@ the sign of `ALPHA` are identical. `model.py` re-types the parameters from the p
 | `run_compare.py` -> `compare_12speeds.csv` | 12 speeds x g in {0, 300, 800, 1500} x zeta in {1.34, 1.45} % |
 | `dense_rootcheck.py` -> `dense_rootcheck.csv`, `dense_sld_z0134.json` | src against the lobe sweep on a 1-rpm grid (2501 speeds), gains 0 to 6000 |
 | `spurious_scan.py` -> `spurious_scan.json/.csv` | Monte Carlo test for pole roots on the paper grid |
-| `zoa_fix_demo.py` -> `zoa_fix_demo.json` | a pole guard for the per-speed scan (demonstration only, not applied to src) |
+| `zoa_fix_demo.py` -> `zoa_fix_demo.json` | a pole guard for the per-speed scan (adopted in src/zoa.py at a8fb532) |
 | `actuator_mode.py` -> `actuator_mode.json`, `actuator_effect.csv` | role of the 8.4 Hz actuator mode |
 | `dense_sdm.py` -> `dense_sdm.csv`; `make_figures.py` | dense SDM sweeps and the figures `fig_zoa_vs_sdm.png`, `fig_rel_diff_12speeds.png` |
 
@@ -115,6 +115,9 @@ the conservative side.
   frequencies agree to 3e-5 Hz.
 * Spurious roots: they do occur, at tooth-passing poles. At w = 2 pi j / T the factor (1 - e^{-iwT}) vanishes, and
   Im a(w) changes sign through a pole. `zoa.py` rejects such a sign change only when |Im a| >= 0.5 |a|.
+  [This describes the code before a8fb532. src/zoa.py now applies the floor(wT/2pi) guard described below
+  instead of the 0.5 filter; the current maximum |rel| against the lobe sweep is 6.0e-6 with no pole roots,
+  see current_grid_check.json, and the guard is pinned by test_no_spurious_root_at_a_tooth_passing_pole.]
   Near the pole, `|Im a|/|a| = |cos(arg Gcl)|`, so the filter lets the pole through whenever a
   tooth harmonic falls where arg Gcl lies between -120 and -60 deg, which is the resonance band. The
   interpolated "root" is then essentially a cancellation residue: for example 29.296875, 31.25,
@@ -155,7 +158,8 @@ the conservative side.
 
 `zoa.a_lim` implements the correct zero-order condition, including the sign and value of alpha_yy = -1 - (Kr/Kt) pi/2.
 It agrees with an SDM of the same averaged model to 2e-5 and with an independent lobe sweep to 1.6e-6. It
-misses no roots. It can occasionally return a spurious pole root: rarely, always on the conservative side,
-and fixable as shown above. Against the time-periodic model, the ZOA is within about 1 % (conservative) for the 45 deg
+misses no roots. It could occasionally return a spurious pole root: rarely, always on the conservative side,
+and fixable as shown above. (Both statements describe the code before a8fb532. With the current grid and the
+pole guard the agreement with the lobe sweep is 6.0e-6 and no pole roots are returned, current_grid_check.json.) Against the time-periodic model, the ZOA is within about 1 % (conservative) for the 45 deg
 helical cutter. For a straight-flute idealisation it is within 3.5 % (conservative) at Hopf boundaries, but
 5 to 6 % non-conservative inside the 1700 to 1950 rpm flip lobe at g = 0. The flip lobe disappears with the helix.

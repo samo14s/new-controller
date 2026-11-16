@@ -11,14 +11,15 @@ period.  The law is not new: PD on x(t) - x(t - T) with the same argument
 (a lower actuator voltage, since the forced vibration is not fought) is Li et
 al. 2022 (Int. J. Adv. Manuf. Technol., doi 10.1007/s00170-022-09128-w); its
 non-invasiveness on the periodic orbit is that of Pyragas delayed feedback
-(Phys. Lett. A 1992), applied to milling with a bound on the control action by
+(Phys. Lett. A 1992), applied to milling by
 van de Wouw et al. 2015 (IFAC-PapersOnLine, doi 10.1016/j.ifacol.2015.09.400)
 and van Dijk, van de Wouw & Nijmeijer 2015 (Int. J. Robust Nonlinear Control
 25(17):3495-3514, doi 10.1002/rnc.3280: fixed-structure delayed output
 feedback that vanishes on the periodic solution, with the actuator forces as
 a design criterion); see also Mancisidor et al. 2019 (Mechatronics, doi
 10.1016/j.mechatronics.2019.102276, delayed feedback against the regenerative
-effect in turning), Du et al. 2022, 2024 (time-delay feedback) and Li et al.
+effect in turning), Du et al. 2024 (IJMS, doi 10.1016/j.ijmecsci.2024.109257,
+robust combined time-delay control) and Li et al.
 2021 (comb filtering of the spindle harmonics, Mech. Syst. Signal Process.).
 What C4 adds is narrower: the analysis under a hard 9 V clip, i.e. the
 authority budget of the forced orbit, the certified basin with the clip (C2's

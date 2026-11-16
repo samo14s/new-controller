@@ -1,6 +1,6 @@
 """C3: certified basin on the time-periodic model (periodic saturated-LMI certificate).
 
-What C2 left open.  C2's theorem is about the averaged (ZOA) model: the
+What C2 left open.  C2's theorem is about the N-node collocation of the averaged (ZOA) model: the
 directional coefficient of the regenerative force is replaced by its mean
 over the tooth period.  The real cut has a time-periodic coefficient
 a H(t), and the forced command b(t) varies over the period while C2 used its

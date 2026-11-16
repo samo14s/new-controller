@@ -3,7 +3,7 @@
     python figures_c1.py      -> ../figures/c1_01_*.png ... c1_05_*.png
 Needs ../results/c1_map.npz, c1_band.npz, c1_gainplane.npz, c1_basin.npz,
 c1_df.npz (c1_unsafe_zone.py); c1_02 and c1_03 run their own simulations.
-All simulations remember four passes (multiple regeneration), as in C1.
+All simulations use the full surface memory (NREG = 0 from c1_unsafe_zone), as the C1 campaigns.
 """
 import os
 import numpy as np
@@ -122,8 +122,8 @@ def c1_03_kicks(rpm=2500, a=15e-3, g=1500.0):
                   ylim=(1e-6, 1e4))
     ax[0].set(ylabel="distance from the periodic orbit (um)")
     ax[1].legend(fontsize=7.5)
-    fig.suptitle(f"C1-3  Bistability: the stable orbit and chatter coexist only with the limit "
-                 f"({rpm} rpm, {a*1e3:.0f} mm)", fontsize=9, y=1.02)
+    fig.suptitle(f"C1-3  Bistability: with the limit a kick of these sizes ends in chatter; without it the same "
+                 f"kicks die out ({rpm} rpm, {a*1e3:.0f} mm)", fontsize=9, y=1.02)
     save(fig, "c1_03_bistability_kicks.png")
 
 

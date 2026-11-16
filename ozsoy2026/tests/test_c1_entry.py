@@ -158,8 +158,34 @@ def test_multiple_regeneration_matches_single_without_separation():
 
 def test_multiple_regeneration_bounds_clipped_chatter():
     """2500 rpm, 15 mm, g = 1500, |V| <= 9 V, step entry: a single pass runs
-    away past 1 cm; four passes settle on a bounded chatter cycle."""
+    away past 1 cm; four passes and the full surface memory settle on a
+    bounded chatter cycle (here; elsewhere four passes are not enough)."""
     r1 = simulate(2500, 15e-3, 1500.0, vmax=9.0, nrev=150)
     r4 = simulate(2500, 15e-3, 1500.0, vmax=9.0, nrev=150, nreg=4)
+    r0 = simulate(2500, 15e-3, 1500.0, vmax=9.0, nrev=150, nreg=0)
     assert r1["diverged"]
     assert not r4["diverged"] and 2e-4 < r4["max_x"] < 1e-3
+    assert not r0["diverged"] and 2e-4 < r0["max_x"] < 1e-3
+
+
+def test_full_memory_matches_single_without_separation():
+    """With a face entry nothing leaves the cut, so the full surface memory
+    gives the single-pass result to round-off."""
+    a = simulate(RPM, A, G, store=True, nrev=60, edge=True)
+    b = simulate(RPM, A, G, store=True, nrev=60, edge=True, nreg=0)
+    assert np.abs(a["x"] - b["x"]).max() < 1e-12 * np.abs(a["x"]).max()
+
+
+def test_full_memory_matches_the_stored_brute_force():
+    """verification/tdsim/check9: against the least chip over the last 600
+    passes, the clipped-chatter amplitude agrees to 0.5 % and the same runs
+    diverge; four passes diverge in two cases where the full memory does not."""
+    import json
+    from conftest import path
+    c = json.load(open(path("verification", "tdsim", "check9_full_memory.json")))
+    rows = c["clipped_chatter"]
+    for r in rows:
+        assert r["full"]["diverged"] == r["brute600"]["diverged"]
+        if not r["full"]["diverged"]:
+            assert r["full"]["max_x_mm"] == pytest.approx(r["brute600"]["max_x_mm"], rel=5e-3)
+    assert sum(r["nreg4"]["diverged"] and not r["full"]["diverged"] for r in rows) == 2

@@ -26,6 +26,10 @@ def test_set_damping_switches_every_module():
     assert a_lim(2500, 0.0) / a0 == pytest.approx(0.0145 / 0.0134, rel=0.05)    # the limit scales with damping
     x1 = simulate(2500, 1e-3, 0.0, store=True, nrev=4)["x"]
     assert not np.array_equal(x0, x1)
+    import c2_certificate as c2
+    import c4_robust
+    assert c2.model(2500, 1e-3, 0.0, N=8)[0][1, 1] == pytest.approx(-P.C / P.M)
+    assert c4_robust.G_struct(1j * P.WN) == pytest.approx(1 / (1j * P.WN * P.C))     # exact at s = j wn
 
 
 def test_uncontrolled_peak_matches_fig6a():

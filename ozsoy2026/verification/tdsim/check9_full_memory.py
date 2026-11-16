@@ -10,8 +10,8 @@ large-amplitude chatter, where 4 passes are not enough.
 Writes check9_full_memory.json.  About 10 min on one core.
 
 Result: the stable cut differs from single regeneration by 4.9 % (the tool
-leaves the cut briefly during the entry transient) and from the brute force
-by 0.3 %.  Clipped chatter: the amplitude agrees with the brute force to
+leaves the cut briefly during the entry transient; single regeneration is as
+far from the brute force) and from the brute force by 0.3 %.  Clipped chatter: the amplitude agrees with the brute force to
 0.4 % and the run diverges (1050 rpm) or stays bounded in the same cases;
 pointwise the chaotic trajectories separate.  With 4 passes, 2 of the 4
 chatter cases diverge where the full memory stays bounded, and a third is
@@ -61,7 +61,15 @@ try:
     r1 = tdsim.simulate(store=True, nrev=80, **c)
     r0 = tdsim.simulate(store=True, nrev=80, nreg=0, **c)
     out["stable_full_vs_single"] = dict(case=c, max_rel_dev=float(np.abs(r0["x"] - r1["x"]).max() / np.abs(r1["x"]).max()))
-    print(out["stable_full_vs_single"], flush=True)
+    lib, tdsim._lib = tdsim._lib, brute
+    try:
+        rb = tdsim.simulate(store=True, nrev=80, nreg=600, **c)
+    finally:
+        tdsim._lib = lib
+    s = np.abs(rb["x"]).max()
+    out["stable_full_vs_brute"] = dict(case=c, max_rel_dev=float(np.abs(r0["x"] - rb["x"]).max() / s),
+                                       single_vs_brute=float(np.abs(r1["x"] - rb["x"]).max() / s))
+    print(out["stable_full_vs_single"], out["stable_full_vs_brute"], flush=True)
     rows = []
     for n, g, f, kw in ((2350.0, 1217.0, 0.9, {}), (1050.0, 1500.0, 0.9, {}), (2500.0, 1500.0, None, dict(a=15e-3)),
                         (1090.0, 1500.0, 0.98, dict(edge=True, kick_step=100 * 512 + 37, kick_dv=12e-3))):

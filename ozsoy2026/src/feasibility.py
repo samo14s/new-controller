@@ -1,8 +1,11 @@
 """A well-posed actuator-feasibility condition (proposed replacement for Eq. 2).
 
 Why the paper's check is ill-posed.  Eq. (2) simulates the cut at exactly
-a_lim, where the chatter mode is marginal: it neither grows nor decays, so the
-peak demand is set by how hard tool entry excites it.  The demand then jumps
+a_lim and takes the peak demand over the whole run.  With a step entry from
+rest (the start assumed in this reproduction, README 4.6) that peak is mostly
+the entry transient in the first revolution; the demand per revolution then
+decays (2500 rpm, g = 536: 27 N to 16 N in 50 revolutions).  So the peak is
+set by how hard tool entry excites the cut.  The demand then jumps
 around in g, the feasible set fragments, and a gain that saturates the
 actuator only for a moment at entry is rejected even though the cut is stable
 (the clipped-DVF reversal of Table 3).

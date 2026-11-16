@@ -55,7 +55,7 @@ problem is solved again in the coordinates whitened by the previous W
 (re-centring).  Every candidate is then checked independently of the solver:
   * M1 at lam = 0 must have its smallest eigenvalue above a round-off bound;
   * the inclusion and the size are computed through a Cholesky factor of W;
-  * an inclusion that is exceeded is repaired by shrinking (W, Y).
+  * an inclusion that is exceeded is repaired by shrinking (W, Y, S).
     python c2_certificate.py validate      -> ../results/c2_validate.npz
     python c2_certificate.py surface       -> ../results/c2_surface.npz (kick, every 60 rpm x 7 depths)
     python c2_certificate.py step          -> ../results/c2_step.npz (step entry, C1 basin speeds)
@@ -77,7 +77,8 @@ VMAX = P.F_MAX / P.GA_GAIN
 KAPPA = P.N_TEETH * P.K_TC * ALPHA / (4 * np.pi)      # dynamic force = KAPPA a (x - x(t - T))
 R2 = np.sqrt(2.0)
 TIGHT = dict(tol_gap_abs=1e-10, tol_gap_rel=1e-10, tol_feas=1e-10, max_iter=400)
-DELTA = 0.5          # validity of the linear cutting model: |x - x(t - T)| <= DELTA fz inside E(P)
+DELTA = 0.5          # |x - x(t - T)| <= DELTA fz inside E(P): excludes gross loss of contact (the chip can still
+#                      vanish near exit), not full validity of the linear cutting model
 FAST = {}                                   # solver defaults (faster; re-centring recovers most of the gap)
 
 
@@ -143,7 +144,12 @@ def orbit(rpm, g, a, N=None, n_t=256):
     command b(t) = -g v(t) on n_t samples of one tooth period, and b_max, a
     bound on |b(t)| over the whole period: the largest of N_DENSE samples plus
     max|b''| dt^2 / 8, with |b''| <= 2 g sum_m w_m^3 |X_m|.  The orbit is
-    truncated to the N_HARM tooth-passing harmonics of feasibility.py.
+    truncated to the N_HARM tooth-passing harmonics of feasibility.py, whose
+    slice-force harmonics come from a 4096-point DFT with the entry jump on a
+    sample.  So b_max bounds that 40-harmonic series, not the true orbit: at
+    the C2 validation points the true maximum is up to 0.8 mV higher.  The
+    rigorous bound is c3_periodic.orbit (README 14.9), and the certificates
+    corrected with it change by a factor 0.997-1.
     """
     from feasibility import force_harmonics, N_HARM
     from structure import Gcl
@@ -376,7 +382,7 @@ def certify(A, B, K, u0, e, rpm, settings=TIGHT, full=False, delta=DELTA):
                 cert = (Tm.copy(), np.linalg.inv(c * (W + W.T) / 2))
             try:
                 Tm = Tm @ cholesky((W + W.T) / 2, lower=True)
-            except np.linalg.LinAlgError:
+            except (np.linalg.LinAlgError, ValueError):       # not positive definite, or non-finite
                 break
         if best > 0:
             break

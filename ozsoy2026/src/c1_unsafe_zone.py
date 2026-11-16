@@ -3,8 +3,11 @@
 With the actuator command clipped (|V| <= F_max/K_a), a cut that the linear
 analysis calls stable can still chatter.  A large enough disturbance makes the
 command saturate, which lowers the effective DVF gain below the one the depth
-needs, so the chatter mode grows.  Without the limit the same cut always
-recovers.  The settled cut and chatter therefore coexist (bistability).  The
+needs, so the chatter mode grows.  Without the limit the cut recovered from
+every kick of the grid at 13 of the 16 tested points; at the other 3 only
+kicks of 0.78-3 m/s, in one phase of 16, end in chatter (loss of contact,
+Dombovari & Stepan 2015).  The settled cut and chatter therefore coexist
+(bistability), and the limit shrinks the basin by 50 times or more.  The
 step entry is one such disturbance.  It reveals only the top of the bistable
 band, where the entry transient exceeds the basin of the stable cut.
 
@@ -334,7 +337,10 @@ def df_gain(A, b, vmax=VMAX):
 
 
 def critical_amplitude(Nstar, b, vmax=VMAX):
-    """Smallest amplitude (V) at which df_gain falls to Nstar (0 or inf at the ends)."""
+    """Smallest amplitude (V) at which df_gain falls to Nstar (inf if never).
+    At Nstar = 1 (the full gain is needed, at a_lim) the gain stays 1 up to
+    the clipping onset vmax - max|b|, so that is the critical amplitude: the
+    basin tends to a finite size at a_lim, not to zero."""
     if Nstar <= 0:
         return np.inf
     A = np.logspace(-3, 3, 1201) * vmax
@@ -343,7 +349,7 @@ def critical_amplitude(Nstar, b, vmax=VMAX):
     if not i.size:
         return np.inf
     if i[0] == 0:
-        return 0.0
+        return float(max(vmax - np.max(np.abs(b)), 0.0)) if Nstar >= 1.0 - 1e-12 else 0.0
     k = i[0]
     return float(np.exp(np.interp(Nstar, [Nv[k], Nv[k - 1]], [np.log(A[k]), np.log(A[k - 1])])))
 

@@ -201,12 +201,13 @@ def c4_04_robust():
                  title=f"largest runout with orbit <= 9 V (capped at {R['runout'][-1] * 1e6:.0f} um)")
     for lab in ("DVF", "tooth comb 1000", "tooth comb"):
         jj = labels.index(lab)
-        for k, ls in zip(range(len(modes)), ("-", "--", "-.", ":")):
-            ax[0, 2].plot(R["tau"] * 1e6, R["tau_a_lim"][i25, jj, k], ls, color=cols[lab], lw=0.8, marker="o", ms=2.8,
+        for k, mk in zip(range(len(modes)), ("o", "s", "^", "D")):       # markers only: values between the
+            ax[0, 2].plot(R["tau"] * 1e6, R["tau_a_lim"][i25, jj, k], mk, color=cols[lab], ms=3.2,  # computed delays are unknown
+                          mfc="none" if k else cols[lab], ls="none",
                           label=f"{name[lab]}, {modes[k]}" if lab == "DVF" or k == 0 else None)
     ax[0, 2].set(xlabel="loop delay (us)", ylabel="a_lim (mm)", ylim=(0, 45),
-                 title=f"loop delay, {R['rpm'][i25]:.0f} rpm (0: unstable; markers: computed delays)")
-    ax[0, 2].legend(fontsize=5.6)
+                 title=f"loop delay, {R['rpm'][i25]:.0f} rpm (0: unstable; computed delays only)")
+    ax[0, 2].legend(fontsize=5.2, loc="upper center", ncol=2, framealpha=0.85)
     it = {t: int(np.argmin(np.abs(R["tau"] - t))) for t in (200e-6, 300e-6)}
     km = {f: k for k, m in enumerate(R["mode2"]) if not np.isnan(m[0]) for f in [m[0]]}
     for lab, mk in (("DVF", "s"), ("tooth comb 1000", "o"), ("tooth comb", "D")):

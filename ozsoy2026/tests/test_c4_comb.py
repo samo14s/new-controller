@@ -90,8 +90,9 @@ def test_comb_limit_converges_in_the_nodes():
 @pytest.mark.parametrize("rpm,g1,g2", [(2500.0, 1500.0, 500.0), (2500.0, 0.0, 2000.0), (1090.0, 0.0, 2000.0)])
 def test_comb_limit_matches_the_simulator(rpm, g1, g2):
     """The simulated (unclipped, step entry) stability limit with the comb
-    terms agrees with the collocated model to 1.5 % (the simulator keeps the
-    time-varying cutting coefficient)."""
+    terms agrees with the collocated model to 1.5 %.  The simulated limit is
+    biased high by the 300-revolution D1 detector, which calls the small limit
+    cycle just above the onset stable (verification/tdsim/check8)."""
     from tdboundary import boundary
     am = c4.a_lim_ctrl(rpm, g1, g2)
     at = boundary(rpm, g1, a_lo=0.8 * am, a_hi=1.3 * am, growth=1.04, g2=g2)

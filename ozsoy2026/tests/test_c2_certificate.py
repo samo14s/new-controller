@@ -86,12 +86,16 @@ def small():
     return dict(rpm=rpm, A=A, B=B, K=K, b=b, u0=c2.VMAX - bmax, e=e, size=size, cert=cert)
 
 
-def test_small_certificate_is_checked_and_holds_on_its_model(small):
+def test_small_certificate_passes_the_sampled_check(small):
+    """A sampled consistency check only (README 12.4): starts on the boundary
+    stay inside; an ellipsoid four times too large (Pz / 16) fails it."""
     s = small
     assert s["size"] > 0
-    vmax, vend = c2.proof_check(s["A"], s["B"], s["K"], s["b"], 60.0 / (s["rpm"] * P.N_TEETH), s["cert"],
-                                nruns=24, nper=20)
+    Tp = 60.0 / (s["rpm"] * P.N_TEETH)
+    vmax, vend = c2.proof_check(s["A"], s["B"], s["K"], s["b"], Tp, s["cert"], nruns=24, nper=20)
     assert vmax <= 1.0 and vend < vmax
+    Tm, Pz = s["cert"]
+    assert c2.proof_check(s["A"], s["B"], s["K"], s["b"], Tp, (Tm, Pz / 16), nruns=24, nper=20)[0] > 1.0
 
 
 def test_check_rejects_a_destabilised_model(small):

@@ -13,10 +13,11 @@ K = 1.34e7                # N/m
 WN = 2 * np.pi * FN
 M = K / WN**2             # modal mass, kg
 
-# The paper's computed curves were not produced with 1.45 %.  The uncontrolled
-# SLD of Figs. 9 and 11 and the uncontrolled FRF peak of Fig. 6a (-111.10 dB)
-# are matched exactly by 1.34 % (see docs, Sec. 2); 1.34 is also the mantissa
-# of the stiffness, which suggests a transcription slip.  The reproduction uses
+# The paper's computed curves that can be tested were not produced with
+# 1.45 %: the uncontrolled FRF peak of Fig. 6a (-111.10 dB), the open-loop pole
+# of Fig. 6b and the uncontrolled SLD of Fig. 9 fit 1.34 % (README 4.1); the
+# controlled curves of Figs. 8, 9 and 11 do not tell the two apart.  1.34 is
+# also the mantissa of the stiffness, which suggests a transcription slip.  The reproduction uses
 # 1.34 % by default and reports 1.45 % as a sensitivity case.
 ZETA_PAPER_CURVES = 0.0134
 ZETA = ZETA_PAPER_CURVES

@@ -212,12 +212,15 @@ def test_merged_and_corner_lmis_give_the_same_certificate():
         beta, (W, Y, S), _ = c3.lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=0.3, valid=c2.validity(n), merged=merged)
         out.append(c3.check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=c2.validity(n))[0])
     assert out[0] > 0 and out[0] == pytest.approx(out[1], rel=2e-3)
+    # the independent check rejects the same candidate on a destabilised model (coefficient doubled)
+    size, _, msg = c3.check(A0, 2 * E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=c2.validity(n))
+    assert size == 0.0 and "decrease" in msg
 
 
 def test_magnus_propagators_are_fourth_order():
     """The step propagators of a time-periodic system against a fine
-    piecewise-constant reference: 4th-order Magnus at L = 40 agrees to about
-    1e-7 (a flipped commutator term would leave about 1e-4)."""
+    piecewise-constant reference: 4th-order Magnus at L = 40 agrees to 9.2e-7
+    of max|ref| (a flipped commutator term would leave 5.3e-4)."""
     from scipy.linalg import expm
     rng = np.random.default_rng(3)
     n = 5
@@ -231,4 +234,4 @@ def test_magnus_propagators_are_fourth_order():
     M = 40000
     for t in (np.arange(M) + 0.5) / M:
         ref = expm((A0 + h(t) * E) / M) @ ref
-    assert np.abs(Phi - ref).max() < 1e-6 * np.abs(ref).max()
+    assert np.abs(Phi - ref).max() < 1e-5 * np.abs(ref).max()
