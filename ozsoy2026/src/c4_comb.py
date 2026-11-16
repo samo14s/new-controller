@@ -43,9 +43,11 @@ Model and certificate: those of C2 (c2_certificate.py) with the delayed terms
 in the deadzone argument K x and in the linear part; the history velocity
 x'(t - T) is the derivative of the Chebyshev interpolant of the history at
 theta = -T.  The orbit, its command bound b_max and the sector condition are
-unchanged (b depends on g1 only).  The interpolant cannot follow the jump of
-x'(t - T) one tooth period after a velocity kick (an error of order g2 dv / 2
-in the command during that period); the simulator validates the result.
+unchanged (b depends on g1 only).  The interpolant does not reproduce the
+delayed velocity of the delay equation after a velocity kick: the model's
+command departs from the DDE's by up to about 0.45-0.5 g2 per m/s of kick in
+the first tooth period and 0.5-0.65 g2 in the second; the simulator
+validates the result.
 
     python c4_comb.py limits     -> ../results/c4_limits.npz   (linear a_lim per design, authority-feasible g1)
     python c4_comb.py gainmap    -> ../results/c4_gainmap.npz  (certified kick over the gain grid, speed x depth)
@@ -64,7 +66,7 @@ from zoa import a_lim
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
 VMAX = c2.VMAX
-G_REF = 1500.0                                 # the paper's DVF gain (C1, C2)
+G_REF = 1500.0                                 # the gain bound of C1-C2 (section 8 map, g <= 1500)
 G1_MAX = 3000.0                                # gain bound of both families (feas_g3000)
 FEAS_KAPPA = 0.9                               # depth range of the authority rule (feasibility.KAPPA)
 
@@ -299,8 +301,9 @@ def run_gainmap(a):
                 for p, g1 in enumerate(o["g1_dvf"]):
                     old[(float(n), float(d), float(g1), 0.0)] = (
                         o["kick_dvf"][i, j, p], o["sigma_dvf"][i, j, p], o["bmax_dvf"][i, j, p], str(o["msg_dvf"][i, j, p]))
-    todo = [k for k in dict.fromkeys(keys + dkeys) if k not in old]
-    print(f"{len(keys)} points, {len(keys) - len(todo)} reused, {len(todo)} to compute", flush=True)
+    allk = list(dict.fromkeys(keys + dkeys))
+    todo = [k for k in allk if k not in old]
+    print(f"{len(allk)} points, {len(allk) - len(todo)} reused, {len(todo)} to compute", flush=True)
     with Pool(a.workers) as pool:
         new = pool.map(_gainmap, [(n, d * 1e-3, g1, g2, zeta) for (n, d, g1, g2) in todo], chunksize=1)
     old.update(dict(zip(todo, new)))

@@ -213,7 +213,8 @@ TD_ORBIT = [(2500.0, 20e-3, 1500.0, 2000.0, 1.0, 2e-6, 0.0), (2500.0, 20e-3, 150
 
 def _td_orbit(c):
     """Settled (unclipped, face entry, nreg 4) peak command in the simulator
-    against the closed form."""
+    against the closed form (a settled cut stays in the material, where the
+    number of remembered passes does not matter)."""
     from tdsim import simulate
     rpm, a, g1, g2, rho, ro, psi = c
     spr = P.STEPS_PER_REV

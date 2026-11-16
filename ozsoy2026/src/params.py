@@ -55,8 +55,9 @@ N_LAYERS = 30
 # --- Sec. 3: speed grid ----------------------------------------------------
 RPM_GRID = np.arange(500, 3001, 10)
 
-# --- ASSUMED (not stated in the paper) -------------------------------------
-# Flexible direction: the actuator and beam act normal to the feed (Fig. 3a),
+# --- ASSUMED (not stated in the paper's text) ------------------------------
+# Flexible direction: the actuator and beam act normal to the feed (read from
+# Figs. 3a and 7, where the feed points out of the page),
 # so the workpiece mode is placed on y (normal), feed on x.
 FLEX_DIR = "y"
 

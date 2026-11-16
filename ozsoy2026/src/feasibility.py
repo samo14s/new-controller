@@ -24,8 +24,8 @@ is the tooth-periodic forced response, and that response has a closed form:
 The demand max_t K_a g |xdot(t)| over all depths up to kappa*a_lim increases
 with g in practice (checked in the tests), so the feasible set is one
 interval [0, g_b] and the optimum is its upper edge.  The entry transient is
-left to a separate time-domain certificate with the real, clipped actuator
-(certify()).
+left to a separate time-domain check with the real, clipped actuator
+(certify(); a simulation of one entry, not a proof).
 """
 import numpy as np
 import params as P
@@ -38,6 +38,10 @@ N_HARM = 40         # tooth-passing harmonics kept
 N_THETA = 4096      # samples of one tooth period for the slice force
 N_T = 256           # time samples per tooth period for the peak search
 N_DEPTH = 80        # depths sampled in (0, kappa * a_lim]
+NREG = 0            # chip memory of the time-domain checks with the clipped actuator: 0 = the
+#                     full surface (tdsim).  With one pass, or a few, a tool that leaves the cut
+#                     is treated as having cut, the chip is overstated and verdicts change
+#                     (README 11.2); C1 uses the full surface as well
 
 _PHI_ST, _PHI_EX = P.immersion_angles()
 
@@ -125,22 +129,25 @@ def edge_gain(rpm, g_hi=3000.0, kappa=KAPPA, guard=GUARD, tol=0.25):
     return lo
 
 
-def certify(rpm, g, kappa=KAPPA, nrev=300, tail=20):
-    """Time-domain certificate at the operating depth kappa*a_lim, from rest.
+def certify(rpm, g, kappa=KAPPA, nrev=300, tail=20, nreg=NREG):
+    """Time-domain check at the operating depth kappa*a_lim, from rest.
 
-    The cut is simulated with the real actuator limit (|V| <= F_max/K_a), so
-    the entry transient may saturate it.  Returns whether the cut settles
-    (D1 detector), the settled peak actuator force, and the closed-form
-    estimate at the same depth for comparison.
+    One run: step entry (full depth from t = 0), the real actuator limit
+    (|V| <= F_max/K_a), so the entry transient may saturate it, and nreg
+    passes remembered by the chip.  Returns whether the cut settles (D1
+    detector), the settled peak actuator force and demand (NaN if the run
+    diverged), and the closed-form demand at the same depth for comparison.
     """
     from tdboundary import classify
     al = a_lim(rpm, g)
     a = kappa * al
-    c = classify(rpm, a, g, vmax=P.F_MAX / P.GA_GAIN, nrev=nrev)
+    c = classify(rpm, a, g, vmax=P.F_MAX / P.GA_GAIN, nrev=nrev, nreg=nreg)
     r = c["run"]
     spr = r["spr"]
     settled = float(np.abs(r["fact"][(nrev - tail) * spr:]).max())
     demand_settled = float(P.GA_GAIN * g * np.abs(r["v"][(nrev - tail) * spr:]).max())
+    if r["diverged"]:
+        settled = demand_settled = np.nan
     return dict(rpm=rpm, g=g, a_mm=a * 1e3, stable=bool(c["stable"]),
                 fact_settled=settled, demand_settled_td=demand_settled,
                 demand_closed_form=float(forced_demand(rpm, g, [a])[0]),

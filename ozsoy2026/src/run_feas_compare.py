@@ -5,7 +5,9 @@ with the same definitions as for the paper's condition:
   * the single fixed gain: with a feasible set that is one interval [0, g_b]
     at every speed, the joint feasible set is [0, min g_b];
   * Table 3: the new per-speed gain against the clipped baselines, both as
-    time-domain limits with the 9 V command limit;
+    time-domain limits with the 9 V command limit (the new gain with the chip
+    memory feasibility.NREG, the full surface; the baselines of table3_main.csv
+    with the single pass of the reproduction);
   * the 21 published test points under the new gains.
     python run_feas_compare.py --tag g1500
 """
@@ -29,7 +31,8 @@ def _td_limit(args):
     P.set_damping(zeta)
     from tdboundary import boundary
     from zoa import a_lim
-    return rpm, g, boundary(rpm, g, vmax=VMAX) * 1e3, a_lim(rpm, g) * 1e3
+    from feasibility import NREG
+    return rpm, g, boundary(rpm, g, vmax=VMAX, nreg=NREG) * 1e3, a_lim(rpm, g) * 1e3
 
 
 def _point(args):
@@ -37,8 +40,9 @@ def _point(args):
     P.set_damping(zeta)
     from zoa import a_lim
     from tdboundary import classify
+    from feasibility import NREG
     al = a_lim(rpm, g) * 1e3
-    c = classify(rpm, depth * 1e-3, g, vmax=VMAX if g > 0 else 0.0)
+    c = classify(rpm, depth * 1e-3, g, vmax=VMAX if g > 0 else 0.0, nreg=NREG)
     return al, "stable" if depth < al else "chatter", "stable" if c["stable"] else "chatter"
 
 

@@ -46,7 +46,7 @@ def c4_01_limits():
         kd = float(L["feas_kd"][names.index(n)])
         a.plot(L["rpm"], L["feas_a_lim"][:, names.index(n)], "--", color=PCOL[n], lw=1,
                label=f"+ P term kd = {kd:.0e} V/m (feasible g1)")
-    a.plot(L["rpm"], L["a_lim"][:, 0], color=GREY, lw=0.8, ls=":", label="DVF at the paper gain (C1, C2)")
+    a.plot(L["rpm"], L["a_lim"][:, 0], color=GREY, lw=0.8, ls=":", label="DVF at the C1/C2 gain (section 8 map, g <= 1500)")
     a.plot(E["rpm"], E["a_entry"][:, des.index("feas_dvf"), ent.index("edge_clip")], "s", color="k", ms=3.5,
            mfc="none", label="simulated face entry, 9 V: DVF")
     a.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("edge_clip")], "D", color=BLUES["d2000"],
@@ -60,14 +60,14 @@ def c4_01_limits():
            lw=0.8, mfc="none", label="simulated step entry, 9 V: DVF (best feasible g)")
     a.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("step_clip")], "D-", color=BLUES["d2000"],
            ms=3, lw=0.8, mfc="none", label="simulated step entry, 9 V: + g2 = 2000")
-    a.plot(M["rpm"], M["a_step_clip"], color=GREY, lw=0.8, label="simulated step entry, 9 V: DVF at the paper gain (C1)")
+    a.plot(M["rpm"], M["a_step_clip"], color=GREY, lw=0.8, label="simulated step entry, 9 V: DVF at the C1/C2 gain (C1)")
     a.set(ylabel="depth (mm)", ylim=(0, None))
     a.legend(fontsize=6.5, loc="upper right")
     a = ax[2]
     a.plot(L["rpm"], L["feas_g1"][:, names.index("dvf")], color="k", lw=1, label="feasible g1, DVF")
     a.plot(L["rpm"], L["feas_g1"][:, names.index("d2000")], color=BLUES["d2000"], lw=1, ls="--",
            label="feasible g1 with g2 = 2000")
-    a.plot(L["rpm"], L["g1"], color=GREY, lw=0.8, ls=":", label="paper gain")
+    a.plot(L["rpm"], L["g1"], color=GREY, lw=0.8, ls=":", label="C1/C2 gain (section 8 map)")
     a.set(xlabel="Spindle speed (rpm)", ylabel="g1 (V s/m)", ylim=(0, 3300))
     a.legend(fontsize=6.5, ncol=3, loc="lower left")
     save(fig, "c4_01_limits.png")
@@ -96,8 +96,8 @@ def c4_02_gainmap():
         k = kick[i].reshape(len(dep), -1)
         p, q = np.unravel_index(k.argmax(axis=1), (len(g1s), len(g2s)))
         ok = k.max(axis=1) > 0
-        ax[1, i].plot(dep[ok], g1s[p][ok], "o-", color="k", ms=3, lw=1, label="g1 of the best design")
-        ax[1, i].plot(dep[ok], g2s[q][ok], "s-", color=OURS, ms=3, lw=1, label="g2 of the best design")
+        ax[1, i].plot(dep[ok], g1s[p][ok], "o-", color="k", ms=3, lw=1, label="g1 of the best design (5 x 5 grid incl. g2 = 0)")
+        ax[1, i].plot(dep[ok], g2s[q][ok], "s-", color=OURS, ms=3, lw=1, label="g2 of the best design (5 x 5 grid incl. g2 = 0)")
         ax[1, i].axvline(G["a_lim_ref"][i], color="k", lw=0.7, ls="--")
         ax[1, i].set(xlabel="depth (mm)", ylim=(-200, 4400))
     ax[0, 0].set(ylabel="certified kick (mm/s)")

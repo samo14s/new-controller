@@ -1,9 +1,11 @@
 """C2: certified basin of the clipped DVF cut (saturated-LMI certificate).
 
 What is proved, and for which model.  The certificate is a theorem about
-the averaged model below, not about the time-domain simulator.  The averaged
-model is validated against the simulator separately (run_validate: its
-critical kick against the simulated one).
+the N-node collocation of the averaged model below (an ODE), not about the
+averaged delay equation itself (that would need a Lyapunov-Krasovskii
+functional) and not about the time-domain simulator.  The model is validated
+against the simulator separately (run_validate: its critical kick against
+the simulated one).
 
 Model.  The deviation from the forced periodic orbit obeys the averaged
 (ZOA) milling DDE with the DVF loop (verification/zoa_sdm: ZOA and SDM agree
@@ -18,7 +20,10 @@ time-periodic cutting coefficient (+-12 % around its average) and the chip
 going to zero near the exit angle.
 
 Sector.  Let b_max bound |b(t)| over the whole period (dense samples plus an
-inter-sample bound from the orbit's harmonics).  For |b(t)| <= b_max < V,
+inter-sample bound from the orbit's harmonics).  The harmonics here come from
+feasibility.py (a DFT of the slice force, whose entry jump falls on a sample,
+truncated at 40 harmonics), so b_max bounds that series, not the true orbit;
+c3_periodic.orbit has the rigorous bound (README 14.9).  For |b(t)| <= b_max < V,
 the deadzone of sat(b + w) - b satisfies the generalised sector condition
 with level u0 = V - b_max at every t: if |w - v| <= u0 then psi (psi - v) <= 0.
 With v = G x, a quadratic V(x) = x' P x and T > 0 this gives the LMIs
@@ -26,7 +31,8 @@ With v = G x, a quadratic V(x) = x' P x and T > 0 this gives the LMIs
     M1 = [[-(A W + W A') - 2 lam W, B S - Y'], [S B' - Y, 2 S]] > 0
     M2 = [[W, W K' - Y'], [K W - Y, u0^2]] >= 0
 so E(P) = {x' P x <= 1} is invariant and every deviation inside it returns
-to the orbit (V' <= -2 lam V).  The size of E(P) along a direction e is
+to the orbit.  lam > 0 is a margin asked of the solver; check() verifies the
+strict decrease at lam = 0 only, so no decay rate is claimed.  The size of E(P) along a direction e is
 maximised through [[1, beta e'], [beta e, W]] >= 0.
 
 Validity.  The averaged model cuts linearly; the real chip clips at zero.  A
@@ -40,7 +46,9 @@ E(P) is invariant, so the bound holds along the whole trajectory.
 Directions certified here:
   kick   e = unit velocity (the kick of C1): beta is a certified kick (m/s)
   step   e = minus the orbit's state at t = 0, history included (the cut
-         starting at rest on a fresh surface): beta >= 1 certifies the entry
+         starting at rest on a fresh surface, at the simulator's entry phase,
+         tooth angle 0): beta >= 1 certifies that entry; other entry phases
+         have other directions and are not covered
 
 Numerics.  Clarabel stops short of the optimum on these problems, so each
 problem is solved again in the coordinates whitened by the previous W
@@ -298,8 +306,8 @@ def check(A, B, K, u0, e, Tm, W, Y, S, valid=None):
     smallest computed eigenvalue against 1e3 n eps ||M1|| (eigvalsh is
     backward stable, so this is beyond round-off).  W must be positive
     definite, with condition number below 1e10.
-    Inclusion: q = (K W - Y) W^-1 (K W - Y)' <= u0^2; if not, (W, Y) is
-    scaled by c = u0^2 / q, which keeps M1 > 0.  The validity bound
+    Inclusion: q = (K W - Y) W^-1 (K W - Y)' <= u0^2; if not, (W, Y, S) is
+    scaled by c = u0^2 / q, which keeps M1 > 0 (M1 is homogeneous in them).  The validity bound
     c_v W c_v' <= h^2 is enforced the same way.
     Size: beta = sqrt(c / e' W^-1 e).  Both quadratic forms come from a
     Cholesky factor of W and lose 1e-9 for safety.
@@ -381,7 +389,8 @@ def certify_kick(rpm, a, g, N=None, settings=TIGHT, delta=DELTA):
 
 
 def certify_step(rpm, a, g, N=None, settings=TIGHT, delta=DELTA):
-    """beta >= 1: the cut entered at rest on a fresh surface is certified."""
+    """beta >= 1: the cut entered at rest on a fresh surface, at entry phase
+    0 (the simulator's t = 0), is certified on the model."""
     A, B, K = model(rpm, a, g, N)
     x0, _, bmax = orbit(rpm, g, a, N)
     return certify(A, B, K, VMAX - bmax, -x0, rpm, settings, delta=delta)
@@ -514,8 +523,8 @@ def boundary_directions(cert, n, nrand=6, seed=0):
 
 def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300, g2=0.0):
     """Apply scale x each boundary point at nphase phases with the C1 protocol
-    (face entry, nreg 4, |V| <= 9 V, 300-rev window); return (chattering, runs).
-    g2: comb term of C4."""
+    (face entry, full surface memory, |V| <= 9 V, 300-rev window); return
+    (chattering, runs).  g2: comb term of C4."""
     from tdsim import simulate
     from tdboundary import classify_run
     spr = P.STEPS_PER_REV
@@ -526,7 +535,7 @@ def td_offaxis(rpm, a, g, cert, scale=1.0, nphase=4, kick_rev=100, window=300, g
         pert = deviation_to_pert(rpm, scale * X)
         for p in range(nphase):
             ks = kick_rev * spr + (p * nd) // nphase
-            r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=4,
+            r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=0,
                          kick_step=ks, pert=pert, g2=g2)
             st = (ks // nd + 1) * nd
             bad += not classify_run(r["x"][st:], spr, r["diverged"])["stable"]

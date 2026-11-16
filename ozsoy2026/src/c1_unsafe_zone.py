@@ -8,10 +8,12 @@ recovers.  The settled cut and chatter therefore coexist (bistability).  The
 step entry is one such disturbance.  It reveals only the top of the bistable
 band, where the entry transient exceeds the basin of the stable cut.
 
-All runs remember the last NREG passes (multiple regeneration).  With a
-single pass, a tooth that leaves the cut is treated as having removed
-material, and clipped chatter runs away instead of settling on a bounded
-cycle.
+All runs cut against the full surface left by the earlier passes (NREG = 0
+in tdsim: the deepest earlier pass at each angle).  With a single pass, or
+with the last few passes only, a tooth that leaves the cut is treated as
+having removed material, the chip is overstated and clipped chatter runs
+away.  The first campaigns remembered 4 passes, which the audit showed is
+not enough after a kick of tens of mm/s.
 
   map        per speed, with the gain map of run_feasibility_map.py, the
              depth limit for four entries: step (clipped and unclipped),
@@ -19,8 +21,8 @@ cycle.
              (The idealised depth ramp of tdsim is left out: a real ramp-in
              shifts the regeneration delay.)
   band       lower edge of the bistable band every 20 rpm: the smallest
-             depth at which a kick of DV_HI on the settled cut (4 phases)
-             ends in chatter
+             depth at which a kick of BAND_DV (3 mm/s to 3 m/s) on the
+             settled cut (2 phases) ends in chatter
   basin      critical kick versus depth at four speeds, 16 phases per tooth
              period, clipped and (control) unclipped.  Also the kick-to-mode
              factor: the slow (chatter) mode amplitude that a unit kick puts
@@ -42,7 +44,10 @@ RES = os.path.join(HERE, "..", "results")
 VMAX = P.F_MAX / P.GA_GAIN
 SPR = P.STEPS_PER_REV
 ND = SPR // P.N_TEETH
-NREG = 4
+NREG = 0            # chip memory: 0 = the full surface (the deepest earlier pass at each angle).
+#                     A fixed number of passes forgets the surface after a kick that swings the
+#                     workpiece by many feeds (a 3 m/s kick: about 3.7 mm), overstates the chip and
+#                     manufactures chatter (the first campaigns used 4 passes; README 11.2)
 ENTRIES = {
     "step_clip": (VMAX, {"nreg": NREG}),
     "step_free": (0.0, {"nreg": NREG}),
@@ -57,8 +62,13 @@ BASIN_FRAC = (0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.98)
 FREE_FRAC = (0.3, 0.6, 0.9, 0.98)
 N_PHASE = 16
 KICK_REV, WINDOW = 100, 300
-DV_LO, DV_HI, N_BISECT = 1e-4, 3.0, 9       # m/s; 3 m/s is a 3.7 mm swing, below the 1 cm abort
-BAND_STEP, BAND_PHASES, BAND_BISECT = 20, 4, 7
+DV_LO, DV_HI, N_BISECT = 1e-4, 3.0, 6       # m/s; 3 m/s is a 3.7 mm swing, below the 1 cm abort
+# the outcome of a kick is not monotone in its size (a large kick throws the tool out of the
+# cut and the vibration then dies out), so the critical kick is searched upwards on this grid,
+# and only the first interval that ends in chatter is bisected
+DV_GRID = np.append(DV_LO * 2.0 ** np.arange(15), DV_HI)      # 1e-4 ... 1.64, 3 m/s
+BAND_STEP, BAND_PHASES, BAND_BISECT = 20, 2, 6
+BAND_DV = np.geomspace(3e-3, DV_HI, 7)                         # kicks tried at each depth of the band
 F_HP = 40.0                                  # Hz, high-pass for the kick-to-mode factor
 
 
@@ -131,18 +141,22 @@ def _kick_chatters(rpm, a, g, vmax, ks, dv, g2=0.0):
 
 
 def _critical_kick(args):
-    """Smallest kick (m/s) that turns the settled cut into chatter, by
-    bisection in log(dv); inf if DV_HI does not, nan if the unkicked cut
-    does not settle.  args: (rpm, a, g, vmax, phase, zeta[, g2])."""
+    """Smallest kick (m/s) that turns the settled cut into chatter: the kicks
+    of DV_GRID are tried upwards, and the first interval that ends in chatter
+    is bisected in log(dv); inf if no kick of the grid does, nan if the
+    unkicked cut does not settle.  args: (rpm, a, g, vmax, phase, zeta[, g2])."""
     rpm, a, g, vmax, phase, zeta = args[:6]
     g2 = args[6] if len(args) > 6 else 0.0
     P.set_damping(zeta)
     ks = KICK_REV * SPR + (phase * ND) // N_PHASE
     if _kick_chatters(rpm, a, g, vmax, ks, DV_LO, g2):
         return np.nan
-    if not _kick_chatters(rpm, a, g, vmax, ks, DV_HI, g2):
+    for k in range(1, len(DV_GRID)):
+        if _kick_chatters(rpm, a, g, vmax, ks, DV_GRID[k], g2):
+            break
+    else:
         return np.inf
-    lo, hi = np.log(DV_LO), np.log(DV_HI)
+    lo, hi = np.log(DV_GRID[k - 1]), np.log(DV_GRID[k])
     for _ in range(N_BISECT):
         mid = 0.5 * (lo + hi)
         if _kick_chatters(rpm, a, g, vmax, ks, np.exp(mid), g2):
@@ -215,7 +229,7 @@ def run_basin(a):
                         a_lim=arr[:, 2], frac=arr[:, 3], vmax=arr[:, 4], dv=dv, p_mode=p_mode,
                         decay=decay, fit_r2=r2, tooth_impulse=tooth_impulse, mass=P.M, zeta=zeta,
                         n_phase=N_PHASE, kick_rev=KICK_REV, window=WINDOW, dv_hi=DV_HI,
-                        nreg=NREG, build=build_id())
+                        dv_grid=DV_GRID, nreg=NREG, build=build_id())
     for row, d, p in zip(arr, dv, p_mode):
         lab = "clip" if row[4] > 0 else "free"
         fin = d[np.isfinite(d)]
@@ -226,17 +240,18 @@ def run_basin(a):
 
 # ---------------------------------------------------------------- band ----
 def _band_low(args):
-    """Smallest depth (mm) at which a DV_HI kick on the settled cut, at any of
-    BAND_PHASES phases, ends in chatter (bisection, assuming the basin
-    shrinks with depth); nan if not even 0.98 a_lim does."""
+    """Smallest depth (mm) at which some kick of BAND_DV (3 mm/s to 3 m/s) on
+    the settled cut, at one of BAND_PHASES phases, ends in chatter (bisection,
+    assuming the band does not have holes in depth); nan if not even 0.98
+    a_lim does."""
     rpm, g, zeta = args
     P.set_damping(zeta)
     from zoa import a_lim
     al = a_lim(rpm, g)
 
     def chatters(f):
-        return any(_kick_chatters(rpm, f * al, g, VMAX, KICK_REV * SPR + p * ND // BAND_PHASES, DV_HI)
-                   for p in range(BAND_PHASES))
+        return any(_kick_chatters(rpm, f * al, g, VMAX, KICK_REV * SPR + p * ND // BAND_PHASES, dv)
+                   for dv in BAND_DV for p in range(BAND_PHASES))
 
     lo, hi = 0.05, 0.98
     if not chatters(hi):
@@ -259,7 +274,7 @@ def run_band(a):
     with Pool(a.workers) as pool:
         low = np.array(pool.map(_band_low, [(float(n), float(gg), zeta) for n, gg in zip(rpm, g)], chunksize=1))
     np.savez_compressed(os.path.join(RES, "c1_band.npz"), rpm=rpm, g=g, a_band_low=low, zeta=zeta,
-                        dv_hi=DV_HI, phases=BAND_PHASES, nreg=NREG, build=build_id())
+                        dv_hi=DV_HI, band_dv=BAND_DV, phases=BAND_PHASES, nreg=NREG, build=build_id())
     np.savetxt(os.path.join(RES, "c1_band.csv"), np.column_stack([rpm, g, low]), delimiter=",",
                header="rpm,g,a_band_low", comments="", fmt="%.4f")
     print(f"band lower edge found at {np.isfinite(low).sum()}/{len(low)} speeds, "

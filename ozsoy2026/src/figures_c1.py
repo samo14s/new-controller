@@ -142,7 +142,7 @@ def c1_04_basin():
         med, lo, hi = np.median(dv, axis=1), dv.min(axis=1), dv.max(axis=1)
         a0 = ax[0, i]
         a0.fill_between(f[fin], lo[fin], hi[fin], color=BAD, alpha=0.2, lw=0)
-        a0.plot(f[fin], med[fin], "o-", color=BAD, ms=3, lw=1, label="critical kick, |V| <= 9 V (TD, 16 phases)")
+        a0.plot(f[fin], med[fin], "o-", color=BAD, ms=3, lw=1, label="critical kick, |V| <= 9 V (TD): median of 16 phases, shading min-max")
         if (~fin).any():
             a0.plot(f[~fin], np.full((~fin).sum(), top), "^", color=BAD, mfc="none", ms=5,
                     label=f"|V| <= 9 V: no chatter up to {b['dv_hi']:.0f} m/s")
@@ -168,7 +168,7 @@ def c1_04_basin():
     ax[1, 0].set(ylabel="kick impulse / tooth\ncutting impulse (%)")
     h, l = ax[0, 1].get_legend_handles_labels()
     fig.legend(h, l, fontsize=7, loc="lower center", ncol=5, bbox_to_anchor=(0.5, -0.06))
-    fig.suptitle("C1-4  The basin of the stable cut shrinks to zero at a_lim; without the limit it is unbounded",
+    fig.suptitle("C1-4  The basin of the stable cut narrows towards a_lim; without the limit no chatter up to 3 m/s",
                  fontsize=9, y=1.0)
     save(fig, "c1_04_basin_vs_depth.png")
 

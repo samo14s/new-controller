@@ -50,7 +50,15 @@ def test_voltage_limit_is_respected():
 
 
 def test_stored_final_scheme_check():
+    """check7 against a converged reference (exact ZOH extrapolated to zero
+    step): the stage-wise scheme at 512 steps/rev is within 0.75 % (median
+    0.04 %), the held force 1.8-8.3 %; the reference agrees with the
+    stage-wise scheme at 16384 steps to 0.04 %."""
     c = json.load(open(path("verification", "tdsim", "check7_final_scheme.json")))
-    assert max(t["rel_err_fmode1"] for t in c["trajectory"]) < 7e-3
+    t = c["trajectory"]
+    assert max(r["rel_err_fmode1"] for r in t) < 7.5e-3
+    assert np.median([r["rel_err_fmode1"] for r in t]) < 1e-3
+    assert min(r["rel_err_fmode0"] for r in t) > 1.5e-2
+    assert max(r["rel_err_fmode1_16384"] for r in t) < 5e-4
     assert max(abs(d["rel"]) for d in c["demand"]) < 2e-3
     assert all(0 <= b["rel"] < 0.03 for b in c["boundary"])

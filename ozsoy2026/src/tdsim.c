@@ -41,7 +41,18 @@
  *                   h = min_k [k fz sin(phi) - (x - x(t - kT)) cos(phi)],
  *                   so a pass that left the cut does not count as having
  *                   removed material (multiple regeneration, needed once
- *                   the tool leaves the cut, i.e. for chatter amplitudes)
+ *                   the tool leaves the cut, i.e. for chatter amplitudes).
+ *                   nreg = 0: the full surface memory.  The chip is cut
+ *                   against the deepest earlier pass at the same angle,
+ *                   whenever it was: for each angular slot of a layer the
+ *                   step of the deepest pass is kept (a pass that cuts is
+ *                   deeper than every earlier one, so it replaces it), and
+ *                   at a stage inside a step the deepest passes of the two
+ *                   slots around the stage's angle are used, besides the
+ *                   last pass.  A large kick (a 3 m/s kick swings the
+ *                   workpiece by mm, i.e. tens of feeds) needs this: with a
+ *                   fixed number of passes the surface is forgotten and the
+ *                   chip overestimated.  Not with ramp_a.
  *   opt[8] g2, opt[9] kd   (only in the build with COMB = 1, see below)
  *                   comb terms of the command (C4):
  *                   V = sat(-g x' - g2 (x' - x'(t-T)) - kd (x - x(t-T)), vmax),
@@ -89,6 +100,9 @@ typedef struct {
     /* entry options (soft = 0: plain step entry) */
     int soft, nlay, edge, nreg;
     double a, Ta, Tf, f0, R, Tt, vmax_now;
+    int full, rec;                  /* full: chip against the deepest earlier pass (nreg = 0) */
+    int *deep;                      /* per (angular slot, layer): step of the deepest earlier pass, -1: none */
+    char *cut;                      /* per element: cut at the start of this step (recorded when rec) */
 #if COMB
     double g2, kd, cdel;            /* cdel: comb delay in steps (0: exactly nd) */
     double ldel;                    /* loop delay in steps (0: none) */
@@ -200,8 +214,8 @@ static double fcut_multi(const Ctx *C, double x, double tau) {
         if (C->edge && !(s >= rs[1])) wp = 0.0;
         if (wp > w) wp = w;
         double hr = S[1] * s - (x - xd[1]) * c, q = 0.0;
-#if COMB
         int it = e / C->nlay;                  /* tooth of this element */
+#if COMB
         if (C->runout) hr += C->ro[it] - C->ro[(it + 1) % C->ntooth];
 #endif
         for (k = 2; k <= K; k++) {             /* only passes that were in the material */
@@ -213,11 +227,29 @@ static double fcut_multi(const Ctx *C, double x, double tau) {
 #endif
             if (hk < hr) hr = hk;
         }
+        if (C->full) {                         /* the deepest earlier pass at this angle */
+            int sig = (n + it * C->nd) % C->spr, o;
+            for (o = 0; o < 2; o++) {          /* the slots at the start and end of the step */
+                int m = C->deep[((sig + o) % C->spr) * C->nlay + j];
+                if (m < 0) continue;
+                int kk = (n + o - m) / C->nd;  /* tooth periods back */
+                if (kk < 2) continue;          /* the last pass is in already */
+                double tk = t - kk * T;
+                if (C->edge && !(s >= (tk > 0.0 ? 1.0 - advance_at(C, tk) / C->R : 1.0))) continue;
+                double Sk = C->Tf > 0.0 ? advance_ext(C, t) - advance_ext(C, tk) : kk * C->fz;
+                double hk = Sk * s - (x - xhist(C, n - kk * C->nd, r)) * c;
+#if COMB
+                if (C->runout) hk += C->ro[it] - C->ro[(it + kk) % C->ntooth];
+#endif
+                if (hk < hr) hr = hk;
+            }
+        }
         if (hr > 0) q += wp * hr;
         if (w > wp) {
             double hf = S[1] * s - x * c;     /* fresh surface */
             if (hf > 0) q += (w - wp) * hf;
         }
+        if (C->rec) C->cut[e] = (char)(q > 0.0);
         f -= (C->Kt * s - C->Kr * c) * C->dz * q;
     }
     return f;
@@ -225,7 +257,7 @@ static double fcut_multi(const Ctx *C, double x, double tau) {
 
 /* cutting force at time t_n + tau, with current displacement x */
 static double fcut(const Ctx *C, double x, double tau) {
-    if (C->nreg > 1) return fcut_multi(C, x, tau);
+    if (C->nreg > 1 || C->full) return fcut_multi(C, x, tau);
     int n = C->n, s0 = n % C->spr, e;
     int j = n - C->nd;                       /* delayed interval [j, j+1] */
     double r = tau / C->dt, xd;
@@ -360,6 +392,7 @@ int simulate(double rpm, double a, double g,
         kick_dv = opt[5];
         clip_on = (int)opt[6];
         C.nreg = (int)opt[7] < 1 ? 1 : ((int)opt[7] > NREG_MAX ? NREG_MAX : (int)opt[7]);
+        C.full = opt[7] == 0.0;
 #if COMB
         C.g2 = opt[8];
         C.kd = opt[9];
@@ -371,6 +404,11 @@ int simulate(double rpm, double a, double g,
 #endif
     }
     C.soft = C.Ta > 0.0 || C.Tf > 0.0 || C.edge;
+    if (C.full) {
+        C.deep = malloc(sizeof(int) * spr * nlay);
+        for (i = 0; i < spr * nlay; i++) C.deep[i] = -1;
+        C.cut = calloc(nel, 1);
+    }
 
     for (s = 0; s < spr; s++) {
         double th = twopi * s / spr;
@@ -405,7 +443,9 @@ int simulate(double rpm, double a, double g,
             xh[n] = z[0];
             vh[n] = z[1];
         }
+        if (C.full) { memset(C.cut, 0, nel); C.rec = 1; }
         f = fcut(&C, z[0], 0.0);
+        C.rec = 0;
         C.fhold = f;
         deriv(&C, z, 0.0, dzz, &fa);
         {
@@ -427,6 +467,9 @@ int simulate(double rpm, double a, double g,
         }
         for (kk = 0; kk < nsub; kk++) rk4(&C, z, kk * dt / nsub, dt / nsub);
         xh[n + 1] = z[0];
+        if (C.full)                          /* the passes that cut became the surface */
+            for (e = 0; e < nel; e++)
+                if (C.cut[e]) C.deep[((n + (e / nlay) * nd) % spr) * nlay + e % nlay] = n;
         vh[n + 1] = z[1];
         if (!(fabs(z[0]) < 1e-2)) { diverged = 1; break; }
     }
@@ -447,5 +490,6 @@ int simulate(double rpm, double a, double g,
     summary[0] = maxd; summary[1] = maxfa; summary[2] = maxx; summary[3] = maxv;
     summary[4] = diverged;
     free(ph); free(sn); free(cs); free(in); free(xh); free(vh);
+    free(C.deep); free(C.cut);
     return diverged;
 }

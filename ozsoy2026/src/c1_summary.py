@@ -75,10 +75,17 @@ def basin_summary():
         dvdf = np.interp(f[ok], d["frac"], d["A_dual"][j]) / (d["g"][j] * p[ok])
         ratios += list(med[ok] / dvdf)
         imp = b["mass"] * med / b["tooth_impulse"][m]
+        # the critical kick of a phase is the smallest kick that ends in chatter; the
+        # table quotes its median over the 16 phases, and the worst phase (minimum)
+        lo = np.min(dv, axis=1)
+        imp_lo = b["mass"] * lo / b["tooth_impulse"][m]
         out[f"{n:.0f}"] = dict(first_finite_frac=r(f[fin].min()) if fin.any() else None,
                                dv_090_mmps=r(med[f == 0.9][0] * 1e3), dv_098_mmps=r(med[f == 0.98][0] * 1e3),
+                               dv_090_min_mmps=r(lo[f == 0.9][0] * 1e3), dv_098_min_mmps=r(lo[f == 0.98][0] * 1e3),
                                impulse_098_pct=r(imp[f == 0.98][0] * 100, 1),
-                               phase_spread_098=r(dv[f == 0.98].max() / dv[f == 0.98].min()))
+                               impulse_098_min_pct=r(imp_lo[f == 0.98][0] * 100, 1),
+                               phase_spread_098=r(dv[f == 0.98].max() / dv[f == 0.98].min()),
+                               phase_spread_max=r((dv[fin].max(axis=1) / dv[fin].min(axis=1)).max()))
     out["td_over_df_min"], out["td_over_df_max"] = r(min(ratios)), r(max(ratios))
     return out
 

@@ -1,0 +1,19 @@
+{
+ "f_grid_step_60_600_hz": 0.01999999999999602,
+ "dense_g0": {
+  "max_abs_rel": 6.0340089232946426e-06,
+  "median_abs_rel": 6.175068262281869e-07,
+  "n_above_1e3": 0,
+  "stored_pre_fix_max_abs_rel": 1.5594330285972902e-06
+ },
+ "dense_g1500": {
+  "max_abs_rel": 7.585196589721122e-07,
+  "median_abs_rel": 8.214676339157734e-08,
+  "n_above_1e3": 0,
+  "stored_pre_fix_max_abs_rel": 1.8474952989677718e-07
+ },
+ "table_96": {
+  "max_abs_rel_vs_lobes": 4.608024730345939e-06,
+  "max_abs_rel_vs_sdm_mean": 1.9560645992511283e-05
+ }
+}

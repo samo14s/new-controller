@@ -12,6 +12,7 @@ Each controller gets a time-domain boundary (D1 detector, 9 V limit active);
 the zero-order a_lim of the proposed gain is listed as well, since the paper's
 Table 3 'proposed' column tracks its Fig. 9 frequency-domain curve.
     python run_table3.py --tag main
+    python run_table3.py --sweep      # clipped DVF at intermediate gains -> table3_clip_gain_sweep.csv
 """
 import argparse
 import os
@@ -26,6 +27,9 @@ PAPER = {500: (15.2, 14.9), 560: (8.7, 8.0), 600: (12.2, 11.8), 800: (11.2, 10.8
          3000: (6.2, 7.1)}
 VMAX = P.F_MAX / P.GA_GAIN
 G_CLIP = (1500.0, 3000.0)
+# clipped DVF between the proposed gain and G_CLIP (README 5.5): the paper's
+# Fig. 8 gain and one more gain at 2500 and 3000 rpm
+SWEEP = ((2500, 543.0), (2500, 800.0), (3000, 794.5), (3000, 1000.0))
 
 
 def work(args):
@@ -43,11 +47,29 @@ def work(args):
     return row
 
 
+def sweep_work(args):
+    rpm, g = args
+    from tdboundary import boundary
+    return rpm, g, boundary(rpm, g, vmax=VMAX) * 1e3
+
+
+def sweep(workers):
+    with Pool(workers) as pool:
+        rows = pool.map(sweep_work, SWEEP)
+    np.savetxt(os.path.join(RES, "table3_clip_gain_sweep.csv"), np.array(rows), delimiter=",",
+               header="rpm,g,a_td_mm_9V", comments="", fmt="%.3f")
+    for r in rows:
+        print(f"{r[0]:4.0f} rpm  g = {r[1]:7.1f}  clipped TD limit {r[2]:6.2f} mm")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tag", required=True)
+    ap.add_argument("--tag")
+    ap.add_argument("--sweep", action="store_true")
     ap.add_argument("--workers", type=int, default=4)
     a = ap.parse_args()
+    if a.sweep:
+        return sweep(a.workers)
     d = np.load(os.path.join(RES, f"gainmap_{a.tag}.npz"))
     zeta = float(d["zeta"])
     gmap = d["g_best"] if "g_best" in d else d["g_ref"]

@@ -95,13 +95,18 @@ def test_small_certificate_is_checked_and_holds_on_its_model(small):
 
 
 def test_check_rejects_a_destabilised_model(small):
-    """The certificate of the cut must fail the decrease test once the
-    depth is past a_lim."""
+    """The solver's own candidate (W, Y, S) passes the check on the cut's
+    model and fails its decrease test once the depth is past a_lim."""
     s = small
-    Tm, Pz = s["cert"]
-    W = np.linalg.inv(Pz)
+    A, B, K, e = s["A"], s["B"], s["K"], s["e"]
+    valid = c2.validity(len(B))
+    Tm = np.diag(c2.scaling(A, s["rpm"]))
+    sigma = -np.linalg.eigvals(A).real.max()
+    _, (W, Y, S), _ = c2.lmi(A, B, K, s["u0"], e, Tm, lam=0.05 * sigma, valid=valid)
+    size, msg = c2.check(A, B, K, s["u0"], e, Tm, W, Y, S, valid=valid)
+    assert size > 0.0, msg
     A2, _, _ = c2.model(s["rpm"], 1.05 * a_lim(s["rpm"], 1500.0), 1500.0, N=8)
-    size, msg = c2.check(A2, s["B"], s["K"], s["u0"], s["e"], Tm, W, np.zeros(len(s["B"])), 1.0)
+    size, msg = c2.check(A2, B, K, s["u0"], e, Tm, W, Y, S, valid=valid)
     assert size == 0.0 and "decrease" in msg
 
 

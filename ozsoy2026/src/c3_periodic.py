@@ -716,6 +716,9 @@ def td_offaxis(rpm, a, g, cert, nodes=None, kick_rev=100, window=300):
     for k in nodes:
         ks = kick_rev * spr + k * nd // mc
         for X in c2.boundary_directions((Tm, np.linalg.inv(W[k])), n):
+            # 4 remembered passes, as in the stored campaigns (C1 now uses the full surface
+            # memory, README 11.2): the starts lie inside the chip-validity bound
+            # |x - x(t - T)| <= 0.5 fz, so the tool stays in the cut and the two agree
             r = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=kick_rev + window, edge=True, nreg=4,
                          kick_step=ks, pert=c2.deviation_to_pert(rpm, X))
             st = (ks // nd + 1) * nd
@@ -897,9 +900,43 @@ def run_basin(a):
     _report(out, out["td_kick"])
 
 
+def run_refresh_td(a):
+    """Replace the simulated critical kicks stored in c3_basin.npz by those
+    of the current c1_basin.npz (same points, same 16 phases), keeping the
+    certificates: after C1 was redone with the full surface memory and the
+    upward kick search (README 11.2)."""
+    b = np.load(os.path.join(RES, "c1_basin.npz"))
+    m = b["vmax"] > 0
+    path = os.path.join(RES, "c3_basin.npz")
+    out = dict(np.load(path))
+    assert np.allclose(out["rpm"], b["rpm"][m]) and np.allclose(out["frac"], b["frac"][m]), "C1 points"
+    out["td_kick"] = b["dv"][m]
+    np.savez_compressed(path, **out)
+    _report(out, out["td_kick"])
+
+
 LOW_AE = 0.1
 LOW_FRAC = (0.5, 0.9)
 LOW_PHASES = (0, 4, 8, 12)                        # of C1's 16 kick phases
+
+
+def run_lowimm_td(a):
+    """Recompute only the simulated critical kicks of c3_lowimm.npz (C1's
+    current protocol), keeping the certificates."""
+    path = os.path.join(RES, "c3_lowimm.npz")
+    out = dict(np.load(path))
+    zeta = gain_map()[2]
+    cut = Cut(LOW_AE)
+    tdj = [(float(n), float(f * cut.a_lim(n, g)), float(g), VMAX, p, zeta)
+           for n, g, f in zip(out["rpm"], out["g"], out["frac"]) for p in LOW_PHASES]
+    with pool(a.workers) as p:
+        td = np.array(p.map(_low_td, tdj, chunksize=1)).reshape(len(out["rpm"]), len(LOW_PHASES))
+    out["td_kick"] = td
+    np.savez_compressed(path, **out)
+    _report(out, td)
+    ph = out["phase_cert"][:, list(LOW_PHASES)]
+    fin = np.isfinite(td) & (out["cert"] > 0)[:, None]
+    print(f"per-phase certificate below the simulated kick at the same phase: {np.sum((ph <= td)[fin])}/{fin.sum()}")
 
 
 def _low_td(args):
@@ -1048,7 +1085,7 @@ def run_counter(a):
         r = certify(rpm, a_, g, cut, full=True)
         P.HELIX, keep = helix, P.HELIX
         try:
-            sim = tdsim.simulate(rpm, a_, g, vmax=VMAX, store=True, nrev=400, edge=True, nreg=4,
+            sim = tdsim.simulate(rpm, a_, g, vmax=VMAX, store=True, nrev=400, edge=True, nreg=4,  # um-level motion
                                  kick_step=100 * P.STEPS_PER_REV, kick_dv=1e-4)
         finally:
             P.HELIX = keep
@@ -1096,13 +1133,15 @@ def run_edge(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge", "straight", "counter"])
+    ap.add_argument("command", choices=["floquet", "basin", "decomp", "lowimm", "edge", "straight", "counter",
+                                        "refresh_td", "lowimm_td"])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--step", type=int, default=20, help="floquet: rpm spacing")
     ap.add_argument("--limit", type=int, default=0, help="basin: first points only (dry run)")
     a = ap.parse_args()
     dict(floquet=run_floquet, basin=run_basin, decomp=run_decomp, lowimm=run_lowimm, edge=run_edge,
-         straight=run_straight, counter=run_counter)[a.command](a)
+         straight=run_straight, counter=run_counter, refresh_td=run_refresh_td,
+         lowimm_td=run_lowimm_td)[a.command](a)
 
 
 if __name__ == "__main__":

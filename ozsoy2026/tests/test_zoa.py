@@ -29,9 +29,15 @@ def test_uncontrolled_minimum():
 
 
 def test_no_spurious_root_at_a_tooth_passing_pole():
-    """Found by the verification: 29.296875 mm used to come back here."""
+    """Found by the verification: 29.296875 mm used to come back here (on the
+    old 0.01 Hz grid).  On the current grid the first case passes with or
+    without the pole guard of a_lim; the next two need it (without it they
+    return the pole residues 46.875 and 15.625 mm, exact binary fractions)."""
     P.set_damping(0.0145)
     assert a_lim(1983, 300.0) * 1e3 == pytest.approx(30.07, abs=0.02)
+    P.set_damping(0.0134)
+    assert a_lim(2130, 1924.93) * 1e3 == pytest.approx(47.800, abs=0.01)
+    assert a_lim(2160, 960.0) * 1e3 == pytest.approx(19.183, abs=0.01)
 
 
 def test_agrees_with_independent_semi_discretisation():

@@ -1,6 +1,8 @@
 #!/bin/sh
 # C4 campaigns: linear limits and feasible designs, certified gain map, simulated
 # entries, robustness (closed form + simulator checks), validation.
+# The limits step was rerun afterwards (about 11:4x for the P-term designs, and at
+# 15:17 by run_c4_chain2.sh with the uncapped check): see log_c4_limits.txt and log_c4_chain2.txt.
 cd "$(dirname "$0")/../src" || exit 1
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 for cmd in limits gainmap entry robust validate; do

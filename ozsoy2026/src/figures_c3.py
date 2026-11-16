@@ -81,7 +81,7 @@ def c3_01_coefficient():
                label=f"ae/D = {ae:g}")
     a.axhline(1.0, color="k", lw=0.6)
     a.set(xlabel="Spindle speed (rpm)", ylabel="Floquet / ZOA",
-          title="C3-1d  Periodic limit / ZOA: never below 1")
+          title="C3-1d  Periodic limit / ZOA: not below 1 by more than 1e-5")
     a.legend(fontsize=7)
     fig.tight_layout()
     save(fig, "c3_01_coefficient.png")

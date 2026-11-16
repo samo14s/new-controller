@@ -112,6 +112,15 @@ def test_corners_reproduce_the_decrease_matrix_and_cover_the_curve():
     cs = c3.corners(np.array([al]), np.array([be]), np.array([0.3]))[0]
     assert len(cs) == 6
     assert len(c3.corners(np.array([al]), np.array([0.0]), np.array([0.3]))[0]) == 4
+    # the values corners() returns are the corners of the triangle x {-eps, +eps}
+    want = [(sv, (al + r) * (1 - sv) + be * (sv - sg), (al + r) * sv + be * sg)
+            for sv, sg in ((0.0, 0.0), (0.5, 0.0), (1.0, 1.0)) for r in (-0.3, 0.3)]
+    assert np.allclose(np.array(cs), np.array(want))
+    # and on the curve (sigma = s^2, i.e. s = 0 and 1) they reproduce A(t) W(s)
+    for (sv, ck, ck1), r in zip(cs, (-0.3, 0.3) * 3):
+        if sv in (0.0, 1.0):
+            lhs = ((1 - sv) * A0 + ck * E) @ Wk + (sv * A0 + ck1 * E) @ Wk1
+            assert np.allclose(lhs, (A0 + (al + be * sv + r) * E) @ ((1 - sv) * Wk + sv * Wk1))
 
 
 def test_petersen_merge_is_exact_for_a_scalar():

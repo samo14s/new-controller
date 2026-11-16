@@ -63,7 +63,9 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     Perturbation: kick_dv (m/s) added to x' at step kick_step (< 0: none);
     clip_on: first step at which the command limit vmax applies.
     nreg: passes the chip remembers (1: x(t - T) only; > 1: least chip over
-    the last nreg passes, so the tool leaving the cut is handled; max 8).
+    the last nreg passes, so the tool leaving the cut is handled; max 8;
+    0: the full surface memory, the chip against the deepest earlier pass,
+    needed once a disturbance swings the workpiece by many feeds).
     pert: full-state deviation added at kick_step, a dict with x, v, q, qd
     and hx, hv (x and x' at 0, 1, ..., nd steps back, nd = spr / N).
     g2, kd: comb terms of the command (C4): V = sat(-g x' - g2 (x' - x'(t - T))
@@ -75,10 +77,11 @@ def simulate(rpm, a, g, vmax=0.0, store=False, nrev=P.N_REVS, nsub=2,
     All of these run in the COMB build, so the default path is untouched.
     """
     if runout != 0.0:
-        assert nreg > 1, "runout is modelled in the multiple-regeneration chip only"
+        assert nreg != 1, "runout is modelled in the multiple-regeneration chip only"
     if loop_delay:
         assert loop_delay >= 60.0 / (rpm * spr), "the loop delay must be at least one step"
     assert spr % P.N_TEETH == 0, "the tooth delay must be a whole number of steps"
+    assert nreg >= 0 and not (nreg == 0 and ramp_a), "full surface memory (nreg 0) is not with ramp_a"
     fmode = FMODE if fmode is None else fmode
     nsteps = spr * nrev
     nbuf = nsteps + 1 if store else 1

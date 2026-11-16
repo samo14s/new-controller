@@ -187,8 +187,13 @@ def m06_optimiser():
                bbox=dict(boxstyle="round", fc="white", ec="0.7"))
     ax[1].semilogy(rpm, np.maximum(spread, 1e-6), ".", color=GREY, ms=3)
     ax[1].set(xlabel="Spindle speed (rpm)", ylabel="spread of 3 seeds (mm)", ylim=(1e-6, 10))
-    ax[1].text(0.01, 0.9, f"identical (< 0.01 mm) at {np.sum(spread < 0.01)}/251 speeds; the outliers sit on a "
-               "fragmented feasible set (2280-2310 rpm)", transform=ax[1].transAxes, va="top", fontsize=7.5)
+    out = rpm[spread >= 0.01]
+    frag = (out >= 2280) & (out <= 2310)
+    ax[1].text(0.01, 0.9, f"identical (< 0.01 mm) at {np.sum(spread < 0.01)}/251 speeds; outliers: "
+               f"{', '.join(f'{n:.0f}' for n in out[frag])} rpm (fragmented feasible set), "
+               f"{', '.join(f'{n:.0f}' for n in out[~frag])} rpm (one seed stopped early, "
+               f"<= {spread[(spread >= 0.01) & ((rpm < 2280) | (rpm > 2310))].max():.2f} mm)",
+               transform=ax[1].transAxes, va="top", fontsize=7.5)
     save(fig, "m06_optimiser_match.png")
 
 
@@ -216,9 +221,17 @@ def m07_high_speed_gain():
 
 def m08_test_points():
     rows = json.load(open(os.path.join(ROOT, "results", "cuts_main.json")))
+    # the two uncontrolled cuts at 2800 rpm are drawn in both Fig. 9 and Fig. 11:
+    # one experiment each, counted once
+    seen, cuts = set(), []
+    for r in rows:
+        key = (r["rpm"], r["depth_mm"], r["controller"])
+        if key not in seen:
+            seen.add(key)
+            cuts.append(r)
     fig, ax = plt.subplots(figsize=(9.5, 4))
     ok = 0
-    for r in rows:
+    for r in cuts:
         good = r["pred_paper"] == r["measured"]
         ok += good
         mk = {"none": "s", "map": "o", "single": "^"}[r["controller"]]
@@ -234,7 +247,8 @@ def m08_test_points():
     ax.plot([], [], "o", mfc="none", mec=GOOD, label="green: model agrees")
     ax.plot([], [], "o", mfc="none", mec=BAD, label="red: model disagrees")
     ax.set(xscale="log", xlabel="measured depth / model a_lim at the paper's gain", ylabel="Spindle speed (rpm)",
-           ylim=(500, 3200), title=f"M8  Published test points with the paper's own gains: {ok}/{len(rows)} agree")
+           ylim=(500, 3200), title=f"M8  Published test points with the paper's own gains: {ok}/{len(cuts)} distinct "
+           f"cuts agree ({len(rows)} markers in Figs. 9 and 11)")
     ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.01, 1.0), borderaxespad=0)
     save(fig, "m08_test_points_match.png")
 

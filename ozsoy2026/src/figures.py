@@ -108,8 +108,9 @@ def fig8_9(tag):
     ax.plot(up[:, 0], up[:, 1], ":", color=PAPER, lw=1.2, label="paper Fig. 9: uncontrolled")
     ax.plot(rpm, a_map, color=OURS, lw=1.6, label="reproduction: controlled (gain map)")
     ax.plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1.4, label="paper Fig. 9: controlled (incl. covered part)")
-    hid = (cp[:, 0] > 1495) & (cp[:, 0] < 2051)
-    ax.plot(cp[hid, 0], cp[hid, 1], color=PAPER, lw=4, alpha=0.25,
+    # the two stretches under white fills (verification/targets/fig9_masks.csv)
+    hid = ((cp[:, 0] > 1495) & (cp[:, 0] < 2051)) | ((cp[:, 0] >= 958.5) & (cp[:, 0] <= 975.4))
+    ax.plot(cp[:, 0], np.where(hid, cp[:, 1], np.nan), color=PAPER, lw=4, alpha=0.25,
             label="covered by white fills in the PDF")
     _markers(ax)
     ax.set(xlabel="Spindle speed (rpm)", ylabel="Depth of cut (mm)", xlim=(380, 3050),
@@ -120,25 +121,19 @@ def fig8_9(tag):
 
 
 def _markers(ax, fig_key="fig9"):
+    """The paper's test markers (verification/targets/<fig>_markers.csv: kind,
+    rpm, depth_mm; quoted fields, so read with csv, not genfromtxt)."""
+    import csv
     path = os.path.join(HERE, "..", "verification", "targets", f"{fig_key}_markers.csv")
-    if not os.path.exists(path):
-        return
-    try:
-        m = np.genfromtxt(path, delimiter=",", names=True, dtype=None, encoding=None)
-    except Exception:
-        return
+    with open(path) as fh:
+        rows = list(csv.DictReader(fh))
     style = {"uncontrolled_stable": ("+", "k"), "uncontrolled_chatter": ("D", "k"),
              "controlled_stable": ("o", "g"), "controlled_chatter": ("x", "r")}
-    names = m.dtype.names
-    kcol = [n for n in names if "type" in n or "kind" in n or "class" in n]
-    if not kcol:
-        return
     for k, (mk, col) in style.items():
-        sel = m[m[kcol[0]] == k]
-        if len(sel):
-            ax.plot(sel[names[[i for i, n in enumerate(names) if "rpm" in n][0]]],
-                    sel[names[[i for i, n in enumerate(names) if "mm" in n or "depth" in n][0]]],
-                    mk, mfc="none", color=col, ms=6, label=f"paper test: {k.replace('_', ' ')}")
+        sel = [(float(r["rpm"]), float(r["depth_mm"])) for r in rows if r["kind"] == k]
+        if sel:
+            x, y = np.array(sel).T
+            ax.plot(x, y, mk, mfc="none", color=col, ms=6, label=f"paper test: {k.replace('_', ' ')}")
 
 
 def fig11(tag):
@@ -196,13 +191,14 @@ def cuts(tag):
         ax[k, 0].set_ylabel("acc (m/s2)", fontsize=7)
         tag_d = " (diverges)" if r.get("diverged_td") else ""
         ax[k, 0].set_title(f"Cut {lab}: {r['rpm']:.0f} rpm, {r['depth_mm']} mm, {r['controller']} "
-                           f"(g = {r['g_ours']:.0f}) -> simulated {r['pred_ours_td']}{tag_d}; "
-                           f"measured {r['measured']}", fontsize=7.5)
+                           f"(our gain g = {r['g_ours']:.0f}; experiment {r['g_paper']:.0f}) -> simulated "
+                           f"{r['pred_ours_td']}{tag_d}; measured {r['measured']}", fontsize=7.5)
         ax[k, 1].semilogy(c[f"{lab}_f"], c[f"{lab}_S"] + 1e-12, color="#4a90c2", lw=0.8)
         ftp = 4 * r["rpm"] / 60.0
         for h in range(1, 4):
             ax[k, 1].axvline(h * ftp, color="k", lw=0.5, ls=":")
         ax[k, 1].set_xlim(0, 420)
+        ax[k, 1].set_ylabel("|acc| spectrum (m/s2)", fontsize=7)
     ax[-1, 0].set_xlabel("Time (s); dots: once per revolution")
     ax[-1, 1].set_xlabel("Frequency (Hz); dotted: tooth passing")
     fig.tight_layout()

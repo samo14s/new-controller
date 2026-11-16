@@ -1,5 +1,13 @@
 # Verification of `src/zoa.py::a_lim` (ZOA) with an independent SDM solver
 
+> **Note added after the audit.** This report was written against `src/zoa.py` as it was
+> before commit a8fb532. That commit adopted the floor(wT/2pi) pole guard demonstrated here
+> (sections 4b and 5) in `src/zoa.py`, replacing the |Im a| >= 0.5 |a| filter, and coarsened
+> the 60-600 Hz frequency grid from 0.01 to 0.02 Hz. With the current code the accuracy against
+> the lobe sweep is 6.0e-6 (g = 0, 1-rpm grid; 1.6e-6 here with the finer grid) and against the
+> mean-coefficient SDM 2.0e-5, with no missed or spurious roots: see `current_grid_check.py` and
+> `current_grid_check.json`. The pole guard is pinned by `tests/test_zoa.py`.
+
 Scope: the frequency-domain stability limit `a_lim(rpm, g)` that the SADE objective
 uses. Nothing in `src/` was modified. Every script here runs on its own with
 `python3 <script>.py` from this folder, using 1 to 2 CPU cores for a few minutes at most.
