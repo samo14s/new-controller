@@ -7,6 +7,15 @@
   },
   "max_rel_dev": 0.048629802080710494
  },
+ "stable_full_vs_brute": {
+  "case": {
+   "rpm": 2500.0,
+   "a": 0.006,
+   "g": 536.0
+  },
+  "max_rel_dev": 0.0031596215100253996,
+  "single_vs_brute": 0.049768459541315174
+ },
  "clipped_chatter": [
   {
    "rpm": 2350.0,
