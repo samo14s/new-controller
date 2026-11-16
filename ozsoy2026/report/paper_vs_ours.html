@@ -84,7 +84,7 @@ table{border-collapse:collapse; width:100%; font-size:14.5px}
 th,td{padding:10px 14px; text-align:right; vertical-align:top; border-bottom:1px solid var(--rule-soft)}
 th{font-weight:600; background:var(--surface-2); color:var(--ink-2); font-size:13px; white-space:nowrap}
 tr:last-child td{border-bottom:none}
-td.code{font-family:var(--f-mono); font-size:12.5px; color:var(--accent); white-space:nowrap; direction:ltr}
+a.code{font-family:var(--f-mono); font-size:12px; color:var(--accent); margin-inline-end:6px; direction:ltr; unicode-bidi:isolate}
 td a{text-decoration:none}
 td a:hover{text-decoration:underline}
 .pill{display:inline-block; font-size:12px; font-weight:600; padding:1px 10px; border-radius:999px; border:1px solid currentColor; white-space:nowrap}
@@ -116,6 +116,7 @@ footer p{max-width:90ch; margin:0 0 10px}
 @media (max-width:560px){
   body{font-size:15.5px}
   th,td{padding:8px 10px}
+  .tbl table{min-width:540px}
   figure{padding:9px}
 }
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
@@ -138,20 +139,20 @@ footer p{max-width:90ch; margin:0 0 10px}
   <h2 id="sum">الحكم في سطر لكلّ شكل</h2>
   <p class="lead">«مطابق» يعني أنّ الفرق في حدود دقّة الاستخراج. الفروق كلّها محسوبة من الملفات المخزّنة في المستودع (<span class="num">results/paper_vs_ours.json</span>).</p>
   <div class="tbl"><table>
-    <thead><tr><th>المقارنة</th><th>في الورقة</th><th>الحكم</th><th>الفرق باختصار</th></tr></thead>
+    <thead><tr><th>في الورقة</th><th>الحكم</th><th>الفرق باختصار</th></tr></thead>
     <tbody>
-      <tr><td class="code"><a href="#p01">P01</a></td><td>الشكل 5: FRF البنية</td><td><span class="pill good">مطابق</span></td><td>وسيط الفرق 0.04 % بقيم الجدول 1</td></tr>
-      <tr><td class="code"><a href="#p02">P02</a></td><td>الشكل 6a: FRF الحلقة المغلقة</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>مطابق تمامًا (≤ 0.002 dB) بكسوبٍ غير المكتوبة في مفتاح الشكل عند 3 سرعات من 4</td></tr>
-      <tr><td class="code"><a href="#p03">P03</a></td><td>الشكل 6b: الأقطاب</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>ضمن 0.05 rad/s بكسوب 1543 و685 و830، لا بكسوب المفتاح 1487 و585 و797</td></tr>
-      <tr><td class="code"><a href="#p04">P04</a></td><td>الشكل 8: خريطة الكسب</td><td><span class="pill bad">يختلف</span></td><td>كسوبنا 0.74 و0.88 من الورقة تحت 1500 rpm، و0.97 في 2320–3000؛ و1.83 في 2060–2310 حيث أمثلنا جيبٌ معزول</td></tr>
-      <tr><td class="code"><a href="#p05">P05</a></td><td>الشكل 9: بلا تحكّم</td><td><span class="pill good">مطابق</span></td><td>وسيط 0.04 %، لكن بتخميد 1.34 % لا 1.45 % المذكور</td></tr>
-      <tr><td class="code"><a href="#p06">P06</a></td><td>الشكل 9: بالتحكّم</td><td><span class="pill bad">يختلف</span></td><td>منحنى الورقة لا يعيده نموذجها نفسه بكسوبها؛ وجزؤه المغطّى ينزل تحت غير المتحكَّم فيه</td></tr>
-      <tr><td class="code"><a href="#p07">P07</a></td><td>الشكل 11: الكسب الثابت</td><td><span class="pill bad">يختلف</span></td><td>كسبنا الثابت 60.3 لا 237؛ ونموذجنا بـ 237 أدنى من منحنى الورقة بنحو 7 %</td></tr>
-      <tr><td class="code"><a href="#p08">P08</a></td><td>الجدول 3</td><td><span class="pill bad">معكوس</span></td><td>DVF المقصوص يتفوّق عندنا في السرعات التسع؛ الورقة تجد العكس عند 2300–3000 rpm</td></tr>
-      <tr><td class="code"><a href="#p09">P09</a></td><td>نقاط الاختبار (الشكلان 9 و11)</td><td><span class="pill good">17 من 19</span></td><td>بكسوب الورقة كما بمنحنياتها؛ وبكسوبنا 13 من 19</td></tr>
-      <tr><td class="code"><a href="#p10">P10</a></td><td>الشكلان 10 و12: تردّد الارتجاج</td><td><span class="pill warn">قريب</span></td><td>ضمن 1–2 Hz عند 10B و12B؛ وأدنى بنحو 4 Hz عند 12D</td></tr>
-      <tr><td class="code"><a href="#p11">P11</a></td><td>أرقام النصّ الرئيسة</td><td><span class="pill info">عشرة أرقام</span></td><td>من 0.25× (الكسب الثابت) إلى 1.66× (أسوأ عمق)</td></tr>
-      <tr><td class="code"><a href="#p12">P12</a></td><td>الشكلان 8 و9، بالشرط المُعاد صياغته</td><td><span class="pill info">خارج إعادة الإنتاج</span></td><td>العمق المفحوص 15.87 mm وسطيًّا مقابل 8.63 للجزء الظاهر من منحنى الورقة</td></tr>
+      <tr><td><a class="code" href="#p01">P01</a> الشكل 5: FRF البنية</td><td><span class="pill good">مطابق</span></td><td>وسيط الفرق 0.04 % بقيم الجدول 1</td></tr>
+      <tr><td><a class="code" href="#p02">P02</a> الشكل 6a: FRF الحلقة المغلقة</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>مطابق تمامًا (≤ 0.002 dB) بكسوبٍ غير المكتوبة في مفتاح الشكل عند 3 سرعات من 4</td></tr>
+      <tr><td><a class="code" href="#p03">P03</a> الشكل 6b: الأقطاب</td><td><span class="pill warn">مطابق مع ملاحظة</span></td><td>ضمن 0.05 rad/s بكسوب 1543 و685 و830، لا بكسوب المفتاح 1487 و585 و797</td></tr>
+      <tr><td><a class="code" href="#p04">P04</a> الشكل 8: خريطة الكسب</td><td><span class="pill bad">يختلف</span></td><td>كسوبنا 0.74 و0.88 من الورقة تحت 1500 rpm، و0.97 في 2320–3000؛ و1.83 في 2060–2310 حيث أمثلنا جيبٌ معزول</td></tr>
+      <tr><td><a class="code" href="#p05">P05</a> الشكل 9: بلا تحكّم</td><td><span class="pill good">مطابق</span></td><td>وسيط 0.04 %، لكن بتخميد 1.34 % لا 1.45 % المذكور</td></tr>
+      <tr><td><a class="code" href="#p06">P06</a> الشكل 9: بالتحكّم</td><td><span class="pill bad">يختلف</span></td><td>منحنى الورقة لا يعيده نموذجها نفسه بكسوبها؛ وجزؤه المغطّى ينزل تحت غير المتحكَّم فيه</td></tr>
+      <tr><td><a class="code" href="#p07">P07</a> الشكل 11: الكسب الثابت</td><td><span class="pill bad">يختلف</span></td><td>كسبنا الثابت 60.3 لا 237؛ ونموذجنا بـ 237 أدنى من منحنى الورقة بنحو 7 %</td></tr>
+      <tr><td><a class="code" href="#p08">P08</a> الجدول 3</td><td><span class="pill bad">معكوس</span></td><td>DVF المقصوص يتفوّق عندنا في السرعات التسع؛ الورقة تجد العكس عند 2300–3000 rpm</td></tr>
+      <tr><td><a class="code" href="#p09">P09</a> نقاط الاختبار (الشكلان 9 و11)</td><td><span class="pill good">17 من 19</span></td><td>بكسوب الورقة كما بمنحنياتها؛ وبكسوبنا 13 من 19</td></tr>
+      <tr><td><a class="code" href="#p10">P10</a> الشكلان 10 و12: تردّد الارتجاج</td><td><span class="pill warn">قريب</span></td><td>ضمن 1–2 Hz عند 10B و12B؛ وأدنى بنحو 4 Hz عند 12D</td></tr>
+      <tr><td><a class="code" href="#p11">P11</a> أرقام النصّ الرئيسة</td><td><span class="pill info">عشرة أرقام</span></td><td>من 0.25× (الكسب الثابت) إلى 1.66× (أسوأ عمق)</td></tr>
+      <tr><td><a class="code" href="#p12">P12</a> الشكلان 8 و9، بالشرط المُعاد صياغته</td><td><span class="pill info">خارج إعادة الإنتاج</span></td><td>العمق المفحوص 15.87 mm وسطيًّا مقابل 8.63 للجزء الظاهر من منحنى الورقة</td></tr>
     </tbody>
   </table></div>
 </section>
