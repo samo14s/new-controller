@@ -130,20 +130,27 @@ def build():
         ok_t = np.isfinite(allt) & (allc > 0)
         ok_m = np.isfinite(allm) & (allc > 0)
 
-        def at(arr_kind, R_, kind, n, d):
+        def at(arr_kind, R_, kind, n, d, key="td_min"):
             m = (R_["rpm"] == n) & (R_["depth"] == d) & (arr_kind == kind)
-            return float(R_["td_min"][m][0]) if m.any() else None
+            return float(R_[key][m][0]) if m.any() else None
         rows = []
         for n in sorted(set(V["rpm"].tolist()) | set(V2["rpm"].tolist())):
             for d in sorted(set(V["depth"].tolist()) | set(V2["depth"].tolist())):
                 dv = at(k2, V2, "dvf_fine", n, d)
-                dv = at(V["kind"], V, "dvf", n, d) if dv is None else dv
+                dvc = at(k2, V2, "dvf_fine", n, d, "cert")
+                if dv is None:
+                    dv, dvc = at(V["kind"], V, "dvf", n, d), at(V["kind"], V, "dvf", n, d, "cert")
                 cb = at(V["kind"], V, "comb", n, d)
                 cb = at(k2, V2, "comb", n, d) if cb is None else cb
                 sg = at(k2, V2, "same_g1", n, d)
                 rows.append((n, d, np.nan if dv is None else dv, np.nan if cb is None else cb,
-                             np.nan if sg is None else sg))
+                             np.nan if sg is None else sg, np.nan if dvc is None else dvc))
         rw = np.array(rows)
+        # pairs chosen before looking at the simulated outcome: where DVF's own certificate almost
+        # vanishes (certified kick <= 2.1 mm/s), i.e. near DVF's limit; and the deep pairs (>= 18 mm)
+        fs_ = np.isfinite(rw[:, 2]) & np.isfinite(rw[:, 4]) & (rw[:, 2] > 0)
+        near = fs_ & np.isfinite(rw[:, 5]) & (rw[:, 5] > 0) & (rw[:, 5] <= 2.1e-3)
+        deep18 = fs_ & (rw[:, 1] >= 18.0)
         fc = np.isfinite(rw[:, 2]) & np.isfinite(rw[:, 3]) & (rw[:, 2] > 0)
         fs = np.isfinite(rw[:, 2]) & np.isfinite(rw[:, 4]) & (rw[:, 2] > 0)
         deep = (V2["kind"] == "comb") & np.isin(V2["depth"], (30.0, 34.0))
@@ -158,7 +165,11 @@ def build():
             deep_td_over_cert=stats(V2["td_min"][okd] / V2["cert"][okd]), deep_points=int(okd.sum()),
             comb_over_dvf=stats(rw[fc, 3] / rw[fc, 2]), comb_better=int(np.sum(rw[fc, 3] > rw[fc, 2])),
             same_g1_over_dvf=stats(rw[fs, 4] / rw[fs, 2]), same_g1_better=int(np.sum(rw[fs, 4] > rw[fs, 2])),
-            pairs_mmps=[[r(x * 1e3, 2) if i > 1 else float(x) for i, x in enumerate(row)] for row in rw])  # rpm, mm, DVF, best delayed, same-g1 delayed
+            same_g1_near_dvf_limit=dict(rule="DVF certified kick <= 2.1 mm/s", n=int(near.sum()),
+                                        pairs=[[float(x) for x in row[:2]] for row in rw[near]],
+                                        ratio=stats(rw[near, 4] / rw[near, 2])),
+            same_g1_deep=dict(rule="depth >= 18 mm", n=int(deep18.sum()), ratio=stats(rw[deep18, 4] / rw[deep18, 2])),
+            pairs_mmps=[[r(x * 1e3, 2) if i > 1 else float(x) for i, x in enumerate(row)] for row in rw])  # rpm, mm, DVF, best delayed, same-g1 delayed, DVF certified
     # ---- robustness
     labels = list(R["labels"])
     rob = {}
