@@ -42,7 +42,7 @@ def work(args):
             runs.append((float(r["x"][0]), r["f"], r["n_eval"], r["gens"]))
         best = max(runs, key=lambda q: q[1])
         row.update(g_sade=best[0], a_sade=best[1], sade_runs=np.array(runs))
-    g = max(g_ref, row.get("g_sade", 0.0)) if do_sade and row["a_sade"] > f_ref else g_ref
+    g = row["g_sade"] if do_sade and row["a_sade"] > f_ref else g_ref         # the gain of the better run
     row["g_best"] = g
     row["a_best"] = max(f_ref, row.get("a_sade", 0.0))
     if do_cert:

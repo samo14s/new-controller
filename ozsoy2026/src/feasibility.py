@@ -70,11 +70,12 @@ _W = slice_force_harmonics()
 def force_harmonics(depths, n_harm=N_HARM):
     """F_m(a) for an array of depths: shape (len(depths), n_harm + 1), N."""
     depths = np.atleast_1d(depths)[:, None]
+    W = _W if n_harm <= N_HARM else slice_force_harmonics(n_harm=n_harm)
     m = np.arange(n_harm + 1)[None, :]
     q = m * P.N_TEETH * np.tan(P.HELIX) / (0.5 * P.D_TOOL)      # rad per metre of depth
     with np.errstate(invalid="ignore", divide="ignore"):
         integ = np.where(m == 0, depths, (1 - np.exp(-1j * q * depths)) / (1j * q))
-    return _W[None, : n_harm + 1] * integ
+    return W[None, : n_harm + 1] * integ
 
 
 def forced_velocity(rpm, g, depths, n_harm=N_HARM, n_t=N_T):
