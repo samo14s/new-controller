@@ -533,8 +533,8 @@ python run_gain_map.py --tag main --sade                  <span class="c"># Figs
 python run_single_gain.py --tag main --sade
 python run_table3.py --tag main
 python run_cuts.py --tag main
-python figures.py --tag main
-../results/run_c1_chain.sh                <span class="c"># C1 (~2 h on 4 cores)</span>
+python figures.py --tag main && python figures_matching.py
+../results/run_c1_chain.sh                <span class="c"># C1, full surface memory (~4 h on 3 cores)</span>
 python c1_summary.py && python figures_c1.py
 ../results/run_c2_chain.sh                <span class="c"># C2 (~2 h on 4 cores, needs clarabel)</span>
 python c2_summary.py && python figures_c2.py
@@ -543,7 +543,15 @@ python c2_summary.py && python figures_c2.py
 python c4_summary.py && python figures_c4.py
 ../results/run_c3_chain.sh                <span class="c"># C3 (~8 h on 4 cores, memory-bound)</span>
 python c3_periodic.py edge --workers 2 && python c3_periodic.py straight && python c3_periodic.py counter
-python c3_summary.py && python figures_c3.py</pre>
+python c3_summary.py && python figures_c3.py
+<span class="c"># redone after the audit (full surface memory, upward kick search); finished jobs are cached
+# in results/cache/ (src/jobcache.py), so an interrupted campaign resumes</span>
+../results/run_c1_chain2.sh               <span class="c"># C1: basin, band, gainplane, map</span>
+../results/run_audit_chain_s8.sh          <span class="c"># section 8 time-domain checks</span>
+../results/run_audit_chain.sh             <span class="c"># C2 validate, C3 kicks, C4 entry/validate/validate2</span>
+python ../verification/tdsim/check8_onset_long_runs.py    <span class="c"># onset with 2000-revolution runs (~3 h)</span>
+python ../verification/tdsim/check9_full_memory.py        <span class="c"># full memory against a 600-pass brute force</span>
+python ../verification/feasibility/cf_vs_td_layers.py     <span class="c"># closed form against the simulator by axial layers</span></pre>
 </section>
 
 <section id="c1">
