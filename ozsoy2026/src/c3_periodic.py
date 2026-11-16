@@ -82,7 +82,6 @@ from zoa import a_lim, alpha_matrix, ALPHA
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
-KAPZ = np.tan(P.HELIX) / (0.5 * P.D_TOOL)          # helix lag, rad per metre of depth
 M_C = 16                                           # subintervals of the tooth period
 N_ENC = 2048                                       # samples per subinterval for the enclosures (the pad
 #                                                  (L + |beta|/tau) dt / 2 dominates the residual below about 1000)
@@ -158,21 +157,21 @@ def aH(t, rpm, a, cut=HALF):
             on = (ph >= cut.st) & (ph < cut.ex)
             out += np.where(on, P.K_TC * np.sin(ph) * np.cos(ph) - P.K_RC * np.cos(ph) ** 2, 0.0)
         return a * out
-    KAPZ = cut.kz
+    kz = cut.kz                                    # helix lag, rad per metre of depth
     for j in range(P.N_TEETH):
         hi = th + j * 2 * np.pi / P.N_TEETH
-        lo = hi - KAPZ * a
+        lo = hi - kz * a
         for p in np.arange(np.floor((lo.min() - cut.ex) / (2 * np.pi)) - 1,
                            np.ceil((hi.max() - cut.st) / (2 * np.pi)) + 2):
             l = np.maximum(lo, cut.st + 2 * np.pi * p)
             u = np.minimum(hi, cut.ex + 2 * np.pi * p)
             m = u > l
-            out[m] += (_prim(u[m] - 2 * np.pi * p) - _prim(l[m] - 2 * np.pi * p)) / KAPZ
+            out[m] += (_prim(u[m] - 2 * np.pi * p) - _prim(l[m] - 2 * np.pi * p)) / kz
     return out
 
 
 def aH_rate_bound(rpm, cut=HALF):
-    """L >= |d(a H)/dt|: each tooth contributes (f(phi_top) - f(phi_bottom)) / KAPZ
+    """L >= |d(a H)/dt|: each tooth contributes (f(phi_top) - f(phi_bottom)) / kz
     times the spindle rate, f bounded on the window."""
     assert cut.kz > 0, "the enclosure assumes a continuous coefficient (helical teeth)"
     ph = np.linspace(cut.st, cut.ex, 4001)

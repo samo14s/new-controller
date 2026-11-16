@@ -13,10 +13,19 @@ def test_default_damping_is_the_one_behind_the_papers_curves():
 
 
 def test_set_damping_switches_every_module():
+    """The plant, the stability solver and the simulator all read the damping
+    at call time, so set_damping switches them together."""
+    from zoa import a_lim
+    from tdsim import simulate
+    a0 = a_lim(2500, 0.0)
+    x0 = simulate(2500, 1e-3, 0.0, store=True, nrev=4)["x"]
     P.set_damping(0.0145)
     assert P.C == pytest.approx(2 * 0.0145 * np.sqrt(P.K * P.M))
     w = 2 * np.pi * np.linspace(100, 160, 20001)
     assert 20 * np.log10(np.abs(G(1j * w)).max()) == pytest.approx(-111.79, abs=0.01)
+    assert a_lim(2500, 0.0) / a0 == pytest.approx(0.0145 / 0.0134, rel=0.05)    # the limit scales with damping
+    x1 = simulate(2500, 1e-3, 0.0, store=True, nrev=4)["x"]
+    assert not np.array_equal(x0, x1)
 
 
 def test_uncontrolled_peak_matches_fig6a():

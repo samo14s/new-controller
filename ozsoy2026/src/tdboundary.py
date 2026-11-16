@@ -7,7 +7,10 @@ the tool leaves the cut and then saturates.  A cut is called stable when
 (criterion D1 of verification/tdsim/detector.py, adopted here):
   * the per-tooth growth factor fitted to log block-RMS(e_k) over the second
     half of the run is below 1 - 2e-5,
-  * the envelope really shrinks across that half (last/first block max < 0.98),
+  * the envelope really shrinks across that half (last/first block max < 0.98;
+    over 300 revolutions the first and last five blocks are 480 teeth apart,
+    so for a clean exponential this asks a decay of at least 4.2e-5 per
+    tooth, and it is this test, not the growth factor, that binds),
   * the end RMS is below the engagement transient, and
   * the regenerative displacement over the last 20 % stays below 0.25 fz
     (catches saturated limit cycles already reached during engagement),
@@ -33,7 +36,7 @@ def classify_run(x, spr, diverged=False, N=P.N_TEETH, delta=2e-5, nblocks=25):
     e = np.diff(x[::nd])
     K = len(e)
     if diverged or not np.all(np.isfinite(e)):
-        return dict(stable=False, mu=np.inf, dx_end_over_fz=np.inf)
+        return dict(stable=False, mu=np.inf, q=np.nan, dx_end_over_fz=np.inf)
 
     def rms(lo, hi):
         seg = e[int(lo * K):int(hi * K)]
