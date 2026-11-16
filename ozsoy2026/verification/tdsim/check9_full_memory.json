@@ -1,0 +1,92 @@
+{
+ "stable_full_vs_single": {
+  "case": {
+   "rpm": 2500.0,
+   "a": 0.006,
+   "g": 536.0
+  },
+  "max_rel_dev": 0.048629802080710494
+ },
+ "clipped_chatter": [
+  {
+   "rpm": 2350.0,
+   "g": 1217.0,
+   "a_mm": 14.406480442240989,
+   "options": {},
+   "full_vs_brute_max_rel_dev": 0.16518228601107732,
+   "full": {
+    "diverged": false,
+    "max_x_mm": 0.5895571617520674
+   },
+   "brute600": {
+    "diverged": false,
+    "max_x_mm": 0.5916966981537916
+   },
+   "nreg4": {
+    "diverged": true,
+    "max_x_mm": 9.969298449922157
+   }
+  },
+  {
+   "rpm": 1050.0,
+   "g": 1500.0,
+   "a_mm": 24.1752123739329,
+   "options": {},
+   "full_vs_brute_max_rel_dev": 1.0,
+   "full": {
+    "diverged": true,
+    "max_x_mm": 9.826504658407522
+   },
+   "brute600": {
+    "diverged": true,
+    "max_x_mm": 9.818839075643112
+   },
+   "nreg4": {
+    "diverged": true,
+    "max_x_mm": 9.834355744972418
+   }
+  },
+  {
+   "rpm": 2500.0,
+   "g": 1500.0,
+   "a_mm": 15.0,
+   "options": {},
+   "full_vs_brute_max_rel_dev": 0.13355113033681862,
+   "full": {
+    "diverged": false,
+    "max_x_mm": 0.43453768815140925
+   },
+   "brute600": {
+    "diverged": false,
+    "max_x_mm": 0.43524143383994085
+   },
+   "nreg4": {
+    "diverged": false,
+    "max_x_mm": 0.5541428036711161
+   }
+  },
+  {
+   "rpm": 1090.0,
+   "g": 1500.0,
+   "a_mm": 20.567075365964218,
+   "options": {
+    "edge": true,
+    "kick_step": 51237,
+    "kick_dv": 0.012
+   },
+   "full_vs_brute_max_rel_dev": 0.00029461314213431863,
+   "full": {
+    "diverged": false,
+    "max_x_mm": 0.041281768022877266
+   },
+   "brute600": {
+    "diverged": false,
+    "max_x_mm": 0.04128176802875115
+   },
+   "nreg4": {
+    "diverged": true,
+    "max_x_mm": 9.941523594501215
+   }
+  }
+ ]
+}
