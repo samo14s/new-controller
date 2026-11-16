@@ -5,9 +5,8 @@ with the same definitions as for the paper's condition:
   * the single fixed gain: with a feasible set that is one interval [0, g_b]
     at every speed, the joint feasible set is [0, min g_b];
   * Table 3: the new per-speed gain against the clipped baselines, both as
-    time-domain limits with the 9 V command limit (the new gain with the chip
-    memory feasibility.NREG, the full surface; the baselines of table3_main.csv
-    with the single pass of the reproduction);
+    time-domain limits with the 9 V command limit and the full surface memory
+    feasibility.NREG (the baselines are those of table3_main.csv);
   * the 21 published test points under the new gains.
     python run_feas_compare.py --tag g1500
 """

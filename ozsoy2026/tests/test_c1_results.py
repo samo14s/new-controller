@@ -98,3 +98,15 @@ def test_gain_plane_plateau(s):
     assert g["1090"]["step_clip_plateau_mm"] == pytest.approx(19.78, abs=0.1)
     assert g["2500"]["step_clip_plateau_mm"] == pytest.approx(13.19, abs=0.1)
     assert g["2500"]["orbit_saturates_from_g"] == 1650.0
+
+
+def test_basin_stays_finite_at_0999_of_the_limit():
+    """verification/tdsim/check11: at 0.999 a_lim the critical kick (current
+    C1 protocol, 4 phases) is 1.4-10.5 mm/s, not zero."""
+    import json
+    c = json.load(open(path("verification", "tdsim", "check11_kick_near_limit.json")))
+    assert c["nreg"] == 0 and c["frac"] == 0.999
+    lo = {n: r["min"] for n, r in c["by_rpm"].items()}
+    assert lo["2500"] == pytest.approx(1.41, abs=0.01) and lo["2870"] > 7.0 and lo["1090"] > 9.0
+    assert all(r["max"] < 11.0 for r in c["by_rpm"].values())
+

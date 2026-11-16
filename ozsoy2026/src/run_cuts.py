@@ -9,7 +9,8 @@ The experiments cannot be repeated.  Two things are done instead:
     experimental_points.csv) is classified by the zero-order limit with
     (a) the paper's own gain at that speed (Fig. 8, 237 V s/m, or none) and
     (b) the reproduced gain, and with (b) also in the time domain
-    (D1 detector, 9 V command limit);
+    (D1 detector, 9 V command limit, full surface memory feasibility.NREG;
+    the single pass of the first run gave the same classes);
  2. the six labelled cuts of Figs. 10 and 12 are simulated over 300
     revolutions; the once-per-revolution samples and the spectrum of the
     acceleration are stored, with the dominant non-synchronous frequency.
@@ -43,6 +44,7 @@ def work(job):
     P.set_damping(job["zeta"])
     from zoa import a_lim
     from tdboundary import classify
+    from feasibility import NREG
     out = dict(job)
     for key in ("paper", "ours"):
         g = job[f"g_{key}"]
@@ -51,14 +53,14 @@ def work(job):
         out[f"fc_{key}"] = fc
         out[f"pred_{key}"] = "stable" if job["depth_mm"] < al * 1e3 else "chatter"
     g = job["g_ours"]
-    c = classify(job["rpm"], job["depth_mm"] * 1e-3, g, vmax=VMAX if g > 0 else 0.0)
+    c = classify(job["rpm"], job["depth_mm"] * 1e-3, g, vmax=VMAX if g > 0 else 0.0, nreg=NREG)
     out["pred_ours_td"] = "stable" if c["stable"] else "chatter"
     out["max_fact_td"] = float(np.abs(c["run"]["fact"]).max())
     run = c["run"]
     out["diverged_td"] = bool(run["diverged"])
     if job["cut"]:
-        # a diverging run (chatter past 1 cm; the model keeps one regeneration
-        # only) stops early and leaves zeros: analyse the part actually run
+        # a diverging run (chatter past 1 cm) stops early and leaves zeros:
+        # analyse the part actually run
         nz = np.nonzero(run["x"])[0]
         nv = int(nz[-1]) + 1 if run["diverged"] and len(nz) else len(run["x"])
         t, v = run["t"][:nv], run["v"][:nv]

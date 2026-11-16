@@ -8,7 +8,10 @@ so two values are reported (1500 V s/m, just above the largest gain of Fig. 8,
 and the reproduction's 3000 V s/m).  The limit is applied to the command,
 |V| <= F_max / K_a = 9 V.
 Proposed: the saturation-aware gain of the main map.
-Each controller gets a time-domain boundary (D1 detector, 9 V limit active);
+Each controller gets a time-domain boundary (D1 detector, 9 V limit active,
+full surface memory feasibility.NREG: the single pass of the first run
+manufactured chatter where the entry transient lifts the tool out of the cut,
+e.g. 20.4 instead of 29.8 mm at 560 rpm with g = 3000);
 the zero-order a_lim of the proposed gain is listed as well, since the paper's
 Table 3 'proposed' column tracks its Fig. 9 frequency-domain curve.
     python run_table3.py --tag main
@@ -37,25 +40,29 @@ def work(args):
     P.set_damping(zeta)
     from tdboundary import boundary
     from zoa import a_lim
+    from feasibility import NREG
     row = dict(rpm=rpm, g_prop=g_prop, a_unc_zoa=a_lim(rpm, 0.0) * 1e3,
                a_prop_zoa=a_lim(rpm, g_prop) * 1e3,
-               a_prop_td=boundary(rpm, g_prop, vmax=VMAX) * 1e3)
+               a_prop_td=boundary(rpm, g_prop, vmax=VMAX, nreg=NREG) * 1e3)
     for gc in G_CLIP:
         row[f"a_clip{int(gc)}_zoa_nolimit"] = a_lim(rpm, gc) * 1e3
-        row[f"a_clip{int(gc)}_td"] = boundary(rpm, gc, vmax=VMAX) * 1e3
+        row[f"a_clip{int(gc)}_td"] = boundary(rpm, gc, vmax=VMAX, nreg=NREG) * 1e3
     row["paper_clip"], row["paper_prop"] = PAPER[rpm]
     return row
 
 
 def sweep_work(args):
-    rpm, g = args
+    rpm, g, zeta = args
+    P.set_damping(zeta)
     from tdboundary import boundary
-    return rpm, g, boundary(rpm, g, vmax=VMAX) * 1e3
+    from feasibility import NREG
+    return rpm, g, boundary(rpm, g, vmax=VMAX, nreg=NREG) * 1e3
 
 
-def sweep(workers):
+def sweep(workers, tag="main"):
+    zeta = float(np.load(os.path.join(RES, f"gainmap_{tag}.npz"))["zeta"])
     with Pool(workers) as pool:
-        rows = pool.map(sweep_work, SWEEP)
+        rows = pool.map(sweep_work, [(n, g, zeta) for n, g in SWEEP], chunksize=1)
     np.savetxt(os.path.join(RES, "table3_clip_gain_sweep.csv"), np.array(rows), delimiter=",",
                header="rpm,g,a_td_mm_9V", comments="", fmt="%.3f")
     for r in rows:
@@ -69,13 +76,13 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     a = ap.parse_args()
     if a.sweep:
-        return sweep(a.workers)
+        return sweep(a.workers, a.tag or "main")
     d = np.load(os.path.join(RES, f"gainmap_{a.tag}.npz"))
     zeta = float(d["zeta"])
     gmap = d["g_best"] if "g_best" in d else d["g_ref"]
     jobs = [(n, float(np.interp(n, d["rpm"], gmap)), zeta) for n in SPEEDS]
     with Pool(a.workers) as pool:
-        rows = pool.map(work, jobs)
+        rows = pool.map(work, jobs, chunksize=1)
     keys = list(rows[0].keys())
     arr = np.array([[r[k] for k in keys] for r in rows])
     np.savetxt(os.path.join(RES, f"table3_{a.tag}.csv"), arr, delimiter=",",

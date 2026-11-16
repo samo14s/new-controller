@@ -62,6 +62,21 @@ def test_papers_single_gain_is_infeasible_at_18_speeds():
 def test_table3_reversal():
     t = np.genfromtxt(path("results", "table3_main.csv"), delimiter=",", names=True)
     assert np.all(t["a_clip1500_td"] > t["a_prop_td"])
+    assert np.all(t["a_clip3000_td"] >= t["a_clip1500_td"])
+
+
+@pytest.mark.slow
+def test_table3_uses_the_full_surface_memory():
+    """The stored clipped limit at 560 rpm with g = 3000 is the full-memory one
+    (29.75 mm); the single pass of the first run gave 20.36 mm."""
+    import params as P
+    from tdboundary import boundary
+    from feasibility import NREG
+    t = np.genfromtxt(path("results", "table3_main.csv"), delimiter=",", names=True)
+    i = int(np.nonzero(t["rpm"] == 560)[0][0])
+    P.set_damping(float(np.load(MAIN)["zeta"]))
+    a = boundary(560.0, 3000.0, vmax=P.F_MAX / P.GA_GAIN, nreg=NREG) * 1e3
+    assert NREG == 0 and a == pytest.approx(t["a_clip3000_td"][i], abs=0.01) and a > 29.0
 
 
 def test_extracted_points_are_sorted_and_complete():
