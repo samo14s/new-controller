@@ -57,7 +57,7 @@ problem is solved again in the coordinates whitened by the previous W
   * the inclusion and the size are computed through a Cholesky factor of W;
   * an inclusion that is exceeded is repaired by shrinking (W, Y).
     python c2_certificate.py validate      -> ../results/c2_validate.npz
-    python c2_certificate.py surface       -> ../results/c2_surface.npz (kick, 40 rpm x 7 depths)
+    python c2_certificate.py surface       -> ../results/c2_surface.npz (kick, every 60 rpm x 7 depths)
     python c2_certificate.py step          -> ../results/c2_step.npz (step entry, C1 basin speeds)
 """
 import argparse
@@ -313,6 +313,8 @@ def check(A, B, K, u0, e, Tm, W, Y, S, valid=None):
     Cholesky factor of W and lose 1e-9 for safety.
     Returns (size, message); size 0 means the candidate is rejected.
     """
+    if not (np.all(np.isfinite(W)) and np.all(np.isfinite(Y)) and np.isfinite(S)):
+        return 0.0, "non-finite candidate"
     As, Bs, Ks, es = transform(A, B, K, e, Tm)
     n = len(Bs)
     W = (W + W.T) / 2
@@ -434,7 +436,12 @@ def proof_check(A, B, K, b, Tp, cert, nruns=48, nper=40, seed=0):
     """Start on the boundary of the certified ellipsoid (0.999 of it) in
     random directions and phases; return the largest V reached and the
     largest final V.  The theorem says max V <= 1 (up to the step) and
-    V -> 0."""
+    V -> 0.
+
+    A sampled consistency check, not evidence for the proof: the largest V
+    is usually the start value 0.999^2, and random directions miss the worst
+    ones (the audit found ellipsoids 2.5-3 times too large passing it).  The
+    guarantee comes from check()."""
     Tm, Pz = cert
     rng = np.random.default_rng(seed)
     n = len(B)
@@ -455,8 +462,8 @@ def model_critical_kick(A, B, K, b, Tp, nphase=4, nper=1200, lo=1e-4, hi=3.0, nb
     diverge, minimum over nphase phases (log bisection, all phases at once).
     Diverged: the state norm (velocity-dominated, so comparable with the
     kick) is not finite or above 10 dv after nper periods; a decaying run is
-    far below dv by then (the linear decay per tooth is <= 0.994 up to
-    0.98 a_lim, 0.994^1200 < 1e-3)."""
+    far below dv by then (the linear decay per tooth is <= 0.9941 up to
+    0.98 a_lim at the validation points, 0.9941^1200 < 1e-3)."""
     n, L = len(B), len(b)
     e = np.zeros(n)
     e[1] = 1.0
@@ -593,7 +600,12 @@ def run_validate(a):
 
 
 def _step_depth(args):
-    """Largest depth with a certified step entry (bisection on depth)."""
+    """Largest depth with a certified step entry (bisection on depth).
+
+    Not used in the campaigns (no stored results).  The bisection assumes the
+    step entry is certified at every depth below the largest one, which is
+    false: the margin u0 at 2500 rpm is 0.59/1.49/7.76/2.79 V at
+    0.3/0.5/0.7/0.9 a_lim."""
     rpm, g, zeta = args
     P.set_damping(zeta)
     al = a_lim(rpm, g)

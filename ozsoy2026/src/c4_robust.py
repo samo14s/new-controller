@@ -133,7 +133,13 @@ def slice_force_revolution(runout=0.0, psi=0.0, n_theta=N_THETA, k_harm=K_HARM):
 def orbit_command(rpm, a, g1, g2=0.0, kd=0.0, tau=0.0, rho=1.0, runout=0.0, psi=0.0, mode2=None,
                   n_t=N_THETA // 4, W=None):
     """Peak |command| (V) of the settled forced motion over one revolution,
-    and the harmonics of the command (complex, k = 0..K_HARM)."""
+    and the harmonics of the command (complex, k = 0..K_HARM).
+
+    No stability check: beyond the linear limit the closed form still returns
+    a finite value that means nothing (e.g. 0.96 V at 25 mm, 2500 rpm,
+    rho = 1.02, where the cut chatters).  Callers keep the depth below the
+    limit; the campaigns use depths up to 0.9 a_lim and their maxima all
+    lie at stable depths."""
     W = slice_force_revolution(runout, psi) if W is None else W
     k = np.arange(len(W))
     q = k * np.tan(P.HELIX) / (0.5 * P.D_TOOL)

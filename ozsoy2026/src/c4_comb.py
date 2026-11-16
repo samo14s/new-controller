@@ -125,6 +125,8 @@ def certify_kick(rpm, a, g1, g2=0.0, settings=c2.TIGHT, full=False, delta=c2.DEL
 
 
 def certify_step(rpm, a, g1, g2=0.0, settings=c2.TIGHT, delta=c2.DELTA):
+    """Step-entry certificate (entry phase 0, as c2.certify_step).  Not used by
+    the campaigns or the tests; kept for interactive use."""
     A, B, K = model(rpm, a, g1, g2)
     x0, _, bmax = c2.orbit(rpm, g1, a)
     return c2.certify(A, B, K, VMAX - bmax, -x0, rpm, settings, delta=delta)
@@ -193,7 +195,7 @@ LIM_DEPTH = np.arange(0.5e-3, 50.01e-3, 0.5e-3)  # depth grid of the orbit-comma
 
 def paper_gains():
     """The DVF gain of C1 and C2 at each speed (feasibility study with g <= 1500:
-    1500, lower from 1530 to 2450 rpm where the forced vibration would saturate)."""
+    1500, lower from 1530 to 2460 rpm where the forced vibration would saturate)."""
     d = np.load(os.path.join(RES, "feas_g1500.npz"))
     return d["rpm"], d["g_best"], float(d["zeta"])
 
