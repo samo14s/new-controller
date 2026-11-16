@@ -515,13 +515,13 @@ footer p{max-width:90ch}
 <section id="tests">
   <h2><span class="sn">09</span>اختبارات الانحدار</h2>
   <div class="col">
-    <p>169 اختبارًا في <code>ozsoy2026/tests/</code> تثبّت ما يقوم عليه التقرير: مطابقة الشكلين 6 و9، وقيم حلّال SDM المستقلّ
+    <p>177 اختبارًا في <code>ozsoy2026/tests/</code> تثبّت ما يقوم عليه التقرير: مطابقة الشكلين 6 و9، وقيم حلّال SDM المستقلّ
     الـ 96، وتقارب المحاكي وحدّ الجهد، وSADE على دالّة بحافّة جدوى، والشرط الجديد وشهادته، وخيارات C1 ونتائجها، وشهادة C2 وفحوصها، وحدود C4 وصيغتها المغلقة وفحوصها، والشهادة الدورية C3 وفحوصها، وكلّ رقم
-    مخزّن يقتبسه التقرير. الحزمة السريعة 154 اختبارًا في نحو 90 ثانية، والكاملة 168 في نحو 20 دقيقة.</p>
+    مخزّن يقتبسه التقرير. الحزمة السريعة 162 اختبارًا في نحو دقيقة، والكاملة 176 في نحو 15 دقيقة (والأخير يحتاج ملفّ الورقة).</p>
   </div>
 <pre class="run">cd ozsoy2026
-python -m pytest tests              <span class="c"># 154 fast tests (~90 s)</span>
-python -m pytest tests --runslow    <span class="c"># 168 (~20 min)</span></pre>
+python -m pytest tests              <span class="c"># 162 fast tests (~60 s)</span>
+python -m pytest tests --runslow    <span class="c"># 176 (~15 min)</span></pre>
 </section>
 
 <section id="run">
