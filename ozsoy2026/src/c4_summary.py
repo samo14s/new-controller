@@ -143,9 +143,15 @@ def build():
                 cb = at(V["kind"], V, "comb", n, d)
                 cb = at(k2, V2, "comb", n, d) if cb is None else cb
                 sg = at(k2, V2, "same_g1", n, d)
+                dv1 = at(V["kind"], V, "dvf", n, d)                  # coarse-grid best DVF (first validation)
                 rows.append((n, d, np.nan if dv is None else dv, np.nan if cb is None else cb,
-                             np.nan if sg is None else sg, np.nan if dvc is None else dvc))
+                             np.nan if sg is None else sg, np.nan if dvc is None else dvc,
+                             np.nan if dv1 is None else dv1))
         rw = np.array(rows)
+        # both DVF designs are the certificate's choice, not the widest simulated basin: the
+        # better of the two simulated ones (coarse and fine g1 grid) is a stricter baseline
+        bd = np.fmax(rw[:, 2], rw[:, 6])
+        fb = np.isfinite(bd) & np.isfinite(rw[:, 3]) & (bd > 0)
         # pairs chosen before looking at the simulated outcome: where DVF's own certificate almost
         # vanishes (certified kick <= 2.1 mm/s), i.e. near DVF's limit; and the deep pairs (>= 18 mm)
         fs_ = np.isfinite(rw[:, 2]) & np.isfinite(rw[:, 4]) & (rw[:, 2] > 0)
@@ -164,12 +170,15 @@ def build():
             offaxis_bad=int(V2["offaxis_bad"].sum()), offaxis_runs=int(V2["offaxis_runs"].sum()),
             deep_td_over_cert=stats(V2["td_min"][okd] / V2["cert"][okd]), deep_points=int(okd.sum()),
             comb_over_dvf=stats(rw[fc, 3] / rw[fc, 2]), comb_better=int(np.sum(rw[fc, 3] > rw[fc, 2])),
+            comb_over_better_dvf=stats(rw[fb, 3] / bd[fb]), comb_better_than_better_dvf=int(np.sum(rw[fb, 3] > bd[fb])),
             same_g1_over_dvf=stats(rw[fs, 4] / rw[fs, 2]), same_g1_better=int(np.sum(rw[fs, 4] > rw[fs, 2])),
             same_g1_near_dvf_limit=dict(rule="DVF certified kick <= 2.1 mm/s", n=int(near.sum()),
                                         pairs=[[float(x) for x in row[:2]] for row in rw[near]],
                                         ratio=stats(rw[near, 4] / rw[near, 2])),
             same_g1_deep=dict(rule="depth >= 18 mm", n=int(deep18.sum()), ratio=stats(rw[deep18, 4] / rw[deep18, 2])),
-            pairs_mmps=[[r(x * 1e3, 2) if i > 1 else float(x) for i, x in enumerate(row)] for row in rw])  # rpm, mm, DVF, best delayed, same-g1 delayed, DVF certified
+            pairs_mmps=[[r(x * 1e3, 2) if i > 1 else float(x) for i, x in enumerate(row)] for row in rw])
+        # pairs_mmps columns: rpm, mm, DVF (fine grid where simulated, else coarse), best delayed,
+        # same-g1 delayed, that DVF's certified kick, coarse-grid DVF
     # ---- robustness
     labels = list(R["labels"])
     rob = {}

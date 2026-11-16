@@ -544,29 +544,29 @@
    ],
    "td_over_cert": [
     {
-     "min": 1.61,
-     "median": 2.27,
+     "min": 1.6,
+     "median": 2.29,
      "max": 7.31,
      "n": 89
     },
     {
-     "min": 1.61,
-     "median": 2.27,
+     "min": 1.6,
+     "median": 2.29,
      "max": 7.32,
      "n": 89
     }
    ],
    "deep_td_over_cert": [
     {
-     "min": 2.07,
-     "median": 2.87,
-     "max": 3.67,
+     "min": 2.08,
+     "median": 2.9,
+     "max": 3.68,
      "n": 8
     },
     {
-     "min": 2.07,
-     "median": 2.87,
-     "max": 3.67,
+     "min": 2.08,
+     "median": 2.9,
+     "max": 3.69,
      "n": 8
     }
    ]

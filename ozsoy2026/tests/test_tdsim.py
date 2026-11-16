@@ -63,3 +63,22 @@ def test_stored_final_scheme_check():
     assert max(r["rel_err_fmode1_16384"] for r in t) < 5e-4
     assert max(abs(d["rel"]) for d in c["demand"]) < 2e-3
     assert all(0 <= b["rel"] < 0.03 for b in c["boundary"])
+
+
+def test_stored_long_run_onsets():
+    """check8 and check10: with 2000-revolution runs the onset is 0.08-0.73 %
+    above ZOA at check7's eight cases and 0.4-1.2 % near the forced resonance
+    (1970-2030 rpm, small gains), so the 300-revolution D1 boundaries are high
+    by 0.05-1.5 % and, near the forced resonance, by 0.8-4.4 % (2000 rpm: the
+    ladder top, 1.05).  The C4 face entry that reached the ladder top at
+    2000 rpm starts to chatter at the linear limit."""
+    c8 = json.load(open(path("verification", "tdsim", "check8_onset_long_runs.json")))
+    assert len(c8) == 8
+    assert all(1.0 < r["onset_over_zoa"] < 1.008 and r["onset_over_zoa"] < r["td300_over_zoa"] for r in c8)
+    c10 = json.load(open(path("verification", "tdsim", "check10_forced_resonance_long_runs.json")))
+    rows = c10["c1_step_free"]
+    assert [r["rpm"] for r in rows] == list(range(1970, 2031, 10))
+    assert all(1.0 < r["onset_over_zoa"] < 1.013 for r in rows)
+    assert all(r["td300_over_zoa"] > r["onset_over_zoa"] + 0.007 for r in rows)
+    f = c10["c4_face_entry"]
+    assert f["td300_over_a_lim"] == pytest.approx(1.05) and abs(f["onset_over_a_lim"] - 1.0) < 2e-3

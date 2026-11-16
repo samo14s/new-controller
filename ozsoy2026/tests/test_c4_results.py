@@ -37,9 +37,27 @@ def test_face_entry_follows_the_linear_limit_and_step_entry_does_not(s):
     e = s["entry"]
     assert e["edge_clip"]["feas_d2000"]["over_a_lim"]["median"] >= 0.99
     assert e["edge_clip"]["d2000_over_dvf"]["min"] > 1.3
+    assert e["edge_clip"]["d2000_over_dvf"]["median"] == pytest.approx(1.72, abs=0.01)
     # step entry: no gain where it is set by saturation (high speed), never much worse
     assert e["step_clip"]["d2000_over_dvf"]["min"] > 0.95
+    assert e["step_clip"]["d2000_over_dvf"]["median"] == pytest.approx(1.03, abs=0.01)
+    assert e["step_clip"]["d2000_over_dvf"]["max"] == pytest.approx(1.27, abs=0.01)
     assert e["step_clip"]["feas_d2000"]["over_a_lim"]["median"] < 0.6
+
+
+def test_face_entry_of_the_delayed_design_per_speed():
+    """The face entry of the d2000 design reaches its linear limit (>= 0.99)
+    at 16 of 25 speeds; above 2000 rpm its step entry stays within 1.1 mm of
+    DVF's, where both are set by the saturation at entry."""
+    E = np.load(path("results", "c4_entry.npz"))
+    des, names = list(E["designs"]), list(E["names"])
+    j, jd = des.index("feas_d2000"), des.index("feas_dvf")
+    edge, step = names.index("edge_clip"), names.index("step_clip")
+    r = E["a_entry"][:, j, edge] / E["a_lim"][:, j]
+    assert int(np.sum(r >= 0.99)) == 16 and r.min() > 0.84
+    hi = E["rpm"] > 2000
+    d = E["a_entry"][hi, j, step] - E["a_entry"][hi, jd, step]
+    assert d.max() < 1.1 and d.min() > -0.25
 
 
 def test_certificate_below_the_simulation_and_its_model(s):
@@ -102,3 +120,17 @@ def test_supplementary_validation(s):
     assert v["deep_points"] == 8 and v["deep_td_over_cert"]["min"] > 2.0
     assert v["same_g1_better"] == 19 and v["same_g1_over_dvf"]["max"] > 2.5
     assert v["same_g1_over_dvf"]["min"] > 0.95
+
+
+def test_basin_widens_where_the_dvf_certificate_vanishes(s):
+    """The rule fixed before comparing (DVF's certified kick <= 2.1 mm/s)
+    picks 6 pairs; there the same-g1 delayed design widens the simulated
+    basin 1.8-2.6 times.  Against the better of the two simulated DVF designs
+    the map's delayed design is better at 13 of 22 depths (median 1.04)."""
+    v = s["validate2"]
+    near = v["same_g1_near_dvf_limit"]
+    assert near["n"] == 6 and near["ratio"]["min"] > 1.75 and near["ratio"]["max"] < 2.65
+    assert v["same_g1_deep"]["n"] == 13 and v["same_g1_deep"]["ratio"]["min"] > 1.0
+    assert v["comb_better"] == 18 and v["comb_over_dvf"]["median"] == pytest.approx(1.11, abs=0.01)
+    assert v["comb_better_than_better_dvf"] == 13
+    assert v["comb_over_better_dvf"]["median"] == pytest.approx(1.04, abs=0.01)
