@@ -525,8 +525,8 @@ python run_feasibility_map.py --tag k095 --gmax 1500 --kappa 0.95
 python run_feasibility_map.py --tag guard085 --gmax 1500 --guard 0.85
 python run_feas_certify.py --tag g1500 && python run_feas_certify.py --tag g3000
 python run_feas_compare.py --tag g1500
-python figures.py --tag main
-# C1 (§11): التجديد المتعدّد، ≈ ساعتان على 4 أنوية
+python figures.py --tag main && python figures_matching.py   # r01-r11، وm01-m08 (مطابقة الورقة والفحوص)
+# C1 (§11): ذاكرة السطح الكاملة؛ ≈ 4.2 ساعات على 3 أنوية (basin 1.5، band 0.8، gainplane 0.2، map 1.7)
 ../results/run_c1_chain.sh                 # df, basin, band, gainplane, map
 python c1_summary.py && python figures_c1.py
 # C2 (§12): pip install clarabel؛ ≈ ساعتان على 4 أنوية
@@ -540,6 +540,17 @@ python c4_summary.py && python figures_c4.py
 ../results/run_c3_chain.sh                 # floquet, basin, lowimm, decomp
 python c3_periodic.py edge --workers 2 && python c3_periodic.py straight --workers 4 && python c3_periodic.py counter
 python c3_summary.py && python figures_c3.py
+# ما أُعيد بعد المراجعة (ذاكرة السطح الكاملة وبحث الركلة الصاعد): الحملات تحفظ كلّ مهمّة منتهية في
+# results/cache/ (src/jobcache.py)، فتُستأنف إن انقطعت
+../results/run_c1_chain2.sh                # C1: basin, band, gainplane, map
+../results/run_audit_chain_s8.sh           # §8: certify-only, run_feas_certify, run_feas_compare (≈ 2 ساعة على نواة)
+../results/run_audit_chain.sh              # C2 validate، C3 refresh_td/lowimm_td، C4 entry/validate/validate2
+# فحوص المراجعة
+python ../verification/tdsim/check7_final_scheme.py     # مرجع متقارب للمحاكي
+python ../verification/tdsim/check8_onset_long_runs.py  # بداية الارتجاج بتشغيلات 2000 دورة (≈ 3 ساعات)
+python ../verification/tdsim/check9_full_memory.py      # الذاكرة الكاملة مقابل قوّة غاشمة (≈ 10 دقائق)
+python ../verification/feasibility/cf_vs_td_layers.py   # الصيغة المغلقة مقابل المحاكي بعدد الطبقات (≈ دقيقتان)
+python ../verification/zoa_sdm/current_grid_check.py    # ZOA مقابل مسح الفصوص بشبكة التردّد الحالية
 ```
 
 المحاكي يُترجَم تلقائيًّا بـ gcc عند أوّل استيراد. كلّ المخرجات في [`results/`](results/)
