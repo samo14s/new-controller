@@ -11,7 +11,15 @@ the tool leaves the cut and then saturates.  A cut is called stable when
   * the end RMS is below the engagement transient, and
   * the regenerative displacement over the last 20 % stays below 0.25 fz
     (catches saturated limit cycles already reached during engagement),
-or when e_k has reached round-off.  Any sustained limit cycle is chatter.
+or when e_k has reached round-off.
+Limitation (found by the audit): just above the linear onset the chatter
+saturates on a small limit cycle, and after a step entry the run takes longer
+than the 300-revolution window to settle on it; the envelope still shrinks
+inside the window and such a run is called stable.  Boundaries near the
+linear limit are therefore up to 1.5 % high: with 2000-revolution runs the
+onset lies 0.1-0.7 % above the ZOA limit, the 300-revolution boundary
+0.4-2.2 % (verification/tdsim/check8).
+Kicked or saturated runs (C1-C4), where chatter is large, are not affected.
 """
 import numpy as np
 import params as P

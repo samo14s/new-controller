@@ -212,3 +212,23 @@ def test_merged_and_corner_lmis_give_the_same_certificate():
         beta, (W, Y, S), _ = c3.lmi(A0, E, B, K, enc, u0n, e, Tm, Tp, lam=0.3, valid=c2.validity(n), merged=merged)
         out.append(c3.check(A0, E, B, K, enc, u0n, e, Tm, Tp, W, Y, S, valid=c2.validity(n))[0])
     assert out[0] > 0 and out[0] == pytest.approx(out[1], rel=2e-3)
+
+
+def test_magnus_propagators_are_fourth_order():
+    """The step propagators of a time-periodic system against a fine
+    piecewise-constant reference: 4th-order Magnus at L = 40 agrees to about
+    1e-7 (a flipped commutator term would leave about 1e-4)."""
+    from scipy.linalg import expm
+    rng = np.random.default_rng(3)
+    n = 5
+    A0 = rng.standard_normal((n, n)) - 2 * np.eye(n)
+    E = rng.standard_normal((n, n))
+    h = lambda t: 1.0 + 0.8 * np.sin(2 * np.pi * np.asarray(t)) + 0.3 * np.cos(6 * np.pi * np.asarray(t))
+    Phi = np.eye(n)
+    for Pi in c3.propagators(A0, E, h, 1.0, 40):
+        Phi = Pi @ Phi
+    ref = np.eye(n)
+    M = 40000
+    for t in (np.arange(M) + 0.5) / M:
+        ref = expm((A0 + h(t) * E) / M) @ ref
+    assert np.abs(Phi - ref).max() < 1e-6 * np.abs(ref).max()

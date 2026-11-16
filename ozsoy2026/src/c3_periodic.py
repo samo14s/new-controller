@@ -593,6 +593,9 @@ def certify(rpm, a, g, cut=HALF, e=None, N=None, mc=M_C, averaged=False, resolve
     if sigma <= 0:
         out.update(note="linearly unstable")
         return out if full else (0.0, out["note"])
+    if not averaged and cut.kz == 0:
+        out.update(note="straight teeth: no enclosure of the jumping coefficient")
+        return out if full else (0.0, out["note"])
     enc = (np.full(mc, cut.kappa * a), np.zeros(mc), np.zeros(mc)) if averaged else \
         enclosure(rpm, a, cut, mc, order=order)
     start = cert2[0] @ cholesky(np.linalg.inv(cert2[1]), lower=True) if cert2 is not None else None
