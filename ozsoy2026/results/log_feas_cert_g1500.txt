@@ -1,0 +1,1 @@
+g1500: clipped limit binds at 112/251 speeds; a_cert 12.57-27.42 mm, mean 15.87

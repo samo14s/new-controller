@@ -81,23 +81,39 @@ def test_gain_map_shape(fmap):
     assert fmap["rpm"][i] == 1940 and g[i] == pytest.approx(134.9, abs=0.5)
 
 
-def test_certificate_binds_exactly_where_it_failed(fmap, fcert):
+def test_td_check_binds_only_where_the_operating_depth_failed(fmap, fcert):
+    """Both time-domain checks use the full surface memory.  Where the run at
+    the operating depth fails, the ladder must bind (by construction); the
+    result is the other direction: with G <= 1500 no shallower depth chatters
+    where the operating depth settles."""
+    assert int(fcert["nreg"]) == 0 and int(fmap["cert_nreg"]) == 0
     binds = fcert["a_td_clipped"] < fcert["a_op_linear"] - 1e-9
-    assert binds.sum() == 126
-    assert np.array_equal(binds, fmap["cert_stable"] == 0)
-    assert np.all(fcert["a_cert"] <= fcert["a_op_linear"] + 1e-9)
+    assert binds.sum() == 112
+    assert not np.any(binds & (fmap["cert_stable"] == 1))
 
 
-def test_certified_depths(fcert):
-    assert fcert["a_cert"].mean() == pytest.approx(15.74, abs=0.05)
-    assert fcert["a_cert"].min() == pytest.approx(12.43, abs=0.05)
+def test_td_check_is_not_monotone_in_depth_with_the_larger_gain_bound():
+    """With G <= 3000 a shallower depth chatters at 7 speeds (570-990 rpm)
+    where the operating depth settles."""
+    m3 = np.load(path("results", "feas_g3000.npz"))
+    c3 = np.load(path("results", "feas_cert_g3000.npz"))
+    binds = c3["a_td_clipped"] < c3["a_op_linear"] - 1e-9
+    assert binds.sum() == 184
+    odd = binds & (m3["cert_stable"] == 1)
+    assert odd.sum() == 7 and c3["rpm"][odd].min() == 570 and c3["rpm"][odd].max() == 990
+
+
+def test_checked_depths(fcert):
+    assert fcert["a_cert"].mean() == pytest.approx(15.87, abs=0.05)
+    i = int(np.argmin(fcert["a_cert"]))
+    assert fcert["a_cert"][i] == pytest.approx(12.57, abs=0.05) and fcert["rpm"][i] == 2140
 
 
 def test_entry_saturation_destabilises_a_linearly_stable_cut():
     from tdboundary import classify
     a = 0.9 * a_lim(2500, 1500.0)
-    assert classify(2500, a, 1500.0)["stable"]
-    assert not classify(2500, a, 1500.0, vmax=P.F_MAX / P.GA_GAIN)["stable"]
+    assert classify(2500, a, 1500.0, nreg=F.NREG)["stable"]
+    assert not classify(2500, a, 1500.0, vmax=P.F_MAX / P.GA_GAIN, nreg=F.NREG)["stable"]
 
 
 def test_clipped_limit_rises_with_gain():

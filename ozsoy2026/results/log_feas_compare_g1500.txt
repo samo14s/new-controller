@@ -1,0 +1,18 @@
+single gain 134.9 V s/m (binding 1940 rpm), mean a_lim 7.31 mm vs map 18.25 mm, min 2.35
+ rpm | g_new  new TD  new ZOA  cert | paper-crit TD | clip1500 clip3000 | paper prop clip
+ 500 |   1500  16.97   16.88  15.19 |        12.10 |    16.97    20.40 |      14.9  15.2
+ 560 |   1500  16.24   16.08  14.47 |        10.84 |    16.18    20.36 |       8.0   8.7
+ 600 |   1500  15.67   15.56  14.00 |        11.10 |    15.64    20.16 |      11.8  12.2
+ 800 |   1500  15.53   15.40  13.86 |        10.91 |    15.31    18.91 |      10.8  11.2
+1300 |   1500  14.31   15.68  14.11 |        11.09 |    14.15    15.21 |      12.0  12.1
+2300 |   1085  13.47   15.30  13.47 |        12.01 |    13.66    13.77 |       4.9   4.5
+2500 |   1500  13.01   17.24  13.01 |         6.36 |    12.95    13.18 |       5.3   4.7
+2800 |   1500  12.60   15.43  12.58 |         7.31 |    12.45    12.86 |       6.6   5.8
+3000 |   1500  12.79   15.55  12.80 |         8.08 |    12.60    12.99 |       7.1   6.2
+test points: ZOA 15/21, TD 15/21
+  miss: Fig9 760 rpm 10.0 mm mapped gain g=1500 a_lim=16.03 measured chatter zoa stable td stable
+  miss: Fig9 1300 rpm 10.0 mm mapped gain g=1500 a_lim=15.68 measured chatter zoa stable td stable
+  miss: Fig9 2800 rpm 5.5 mm mapped gain g=1500 a_lim=15.43 measured chatter zoa stable td stable
+  miss: Fig11 1200 rpm 3.0 mm single gain 237 g=135 a_lim=2.63 measured stable zoa chatter td chatter
+  miss: Fig11 2700 rpm 3.0 mm single gain 237 g=135 a_lim=2.37 measured stable zoa chatter td chatter
+  miss: Fig11 3000 rpm 3.0 mm single gain 237 g=135 a_lim=2.69 measured stable zoa chatter td chatter

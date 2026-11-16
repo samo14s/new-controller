@@ -2,9 +2,9 @@
 
 The steady (forced-response) condition fixes the gain; it cannot see the
 entry transient.  With the real actuator, a step entry saturates the
-command, and at large gains this tips cuts that the linear analysis calls
-stable into chatter (e.g. 2500 rpm, g = 1500: linear limit 17.2 mm, clipped
-time-domain limit 13.3 mm).  The depth checked here is
+command, and mostly at large gains this tips cuts that the linear analysis
+calls stable into chatter (e.g. 2500 rpm, g = 1500: linear limit 17.24 mm,
+clipped time-domain limit 13.01 mm with the full surface memory).  The depth checked here is
 
     a_cert = min(kappa * a_lim(g*),  a_TD,clipped(g*))
 

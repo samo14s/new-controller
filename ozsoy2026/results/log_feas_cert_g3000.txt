@@ -1,0 +1,1 @@
+g3000: clipped limit binds at 184/251 speeds; a_cert 12.57-29.76 mm, mean 17.13
