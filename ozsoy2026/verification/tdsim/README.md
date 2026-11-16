@@ -4,6 +4,17 @@ This is an independent check of the milling time-domain simulator used in the
 reproduction of Ozsoy, Sims & Ozturk (J. Manuf. Processes 171, 2026). Nothing in
 `src/` was changed. All scripts, results and figures are in this folder.
 
+> **Later changes and checks.** Sections 1-7 review the first version of the
+> simulator. Since then the cutting force is evaluated at every RK4 stage
+> instead of held over the step (`check7_final_scheme`: below 1 % against a
+> converged reference, so the bias of section 4 is gone), and the chip can
+> remember the full surface (`nreg = 0`, the deepest earlier pass at each angle;
+> `check9_full_memory` against a 600-pass brute force), which every clipped
+> time-domain result now uses. The 300-revolution D1 window was checked with
+> 2000-revolution runs (`check8_onset_long_runs`, and near the forced resonance
+> `check10_forced_resonance_long_runs`), and `check11_kick_near_limit` gives the
+> critical kick at 0.999 of the limit. See ozsoy2026/README.md, sections 3 and 11.2.
+
 ## How to run
 
 ```
