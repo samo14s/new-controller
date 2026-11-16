@@ -38,8 +38,8 @@ maximised through [[1, beta e'], [beta e, W]] >= 0.
 Validity.  The averaged model cuts linearly; the real chip clips at zero.  A
 large deviation lifts the tool out of the cut, and then the model no longer
 describes the cut.  The review found such states inside an unconstrained
-E(P) (history deviations of 5 fz) that chatter in the simulator.  So E(P) is
-also kept inside |x - x(t - T)| <= DELTA fz:
+E(P) (history deviations up to about 12 fz at 2500 rpm and 0.7 a_lim) that
+chatter in the simulator.  So E(P) is also kept inside |x - x(t - T)| <= DELTA fz:
     M4 = [[W, W c'], [c W, (DELTA fz)^2]] >= 0,   c = e_x - e_phi_N.
 E(P) is invariant, so the bound holds along the whole trajectory.
 
