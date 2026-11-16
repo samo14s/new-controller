@@ -195,7 +195,7 @@ def c3_04_decomp():
     a.set_xticks(x, [f"{r:.0f}\n{f:.1f}" for r, f in zip(L["rpm"][o], L["frac"][o])], fontsize=7)
     a.set(ylabel="kick (mm/s), smallest over the phases",
           title=f"C3-4c  ae/D = {float(L['ae']):g} (rpm, depth / a_lim)")
-    a.legend(fontsize=6, loc="lower left")
+    a.legend(fontsize=6, loc="upper right", framealpha=0.6)
     fig.tight_layout()
     save(fig, "c3_04_decomp.png")
 

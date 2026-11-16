@@ -2,8 +2,9 @@
 
 Per speed: the upper edge of the feasible interval by bisection (reference),
 SADE on the same objective (3 seeds, the main run's settings), and a
-time-domain certificate at the operating depth kappa*a_lim with the clipped
-actuator, starting from rest.
+time-domain check at the operating depth kappa*a_lim with the clipped
+actuator and the full surface memory, from a step entry at rest (one
+simulated entry, not a proof; the cert_* fields keep their old names).
     python run_feasibility_map.py --tag g1500 --gmax 1500 --sade --certify
     python run_feasibility_map.py --tag g3000 --gmax 3000
     python run_feasibility_map.py --tag k095 --gmax 1500 --kappa 0.95

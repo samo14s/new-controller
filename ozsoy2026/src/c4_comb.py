@@ -33,8 +33,10 @@ with an ideal collocated actuator the velocity loop is passive like DVF.  Sign
 of kd: the regenerative force is KAPPA a (x - x(t - T)) with KAPPA < 0, so
 kd < 0 opposes it (each -1e5 V/m adds about 1 mm to a_lim) and kd > 0 adds to it.
 
-Fair baseline.  The paper's gain bound g <= 1500 is an assumption of this
-reproduction, not the actuator's limit.  Both families are therefore compared
+Fair baseline.  The gain bound g <= 1500 of C1-C2 (the section 8 map) is an
+assumption of this reproduction, not the actuator's limit.  ('paper' in the
+names below, e.g. paper_gains() and the 'paper+1000' designs, means that
+C1/C2 gain, not the published paper's gain.)  Both families are therefore compared
 under the same authority rule as feasibility.py (the settled forced demand
 stays below F_max at every depth up to 0.9 a_lim of the design) with the same
 bound g1 <= 3000; the DVF optimum is then feas_g3000's.
@@ -188,7 +190,7 @@ def feasible_g1(rpm, g2=0.0, kd=0.0, g_hi=G1_MAX, tol=0.25, guard=1.0):
 
 
 # ------------------------------------------------------------ campaigns ----
-LIM_G2 = (0.0, 500.0, 1000.0, 2000.0, 4000.0)  # comb gains added to the paper's DVF gain
+LIM_G2 = (0.0, 500.0, 1000.0, 2000.0, 4000.0)  # comb gains added to the C1/C2 DVF gain (section 8 map, g <= 1500)
 FEAS_DESIGNS = (("dvf", 0.0, 0.0), ("d1000", 1000.0, 0.0), ("d2000", 2000.0, 0.0), ("d4000", 4000.0, 0.0),
                 ("p3e5", 0.0, -3e5), ("p1e6", 0.0, -1e6))   # (name, g2, kd), g1 = feasible_g1
 LIM_DEPTH = np.arange(0.5e-3, 50.01e-3, 0.5e-3)  # depth grid of the orbit-command map (m)
@@ -221,7 +223,7 @@ def _limits(args):
 
 
 def run_limits(a):
-    """Per speed: (1) the paper's DVF gain g1 with the comb gains LIM_G2 (linear
+    """Per speed: (1) the C1/C2 DVF gain g1 (section 8 map, g <= 1500) with the comb gains LIM_G2 (linear
     a_lim), with the forced orbit's command bound on a depth grid; (2) the
     authority-feasible designs FEAS_DESIGNS (g1 <= 3000 under the rule of
     feasibility.py) and their linear a_lim."""
@@ -242,9 +244,9 @@ def run_limits(a):
                         uncapped_g1=unc[:, :2], uncapped_a_lim=unc[:, 2:] * 1e3, zeta=zeta)
     for j, g2 in enumerate(LIM_G2):
         r = al[:, j] / al[:, 0]
-        print(f"paper g1 + g2 = {g2:5.0f}: a_lim {np.nanmin(al[:, j]):.2f}-{np.nanmax(al[:, j]):.2f} mm, "
+        print(f"C1/C2 g1 + g2 = {g2:5.0f}: a_lim {np.nanmin(al[:, j]):.2f}-{np.nanmax(al[:, j]):.2f} mm, "
               f"ratio to DVF {np.nanmin(r):.2f}-{np.nanmax(r):.2f} (median {np.nanmedian(r):.2f})")
-    print(f"paper g1: orbit command >= 9 V on {np.mean(bmax >= VMAX) * 100:.1f} % of the speed x depth grid")
+    print(f"C1/C2 g1: orbit command >= 9 V on {np.mean(bmax >= VMAX) * 100:.1f} % of the speed x depth grid")
     m = np.isfinite(unc[:, 2])
     if m.any():
         r = unc[m, 3] / unc[m, 2]
@@ -334,7 +336,7 @@ ENT_NAMES = ("step_clip", "edge_clip")
 
 
 def entry_designs():
-    """(label, g1 per ENT_RPM, g2): the paper's gain plus 1000 and 2000, and the
+    """(label, g1 per ENT_RPM, g2): the C1/C2 gain plus 1000 and 2000, and the
     authority-feasible DVF and d2000 designs of c4_limits.npz."""
     rpm_map, g_map, _ = paper_gains()
     L = np.load(os.path.join(RES, "c4_limits.npz"))

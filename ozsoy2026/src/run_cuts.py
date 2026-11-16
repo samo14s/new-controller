@@ -1,7 +1,11 @@
-"""Simulated counterparts of the measured cuts (Figs. 9-12) and of every test point.
+"""The published test points and the labelled cuts (Figs. 9-12) in the model.
+
+The labelled cuts are simulated at the reproduced gains (60.3 V s/m; 992 from
+the map at 1300 rpm), not at the experiments' gains (237; 1158 from Fig. 8),
+so they are not counterparts of the experiments.
 
 The experiments cannot be repeated.  Two things are done instead:
- 1. every one of the 21 published test points (verification/targets/
+ 1. every one of the 21 published test markers (19 distinct cuts; verification/targets/
     experimental_points.csv) is classified by the zero-order limit with
     (a) the paper's own gain at that speed (Fig. 8, 237 V s/m, or none) and
     (b) the reproduced gain, and with (b) also in the time domain

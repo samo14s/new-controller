@@ -62,10 +62,12 @@ def c2_01_validation():
                   xlabel="depth / a_lim(g)")
         ok = np.isfinite(v["td_min"][m]) & (v["cert"][m] > 0)
         r = v["td_min"][m][ok] / v["cert"][m][ok]
-        ax[i].text(0.04, 0.04, f"TD / cert {r.min():.1f}-{r.max():.1f}", transform=ax[i].transAxes, fontsize=7.5)
+        ax[i].text(0.96, 0.62, f"TD / cert {r.min():.1f}-{r.max():.1f}", transform=ax[i].transAxes, fontsize=7.5,
+                   ha="right", bbox=dict(boxstyle="round", fc="white", ec="0.8", alpha=0.85))
     ax[0].set(ylabel="critical kick (mm/s)")
+    ax[0].plot([], [], "^", color="0.3", mfc="none", ms=5, label="no chatter for any kick up to 3 m/s (drawn at 2 m/s)")
     h, l = ax[0].get_legend_handles_labels()
-    fig.legend(h, l, fontsize=7.5, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.08))
+    fig.legend(h, l, fontsize=7.5, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.16))
     off = ""
     if "offaxis_bad" in v:
         off = (f"; off-axis boundary points in the simulator: {int(v['offaxis_bad'].sum())}/"

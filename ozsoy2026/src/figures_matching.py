@@ -53,7 +53,8 @@ def m01_uncontrolled_sld():
         out[z] = np.median(np.abs(rel))
     P.set_damping(P.ZETA_PAPER_CURVES)
     ax[0].set(ylabel="a_lim (mm)", ylim=(0, 31),
-              title="M1  Uncontrolled stability lobes: model vs paper")
+              title="M1  Uncontrolled stability lobes: model vs paper (400-3000 rpm;\n"
+                    "the paper's first points, 389-399 rpm with a spike to 16 mm at 389, excluded)")
     ax[0].legend(fontsize=7.5)
     ax[1].set(xlabel="Spindle speed (rpm)", ylabel="error (%)", ylim=(-2, 14))
     ax[1].text(0.01, 0.92, f"median |error|: 1.34 % -> {out[0.0134]:.2f} %,   1.45 % -> {out[0.0145]:.2f} %",
@@ -154,7 +155,7 @@ def m05_simulator():
     ax[0].bar(x - 0.2, [100 * t["rel_err_fmode0"] for t in tr], 0.4, color=GREY, label="force held per step")
     ax[0].bar(x + 0.2, [100 * t["rel_err_fmode1"] for t in tr], 0.4, color=OURS, label="force per RK4 stage (used)")
     ax[0].set_xticks(x, lab, rotation=30, fontsize=7)
-    ax[0].set(ylabel="max error in x (%)", title="M5a  512 steps/rev vs exact (8192)")
+    ax[0].set(ylabel="max error in x (%)", title="M5a  512 steps/rev vs converged reference\n(exact ZOH extrapolated to zero step)")
     ax[0].legend(fontsize=7)
     dm = c["demand"]
     ax[1].bar(np.arange(len(dm)), [100 * d["rel"] for d in dm], color=OURS)
@@ -191,8 +192,8 @@ def m06_optimiser():
     frag = (out >= 2280) & (out <= 2310)
     ax[1].text(0.01, 0.9, f"identical (< 0.01 mm) at {np.sum(spread < 0.01)}/251 speeds; outliers: "
                f"{', '.join(f'{n:.0f}' for n in out[frag])} rpm (fragmented feasible set), "
-               f"{', '.join(f'{n:.0f}' for n in out[~frag])} rpm (one seed stopped early, "
-               f"<= {spread[(spread >= 0.01) & ((rpm < 2280) | (rpm > 2310))].max():.2f} mm)",
+               f"{', '.join(f'{n:.0f}' for n in out[~frag])} rpm (seeds end in different small pockets at "
+               f"the feasibility edge, or stop early; <= {spread[(spread >= 0.01) & ((rpm < 2280) | (rpm > 2310))].max():.2f} mm)",
                transform=ax[1].transAxes, va="top", fontsize=7.5)
     save(fig, "m06_optimiser_match.png")
 
