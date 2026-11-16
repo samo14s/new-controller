@@ -63,7 +63,8 @@ def test_low_immersion(s):
     L = s["lowimm"]
     assert L["certified"] == L["points"] == 8
     assert L["offaxis"] == [0, 576] and L["proof_vmax"] < 1.0
-    assert L["phase_cert_below_td"][0] == L["phase_cert_below_td"][1] == 19
+    # full surface memory: 4 points with a finite simulated kick (16 phases), the other 4 never chatter up to 3 m/s
+    assert L["phase_cert_below_td"][0] == L["phase_cert_below_td"][1] == 16 and L["td_finite_points"] == 4
     assert 0.94 < L["c3_over_c2"]["min"] and L["c3_over_c2"]["max"] < 1.04
 
 

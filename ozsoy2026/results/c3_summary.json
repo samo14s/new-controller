@@ -104,33 +104,33 @@
    "n": 704
   },
   "model_over_td": {
-   "min": 0.674,
-   "median": 0.911,
-   "max": 0.97,
+   "min": 0.613,
+   "median": 0.901,
+   "max": 0.979,
    "n": 29
   },
   "td_over_cert": {
-   "min": 1.487,
-   "median": 2.407,
-   "max": 14.038,
+   "min": 1.464,
+   "median": 2.401,
+   "max": 14.043,
    "n": 28
   },
   "td_over_c2": {
-   "min": 1.504,
-   "median": 2.522,
-   "max": 27.584,
+   "min": 1.48,
+   "median": 2.516,
+   "max": 27.594,
    "n": 28
   },
   "td_over_cert_from_07": {
-   "min": 1.487,
-   "median": 2.243,
-   "max": 4.836,
+   "min": 1.464,
+   "median": 2.268,
+   "max": 4.777,
    "n": 18
   },
   "td_over_c2_from_07": {
-   "min": 1.504,
-   "median": 2.351,
-   "max": 3.271,
+   "min": 1.48,
+   "median": 2.349,
+   "max": 3.264,
    "n": 18
   },
   "proof_vmax": 0.9969,
@@ -215,18 +215,18 @@
    128
   ],
   "phase_cert_below_td": [
-   19,
-   19
+   16,
+   16
   ],
   "cert_below_td_min": [
-   5,
-   5
+   4,
+   4
   ],
   "c2_below_periodic_model": [
    8,
    8
   ],
-  "td_finite_points": 5,
+  "td_finite_points": 4,
   "proof_starts": 384,
   "periodic_over_averaged_model": {
    "min": 0.9739,
@@ -235,34 +235,34 @@
    "n": 128
   },
   "model_over_td": {
-   "min": 0.69,
-   "median": 0.85,
-   "max": 0.903,
-   "n": 5
+   "min": 0.682,
+   "median": 0.844,
+   "max": 0.885,
+   "n": 4
   },
   "td_over_cert": {
-   "min": 1.78,
-   "median": 1.962,
-   "max": 2.91,
-   "n": 5
+   "min": 1.768,
+   "median": 2.072,
+   "max": 2.947,
+   "n": 4
   },
   "td_over_c2": {
-   "min": 1.739,
-   "median": 1.986,
-   "max": 2.853,
-   "n": 5
+   "min": 1.717,
+   "median": 2.086,
+   "max": 2.89,
+   "n": 4
   },
   "td_over_cert_from_07": {
-   "min": 1.78,
-   "median": 1.842,
-   "max": 1.962,
-   "n": 3
+   "min": 1.768,
+   "median": 1.794,
+   "max": 1.819,
+   "n": 2
   },
   "td_over_c2_from_07": {
-   "min": 1.739,
-   "median": 1.767,
-   "max": 1.986,
-   "n": 3
+   "min": 1.717,
+   "median": 1.736,
+   "max": 1.755,
+   "n": 2
   },
   "proof_vmax": 0.99639,
   "proof_vend": 0.02369,
@@ -437,14 +437,14 @@
    },
    "td_over_cert_min_max_median07": [
     [
-     1.5,
-     27.51,
-     2.32
+     1.48,
+     27.52,
+     2.34
     ],
     [
-     1.5,
-     27.58,
-     2.32
+     1.48,
+     27.59,
+     2.34
     ]
    ]
   },
@@ -546,13 +546,13 @@
     {
      "min": 1.61,
      "median": 2.27,
-     "max": 7.44,
+     "max": 7.31,
      "n": 89
     },
     {
      "min": 1.61,
      "median": 2.27,
-     "max": 7.45,
+     "max": 7.32,
      "n": 89
     }
    ],
