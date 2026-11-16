@@ -219,7 +219,7 @@ def points(tag):
     ax[0].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1, label="uncontrolled")
     ax[0].plot(d["rpm"], d["a_best"], color=OURS, lw=1.4, label="reproduced gain map")
     cp = np.loadtxt(os.path.join(DIG, "fig9_controlled_points.csv"), delimiter=",", skiprows=1)
-    ax[0].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1, alpha=0.7, label="paper Fig. 9 controlled")
+    ax[0].plot(cp[:, 0], cp[:, 1], color=PAPER, lw=1, alpha=0.7, label="paper Fig. 9 controlled (incl. covered part)")
     ax[1].plot(fine, sld(fine, 0.0) * 1e3, "--", color=UNC, lw=1)
     ax[1].plot(fine, sld(fine, float(sg["g_ref"])) * 1e3, color=OURS, lw=1.4,
                label=f"reproduced single gain {float(sg['g_ref']):.0f}")
@@ -234,10 +234,11 @@ def points(tag):
         ax[k].plot([], [], "o", mfc="g", mec="g", label="measured stable, predicted stable")
         ax[k].plot([], [], "o", mfc="r", mec="r", label="measured chatter, predicted chatter")
         ax[k].plot([], [], "o", mfc="none", mec="k", label="open: prediction disagrees")
+        ax[k].plot([], [], "s", mfc="none", mec="0.4", label="square: uncontrolled cut")
         ax[k].set(xlabel="Spindle speed (rpm)", xlim=(400, 3050), ylim=(0, 20))
         ax[k].legend(fontsize=6.3, loc="upper right")
-    ax[0].set(ylabel="Depth of cut (mm)", title="Mapped gain: published test points")
-    ax[1].set(title="Single gain: published test points")
+    ax[0].set(ylabel="Depth of cut (mm)", title="Mapped gain: published test points\n(fill: time domain at the reproduced gains)")
+    ax[1].set(title="Single gain: published test points\n(fill: time domain at the reproduced gains)")
     fig.savefig(os.path.join(FIG, f"r09_test_points_{tag}.png"))
     plt.close(fig)
 
@@ -265,8 +266,8 @@ def sensitivity(tag="main"):
               title="Gain map: sensitivity to unstated choices")
     ax[1].set(xlabel="Spindle speed (rpm)", ylabel="a_lim (mm)", xlim=(500, 3000), ylim=(0, 40),
               title="Controlled limit: same cases")
-    ax[0].legend(fontsize=6.5)
-    ax[1].legend(fontsize=6.5)
+    ax[0].legend(fontsize=6.5, framealpha=0.4)
+    ax[1].legend(fontsize=6.5, framealpha=0.4)
     fig.savefig(os.path.join(FIG, "r08_sensitivity.png"))
     plt.close(fig)
 
@@ -301,10 +302,10 @@ def feasibility_figs(tag="g1500"):
     if os.path.exists(cpath):
         c = np.load(cpath)
         ax[1].plot(c["rpm"], c["a_cert"], color=OURS, lw=1.8,
-                   label=f"reformulated: certified depth (min of {kappa:g} a_lim, clipped TD)")
+                   label=f"reformulated: checked depth (min of {kappa:g} a_lim, clipped step-entry TD)")
     ax[1].set(xlabel="Spindle speed (rpm)", ylabel="Depth of cut (mm)", xlim=(500, 3000),
               ylim=(0, 32), title="Controlled limit")
-    ax[1].legend(fontsize=6.5, loc="upper left")
+    ax[1].legend(fontsize=6.5, loc="upper left", framealpha=0.4)
     fig.savefig(os.path.join(FIG, f"r10_feasibility_{tag}.png"))
     plt.close(fig)
 

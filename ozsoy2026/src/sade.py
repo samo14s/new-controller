@@ -4,7 +4,10 @@ The paper cites [56] for SADE and describes: NP trial gains drawn over the
 search interval, DE mutation/crossover from a strategy pool, greedy selection,
 adaptation of (F, CR) and of the strategy probabilities from the success
 record of a learning period, and termination on a stagnation window or a
-generation cap.  This module implements exactly that loop for maximisation.
+generation cap.  This module implements that loop for maximisation, with one
+difference that follows SaDE 2009 rather than the paper's Step 4: F is not
+adapted but redrawn from N(0.5, 0.3) (clipped) every generation; CR and the
+strategy probabilities are adapted (verification/sade/README.md, row 6).
 """
 import numpy as np
 

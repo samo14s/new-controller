@@ -54,7 +54,10 @@ def band_summary():
     return dict(n_speeds=int(len(low)), found=int(ok.sum()), none_at_rpm=b["rpm"][~ok].tolist(),
                 g_where_none=[r(x, 0) for x in b["g"][~ok]],
                 ratio_min=r(q.min()), ratio_median=r(np.median(q)), ratio_max=r(q.max()),
-                over_alim0_min=r((low[ok] / a0[ok]).min()), kick_mps=float(b["dv_hi"]))
+                over_alim0_min=r((low[ok] / a0[ok]).min()), kick_mps=float(b["dv_hi"]),
+                kicks_mps=[r(x, 4) for x in b["band_dv"]] if "band_dv" in b.files else None,
+                phases=int(b["phases"]) if "phases" in b.files else None,
+                nreg=int(b["nreg"]) if "nreg" in b.files else None)
 
 
 def basin_summary():
@@ -62,6 +65,11 @@ def basin_summary():
     out = {}
     clip, free = b["vmax"] > 0, b["vmax"] == 0
     out["free_all_inf"] = bool(np.all(np.isinf(b["dv"][free])))
+    out["nreg"] = int(b["nreg"]) if "nreg" in b.files else None
+    out["kick_grid_mps"] = [r(b["dv_grid"].min(), 5), r(b["dv_grid"].max(), 2)] if "dv_grid" in b.files else None
+    # unkicked cuts that did not settle (nan) and kicks of the grid that never ended in chatter (inf)
+    out["clip_nan"] = int(np.isnan(b["dv"][clip]).sum())
+    out["clip_inf"] = int(np.isinf(b["dv"][clip]).sum())
     out["free_fracs"] = sorted(set(b["frac"][free].round(2).tolist()))
     ratios = []
     for n in sorted(set(b["rpm"].tolist())):
