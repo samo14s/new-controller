@@ -4,3 +4,4 @@ __pycache__/
 _tdsim.so
 _tdsim_comb.so
 .pytest_cache/
+ozsoy2026/results/cache/

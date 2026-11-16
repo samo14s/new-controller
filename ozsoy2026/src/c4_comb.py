@@ -62,6 +62,7 @@ import numpy as np
 import params as P
 import c2_certificate as c2
 from zoa import a_lim
+from jobcache import cached_map
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -361,13 +362,14 @@ def _entry(args):
 
 def run_entry(a):
     """Step and face entries with the 9 V limit in the simulator (C1
-    protocol: nreg 4, D1 classifier) for the designs of entry_designs()."""
+    protocol: full surface memory, D1 classifier) for the designs of entry_designs()."""
     import tdsim                                  # build and fix the simulator before the workers start
     zeta = paper_gains()[2]
     des = entry_designs()
     jobs = [(n, float(g1[i]), g2, k, zeta) for i, n in enumerate(ENT_RPM) for _, g1, g2 in des for k in ENT_NAMES]
     with Pool(a.workers) as pool:
-        lim = np.array(pool.map(_entry, jobs, chunksize=1)).reshape(len(ENT_RPM), len(des), len(ENT_NAMES))
+        from c1_unsafe_zone import _proto
+        lim = np.array(cached_map(pool, _entry, jobs, "c4entry-" + _proto())).reshape(len(ENT_RPM), len(des), len(ENT_NAMES))
     al = np.array([[a_lim_ctrl(n, float(g1[i]), g2) for _, g1, g2 in des] for i, n in enumerate(ENT_RPM)]) * 1e3
     np.savez_compressed(os.path.join(RES, "c4_entry.npz"), rpm=np.array(ENT_RPM),
                         designs=np.array([d[0] for d in des]), g1=np.array([d[1] for d in des]).T,
@@ -429,8 +431,9 @@ def run_validate(a):
     td_jobs = [(n, d * 1e-3, g1, VMAX, p, zeta, g2) for (n, d, g1, g2, _) in pts for p in range(N_PHASE)]
     cjobs = [(n, d * 1e-3, g1, g2, zeta, kind == "comb") for (n, d, g1, g2, kind) in pts]
     with Pool(a.workers) as pool:
-        dv = np.array(pool.map(_critical_kick, td_jobs, chunksize=1)).reshape(len(pts), N_PHASE)
-        res = pool.map(_validate, cjobs, chunksize=1)
+        from c1_unsafe_zone import _proto
+        dv = np.array(cached_map(pool, _critical_kick, td_jobs, "c4val-" + _proto())).reshape(len(pts), N_PHASE)
+        res = cached_map(pool, _validate, cjobs, "c4val-" + _proto())
     cert, vmax, vend, mk, obad, oruns = (np.array([r[k] for r in res], float) for k in (0, 2, 3, 4, 5, 6))
     kind = np.array([p[4] for p in pts])
     unsettled = np.isnan(dv).any(axis=1)          # the unkicked cut chatters at some phase
@@ -502,10 +505,11 @@ def run_validate2(a):
                 if k > 0:
                     pts.append((float(n), d, g1, g2, "comb"))
     with Pool(a.workers) as pool:
-        sg = pool.map(_same_g1, [(n, d * 1e-3, g1, zeta) for n, d, g1 in sjobs], chunksize=1)
+        from c1_unsafe_zone import _proto
+        sg = cached_map(pool, _same_g1, [(n, d * 1e-3, g1, zeta) for n, d, g1 in sjobs], "c4val2-" + _proto())
         pts += [(n, d, g1, g2, "same_g1") for (n, d, g1), (k, g2) in zip(sjobs, sg) if k > 0]
         td_jobs = [(n, d * 1e-3, g1, VMAX, p, zeta, g2) for (n, d, g1, g2, _) in pts for p in range(N_PHASE)]
-        dv = np.array(pool.map(_critical_kick, td_jobs, chunksize=1)).reshape(len(pts), N_PHASE)
+        dv = np.array(cached_map(pool, _critical_kick, td_jobs, "c4val2-" + _proto())).reshape(len(pts), N_PHASE)
         res = pool.map(_validate, [(n, d * 1e-3, g1, g2, zeta, kind == "comb") for (n, d, g1, g2, kind) in pts],
                        chunksize=1)
     cert, vmax, vend, mk, obad, oruns = (np.array([r[k] for r in res], float) for k in (0, 2, 3, 4, 5, 6))

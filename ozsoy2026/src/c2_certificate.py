@@ -69,6 +69,7 @@ from scipy.linalg import expm, cholesky, solve_triangular
 import clarabel
 import params as P
 from zoa import a_lim, ALPHA
+from jobcache import cached_map
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -576,7 +577,8 @@ def run_validate(a):
     m = b["vmax"] > 0
     jobs = [(float(n), float(g), float(f), float(b["zeta"])) for n, g, f in zip(b["rpm"][m], b["g"][m], b["frac"][m])]
     with Pool(a.workers) as pool:
-        res = pool.map(_validate, jobs, chunksize=1)
+        from c1_unsafe_zone import _proto
+        res = cached_map(pool, _validate, jobs, "c2val-" + _proto())
     cert, vmax, vend, mk, obad, oruns = (np.array([r[k] for r in res]) for k in (0, 2, 3, 4, 5, 6))
     td_min = b["dv"][m].min(axis=1)
     np.savez_compressed(os.path.join(RES, "c2_validate.npz"), rpm=b["rpm"][m], g=b["g"][m], frac=b["frac"][m],

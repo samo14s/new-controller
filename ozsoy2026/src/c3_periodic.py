@@ -79,6 +79,7 @@ import params as P
 import c2_certificate as c2
 from c2_certificate import LMIBlock, solve_sdp, VMAX, TIGHT, DELTA
 from zoa import a_lim, alpha_matrix, ALPHA
+from jobcache import cached_map
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -932,7 +933,8 @@ def run_lowimm_td(a):
     tdj = [(float(n), float(f * cut.a_lim(n, g)), float(g), VMAX, p, zeta)
            for n, g, f in zip(out["rpm"], out["g"], out["frac"]) for p in LOW_PHASES]
     with pool(a.workers) as p:
-        td = np.array(p.map(_low_td, tdj, chunksize=1)).reshape(len(out["rpm"]), len(LOW_PHASES))
+        from c1_unsafe_zone import _proto
+        td = np.array(cached_map(p, _low_td, tdj, "c3lowtd-" + _proto())).reshape(len(out["rpm"]), len(LOW_PHASES))
     out["td_kick"] = td
     np.savez_compressed(path, **out)
     _report(out, td)

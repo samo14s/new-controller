@@ -38,6 +38,7 @@ import os
 from multiprocessing import Pool
 import numpy as np
 import params as P
+from jobcache import cached_map, protocol
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -70,6 +71,12 @@ DV_GRID = np.append(DV_LO * 2.0 ** np.arange(15), DV_HI)      # 1e-4 ... 1.64, 3
 BAND_STEP, BAND_PHASES, BAND_BISECT = 20, 2, 6
 BAND_DV = np.geomspace(3e-3, DV_HI, 7)                         # kicks tried at each depth of the band
 F_HP = 40.0                                  # Hz, high-pass for the kick-to-mode factor
+
+
+def _proto():
+    """Hash of the protocol constants, for the job cache (jobcache.py)."""
+    return protocol(NREG, DV_GRID.tolist(), N_BISECT, KICK_REV, WINDOW, N_PHASE, BAND_DV.tolist(),
+                    BAND_PHASES, BAND_BISECT, LADDER, ENTRIES, F_HP)
 
 
 def build_id():
@@ -110,7 +117,7 @@ def run_map(a):
     fn = os.path.join(RES, "c1_map.npz")
     jobs = [(float(n), float(gg), k, zeta) for n, gg in zip(rpm, g) for k in todo]
     with Pool(a.workers) as pool:
-        lim = np.array(pool.map(_limit, jobs, chunksize=4)).reshape(len(rpm), len(todo))
+        lim = np.array(cached_map(pool, _limit, jobs, "c1map-" + _proto(), chunksize=4)).reshape(len(rpm), len(todo))
     data = dict(np.load(fn)) if a.entries and os.path.exists(fn) else dict(
         rpm=rpm, g=g, zeta=zeta,
         a_lim=np.array([a_lim(n, gg) for n, gg in zip(rpm, g)]) * 1e3,
@@ -216,8 +223,8 @@ def run_basin(a):
     jobs = [(float(n), f * al, g, v, p, zeta) for (n, g, al, f, v) in cases for p in range(N_PHASE)]
     clipped = [(float(n), f * al, g, zeta) for (n, g, al, f, v) in cases if v > 0]
     with Pool(a.workers) as pool:
-        dv = np.array(pool.map(_critical_kick, jobs, chunksize=1)).reshape(len(cases), N_PHASE)
-        mf = np.array(pool.map(_mode_factor, clipped))
+        dv = np.array(cached_map(pool, _critical_kick, jobs, "c1basin-" + _proto())).reshape(len(cases), N_PHASE)
+        mf = np.array(cached_map(pool, _mode_factor, clipped, "c1basin-" + _proto()))
     arr = np.array([(n, g, al * 1e3, f, v) for (n, g, al, f, v) in cases])
     p_mode, decay, r2 = (np.full(len(cases), np.nan) for _ in range(3))
     clip = arr[:, 4] > 0
@@ -272,7 +279,8 @@ def run_band(a):
     m = (rpm_map - rpm_map[0]) % BAND_STEP == 0
     rpm, g = rpm_map[m], g_map[m]
     with Pool(a.workers) as pool:
-        low = np.array(pool.map(_band_low, [(float(n), float(gg), zeta) for n, gg in zip(rpm, g)], chunksize=1))
+        low = np.array(cached_map(pool, _band_low, [(float(n), float(gg), zeta) for n, gg in zip(rpm, g)],
+                                  "c1band-" + _proto()))
     np.savez_compressed(os.path.join(RES, "c1_band.npz"), rpm=rpm, g=g, a_band_low=low, zeta=zeta,
                         dv_hi=DV_HI, band_dv=BAND_DV, phases=BAND_PHASES, nreg=NREG, build=build_id())
     np.savetxt(os.path.join(RES, "c1_band.csv"), np.column_stack([rpm, g, low]), delimiter=",",
@@ -291,7 +299,8 @@ def run_gainplane(a):
     names = ["step_clip", "step_free", "edge_clip"]
     jobs = [(n, gg, k, zeta) for n in speeds for gg in gains for k in names]
     with Pool(a.workers) as pool:
-        lim = np.array(pool.map(_limit, jobs, chunksize=2)).reshape(len(speeds), len(gains), len(names))
+        lim = np.array(cached_map(pool, _limit, jobs, "c1gainplane-" + _proto(), chunksize=2)).reshape(
+            len(speeds), len(gains), len(names))
     data = dict(rpm=np.array(speeds), gains=gains, zeta=zeta, nreg=NREG, build=build_id(),
                 g_map=np.interp(speeds, rpm_map, g_map),
                 a_lim=np.array([[a_lim(n, gg) for gg in gains] for n in speeds]) * 1e3,

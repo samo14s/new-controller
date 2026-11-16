@@ -18,6 +18,7 @@ import os
 from multiprocessing import Pool
 import numpy as np
 import params as P
+from jobcache import cached_map, protocol
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(HERE, "..", "results")
@@ -68,7 +69,8 @@ def main():
     # Table 3 with the new gains (clipped baselines are in table3_main.csv)
     jobs = [(n, float(np.interp(n, rpm, g)), zeta) for n in SPEEDS]
     with Pool(a.workers) as pool:
-        t3 = pool.map(_td_limit, jobs)
+        from feasibility import NREG
+        t3 = cached_map(pool, _td_limit, jobs, f"feascmp-{a.tag}-" + protocol(NREG))
     old = np.genfromtxt(os.path.join(RES, "table3_main.csv"), delimiter=",", names=True)
     cert = np.load(os.path.join(RES, f"feas_cert_{a.tag}.npz"))
     rows = []
@@ -98,7 +100,8 @@ def main():
                             controller=ctrl, measured=r["state"], g=gg))
             jobs.append((n, depth, gg, zeta))
     with Pool(a.workers) as pool:
-        res = pool.map(_point, jobs)
+        from feasibility import NREG
+        res = cached_map(pool, _point, jobs, f"feascmp-{a.tag}-" + protocol(NREG))
     for p, (al, pz, pt) in zip(pts, res):
         p.update(alim=al, pred_zoa=pz, pred_td=pt)
     out["points"] = pts

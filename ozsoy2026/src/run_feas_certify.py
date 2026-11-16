@@ -21,6 +21,7 @@ import os
 from multiprocessing import Pool
 import numpy as np
 import params as P
+from jobcache import cached_map, protocol
 
 RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results")
 VMAX = P.F_MAX / P.GA_GAIN
@@ -48,7 +49,8 @@ def main():
     zeta, kappa = float(d["zeta"]), float(d["kappa"])
     jobs = [(float(n), float(g), zeta, kappa) for n, g in zip(d["rpm"], d["g_best"])]
     with Pool(a.workers) as pool:
-        rows = pool.map(work, jobs)
+        from feasibility import NREG
+        rows = cached_map(pool, work, jobs, f"feascert-{a.tag}-" + protocol(NREG, 0.25, 1.08))
     arr = np.array(rows)
     keys = ["rpm", "g", "a_lim", "a_op_linear", "a_td_clipped", "a_cert"]
     data = {k: arr[:, i] for i, k in enumerate(keys)}
