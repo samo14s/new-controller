@@ -73,7 +73,7 @@ def c2_01_validation():
         off = (f"; off-axis boundary points in the simulator: {int(v['offaxis_bad'].sum())}/"
                f"{int(v['offaxis_runs'].sum())} chatter")
     fig.suptitle(f"C2-1  Certified kick vs the averaged model and the simulated cut (certificate below both at every "
-                 f"point; proof check max V = {np.nanmax(v['proof_vmax']):.3f}{off})", fontsize=8.5, y=1.02)
+                 f"point; sampled check max V = {np.nanmax(v['proof_vmax']):.3f}{off})", fontsize=8.5, y=1.02)
     save(fig, "c2_01_validation.png")
 
 
