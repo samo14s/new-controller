@@ -81,7 +81,7 @@ evaluated with $N_h=40$ harmonics, and the peak command $b_{\max}=\max_t\lvert b
 Table~\ref{tab:case} lists the parameters, all taken from \citet{ozsoy2026robust} except those marked as derived or chosen here. Two entries need comment. The flexible direction is not stated in the text of \citet{ozsoy2026robust}; it is taken normal to the feed, along the actuator axis, which gives $\alpha_{yy}=-1.428$ and reproduces their uncontrolled stability chart with a median deviation of \SI{0.04}{\percent} over \SIrange{400}{3000}{\rpm}. The damping ratio is \SI{1.34}{\percent} rather than the \SI{1.45}{\percent} of their Table~1, because the curves computed in that paper are fitted by the former: the peak of the uncontrolled receptance ($-111.10$~dB, against $-111.79$~dB with \SI{1.45}{\percent}), the open-loop pole (\SI{1.3405}{\percent}) and the uncontrolled stability chart (\SI{1.3394}{\percent}); with \SI{1.45}{\percent} the uncontrolled chart deviates by \SI{8.0}{\percent} (median). The controlled results hardly depend on this choice: the gain map of Section~\ref{sec:feas-pub} changes by a median factor of 1.00.
 % src: README §2, §4.1, §5.1, §6; verification/consistency/a_damping.json (fig6a peak -111.10 dB vs -111.79; fig6b pole 1.3405 %; fig9 fit 1.3394 %); results/paper_vs_ours.json (p05: 0.037 % at 1.34 %, 7.99 % at 1.45 %); results/gainmap_zeta145.npz vs gainmap_main.npz (median gain ratio 0.995)
 
-\begin{table}[t]
+\begin{table}[!tbp]
   \centering
   \caption{Case-study parameters \citep{ozsoy2026robust}. Quantities marked $^\dagger$ are derived from the others; those marked $^\ddagger$ are chosen or inferred in this work (Section~\ref{sec:model-case}); Table~1 of \citet{ozsoy2026robust} lists $\zeta=\SI{1.45}{\percent}$.}
   \label{tab:case}

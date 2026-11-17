@@ -42,7 +42,7 @@ In test (ii) of Section~\ref{sec:cert-check}, the smallest computed eigenvalue m
 Table~\ref{tab:lmi-settings} lists the settings. At all 48 validation points the kept C2 candidate came from a re-centred solve. For C3, solves without the warm start needed about 200 iterations (eight segments, during development) and stopped short, while a second, re-centred pass added only 0.4\,\% at \SI{2500}{\rpm} and $0.9\alim$. Merging made the solves 3--4 times faster and agreed with separate vertices to the fifth digit (eight segments, development) and within 0.2\,\% in a test (four segments). In the first run the merged problem failed at the first solver step at 32 of the 48 points, its multiplier block mixing the small residual with terms of the size of $\mathcal A$; balancing removed this, and with the fallbacks 47 points were certified, the one at \SI{2870}{\rpm} and $0.98\alim$ only with separate vertices. At \SI{2500}{\rpm} and $0.98\alim$ the best candidates had a positive smallest eigenvalue below the round-off bound. Sizes reproduce to about 0.1\,\%, not bit for bit (3.426 against \SI{3.428}{\milli\metre\per\second} at \SI{2500}{\rpm}, $0.9\alim$).
 % src: README §12.3, §14.5, §14.9; results/c2_validate.npz (msg: pass 1 or 2 at all 48 points), c3_basin.npz and c3_edge.npz (msg)
 
-\begin{table}[t]
+\begin{table}[!tbp]
 \centering
 \caption{Numerical settings and cost of the certificates; $\varrho$ is the linear decay rate (C2) or the Floquet decay rate (C3).}
 \label{tab:lmi-settings}

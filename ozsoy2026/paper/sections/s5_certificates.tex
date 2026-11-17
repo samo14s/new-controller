@@ -78,14 +78,14 @@ The sector condition holds pointwise in time, so segment $k$ uses its own level 
 C2 was computed at the 48 clipped points of Section~\ref{sec:bistability} (1090, 1420, 2500 and \SI{2870}{\rpm}; 12 depths from 0.15 to $0.98\alim$; $g=\SI{1500}{\volt\second\per\metre}$; Fig.~\ref{fig:cert}, Table~\ref{tab:cert}). All 48 certificates passed the check, with certified kicks of 0.96--\SI{12.9}{\milli\metre\per\second}. Each lies below the critical kick of its own model (the averaged collocated model with the true dead zone, minimum over four phases) at all 44 points where that kick is finite, and below $\Delta v^*$ (minimum over 16 phases) at all 29 points where $\Delta v^*$ is finite. $\Delta v^*/\beta$ is 1.48--27.6, largest at \SI{2500}{\rpm} and $0.4\alim$ ($\beta=\SI{0.96}{\milli\metre\per\second}$), and 1.48--3.26 (median 2.34) from $0.7\alim$ upwards. The averaged model is slightly more fragile than the simulated cut (critical kick 0.62--0.99 times $\Delta v^*$, median 0.92), so the gap lies mainly between the certificate and its own model.
 % src: README §12.4; results/c2_validate.npz, c2_summary.json (validate), c3_summary.json (errata.c2_validate: 1.48-27.59, median 2.34 from 0.7 a_lim)
 
-\begin{figure}[t]
+\begin{figure}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig06_certificates.pdf}
 \caption{Certified kick on the averaged model (C2, squares; command bound corrected as in Section~\ref{sec:cert-lmi}) and on the periodic model (C3, diamonds; valid at every phase) against the simulated critical kick $\Delta v^*$ (circles; minimum over 16 phases), at (a) 1090, (b) 1420, (c) 2500 and (d) \SI{2870}{\rpm}, $g=\SI{1500}{\volt\second\per\metre}$, $\Vmax=\SI{9}{\volt}$. Triangles: no chatter for any kick up to \SI{3}{\metre\per\second}. C3 is missing at \SI{2500}{\rpm} and $0.98\alim$, where no candidate passed the check. Wherever $\Delta v^*$ is finite, both certificates lie below it.}
 \label{fig:cert}
 \end{figure}
 
-\begin{table}[t]
+\begin{table}[!tbp]
 \centering
 \caption{Validation of the certificates at the 48 clipped points of Section~\ref{sec:bistability} (four speeds, 12 depths from 0.15 to $0.98\alim$, $g=\SI{1500}{\volt\second\per\metre}$). $\Delta v^*$: simulated critical kick; C2 corrected for the command bound.}
 \label{tab:cert}
@@ -118,7 +118,7 @@ The step entry is certified only at $0.3\alim$ at 1090, 1420 and \SI{2870}{\rpm}
 Over the gain map of Section~\ref{sec:feasibility}, at 42 speeds from 500 to \SI{2960}{\rpm} and seven depths from 0.5 to $0.98\alim$, 287 of 294 points were certified and checked (Fig.~\ref{fig:surf}a); at $0.9\alim$ the certified kick is 0--\SI{16}{\milli\metre\per\second}, with a median of \SI{6.6}{\milli\metre\per\second}. The other seven points lie at 1520--\SI{2000}{\rpm}, where the gain of the map sits at the authority limit: at three the forced orbit itself saturates ($u_0\le0$), and at four no candidate passed the check, with $u_0=0.04$--\SI{0.38}{\volt}, a numerical limit rather than a property of the cut. At 2060--\SI{2660}{\rpm} the forced orbit leaves little margin at shallow depths, and a kick of \SI{4}{\milli\metre\per\second} is not certified even at $0.5\alim$.
 % src: README §12.6; results/c2_surface.npz (cert, u0, msg: failures at 1520/0.95, 1520/0.98, 1580/0.90, 1580/0.95, 1760/0.80, 1880/0.70, 2000/0.98), c2_summary.json (surface), c3_summary.json (errata.c2_surface: kick at 0.9 a_lim unchanged, 0-16.02, median 6.58)
 
-\begin{figure}[t]
+\begin{figure}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig07_certified_surface.pdf}
 \caption{(a) Certified kick of the averaged model (C2) over spindle speed and depth on the gain map of Section~\ref{sec:feasibility}: 42 speeds, seven depths from 0.5 to $0.98\alim$; hatched: not certified (7 of 294 points); line: simulated step-entry limit of Section~\ref{sec:bistability}. (b)--(e) Step-entry certificate $\beta$ at the four speeds of Fig.~\ref{fig:cert}; $\beta\ge1$ (shaded) certifies the entry at rest on a fresh surface at the entry phase of the simulator; dashed: simulated step-entry limit. Command bound corrected as in Section~\ref{sec:cert-lmi}.}
@@ -148,7 +148,7 @@ At $a_e/D=0.1$, where $aH(t)$ varies more (over the four speeds 0.66--1.40 times
 Averaging is known to fail in strongly interrupted cutting \citep{davies2002stability,bayly2003stability,merdol2004multi}. With straight teeth $aH(t)$ jumps as teeth enter and leave the cut, and at half immersion between 1600 and \SI{2100}{\rpm} (steps of \SI{25}{\rpm}) the uncontrolled cut has flip lobes below the averaged limit at 12 of 21 speeds (1675--\SI{1950}{\rpm}, from 0.947 of that limit). Where they persist with DVF ($g=\SI{100}{\volt\second\per\metre}$ at four speeds; the gain of the map at \SI{1950}{\rpm}), the forced orbit alone needs 27--\SI{66}{\volt} at 0.98 of the averaged limit, so $u_0<0$ and C2 claims nothing; gains of 250 and \SI{500}{\volt\second\per\metre} removed them, while gains of 141--\SI{250}{\volt\second\per\metre} and straight teeth at low immersion were not examined. Without control there is no forced command and the method of C2 does certify, which gives the counterexample of Table~\ref{tab:counter}: the averaged model, and with it the C2 certificate, is the same for both cutters, whereas the periodic model separates them. With straight teeth the cut is linearly unstable, though nearly benign in practice, its period-two oscillation staying at about \SI{1}{\micro\metre}.
 % src: README §14.8 and the C3 summary at the head of the README; results/c3_straight.npz, c3_counter.npz (x_tooth alternation about 0.53 um, i.e. about 1 um peak to peak), c3_summary.json (straight, counter)
 
-\begin{table}[t]
+\begin{table}[!tbp]
 \centering
 \caption{Counterexample to averaging: \SI{1850}{\rpm}, no control ($g=0$), depth 0.98 times the averaged limit (\SI{23.6}{\milli\metre}), half immersion.}
 \label{tab:counter}
