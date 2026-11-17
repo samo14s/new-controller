@@ -1,0 +1,396 @@
+{
+ "note": "Analyses requested by the internal review of the manuscript (paper/notes/\nreview_triage.json), stored so that every number added to the paper has a file.\n\nA. The two published cuts that the linear model misclassifies (Ozsoy et al.\n   2026, controlled, chattered below the predicted limit): 1300 rpm / 10 mm at\n   g = 1157.98 V s/m and 2800 rpm / 5.5 mm at g = 679.55 V s/m.  Closed-form\n   forced command, clipped step and face entries, and the 16-phase critical\n   kick with the 9 V clip and the full surface memory (C1 protocol).\nB. Certified kick beta against the collocation order N (C2 and DVF + D).\nC. Certified kick against the validity bound delta (C2).\nD. Eccentric runout at which the forced command of the g = 1500 designs\n   reaches 9 V at some depth up to 0.9 a_lim (closed form, 8 runout phases).\nE. From stored results: free voltage at a_lim with an 8.1 V clip; depths\n   beyond 2D = 32 mm for DVF and DVF + D (g2 = 2000); displacement\n   equivalents of the worst-phase critical kicks at 0.98 a_lim.\n\n    OMP_NUM_THREADS=1 python3 verification/paper/revision_runs.py\n",
+ "closed_form": {
+  "published_cuts": [
+   {
+    "rpm": 1300.0,
+    "a_mm": 10.0,
+    "g": 1157.98,
+    "a_lim_mm": 12.478260592099334,
+    "frac": 0.8013937460427413,
+    "bmax_V": 3.5250583105374913,
+    "tooth_impulse_Ns": 2.234398727960091,
+    "mass": 20.302429537705354
+   },
+   {
+    "rpm": 2800.0,
+    "a_mm": 5.5,
+    "g": 679.55,
+    "a_lim_mm": 7.264324447422137,
+    "frac": 0.757124773240513,
+    "bmax_V": 3.0003393744487097,
+    "tooth_impulse_Ns": 0.5705696751755231,
+    "mass": 20.302429537705354
+   }
+  ],
+  "runout_to_clip_g1500": {
+   "1090": {
+    "cmd0_V": 5.315258843680535,
+    "runout_um": null,
+    "note": "below 9 V up to 10 um"
+   },
+   "1420": {
+    "cmd0_V": 7.423994120418376,
+    "runout_um": 8.736979952082034
+   },
+   "2500": {
+    "cmd0_V": 8.56986082396655,
+    "runout_um": 0.730348648503423
+   },
+   "2870": {
+    "cmd0_V": 5.929127473494219,
+    "runout_um": 3.0910926498472695
+   }
+  }
+ },
+ "stored": {
+  "free_voltage_at_alim": {
+   "1090": {
+    "bmax_V": 5.0777667472051995,
+    "free_9V": 3.9222332527948005,
+    "free_8p1V": 3.0222332527948
+   },
+   "1420": {
+    "bmax_V": 7.338055681903451,
+    "free_9V": 1.6619443180965492,
+    "free_8p1V": 0.7619443180965488
+   },
+   "2500": {
+    "bmax_V": 8.132513634637409,
+    "free_9V": 0.8674863653625913,
+    "free_8p1V": -0.03251363463740908
+   },
+   "2870": {
+    "bmax_V": 4.3118851576082236,
+    "free_9V": 4.6881148423917764,
+    "free_8p1V": 3.788114842391776
+   }
+  },
+  "depth_2D": {
+   "names": [
+    "dvf",
+    "d1000",
+    "d2000",
+    "d4000",
+    "p3e5",
+    "p1e6"
+   ],
+   "n_speeds": 251,
+   "dvf_above_32mm": 251,
+   "d2000_above_32mm": 251,
+   "median_ratio": 1.7805448737484062,
+   "median_ratio_capped_32mm": 1.0,
+   "max_dvf_mm": 42752.37584607124,
+   "max_d2000_mm": 64076.697891448304
+  },
+  "kick_displacement_098": [
+   {
+    "rpm": 1090.0,
+    "dv_worst_mmps": 10.880680663798543,
+    "displacement_um": 13.392993904469783
+   },
+   {
+    "rpm": 1420.0,
+    "dv_worst_mmps": 5.043138704345241,
+    "displacement_um": 6.20758278031401
+   },
+   {
+    "rpm": 2500.0,
+    "dv_worst_mmps": 2.3374684706890365,
+    "displacement_um": 2.8771822229823143
+   },
+   {
+    "rpm": 2870.0,
+    "dv_worst_mmps": 8.121926126027095,
+    "displacement_um": 9.997252052470381
+   }
+  ]
+ },
+ "published_cuts_kicks_mps": {
+  "1300": [
+   0.025878765722923528,
+   0.025878765722923528,
+   0.026160567005545383,
+   0.026733408830141792,
+   0.026733408830141792,
+   0.026445436902943445,
+   0.025878765722923528,
+   0.025599999999999994,
+   0.02505144478944512,
+   0.02505144478944512,
+   0.025324237137765767,
+   0.025878765722923528,
+   0.026445436902943445,
+   0.026733408830141792,
+   0.026733408830141792,
+   0.026160567005545383
+  ],
+  "2800": [
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity,
+   Infinity
+  ]
+ },
+ "published_cuts_entries": [
+  {
+   "rpm": 1300.0,
+   "a_mm": 10.0,
+   "g": 1157.98,
+   "entry": "step",
+   "chatter": false,
+   "max_x_mm": 0.021948566440273258
+  },
+  {
+   "rpm": 1300.0,
+   "a_mm": 10.0,
+   "g": 1157.98,
+   "entry": "face",
+   "chatter": false,
+   "max_x_mm": 0.01833031953815843
+  },
+  {
+   "rpm": 2800.0,
+   "a_mm": 5.5,
+   "g": 679.55,
+   "entry": "step",
+   "chatter": false,
+   "max_x_mm": 0.020048270393697675
+  },
+  {
+   "rpm": 2800.0,
+   "a_mm": 5.5,
+   "g": 679.55,
+   "entry": "face",
+   "chatter": false,
+   "max_x_mm": 0.011829112036951944
+  }
+ ],
+ "beta_vs_N": [
+  {
+   "kind": "nconv",
+   "args": [
+    2500.0,
+    0.9,
+    20
+   ],
+   "beta_mmps": 3.0579045522928014,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    2500.0,
+    0.9,
+    30
+   ],
+   "beta_mmps": 3.056753492114562,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    2500.0,
+    0.9,
+    40
+   ],
+   "beta_mmps": 3.057759971860405,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999999837"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    1090.0,
+    0.9,
+    24
+   ],
+   "beta_mmps": 6.19606176681556,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    1090.0,
+    0.9,
+    36
+   ],
+   "beta_mmps": 6.144741467801255,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.972427878862"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    1090.0,
+    0.9,
+    48
+   ],
+   "beta_mmps": 6.097519170264921,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.958538487114"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    2870.0,
+    0.3,
+    20
+   ],
+   "beta_mmps": 8.742926478253384,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.992333527091"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    2870.0,
+    0.3,
+    30
+   ],
+   "beta_mmps": 8.608898129701794,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.981078928104"
+  },
+  {
+   "kind": "nconv",
+   "args": [
+    2870.0,
+    0.3,
+    40
+   ],
+   "beta_mmps": 8.60764644147417,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.965429700061"
+  },
+  {
+   "kind": "nconv_comb",
+   "args": [
+    2500.0,
+    0.022,
+    500.0,
+    4000.0,
+    20
+   ],
+   "beta_mmps": 3.561575647422627,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999994017"
+  },
+  {
+   "kind": "nconv_comb",
+   "args": [
+    2500.0,
+    0.022,
+    500.0,
+    4000.0,
+    30
+   ],
+   "beta_mmps": 3.541322896480996,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok"
+  },
+  {
+   "kind": "nconv_comb",
+   "args": [
+    2500.0,
+    0.022,
+    500.0,
+    4000.0,
+    40
+   ],
+   "beta_mmps": 3.5296301083386656,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999994848"
+  }
+ ],
+ "beta_vs_delta": [
+  {
+   "rpm": 1090.0,
+   "frac": 0.15,
+   "delta": 0.25,
+   "beta_mmps": 6.574768181198573,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.935301310641"
+  },
+  {
+   "rpm": 1090.0,
+   "frac": 0.15,
+   "delta": 0.5,
+   "beta_mmps": 11.689110180606216,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok"
+  },
+  {
+   "rpm": 1090.0,
+   "frac": 0.15,
+   "delta": 1.0,
+   "beta_mmps": 18.495810637475863,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.98998449721"
+  },
+  {
+   "rpm": 1090.0,
+   "frac": 0.15,
+   "delta": null,
+   "beta_mmps": 23.367226731748325,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999906861"
+  },
+  {
+   "rpm": 2870.0,
+   "frac": 0.3,
+   "delta": 0.25,
+   "beta_mmps": 5.685425273370538,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.959040378521"
+  },
+  {
+   "rpm": 2870.0,
+   "frac": 0.3,
+   "delta": 0.5,
+   "beta_mmps": 8.742926478253384,
+   "note": "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.992333527091"
+  },
+  {
+   "rpm": 2870.0,
+   "frac": 0.3,
+   "delta": 1.0,
+   "beta_mmps": 10.012476748856184,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok"
+  },
+  {
+   "rpm": 2870.0,
+   "frac": 0.3,
+   "delta": null,
+   "beta_mmps": 10.369410680370391,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999966998"
+  },
+  {
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "delta": 0.25,
+   "beta_mmps": 2.899029243148375,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.930026005867"
+  },
+  {
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "delta": 0.5,
+   "beta_mmps": 3.0579045522928014,
+   "note": "Solved; pass 2, lam 0.05 sigma; ok"
+  },
+  {
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "delta": 1.0,
+   "beta_mmps": 3.071247854586335,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.99999999462"
+  },
+  {
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "delta": null,
+   "beta_mmps": 3.073133645176438,
+   "note": "AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999968967"
+  }
+ ],
+ "runtime_s": 2581.1
+}
