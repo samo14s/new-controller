@@ -28,10 +28,25 @@ Floquet limits of the periodic collocated model used 200 Magnus steps per period
 
 \subsection{Validity bound}\label{supp:cert-delta}
 
-Without the validity bound~\eqref{M-eq:lmi-valid}, the certified ellipsoid at \SI{2500}{\rpm} and $0.7\alim$ admitted histories displaced by 7--12 feeds, with the tool entirely out of the cut. These states return to the orbit in the linear model, but 32 of 72 off-axis runs from its boundary ended in chatter in the simulator, against none with the bound. DELTA-SUPP-SENTENCE
-% src: README §12.4 (7-12 f_z; 32 of 72 runs, 0 of 72 with the bound); DELTA-SRC
+Without the validity bound~\eqref{M-eq:lmi-valid}, the certified ellipsoid at \SI{2500}{\rpm} and $0.7\alim$ admitted histories displaced by 7--12 feeds, with the tool entirely out of the cut. These states return to the orbit in the linear model, but 32 of 72 off-axis runs from its boundary ended in chatter in the simulator, against none with the bound. Table~\ref{tab:delta} gives the certified kick for other values of $\delta$ and without the bound, with the command bound of the original C2 solves. Near the limit the sector condition sets the certificate and $\delta$ hardly matters; at shallow depths the bound sets it, and without the bound $\beta$ doubles at \SI{1090}{\rpm} and $0.15\alim$, but the set may then contain states with the tool out of the cut, as above.
+% src: README §12.4 (7-12 f_z; 32 of 72 runs, 0 of 72 with the bound); verification/paper/revision_runs.json (beta_vs_delta; 23.367/11.689 = 2.0 at 1090 rpm, 0.15 a_lim; delta = 0.5 values equal results/c2_validate.npz cert)
 
-DELTA-TABLE
+\begin{table}[!tbp]
+\centering
+\caption{Certified kick $\beta$ (\si{\milli\metre\per\second}) of the averaged model (C2) against the validity bound $\delta$ of Eq.~\eqref{M-eq:lmi-valid}; $\delta=0.5$ is used in the article.}
+\label{tab:delta}
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Point & $\delta=0.25$ & $\delta=0.5$ & $\delta=1$ & no bound\\
+\midrule
+\SI{1090}{\rpm}, $0.15\alim$ & 6.57 & 11.7 & 18.5 & 23.4\\
+\SI{2870}{\rpm}, $0.3\alim$ & 5.69 & 8.74 & 10.0 & 10.4\\
+\SI{2500}{\rpm}, $0.9\alim$ & 2.90 & 3.06 & 3.07 & 3.07\\
+\bottomrule
+\end{tabular}
+\end{table}
+% src: verification/paper/revision_runs.json (beta_vs_delta: 6.5748/11.6891/18.4958/23.3672; 5.6854/8.7429/10.0125/10.3694; 2.8990/3.0579/3.0712/3.0731 mm/s)
 
 \subsection{What the periodic certificate gains, and its convergence}\label{supp:cert-decomp}
 

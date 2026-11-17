@@ -11,10 +11,26 @@ A_0=\begin{bmatrix}
 \hat{\bm d}_0&\bm 0&\bm 0&\bm 0&\hat D
 \end{bmatrix},
 \end{equation}
-$B=[0,\ K_a/m,\ 0,\ 1,\ \bm 0]^\top$, where $\hat{\bm d}_0\in\mathbb R^N$ and $\hat D\in\mathbb R^{N\times N}$ are column 0 and columns $1,\dots,N$ of rows $1,\dots,N$ of $(2/T)D_N$, $D_N$ being the Chebyshev differentiation matrix on the points $\cos(\pi j/N)$, $j=0,\dots,N$ \citep{trefethen2000spectral}: the last $N$ rows state $\tfrac{\mathrm d}{\mathrm dt}\tilde x(t+\vartheta_j)=\tfrac2T\sum_{l=0}^{N}(D_N)_{jl}\,\tilde x(t+\vartheta_l)$. The last of these rows, $d_N^\top=e_{4+N}^\top A_0$, is the derivative of the interpolant at $\vartheta=-T$ used in Section~\ref{sec:delayed}. Table~\ref{tab:nconv} gives the certified kick against $N$; NCONV-APP-SENTENCE
-% src: src/c2_certificate.py (cheb, model, history_nodes); src/c3_periodic.py (model); src/c4_comb.py (model: x'(t - T) from row N of (2/T) D_N); NCONV-SRC
+$B=[0,\ K_a/m,\ 0,\ 1,\ \bm 0]^\top$, where $\hat{\bm d}_0\in\mathbb R^N$ and $\hat D\in\mathbb R^{N\times N}$ are column 0 and columns $1,\dots,N$ of rows $1,\dots,N$ of $(2/T)D_N$, $D_N$ being the Chebyshev differentiation matrix on the points $\cos(\pi j/N)$, $j=0,\dots,N$ \citep{trefethen2000spectral}: the last $N$ rows state $\tfrac{\mathrm d}{\mathrm dt}\tilde x(t+\vartheta_j)=\tfrac2T\sum_{l=0}^{N}(D_N)_{jl}\,\tilde x(t+\vartheta_l)$. The last of these rows, $d_N^\top=e_{4+N}^\top A_0$, is the derivative of the interpolant at $\vartheta=-T$ used in Section~\ref{sec:delayed}. Table~\ref{tab:nconv} gives the certified kick for $N$, $1.5N$ and $2N$ nodes, $N$ being the default of Section~\ref{sec:cert-model}, which reproduces the stored C2 certificates.
+% src: src/c2_certificate.py (cheb, model, history_nodes); src/c3_periodic.py (model); src/c4_comb.py (model: x'(t - T) from row N of (2/T) D_N); verification/paper/revision_runs.json (beta_vs_N; values at the default N equal results/c2_validate.npz cert at the three C2 points)
 
-NCONV-TABLE
+\begin{table}[!tbp]
+\centering
+\caption{Certified kick $\beta$ (\si{\milli\metre\per\second}) against the number $N$ of collocation nodes, with the command bound of the original C2 solves (before the rescaling to $\bar b$); DVF\,+\,D: $g_1=500$, $g_2=\SI{4000}{\volt\second\per\metre}$ (Section~\ref{sec:delayed}).}
+\label{tab:nconv}
+\small
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Model & Point & $N$ & $\beta$ at $N$ & at $1.5N$ & at $2N$\\
+\midrule
+C2 & \SI{2500}{\rpm}, $0.9\alim$ & 20 & 3.06 & 3.06 & 3.06\\
+C2 & \SI{1090}{\rpm}, $0.9\alim$ & 24 & 6.20 & 6.14 & 6.10\\
+C2 & \SI{2870}{\rpm}, $0.3\alim$ & 20 & 8.74 & 8.61 & 8.61\\
+DVF\,+\,D & \SI{2500}{\rpm}, \SI{22}{\milli\metre} & 20 & 3.56 & 3.54 & 3.53\\
+\bottomrule
+\end{tabular}
+\end{table}
+% src: verification/paper/revision_runs.json (beta_vs_N: 3.0579/3.0568/3.0578; 6.1961/6.1447/6.0975; 8.7429/8.6089/8.6076; 3.5616/3.5413/3.5296 mm/s at N = 20/30/40, 24/36/48, 20/30/40, 20/30/40)
 
 \paragraph{Conditions of C2}
 The program maximises $\beta$ subject to Eqs.~\eqref{eq:lmi-dec}--\eqref{eq:lmi-size}, with the left side of Eq.~\eqref{eq:lmi-dec} reduced by $\varepsilon I$, $S\ge\varepsilon$, $\varepsilon=10^{-9}$, and $\beta\ge0$. It has $n_\xi(n_\xi+1)/2+n_\xi+2$ unknowns, 326--704 for $n_\xi=4+N=24$--36, in four LMI blocks of order at most $n_\xi+1$. The decay margin is $\lambda=0.05\lambda_0$, $\lambda_0=-\max\operatorname{Re}\operatorname{eig}\mathcal A$ with $aH=\overline{aH}$, and $0.2\lambda_0$ when no candidate passed the check. The first solve uses coordinates scaled by the peak response of each state to a \SI{1}{\milli\metre\per\second} kick, the next two coordinates whitened by the previous $W$ (re-centring); at all 48 points of Section~\ref{sec:cert-c2} the kept candidate came from a re-centred solve, five of them with the solver status `almost solved', which the check does not rely on.
@@ -29,7 +45,7 @@ The line $c_{0,k}+c_{1,k}s$ is a least-squares fit to $aH$ at 2048 points of seg
 % src: src/c3_periodic.py (enclosure: N_ENC 2048, aH_rate_bound, orbit, velocity_tail, lmi); src/c2_certificate.py (orbit); src/c3_summary.py (margin_errata); results/c3_summary.json (errata: extra_mV 0.414-2.079 and 0.131-3.275); README §14.2, §14.9
 
 \paragraph{Independent check}
-A candidate passes if $W\succ0$ with a condition number below $10^{10}$ and if the smallest computed eigenvalue of every decrease matrix at $\lambda=0$ exceeds $10^3(n_\xi+1)\epsilon_{\mathrm{mach}}$ times its largest absolute eigenvalue. This margin lies well above the backward error of the symmetric eigensolver, but the test is made in floating point. It is not an interval-arithmetic or verified-Cholesky proof \citep{NEW:rump2006verification}, and for C2, whose matrices are formed in the re-centred coordinates, the tolerance does not cover the rounding made in forming them. For C3 the test is applied at all $6M$ vertices separately, also when they were merged in the solve, with a scale that also covers the rounding in $\Delta_kW$ and in $\mathcal AW$ (Supplementary Material). Inclusion, validity and the size $\beta=(e^\top W^{-1}e)^{-1/2}$ are evaluated at every node through Cholesky factors, and an exceeded bound is repaired by one common scaling of all $(W_k,Y_k,S_k)$, which keeps every decrease LMI by homogeneity. The largest candidate that passed is kept, and the smaller of its checked size and the solver's $\beta$ is reported.
+A candidate passes if $W\succ0$ with a condition number below $10^{10}$ and if the smallest computed eigenvalue of every decrease matrix at $\lambda=0$ exceeds $10^3(n_\xi+1)\epsilon_{\mathrm{mach}}$ times its largest absolute eigenvalue. This margin lies well above the backward error of the symmetric eigensolver, but the test is made in floating point. It is not an interval-arithmetic or verified-Cholesky proof \citep{rump2006verification}, and for C2, whose matrices are formed in the re-centred coordinates, the tolerance does not cover the rounding made in forming them. For C3 the test is applied at all $6M$ vertices separately, also when they were merged in the solve, with a scale that also covers the rounding in $\Delta_kW$ and in $\mathcal AW$ (Supplementary Material). Inclusion, validity and the size $\beta=(e^\top W^{-1}e)^{-1/2}$ are evaluated at every node through Cholesky factors, and an exceeded bound is repaired by one common scaling of all $(W_k,Y_k,S_k)$, which keeps every decrease LMI by homogeneity. The largest candidate that passed is kept, and the smaller of its checked size and the solver's $\beta$ is reported.
 % src: src/c2_certificate.py (check: condition number of W below 1e10, tolerance 1e3 (n+1) eps max|lambda|; certify); src/c3_periodic.py (check)
 
 \paragraph{Settings and model runs}
