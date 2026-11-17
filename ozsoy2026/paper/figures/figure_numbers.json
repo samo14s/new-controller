@@ -1,0 +1,622 @@
+{
+ "fig02": {
+  "speeds": 251,
+  "gain_at_1500": 157,
+  "gain_min": [
+   134.9,
+   1940.0
+  ],
+  "eq2_gain_min": [
+   71.1,
+   1950.0
+  ],
+  "mean_a_chk_mm": 15.87,
+  "mean_a_lim_eq2_mm": 12.75,
+  "mean_a_lim0_mm": 5.85,
+  "td_clipped_governs": 112,
+  "min_a_chk": [
+   12.57,
+   2140.0
+  ],
+  "a_chk_over_a_lim": [
+   0.74,
+   0.9
+  ],
+  "a_chk_2500": 13.01,
+  "a_lim_2500": 17.24
+ },
+ "fig03": {
+  "rpm": 2500.0,
+  "g": 1500.0,
+  "frac": 0.9,
+  "a_lim_mm": 17.24,
+  "depth_mm": 15.51,
+  "kick_revolution": 100,
+  "kick_phase": "0 of 16 (start of a tooth period)",
+  "kicks_mm_s": [
+   7.0,
+   7.6
+  ],
+  "critical_kick_this_phase_mm_s": 7.29,
+  "critical_kick_min_16_phases_mm_s": 7.21,
+  "critical_kick_median_16_phases_mm_s": 8.3,
+  "orbit_x_um": [
+   -26.0,
+   -18.6
+  ],
+  "orbit_V": [
+   -6.24,
+   5.49
+  ],
+  "chatter_x_um": [
+   -393.0,
+   356.0
+  ],
+  "chatter_V": [
+   -9.0,
+   9.0
+  ],
+  "run": "face entry, |V| <= 9 V, full surface memory (nreg 0), 400 revolutions, judged over the 300 after the kick"
+ },
+ "fig04": {
+  "speeds": 251,
+  "step_below_097": 157,
+  "step_ratio_min": [
+   0.736,
+   2460.0
+  ],
+  "step_ratio_median": 0.91,
+  "face_ratio_min": 0.985,
+  "band_speeds": 126,
+  "band_found": 109,
+  "band_ratio": {
+   "min": 0.21,
+   "median": 0.46,
+   "max": 0.98,
+   "n": 109
+  },
+  "band_over_a_lim0_min": 1.08,
+  "mean_step_mm": 16.73,
+  "mean_face_mm": 18.26,
+  "mean_a_lim_mm": 18.25,
+  "at_2500": {
+   "a_lim": 17.24,
+   "step": 13.0,
+   "face": 17.25
+  }
+ },
+ "fig05": {
+  "by_rpm": {
+   "1090": {
+    "first_finite_frac": 0.25,
+    "at_090_median_min": [
+     15.3,
+     15.06
+    ],
+    "at_098_median_min": [
+     11.55,
+     10.88
+    ]
+   },
+   "1420": {
+    "first_finite_frac": 0.8,
+    "at_090_median_min": [
+     13.7,
+     12.53
+    ],
+    "at_098_median_min": [
+     5.32,
+     5.04
+    ]
+   },
+   "2500": {
+    "first_finite_frac": 0.4,
+    "at_090_median_min": [
+     8.3,
+     7.21
+    ],
+    "at_098_median_min": [
+     2.55,
+     2.34
+    ]
+   },
+   "2870": {
+    "first_finite_frac": 0.5,
+    "at_090_median_min": [
+     11.8,
+     11.49
+    ],
+    "at_098_median_min": [
+     8.67,
+     8.12
+    ]
+   }
+  },
+  "td_median_over_df": [
+   0.61,
+   1.13
+  ],
+  "clip_shrinks_basin_by": [
+   52.0,
+   701.0
+  ],
+  "free_points": 16,
+  "free_points_with_chatter": 3,
+  "phase_spread_max": 1.24
+ },
+ "fig06": {
+  "c2_points": 48,
+  "c2_certified": 48,
+  "c2_below_td": [
+   29,
+   29
+  ],
+  "td_over_c2": {
+   "min": 1.48,
+   "median": 2.43,
+   "max": 27.59,
+   "n": 29
+  },
+  "td_over_c2_median_from_07": 2.34,
+  "c3_certified": [
+   47,
+   48
+  ],
+  "c3_not_certified": [
+   "2500 rpm 0.98"
+  ],
+  "c3_below_td": [
+   28,
+   28
+  ],
+  "td_over_c3_from_07": {
+   "min": 1.46,
+   "median": 2.27,
+   "max": 4.78,
+   "n": 18
+  },
+  "c3_over_c2": {
+   "min": 0.352,
+   "median": 1.064,
+   "max": 2.008,
+   "n": 47
+  },
+  "c2_correction_factor": {
+   "min": 0.9972,
+   "median": 0.9997,
+   "max": 1.0,
+   "n": 48
+  },
+  "td_at_098": [
+   10.88,
+   5.04,
+   2.34,
+   8.12
+  ]
+ },
+ "fig07": {
+  "grid": [
+   42,
+   7
+  ],
+  "certified": [
+   287,
+   294
+  ],
+  "not_certified": [
+   "1520 rpm 0.95",
+   "1520 rpm 0.98",
+   "1580 rpm 0.90",
+   "1580 rpm 0.95",
+   "1760 rpm 0.80",
+   "1880 rpm 0.70",
+   "2000 rpm 0.98"
+  ],
+  "kick_090": {
+   "min": 0.0,
+   "median": 6.58,
+   "max": 16.02,
+   "n": 42
+  },
+  "kick_range": {
+   "min": 0.02,
+   "median": 7.63,
+   "max": 16.76,
+   "n": 287
+  },
+  "beta_by_rpm": {
+   "1090": [
+    1.48,
+    0.6,
+    0.71,
+    0.43,
+    0.35,
+    0.36
+   ],
+   "1420": [
+    1.61,
+    0.72,
+    0.67,
+    0.72,
+    0.52,
+    0.27
+   ],
+   "2500": [
+    0.16,
+    0.18,
+    0.42,
+    0.65,
+    0.44,
+    0.16
+   ],
+   "2870": [
+    1.04,
+    0.48,
+    0.48,
+    0.57,
+    0.64,
+    0.45
+   ]
+  },
+  "beta_fracs": [
+   0.3,
+   0.5,
+   0.6,
+   0.7,
+   0.8,
+   0.9
+  ],
+  "beta_certified": 3,
+  "surface_factor": {
+   "min": 0.8584,
+   "median": 0.9997,
+   "max": 1.0,
+   "n": 287
+  },
+  "beta_factor": {
+   "min": 0.9979,
+   "median": 0.9997,
+   "max": 1.0,
+   "n": 24
+  },
+  "step_limit_ratio": {
+   "1090": 0.895,
+   "1420": 0.893,
+   "2500": 0.754,
+   "2870": 0.821
+  }
+ },
+ "fig08": {
+  "speeds": 251,
+  "entry_speeds": 25,
+  "g1_max": 3000.0,
+  "dvf_authority_limited": 195,
+  "a_lim_over_dvf": {
+   "d1000": {
+    "min": 1.23,
+    "median": 1.43,
+    "max": 1.57,
+    "n": 251
+   },
+   "d2000": {
+    "min": 1.44,
+    "median": 1.78,
+    "max": 2.1,
+    "n": 251
+   },
+   "d4000": {
+    "min": 1.75,
+    "median": 2.4,
+    "max": 3.15,
+    "n": 251
+   }
+  },
+  "dvf_a_lim_mm": {
+   "min": 13.96,
+   "median": 24.45,
+   "max": 42.75,
+   "n": 251
+  },
+  "d2000_a_lim_mm": {
+   "min": 29.18,
+   "median": 42.22,
+   "max": 64.08,
+   "n": 251
+  },
+  "face_d2000_over_dvf": {
+   "min": 1.45,
+   "median": 1.72,
+   "max": 2.12,
+   "n": 25
+  },
+  "step_d2000_over_dvf": {
+   "min": 0.98,
+   "median": 1.03,
+   "max": 1.27,
+   "n": 25
+  },
+  "step_dvf_mm": {
+   "min": 12.88,
+   "median": 16.17,
+   "max": 28.21,
+   "n": 25
+  },
+  "step_d2000_mm": {
+   "min": 12.75,
+   "median": 19.04,
+   "max": 35.1,
+   "n": 25
+  }
+ },
+ "fig09": {
+  "certified_without_gap_mm": {
+   "1090": {
+    "dvf_1": 34.0,
+    "comb_1": 34.0,
+    "dvf_2": 32.0,
+    "comb_2": 34.0,
+    "dvf_4": 26.0,
+    "comb_4": 28.0
+   },
+   "1420": {
+    "dvf_1": 18.0,
+    "comb_1": 34.0,
+    "dvf_2": 16.0,
+    "comb_2": 30.0,
+    "dvf_4": 16.0,
+    "comb_4": 26.0
+   },
+   "2500": {
+    "dvf_1": 16.0,
+    "comb_1": 34.0,
+    "dvf_2": 16.0,
+    "comb_2": 28.0,
+    "dvf_4": 14.0,
+    "comb_4": 16.0
+   },
+   "2870": {
+    "dvf_1": 28.0,
+    "comb_1": 34.0,
+    "dvf_2": 16.0,
+    "comb_2": 34.0,
+    "dvf_4": 14.0,
+    "comb_4": 18.0
+   }
+  },
+  "validation_points": 100,
+  "validation_cert_below_td": [
+   89,
+   89
+  ],
+  "validation_td_over_cert": {
+   "min": 1.6,
+   "median": 2.29,
+   "max": 7.32,
+   "n": 89
+  },
+  "same_g1_over_dvf": {
+   "min": 0.96,
+   "median": 1.14,
+   "max": 2.59,
+   "n": 22
+  },
+  "same_g1_better": [
+   19,
+   22
+  ],
+  "same_g1_where_dvf_cert_le_2p1": {
+   "pairs": [
+    [
+     1090.0,
+     34.0
+    ],
+    [
+     1420.0,
+     18.0
+    ],
+    [
+     1420.0,
+     22.0
+    ],
+    [
+     2500.0,
+     22.0
+    ],
+    [
+     2870.0,
+     18.0
+    ],
+    [
+     2870.0,
+     22.0
+    ]
+   ],
+   "ratio": {
+    "min": 1.79,
+    "median": 2.0,
+    "max": 2.59,
+    "n": 6
+   }
+  },
+  "map_design_over_dvf": {
+   "min": 0.82,
+   "median": 1.11,
+   "max": 3.02,
+   "n": 22
+  },
+  "map_design_better": [
+   18,
+   22
+  ],
+  "gainmap_factor": {
+   "dvf": {
+    "min": 0.5934,
+    "median": 0.9996,
+    "max": 1.0,
+    "n": 835
+   },
+   "comb": {
+    "min": 0.5934,
+    "median": 0.9997,
+    "max": 1.0,
+    "n": 1053
+   }
+  }
+ },
+ "fig10": {
+  "designs": "g1 the largest <= 3000 V s/m with the forced command <= 8.1 V up to 0.9 a_lim (10 % guard band); closed-form ZOA model (src/c4_robust.py)",
+  "g1_by_rpm": {
+   "DVF": [
+    2539.0,
+    1682.0,
+    1396.0,
+    2164.0
+   ],
+   "DVF + D, $g_2=1000$": [
+    2539.0,
+    1683.0,
+    1396.0,
+    2164.0
+   ],
+   "DVF + D, $g_2=2000$": [
+    2539.0,
+    1683.0,
+    1396.0,
+    2165.0
+   ],
+   "DVF + D, $g_2=4000$": [
+    2539.0,
+    1682.0,
+    1396.0,
+    2164.0
+   ]
+  },
+  "eps_plus2_rel": [
+   0.87,
+   0.93
+  ],
+  "eps_minus2_rel": [
+   1.08,
+   1.17
+  ],
+  "eps_pm1_rel": [
+   0.93,
+   1.08
+  ],
+  "eps_pm2_worst_cmd": [
+   7.76,
+   8.89
+  ],
+  "eps_pm3_cases_above_9V": [
+   2,
+   8
+  ],
+  "runout_tolerated_um": {
+   "DVF": [
+    1.12,
+    4.5
+   ],
+   "DVF + D, $g_2=1000$": [
+    1.22,
+    3.22
+   ],
+   "DVF + D, $g_2=2000$": [
+    1.03,
+    2.42
+   ],
+   "DVF + D, $g_2=4000$": [
+    0.69,
+    1.73
+   ]
+  },
+  "loop_delay_largest_with_ratio_ge_05_us": {
+   "DVF": 300.0,
+   "DVF + D, $g_2=1000$": 200.0,
+   "DVF + D, $g_2=2000$": 100.0,
+   "DVF + D, $g_2=4000$": 100.0
+  },
+  "at_300us_400Hz": {
+   "DVF": [
+    40.1,
+    19.0,
+    17.1,
+    23.5
+   ],
+   "DVF + D, $g_2=1000$": [
+    44.9,
+    24.7,
+    23.0,
+    30.3
+   ],
+   "DVF + D, $g_2=2000$": [
+    22.4,
+    18.7,
+    11.0,
+    19.0
+   ]
+  },
+  "at_200us_600Hz": {
+   "DVF": [
+    40.4,
+    19.4,
+    16.8,
+    23.5
+   ],
+   "DVF + D, $g_2=1000$": [
+    46.8,
+    26.4,
+    23.7,
+    31.6
+   ],
+   "DVF + D, $g_2=2000$": [
+    12.6,
+    8.0,
+    4.4,
+    12.9
+   ]
+  },
+  "second_modes_f_kratio_zeta": [
+   [
+    400.0,
+    6.0,
+    0.01
+   ],
+   [
+    600.0,
+    6.0,
+    0.01
+   ],
+   [
+    800.0,
+    40.0,
+    0.01
+   ]
+  ],
+  "a_lim_nominal_mm": {
+   "DVF": [
+    37.6,
+    19.4,
+    15.9,
+    22.8
+   ],
+   "DVF + D, $g_2=1000$": [
+    47.1,
+    28.6,
+    24.6,
+    33.2
+   ],
+   "DVF + D, $g_2=2000$": [
+    55.4,
+    36.0,
+    32.1,
+    42.2
+   ],
+   "DVF + D, $g_2=4000$": [
+    70.5,
+    48.9,
+    45.8,
+    58.2
+   ]
+  }
+ }
+}

@@ -8,8 +8,8 @@
   % junctions and blocks, placed explicitly so that no wire crosses a block
   \node[sum] (s1) at (0,0) {$+$};
   \node[sum] (s2) at (0,1.7) {$+$};
-  \node[blk, minimum width=21mm] (F0) at (-2.5,1.7) {static force\\ $F_0(t;a)$};
-  \node[blk, minimum width=40mm] (cut) at (3.0,1.7) {regenerative force\\ $a\,K(t)\,[x(t)-x(t-T)]$};
+  \node[blk, minimum width=21mm] (F0) at (-2.5,1.7) {static force\\ $f_s(t;a)$};
+  \node[blk, minimum width=40mm] (cut) at (3.0,1.7) {regenerative force\\ $aH(t)\,[x(t)-x(t-T)]$};
   \node[blk, minimum width=17mm] (G) at (1.9,0) {structure\\ $G(s)$};
   \node[coordinate] (xb) at (5.7,0) {};
   \node[blk, minimum width=12mm] (D) at (6.9,0) {$s$};
@@ -20,7 +20,7 @@
   % cutting forces
   \draw[->] (F0.east) -- (s2.west);
   \draw[->] (cut.west) -- (s2.east);
-  \draw[->] (s2.south) -- node[lab, left] {$F_c$} (s1.north);
+  \draw[->] (s2.south) -- node[lab, left] {$f_c$} (s1.north);
   % structure and velocity
   \draw[->] (s1.east) -- (G.west);
   \draw (G.east) -- node[lab, above, pos=0.5] {$x$} (xb);
@@ -32,9 +32,9 @@
   \draw[->] (vb) |- (K.east);
   \draw[->] (K.west) -- node[lab, above] {$u$} (sat.east);
   \draw[->] (sat.west) -- node[lab, above] {$V$} (Ga.east);
-  \draw[->] (Ga.west) -| node[lab, left, pos=0.75] {$F_a$} (s1.south);
+  \draw[->] (Ga.west) -| node[lab, left, pos=0.75] {$f_a$} (s1.south);
   \node[lab, below=1mm of sat, text=black!60] {$|V|\le\SI{9}{\volt}$};
 \end{tikzpicture}
-\caption{The controlled cut. The workpiece mode $G(s)$ is driven by the cutting force $F_c$, made of a static, tooth-periodic part and a regenerative part proportional to $x(t)-x(t-T)$, and by the force $F_a$ of the proof-mass actuator. The direct velocity feedback command $u=-g\dot x$ is clipped at $\Vmax=F_{\max}/K_a=\SI{9}{\volt}$. In Section~\ref{sec:delayed} the DVF block is replaced by the delayed difference law of Eq.~\eqref{eq:comb-law}.}
+\caption{The controlled cut. The workpiece mode $G(s)$ is driven by the cutting force $f_c$, made of a static, tooth-periodic part and a regenerative part proportional to $x(t)-x(t-T)$, and by the force $f_a$ of the proof-mass actuator [Eqs.~\eqref{eq:eom} and \eqref{eq:split}]. The direct velocity feedback command $u=-g\dot x$ is clipped at $\Vmax=F_{\max}/K_a=\SI{9}{\volt}$. In Section~\ref{sec:delayed} the DVF block is replaced by the delayed difference law of Eq.~\eqref{eq:comb-law}.}
 \label{fig:model}
 \end{figure}

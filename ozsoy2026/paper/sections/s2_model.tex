@@ -1,0 +1,119 @@
+\section{Model and case study}\label{sec:model}
+
+The model is the actively damped milling system of \citet{ozsoy2026robust}, rebuilt from its published parameters; Fig.~\ref{fig:model} shows the loop. This section states the equations used in all later sections: the clipped feedback loop, the regenerative force of the helical cutter, the linear stability limit and the tooth-periodic forced orbit.
+
+\input{sections/fig_model}
+
+\subsection{Structure, actuator and clipped velocity feedback}\label{sec:model-loop}
+
+The workpiece is flexible in one direction, normal to the feed, and is represented by its dominant mode. With $x(t)$ the displacement at the cutting point and $q(t)$ the internal coordinate of the proof-mass actuator,
+\begin{equation}\label{eq:eom}
+  m\ddot x+c\dot x+kx=f_c(t)+f_a(t),\qquad
+  \ddot q+2\zeta_a\omega_a\dot q+\omega_a^2q=V(t),\qquad
+  f_a=K_a\ddot q ,
+\end{equation}
+where $f_c$ is the cutting force on the workpiece and $f_a$ the actuator force. The structure and the actuator thus have the transfer functions $G(s)=1/(ms^2+cs+k)$ and $G_a(s)=K_as^2/(s^2+2\zeta_a\omega_as+\omega_a^2)$, the latter in newtons per volt. The actuator mode lies at $\omega_a/2\pi=\SI{8.40}{\hertz}$ with $\zeta_a=0.150$; at \SI{129.3}{\hertz} the magnitude of $G_a$ is within \SI{0.4}{\percent} of $K_a$ and its phase is \SI{1.1}{\degree}. The controller is direct velocity feedback (DVF) through this inertial actuator \citep{elliott2001feedback}, $u(t)=-g\dot x(t)$, and the applied command is clipped:
+\begin{equation}\label{eq:dvf}
+  V(t)=\operatorname{sat}_{V_{\max}}\bigl(u(t)\bigr)=\max\bigl\{-V_{\max},\,\min\{V_{\max},u(t)\}\bigr\},
+\end{equation}
+with $V_{\max}=F_{\max}/K_a=\SI{9}{\volt}$. While the clip is inactive the loop is linear, with the closed-loop receptance
+\begin{equation}\label{eq:Gcl}
+  G_{\mathrm{cl}}(s)=\frac{G(s)}{1+g\,s\,G_a(s)\,G(s)} .
+\end{equation}
+At $g=\SI{1500}{\volt\second\per\metre}$ the structural pole of Eq.~\eqref{eq:Gcl} has \SI{15.1}{\percent} damping at \SI{128.97}{\hertz}, against \SI{1.34}{\percent} without control, and the actuator pole has \SI{14.1}{\percent}. The clip acts on the command, before the actuator dynamics, so the force produced can transiently exceed $F_{\max}$ (up to about \SI{30}{\newton}). Clipping at \SI{8.1}{\volt} instead, which keeps the force below \SI{27}{\newton}, lowers the clipped step-entry limits at $g=1500$ from 13.01 to \SI{12.47}{\milli\metre} at \SI{2500}{\rpm} and from 12.79 to \SI{12.10}{\milli\metre} at \SI{3000}{\rpm}.
+% src: src/params.py, src/structure.py; verification/zoa_sdm/actuator_mode.json (|Ga|/K_a = 1.004 and 1.12 deg at 129.3 Hz; poles at g = 1500: 128.97 Hz, 15.07 %, and 8.42 Hz, 14.14 %); README §4.6 (clip before the actuator, force about 30 N, 8.1 V case: README only, no stored file)
+
+\subsection{Regenerative force of the helical cutter}\label{sec:model-force}
+
+The cutter has $N_t=4$ teeth, radius $R=D/2$ and helix angle $\eta$. The immersion angle of tooth $j$ at height $z\in[0,a]$ above the tool tip is
+\begin{equation}\label{eq:phi}
+  \phi_j(t,z)=\Omega t+2\pi j/N_t-z\tan\eta/R ,\qquad j=0,\dots,N_t-1,
+\end{equation}
+measured clockwise from the feed-normal direction; in half-immersion down milling a tooth cuts while $\phi_j\in[\phi_{\mathrm{st}},\phi_{\mathrm{ex}}]=[\pi/2,\pi]$ (modulo $2\pi$), which is indicated by $\gamma_j(t,z)=1$ ($\gamma_j=0$ otherwise). The chip thickness of the slice $\mathrm dz$ is
+\begin{equation}\label{eq:chip}
+  h_j(t,z)=f_z\sin\phi_j-\bigl[x(t)-x(t-T)\bigr]\cos\phi_j ,
+\end{equation}
+the surface having been left by the preceding tooth one tooth period $T$ earlier. \ref{app:simulator} replaces $x(t-T)$ by the deepest earlier pass, which matters once the tool leaves the cut. The force on the workpiece along $x$ is
+\begin{equation}\label{eq:fcut}
+  f_c(t)=-\sum_{j=0}^{N_t-1}\int_0^a\gamma_j\,\bigl(K_{tc}\sin\phi_j-K_{rc}\cos\phi_j\bigr)\max\{h_j,0\}\,\mathrm dz ,
+\end{equation}
+so the force vanishes where the tool loses contact. As long as every engaged chip is positive, $f_c$ splits into a static and a regenerative part,
+\begin{align}
+  f_c(t)&=f_s(t;a)+aH(t)\,\bigl[x(t)-x(t-T)\bigr],\label{eq:split}\\
+  aH(t)&=\sum_{j=0}^{N_t-1}\int_0^a\gamma_j\,\bigl(K_{tc}\sin\phi_j\cos\phi_j-K_{rc}\cos^2\phi_j\bigr)\,\mathrm dz ,\label{eq:aHt}
+\end{align}
+where $f_s$ is Eq.~\eqref{eq:fcut} with $h_j=f_z\sin\phi_j$. Both $f_s$ and the coefficient $aH(t)$ are $T$-periodic. Over one tooth period every axial slice contributes the same mean, only shifted in time by the helix, so the mean coefficient is exactly linear in the depth \citep{altintas1995analytical}:
+\begin{equation}\label{eq:aHmean}
+  \begin{aligned}
+    \overline{aH}&=\frac{N_tK_{tc}\,a}{4\pi}\,\alpha_{yy},\\
+    \alpha_{yy}&=2\int_{\pi/2}^{\pi}\Bigl(\sin\phi\cos\phi-\frac{K_{rc}}{K_{tc}}\cos^2\phi\Bigr)\mathrm d\phi
+    =-1-\frac{\pi}{2}\,\frac{K_{rc}}{K_{tc}}=-1.428 ,
+  \end{aligned}
+\end{equation}
+with $\alpha_{yy}$ the directional factor of the feed-normal direction. The axial tooth pitch $p_a=2\pi R/(N_t\tan\eta)=\SI{12.57}{\milli\metre}$ is comparable with the depths of interest, so the helix cancels most of the variation of $aH(t)$: near the stability limit it stays within about $\pm\SI{12}{\percent}$ of its mean, more at shallow depths, and it is constant when $a$ is a multiple of $p_a$ \citep{zatarain2006helix,insperger2006helix}.
+% src: src/zoa.py (alpha_matrix), src/tdsim.c (force), src/c3_periodic.py (aH); verification/zoa_sdm/README.md §1 (derivation, alpha_yy = -1.428399); README §12.2 (+-12 % near the limit), §14.4 (pitch)
+
+\subsection{Linear stability limit}\label{sec:model-zoa}
+
+Replacing $aH(t)$ by its mean, Eq.~\eqref{eq:aHmean}, which is the zero-order approximation (ZOA) of \citet{altintas1995analytical}, and linearising the deviation from the forced orbit of Section~\ref{sec:model-orbit} gives the characteristic equation
+\begin{equation}\label{eq:char}
+  1-\frac{N_tK_{tc}\,a}{4\pi}\,\alpha_{yy}\bigl(1-e^{-i\omega T}\bigr)\,G_{\mathrm{cl}}(i\omega)=0 .
+\end{equation}
+At a fixed speed $T$ is fixed, and Eq.~\eqref{eq:char} gives the depth $a(\omega)$ directly as a function of the chatter frequency. It was scanned from 0.5 to \SI{60}{\hertz} on a coarse grid and from 60 to \SI{600}{\hertz} in steps of \SI{0.02}{\hertz}. Every sign change of $\operatorname{Im}a(\omega)$ with $\operatorname{Re}a(\omega)>0$ is a crossing of the stability boundary, except a sign change whose bracket contains a tooth-passing harmonic: there $1-e^{-i\omega T}$ vanishes and $a(\omega)$ has a pole. The smallest crossing is $a_{\lim}(g)$; no lobes are intersected or interpolated. For $g<\SI{2.4e4}{\volt\second\per\metre}$ the actuator mode creates no crossing below \SI{60}{\hertz}. The ZOA limit agrees with an independent semi-discretisation of the same averaged model to $2\times10^{-5}$ and is conservative by \SIrange{0}{1.05}{\percent} with respect to the time-periodic helical model (\ref{app:simulator}).
+% src: src/zoa.py (F_GRID, pole guard); README §2-3; verification/zoa_sdm/current_grid_check.json (table_96: 1.96e-5)
+
+\subsection{Forced orbit and its command}\label{sec:model-orbit}
+
+Below $a_{\lim}$ and with the command inside the clip, the deviation decays and the motion converges to a $T$-periodic forced orbit $x_p(t)$. On any $T$-periodic motion the regenerative term of Eq.~\eqref{eq:split} vanishes, so $x_p$ is the response of the linear loop \eqref{eq:Gcl} to the static force alone, and it has a closed form. Let $\hat f_s(\theta)=\sum_mW_me^{imN_t\theta}$ be the static force per unit depth of the slice at $z=0$, as a function of the spindle angle $\theta=\Omega t$, with $W_m$ its Fourier coefficients over one tooth period. Every other slice carries the same force, delayed in spindle angle by its helix lag $z\tan\eta/R$ [Eq.~\eqref{eq:phi}], so the integral over the depth is exact:
+\begin{equation}\label{eq:Fm}
+  F_m(a)=W_m\,\frac{1-e^{-imN_ta\tan\eta/R}}{imN_t\tan\eta/R}\quad(m\neq0),\qquad F_0(a)=W_0\,a .
+\end{equation}
+With $\omega_T=2\pi/T=N_t\Omega$, the orbit and its command are
+\begin{equation}\label{eq:xp}
+  x_p(t)=\sum_{m=-N_h}^{N_h}G_{\mathrm{cl}}(im\omega_T)\,F_m(a)\,e^{im\omega_Tt},\qquad
+  b(t)=-g\,\dot x_p(t),
+\end{equation}
+evaluated with $N_h=40$ harmonics, and the peak command $b_{\max}=\max_t\lvert b(t)\rvert$ is taken over 256 samples per tooth period. The factor in Eq.~\eqref{eq:Fm} vanishes when $a$ is a multiple of $p_a/m$, so at a fixed speed the forced command is not monotone in the depth. The orbit persists unchanged in the clipped loop as long as $b_{\max}<V_{\max}$, and $b(t)$ is then the command that the actuator supplies in settled cutting. The orbit is used for the authority condition (Section~\ref{sec:feasibility}), for the describing function (Section~\ref{sec:bistability}) and for the dead zone of the certificates (Section~\ref{sec:certificates}).
+% src: src/feasibility.py (slice_force_harmonics, force_harmonics, forced_velocity: N_HARM = 40, N_T = 256); README §8.2 (helix cancellation, pitch 12.57 mm)
+
+\subsection{Case study}\label{sec:model-case}
+
+Table~\ref{tab:case} lists the parameters, all taken from \citet{ozsoy2026robust} except those marked as derived or chosen here. Two entries need comment. The flexible direction is not stated in the text of \citet{ozsoy2026robust}; it is taken normal to the feed, along the actuator axis, which gives $\alpha_{yy}=-1.428$ and reproduces their uncontrolled stability chart with a median deviation of \SI{0.04}{\percent} over \SIrange{400}{3000}{\rpm}. The damping ratio is \SI{1.34}{\percent} rather than the \SI{1.45}{\percent} of their Table~1, because the curves computed in that paper are fitted by the former: the peak of the uncontrolled receptance ($-111.10$~dB, against $-111.79$~dB with \SI{1.45}{\percent}), the open-loop pole (\SI{1.3405}{\percent}) and the uncontrolled stability chart (\SI{1.3394}{\percent}); with \SI{1.45}{\percent} the uncontrolled chart deviates by \SI{8.0}{\percent} (median). The controlled results hardly depend on this choice: the gain map of Section~\ref{sec:feas-pub} changes by a median factor of 1.00.
+% src: README §2, §4.1, §5.1, §6; verification/consistency/a_damping.json (fig6a peak -111.10 dB vs -111.79; fig6b pole 1.3405 %; fig9 fit 1.3394 %); results/paper_vs_ours.json (p05: 0.037 % at 1.34 %, 7.99 % at 1.45 %); results/gainmap_zeta145.npz vs gainmap_main.npz (median gain ratio 0.995)
+
+\begin{table}[t]
+  \centering
+  \caption{Case-study parameters \citep{ozsoy2026robust}. Quantities marked $^\dagger$ are derived from the others; those marked $^\ddagger$ are chosen or inferred in this work (Section~\ref{sec:model-case}); Table~1 of \citet{ozsoy2026robust} lists $\zeta=\SI{1.45}{\percent}$.}
+  \label{tab:case}
+  \small
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Quantity & Symbol & Value\\
+    \midrule
+    \multicolumn{3}{@{}l}{\emph{Structure: one mode, feed-normal direction}}\\
+    Natural frequency & $\omega_n/2\pi$ & \SI{129.3}{\hertz}\\
+    Modal stiffness & $k$ & \SI{1.34e7}{\newton\per\metre}\\
+    Modal mass$^\dagger$ & $m=k/\omega_n^2$ & \SI{20.30}{\kilogram}\\
+    Damping ratio$^\ddagger$ & $\zeta$ & \SI{1.34}{\percent}\\
+    \multicolumn{3}{@{}l}{\emph{Proof-mass actuator and command}}\\
+    Force constant & $K_a$ & \SI{3}{\newton\per\volt}\\
+    Actuator coefficients & $2\zeta_a\omega_a$; $\omega_a^2$ & \SI{15.834}{\per\second}; \SI{2785.6}{\per\second\squared}\\
+    Actuator mode$^\dagger$ & $\omega_a/2\pi$; $\zeta_a$ & \SI{8.40}{\hertz}; 0.150\\
+    Peak force & $F_{\max}$ & \SI{27}{\newton}\\
+    Command limit$^\dagger$ & $V_{\max}=F_{\max}/K_a$ & \SI{9}{\volt}\\
+    \multicolumn{3}{@{}l}{\emph{Cutter and cutting conditions}}\\
+    Diameter; teeth; helix & $D$; $N_t$; $\eta$ & \SI{16}{\milli\metre}; 4; \SI{45}{\degree}\\
+    Axial tooth pitch$^\dagger$ & $p_a$ & \SI{12.57}{\milli\metre}\\
+    Cutting coefficients & $K_{tc}$; $K_{rc}$ & \SI{660}{\mega\pascal}; \SI{180}{\mega\pascal}\\
+    Radial immersion & $a_e/D$ & 0.5, down milling\\
+    Feed per tooth & $f_z$ & \SI{0.05}{\milli\metre}\\
+    Directional factor$^{\dagger\ddagger}$ & $\alpha_{yy}$ & $-1.428$\\
+    Spindle speeds & $n$ & \SIrange{500}{3000}{\rpm}, step \SI{10}{\rpm}\\
+    \multicolumn{3}{@{}l}{\emph{Numerical settings}}\\
+    Simulation & & 512 steps/rev, 30 layers\\
+    Harmonics of the orbit$^\ddagger$ & $N_h$ & 40\\
+    Gain search interval$^\ddagger$ & $\mathcal G$ & $[0,1500]$ or $[0,3000]$ \si{\volt\second\per\metre}\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% src: src/params.py (Table 1, Table 2, Eq. 3, RPM_GRID, STEPS_PER_REV, N_REVS, N_LAYERS, FLEX_DIR); src/feasibility.py (N_HARM); src/gainmap.py (G = [0, 3000]); README §2
