@@ -1,0 +1,10 @@
+\section{Conclusions}\label{sec:conclusions}
+
+Clipping the command of a velocity feedback loop at the force capacity of its proof-mass actuator changes the stability of a milling cut from a property of the linear system into a property of a basin. On the case study of \citet{ozsoy2026robust} the following was found.
+\begin{enumerate}
+\item The published authority test of saturation-aware gain scheduling is set by the transient of entering the cut from rest; bounding the steady forced demand at every depth up to $0.9\,\alim$ in closed form and checking it with the clipped actuator in the time domain gives a well-posed gain map and a checked depth of \SI{15.87}{\milli\metre} on average.
+\item The clipped loop is bistable. Entering from rest lowers the attainable depth below $0.97\,\alim$ at 157 of 251 speeds, a gentle entry recovers the limit, and near the limit velocity kicks of 2.4--10.8\,\% of one tooth's cutting impulse end the stable cut in chatter, while without the clip only kicks of \SI{0.78}{\metre\per\second} or more do. The basin shrinks towards a finite size, not to zero, at the linear limit.
+\item Sector-condition LMIs with a dead zone that moves with the forced command certify a basin around the forced orbit on collocation models of both the averaged and the time-periodic milling model. In simulation no kick inside a certificate ended in chatter; the certificates are 1.5 to 28 times smaller than the measured basins, and the gap does not come from averaging.
+\item A delayed difference term that vanishes on the forced orbit raises the linear limit 1.78 times under the same authority rule and widens the simulated basin where the DVF certificate almost vanishes, but not at shallow depths; it does not help a step entry at high speed and needs a fast, encoder-synchronised loop.
+\end{enumerate}
+The certificates are statements about collocation models of a single-mode milling model; extending them to the delay equation and validating the bistability experimentally are the next steps.

@@ -1,0 +1,35 @@
+%% Cover letter draft. Build: pdflatex cover_letter.tex
+\documentclass[11pt]{letter}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{siunitx}
+\sisetup{range-phrase={--}, range-units=single}
+\DeclareSIUnit\rpm{rpm}
+\signature{{[Corresponding author name]}\\ {[Department, Institution]}\\ {[e-mail]}}
+\address{{[Department]}\\ {[Institution]}\\ {[City, Country]}}
+\begin{document}
+\begin{letter}{The Editor\\ Mechanical Systems and Signal Processing}
+\opening{Dear Editor,}
+
+Please consider the enclosed manuscript, \emph{``Saturation-induced bistability in active chatter control of milling: basins of attraction, certificates and an authority-preserving delayed term''}, for publication as a research article in \emph{Mechanical Systems and Signal Processing}.
+
+Active damping of milling chatter with proof-mass actuators is limited by the force the actuator can deliver. A recent saturation-aware design (Ozsoy, Sims and Ozturk, J.\ Manuf.\ Process.\ 171 (2026) 247--257) schedules the gain of direct velocity feedback over the spindle speed so that the force demand of a simulated cut stays within this limit. The manuscript asks what the limit itself does to the controlled cut, and answers four questions on the same case study:
+\begin{enumerate}
+\item The published authority test is dominated by the transient of entering the cut from rest. We formulate a well-posed condition from the steady forced response at every depth up to a margin below the stability limit, followed by a time-domain check with the clipped actuator.
+\item The clipped loop is bistable. Entering from rest lowers the attainable depth below 0.97 of the linear limit at 157 of 251 speeds, and near the limit velocity kicks of 2.4--10.8\,\% of one tooth's cutting impulse push the cut into chatter, whereas without the clip only kicks of \SI{0.78}{\metre\per\second} or more do.
+\item The basin of the stable cut is certified by sector-condition linear matrix inequalities in which the dead zone moves with the forced command, on collocation models of the averaged and of the time-periodic milling model. No simulated kick inside a certificate ended in chatter; the certificates are 1.5 to 28 times smaller than the simulated basins.
+\item A delayed difference term that vanishes on the forced orbit raises the linear limit 1.78 times under the same authority rule and widens the basin, but tolerates only about \SIrange{100}{200}{\micro\second} of loop delay when an unmodelled mode is present.
+\end{enumerate}
+
+We believe the work fits the scope of the journal, at the junction of active vibration control, nonlinear dynamics of machining and computational stability analysis. The tools we use (bistable zones, sector conditions, spectral collocation, delayed feedback) are established. What is new is their combination for a force-limited actuator, the quantification over the speed range, and the cross-validation of every certificate against an independent time-domain simulator. The study is computational. The simulator, the scripts and the stored results that produce every number and figure will be made publicly available, and the manuscript states the limitations of a single-mode model and describes the experiment that would test the predictions.
+
+The manuscript builds on the model and parameters of Ozsoy et al.\ (2026). It is not a comment on that article: we use the published case study as a well-documented benchmark and discuss only those aspects of the published design that bear on our questions.
+
+This manuscript is original, has not been published, and is not under consideration elsewhere. All authors have approved the submission and declare no competing interests. The use of generative AI tools in preparing the work is declared in the manuscript.
+
+[Suggested reviewers, to be chosen by the authors from experts without conflicts of interest, for example authors of the cited work on the bistable zone of milling, on active chatter damping with inertial actuators, on velocity feedback with stroke-limited actuators, and on delayed feedback in machining. Verify current affiliations and e-mail addresses before listing them.]
+
+\closing{Yours sincerely,}
+\end{letter}
+\end{document}
