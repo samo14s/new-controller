@@ -110,3 +110,23 @@ def test_basin_stays_finite_at_0999_of_the_limit():
     assert lo["2500"] == pytest.approx(1.41, abs=0.01) and lo["2870"] > 7.0 and lo["1090"] > 9.0
     assert all(r["max"] < 11.0 for r in c["by_rpm"].values())
 
+
+
+def test_describing_function_limit_is_the_clipping_onset():
+    """At a = a_lim the cut needs the full gain (N* = 1), so the critical
+    amplitude of Eq. (dfbasin) is the clipping onset V_max - max|b(t)| at every
+    speed.  Regression: round-off (a first describing-function sample of
+    1 + 2e-15) once returned the first grid amplitude, 0.009 V, at 1420 rpm,
+    where the onset is 1.66 V."""
+    import c1_unsafe_zone as c
+    import params as P
+    from feasibility import forced_velocity
+    d = np.load(path("results", "c1_df.npz"))
+    P.set_damping(float(d["zeta"]))
+    assert d["frac"][-1] == pytest.approx(1.0)
+    for j, rpm in enumerate(d["rpm"]):
+        g, a = float(d["g"][j]), float(d["a"][j, -1]) * 1e-3
+        b = -g * forced_velocity(rpm, g, [a], n_t=c.ND)[0]
+        assert d["A_dual"][j, -1] == pytest.approx(c.VMAX - np.abs(b).max(), abs=1e-6)
+        assert c.critical_amplitude(1.0 + 2e-15, b) == pytest.approx(c.VMAX - np.abs(b).max())
+    assert d["A_dual"][list(d["rpm"]).index(1420.0), -1] > 1.6

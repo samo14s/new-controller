@@ -343,6 +343,11 @@ def critical_amplitude(Nstar, b, vmax=VMAX):
     basin tends to a finite size at a_lim, not to zero."""
     if Nstar <= 0:
         return np.inf
+    if Nstar >= 1.0 - 1e-9:
+        # decided before the search: df_gain is 1 only up to round-off below the
+        # onset, and a first sample of 1 + 2e-15 would otherwise be taken for the
+        # crossing and return the first grid amplitude (1e-3 vmax)
+        return float(max(vmax - np.max(np.abs(b)), 0.0))
     A = np.logspace(-3, 3, 1201) * vmax
     Nv = df_gain(A, b, vmax)
     i = np.where(Nv <= Nstar)[0]
