@@ -110,7 +110,7 @@ def stored_parts():
                                    for n, b in zip(df["rpm"], bmax_lim)}
     L = np.load(os.path.join(RES, "c4_limits.npz"))
     names = [str(s) for s in L["feas_names"]]
-    al = L["feas_a_lim"] * 1e3
+    al = L["feas_a_lim"]                      # stored in mm
     i_dvf, i_d2 = names.index("dvf"), names.index("d2000")
     cap = 32.0
     out["depth_2D"] = dict(names=names, n_speeds=int(al.shape[0]),

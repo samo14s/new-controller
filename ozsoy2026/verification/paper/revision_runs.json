@@ -76,12 +76,12 @@
     "p1e6"
    ],
    "n_speeds": 251,
-   "dvf_above_32mm": 251,
-   "d2000_above_32mm": 251,
+   "dvf_above_32mm": 71,
+   "d2000_above_32mm": 222,
    "median_ratio": 1.7805448737484062,
-   "median_ratio_capped_32mm": 1.0,
-   "max_dvf_mm": 42752.37584607124,
-   "max_d2000_mm": 64076.697891448304
+   "median_ratio_capped_32mm": 1.309059215082253,
+   "max_dvf_mm": 42.75237584607124,
+   "max_d2000_mm": 64.0766978914483
   },
   "kick_displacement_098": [
    {
