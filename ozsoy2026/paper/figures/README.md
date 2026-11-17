@@ -18,7 +18,7 @@ drawn in TikZ by the integrator and is not here.
 
 ## Style
 
-* Every figure is 190 mm wide (double column, final print size); heights 66-140 mm.
+Every figure is drawn at the preprint text width, 390 pt (137.2 mm), so it is placed at 1:1 with 8 pt text; heights 66-138 mm.
   With `width=\textwidth` the elsarticle preprint layout scales them by about 0.7.
 * 8 pt Liberation Sans (Helvetica/Arial metrics), mathtext in the same font; lines
   0.8-1.2 pt; no titles; panel letters (a), (b), ... in the upper-left corner of each

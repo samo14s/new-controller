@@ -21,7 +21,7 @@ At \SI{2500}{\rpm} with $g=1500$ ($\alim=\SI{17.24}{\milli\metre}$) and $a=\SI{1
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig03_two_outcomes.pdf}
-  \caption{The same linearly stable cut (\SI{2500}{\rpm}, $g=\SI{1500}{\volt\second\per\metre}$, $a=0.9a_{\lim}=\SI{15.51}{\milli\metre}$, $\lvert V\rvert\le\SI{9}{\volt}$), settled by a face entry and kicked at the start of a tooth period, where the critical kick is \SI{7.29}{\milli\metre\per\second}. (a,\,c)~$\Delta v=\SI{7.0}{\milli\metre\per\second}$: the motion returns to the forced orbit. (b,\,d)~$\Delta v=\SI{7.6}{\milli\metre\per\second}$: it ends in clipped chatter. Top: displacement $x$; bottom: applied command $V$ and the clip $\pm V_{\max}$.}
+  \caption{The same linearly stable cut (\SI{2500}{\rpm}, $g=\SI{1500}{\volt\second\per\metre}$, $a=0.9a_{\lim}=\SI{15.51}{\milli\metre}$, $\lvert V\rvert\le\SI{9}{\volt}$), settled by a face entry and kicked at the start of a tooth period, where the critical kick is \SI{7.29}{\milli\metre\per\second}. (a,\,c)~$\Delta v=\SI{7.0}{\milli\metre\per\second}$: the motion returns to the forced orbit. (b,\,d)~$\Delta v=\SI{7.6}{\milli\metre\per\second}$: it ends in clipped chatter. Top: displacement $x$; bottom: applied command $V$ and the clip $\pm V_{\max}$; dotted vertical line: the kick.}
   \label{fig:two}
 \end{figure}
 % src: paper/figures/figure_numbers.json (fig03), results/c1_basin.npz
@@ -37,7 +37,7 @@ The lower edge of the bistable band was found at 109 of the 126 speeds, at 0.21-
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig04_entry_map.pdf}
-  \caption{Depth limits over 251 speeds with the gains of Section~\ref{sec:feasibility} ($\mathcal G=[0,1500]$). (a)~Linear limit $a_{\lim}(g)$ and uncontrolled limit $a_{\lim}(0)$; time-domain limits with the \SI{9}{\volt} clip for the step entry and the face entry; lower edge of the bistable band from kicks of \SI{3}{\milli\metre\per\second} to \SI{3}{\metre\per\second} on the settled cut (every \SI{20}{\rpm}). Shaded: the bistable band, and the part of it in which the step entry ends in chatter. (b)~The same limits as fractions of $a_{\lim}(g)$.}
+  \caption{Depth limits over 251 speeds with the gains of Section~\ref{sec:feasibility} ($\mathcal G=[0,1500]$). (a)~Linear limit $a_{\lim}(g)$ and uncontrolled limit $a_{\lim}(0)$; time-domain limits with the \SI{9}{\volt} clip for the step entry and the face entry; lower edge of the bistable band from kicks of \SI{3}{\milli\metre\per\second} to \SI{3}{\metre\per\second} on the settled cut (every \SI{20}{\rpm}). Shaded: the bistable band, and the part of it in which the step entry ends in chatter. (b)~The same limits as fractions of $a_{\lim}(g)$; open markers: step-entry (squares) and face-entry (circles) limits at the top of the depth ladder, $1.05a_{\lim}$, above which they were not resolved.}
   \label{fig:map}
 \end{figure}
 
@@ -92,7 +92,7 @@ Where $p$ could be fitted, from 0.7--$0.8\alim$ upwards, the simulated critical 
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig05_basin.pdf}
-  \caption{Critical kick $\Delta v^*$ against $a/a_{\lim}$ at (a)~1090, (b)~1420, (c)~2500 and (d)~\SI{2870}{\rpm} ($g=\SI{1500}{\volt\second\per\metre}$). With the \SI{9}{\volt} clip: median over 16 phases (circles) and range over the phases (bars; lower end: worst phase); black triangles: no chatter for any kick up to \SI{3}{\metre\per\second}. Without the clip: smallest kick that ends in chatter (diamonds) or no chatter up to \SI{3}{\metre\per\second} (grey triangles). Crosses: describing-function estimate, Eq.~\eqref{eq:dfbasin}.}
+  \caption{Critical kick $\Delta v^*$ against $a/a_{\lim}$ at (a)~1090, (b)~1420, (c)~2500 and (d)~\SI{2870}{\rpm} ($g=\SI{1500}{\volt\second\per\metre}$). With the \SI{9}{\volt} clip: median over 16 phases (circles) and range over the phases (bars; lower end: worst phase); black triangles: no chatter for any kick up to \SI{3}{\metre\per\second}. Without the clip: smallest kick that ends in chatter (diamonds) or no chatter up to \SI{3}{\metre\per\second} (grey triangles). Crosses: describing-function estimate, Eq.~\eqref{eq:dfbasin}. Right axis of (d): the kick as an equivalent displacement $\Delta v^*/\omega_n$.}
   \label{fig:basin}
 \end{figure}
 

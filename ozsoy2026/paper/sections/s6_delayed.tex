@@ -81,7 +81,7 @@ With $g_2=2000$ the limit rises by a median factor of 1.78 (1.44--2.10; Table~\r
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig08_delayed_limits.pdf}
-  \caption{Designs obeying the same authority rule ($g_1\le\SI{3000}{\volt\second\per\metre}$; steady forced command within \SI{9}{\volt} up to 0.9 of the design's own $\alim$). (a)~Linear limits of DVF and of DVF\,+\,D with $g_2=1000$, 2000 and \SI{4000}{\volt\second\per\metre}; squares: simulated face-entry limits ($\lvert V\rvert\le\SI{9}{\volt}$, 25 speeds) of DVF and of DVF\,+\,D with $g_2=2000$. (b)~Simulated step-entry limits of the same two designs. (c)~Their admissible gain $g_1$.}
+  \caption{Designs obeying the same authority rule ($g_1\le\SI{3000}{\volt\second\per\metre}$; steady forced command within \SI{9}{\volt} up to 0.9 of the design's own $\alim$). (a)~Linear limits of DVF and of DVF\,+\,D with $g_2=1000$, 2000 and \SI{4000}{\volt\second\per\metre}; squares: simulated face-entry limits ($\lvert V\rvert\le\SI{9}{\volt}$, 25 speeds) of DVF and of DVF\,+\,D with $g_2=2000$; dash-dotted: $2D=\SI{32}{\milli\metre}$, twice the cutter diameter. (b)~Simulated step-entry limits of the same two designs.}
   \label{fig:dlim}
 \end{figure}
 
@@ -140,7 +140,7 @@ The map design, which also frees authority, is ahead of the 26-gain DVF at 18 of
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig09_delayed_basin.pdf}
-  \caption{Certified and simulated kicks with the delayed term at (a)~1090, (b)~1420, (c)~2500 and (d)~\SI{2870}{\rpm} ($\lvert V\rvert\le\SI{9}{\volt}$). Open markers: certified kick of the best design at each depth over 26 DVF gains (circles) and over 20 delayed pairs $(g_1,g_2)$ (diamonds), command bound corrected; no marker: nothing certified. Filled markers: simulated critical kick $\Delta v^*$ (worst of 16 phases) of the best DVF design (26 gains), of the delayed design of the map, and of the same-$g_1$ design ($g_2=\SI{500}{\volt\second\per\metre}$ added to the $g_1$ of that DVF); triangles: no chatter for any kick up to \SI{3}{\metre\per\second}.}
+  \caption{Certified and simulated kicks with the delayed term at (a)~1090, (b)~1420, (c)~2500 and (d)~\SI{2870}{\rpm} ($\lvert V\rvert\le\SI{9}{\volt}$). Open markers: certified kick of the best design at each depth over 26 DVF gains (circles) and over 20 delayed pairs $(g_1,g_2)$ (diamonds), command bound corrected; no marker: nothing certified. Filled markers: simulated critical kick $\Delta v^*$ (worst of 16 phases) of the best DVF design (26 gains), of the delayed design of the map, and of the same-$g_1$ design ($g_2=\SI{500}{\volt\second\per\metre}$ added to the $g_1$ of that DVF); triangles: no chatter for any kick up to \SI{3}{\metre\per\second} (offset horizontally for legibility).}
   \label{fig:dbasin}
 \end{figure}
 
@@ -180,6 +180,6 @@ The results above assume one mode, an instantaneous loop, a comb delay equal to 
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig10_robustness.pdf}
-  \caption{Robustness of the delayed term (closed-form zero-order model; designs as in Table~\ref{tab:drobust}). (a)~Linear limit against the comb-delay error, relative to the exact delay ($g_2=\SI{2000}{\volt\second\per\metre}$), and (d)~worst forced-orbit command in the same cases. (b)~Worst forced-orbit command at \SI{2500}{\rpm} against the eccentric runout, and (e)~the runout at which it reaches \SI{9}{\volt}. (c)~$\alim(\tau)/\alim(0)$, worst over the four speeds and the three assumed second modes, at the computed delays only (0: loop unstable without cutting). (f)~$\alim$ of DVF and of DVF\,+\,D with $g_2=1000$ and 2000, with \SI{300}{\micro\second} and the \SI{400}{\hertz} mode (solid) or \SI{200}{\micro\second} and the \SI{600}{\hertz} mode (dashed); $g_2=4000$, unstable without cutting in both cases, is not shown.}
+  \caption{Robustness of the delayed term (closed-form zero-order model; designs as in Table~\ref{tab:drobust}). (a)~Linear limit against the comb-delay error, relative to the exact delay ($g_2=\SI{2000}{\volt\second\per\metre}$), and (d)~worst forced-orbit command in the same cases. (b)~Worst forced-orbit command at \SI{2500}{\rpm} against the eccentric runout, and (e)~the runout at which it reaches \SI{9}{\volt}. (c)~$\alim(\tau)/\alim(0)$, worst over the four speeds and the three assumed second modes, at the computed delays only (0: loop unstable without cutting; dotted: 0.5; markers offset horizontally for legibility). (f)~$\alim$ of DVF and of DVF\,+\,D with $g_2=1000$ and 2000, with \SI{300}{\micro\second} and the \SI{400}{\hertz} mode (solid) or \SI{200}{\micro\second} and the \SI{600}{\hertz} mode (dashed); $g_2=4000$, unstable without cutting in both cases, is not shown.}
   \label{fig:robust}
 \end{figure}

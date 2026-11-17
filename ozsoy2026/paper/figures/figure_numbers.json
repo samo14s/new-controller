@@ -23,7 +23,33 @@
    0.9
   ],
   "a_chk_2500": 13.01,
-  "a_lim_2500": 17.24
+  "a_lim_2500": 17.24,
+  "published_map": {
+   "file": "verification/targets/fig8_gain_map.csv",
+   "vertices": 214,
+   "gain_range": [
+    256.9,
+    1487.0
+   ],
+   "straight_interpolated_rpm": [
+    [
+     500.0,
+     550.0
+    ],
+    [
+     560.0,
+     620.0
+    ],
+    [
+     620.0,
+     740.0
+    ],
+    [
+     1410.0,
+     1860.0
+    ]
+   ]
+  }
  },
  "fig03": {
   "rpm": 2500.0,
@@ -76,6 +102,22 @@
    "n": 109
   },
   "band_over_a_lim0_min": 1.08,
+  "ladder_top_rpm": {
+   "step": [
+    500.0,
+    550.0,
+    670.0,
+    1000.0
+   ],
+   "face": [
+    500.0,
+    540.0,
+    670.0,
+    720.0,
+    1000.0,
+    1080.0
+   ]
+  },
   "mean_step_mm": 16.73,
   "mean_face_mm": 18.26,
   "mean_a_lim_mm": 18.25,
@@ -346,7 +388,15 @@
    "median": 19.04,
    "max": 35.1,
    "n": 25
-  }
+  },
+  "cutter_diameter_mm": 16.0,
+  "above_2D_speeds": {
+   "dvf": 71,
+   "d1000": 148,
+   "d2000": 222,
+   "d4000": 251
+  },
+  "median_capped_2D_d2000_over_dvf": 1.309
  },
  "fig09": {
   "certified_without_gap_mm": {

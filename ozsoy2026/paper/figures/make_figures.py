@@ -19,7 +19,9 @@ rather than read:
     the margin is almost nil.
 
 Journal style: no titles, panel letters top left, 8 pt Liberation Sans
-(Helvetica/Arial metrics), 0.8-1.2 pt lines, 90 or 190 mm wide, Okabe-Ito colours:
+(Helvetica/Arial metrics; legends 7.5 pt), 0.7-1.0 pt lines, drawn at the
+\textwidth of the elsarticle preprint (390 pt = 137.2 mm), so that
+width=\textwidth includes them at 1:1 and no text falls below 7.5 pt, Okabe-Ito colours:
 DVF black; reformulated condition and delayed term blue; Eq. (2) of the
 published method grey; uncontrolled dashed grey; certificates C2 orange and C3
 green (open markers); simulations filled markers.
@@ -46,11 +48,12 @@ import params as P                                    # noqa: E402
 
 P.set_damping(P.ZETA_PAPER_CURVES)                    # 1.34 %, as every stored campaign
 VMAX = P.F_MAX / P.GA_GAIN                            # 9 V
-SPEEDS = (1090, 1420, 2500, 2870)                     # the four basin speeds of C1-C4
+SPEEDS = (1090, 1420, 2500, 2870)
+D_CUT = P.D_TOOL * 1e3                                # cutter diameter, 16 mm                     # the four basin speeds of C1-C4
 
 # ------------------------------------------------------------------ style ----
 MM = 1.0 / 25.4
-W1, W2 = 90 * MM, 190 * MM
+W2 = 390.0 / 72.27                  # \textwidth of the elsarticle preprint (390 pt = 137.2 mm), in inches
 K = "#000000"           # DVF
 BLUE = "#0072B2"        # reformulated condition; delayed term (g2 = 2000, map design)
 BLUE_L = "#56B4E9"      # delayed term g2 = 1000; same-g1 design
@@ -74,14 +77,14 @@ plt.rcParams.update({
     "mathtext.cal": "Liberation Sans",
     "mathtext.fallback": "stixsans",
     "font.size": 8, "axes.labelsize": 8, "axes.titlesize": 8, "xtick.labelsize": 8,
-    "ytick.labelsize": 8, "legend.fontsize": 8, "legend.title_fontsize": 8,
-    "axes.linewidth": 0.8, "lines.linewidth": 1.0, "lines.markersize": 3.5,
-    "lines.markeredgewidth": 0.8, "patch.linewidth": 0.8, "hatch.linewidth": 0.6,
-    "xtick.major.width": 0.8, "ytick.major.width": 0.8, "xtick.minor.width": 0.6,
-    "ytick.minor.width": 0.6, "xtick.major.size": 3.0, "ytick.major.size": 3.0,
-    "xtick.minor.size": 1.8, "ytick.minor.size": 1.8, "xtick.direction": "in",
+    "ytick.labelsize": 8, "legend.fontsize": 7.5, "legend.title_fontsize": 7.5,
+    "axes.linewidth": 0.6, "lines.linewidth": 0.85, "lines.markersize": 3.2,
+    "lines.markeredgewidth": 0.7, "patch.linewidth": 0.6, "hatch.linewidth": 0.5,
+    "xtick.major.width": 0.6, "ytick.major.width": 0.6, "xtick.minor.width": 0.45,
+    "ytick.minor.width": 0.45, "xtick.major.size": 2.8, "ytick.major.size": 2.8,
+    "xtick.minor.size": 1.6, "ytick.minor.size": 1.6, "xtick.direction": "in",
     "ytick.direction": "in", "xtick.top": True, "ytick.right": True,
-    "legend.frameon": False, "legend.handlelength": 2.2, "legend.handletextpad": 0.5,
+    "legend.frameon": False, "legend.handlelength": 2.0, "legend.handletextpad": 0.5,
     "legend.borderaxespad": 0.3, "legend.columnspacing": 1.2, "legend.labelspacing": 0.3,
     "axes.labelpad": 2.0, "figure.dpi": 100, "savefig.dpi": 300,
     "pdf.fonttype": 42, "ps.fonttype": 42, "axes.unicode_minus": True,
@@ -121,6 +124,14 @@ def top_marks(ax, x, color, marker="^", y=0.94, **kw):
     """Markers at a fixed height in axes units (for 'no chatter up to the search limit')."""
     tr = transforms.blended_transform_factory(ax.transData, ax.transAxes)
     return ax.plot(x, np.full(len(x), y), marker, color=color, transform=tr, ls="none", clip_on=False, **kw)
+
+
+def frac_ticks(ax, major=(0.2, 0.6, 1.0), minor=(0.4, 0.8)):
+    """Depth-ratio ticks for narrow side-by-side panels: labels at 0.2, 0.6, 1.0 only, so that the
+    last label of one panel and the first of the next do not touch."""
+    ax.set_xticks(major)
+    ax.set_xticks(minor, minor=True)
+    ax.xaxis.set_major_formatter(ticker.FormatStrFormatter("%.1f"))
 
 
 def r(x, nd=2):
@@ -173,22 +184,40 @@ def gainmap_factors(G):
 
 # =============================================================== Fig. 2 ====
 def fig02():
-    """Gain maps and depths: Eq. (2) as written (reproduced) vs the reformulated condition."""
+    """Gain maps and depths: published condition (reproduced), reformulated condition, published map."""
     f, c, e, m = load("feas_g1500.npz"), load("feas_cert_g1500.npz"), load("gainmap_main.npz"), load("c1_map.npz")
-    fig, ax = plt.subplots(1, 2, figsize=(W2, 72 * MM), layout="constrained")
+    pub = np.loadtxt(os.path.join(ROOT, "verification", "targets", "fig8_gain_map.csv"), delimiter=",", skiprows=1)
+    straight = json.load(open(os.path.join(ROOT, "verification", "targets", "fig8_features.json")))["straight_stretches"]
+    spans = [(s_["rpm_from"], s_["rpm_to"]) for s_ in straight]
+    fig, ax = plt.subplots(2, 1, figsize=(W2, 128 * MM), layout="constrained", sharex=True)
     a = ax[0]
-    a.plot(e["rpm"], e["g_best"], color=GREY, lw=1.0, label="Published condition (reproduced)")
-    a.plot(f["rpm"], f["g_best"], color=BLUE, lw=1.2, label=r"Reformulated condition, $g\leq1500$ V s/m")
-    a.set(xlabel="Spindle speed $n$ (rpm)", ylabel="Gain $g$ (V s/m)", xlim=(500, 3000), ylim=(0, 1700))
-    a.legend(loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=1, borderaxespad=0.0)
+    a.plot(e["rpm"], e["g_best"], color=GREY, lw=0.85, label="Published condition, reproduced (step entry)")
+    a.plot(f["rpm"], f["g_best"], color=BLUE, lw=1.02, label=r"Reformulated condition, $g\leq1500$ V s/m")
+    #   published map (vector-extracted vertices); stretches that are straight lines between optimised speeds
+    #   (README 4.4: 500-550, 560-620, 620-740 and 1410-1860 rpm) are drawn dotted
+    mid = 0.5 * (pub[1:, 0] + pub[:-1, 0])
+    lin = np.array([any(lo <= x <= hi for lo, hi in spans) for x in mid])
+    k0 = 0
+    for k in range(1, len(lin) + 1):
+        if k == len(lin) or lin[k] != lin[k0]:
+            a.plot(pub[k0:k + 1, 0], pub[k0:k + 1, 1], ":" if lin[k0] else "-", color=FACE,
+                   lw=1.1 if lin[k0] else 0.85, zorder=3)
+            k0 = k
+    h, lab = a.get_legend_handles_labels()
+    h += [Line2D([], [], color=FACE, lw=0.85), Line2D([], [], color=FACE, lw=1.1, ls=":")]
+    lab += ["Published map (Ozsoy et al.)", "Published map, straight interpolated segments"]
+    a.set(ylabel="Gain $g$ (V s/m)", xlim=(500, 3000), ylim=(0, 1700))
+    a.legend([h[k] for k in (0, 2, 1, 3)], [lab[k] for k in (0, 2, 1, 3)], loc="lower left",
+             bbox_to_anchor=(0.0, 1.01), ncol=2, borderaxespad=0.0, columnspacing=1.0)
     b = ax[1]
-    b.plot(m["rpm"], m["a_lim0"], "--", color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
-    b.plot(e["rpm"], e["a_best"], color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}$ at the published-condition gains")
-    b.plot(c["rpm"], c["a_op_linear"], ":", color=BLUE, lw=1.2,
+    b.plot(m["rpm"], m["a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
+    b.plot(e["rpm"], e["a_best"], color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}$ at the published-condition gains")
+    b.plot(c["rpm"], c["a_op_linear"], ":", color=BLUE, lw=1.02,
            label=r"$\kappa\,a_{\mathrm{lim}}$, reformulated ($\kappa=0.9$)")
-    b.plot(c["rpm"], c["a_cert"], color=BLUE, lw=1.2, label=r"$a_{\mathrm{chk}}$, reformulated")
+    b.plot(c["rpm"], c["a_cert"], color=BLUE, lw=1.02, label=r"$a_{\mathrm{chk}}$, reformulated")
     b.set(xlabel="Spindle speed $n$ (rpm)", ylabel="Axial depth of cut $a$ (mm)", xlim=(500, 3000), ylim=(0, 32))
-    b.legend(loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=2, borderaxespad=0.0)
+    b.legend(loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=2, borderaxespad=0.0, columnspacing=1.0)
+    fig.align_ylabels(ax)
     letter(a, "a")
     letter(b, "b")
     save(fig, "fig02_feasibility")
@@ -201,7 +230,10 @@ def fig02():
         mean_a_lim0_mm=r(m["a_lim0"].mean()), td_clipped_governs=int(gov.sum()),
         min_a_chk=[r(c["a_cert"].min()), float(c["rpm"][np.argmin(c["a_cert"])])],
         a_chk_over_a_lim=[r((c["a_cert"] / c["a_lim"]).min()), r((c["a_cert"] / c["a_lim"]).max())],
-        a_chk_2500=r(float(c["a_cert"][c["rpm"] == 2500][0])), a_lim_2500=r(float(c["a_lim"][c["rpm"] == 2500][0])))
+        a_chk_2500=r(float(c["a_cert"][c["rpm"] == 2500][0])), a_lim_2500=r(float(c["a_lim"][c["rpm"] == 2500][0])),
+        published_map=dict(file="verification/targets/fig8_gain_map.csv", vertices=int(len(pub)),
+                           gain_range=[r(pub[:, 1].min(), 1), r(pub[:, 1].max(), 1)],
+                           straight_interpolated_rpm=[[float(lo), float(hi)] for lo, hi in spans]))
 
 
 # =============================================================== Fig. 3 ====
@@ -231,24 +263,24 @@ def fig03():
     assert runs[0][2] and not runs[1][2], "expected: small kick settles, larger kick chatters"
     T = 60.0 / rpm                                     # one revolution
     t0, t1 = -1 * T, 30 * T
-    fig, ax = plt.subplots(2, 2, figsize=(W2, 92 * MM), layout="constrained", sharex=True)
+    fig, ax = plt.subplots(2, 2, figsize=(W2, 98 * MM), layout="constrained", sharex=True)
     for j, (dv, out, stable) in enumerate(runs):
         t = out["t"] - out["t"][ks]
         w = (t >= t0) & (t <= t1)
-        ax[0, j].plot(t[w], out["x"][w] * 1e6, color=K, lw=0.8)
-        ax[1, j].plot(t[w], out["vcmd"][w], color=K, lw=0.8)
+        ax[0, j].plot(t[w], out["x"][w] * 1e6, color=K, lw=0.68)
+        ax[1, j].plot(t[w], out["vcmd"][w], color=K, lw=0.68)
         for s in (1, -1):
-            ax[1, j].axhline(s * VMAX, color=STEP, lw=0.9, ls="--")
+            ax[1, j].axhline(s * VMAX, color=STEP, lw=0.77, ls="--")
         for q in range(2):
-            ax[q, j].axvline(0.0, color=GREY, lw=0.8, ls=":")
+            ax[q, j].axvline(0.0, color=GREY, lw=0.68, ls=":")
         ax[1, j].set(xlabel="Time after the kick $t-t_k$ (s)", ylim=(-11, 13.5), xlim=(t0, t1),
                      yticks=(-10, -5, 0, 5, 10))
     ax[0, 0].set_ylabel(r"Displacement $x$ (µm)")
     ax[1, 0].set_ylabel("Command $V$ (V)")
-    ax[0, 0].set_ylim(-36, -8)
-    ax[0, 1].set_ylim(-520, 520)
+    ax[0, 0].set_ylim(-36, -4)
+    ax[0, 1].set_ylim(-520, 640)
     for j in range(2):
-        ax[1, j].text(t1, VMAX, r"$V_{\max}=9$ V ", color=STEP, ha="right", va="bottom", fontsize=8)
+        ax[1, j].text(t1 - 0.01 * (t1 - t0), VMAX + 0.2, r"$V_{\max}=9$ V ", color=STEP, ha="right", va="bottom", fontsize=8)
     lab0 = rf"$\Delta v={runs[0][0]*1e3:.1f}$ mm/s: returns to the forced orbit"
     lab1 = rf"$\Delta v={runs[1][0]*1e3:.1f}$ mm/s: clipped chatter"
     letter(ax[0, 0], "a", lab0)
@@ -285,22 +317,30 @@ def fig04():
                    label="Bistable band")
     a.fill_between(n, d["a_step_clip"], al, where=d["a_step_clip"] < al, color=STEP_FILL, lw=0,
                    label="Step entry ends in chatter")
-    a.plot(n, d["a_lim0"], "--", color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
-    a.plot(n, al, color=K, lw=1.2, label=r"$a_{\mathrm{lim}}(g)$, linear")
-    a.plot(n, d["a_edge_clip"], "--", color=FACE, lw=1.0, label=r"Face entry, $|V|\leq9$ V")
-    a.plot(n, d["a_step_clip"], color=STEP, lw=1.0, label=r"Step entry, $|V|\leq9$ V")
-    a.plot(bd["rpm"], lowb, "o", color=K, ms=2.2, mew=0, label="Lower edge of the bistable band")
+    a.plot(n, d["a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
+    a.plot(n, al, color=K, lw=1.02, label=r"$a_{\mathrm{lim}}(g)$, linear")
+    a.plot(n, d["a_edge_clip"], "--", color=FACE, lw=0.85, label=r"Face entry, $|V|\leq9$ V")
+    a.plot(n, d["a_step_clip"], color=STEP, lw=0.85, label=r"Step entry, $|V|\leq9$ V")
+    a.plot(bd["rpm"], lowb, "o", color=K, ms=1.98, mew=0, label="Lower edge of the bistable band")
     a.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 33), xlim=(480, 3020))
+    b = ax[1]
+    b.axhline(1.0, color=K, lw=0.68)
+    b.plot(n, d["a_edge_clip"] / al, "--", color=FACE, lw=0.85)
+    b.plot(n, d["a_step_clip"] / al, color=STEP, lw=0.85)
+    b.plot(bd["rpm"], lowb / al_b, "o", color=K, ms=1.98, mew=0)
+    top = 1.05 - 1e-6                                   # top of the depth ladder: limit not resolved above it
+    hl = []
+    for y_, col, mk, ms_, nm in ((d["a_step_clip"] / al, STEP, "s", 4.4, "Step entry"),
+                                 (d["a_edge_clip"] / al, FACE, "o", 3.2, "Face entry")):
+        hl += b.plot(n[y_ >= top], y_[y_ >= top], mk, color=col, mfc="white", ms=ms_, zorder=5,
+                     label=nm + r" at the ladder top")
     h, lab = a.get_legend_handles_labels()
     order = [3, 2, 5, 4, 6, 0, 1]
-    a.legend([h[i] for i in order], [lab[i] for i in order], loc="lower left", bbox_to_anchor=(0.0, 1.01),
-             ncol=3, borderaxespad=0.0)
-    b = ax[1]
-    b.axhline(1.0, color=K, lw=0.8)
-    b.plot(n, d["a_edge_clip"] / al, "--", color=FACE, lw=1.0)
-    b.plot(n, d["a_step_clip"] / al, color=STEP, lw=1.0)
-    b.plot(bd["rpm"], lowb / al_b, "o", color=K, ms=2.2, mew=0)
-    b.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"$a\,/\,a_{\mathrm{lim}}(g)$ (–)", ylim=(0, 1.12))
+    h, lab = [h[i] for i in order] + hl, [lab[i] for i in order] + [x.get_label() for x in hl]
+    a.legend(h, lab, loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=3, borderaxespad=0.0, columnspacing=1.0)
+    b.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"$a\,/\,a_{\mathrm{lim}}(g)$ (–)", ylim=(0, 1.2),
+          yticks=(0, 0.25, 0.5, 0.75, 1.0))
+    fig.align_ylabels(ax)
     letter(a, "a")
     letter(b, "b")
     save(fig, "fig04_entry_map")
@@ -312,6 +352,7 @@ def fig04():
         step_ratio_median=r(np.median(rs), 3), face_ratio_min=r(re_.min(), 3),
         band_speeds=int(len(lowb)), band_found=int(np.isfinite(lowb).sum()),
         band_ratio=rng(rb, 2), band_over_a_lim0_min=r(np.nanmin(lowb / np.interp(bd["rpm"], n, d["a_lim0"])), 2),
+        ladder_top_rpm=dict(step=[float(x) for x in n[rs >= 1.05 - 1e-6]], face=[float(x) for x in n[re_ >= 1.05 - 1e-6]]),
         mean_step_mm=r(np.mean(d["a_step_clip"])), mean_face_mm=r(np.mean(d["a_edge_clip"])), mean_a_lim_mm=r(al.mean()),
         at_2500=dict(a_lim=r(float(al[n == 2500][0])), step=r(float(d["a_step_clip"][n == 2500][0])),
                      face=r(float(d["a_edge_clip"][n == 2500][0]))))
@@ -332,21 +373,21 @@ def fig05():
         f, dv = b["frac"][m], b["dv"][m] * 1e3
         fin = np.all(np.isfinite(dv), axis=1)
         med, lo, hi = np.median(dv, axis=1), dv.min(axis=1), dv.max(axis=1)
-        a.axhline(top, color=GREY, lw=0.8, ls=":")
-        a.plot(f[fin], med[fin], "o-", color=K, ms=3.2, lw=1.0, label=r"$|V|\leq9$ V: median over 16 phases")
+        a.axhline(top, color=GREY, lw=0.68, ls=":")
+        a.plot(f[fin], med[fin], "o-", color=K, ms=2.88, lw=0.85, label=r"$|V|\leq9$ V: median over 16 phases")
         a.errorbar(f[fin], med[fin], yerr=[med[fin] - lo[fin], hi[fin] - med[fin]], fmt="none", ecolor=K,
-                   elinewidth=0.8, capsize=2.2, capthick=0.8, label=r"$|V|\leq9$ V: range over 16 phases (lower end: minimum)")
+                   elinewidth=0.68, capsize=2.2, capthick=0.68, label=r"$|V|\leq9$ V: range over 16 phases (lower end: minimum)")
         none = ~np.any(np.isfinite(dv), axis=1)
-        a.plot(f[none] - 0.006, np.full(none.sum(), top), "^", color=K, ms=4,
+        a.plot(f[none] - 0.006, np.full(none.sum(), top), "^", color=K, ms=3.6,
                label=r"$|V|\leq9$ V: no chatter up to 3 m/s")
         mf = (b["rpm"] == n) & (b["vmax"] == 0)
         dvf = b["dv"][mf] * 1e3
         fmin = np.array([x[np.isfinite(x)].min() if np.isfinite(x).any() else np.inf for x in dvf])
         nf = ~np.isfinite(fmin)
-        a.plot(b["frac"][mf][nf] + 0.006, np.full(nf.sum(), top), "^", color=GREY, ms=4,
+        a.plot(b["frac"][mf][nf] + 0.006, np.full(nf.sum(), top), "^", color=GREY, ms=3.6,
                label="No voltage limit: no chatter up to 3 m/s")
         if (~nf).any():
-            a.plot(b["frac"][mf][~nf], fmin[~nf], "D", color=GREY, ms=3.5, mew=0,
+            a.plot(b["frac"][mf][~nf], fmin[~nf], "D", color=GREY, ms=3.15, mew=0,
                    label="No voltage limit: smallest kick ending in chatter")
             for fr, v in zip(b["frac"][mf][~nf], fmin[~nf]):
                 k = np.nonzero(np.isclose(f, fr))[0][0]
@@ -355,12 +396,17 @@ def fig05():
         ok = np.isfinite(p) & fin
         A2 = np.interp(f[ok], d["frac"], d["A_dual"][j])
         dvdf = A2 / (g * p[ok]) * 1e3
-        a.plot(f[ok], dvdf, "x-.", color=FACE, ms=4, lw=1.0, label="Describing-function estimate")
+        a.plot(f[ok], dvdf, "x-.", color=FACE, ms=3.6, lw=0.85, label="Describing-function estimate")
         ratios += list(med[ok] / dvdf)
-        a.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.1, 1.02), yscale="log", ylim=(1, 1e4),
-              xticks=(0.2, 0.4, 0.6, 0.8, 1.0))
+        a.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.1, 1.02), yscale="log", ylim=(1, 1e4))
+        frac_ticks(a)
         letter(a, "abcd"[i], f"{n} rpm", out=True)
     ax[0].set_ylabel(r"Critical kick $\Delta v^{*}$ (mm/s)")
+    #   equivalent displacement amplitude of the kick, Delta v / omega_n (A-m4)
+    sec = ax[-1].secondary_yaxis("right", functions=(lambda v: v / P.WN * 1e3, lambda u: u * P.WN * 1e-3))
+    sec.set_ylabel(r"$\Delta v^{*}/\omega_n$ (µm)")
+    ax[-1].tick_params(axis="y", which="both", right=False)
+    sec.tick_params(axis="y", which="both", direction="in")
     h, lab = [], []
     for a_ in ax:
         for hh, ll in zip(*a_.get_legend_handles_labels()):
@@ -410,13 +456,13 @@ def fig06():
         assert np.allclose(c3b["frac"][k], f)
         c3c = np.where(c3b["cert"][k] > 0, c3b["cert"][k], np.nan) * 1e3
         fin = np.isfinite(td[m])
-        a.plot(f[fin], td[m][fin], "o-", color=K, ms=3.5, lw=1.0, label="Simulated critical kick (minimum over 16 phases)")
+        a.plot(f[fin], td[m][fin], "o-", color=K, ms=3.15, lw=0.85, label="Simulated critical kick (minimum over 16 phases)")
         if (~fin).any():
-            top_marks(a, f[~fin], K, ms=4, label="Simulated: no chatter up to 3 m/s")
-        a.plot(f, c2c[m], "s--", color=C2C, ms=3.8, mfc="white", lw=1.0, label="C2 certificate (averaged model)")
-        a.plot(f, c3c, "D--", color=C3C, ms=3.6, mfc="white", lw=1.0, label="C3 certificate (periodic model)")
-        a.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.1, 1.02), yscale="log", ylim=(0.5, 250),
-              xticks=(0.2, 0.4, 0.6, 0.8, 1.0))
+            top_marks(a, f[~fin], K, ms=3.6, label="Simulated: no chatter up to 3 m/s")
+        a.plot(f, c2c[m], "s--", color=C2C, ms=3.42, mfc="white", lw=0.85, label="C2 certificate (averaged model)")
+        a.plot(f, c3c, "D--", color=C3C, ms=3.24, mfc="white", lw=0.85, label="C3 certificate (periodic model)")
+        a.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.1, 1.02), yscale="log", ylim=(0.5, 250))
+        frac_ticks(a)
         letter(a, "abcd"[i], f"{n} rpm", out=True)
     ax[0].set_ylabel(r"Kick $\Delta v$ (mm/s)")
     h, lab = [], []
@@ -448,41 +494,51 @@ def fig06():
 
 # =============================================================== Fig. 7 ====
 def fig07():
-    """C2 certified kick over speed and depth; step-entry certificate beta at the four speeds."""
+    """Averaged-model (C2) certified kick over speed and depth; step-entry certificate beta at the four speeds."""
     from zoa import a_lim
     S, St, mp, d1 = load("c2_surface.npz"), load("c2_step.npz"), load("c1_map.npz"), load("feas_g1500.npz")
     sfac = surface_factor(S)
     cert = S["cert"] * sfac * 1e3                                    # (speed, depth), mm/s
     n, fr = S["rpm"], S["frac"]
-    fig = plt.figure(figsize=(W2, 128 * MM), layout="constrained")
-    sf = fig.subfigures(2, 1, height_ratios=[1.45, 1], hspace=0.02)
+    fig = plt.figure(figsize=(W2, 138 * MM), layout="constrained")
+    sf = fig.subfigures(2, 1, height_ratios=[1.35, 1], hspace=0.02)
     a = sf[0].subplots(1, 1)
-    edges = np.array([0.0, 1.0, 2.0, 4.0, 8.0, 16.0])
-    cols = plt.get_cmap("viridis")(np.linspace(0.0, 1.0, len(edges)))
-    cmap = ListedColormap(cols)
-    norm = BoundaryNorm(edges, cmap.N, extend="max")
+    #   uniform rows (one per computed depth, rows not to scale in a/a_lim) and a 1-2-5 log colour scale
+    edges = np.array([0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0])
+    cmap = ListedColormap(plt.get_cmap("viridis")(np.linspace(0.0, 1.0, len(edges) - 1)))
+    norm = BoundaryNorm(edges, cmap.N)
     xe = np.concatenate([[n[0] - 30], 0.5 * (n[1:] + n[:-1]), [n[-1] + 30]])
-    ye = np.concatenate([[fr[0] - 0.05], 0.5 * (fr[1:] + fr[:-1]), [fr[-1] + 0.01]])
+    ye = np.arange(len(fr) + 1) - 0.5
     Z = np.ma.masked_less_equal(cert.T, 0.0)
     im = a.pcolormesh(xe, ye, Z, cmap=cmap, norm=norm, shading="flat", edgecolors="face", linewidth=0.3)
     #   (cell edges in the cell colour: no hairline seams between cells in PDF viewers)
+    sat = np.char.startswith(S["msg"].T.astype(str), "orbit saturates")
     none = cert.T <= 0
     for (jj, ii) in zip(*np.nonzero(none)):
-        a.add_patch(plt.Rectangle((xe[ii], ye[jj]), xe[ii + 1] - xe[ii], ye[jj + 1] - ye[jj], fc="white",
-                                  ec=GREY, lw=0.8, hatch="////", zorder=3))
-    ratio = mp["a_step_clip"] / mp["a_lim"]
-    a.plot(mp["rpm"], ratio, color="white", lw=2.4, zorder=4)
-    a.plot(mp["rpm"], ratio, color=STEP, lw=1.1, zorder=5, label="Simulated step-entry limit")
+        a.add_patch(plt.Rectangle((xe[ii], ye[jj]), xe[ii + 1] - xe[ii], 1.0, fc=LIGHT if sat[jj, ii] else "white",
+                                  ec=K if sat[jj, ii] else GREY, lw=0.6, hatch="xxxx" if sat[jj, ii] else "////",
+                                  zorder=3))
+    #   depths above the simulated step-entry limit (the step entry from rest ends in chatter there)
+    ratio = np.interp(n, mp["rpm"], mp["a_step_clip"] / mp["a_lim"])
+    above = fr[None, :] > ratio[:, None] + 1e-9                      # (speed, depth)
+    ii, jj = np.nonzero(above)
+    a.plot(n[ii], jj, "o", color="white", mec=K, mew=0.6, ms=3.0, ls="none", zorder=4)
     a.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(xe[0], xe[-1]),
-          ylim=(ye[0], ye[-1]), yticks=fr)
+          ylim=(ye[0], ye[-1]), yticks=np.arange(len(fr)))
     a.set_yticklabels([f"{x:g}" for x in fr])
-    cb = sf[0].colorbar(im, ax=a, pad=0.01, aspect=18, ticks=edges, spacing="uniform", extend="max", extendfrac=0.12)
-    cb.set_label("C2 certified kick (mm/s)")
+    a.tick_params(axis="y", which="both", right=False)
+    a.yaxis.set_minor_locator(ticker.NullLocator())
+    cb = sf[0].colorbar(im, ax=a, pad=0.01, aspect=16, ticks=edges, spacing="uniform")
+    cb.set_label("Certified kick, averaged model (mm/s)")
     cb.ax.set_yticklabels([f"{x:g}" for x in edges])
     cb.ax.tick_params(direction="out", right=True, left=False)
-    hatch = Patch(fc="white", ec=GREY, hatch="////", lw=0.8, label="Not certified")
-    a.legend(handles=[a.get_legend_handles_labels()[0][0], hatch], loc="lower left", bbox_to_anchor=(0.0, 1.01),
-             ncol=2, borderaxespad=0.0)
+    cb.ax.minorticks_off()
+    hd = [Line2D([], [], color="white", marker="o", mec=K, mew=0.6, ms=3.0, ls="none"),
+          Patch(fc=LIGHT, ec=K, hatch="xxxx", lw=0.6),
+          Patch(fc="white", ec=GREY, hatch="////", lw=0.6)]
+    a.legend(hd, ["Above the simulated step-entry limit", r"Forced orbit at the clip ($u_0\leq0$)",
+                  "No candidate passed the check"], loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=2,
+             borderaxespad=0.0, columnspacing=1.0)
     letter(a, "a")
     ax = sf[1].subplots(1, 4, sharey=True)
     betas, bfac = [], []
@@ -494,11 +550,11 @@ def fig07():
         bfac.append(fb)
         b = ax[i]
         b.axhspan(1.0, 10.0, color=C2C, alpha=0.12, lw=0)
-        b.axhline(1.0, color=K, lw=0.8)
+        b.axhline(1.0, color=K, lw=0.68)
         j = int(np.argmin(np.abs(mp["rpm"] - nn)))
-        b.axvline(mp["a_step_clip"][j] / mp["a_lim"][j], color=STEP, lw=1.0, ls="--",
+        b.axvline(mp["a_step_clip"][j] / mp["a_lim"][j], color=STEP, lw=0.85, ls="--",
                   label="Simulated step-entry limit")
-        b.plot(St["frac"], beta, "o--", color=C2C, mfc="white", ms=3.8, lw=1.0, label=r"Step-entry certificate $\beta$ (C2)")
+        b.plot(St["frac"], beta, "o--", color=C2C, mfc="white", ms=3.42, lw=0.85, label=r"Step-entry certificate $\beta$ (averaged model)")
         b.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.25, 0.95), yscale="log", ylim=(0.1, 4),
               xticks=(0.3, 0.5, 0.7, 0.9))
         letter(b, "bcde"[i], f"{nn:.0f} rpm")
@@ -530,38 +586,38 @@ def fig08():
     """Linear limit under the same authority rule (DVF vs DVF + D) and simulated entries (C4)."""
     L, E = load("c4_limits.npz"), load("c4_entry.npz")
     names, des, ent = list(L["feas_names"]), list(E["designs"]), list(E["names"])
-    fig, ax = plt.subplots(3, 1, figsize=(W2, 140 * MM), sharex=True, layout="constrained",
-                           gridspec_kw={"height_ratios": [2.0, 1.15, 0.75]})
+    fig, ax = plt.subplots(2, 1, figsize=(W2, 122 * MM), sharex=True, layout="constrained",
+                           gridspec_kw={"height_ratios": [2.0, 1.15]})
     a = ax[0]
-    a.plot(L["rpm"], L["feas_a_lim"][:, names.index("dvf")], color=K, lw=1.2, label="DVF, linear limit")
+    a.plot(L["rpm"], L["feas_a_lim"][:, names.index("dvf")], color=K, lw=1.02, label="DVF, linear limit")
     for nm, col, ls in (("d1000", BLUE_L, "-"), ("d2000", BLUE, "-"), ("d4000", BLUE_D, "--")):
         g2 = float(L["feas_g2"][names.index(nm)])
-        a.plot(L["rpm"], L["feas_a_lim"][:, names.index(nm)], ls, color=col, lw=1.2,
+        a.plot(L["rpm"], L["feas_a_lim"][:, names.index(nm)], ls, color=col, lw=1.02,
                label=rf"DVF + D, $g_2={g2:.0f}$, linear limit")
-    a.plot(E["rpm"], E["a_entry"][:, des.index("feas_dvf"), ent.index("edge_clip")], "s", color=K, ms=3.5,
+    a.plot(E["rpm"], E["a_entry"][:, des.index("feas_dvf"), ent.index("edge_clip")], "s", color=K, ms=3.15,
            label="DVF, face entry")
-    a.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("edge_clip")], "s", color=BLUE, ms=3.5,
+    a.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("edge_clip")], "s", color=BLUE, ms=3.15,
            label=r"DVF + D, $g_2=2000$, face entry")
+    #   twice the cutter diameter (16 mm): a practical bound on the axial depth of this tool (A-M7)
+    a.axhline(2 * D_CUT, color=GREY, lw=0.7, ls=(0, (5, 2, 1, 2)), zorder=1,
+              label=rf"$2D={2 * D_CUT:.0f}$ mm, twice the cutter diameter")
+    a.annotate(r"$2D$", xy=(1.0, 2 * D_CUT), xycoords=("axes fraction", "data"), xytext=(2.5, 0),
+               textcoords="offset points", color=GREY, ha="left", va="center", fontsize=8)
     a.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 85), xlim=(480, 3020))
     h, lab = a.get_legend_handles_labels()
-    order = [0, 4, 1, 5, 2, 3]
-    a.legend([h[k] for k in order], [lab[k] for k in order], loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=3,
-             borderaxespad=0.0)
+    order = [0, 4, 1, 6, 5, 2, 3]
+    a.legend([h[k] for k in order], [lab[k] for k in order], loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=2,
+             borderaxespad=0.0, columnspacing=1.0)
     b = ax[1]
-    b.plot(E["rpm"], E["a_entry"][:, des.index("feas_dvf"), ent.index("step_clip")], "^-", color=K, ms=3.8, lw=1.0,
+    b.plot(E["rpm"], E["a_entry"][:, des.index("feas_dvf"), ent.index("step_clip")], "^-", color=K, ms=3.42, lw=0.85,
            label="DVF, step entry")
-    b.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("step_clip")], "^-", color=BLUE, ms=3.8,
-           lw=1.0, label=r"DVF + D, $g_2=2000$, step entry")
+    b.plot(E["rpm"], E["a_entry"][:, des.index("feas_d2000"), ent.index("step_clip")], "^-", color=BLUE, ms=3.42,
+           lw=0.85, label=r"DVF + D, $g_2=2000$, step entry")
     b.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 40))
     b.legend(loc="upper right", ncol=1)
-    c = ax[2]
-    c.plot(L["rpm"], L["feas_g1"][:, names.index("dvf")], color=K, lw=1.2, label="DVF")
-    c.plot(L["rpm"], L["feas_g1"][:, names.index("d2000")], "--", color=BLUE, lw=1.2, label=r"DVF + D, $g_2=2000$")
-    c.set(xlabel="Spindle speed $n$ (rpm)", ylabel="Gain $g_1$ (V s/m)", ylim=(0, 3950), yticks=(0, 1000, 2000, 3000))
-    c.legend(loc="lower right", ncol=1)
+    b.set(xlabel="Spindle speed $n$ (rpm)")
     letter(a, "a")
     letter(b, "b")
-    letter(c, "c")
     save(fig, "fig08_delayed_limits")
     dvf = L["feas_a_lim"][:, names.index("dvf")]
     st = {nm: rng(L["feas_a_lim"][:, names.index(nm)] / dvf, 2) for nm in ("d1000", "d2000", "d4000")}
@@ -573,7 +629,12 @@ def fig08():
         a_lim_over_dvf=st, dvf_a_lim_mm=rng(dvf, 2), d2000_a_lim_mm=rng(L["feas_a_lim"][:, names.index("d2000")], 2),
         face_d2000_over_dvf=rng(face, 2), step_d2000_over_dvf=rng(step, 2),
         step_dvf_mm=rng(E["a_entry"][:, des.index("feas_dvf"), ent.index("step_clip")], 2),
-        step_d2000_mm=rng(E["a_entry"][:, des.index("feas_d2000"), ent.index("step_clip")], 2))
+        step_d2000_mm=rng(E["a_entry"][:, des.index("feas_d2000"), ent.index("step_clip")], 2),
+        cutter_diameter_mm=D_CUT,
+        above_2D_speeds={nm: int(np.sum(L["feas_a_lim"][:, names.index(nm)] > 2 * D_CUT))
+                         for nm in ("dvf", "d1000", "d2000", "d4000")},
+        median_capped_2D_d2000_over_dvf=r(np.median(np.minimum(L["feas_a_lim"][:, names.index("d2000")], 2 * D_CUT)
+                                                    / np.minimum(dvf, 2 * D_CUT)), 3))
 
 
 # =============================================================== Fig. 9 ====
@@ -603,26 +664,26 @@ def fig09():
     kick = G["kick"] * fc * 1e3
     kdvf = G["kick_dvf"] * fd * 1e3
     dep = G["depth"]
-    fig, ax = plt.subplots(1, 4, figsize=(W2, 72 * MM), sharey=True, layout="constrained")
+    fig, ax = plt.subplots(1, 4, figsize=(W2, 80 * MM), sharey=True, layout="constrained")
     gap = {}
     for i, n in enumerate(G["rpm"]):
         a = ax[i]
         dbest = np.maximum(kick[i, :, :, 0].max(axis=1), kdvf[i].max(axis=1))
         cbest = kick[i, :, :, 1:].reshape(len(dep), -1).max(axis=1)
-        a.plot(dep, np.where(dbest > 0, dbest, np.nan), "o--", color=C2C, mfc="white", ms=3.5, lw=1.0,
+        a.plot(dep, np.where(dbest > 0, dbest, np.nan), "o--", color=C2C, mfc="white", ms=3.15, lw=0.85,
                label="Certificate, best DVF (26 gains)")
-        a.plot(dep, np.where(cbest > 0, cbest, np.nan), "D--", color=BLUE, mfc="white", ms=3.4, lw=1.0,
-               label=r"Certificate, best DVF + D (20 pairs $g_1, g_2$)")
+        a.plot(dep, np.where(cbest > 0, cbest, np.nan), "D--", color=BLUE, mfc="white", ms=3.06, lw=0.85,
+               label="Certificate, best DVF + D (20 pairs)")
         for kind, col, mk, lab in (("dvf", K, "o", "Simulated, best DVF"),
                                    ("comb", BLUE, "D", "Simulated, best DVF + D (map design)"),
-                                   ("same", BLUE_L, "s", r"Simulated, DVF + D with the $g_1$ of the best DVF")):
+                                   ("same", BLUE_L, "s", r"Simulated, DVF + D, $g_1$ of the best DVF")):
             d, t = _td_series(V, V2, n, kind)
             fin = np.isfinite(t)
-            a.plot(d[fin], t[fin], mk + "-", color=col, ms=3.6, lw=1.0, label=lab, zorder=4)
+            a.plot(d[fin], t[fin], mk + "-", color=col, ms=3.24, lw=0.85, label=lab, zorder=4)
             if (~fin).any():
                 off = {"dvf": -0.7, "comb": 0.0, "same": 0.7}[kind]
-                top_marks(a, d[~fin] + off, col, ms=4, label="Simulated: no chatter up to 3 m/s" if kind == "dvf" else None)
-        a.set(xlabel="Axial depth of cut $a$ (mm)", xlim=(0, 36), yscale="log", ylim=(0.3, 300), xticks=(0, 10, 20, 30))
+                top_marks(a, d[~fin] + off, col, ms=3.6, label="Simulated: no chatter up to 3 m/s" if kind == "dvf" else None)
+        a.set(xlabel="Depth of cut $a$ (mm)", xlim=(0, 36), yscale="log", ylim=(0.3, 300), xticks=(0, 10, 20, 30))
         letter(a, "abcd"[i], f"{n:.0f} rpm", out=True)
         row = {}
         for D in (1.0, 2.0, 4.0):
@@ -640,10 +701,10 @@ def fig09():
                 lab.append(ll)
     order = [lab.index(s) for s in ("Simulated, best DVF", "Certificate, best DVF (26 gains)",
                                     "Simulated, best DVF + D (map design)",
-                                    r"Certificate, best DVF + D (20 pairs $g_1, g_2$)",
-                                    r"Simulated, DVF + D with the $g_1$ of the best DVF",
+                                    "Certificate, best DVF + D (20 pairs)",
+                                    r"Simulated, DVF + D, $g_1$ of the best DVF",
                                     "Simulated: no chatter up to 3 m/s")]
-    fig.legend([h[k] for k in order], [lab[k] for k in order], loc="outside lower center", ncol=3)
+    fig.legend([h[k] for k in order], [lab[k] for k in order], loc="outside lower center", ncol=2)
     save(fig, "fig09_delayed_basin")
     # validation designs: strict-solver certificates, corrected as in src/c3_summary.margin_errata
     import c2_certificate as c2
@@ -704,18 +765,18 @@ def fig10():
     # (a) comb-delay error: limit relative to the exact comb; (d) worst orbit command over the design depths
     for i, mk, ls in spd:
         n = R["rpm"][i]
-        ax[0, 0].plot(eps, R["eps_a_lim"][i, j2] / R["a_lim"][i, j2], mk + ls, color=BLUE, ms=3.2, lw=1.0,
+        ax[0, 0].plot(eps, R["eps_a_lim"][i, j2] / R["a_lim"][i, j2], mk + ls, color=BLUE, ms=2.88, lw=0.85,
                       label=f"{n:.0f} rpm")
-        ax[1, 0].plot(eps, R["eps_cmd"][i, j2], mk + ls, color=BLUE, ms=3.2, lw=1.0)
-    ax[0, 0].axhline(1.0, color=K, lw=0.8)
-    ax[0, 0].axhline(0.9, color=K, lw=0.8, ls=":")
+        ax[1, 0].plot(eps, R["eps_cmd"][i, j2], mk + ls, color=BLUE, ms=2.88, lw=0.85)
+    ax[0, 0].axhline(1.0, color=K, lw=0.68)
+    ax[0, 0].axhline(0.9, color=K, lw=0.68, ls=":")
     ax[0, 0].text(-3.25, 0.895, r"$\kappa=0.9$", va="top", ha="left", fontsize=8)
     ax[0, 0].set(xlabel=r"Comb-delay error $T_c/T-1$ (%)", ylabel=r"$a_{\mathrm{lim}}(T_c)\,/\,a_{\mathrm{lim}}(T)$ (–)",
                  xlim=(-3.4, 3.4), ylim=(0.76, 1.42), xticks=np.arange(-3, 4))
     ax[0, 0].legend(loc="upper right", ncol=1, handlelength=2.8, title=r"$g_2=2000$", title_fontsize=8)
-    ax[1, 0].axhline(VMAX, color=STEP, lw=0.9, ls="--")
+    ax[1, 0].axhline(VMAX, color=STEP, lw=0.77, ls="--")
     ax[1, 0].text(0.0, VMAX + 0.04, r"$V_{\max}=9$ V", color=STEP, va="bottom", ha="center", fontsize=8)
-    ax[1, 0].axhline(8.1, color=K, lw=0.8, ls=":")
+    ax[1, 0].axhline(8.1, color=K, lw=0.68, ls=":")
     ax[1, 0].text(-3.12, 8.07, "8.1 V", va="top", ha="left", fontsize=8)
     ax[1, 0].set(xlabel=r"Comb-delay error $T_c/T-1$ (%)", ylabel="Worst forced-orbit command (V)", xlim=(-3.4, 3.4),
                  ylim=(7.0, 10.2), xticks=np.arange(-3, 4))
@@ -724,20 +785,20 @@ def fig10():
     tol = {}
     for key, col, mk, name in designs:
         jj = lab.index(key)
-        ax[0, 1].plot(R["runout"] * 1e6, R["runout_cmd"][i25, jj], mk + "-", color=col, ms=3.2, lw=1.0, label=name)
+        ax[0, 1].plot(R["runout"] * 1e6, R["runout_cmd"][i25, jj], mk + "-", color=col, ms=2.88, lw=0.85, label=name)
         t = []
         for i in range(len(R["rpm"])):
             rc = R["runout_cmd"][i, jj]
             t.append(np.interp(VMAX, rc, R["runout"]) * 1e6 if rc[0] < VMAX <= rc[-1] else
                      (R["runout"][-1] * 1e6 if rc[-1] < VMAX else 0.0))
         tol[name] = t
-        ax[1, 1].plot(R["rpm"], t, mk + "-", color=col, ms=3.4, lw=1.0)
-    ax[0, 1].axhline(VMAX, color=STEP, lw=0.9, ls="--")
+        ax[1, 1].plot(R["rpm"], t, mk + "-", color=col, ms=3.06, lw=0.85)
+    ax[0, 1].axhline(VMAX, color=STEP, lw=0.77, ls="--")
     ax[0, 1].text(5.1, VMAX - 0.12, r"$V_{\max}=9$ V", color=STEP, va="top", ha="right", fontsize=8)
     ax[0, 1].set(xlabel="Eccentric runout (µm)", ylabel="Worst forced-orbit command (V)", xlim=(-0.2, 5.2),
                  ylim=(7.5, 14.5))
     ax[1, 1].set(xlabel="Spindle speed $n$ (rpm)", ylabel="Runout tolerated (µm)", ylim=(0, 5.2),
-                 xlim=(950, 3010), xticks=(1000, 1500, 2000, 2500, 3000))
+                 xlim=(950, 3010), xticks=(1000, 2000, 3000))
     # (c) loop delay: worst case over the four speeds and the three assumed second modes (computed delays only)
     tau = R["tau"] * 1e6
     modes = [k for k in range(R["mode2"].shape[0]) if np.isfinite(R["mode2"][k, 0])]
@@ -747,8 +808,8 @@ def fig10():
         A = R["tau_a_lim"][:, jj][:, modes]                          # (rpm, mode, tau)
         w = (A / A[:, :, :1]).min(axis=(0, 1))
         worst[name] = w
-        ax[0, 2].plot(tau + off, w, mk, color=col, ms=3.6, ls="none")
-    ax[0, 2].axhline(0.5, color=K, lw=0.8, ls=":")
+        ax[0, 2].plot(tau + off, w, mk, color=col, ms=3.24, ls="none")
+    ax[0, 2].axhline(0.5, color=K, lw=0.68, ls=":")
     ax[0, 2].set(xlabel=r"Loop delay $\tau$ (µs)", ylabel=r"Worst $a_{\mathrm{lim}}(\tau)\,/\,a_{\mathrm{lim}}(0)$ (–)",
                  xlim=(-25, 425), ylim=(-0.06, 1.22), xticks=(0, 100, 200, 300, 400))
     # (f) a_lim over the speeds for two delay / second-mode cases
@@ -756,15 +817,18 @@ def fig10():
     it = {t: int(np.argmin(np.abs(R["tau"] - t))) for t in (200e-6, 300e-6)}
     for key, col, mk, name in designs[:3]:
         jj = lab.index(key)
-        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, km[400.0], it[300e-6]], mk + "-", color=col, ms=3.4, lw=1.0)
-        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, km[600.0], it[200e-6]], mk + "--", color=col, ms=3.4, lw=1.0)
-    case = [Line2D([], [], color=K, lw=1.0, ls="-"), Line2D([], [], color=K, lw=1.0, ls="--")]
-    ax[1, 2].legend(case, ["300 µs, 400 Hz mode", "200 µs, 600 Hz mode"], loc="upper right", ncol=1)
+        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, km[400.0], it[300e-6]], mk + "-", color=col, ms=3.06, lw=0.85)
+        ax[1, 2].plot(R["rpm"], R["tau_a_lim"][:, jj, km[600.0], it[200e-6]], mk + "--", color=col, ms=3.06, lw=0.85)
+    case = [Line2D([], [], color=K, lw=0.85, ls="-"), Line2D([], [], color=K, lw=0.85, ls="--")]
+    ax[1, 2].legend(case, ["300 µs, 400 Hz", "200 µs, 600 Hz"], loc="upper right", ncol=1, handlelength=1.8,
+                    title="Delay, second mode")
     ax[1, 2].set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"$a_{\mathrm{lim}}$ (mm)", ylim=(0, 64), xlim=(950, 3010),
-                 xticks=(1000, 1500, 2000, 2500, 3000))
+                 xticks=(1000, 2000, 3000))
+    for a_ in (ax[1, 1], ax[1, 2]):
+        a_.set_xticks((1500, 2500), minor=True)
     for a_, s, txt in zip(ax.ravel(), "abcdef", (None, "2500 rpm", None, None, None, None)):
         letter(a_, s, txt)
-    hd = [Line2D([], [], color=col, marker=mk, ms=3.4, lw=1.0) for _, col, mk, _ in designs]
+    hd = [Line2D([], [], color=col, marker=mk, ms=3.06, lw=0.85) for _, col, mk, _ in designs]
     fig.legend(hd, [d[3] for d in designs], loc="outside upper center", ncol=4)
     save(fig, "fig10_robustness")
     rel = R["eps_a_lim"][:, j2] / R["a_lim"][:, j2][:, None]
