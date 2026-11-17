@@ -1,0 +1,753 @@
+{
+ "items": [
+  {
+   "ids": "A-M10,B-B9,B-B8,A-m1",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Both reviewers are right that the summary statements overstate: 157/251 is a step-entry result (face entry reaches >=0.985 a_lim everywhere), 2.4-10.8 % holds at four speeds at 0.98 a_lim, 'no kick below 0.78 m/s' holds at the 16 points tested, the LMIs give inner estimates on collocation models, 1.5-28 excludes the 19 points without chatter, the step-entry median 1.03 of the delayed term and the runout fragility are missing, and the second modes are assumed, not 'unmodelled'. Highlights checked <= 85 characters (80/84/82/80/83). Numbers stored in c1_summary.json, c1_basin.npz, c2_validate.npz, c4_summary.json (DVF runout_tolerance_um 1.12-4.50; entry median 1.03). New abstract about 254 words, as long as the current one.",
+   "edits": [
+    {
+     "file": "paper/main.tex",
+     "fix_old": "\\item Entering from rest lowers the attainable depth by over 3\\,\\% at 157 of 251 speeds.\n\\item Near the limit, kicks of 2.4--10.8\\,\\% of one tooth's impulse can trigger chatter.\n\\item Sector-condition LMIs certify basins that no simulated kick violated.",
+     "fix_new": "\\item A step entry from rest chatters below 0.97 of the linear limit at 157 of 251 speeds.\n\\item At four speeds near the limit, kicks of 2--11\\,\\% of a tooth's impulse cause chatter.\n\\item LMIs on collocation models give basin estimates that no simulated kick violated."
+    },
+    {
+     "file": "paper/highlights.txt",
+     "fix_old": "- Entering from rest lowers the attainable depth by over 3 % at 157 of 251 speeds.\n- Near the limit, kicks of 2.4\u201310.8 % of one tooth's impulse can trigger chatter.\n- Sector-condition LMIs certify basins that no simulated kick violated.",
+     "fix_new": "- A step entry from rest chatters below 0.97 of the linear limit at 157 of 251 speeds.\n- At four speeds near the limit, kicks of 2\u201311 % of a tooth's impulse cause chatter.\n- LMIs on collocation models give basin estimates that no simulated kick violated."
+    },
+    {
+     "file": "paper/cover_letter.tex",
+     "fix_old": "\\item With the step entry from rest that reproduces the published gains, the published authority test is dominated by the entry transient. We formulate a well-posed condition from the steady forced response at every depth up to a margin below the stability limit, followed by a time-domain check with the clipped actuator.",
+     "fix_new": "\\item With the step entry from rest that reproduces the published gains at high speeds, the published authority test is dominated by the entry transient. We formulate an entry-independent condition from the steady forced response at every depth up to a margin below the stability limit, followed by a time-domain check with the clipped actuator."
+    },
+    {
+     "file": "paper/cover_letter.tex",
+     "fix_old": "\\item The clipped loop is bistable. Entering from rest lowers the attainable depth below 0.97 of the linear limit at 157 of 251 speeds, and near the limit, at four speeds, velocity kicks of 2.4--10.8\\,\\% of one tooth's cutting impulse, applied in the worst phase, push the cut into chatter, whereas without the clip only kicks of \\SI{0.78}{\\metre\\per\\second} or more do.",
+     "fix_new": "\\item The forced orbit of the clipped loop has a bounded basin. A step entry from rest (full engagement at $t=0$) chatters below 0.97 of the linear limit at 157 of 251 speeds, whereas a face entry reaches the limit, and near the limit, at four speeds, velocity kicks of 2.4--10.8\\,\\% of one tooth's cutting impulse, applied in the worst phase, push the cut into chatter, whereas without the clip only kicks of \\SI{0.78}{\\metre\\per\\second} or more did so at the 16 points tested."
+    },
+    {
+     "file": "paper/cover_letter.tex",
+     "fix_old": "\\item The basin of the stable cut is certified by sector-condition linear matrix inequalities in which the dead zone moves with the forced command, on collocation models of the averaged and of the time-periodic milling model. No simulated kick inside a certificate ended in chatter; the certified kicks are 1.5 to 28 times smaller than the simulated critical kicks.",
+     "fix_new": "\\item Ellipsoidal inner estimates of the basin are obtained from sector-condition linear matrix inequalities in which the dead zone moves with the forced command, numerically verified on collocation models of the averaged and of the time-periodic milling model. No simulated kick inside them ended in chatter; where the simulated basin is finite, the certified kicks are 1.5 to 28 times smaller than the simulated critical kicks."
+    },
+    {
+     "file": "paper/cover_letter.tex",
+     "fix_old": "but tolerates only about \\SIrange{100}{200}{\\micro\\second} of loop delay when an unmodelled mode is present.",
+     "fix_new": "but raises the step-entry limit by a median factor of only 1.03 and tolerates only about \\SIrange{100}{200}{\\micro\\second} of loop delay with an assumed second mode at 400--\\SI{800}{\\hertz}."
+    },
+    {
+     "file": "paper/cover_letter.tex",
+     "fix_old": "will be made publicly available, and the manuscript states the limitations of a single-mode model and describes the experiment that would test the predictions.",
+     "fix_new": "will be made publicly available. At the published gains the model classifies 17 of the 19 published cutting tests as measured, and the manuscript states the limitations of a single-mode model and describes how the predictions could be tested."
+    }
+   ],
+   "instruction": "Replace the whole content of paper/sections/s0_abstract.tex by:\nSaturation-aware scheduling of direct velocity feedback (DVF) for active chatter damping picks, per spindle speed, the largest gain whose demand a proof-mass actuator can deliver. This paper analyses what the voltage clip does to the cut in a single-mode regenerative milling model. First, the published authority test, simulated with the step entry from rest that reproduces its gains, depends on the entry transient; an entry-independent condition bounds the steady forced command up to 0.9 of the stability limit, with a time-domain check of the clipped entry. Second, the forced orbit of the clipped loop has a bounded basin: a step entry (full engagement at $t=0$) chatters below 0.97 of the linear limit at 157 of 251 speeds, whereas a face entry reaches the limit, and at four speeds near the limit worst-phase kicks of 2.4--10.8\\,\\% of one tooth's cutting impulse cause chatter, against \\SI{0.78}{\\metre\\per\\second} or more without the clip at 16 points. Third, sector-condition linear matrix inequalities give ellipsoidal inner estimates of this basin, numerically verified on collocation models of the averaged and time-periodic dynamics; no simulated kick inside them caused chatter, and where the simulated basin is finite they are 1.5--28 times smaller than the critical kicks. The free voltage is small: 1.1--\\SI{4.5}{\\micro\\metre} of runout uses up a \\SI{10}{\\percent} voltage margin. Finally, a published delayed term that vanishes on the forced orbit raises the linear limit by a median factor of 1.78 but the step-entry limit by only 1.03, and is fragile to loop delay with assumed second modes. The study is computational."
+  },
+  {
+   "ids": "A-M10,B-B9,B-B6",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "The conclusions repeat the overstated claims ('well-posed gain map', 'certify a basin', selected-subset basin gain, no step-entry figure, no runout fragility, and 'it nearly closes' at 1420 rpm, which rests on a rounding artefact, see ED-1). The rewrite qualifies each item, adds the 17/19 validation status and the 104/109 'a checked depth is not a safe depth' caveat. Compiled in a scratch copy without errors.",
+   "instruction": "Replace the whole content of paper/sections/s8_conclusions.tex by:\n\\section{Conclusions}\\label{sec:conclusions}\n\nClipping the command of a velocity feedback loop at the force capacity of its proof-mass actuator changes the stability of a milling cut from a property of the linear system into a property of a basin. On the case study of \\citet{ozsoy2026robust}, with a single-mode model that classifies 17 of its 19 published cutting tests as measured, the following was found.\n\\begin{enumerate}\n\\item With the step entry from rest that reproduces the published gains at high speeds, the authority test of saturation-aware gain scheduling is set by the entry transient. Bounding the steady forced demand in closed form at every depth up to $0.9\\,\\alim$, with a time-domain check of the clipped entry, gives an entry-independent gain map. With gains up to \\SI{1500}{\\volt\\second\\per\\metre} the checked depth averages \\SI{15.87}{\\milli\\metre}, but the gain sits at this chosen bound at 157 of 251 speeds, and a checked depth is not a safe depth: it lies inside the bistable band at 104 of the 109 speeds where the band was found.\n\\item The forced orbit of the clipped loop has a bounded basin, outside which the model ends in large-amplitude clipped chatter. A step entry from rest (full engagement at $t=0$) chatters below $0.97\\,\\alim$ at 157 of 251 speeds, whereas a face entry reaches at least $0.985\\,\\alim$ at every speed. At four speeds and $0.98\\,\\alim$, worst-phase velocity kicks of 2.4--10.8\\,\\% of one tooth's cutting impulse (3--\\SI{13}{\\micro\\metre} of equivalent displacement) end the cut in chatter; without the clip, only kicks of \\SI{0.78}{\\metre\\per\\second} or more did so at the 16 points tested. At the linear limit the basin keeps a finite size, set by the voltage $\\Vmax-\\bmax$ that the forced command leaves free.\n\\item Sector-condition LMIs with a dead zone that moves with the forced command give ellipsoidal inner estimates of this basin, numerically verified on collocation models of the averaged and of the time-periodic milling model. No simulated kick inside them ended in chatter; where the simulated basin was finite they are 1.5 to 28 times smaller than the simulated critical kicks, mainly because of the certificate rather than of averaging. They cover instantaneous perturbations only.\n\\item The free voltage is small: for DVF designs that keep 10\\,\\% of the voltage free, 1.1--\\SI{4.5}{\\micro\\metre} of eccentric runout brings the forced command to the clip.\n\\item A published delayed difference term that vanishes on the forced orbit raises the linear limit by a median factor of 1.78 ($g_2=\\SI{2000}{\\volt\\second\\per\\metre}$) under the same authority rule, but the step-entry limit by only 1.03, and at the same forced command it widens the simulated basin by a median factor of 1.14. With assumed second modes at 400--\\SI{800}{\\hertz} it tolerates only about 100--\\SI{200}{\\micro\\second} of loop delay, against \\SI{300}{\\micro\\second} for DVF.\n\\end{enumerate}\nAll results are computational. Extending the certificates to the delay equation, assessing the free voltage against runout, edge forces and noise, and testing the bistability experimentally are the next steps."
+  },
+  {
+   "ids": "A-M11,A-M1,B-B9,B-B6,B-B8,A-M5,A-M6,A-M7,A-M9,B-m12",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "One rewrite answers: B-B9(d) ('This gap does not come from the model' contradicted by the next sentence), B-B6 (instantaneous perturbations only), A-M5 (fragile free voltage), A-M9(c) (certificate vs describing function), B-B8(e) (the phase of 1-e^{-sT} alternates lead/lag), A-M7(c) (notch DVF and filtered comb named as untested), A-M6 (modelling limits stated once), A-M11 (two-stage validation plan; HIL refs already in refs.bib) and A-M1 (limitations collected once: the duplicated limitation paragraphs of 4.7, 5.7 and 6.9 are deleted; their unique content is carried over). New numbers from stored files: c2_validate.npz (19 no-chatter points 1.67-12.51 mm/s; 0.9-0.98 a_lim certificates 1.14-6.89 mm/s = 1.4-8.5 um), c4_limits.npz (median 1.31 with depth capped at 32 mm), c4_summary.json. Scratch build compiles with no undefined references.",
+   "instruction": "(a) Replace the whole content of paper/sections/s7_discussion.tex by the text at the end. (b) In paper/sections/s4_bistability.tex rename '\\subsection{Implications and limitations}\\label{sec:bistab-lim}' to '\\subsection{Implications}\\label{sec:bistab-lim}' and delete the second paragraph of that subsection (from 'These results rest on a single-mode model and on simulation alone;' to the end of its '% src: README \u00a711.7; ...' line). (c) In paper/sections/s5_certificates.tex replace subsection 5.7 (from '\\subsection{Limitations}\\label{sec:cert-limits}' to the end of its '% src: README \u00a712.7 (limits), \u00a714.10 (limits), \u00a73 (cf_vs_td_layers: up to +8.7 %)' line) by:\nThe forced command of the simulator, computed with 30 axial layers, exceeds the closed form used by the certificates by up to \\SI{8.7}{\\percent} (at most \\SI{0.33}{\\volt}) at the operating points of Section~\\ref{sec:feasibility}, so the simulator's margin is slightly narrower; no comparison above changes, as every certificate lies below the simulated basin. The other limitations of the certificates are collected in Section~\\ref{sec:discussion}.\n% src: README \u00a712.7 (limits), \u00a714.10 (limits), \u00a73 (cf_vs_td_layers: up to +8.7 %); results/feas_g1500.npz (cert_demand_td - cert_demand_cf at most 0.98 N = 0.33 V at the 129 settled points with demand >= 1 N)\n(d) In paper/sections/s6_delayed.tex delete subsection 6.9 (from '\\subsection{Implications and limitations}\\label{sec:delayed-lim}' to the end of the file); none of these labels is referenced.\nNew s7_discussion.tex:\n\\section{Discussion}\\label{sec:discussion}\n\n\\paragraph{The linear limit is not the attainable depth}\nWith a clipped actuator the linear stability limit $\\alim(g)$ is an upper bound that a real cut reaches only if it enters gently and is not disturbed. Two consequences follow for practice. First, the way the tool enters the cut is part of the design: a step entry from rest, an idealised full engagement at $t=0$, saturates the actuator for a few tooth periods and, at 157 of the 251 speeds of the case study, pushes cuts below $0.97\\,\\alim$ into chatter, while a face entry or a feed ramp reaches the limit (Section~\\ref{sec:bistability}). Second, the authority that the feedback spends on the forced vibration must be budgeted explicitly. At \\SI{2500}{\\rpm} and $g=\\SI{1500}{\\volt\\second\\per\\metre}$ the forced orbit already requires a command of 6--\\SI{8.6}{\\volt} at about half of the depths below the limit, leaving between a fraction of a volt and \\SI{3}{\\volt} for the deviation from the orbit, which is what sets the basin. This margin is fragile: for DVF designs that keep \\SI{10}{\\percent} of the voltage free, 1.1--\\SI{4.5}{\\micro\\metre} of eccentric runout brings the forced command to the clip (Section~\\ref{sec:delayed-robust}), so a voltage guard for runout and noise belongs in the authority condition of Section~\\ref{sec:feasibility}. The certificates of Section~\\ref{sec:certificates} then bound from below, on collocation models, the instantaneous perturbation that the remaining authority can absorb; persistent disturbances are not covered.\n% src: README 13.1 (orbit command at 2500 rpm, g = 1500), 8.4, 11.4; results/c4_summary.json (robust.by_rpm, DVF runout_tolerance_um 1.12-4.50)\n\n\\paragraph{How conservative the certificates are, and why}\nWhere the simulated basin is finite, the certified kicks are 1.5 to 28 times smaller than the simulated critical kicks, and about 2.3 times smaller near the limit; where no kick up to \\SI{3}{\\metre\\per\\second} caused chatter, they are smaller by a factor of at least 240. From $0.9\\alim$ upwards they correspond to 1.4--\\SI{8.5}{\\micro\\metre} of equivalent displacement, the order of the runout that uses up the free voltage, and there the describing-function estimate of Section~\\ref{sec:bistab-df} is within 0.88--1.13 of the simulated basin at almost no cost: the certificate gives a guarantee for the model, the describing function a design estimate. The gap lies mainly in the certificate. The critical kick of the collocation model itself is 0.62--0.99 times the simulated one (median 0.92), and for this helical cutter averaging the time-periodic cutting coefficient changes it by only $-3$ to $+5\\,\\%$ phase by phase; the Floquet limit of the periodic model lies between 0.99999 and 1.0011 times the averaged limit at half immersion, and the periodic certificate is a median of 6\\,\\% larger than the averaged one. The rest of the gap is attributed to the ellipsoidal shape of the certified set, to the sector bound that replaces the dead zone and, at shallow depths, to the validity bound on the chip, an attribution that was not tested by re-solving. Lur'e-type, piecewise-quadratic or sum-of-squares Lyapunov functions, and Lyapunov--Krasovskii functionals that act on the delay equation itself rather than on its collocation model, are the natural next steps. The step entry from rest is certified only at shallow depths; certifying it at productive depths requires a phase-dependent entry condition that is not available yet.\n% src: README 12.4-12.7, 14.5-14.10, results/c3_summary.json errata; results/c2_validate.npz recomputed (19 points without chatter up to 3 m/s: certificates 1.67-12.51 mm/s; certificates at 0.9-0.98 a_lim 1.14-6.89 mm/s, i.e. 1.4-8.5 um at omega_n)\n\n\\paragraph{What the delayed term buys and what it costs}\nBecause $\\dot x(t)-\\dot x(t-T)$ vanishes on the forced orbit, the delayed term adds damping of the chatter deviation without adding to the forced command. Under the same authority rule as DVF it raises the linear limit by a median factor of 1.78 for $g_2=\\SI{2000}{\\volt\\second\\per\\metre}$ (1.31 with the usable depth capped at twice the cutter diameter), and the simulated face entry follows the new limit. At the same forced command it widens the simulated basin by a median factor of 1.14 over 22 depth--speed pairs, and 1.8 to 2.6 times where the DVF certificate almost vanishes, so the gain comes from the larger linear margin and not from freed authority; at shallow depths the basin does not widen. The step-entry limit rises by a median factor of only 1.03, and by at most \\SI{1.1}{\\milli\\metre} at \\SI{2100}{\\rpm} and above, where the entry saturation, not the damping, sets the limit, so the bistable band widens. The price is robustness. The phase of $1-e^{-sT}$ alternates between lead and lag from one tooth-passing harmonic to the next; where it lags, it adds to the loop delay and erodes the phase margin of higher modes. With the assumed second modes, $g_2=\\SI{1000}{\\volt\\second\\per\\metre}$ tolerates about \\SI{200}{\\micro\\second} of loop delay and $g_2$ of 2000 to \\SI{4000}{\\volt\\second\\per\\metre} only about \\SI{100}{\\micro\\second}, against \\SI{300}{\\micro\\second} for DVF, on a coarse grid of delays. The delay must also follow the spindle speed: for $g_2=\\SI{2000}{\\volt\\second\\per\\metre}$ a $+2\\,\\%$ mismatch lowers the limit to 0.87--0.93 of its nominal value. And the term raises the sensitivity of the forced command to eccentric runout, which the voltage margin then tolerates only up to 1.0--\\SI{2.4}{\\micro\\metre}. A gain $g_2\\approx\\SI{1000}{\\volt\\second\\per\\metre}$ is a reasonable compromise: it keeps 1.2 to 1.6 times the DVF limit and the robustness of a \\SI{200}{\\micro\\second} loop. An implementation would need a fast loop, a multi-mode frequency response in the design, a delay synchronised with the spindle encoder and an authority margin; a low-pass filter in the delay path, as in repetitive control, or DVF with notch filters at the tooth-passing harmonics might keep much of the benefit with less phase lag, but neither was evaluated.\n% src: README 13.5-13.10, results/c4_summary.json; results/c4_limits.npz recomputed (median ratio with the depth capped at 32 mm: 1.31); results/c4_validate2.npz via c4_summary.json (same_g1_over_dvf median 1.14, 19/22)\n\n\\paragraph{Limitations}\nThe results are predictions of a model that classifies 17 of the 19 published cutting tests of \\citet{ozsoy2026robust} as measured; the two exceptions are controlled cuts that chattered at 0.76 and 0.80 of the predicted limit (Section~\\ref{sec:model-case}). The model has one identified mode, uniform over the depth, a rigid tool, a cutting force linear in the chip thickness without edge forces or process damping, and an actuator whose only nonlinearity is a hard clip on an exact velocity, without stroke or current limits, amplifier dynamics, sensor noise or, outside Section~\\ref{sec:delayed-robust}, loop delay; the second modes of Section~\\ref{sec:delayed-robust} are assumed. The attribution of the bistability to the clip holds for this linear force law, since a nonlinear force law can itself make the cut subcritical \\citep{kalmarnagy2001subcritical,dombovari2008estimates}. Outside the basin of the forced orbit the model predicts clipped chatter of 0.4--\\SI{0.6}{\\milli\\metre}, or divergence, beyond its range of validity. The free voltage depends on what the model omits: runout uses it up (Section~\\ref{sec:delayed-robust}), and edge forces would add to the static force and hence to the forced command. The certificates hold for collocation models and for instantaneous perturbations only. The 300-revolution classifier biases boundaries near $\\alim$ high (Section~\\ref{sec:bistab-map} and \\ref{app:simulator}).\n% src: results/cuts_main.json; README 7, 11.2, 11.7, 12.7, 13.10; verification/tdsim/check8, check9, check10\n\n\\paragraph{Towards experimental validation}\nThe predictions could be tested in two stages. On a hardware-in-the-loop rig, where the real actuator, amplifier and controller act on the identified structure while the regenerative force is emulated \\citep{sahu2021bistability,sahu2023adaptive,mancisidor2019mechatronics}, command pulses applied through the actuator at controlled phases, with and without the clip, would measure the critical pulse against the depth directly and repeatably. Cutting tests at two or three speeds where the predicted band is wide would then compare a face entry with an entry into a pre-machined pocket, or a feed hold and restart inside the cut, at depths inside the band, with the runout and the settled command measured, chatter detected from once-per-tooth samples, and enough repetitions to estimate probabilities, since uncontrolled disturbances make the outcome random."
+  },
+  {
+   "ids": "A-M4,A-m8,B-m8",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "'Well-posed'/'ill-posed' are used informally (closed form, entry-independent, one feasible interval on a grid). Renamed to 'entry-independent' / 'set by the entry transient' in the title and intro of Section 3, contribution 1 and question (i); the conceptual point of A-M4 (the published test keeps one specified entry inside the linear range, a meaningful entry-specific basin requirement the new condition gives up) is added to Section 3.3. Abstract, conclusions and cover letter are handled in the first two items.",
+   "edits": [
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "\\item A well-posed authority condition (Section~\\ref{sec:feasibility}). The published test takes the peak demand of a simulated cut, which, for the step entry from rest that reproduces the published gains at high speeds, is set by the entry transient and makes the feasible set of gains fragmented.",
+     "fix_new": "\\item An entry-independent authority condition (Section~\\ref{sec:feasibility}). The published test takes the peak demand of a simulated cut, which, for the step entry from rest that reproduces the published gains at high speeds, is set by the entry transient and, in the reproduction, makes the feasible set of gains fragmented."
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "\\section{A well-posed authority condition for gain scheduling}\\label{sec:feasibility}",
+     "fix_new": "\\section{An entry-independent authority condition for gain scheduling}\\label{sec:feasibility}"
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "This section shows why the published form of that condition is ill-posed and replaces it by a steady-state condition in closed form,",
+     "fix_new": "This section shows that the published form of that condition, as reproduced here, is set by the entry transient, and replaces it by a steady-state condition in closed form,"
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "The reformulated condition is well posed: it is evaluated in closed form,",
+     "fix_new": "The reformulated condition does not depend on the entry: it is evaluated in closed form,"
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "lies inside the bistable band of Section~\\ref{sec:bistability} at 104 of the 109 speeds where the band was found.",
+     "fix_new": "lies inside the bistable band of Section~\\ref{sec:bistability} at 104 of the 109 speeds where the band was found. The published condition, applied to a specified entry, keeps that entry inside the linear range at $a=a_{\\lim}$, a conservative but meaningful requirement on the basin for that entry; the reformulated condition gives this up for independence from the entry, so the basin has to be assessed separately (Sections~\\ref{sec:bistability} and~\\ref{sec:certificates})."
+    }
+   ]
+  },
+  {
+   "ids": "A-M4,A-m2",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "All facts asked for are stored. Agreement over the whole range: README \u00a75.2 (gain ratio 0.74 at 500-1150, 0.88 at 1160-1490, 1.2-1.9 at 2060-2310, 0.97 at 2320-3000 rpm; 0.72 on the interval connected to g=0). Demand reading: README \u00a74.6, \u00a76, results/gainmap_volt.npz (voltage reading: map 2-3 times larger). Equal footing (same clipped step entry, full memory, nine speeds of Table 3 of [19]): results/table3_main.csv (6.37-12.12 mm) vs feas_compare_g1500.json (12.60-16.97 mm). Relation to the clipped-DVF comparison of [19]: table3_clip_gain_sweep.csv, README \u00a75.5 (2500 rpm: 6.37 mm at g=536 to 13.23 mm at g=3000, monotone). That sentence is neutral ('was not reproduced') and tied to the allowed point (i) on the entry transient, so it respects novelty-memo claim 14; authors may instead keep it for the response letter. Fragmentation now restricted to the reproduced objective.",
+   "edits": [
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "reproduces their gains at \\SIrange{2320}{3000}{\\rpm} (median ratio 0.97) and was used.\n% src: src/objective.py, src/gainmap.py (G = [0, 3000], DG = 20), src/run_gain_map.py; README \u00a72, \u00a74.6, \u00a75.2 (gain ratio 0.97 at 2320-3000 rpm)",
+     "fix_new": "reproduces their gains at \\SIrange{2320}{3000}{\\rpm} (median ratio 0.97) and was used. Elsewhere the reproduced gains are 0.74 (500--\\SI{1150}{\\rpm}) and 0.88 (1160--\\SI{1490}{\\rpm}) times the published ones (medians) and 1.2--1.9 times at 2060--\\SI{2310}{\\rpm}. The demand of \\citet{ozsoy2026robust} is written as $g\\lvert\\dot x\\rvert$, with $g$ in \\si{\\volt\\second\\per\\metre}, and compared with \\SI{27}{\\newton}; it is read here as the force $K_ag\\lvert\\dot x\\rvert$ of Eq.~\\eqref{eq:pub}, which gives the agreement above, whereas reading it as a voltage would make the gains 2--3 times larger.\n% src: src/objective.py, src/gainmap.py (G = [0, 3000], DG = 20), src/run_gain_map.py; README \u00a72, \u00a74.6, \u00a75.2 (gain ratio 0.97 at 2320-3000 rpm; 0.74, 0.88 and 1.2-1.9 by speed range), \u00a76 (voltage reading: results/gainmap_volt.npz)"
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "The feasible set therefore fragments.",
+     "fix_new": "In the reproduction the feasible set therefore fragments."
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "on the interval connected to $g=0$ the depth at \\SIrange{2060}{2310}{\\rpm} would be \\SIrange{6.0}{8.0}{\\milli\\metre}.",
+     "fix_new": "on the interval connected to $g=0$ the depth at \\SIrange{2060}{2310}{\\rpm} would be \\SIrange{6.0}{8.0}{\\milli\\metre}. This is the range where the reproduced gains exceed the published ones; on the connected interval they would be about 0.72 times the published gains, so the pockets are a property of the reproduced objective and need not occur in the computation of \\citet{ozsoy2026robust}."
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "and \\SI{5.85}{\\milli\\metre} without control.",
+     "fix_new": "and \\SI{5.85}{\\milli\\metre} without control. On an equal footing, with the same clipped step entry and full surface memory, the time-domain limit at the nine speeds of Table~3 of \\citet{ozsoy2026robust} is 6.4--\\SI{12.1}{\\milli\\metre} at the reproduced gains of Eq.~\\eqref{eq:pub} and 12.6--\\SI{17.0}{\\milli\\metre} at those of Eq.~\\eqref{eq:feas} (\\SI{6.4}{\\milli\\metre} against \\SI{13.0}{\\milli\\metre} at \\SI{2500}{\\rpm})."
+    },
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "results/gainmap_main.npz (a_best); README \u00a78.3, \u00a78.4",
+     "fix_new": "results/gainmap_main.npz (a_best); README \u00a78.3, \u00a78.4; results/table3_main.csv (a_prop_td 6.37-12.12 mm), results/feas_compare_g1500.json (table3: a_new_td 12.60-16.97 mm)"
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "The plateau was measured at two speeds only; at \\SIrange{600}{1300}{\\rpm} a larger gain does raise the step-entry limit (Section~\\ref{sec:delayed}).",
+     "fix_new": "The plateau was measured at two speeds only; at \\SIrange{600}{1300}{\\rpm} a larger gain does raise the step-entry limit (Section~\\ref{sec:delayed}). At \\SI{2500}{\\rpm} the clipped step-entry limit rises with the gain from \\SI{6.4}{\\milli\\metre} at the reproduced scheduled gain (\\SI{536}{\\volt\\second\\per\\metre}) to \\SI{13.2}{\\milli\\metre} at $g=3000$, so in this model clipping a gain above the scheduled one does not weaken DVF; the clipped-DVF comparison of \\citet[Table~3]{ozsoy2026robust}, whose clipped gain is set by a tuning rule rather than stated, was not reproduced."
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "results/c1_gainplane.npz (a_step_clip, a_edge_clip, a_lim, orbit_peak_V), results/c1_summary.json (gainplane); README \u00a711.6, \u00a713.6",
+     "fix_new": "results/c1_gainplane.npz (a_step_clip, a_edge_clip, a_lim, orbit_peak_V), results/c1_summary.json (gainplane); README \u00a711.6, \u00a713.6; results/table3_main.csv and table3_clip_gain_sweep.csv (2500 rpm: 6.37 mm at g = 536, 13.23 mm at g = 3000), README \u00a75.5"
+    }
+   ],
+   "instruction": "Fig. 2 (paper/figures/make_figures.py): overlay the published map of [19] on panel (a) (verification/targets/fig8_gain_map.csv or digitized/fig8_gains.json; mark its straight interpolated segments 500-610, 620-740 and 1410-1860 rpm, README \u00a74.4); replace the legend strings 'Eq. (2) of Ozsoy et al., as written' by 'Published condition [19], reproduced with a step entry' and 'a_lim at the Eq. (2) gains' by 'a_lim at the gains of Eq. (13)'; add 'and the published map of [19]' to the caption. Then add '(Fig.~\\ref{fig:feas}a)' after '1.2--1.9 times at 2060--\\SI{2310}{\\rpm}' in Section 3.1."
+  },
+  {
+   "ids": "A-M2,B-B3",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Correct: above a_lim(0) the open-loop cut is exponentially unstable, so with a bounded input the null-controllable region is bounded along the unstable modes and a bounded basin is expected (hu2001book, in refs.bib); the paper's own band edge >= 1.08 a_lim(0) agrees. The edits say so in Sections 1 and 4.3, present the contribution as quantification (basin size vs depth, speed, entry, role of b_max), and word contribution 3 as an adaptation of the standard reduction of the saturation level by the input already in use. This removes an implicit novelty claim; none is added.",
+   "edits": [
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "To the authors' knowledge, no work has measured the basin of attraction of the stable cut, or certified a region of attraction around it, for a fixed active-damping law whose actuator saturates in milling. For a DVF law whose command is clipped at the actuator capacity in a regenerative milling model, this leaves open (i) how the authority condition of a saturation-aware gain map should be posed so that it is well defined, (ii) how far the clip exposes the linearly stable cut to chatter across the speed range, and how this depends on the way the tool enters the cut, (iii) how large a basin around the forced orbit can be guaranteed when part of the authority is spent on the forced vibration,",
+     "fix_new": "That the basin of the stable cut is bounded above the uncontrolled stability limit is expected: there the open-loop cut is exponentially unstable, and with a bounded input the null-controllable region of such a system is bounded along its unstable modes, so that no bounded feedback can stabilise it globally \\citep{hu2001book}. To the authors' knowledge, however, the size of this basin has not been measured, nor a region of attraction around the stable cut certified, for a fixed active-damping law whose actuator saturates in milling. For a DVF law whose command is clipped at the actuator capacity in a regenerative milling model, this leaves open (i) how the authority condition of a saturation-aware gain map can be posed independently of the entry transient, (ii) how far the clip exposes the linearly stable cut to chatter across the speed range, and how this depends on the way the tool enters the cut, (iii) how large an inner estimate of the basin around the forced orbit can be certified when part of the authority is spent on the forced vibration,"
+    },
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "\\item Certificates of the basin (Section~\\ref{sec:certificates}): ellipsoidal sets around the forced orbit proved by sector-condition LMIs in which the dead zone moves with the forced command, so that the authority spent on the forced vibration enters the certificate. They are proved first on a collocation model of the averaged milling model and then on one of the time-periodic model; each solution is checked independently of the solver,",
+     "fix_new": "\\item Inner estimates of the basin (Section~\\ref{sec:certificates}): ellipsoidal sets around the forced orbit from sector-condition LMIs. The generalised sector condition is applied around the known, time-varying forced command, an adaptation of the usual reduction of the saturation level by the part of the input already in use \\citep{hu2001book,tarbouriech2011book}, so that the authority spent on the forced vibration enters the certificate. The certificates are computed first on a collocation model of the averaged milling model and then on one of the time-periodic model; each solution is verified numerically, independently of the solver,"
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "the clip can only lower the effective gain, and a cut shallower than $a_{\\lim}(0)$ is stable even with the command fully saturated.",
+     "fix_new": "the clip can only lower the effective gain, and a cut shallower than $a_{\\lim}(0)$ is stable even with the command fully saturated. Above $a_{\\lim}(0)$ a bounded basin is expected, since the uncontrolled cut is exponentially unstable there and no bounded input can stabilise it globally \\citep{hu2001book}; what the simulations add is the size of the basin and its dependence on depth, speed and entry."
+    }
+   ],
+   "instruction": "After verifying the record, also cite Hu, Lin & Chen, Automatica 38 (2002) 351-359 (saturation with persistent disturbances) as \\citep{hu2002disturbance} next to hu2001book in the new first sentence of the last introduction paragraph and in Section 5.2 after 'operation around a non-zero input' (see the references item)."
+  },
+  {
+   "ids": "A-M2",
+   "category": "needs-new-work",
+   "priority": 1,
+   "rationale": "The overlap with Ozsoy et al. (2025) cannot be answered from the repository: the novelty memo (paper/notes/novelty.md \u00a70, \u00a72) says its full text was never read and warns that its frequency-domain model may already predict a threshold amplitude, i.e. part of Eqs. (17)-(18).",
+   "instruction": "Read the full text of ozsoy2025frequency. Then state at the start of Section 4.5, in one or two sentences, whether its model includes the forced tooth-periodic component, uses a describing function of the clip and predicts a threshold amplitude, and how Eqs. (17)-(18) differ (dual-input around b(t), limit (V_max-b_max)/(g p), comparison with simulated critical kicks). If it already contains a dual-input describing function around the forced command, credit it and present Eq. (18) as its use for the basin. Do not present Section 4.5 as new before this check."
+  },
+  {
+   "ids": "A-M3,A-M11,A-m13",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "Valid and important: the only measurements are never mentioned. Stored (results/cuts_main.json, verification/targets/experimental_points.csv and fft_peaks.csv, README \u00a75.6, \u00a74.6, \u00a77): at the published gains the linear limit classifies 17 of 19 distinct cuts as measured; the failures are controlled cuts at 1300 rpm/10 mm (g=1158, a_lim=12.48 mm, 0.80 a_lim; 149.0 Hz predicted vs 149.5 Hz measured) and 2800 rpm/5.5 mm (g=679.5, a_lim=7.26 mm, 0.76 a_lim); frequency errors 0.5-4 Hz; the stable cut at 1300 rpm/8 mm has its tallest peak at the 7th spindle harmonic (runout); beam modes at 23 and 47 Hz are neglected as in [19]. Edits add a validation paragraph to Section 2.5 and a pointer in Section 1. m13: the repository does not record flute length, overhang, workpiece height, mode shape, proof mass/stroke, sampling rate or latency.",
+   "edits": [
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "The study is computational; Section~\\ref{sec:discussion} discusses what an experimental validation would need.",
+     "fix_new": "The study is computational: at the published gains the model classifies 17 of the 19 published cutting tests of \\citet{ozsoy2026robust} as measured (Section~\\ref{sec:model-case}), and Section~\\ref{sec:discussion} outlines how the predictions could be tested."
+    },
+    {
+     "file": "paper/sections/s2_model.tex",
+     "fix_old": "results/gainmap_zeta145.npz vs gainmap_main.npz (median gain ratio 0.995)",
+     "fix_new": "results/gainmap_zeta145.npz vs gainmap_main.npz (median gain ratio 0.995)\n\nThe model was checked against the cutting tests of \\citet{ozsoy2026robust}, the only measurements on this set-up. At the gains used in the tests, the linear limit classifies 17 of the 19 distinct published cuts as measured. The two exceptions are controlled cuts that chattered below the predicted limit, at \\SI{1300}{\\rpm} and \\SI{10}{\\milli\\metre} ($0.80\\alim$) and at \\SI{2800}{\\rpm} and \\SI{5.5}{\\milli\\metre} ($0.76\\alim$); at the first, the predicted chatter frequency, \\SI{149.0}{\\hertz}, lies close to the strongest measured peak, \\SI{149.5}{\\hertz}. Where chatter frequencies can be compared, model and measurement differ by 0.5--\\SI{4}{\\hertz}, and the measured spectra contain spindle harmonics that are not multiples of the tooth-passing frequency (the seventh is the strongest peak of the stable cut at \\SI{1300}{\\rpm} and \\SI{8}{\\milli\\metre}), a sign of runout, which the model omits. The model also neglects the beam modes of the set-up at 23 and \\SI{47}{\\hertz}, as \\citet{ozsoy2026robust} do, takes the mode shape as uniform over the depth and the tool as rigid, and uses the exact velocity, whereas \\citet{ozsoy2026robust} estimate it by integration and zero-phase filtering. The depths and kicks reported below are predictions of this model.\n% src: results/cuts_main.json (21 marks, 19 distinct cuts; pred_paper equals measured at 17/19; 1300 rpm, 10 mm: g_paper 1158.0, alim_paper 12.48 mm, fc_paper 149.03 Hz; 2800 rpm, 5.5 mm: g_paper 679.5, alim_paper 7.26 mm); verification/targets/fft_peaks.csv (Fig10 B 149.5 Hz; Fig10 A tallest peak 151.6 Hz, spindle harmonic 7); README \u00a75.6 (12B 131.9 vs 133.3 Hz, 12D 134.0 vs 138.1 Hz), \u00a74.6 (velocity estimate), \u00a77 (beam modes 23 and 47 Hz)"
+    }
+   ],
+   "instruction": "m13: check [19] for flute length, overhang, workpiece height and mode shape over the depth, proof mass and stroke, velocity sensor, sampling rate and loop latency; add to Section 2.5 either the values or 'These are not reported in [19] and are not modelled here.' The margins and kicks at the two failing cuts need the short run of the next item."
+  },
+  {
+   "ids": "A-M3",
+   "category": "needs-new-work",
+   "priority": 1,
+   "rationale": "The reviewer's runs (phases 0 and 8 only, outside the repository) give settling step and face entries, 25-26 mm/s critical kicks at 1300 rpm and none up to 3 m/s at 2800 rpm; the closed form (feasibility.forced_demand, run read-only for this triage) gives b_max = 3.53 and 3.00 V (u0 = 5.47 and 6.00 V). Must be regenerated and stored before quoting; about 16 s per phase, under 10 min in all.",
+   "instruction": "With the published gains (1157.98 and 679.55 V s/m), the 9 V clip and full memory, run step and face entries and the 16-phase critical kick (c1_unsafe_zone._critical_kick) at 1300 rpm/10 mm and 2800 rpm/5.5 mm; store them with the closed-form b_max. Then append to the new Section 2.5 paragraph (adjusting to the stored values): 'At these two cuts the forced command at the published gain is 3.5 and \\SI{3.0}{\\volt}, leaving more than \\SI{5}{\\volt} free; with the clip and full surface memory both entries settle, kicks of about \\SI{25}{\\milli\\metre\\per\\second} (23\\,\\% of a tooth's cutting impulse) are needed at \\SI{1300}{\\rpm}, and no kick up to \\SI{3}{\\metre\\per\\second} causes chatter at \\SI{2800}{\\rpm}. The clip-induced bistability of Section~\\ref{sec:bistability} therefore does not explain these two cuts; there the model overestimates the controlled limit by at least 25--32\\,\\%, more than most effects quantified below.'"
+  },
+  {
+   "ids": "A-M5,B-B6,A-m18,A-M9",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "Valid core point. Stored: DVF designs keeping 10 % of the voltage free reach 9 V with 1.12-4.50 um of eccentric runout (c4_summary.json); now in abstract, Discussion and Conclusions. The edit fixes Section 6.8, which implies all Section 3-5 designs sit at exactly 9 V (not true at the 157 capped speeds). Indicative read-only closed-form checks with the repository's code (store before quoting): for the g=1500 designs, c4_robust.worst_orbit_command (40 depths up to 0.9 a_lim, 8 phases) gives 8.57 V at 2500 rpm without runout, reaching 9 V at about 0.7 um, about 3.1 um at 2870 rpm, below 9 V up to 3 um at 1090/1420 rpm (5.82, 7.97 V). A-m18: an 8.1 V clip leaves V_max-b_max at a_lim of 3.02, 0.76, -0.03, 3.79 V instead of 3.92, 1.66, 0.87, 4.69 V (1090/1420/2500/2870 rpm), i.e. by Eq. (18) the near-limit basin shrinks 19-54 % and at 2500 rpm the orbit itself saturates. A-M5(v) overstates the layer effect: at most 0.33 V (feas_g1500.npz), not 0.5 V.",
+   "edits": [
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "a design whose demand reaches exactly \\SI{9}{\\volt}, as in Sections~\\ref{sec:feasibility}--\\ref{sec:certificates}, saturates under any perturbation.",
+     "fix_new": "a design whose steady demand reaches exactly \\SI{9}{\\volt} at some depth, as at the authority-limited speeds of Sections~\\ref{sec:feasibility}--\\ref{sec:certificates}, saturates under any perturbation that raises it."
+    }
+   ],
+   "instruction": "After storing both checks (a short script in verification/paper/), add to Section 4.4: 'At \\SI{2500}{\\rpm} the forced command of the $g=1500$ design reaches the clip at some depth up to $0.9a_{\\lim}$ with about \\SI{0.7}{\\micro\\metre} of eccentric runout (\\SI{3.1}{\\micro\\metre} at \\SI{2870}{\\rpm}; more than \\SI{3}{\\micro\\metre} at 1090 and \\SI{1420}{\\rpm}).' and to Section 2.1 after the 8.1 V sentence: 'Near the limit, where the basin scales with $V_{\\max}-b_{\\max}$ (Section~\\ref{sec:bistab-df}), the \\SI{8.1}{\\volt} clip would leave 3.0, 0.8, $-0.03$ and \\SI{3.8}{\\volt} at $a_{\\lim}$ instead of 3.9, 1.7, 0.9 and \\SI{4.7}{\\volt} at 1090, 1420, 2500 and \\SI{2870}{\\rpm}.'"
+  },
+  {
+   "ids": "A-M5,A-M9",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "A sensitivity and robust-authority study is new but cheap with the closed form and Eq. (18) (minutes), plus C2 certificates at a few points (20-150 s each).",
+   "instruction": "Compute b_max and Eq. (18) at the four basin speeds for edge coefficients 0-40 N/mm, runout 0-10 um (DVF g=1500), +-10-20 % in K_tc, K_rc, K_a, zeta, k and a realistic sensor noise; add a runout/noise guard on V_max in Eq. (14) and show the gain map; recompute C2 at 3-4 points with b_max replaced by its upper bound over the uncertainty set (Eq. (22) unchanged). If not done, add to the Discussion limitations: 'The sensitivity of the free voltage to edge forces, to errors of 10--20\\,\\% in the cutting, actuator and modal parameters and to sensor noise was not quantified; a certificate robust to them would use an upper bound of $b_{\\max}$ over the uncertainty set in Eq.~\\eqref{eq:sector}.'"
+  },
+  {
+   "ids": "A-M6,A-m8",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Valid: attributing the bistability to the clip holds for the linear force law, and what is shown is a bounded basin of the forced orbit with outcomes outside it that may diverge. The edits qualify 'the saturation makes them coexist' and 'the clip creates it' and define 'bistable' once. The omitted effects (edge forces, process damping, mode shape, rigid tool, ideal actuator, unbounded chip) are listed in the new Discussion limitations, citing kalmarnagy2001subcritical and dombovari2008estimates (in refs.bib).",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "The forced orbit and clipped chatter therefore coexist, and at kicks of this size it is the saturation that makes them coexist:",
+     "fix_new": "The forced orbit and clipped chatter therefore coexist, and in this linear-force model, at kicks of this size, it is the saturation that makes them coexist:"
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "the effective gain falls below the gain that the depth requires, and the growing chatter saturates the command further.",
+     "fix_new": "the effective gain falls below the gain that the depth requires, and the growing chatter saturates the command further. Here and below, `bistable' means that the forced orbit has a bounded basin, outside which the model ends in large-amplitude clipped chatter, bounded or divergent (Section~\\ref{sec:bistab-prot})."
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "the clip creates it on this range of kicks and shrinks the basin by a factor of at least 70--595.",
+     "fix_new": "the clip creates it, in this linear-force model and on this range of kicks, and shrinks the basin by a factor of at least 70--595."
+    }
+   ]
+  },
+  {
+   "ids": "A-M6",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Power-law and edge-force basins need a new force law in the simulator and new kick campaigns; process damping and stroke likewise. Moderate work.",
+   "instruction": "If feasible: critical kick vs depth at two speeds with a power-law force (exponent 0.7-0.8, matched in mean force) and with edge forces, with and without the clip; report the proof-mass stroke for a plausible proof mass. If not done, state in the response letter that these are left for future work; the Discussion limitations already restrict the claim, and 'process damping' should cite budak2010process once added."
+  },
+  {
+   "ids": "A-M7,B-B8,A-M10",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "Valid. From results/c4_limits.npz (read-only): with g2=2000 the limit exceeds 32 mm (2D) at 222 of 251 speeds against 71 for DVF; capping the usable depth at 32 mm lowers the median gain from 1.78 to 1.31; the tests of [19] went to 10 mm. Edits add this to Section 6.4, replace 'unmodelled' by 'assumed', and say the delay tolerances come from a six-point grid with a 0.5 a_lim(0) criterion (B-B8(a)). Lead/lag (B-B8(e)) and notch/filtered-comb alternatives (A-M7(c)) are in the new Discussion.",
+   "edits": [
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "at every speed, as (iii) predicts.",
+     "fix_new": "at every speed, as (iii) predicts. Much of the gain lies at large depths: with $g_2=2000$ the limit exceeds \\SI{32}{\\milli\\metre}, twice the cutter diameter, at 222 of the 251 speeds, against 71 for DVF, and with the usable depth capped at \\SI{32}{\\milli\\metre} the median gain over DVF falls from 1.78 to 1.31; the cutting tests of \\citet{ozsoy2026robust} went up to \\SI{10}{\\milli\\metre}."
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "p1e6 - dvf 9.66-9.93 mm); README \u00a713.4, \u00a713.5",
+     "fix_new": "p1e6 - dvf 9.66-9.93 mm); README \u00a713.4, \u00a713.5; results/c4_limits.npz recomputed: feas_a_lim > 32 mm at 222/251 speeds (d2000) and 71/251 (dvf); median of min(a, 32 mm) ratio d2000/dvf 1.309; verification/targets/experimental_points.csv (tested depths up to 10 mm)"
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "DVF with the constant gain $g_1+2g_2$ keeps a limit more than three times larger under the same delay and mode.",
+     "fix_new": "DVF with the constant gain $g_1+2g_2$ keeps a limit more than three times larger under the same delay and mode. The tolerances of Table~\\ref{tab:drobust} are read off six computed delays with the criterion $\\alim(\\tau)\\ge0.5\\,\\alim(0)$ and three assumed modes, so the families differ by one step of that grid; they illustrate a trend and are not delay margins."
+    },
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "and the robustness limits set by loop delay, unmodelled modes, delay mismatch and runout.",
+     "fix_new": "and the robustness limits set by loop delay with assumed higher modes, delay mismatch and runout."
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "\\emph{Loop delay and unmodelled modes.}",
+     "fix_new": "\\emph{Loop delay and assumed higher modes.}"
+    }
+   ],
+   "instruction": "Fig. 8 (A-m7): drop panel (c) (two coincident curves) and delete '(Fig.~\\ref{fig:dlim}c)' in Section 6.4, or replace (c) by u0 of both designs; draw a line at 32 mm in panel (a)."
+  },
+  {
+   "ids": "A-M7,B-B8",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Continuous delay margins are cheap with the closed form (c4_robust.a_lim_cf, bisection in tau); a parametric second-mode map and a nonlinear check are moderate; notch-filtered DVF and a Q-filtered comb are new designs. A gain cap derived from delay and noise margins belongs here.",
+   "instruction": "Compute delay margins by bisection for the uncut loop and for a_lim(tau)/a_lim(0) = 0.9 and 0.5, over mode frequency 300-1000 Hz, stiffness ratio and damping; one simulated critical kick with tau = 100-200 us at two points; optionally notch-filtered DVF and E_Q(s) = 1 - Q(s)e^{-sT} under the same authority rule. If not done, add after the new grid sentence in Section 6.8: 'Continuous delay margins, a parametric study of the second mode, the effect of loop delay on the basin of the clipped loop, sample rounding of $T$, spindle-speed fluctuation and noise amplified by $\\lvert K\\rvert$ up to $g_1+2g_2$ were not examined, nor were filtered alternatives such as a low-pass filter in the delay path \\citep{hara1988repetitive} or DVF with notch filters at the tooth-passing harmonics \\citep{herzog1996unbalance}.'"
+  },
+  {
+   "ids": "A-M8,A-m20,B-B6",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "Partly valid. (c) is right: 'runout, inhomogeneous material or tool exit could do the same' is unsupported and is replaced. (b) Displacement equivalents from c1_basin.npz: worst-phase kicks at 0.98 a_lim are 2.9-13 um against a forced vibration of about 4 um amplitude (figure_numbers.json fig03) and a 50 um feed; kicks <= 10 mm/s cause chatter only from 0.90-0.95 a_lim (none at 1090 rpm), <= 30 mm/s from 0.40-0.80 a_lim. (a) is partly wrong at the four basin speeds, where the first finite depths have critical kicks of 21-66 mm/s, not 3 m/s; it holds for the 126-speed band map, whose per-kick outcomes are not stored (2500 rpm: band edge 0.31 a_lim vs 0.40 from the 16-kick search, so a large kick set it). A-m20: keep the 1 mm/s rows (the only threshold at which the families differ over the whole grid) and give displacement equivalents instead of dropping them.",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "At $0.98a_{\\lim}$ the critical kick of the worst phase carries \\SIrange{2.4}{10.8}{\\percent} of this impulse (\\SIrange{2.6}{11.5}{\\percent} for the median over the phases).",
+     "fix_new": "At $0.98a_{\\lim}$ the critical kick of the worst phase carries \\SIrange{2.4}{10.8}{\\percent} of this impulse (\\SIrange{2.6}{11.5}{\\percent} for the median over the phases); as an equivalent displacement $\\Delta v^*/\\omega_n$ it is 2.9--\\SI{13}{\\micro\\metre}, against a forced vibration of about \\SI{4}{\\micro\\metre} amplitude at \\SI{2500}{\\rpm} and $0.9a_{\\lim}$ (Fig.~\\ref{fig:two}) and a feed of \\SI{50}{\\micro\\metre}. Kicks of at most \\SI{10}{\\milli\\metre\\per\\second} (\\SI{12}{\\micro\\metre}) end in chatter only from 0.90--$0.95a_{\\lim}$ upwards at 1420, 2500 and \\SI{2870}{\\rpm}, and at none of the 12 depths at \\SI{1090}{\\rpm}; kicks of at most \\SI{30}{\\milli\\metre\\per\\second} from 0.40--$0.80a_{\\lim}$ upwards."
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "src/c1_unsafe_zone.py (run_basin: tooth impulse)",
+     "fix_new": "src/c1_unsafe_zone.py (run_basin: tooth impulse); results/c1_basin.npz recomputed: worst-phase dv at 0.98 a_lim 2.34-10.88 mm/s = 2.9-13.4 um at omega_n = 2 pi 129.3 rad/s; smallest depth with worst-phase dv <= 10 mm/s: 0.95, 0.90, 0.95 a_lim at 1420, 2500, 2870 rpm, none at 1090; <= 30 mm/s: 0.40, 0.80, 0.40, 0.50 a_lim; paper/figures/figure_numbers.json (fig03 orbit_x_um -26.0 to -18.6)"
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "turns the cut into chatter, and a real disturbance of that size, from runout, inhomogeneous material or the tool leaving the workpiece, could do the same; an operating margin should be expressed by the size of the basin, which Section~\\ref{sec:certificates} bounds from below on collocated models of the cut, rather than as a fixed fraction of $a_{\\lim}$.",
+     "fix_new": "turns the cut into chatter. Which real disturbances act like such a kick was not examined; runout, for instance, is a persistent forcing that rather uses up part of the free voltage (Section~\\ref{sec:delayed-robust}). An operating margin should nevertheless be expressed by the size of the basin, which Section~\\ref{sec:certificates} bounds from below for instantaneous perturbations on collocation models of the cut, rather than as a fixed fraction of $a_{\\lim}$."
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "whereas kicks of 2.4--\\SI{10.8}{\\percent} tip the clipped DVF cut into chatter near its limit (Section~\\ref{sec:bistab-basin}).",
+     "fix_new": "whereas kicks of 2.4--\\SI{10.8}{\\percent} tip the clipped DVF cut into chatter near its limit (Section~\\ref{sec:bistab-basin}). As equivalent displacements $\\beta_{\\mathrm{th}}/\\omega_n$, the thresholds of 1, 2 and \\SI{4}{\\milli\\metre\\per\\second} are 1.2, 2.5 and \\SI{4.9}{\\micro\\metre}."
+    }
+   ]
+  },
+  {
+   "ids": "A-M8,B-B6",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Iso-contours over 126 speeds need the band campaign rerun with per-kick outcomes stored (about 0.8 h on 3 cores, README \u00a710); realistic events and a bounded-disturbance LMI analysis are new.",
+   "instruction": "Rerun the band map storing each of the seven kick outcomes and draw contours for Delta v* = 3, 10, 30 mm/s in Fig. 4; optionally simulate a slot crossing, a feed hold and restart or a short force pulse, and add an L2/amplitude-bounded disturbance channel to the C2 LMIs (Hu & Lin 2001; Fang, Lin & Hu 2004). If not done, add to Section 4.3 after 'narrow windows of chatter may have been missed': 'The lower edge rests on kicks of up to \\SI{3}{\\metre\\per\\second}, far beyond the validity of the model; contours for bounded kicks were computed only at the four speeds of Table~\\ref{tab:basin}.'"
+  },
+  {
+   "ids": "A-M9,A-M10",
+   "category": "analysis-from-stored-results",
+   "priority": 1,
+   "rationale": "Valid: 1.5-28 covers only the 29 points with finite Delta v*. From results/c2_validate.npz: at the other 19 points the C2 certificates are 1.67-12.51 mm/s, at least 240 times (up to about 1800 times at 2500 rpm, 0.3 a_lim) below the 3 m/s upper end of the tested kicks. A-M9(c) is answered in the new Discussion (DF within 0.88-1.13 near the limit: design estimate; certificate: guarantee for the model).",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "and 1.48--3.26 (median 2.34) from $0.7\\alim$ upwards.",
+     "fix_new": "and 1.48--3.26 (median 2.34) from $0.7\\alim$ upwards. At the other 19 points no kick up to \\SI{3}{\\metre\\per\\second} ended in chatter, and the certificates there (1.7--\\SI{12.5}{\\milli\\metre\\per\\second}) are at least 240 times smaller than the largest kick tested."
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "c3_summary.json (errata.c2_validate: 1.48-27.59, median 2.34 from 0.7 a_lim)",
+     "fix_new": "c3_summary.json (errata.c2_validate: 1.48-27.59, median 2.34 from 0.7 a_lim); results/c2_validate.npz recomputed: td_min infinite at 19 points, cert there 1.672-12.514 mm/s, 3 m/s / cert >= 240"
+    }
+   ],
+   "instruction": "Optional new work: a basin-aware gain map (maximise a_lim subject to beta >= beta_req up to kappa a_lim). If not done, add to the Discussion paragraph on conservatism: 'A gain map that keeps a certified kick at every depth up to $\\kappa\\alim$, of which Table~\\ref{tab:dgap} is a first step at four speeds, was not computed.'"
+  },
+  {
+   "ids": "B-B4,A-M9",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid. Checked from Eq. (9) with K_rc/K_tc = 0.273: for delta = 0.5 the chip can vanish over the last arctan(0.5) = 26.6 deg of the 90 deg arc, which carries 30.5 % of alpha_yy. The 'preliminary run' without the bound is quantified from README \u00a712.4 (32 of 72 off-axis runs chattered, none with the bound). Reviewer B's delta=1 runs (+58 % at 1090 rpm/0.15 a_lim, +15 % at 2870 rpm/0.3 a_lim, +0.4 % at 2500 rpm/0.9 a_lim) contradict README \u00a712.7 ('0-15 %'), so the sweep must be stored (next item).",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "in a preliminary run, off-axis kicks on its boundary at \\SI{2500}{\\rpm} and $0.7\\alim$ ended in chatter, whereas none did with the bound (Section~\\ref{sec:cert-c2}). The bound excludes only gross loss of contact: the chip can still vanish near the exit angle inside it. The value $\\delta=0.5$ is a choice; a larger $\\delta$ raises the certificates, most at the shallowest depths.",
+     "fix_new": "32 of 72 off-axis kicks on its boundary at \\SI{2500}{\\rpm} and $0.7\\alim$ then ended in chatter in the simulator, and none did with the bound (Section~\\ref{sec:cert-c2}). The bound excludes only gross loss of contact: inside it the chip can still vanish over the last $\\arctan\\delta\\approx\\ang{27}$ of the \\ang{90} engagement arc, which carries about \\SI{30}{\\percent} of the integral that defines $\\alpha_{yy}$ in Eq.~\\eqref{eq:aHmean}, so a nonlinearity outside the certified model is active inside the set. The value $\\delta=0.5$ is a choice; a larger $\\delta$ raises the certificates, most at the shallowest depths, where the bound rather than the sector condition may limit them."
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "% src: README \u00a712.2, \u00a712.4, \u00a712.7",
+     "fix_new": "% src: README \u00a712.2, \u00a712.4 (32 of 72 off-axis runs without the bound), \u00a712.7; arctan(0.5) = 26.6 deg and the share 0.305 of alpha_yy over [pi - arctan 0.5, pi] follow from Eq. (aHmean) with K_rc/K_tc = 0.273"
+    }
+   ]
+  },
+  {
+   "ids": "B-B4,A-M9,B-m12",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Cheap (C2 solve 20-150 s): a delta sweep identifies which constraint limits beta (validity bound, sector bound or shape) and supports the attribution in the Discussion. Modelling contact loss as a second sector nonlinearity is a research extension.",
+   "instruction": "Run c2_certificate.certify_kick(..., delta=d), d in {0.25, 0.5, 1, None}, at 1090 rpm/0.15 a_lim, 2870 rpm/0.3 a_lim and 2500 rpm/0.9 a_lim; store; replace 'where the bound rather than the sector condition may limit them' in Section 5.2 by the measured statement (e.g. 'with $\\delta=1$ the certificate rises by 58\\,\\% at \\SI{1090}{\\rpm} and $0.15\\alim$ and 15\\,\\% at \\SI{2870}{\\rpm} and $0.3\\alim$ but 0.4\\,\\% at \\SI{2500}{\\rpm} and $0.9\\alim$, so the shallow-depth plateau of Fig.~\\ref{fig:cert} is set largely by the validity bound'), update 'an attribution that was not tested by re-solving' in the Discussion and correct README \u00a712.7. Mention contact loss as a possible second sector nonlinearity (not attempted)."
+  },
+  {
+   "ids": "B-B1",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Valid and cheap. Reviewer B's runs (outside the repository): beta converged at 2500 rpm/0.9 a_lim (3.060 to 3.057 mm/s, N = 12-32), drifting down 1.4 % at 1090 rpm/0.9 a_lim (6.248 to 6.160; default N=24: 6.196) and 1.6 % for DVF+D at 2500 rpm/22 mm (3.609 to 3.552; default 3.562). The LK edit already states that spectral convergence does not imply convergence of the certified set.",
+   "instruction": "Rerun and store beta for N, ~1.5N and 2N at C2 2500 and 1090 rpm/0.9 a_lim, C2 2870 rpm/0.3 a_lim, C3 at one point, and DVF+D at 2500 rpm/22 mm (g1=500, g2=4000); add a small table to Appendix B and to Section 5.1: 'Table B.x gives $\\beta$ against $N$: it changes by less than 0.1\\,\\% at \\SI{2500}{\\rpm} and drifts down by 0.6\\,\\% from the default $N$ to $N=32$ at \\SI{1090}{\\rpm}, so the reported values may overstate the converged size by about 1\\,\\%.' (use stored values)."
+  },
+  {
+   "ids": "B-B2",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid: the step to the delay equation was dismissed with one citation, whereas LK functionals with sector conditions for saturated time-delay systems are established, and for a kick only the part of the functional on the present state matters. The edit says so and names the difficulty (delay of 0.65-3.9 structural periods). The literature (Tarbouriech & Gomes da Silva 2000; Cao, Lin & Hu 2002; Fridman, Pila & Shaked 2003; Fridman 2014; Gu et al. 2003) is added in the references item.",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "The certificates are therefore theorems about Eq.~\\eqref{eq:coll}, the $N$-node collocation of the averaged (C2) or the time-periodic (C3) model; they are not theorems about the delay equation, which would require a Lyapunov--Krasovskii functional \\citep{seuret2014bessel}, nor about the simulator.",
+     "fix_new": "The certificates are therefore verified numerically for Eq.~\\eqref{eq:coll}, the $N$-node collocation of the averaged (C2) or the time-periodic (C3) model, not for the delay equation or the simulator, and convergence of the rightmost eigenvalues in $N$ does not imply convergence of the certified set. For the delay equation itself, Lyapunov--Krasovskii functionals combined with sector conditions would be needed \\citep{seuret2014bessel}; since a kick leaves the history deviation at zero, only the part of such a functional that acts on the present state would matter for a kick, but the delay of 0.65--3.9 structural periods calls for high-order functionals, which were not attempted."
+    }
+   ]
+  },
+  {
+   "ids": "B-B2",
+   "category": "needs-new-work",
+   "priority": 3,
+   "rationale": "An LK certificate on the averaged delay equation is a research task (high-order Bessel-Legendre or discretised functionals; lobes not connected to T=0). Useful but not required for revision.",
+   "instruction": "Optional: attempt it at 2500 rpm, 0.5 and 0.9 a_lim with the same sector condition and compare (e2'Pe2)^(-1/2) with the collocation beta, or report why it fails; otherwise say in the response that it was not attempted (the text already does)."
+  },
+  {
+   "ids": "B-B3",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Checked: (i) psi(w,t)[psi(w,t)-v] <= 0 holds for -(V_max+b(t)) <= w-v <= V_max-b(t), and for a set symmetric about the orbit reduces to |w-v| <= V_max-|b(t)|; Eq. (22) is its uniform-in-time form; (ii) the level reduction is the standard treatment of non-symmetric saturation / non-zero operating points; (iii) after the congruence with diag(W,S), S is the inverse of the S-procedure multiplier (the code docstring says S = 1/T). Edits add (i)-(iii).",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "the case $w<-\\Vmax-b(t)$ is symmetric, and $\\psi=0$ otherwise.",
+     "fix_new": "the case $w<-\\Vmax-b(t)$ is symmetric, and $\\psi=0$ otherwise. The sharp condition is $\\psi(w,t)[\\psi(w,t)-v]\\le0$ whenever $-\\Vmax-b(t)\\le w-v\\le\\Vmax-b(t)$; for a set symmetric about the orbit it reduces to $\\lvert w-v\\rvert\\le\\Vmax-\\lvert b(t)\\rvert$ at each $t$, of which Eq.~\\eqref{eq:sector} is the uniform-in-time form used by C2 (C3 uses it segment by segment, Section~\\ref{sec:cert-periodic})."
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "with the level $u_0=\\SI{9}{\\volt}-\\bmax$: the authority spent on the forced orbit is removed from the level.",
+     "fix_new": "with the level $u_0=\\SI{9}{\\volt}-\\bmax$: as for non-symmetric saturation or operation around a non-zero input \\citep{hu2001book,tarbouriech2011book}, the part of the input already in use, here by the forced orbit, is removed from the level."
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "and a scalar multiplier $S>0$, the S-procedure",
+     "fix_new": "and a scalar $S>0$, the inverse of the S-procedure multiplier after a congruence with $\\operatorname{diag}(W,S)$, the S-procedure"
+    }
+   ],
+   "instruction": "(iv) State Lemma 1 (sharp moving-dead-zone sector condition) and Propositions 1 (C2) and 2 (C3) with explicit assumptions (an upper bound b_bar >= sup|b(t)| with b_bar < V_max, segment-wise for C3; the enclosure of aH(t); strict LMIs (23)-(26), (28) at the six vertices, with lambda = 0) and conclusion (E(W^{-1}), or the tube, is forward invariant for Eq. (20) with the true dead zone and trajectories in it converge exponentially to the orbit), with 6-10 line proofs; delete the prose they replace in Sections 5.2 and 5.4. main.tex already defines \\newtheorem{proposition}."
+  },
+  {
+   "ids": "B-B5,B-m9,B-m3",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Valid: acceptance is a floating-point eigenvalue test (tolerance 1e3 (n+1) eps max|lambda|, src/c2_certificate.py check()), for C2 on matrices formed in re-centred coordinates without accounting for the rounding in forming them; 'proved'/'theorem' overstate it. Edits retitle Section 5, use 'numerically verified', and state the C2 tolerance limitation in Appendix B; the abstract, Discussion and Conclusions items use the same wording.",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "\\section{Certified basins of attraction}\\label{sec:certificates}",
+     "fix_new": "\\section{Certified inner estimates of the basin}\\label{sec:certificates}"
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "This section proves inner estimates of the basin instead, on collocation models of the averaged and the time-periodic milling model:",
+     "fix_new": "This section computes inner estimates of the basin instead, verified numerically on collocation models of the averaged and the time-periodic milling model:"
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "at $\\lambda=0$ above a round-off bound;",
+     "fix_new": "at $\\lambda=0$ above a round-off bound (a floating-point test, not an interval-arithmetic proof);"
+    },
+    {
+     "file": "paper/sections/appB_lmi.tex",
+     "fix_old": "but the test is made in floating point; it is not an interval-arithmetic proof.",
+     "fix_new": "but the test is made in floating point; it is not an interval-arithmetic proof, and for C2, whose matrices are formed in the re-centred coordinates, the tolerance does not cover the rounding made in forming them."
+    }
+   ],
+   "instruction": "Replace any remaining 'proved'/'theorem'/'guarantee' referring to the certificates; use a distinct symbol b_bar for the rigorous command bound of Section 5.2 (b_max stays the sampled peak of Section 2.4); condense the correction paragraph at the end of Section 5.2 to one sentence ('C2 sizes were rescaled to the rigorous bound b_bar of Appendix B, by factors 0.997-1.000 at the 48 points and down to 0.86 on the surface') and move the rest to Appendix B, or recompute C2 with b_bar (next item)."
+  },
+  {
+   "ids": "B-B5,B-m9,B-m3,B-m5",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "A rigorous test needs the candidates (W, Y, S), which are not stored (c2_validate.npz holds sizes only), so C2 (about 2 h on 4 cores) and C3 (about 8 h) must be rerun saving them. 5 of the 48 stored C2 solutions are AlmostSolved (B-m9 confirmed).",
+   "instruction": "Store every accepted candidate; verify M - alpha I > 0 in original coordinates with a floating-point Cholesky and Rump's bound (BIT 46 (2006) 433-452) or interval arithmetic; report lambda_min/||M|| (and the C3 vertex where it occurs), the dual objective or relative gap per certificate, and the verified decay rate; recompute C2 directly with b_bar. Only then write 'proved for the N-node model'. B-m5: report C3 at M=32 where compared with C2 at 0.9 a_lim (c3_decomp.npz) and add to Section 5.6: 'For design, the averaged certificate C2 is the practical choice; C3 serves to show that averaging does not cause the gap.'"
+  },
+  {
+   "ids": "B-B7,A-M9",
+   "category": "analysis-from-stored-results",
+   "priority": 2,
+   "rationale": "Valid. From results/c4_validate.npz and c4_validate2.npz (read-only): model/simulated critical kick 0.80-1.01 (median 0.98, 29 points) for the map designs, 0.79-1.00 (median 0.96, 22) for the same-g1 designs, against 0.66-1.02 for DVF (38). The edits report this in Section 6.3 and put the caveat in the Table 7 caption. Velocity-history collocation is optional new work; beta vs N for DVF+D is in the B-B1 item.",
+   "edits": [
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "The certificate therefore rests more on the simulator check (Section~\\ref{sec:delayed-valid}) than in Section~\\ref{sec:certificates}.",
+     "fix_new": "The certificate therefore rests more on the simulator check (Section~\\ref{sec:delayed-valid}) than in Section~\\ref{sec:certificates}; there, the critical kick of the collocated DVF\\,+\\,D model is 0.80--1.01 (median 0.98) times the simulated one for the map designs and 0.79--1.00 (median 0.96) for the same-$g_1$ designs, against 0.66--1.02 for DVF."
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "2.4x the nodes at 2500 rpm); README \u00a713.3",
+     "fix_new": "2.4x the nodes at 2500 rpm); README \u00a713.3\n% src (model to simulated critical kick): results/c4_validate.npz and c4_validate2.npz recomputed: comb 29 points 0.80-1.01 (median 0.98), same_g1 22 points 0.79-1.00 (median 0.96), dvf and dvf_fine 38 points 0.66-1.02"
+    },
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "by the best candidate design ($\\lvert V\\rvert\\le\\SI{9}{\\volt}$; averaged collocation model; command bound corrected).",
+     "fix_new": "by the best candidate design ($\\lvert V\\rvert\\le\\SI{9}{\\volt}$; averaged collocation model, in which the delayed velocity of DVF\\,+\\,D is the derivative of the history interpolant, Section~\\ref{sec:delayed-model}; command bound corrected)."
+    }
+   ]
+  },
+  {
+   "ids": "B-B9,A-M10",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Valid: '1.8-2.6 times' is a six-pair subset chosen by a 2.1 mm/s threshold, and 'a rule fixed before the simulations were compared' cannot be verified. The edit leads with the all-pairs median 1.14 over 22 pairs (c4_summary.json validate2), then >= 18 mm (1.45), then the subset, and calls the threshold descriptive.",
+   "edits": [
+    {
+     "file": "paper/sections/s6_delayed.tex",
+     "fix_old": "Where the DVF certificate almost vanishes, the basin widens with the same budget. A rule fixed before the simulations were compared, a DVF certified kick of at most \\SI{2.1}{\\milli\\metre\\per\\second}, selects six pairs at 18--\\SI{34}{\\milli\\metre}, at which the same-$g_1$ design raises $\\Delta v^*$ 1.79--2.59 times (median 2.00), e.g.\\ from 4.0 to \\SI{10.4}{\\milli\\metre\\per\\second} at \\SI{1420}{\\rpm} and \\SI{18}{\\milli\\metre}; the next pair, with a DVF certificate of \\SI{2.6}{\\milli\\metre\\per\\second}, gives 1.45, and the 13 pairs at \\SI{18}{\\milli\\metre} and deeper give 1.06--2.59 (median 1.45).",
+     "fix_new": "With the same budget the widening is concentrated where the DVF certificate almost vanishes: over all 22 pairs the same-$g_1$ design raises $\\Delta v^*$ by a median factor of 1.14, at the 13 pairs at \\SI{18}{\\milli\\metre} and deeper by 1.06--2.59 (median 1.45), and at the six pairs, all at 18--\\SI{34}{\\milli\\metre}, where the DVF certificate is at most \\SI{2.1}{\\milli\\metre\\per\\second} by 1.79--2.59 (median 2.00), e.g.\\ from 4.0 to \\SI{10.4}{\\milli\\metre\\per\\second} at \\SI{1420}{\\rpm} and \\SI{18}{\\milli\\metre}; the next pair, with a DVF certificate of \\SI{2.6}{\\milli\\metre\\per\\second}, gives 1.45. The threshold of \\SI{2.1}{\\milli\\metre\\per\\second} is descriptive and has no physical meaning."
+    }
+   ]
+  },
+  {
+   "ids": "ED-1,A-m17,B-m14",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Editor's finding: Section 4.5 says the forced command at a_lim at 1420 rpm comes within 0.01 V of the clip and the basin almost closes; this rests on results/c1_df.npz A_dual = 0.009 V at a = a_lim, a rounding artefact. In src/c1_unsafe_zone.py critical_amplitude, at Nstar = 1 the test Nv <= Nstar is decided by round-off (N(A[0]) - 1 = +2e-15 at 1420 rpm), so it returns A[0] = 0.009 V instead of V_max - max|b| = 1.66 V (reproduced read-only: max|b| = 7.34 V at a_lim). Values at 1090/2500/2870 rpm (3.92, 0.87, 4.69 V) and the td/DF ratios (depths <= 0.98) are unaffected. The edit corrects the claim and the src comment and adds the caveats of B-m14 and the residue route of A-m17; Conclusion 2 is fixed in the conclusions item.",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "Where $b_{\\max}$ approaches $V_{\\max}$ the basin becomes small: at \\SI{1420}{\\rpm} the forced command at $a_{\\lim}$ comes within \\SI{0.01}{\\volt} of the clip, and Eq.~\\eqref{eq:dfbasin} predicts a basin that almost closes there; this speed was not simulated at $0.999a_{\\lim}$. The estimate is cheap, but $p$ is valid only near the limit.",
+     "fix_new": "At $a_{\\lim}$ the forced command leaves 3.9, 1.7, 0.9 and \\SI{4.7}{\\volt} free at 1090, 1420, 2500 and \\SI{2870}{\\rpm}; by Eq.~\\eqref{eq:dfbasin} the basin would close only where $b_{\\max}$ reached $V_{\\max}$, which the authority condition of Section~\\ref{sec:feasibility} excludes up to $\\kappa a_{\\lim}$. The estimate is cheap, but it rests on the filtering hypothesis, on a chatter frequency incommensurate with $\\omega_T$ and on the factor $p$, which was fitted from simulations at one kick phase and is valid only near the limit; $A^*$ is the harmonic-balance amplitude of the unstable limit cycle that separates the two attractors. On a machine, $p$ could be estimated from a measured frequency response as the residue of the critical root of Eq.~\\eqref{eq:char}, which was not attempted here."
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "results/c1_df.npz (A_dual at a = a_lim: 3.92, 0.009, 0.87, 4.69 V at 1090, 1420, 2500, 2870 rpm)",
+     "fix_new": "results/c1_df.npz (A_dual at a = a_lim: 3.92, 0.87, 4.69 V at 1090, 2500, 2870 rpm; at 1420 rpm the stored 0.009 V is a rounding artefact of c1_unsafe_zone.critical_amplitude at N* = 1, and V_max - max|b| at a_lim is 1.66 V from feasibility.forced_velocity; regenerate c1_df.npz after the fix)"
+    }
+   ],
+   "instruction": "Fix critical_amplitude (handle Nstar >= 1 - 1e-12 before the search, or compare Nv <= Nstar - 1e-12), regenerate results/c1_df.npz, add a regression test that A_dual at a = a_lim equals V_max - max|b| at the four speeds, and correct README \u00a711.5 if it repeats the 1420 rpm statement. Showing Eq. (18) over the speed range (A-m17) is optional new work (needs p per point)."
+  },
+  {
+   "ids": "A-m1,B-m7,A-m14",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Valid. The supplied PDF has an older title, abstract and highlights (even the latest scratch build has the previous title); the appendix table is numbered B.9 because the counter is not reset (edit checked in a scratch build: Table B.1). Declarations are placeholders.",
+   "edits": [
+    {
+     "file": "paper/main.tex",
+     "fix_old": "\\appendix\n\\input{sections/appA_simulator}",
+     "fix_new": "\\appendix\n\\setcounter{table}{0}\n\\input{sections/appA_simulator}"
+    }
+   ],
+   "instruction": "Recompile from the current sources after all edits; use one title in main.tex, the PDF metadata, highlights.txt and the cover letter; keep highlights <= 85 characters. Complete authors, affiliations, CRediT, funding, acknowledgements, AI-tool name, repository URL and the bracketed sentence of Appendix C (who designed the study, which steps and numbers were checked by hand, how). Give referees private access to code and stored results."
+  },
+  {
+   "ids": "A-M1,B-B10",
+   "category": "edit",
+   "priority": 1,
+   "rationale": "Both reviewers find the paper too long and notebook-like. The triage edits already delete the duplicated limitations (4.7, 5.7, 6.9), development history and the counterexample table, but add about 1,300 requested words, so Sections 1-8 would be about 15,700 words without further cuts. The length plan cuts about 5,300 words without losing a result.",
+   "instruction": "After the other edits, implement the length plan (target about 10,000 words in Sections 1-8, 35-40 preprint pages, plus a Supplementary Material file). Report secondary numbers with 2-3 significant figures (e.g. 'within 0.1 %' for 0.99999-1.0011; 1.06 for 1.064; move 6e-6, 3e-8, 2e-5 to appendices) and state each key number and caveat once."
+  },
+  {
+   "ids": "A-M1",
+   "category": "reject",
+   "priority": 2,
+   "rationale": "Option (a), splitting into two papers, is not recommended: Section 6 reuses the model, authority rule, simulator and certificate of Sections 2-5, and its point is the fair comparison with DVF under the same clip; a second paper would repeat about 3,000 words of method. Option (b), shortening with Supplementary Material, is adopted."
+  },
+  {
+   "ids": "A-m5",
+   "category": "analysis-from-stored-results",
+   "priority": 2,
+   "rationale": "Valid, verified in results/c1_map.npz: the unclipped step-entry limit exceeds a_lim by more than 1.5 % at 75 speeds (1.65-5 %, all of 1990-2480 rpm, 1.05 at 2000 rpm), beyond the long-run check (only 1970-2030 rpm); face entry and feed ramp reach the ladder top 1.05 a_lim at 500, 540, 670, 720, 1000, 1080 rpm and the step entry at 500, 550, 670, 1000 rpm, inflating the face-entry mean (18.20 vs 18.21 mm without them). Edits state this and soften 'recovers the linear limit'.",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "The face entry recovers the linear limit at every speed (mean \\SI{18.26}{\\milli\\metre}, at least $0.985a_{\\lim}$, against a mean $a_{\\lim}$ of \\SI{18.25}{\\milli\\metre}), and the feed ramp falls below $0.97a_{\\lim}$ only at \\SI{2000}{\\rpm} ($0.957a_{\\lim}$).",
+     "fix_new": "The face entry reaches at least $0.985a_{\\lim}$ at every speed (mean \\SI{18.20}{\\milli\\metre} against a mean $a_{\\lim}$ of \\SI{18.21}{\\milli\\metre} at the 245 speeds where it stayed below the top of the depth ladder), and the feed ramp falls below $0.97a_{\\lim}$ only at \\SI{2000}{\\rpm} ($0.957a_{\\lim}$). At 500, 540, 670, 720, 1000 and \\SI{1080}{\\rpm} the face entry and the feed ramp, and at 500, 550, 670 and \\SI{1000}{\\rpm} the step entry, reached the top of the ladder, $1.05a_{\\lim}$; these values lie above the linear limit and are attributed to the classifier."
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "Without the clip the step-entry limit sits at the linear limit (median ratio 1.01). Its excess of up to 1.05 at \\SIrange{1970}{2030}{\\rpm}, near the forced resonance, is the bias of D1: runs of 2000 revolutions place the onset there at 1.004--$1.012a_{\\lim}$.\n% src: results/c1_map.npz, results/c1_summary.json (map: step_clip, edge_clip, feed_clip, step_free, soft_minus_step); verification/tdsim/check10_forced_resonance_long_runs.json",
+     "fix_new": "Without the clip the step-entry limit sits at the linear limit (median ratio 1.01), but it exceeds it by more than \\SI{1.5}{\\percent} at 75 speeds, among them every speed from 1990 to \\SI{2480}{\\rpm}, and by up to \\SI{5}{\\percent} at \\SI{2000}{\\rpm}. Near the forced resonance (\\SIrange{1970}{2030}{\\rpm}) runs of 2000 revolutions place the onset at 1.004--$1.012a_{\\lim}$, so the excess there is the bias of D1; at the other speeds it was not checked with long runs.\n% src: results/c1_map.npz, results/c1_summary.json (map: step_clip, edge_clip, feed_clip, step_free, soft_minus_step); verification/tdsim/check10_forced_resonance_long_runs.json; results/c1_map.npz recomputed: a_step_free/a_lim > 1.015 at 75 speeds (1.0165-1.050, all of 1990-2480 rpm); a_edge_clip and a_feed_clip = 1.05 a_lim at 500, 540, 670, 720, 1000, 1080 rpm, a_step_clip at 500, 550, 670, 1000 rpm; at the other 245 speeds a_edge_clip mean 18.200 mm, a_lim mean 18.206 mm"
+    },
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "the face entry, natural in side milling, recovers the linear limit at all 251 speeds,",
+     "fix_new": "the face entry, natural in side milling, reaches at least $0.985a_{\\lim}$ at all 251 speeds,"
+    }
+   ],
+   "instruction": "Mark the ladder-top values in Fig. 4. Optionally verify the 75 unclipped speeds and the ladder-top speeds with 2000-revolution runs (check10 protocol) and store them."
+  },
+  {
+   "ids": "A-m10,B-B10",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid: the 4-128-pass band edge, the 64 entry phases and worst-phase step certificates, the '2.5-3 times too large' ellipsoids and the development iteration counts/first-run failures are not in the stored results. Edits delete them or keep only the qualitative statement; Appendix C then needs no exception. The validity-bound run is kept because README \u00a712.4 records it and the code regenerates it (delta=None).",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "This sampled test is only a consistency check, since, in a test during development, ellipsoids 2.5--3 times too large also passed it; the guarantee rests on the independent check.",
+     "fix_new": "This sampled test is only a consistency check, as ellipsoids that are too large can pass it; the guarantee rests on the independent check."
+    },
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "The certificate also depends on the entry phase. In a development run, applied at 64 entry phases at $0.3\\alim$, it gave $\\beta\\ge1$ at only 24 phases at \\SI{1420}{\\rpm} (minimum 0.49) and 27 at \\SI{1090}{\\rpm}; certificates maximised for the worst phase reach 0.78 and 0.80, and only at \\SI{2870}{\\rpm} is the worst phase certified ($\\beta=1.02$).",
+     "fix_new": "The certificate also depends on the entry phase, and it was computed for the entry phase of the simulator only."
+    },
+    {
+     "file": "paper/sections/appB_lmi.tex",
+     "fix_old": "For C3, solves without the warm start needed about 200 iterations (eight segments, during development) and stopped short, while a second, re-centred pass added only 0.4\\,\\% at \\SI{2500}{\\rpm} and $0.9\\alim$. Merging made the solves 3--4 times faster and agreed with separate vertices to the fifth digit (eight segments, development) and within 0.2\\,\\% in a test (four segments). In the first run the merged problem failed at the first solver step at 32 of the 48 points, its multiplier block mixing the small residual with terms of the size of $\\mathcal A$; balancing removed this, and with the fallbacks 47 points were certified, the one at \\SI{2870}{\\rpm} and $0.98\\alim$ only with separate vertices.",
+     "fix_new": "For C3, a second, re-centred pass added only 0.4\\,\\% at \\SI{2500}{\\rpm} and $0.9\\alim$, so a single solve, started in the coordinates of the C2 certificate, was used. Merging the vertices made the solves 3--4 times faster; the merged problem needed balanced multiplier blocks to start, and with the fallbacks 47 points were certified, the one at \\SI{2870}{\\rpm} and $0.98\\alim$ only with separate vertices."
+    },
+    {
+     "file": "paper/sections/appB_lmi.tex",
+     "fix_old": "Sizes reproduce to about 0.1\\,\\%, not bit for bit (3.426 against \\SI{3.428}{\\milli\\metre\\per\\second} at \\SI{2500}{\\rpm}, $0.9\\alim$).",
+     "fix_new": "Sizes reproduce to about 0.1\\,\\%."
+    },
+    {
+     "file": "paper/sections/appB_lmi.tex",
+     "fix_old": "in a development check the time step moved the result by about 0.1--0.2\\,\\%.",
+     "fix_new": "the time discretisation moves the result by about 0.1--0.2\\,\\%."
+    },
+    {
+     "file": "paper/sections/appC_software.tex",
+     "fix_old": "so that the numbers and figures of this article, apart from the preliminary runs and development checks marked as such, can be regenerated and inspected.",
+     "fix_new": "so that the numbers and figures of this article can be regenerated and inspected."
+    }
+   ]
+  },
+  {
+   "ids": "A-m11,B-m4",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid: Section 4.1 said all results use full memory, while the C3 off-axis runs used four passes. The edits remove the unstored 4-128-pass numbers, qualify the statement and give the rationale in Appendix B (four passes overstate the chip, which tends to favour chatter; none of the 3384 runs chattered).",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "In preliminary runs with single regeneration, clipped chatter grew beyond \\SI{1}{\\centi\\metre} and created an artificial lower edge of the band. A fixed number of remembered passes does not suffice either (four passes cover only \\SI{0.2}{\\milli\\metre} of feed): in preliminary runs under a \\SI{3}{\\metre\\per\\second} kick at \\SI{1040}{\\rpm}, the band edge moved from 0.18 to $0.78a_{\\lim}$ as the memory grew from 4 to 128 passes, whereas the full memory gives $0.22a_{\\lim}$ with the seven-kick protocol. All results below use the full memory (\\ref{app:simulator}).",
+     "fix_new": "With single regeneration, or with a fixed number of remembered passes (four passes cover only \\SI{0.2}{\\milli\\metre} of feed), the chip is overestimated once the tool has left the cut, and clipped chatter can diverge spuriously (\\ref{app:simulator}). All results below use the full memory, except the off-axis runs of the periodic certificate (Section~\\ref{sec:cert-c3}), which used the last four passes (\\ref{app:lmi})."
+    },
+    {
+     "file": "paper/sections/appB_lmi.tex",
+     "fix_old": "the C2 runs used the full surface memory, the C3 runs the last four passes, as in the original campaign, their starts lying inside the validity bound.",
+     "fix_new": "the C2 runs used the full surface memory, the C3 runs the last four passes, as in the original campaign, their starts lying inside the validity bound; four passes overstate the chip once the tool has left the cut for longer, which tends to favour chatter, and none of these runs chattered."
+    }
+   ]
+  },
+  {
+   "ids": "A-m11,B-m4",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Cheap: a representative subset (e.g. 18 directions x 4 phases at the four 0.9 a_lim points, 288 runs of 1-2 s) with full memory settles it.",
+   "instruction": "Rerun that subset with nreg = 0, store it, and replace the rationale clause in Appendix B by 'a rerun of 288 of these runs with the full memory also ended without chatter' (or report what changed)."
+  },
+  {
+   "ids": "A-m6,B-m6",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Agreed: the straight-tooth counterexample is at g = 0, outside the case study, and illustrates a classical fact. Two sentences keep the only relevant results; Table 5 is removed (or moved to Supplementary Material). Saves about 170 words and a table; later tables renumber automatically (checked in a scratch build).",
+   "instruction": "In paper/sections/s5_certificates.tex replace the text from 'Averaging is known to fail in strongly interrupted cutting' to the end of the '% src: README \u00a714.8; results/c3_counter.npz ... log_c3_counter.txt' line after Table~\\ref{tab:counter} (paragraph, its src line, the table environment and its src line) by:\nAveraging is known to fail in strongly interrupted cutting \\citep{davies2002stability,bayly2003stability,merdol2004multi}. With straight teeth at half immersion the uncontrolled cut has flip lobes below the averaged limit (from 0.947 of it at 1675--\\SI{1950}{\\rpm}); where they persist with DVF the forced orbit alone needs 27--\\SI{66}{\\volt}, so $u_0<0$ and C2 claims nothing, whereas without control, at \\SI{1850}{\\rpm} and 0.98 of the averaged limit, the averaged certificate (\\SI{13.2}{\\milli\\metre\\per\\second}) is the same for straight and helical teeth while the periodic one rejects the linearly unstable straight-tooth cut (Floquet multiplier 1.034).\n% src: README \u00a714.8; results/c3_straight.npz, c3_counter.npz, c3_summary.json (straight, counter); log_c3_counter.txt"
+  },
+  {
+   "ids": "A-m16,B-B2,B-B6,B-B8,B-m12,A-M2",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid: ozsoy2022robotically is in refs.bib but uncited (edit below); insperger2008chatter is also uncited. Missing literature listed below; entries were written from memory: verify every DOI and page range before adding (novelty memo \u00a70 warns about this).",
+   "edits": [
+    {
+     "file": "paper/sections/s1_intro.tex",
+     "fix_old": "\\citet{ozsoy2025frequency} showed in robot-assisted milling that actuator saturation can destabilise active vibration control, and modelled it in the frequency domain to guide the choice of cutting parameters.",
+     "fix_new": "Following a feasibility study of active vibration control in robot-assisted milling \\citep{ozsoy2022robotically}, \\citet{ozsoy2025frequency} showed in the same setting that actuator saturation can destabilise the control, and modelled it in the frequency domain to guide the choice of cutting parameters."
+    }
+   ],
+   "instruction": "Add after verification and cite: hu2002disturbance (Hu, Lin, Chen, Automatica 38(2) 2002 351-359, doi 10.1016/S0005-1098(01)00209-6) [Sec. 1 with hu2001book; Sec. 5.2 after 'non-zero input']; tarbouriech2000delay (Tarbouriech, Gomes da Silva, IEEE TAC 45(1) 2000 105-111, doi 10.1109/9.827363), cao2002delay (Cao, Lin, Hu, IEEE TCAS-I 49(2) 2002 233-240, doi 10.1109/81.983870), fridman2003regional (Fridman, Pila, Shaked, IJRNC 13(9) 2003 885-907, doi 10.1002/rnc.852), fridman2014book (Fridman, Introduction to Time-Delay Systems, Birkhauser 2014), gu2003book (Gu, Kharitonov, Chen, Stability of Time-Delay Systems, Birkhauser 2003) [Sec. 5.1 with seuret2014bessel]; rump2006verification (Rump, BIT 46(2) 2006 433-452, doi 10.1007/s10543-006-0056-1) [App. B]; fang2004l2 (Fang, Lin, Hu, Automatica 40(7) 2004 1229-1238, doi 10.1016/j.automatica.2004.02.009) [Discussion, 'persistent disturbances']; hu2004lure (Hu, Huang, Lin, IEEE TAC 49(4) 2004 535-548), hu2006nonquadratic (Hu, Teel, Zaccarian, IEEE TAC 51(11) 2006 1770-1786), dai2009piecewise (Dai, Hu, Teel, Zaccarian, Syst. Control Lett. 58(5) 2009 365-371), papachristodoulou2009sos (Papachristodoulou, Peet, Lall, IEEE TAC 54(5) 2009 1058-1064) [Discussion, next steps]; hara1988repetitive (Hara, Yamamoto, Omata, Nakano, IEEE TAC 33(7) 1988 659-668) and herzog1996unbalance (Herzog, Buhler, Gahler, Larsonneur, IEEE TCST 4(5) 1996 580-586) [Discussion, filtered alternatives]; budak2010process (Budak, Tunc, CIRP Annals 59(1) 2010 403-408) and altintas2012book (Altintas, Manufacturing Automation, 2nd ed., CUP 2012) [Discussion limitations, process damping and edge forces]. Cite insperger2008chatter with the helix/averaging references or remove it."
+  },
+  {
+   "ids": "A-M1,A-m8,B-m1,B-B10",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid: internal labels (C1-C3, D1, kick, authority, map/same-g1 design) and clashing symbols (E matrix vs E(s); K row vs K(s); tau for averaging horizon, segment length and loop delay; psi dead zone vs runout phase; rho/varrho three meanings; n speed vs dimension; q, p, h_k, Wdot_k, e reused; b_max sampled vs bound).",
+   "instruction": "Add a nomenclature table after Table 1 (symbols and labels: a_lim, a_chk, kappa, b(t), b_max/b_bar, u0, Delta v*, beta, averaged-model certificate C2, periodic-model certificate C3, classifier D1, step entry, face entry, feed ramp, kick, authority, map design, same-g1 design). Rename: regeneration matrix E -> E_r (Eq. 20, App. B, E_r = p_r q_r^T); feedback row K -> k^T; segment length tau -> tau_s; loop delay tau -> tau_d (Sec. 6, Eq. 31, Table 8, Fig. 10); horizon in Eq. (17) -> tau_a; runout phase psi -> phi_r; comb ratio rho -> T_c = (1+epsilon)T and N_t T; decay rate varrho -> sigma; balancing factor rho_k -> c_k; state dimension n -> n_xi; h_k, ell_k -> c_{0,k}, c_{1,k}; Wdot_k -> Delta_k W; size direction e -> e_beta; rigorous bound b_bar. Prefer descriptive names over C2/C3 in running text."
+  },
+  {
+   "ids": "A-m3,A-m4,A-m7,B-m7",
+   "category": "edit",
+   "priority": 2,
+   "rationale": "Valid figure issues: figures drawn 190 mm wide with 8 pt text are scaled about 0.7 in the preprint; Fig. 7 legend uses '(C1)'/'(C2)' and non-uniform depth rows.",
+   "instruction": "In paper/figures/make_figures.py: (1) draw at the text width of the review PDF or raise fonts so text is >= 7 pt after scaling (Figs. 4, 6, 7, 9 first); (2) Fig. 7: remove '(C1)'/'(C2)', use uniform rows or plot certified kick vs speed for 3-4 depths, finer colour scale, distinguish u0 <= 0 from 'no candidate passed', explain binning in the caption; (3) Fig. 3: zoomed insets of 1-2 tooth periods or x - x_p; (4) Fig. 5: optional axis Delta v/omega_n; (5) Figs. 2, 4, 8 as in the A-M4, A-m5 and A-M7 items. Re-check figure_numbers.json and captions.tex."
+  },
+  {
+   "ids": "A-m12",
+   "category": "needs-new-work",
+   "priority": 2,
+   "rationale": "Partly answerable: c1_basin.npz stores the slowest-mode decay per tooth period; at 0.98 a_lim it is 0.985-0.994, so a residual left by the face entry at revolution 40 decays only to 3-22 % by the kick at revolution 100 (1.4-2.9 % at 0.95 a_lim; essentially none at 0.999 a_lim). Its size relative to the kick response is not stored.",
+   "instruction": "For each basin point >= 0.95 a_lim store the deviation from x_p at revolution 100 of the unkicked face-entry run and its ratio to the deviation caused by the critical kick; if not small, kick after a convergence criterion. If not done, add to Section 4.1: 'At $0.98a_{\\lim}$ the slowest mode decays by only 0.985--0.994 per tooth period, so a residual of the face entry would have decayed to 3--22\\,\\% of its value by the kick; this residual was not measured.'"
+  },
+  {
+   "ids": "B-m2",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Correct: the averaging argument holds only for the time-invariant model; the edit says so and why it fails on the periodic model.",
+   "edits": [
+    {
+     "file": "paper/sections/s5_certificates.tex",
+     "fix_old": "With a single level, a periodic $W$ cannot gain on the averaged model: the LMIs are linear in $(W,Y,S)$ and $\\dot W$ integrates to zero over the period, so the period average of a feasible periodic certificate is a feasible constant one of the same size.",
+     "fix_new": "For the averaged, time-invariant model with a single level, a periodic $W$ cannot gain: the LMIs are then linear in $(W,Y,S)$ with constant coefficients and $\\dot W$ integrates to zero over the period, so the period average of a feasible periodic certificate is a feasible constant one of the same size; on the periodic model the argument fails, since the period average of $aH(t)W(t)$ is not the product of the averages."
+    }
+   ]
+  },
+  {
+   "ids": "A-m9",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Checked read-only with src/structure.py: |b_m| is proportional to |g/(1+gz)|, z = i w G_a G, increasing in g iff 1 + g Re z > 0; over harmonics 1-40, 251 speeds and g up to 2e4 the minimum is 0.92 (Re z < 0 at 0.9 % of pairs, where the actuator lead exceeds the structural lag); 1 + g Re z is linear in g, so g = 2e4 covers all smaller gains. Add this 10-line check to verification/paper/feas_monotone.py and store it before submission.",
+   "edits": [
+    {
+     "file": "paper/sections/s3_feasibility.tex",
+     "fix_old": "and at demands above \\SI{140}{\\newton}, far beyond $F_{\\max}$; the feasible set was one interval",
+     "fix_new": "and at demands above \\SI{140}{\\newton}, far beyond $F_{\\max}$. Each harmonic of $b$ grows with $g$, because $\\lvert g/(1+gz)\\rvert$, with $z=i\\omega G_a(i\\omega)G(i\\omega)$, increases with $g$ whenever $1+g\\operatorname{Re}z>0$, which holds at the first 40 tooth-passing harmonics at all 251 speeds for $g\\le\\SI{2e4}{\\volt\\second\\per\\metre}$; drops can therefore come only from the phase alignment of the harmonics in the peak or from a shrinking depth range. On the grid the feasible set was one interval"
+    }
+   ]
+  },
+  {
+   "ids": "A-m19",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Column header defined in the caption of Table 3.",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "The last column gives $m\\Delta v^*$ as a percentage of the cutting impulse $\\bar F_yT$ of Eq.~\\eqref{eq:impulse}.}",
+     "fix_new": "The last column gives $m\\Delta v^*$ as a percentage of the cutting impulse $\\bar F_yT$ of Eq.~\\eqref{eq:impulse}. Basin finite from: the smallest of the 12 depths at which some kick of at most \\SI{3}{\\metre\\per\\second} ends in chatter.}"
+    }
+   ]
+  },
+  {
+   "ids": "A-m15",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Verified (feas_g1500.npz, c1_map.npz): both sets have 157 speeds, 110 in common.",
+   "edits": [
+    {
+     "file": "paper/sections/s4_bistability.tex",
+     "fix_old": "it is below $0.97a_{\\lim}$ at 157 of 251 speeds (Fig.~\\ref{fig:map}).",
+     "fix_new": "it is below $0.97a_{\\lim}$ at 157 of 251 speeds (Fig.~\\ref{fig:map}), a different set from the 157 speeds at which the gain sits at its bound in Section~\\ref{sec:feas-res} (110 speeds belong to both)."
+    }
+   ]
+  },
+  {
+   "ids": "A-m17",
+   "category": "needs-new-work",
+   "priority": 3,
+   "rationale": "Eq. (18) over the speed range needs p per point (one kicked linear run each) or an analytical p from the residue of the critical root, which has not been derived or checked; the ED-1 edit states the route and the caveats.",
+   "instruction": "Optional: compute p as 2m|Res_{lambda_c}(sH(s))| at the four speeds, compare with c1_basin.npz p_mode, and if it agrees show Eq. (18) at 0.9 and 0.98 a_lim over the 251 speeds."
+  },
+  {
+   "ids": "B-m10",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Valid presentation point: Table 4 mixes model-consistency checks, simulator validation and the weak sampled check, and its model kicks follow different protocols (C2: 4 phases, ~2 % bisection; C3: 16 phases, 0.06 %).",
+   "instruction": "Split Table 4 into 'Consistency with the collocation model' and 'Validation in the simulator' blocks and footnote the protocol difference (or recompute C2 model kicks with the C3 protocol, a cheap rerun)."
+  },
+  {
+   "ids": "B-m11",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Partly valid. The closed form checks the loop without cutting in every case (c4_robust.a_lim_cf returns 0 if unstable at a = 1e-7; '0' in Fig. 10c), so a sentence suffices; the reviewer's explanation (E(iw) ~ iwT small near 8.4 Hz) is inaccurate here (|E| about 0.3 at 2500 rpm, 0.7 at 1090 rpm). The 5 kHz cut-off of the argument principle needs a stated bound (|Delta-1| decays like 1/w; rough estimate below 0.3).",
+   "instruction": "Add to Section 6.1 (ii) after 'like DVF \\citep{elliott2001feedback}': 'With the inertial actuator and a loop delay, positive realness alone does not ensure stability; the loop without cutting is therefore checked in every closed-form computation of Section~\\ref{sec:delayed-robust}.' and to Section 6.3 after 'up to \\SI{5}{\\kilo\\hertz}' a sentence giving the computed, stored bound of |Delta(iw)-1| beyond 5 kHz for all designs and modes."
+  },
+  {
+   "ids": "B-m13",
+   "category": "needs-new-work",
+   "priority": 3,
+   "rationale": "Valid but optional: the off-axis test samples 18 fixed directions; a worst-direction search would be stronger.",
+   "instruction": "Optional falsification search on the collocated model with the true dead zone, then simulate the worst points. If not done, add to Section 5.5 after 'none of the 3456 runs ended in chatter': 'These directions were sampled, not searched for the worst case.'"
+  },
+  {
+   "ids": "B-m5",
+   "category": "edit",
+   "priority": 3,
+   "rationale": "Valid: C3 is not converged in M (+3-12 % from 16 to 32), gains 6 % over C2 (mostly from the phase-dependent level), and fails at 2500 rpm/0.98 a_lim only on the round-off bound.",
+   "instruction": "Add at the end of Section 5.6: 'For design, the averaged certificate C2 is the practical choice; C3 serves to show that averaging does not cause the gap, and its sizes are conservative in the number of segments.' Quote C3 at M = 32 where compared at 0.9 a_lim (c3_decomp.npz) and state that at 2500 rpm/0.98 a_lim the best candidates failed only the round-off bound."
+  }
+ ],
+ "length_plan": "Main text (Sections 1-8) is about 14,500 words now and about 15,700 after the triage edits (they add requested content but already delete the limitation paragraphs of 4.7, 5.7 and 6.9, the development history and Table 5). Target: about 10,000 words (35-40 preprint pages) plus Appendices A-C (about 2,100) and a Supplementary Material file (about 2,000). Cuts, none losing a result:\nS1 Introduction (1,410 -> 900, -500): P1 actuator/hardware examples to one sentence (-80); P3 keep nonlinear chatter and regional guarantees, move the tool list (sector conditions, clock-dependent Lyapunov matrices, saturated periodic systems, collocation) to Sections 5.2/5.4, where it is cited again (-180); delete P4 (delayed feedback), which Section 6.2 repeats (-110); contributions one sentence each, 'tools are not new' list to one sentence (-130).\nS2 Model (1,300 -> 1,050, -250): frequency-scan details of 2.3 (grid, pole guard, actuator-mode crossing, SDM agreement) to App. A (-90); pole numbers and the 8.1 V test of 2.1 to App. A (-60); damping justification of 2.5 to two sentences, dB values to App. A (-70); helix remarks of 2.2 (-30).\nS3 Feasibility (1,680 -> 950, -730): 3.1 keep Eq. (13), start assumption, agreement and demand reading, entry dependence (27 to 16 N; gentle-entry optimum) and the 2300 rpm pocket in one sentence; SADE/reference/seed details and the 2280 rpm example to App. A (-280). 3.2 move the 151-gain monotonicity numbers and the simulator-vs-closed-form comparison (129/139 points) to App. A, keep the harmonic argument (-150). 3.3 drop the jump examples (383 to 213, 858 to 415), the 1690-2200 rpm per-speed comparison and the 1070 rpm ladder detail; kappa = 0.95, guard 0.85 and g_max = 3000 into a Table 2 footnote (-300).\nS4 Bistability (2,950 -> 1,950, -1,000): intro literature recap, already in S1 (-100); 4.1 kick-search grid/bisection and memory justification to App. A, keep the three entries and the kick definition (-250); 4.2 orbit and chatter ranges into the Fig. 3 caption (-80); 4.3 no-band list and classifier detail to one sentence each (-120); 4.4 unclipped comparison to two sentences (-100); 4.5 the 0.999 a_lim results to one sentence (-70); 4.7 merged into Discussion P1, which repeats it (linear limit is not the safety measure, entry is a design variable, gain map must account for the basin) (-180); D1 bias stated only in 4.1 and App. A, removing repeats in 4.3, 6.5 and 7 (-100).\nS5 Certificates (3,310 -> 2,050, -1,260): intro tools sentence (-50); 5.1 'collocation model, not the delay equation' stated once here, removing repeats in 6.3 and 8 (-60); 5.2 command-bound correction narrative to one sentence, details to App. B; Lemma/Proposition 1 replaces explanatory prose (-150); 5.4 vertex enumeration, enclosure (2048 samples), Petersen merging and literature list to App. B, keep W(t) and Eq. (28) (-220); 5.5 off-axis and sampled checks to one sentence, step-entry certificate to two sentences, Table 4 split and shortened (-200); 5.6 decomposition and segment-convergence paragraph (-150), a_e/D = 0.1 paragraph (-90) and the shortened straight-tooth paragraph (-95) to Supplementary Material; Floquet result to one sentence; keep C3/C2 summary, phase-by-phase validation and 'gap not from averaging' (-245 more by trimming).\nS6 Delayed term (3,420 -> 2,250, -1,170): 6.1 condense (ii)-(iii) (-80); 6.2 becomes the single prior-work paragraph on delayed feedback (0); 6.3 simulator paragraph and closed-form verification numbers to App. A/B (-200); 6.4 P-term to one sentence, its Table 6 rows to Supplementary Material (-100); 6.5 (-60); 6.6 condense 'Both families follow one pattern' (-80); 6.7 condense design list and comparisons, keep all-pairs, >= 18 mm and subset statistics (-250); 6.8 spindle-period comb paragraph to Supplementary Material, condense comb-error and loop-delay paragraphs (-260); 6.9 already removed (its g2 ~ 1000 compromise and implementation list are in the Discussion) (-140 of trimming elsewhere in 6).\nS7 Discussion (1,210 -> 1,050, -160): absorbs 4.7; trim the delayed-term paragraph, whose numbers are in Section 6.\nS8 Conclusions (480 -> 380, -100): two sentences per item.\nAppendices: App. B settings paragraph already trimmed; avoid repeating Table B.1 in text (-80).\nSupplementary Material: S1 C3 details (vertices, Petersen, enclosure, decomposition, segment convergence, a_e/D = 0.1); S2 straight-tooth counterexample with its table; S3 P-term results and spindle-period comb; S4 reproduction details (SADE, reference scan, pockets, published-map comparison); S5 classifier long-run checks.\nGlobal: secondary numbers in tables with 2-3 significant figures; each key number and caveat once ('no experiment': S1 and Discussion; 'collocation, not delay equation': 5.1 and Discussion; D1 bias: 4.1 and App. A); a nomenclature table replaces repeated definitions (-100).\nTotal about -5,300 words, giving about 10,400 words in Sections 1-8."
+}

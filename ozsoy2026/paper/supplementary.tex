@@ -1,0 +1,41 @@
+%% Supplementary Material for the manuscript (Mechanical Systems and Signal Processing).
+%% Build: latexmk -pdf supplementary.tex   (after main.tex, whose labels it cites via xr)
+\documentclass[preprint,12pt]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{siunitx}
+\sisetup{detect-all, range-phrase={--}, range-units=single, per-mode=symbol, group-minimum-digits=5}
+\DeclareSIUnit\rpm{rpm}
+\usepackage{xr}
+\externaldocument[M-]{main}
+\usepackage[hidelinks]{hyperref}
+\biboptions{numbers,sort&compress}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\alim}{a_{\lim}}
+\newcommand{\achk}{a_{\mathrm{chk}}}
+\newcommand{\Vmax}{V_{\max}}
+\newcommand{\bmax}{b_{\max}}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\begin{document}
+\begin{frontmatter}
+\title{Supplementary Material for ``Actuator saturation and bistability in active chatter control of milling: certified basins of attraction and delayed feedback''}
+\end{frontmatter}
+This document collects the numerical details, sensitivity checks and secondary results that support the article but are not needed to follow it. Section, equation, figure and table numbers without the prefix S refer to the article.
+
+\input{sections/supp_s3}
+\input{sections/supp_s4}
+\input{sections/supp_s5}
+\input{sections/supp_s6}
+
+\bibliographystyle{elsarticle-num-names}
+\bibliography{refs}
+\end{document}
