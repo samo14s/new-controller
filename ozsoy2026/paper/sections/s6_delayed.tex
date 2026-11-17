@@ -9,7 +9,7 @@ The DVF command of Eq.~\eqref{eq:dvf} is replaced by
 \begin{equation}\label{eq:comb-law}
   u(t)=-g_1\dot x(t)-g_2\bigl[\dot x(t)-\dot x(t-T)\bigr]-k_d\bigl[x(t)-x(t-T)\bigr],
 \end{equation}
-and clipped as before, $V=\sat_{\Vmax}(u)$. This is DVF plus a proportional--derivative feedback of the displacement difference over one tooth period; designs with $k_d=0$ are denoted DVF\,+\,D and designs with $g_2=0$ DVF\,+\,P. In the Laplace domain $U(s)=-\bigl[s\,K(s)+k_d\,E(s)\bigr]X(s)$, with the scalar transfer functions (not the row $K$ and the matrix $E$ of Eq.~\eqref{eq:coll})
+and clipped as before, $V=\sat_{\Vmax}(u)$. This is DVF plus a proportional--derivative (PD) feedback of the displacement difference over one tooth period; designs with $k_d=0$ are denoted DVF\,+\,D and designs with $g_2=0$ DVF\,+\,P. In the Laplace domain $U(s)=-\bigl[s\,K(s)+k_d\,E(s)\bigr]X(s)$, with the scalar transfer functions (not the row $K$ and the matrix $E$ of Eq.~\eqref{eq:coll})
 \begin{equation}\label{eq:comb-K}
   K(s)=g_1+g_2\,E(s),\qquad E(s)=1-e^{-sT}.
 \end{equation}
@@ -33,7 +33,7 @@ The collocated model~\eqref{eq:coll} keeps its form, with the DVF row $K=-g\,e_2
 \begin{equation*}
   \begin{gathered}
     K=-(g_1+g_2)\,e_2^\top+g_2\,d_N^\top-k_d\,\bigl(e_1-e_{4+N}\bigr)^\top,\\
-    d_N^\top\xi=\frac2T\Bigl[D_{N0}\,\tilde x+\sum_{l=1}^{N}D_{Nl}\,\tilde x(t+\vartheta_l)\Bigr],
+    d_N^\top\xi=\frac2T\Bigl[(D_N)_{N0}\,\tilde x+\sum_{l=1}^{N}(D_N)_{Nl}\,\tilde x(t+\vartheta_l)\Bigr],
   \end{gathered}
 \end{equation*}
 where $e_{4+N}^\top\xi=\tilde x(t-T)$ and $d_N^\top\xi$, the derivative of the Chebyshev interpolant of the history at $\vartheta=-T$ (\ref{app:lmi}), stands for $\dot{\tilde x}(t-T)$. Since $b(t)$ depends on $g_1$ only, the orbit, $\bmax$ and the sector condition~\eqref{eq:sector} are unchanged, and the LMIs \eqref{eq:lmi-dec}--\eqref{eq:lmi-size} and the check of Section~\ref{sec:cert-check} apply as they stand. A velocity kick, however, leaves a kink in the history that the interpolant smooths: the delayed command of the model then departs from that of the delay equation by about half of $g_2\Delta v$ in each of the first two tooth periods after a kick $\Delta v$, against less than \SI{1}{\percent} of $g\Delta v$ for DVF. The certificate therefore rests more on the simulator check (Section~\ref{sec:delayed-valid}) than those of Section~\ref{sec:certificates} do.
@@ -187,7 +187,7 @@ The results above assume one mode, an instantaneous loop, a comb delay equal to 
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/fig10_robustness.pdf}
-  \caption{Robustness of the delayed term (closed-form zero-order model; designs as in Table~\ref{tab:drobust}). (a)~Linear limit against the comb-delay error, relative to the exact delay ($g_2=\SI{2000}{\volt\second\per\metre}$), and (d)~worst forced-orbit command in the same cases. (b)~Worst forced-orbit command at \SI{2500}{\rpm} against the eccentric runout, and (e)~the runout at which it reaches \SI{9}{\volt}. (c)~$\alim(\tau)/\alim(0)$, worst over the four speeds and the three assumed second modes, at the computed delays only (0: loop unstable without cutting). (f)~$\alim$ with \SI{300}{\micro\second} and the \SI{400}{\hertz} mode (solid) or \SI{200}{\micro\second} and the \SI{600}{\hertz} mode (dashed); $g_2=4000$, unstable without cutting in both cases, is not shown.}
+  \caption{Robustness of the delayed term (closed-form zero-order model; designs as in Table~\ref{tab:drobust}). (a)~Linear limit against the comb-delay error, relative to the exact delay ($g_2=\SI{2000}{\volt\second\per\metre}$), and (d)~worst forced-orbit command in the same cases. (b)~Worst forced-orbit command at \SI{2500}{\rpm} against the eccentric runout, and (e)~the runout at which it reaches \SI{9}{\volt}. (c)~$\alim(\tau)/\alim(0)$, worst over the four speeds and the three assumed second modes, at the computed delays only (0: loop unstable without cutting). (f)~$\alim$ of DVF and of DVF\,+\,D with $g_2=1000$ and 2000, with \SI{300}{\micro\second} and the \SI{400}{\hertz} mode (solid) or \SI{200}{\micro\second} and the \SI{600}{\hertz} mode (dashed); $g_2=4000$, unstable without cutting in both cases, is not shown.}
   \label{fig:robust}
 \end{figure}
 

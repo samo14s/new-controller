@@ -177,13 +177,13 @@ def fig02():
     f, c, e, m = load("feas_g1500.npz"), load("feas_cert_g1500.npz"), load("gainmap_main.npz"), load("c1_map.npz")
     fig, ax = plt.subplots(1, 2, figsize=(W2, 72 * MM), layout="constrained")
     a = ax[0]
-    a.plot(e["rpm"], e["g_best"], color=GREY, lw=1.0, label="Eq. (2) of Ozsoy et al., as written")
+    a.plot(e["rpm"], e["g_best"], color=GREY, lw=1.0, label="Published condition (reproduced)")
     a.plot(f["rpm"], f["g_best"], color=BLUE, lw=1.2, label=r"Reformulated condition, $g\leq1500$ V s/m")
     a.set(xlabel="Spindle speed $n$ (rpm)", ylabel="Gain $g$ (V s/m)", xlim=(500, 3000), ylim=(0, 1700))
     a.legend(loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=1, borderaxespad=0.0)
     b = ax[1]
     b.plot(m["rpm"], m["a_lim0"], "--", color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
-    b.plot(e["rpm"], e["a_best"], color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}$ at the Eq. (2) gains")
+    b.plot(e["rpm"], e["a_best"], color=GREY, lw=1.0, label=r"$a_{\mathrm{lim}}$ at the published-condition gains")
     b.plot(c["rpm"], c["a_op_linear"], ":", color=BLUE, lw=1.2,
            label=r"$\kappa\,a_{\mathrm{lim}}$, reformulated ($\kappa=0.9$)")
     b.plot(c["rpm"], c["a_cert"], color=BLUE, lw=1.2, label=r"$a_{\mathrm{chk}}$, reformulated")
@@ -472,7 +472,7 @@ def fig07():
                                   ec=GREY, lw=0.8, hatch="////", zorder=3))
     ratio = mp["a_step_clip"] / mp["a_lim"]
     a.plot(mp["rpm"], ratio, color="white", lw=2.4, zorder=4)
-    a.plot(mp["rpm"], ratio, color=STEP, lw=1.1, zorder=5, label="Simulated step-entry limit (C1)")
+    a.plot(mp["rpm"], ratio, color=STEP, lw=1.1, zorder=5, label="Simulated step-entry limit")
     a.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(xe[0], xe[-1]),
           ylim=(ye[0], ye[-1]), yticks=fr)
     a.set_yticklabels([f"{x:g}" for x in fr])
@@ -497,7 +497,7 @@ def fig07():
         b.axhline(1.0, color=K, lw=0.8)
         j = int(np.argmin(np.abs(mp["rpm"] - nn)))
         b.axvline(mp["a_step_clip"][j] / mp["a_lim"][j], color=STEP, lw=1.0, ls="--",
-                  label="Simulated step-entry limit (C1)")
+                  label="Simulated step-entry limit")
         b.plot(St["frac"], beta, "o--", color=C2C, mfc="white", ms=3.8, lw=1.0, label=r"Step-entry certificate $\beta$ (C2)")
         b.set(xlabel=r"$a\,/\,a_{\mathrm{lim}}$ (–)", xlim=(0.25, 0.95), yscale="log", ylim=(0.1, 4),
               xticks=(0.3, 0.5, 0.7, 0.9))
