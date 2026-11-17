@@ -1,7 +1,7 @@
 Highlights (each at most 85 characters including spaces)
 
 - Clipping the actuator command shrinks the basin of linearly stable milling cuts.
-- Entering the cut from rest lowers the attainable depth at 157 of 251 speeds.
-- Near the limit, kicks of 2.4–10.8 % of one tooth's impulse trigger chatter.
+- Entering from rest lowers the attainable depth by over 3 % at 157 of 251 speeds.
+- Near the limit, kicks of 2.4–10.8 % of one tooth's impulse can trigger chatter.
 - Sector-condition LMIs certify basins that no simulated kick violated.
 - A published delayed difference term saves actuator authority but needs a fast loop.
