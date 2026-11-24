@@ -1,4 +1,4 @@
-Highlights (each at most 85 characters including spaces)
+Highlights
 
 - Clipping the actuator command shrinks the basin of linearly stable milling cuts.
 - A step entry from rest chatters below 0.97 of the linear limit at 157 of 251 speeds.

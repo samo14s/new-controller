@@ -32,8 +32,11 @@ def inline(path, depth=0):
 def main():
     if not os.path.exists(os.path.join(HERE, "main.bbl")):
         sys.exit("run latexmk -pdf main.tex first (main.bbl missing)")
+    for f in ("supplementary.pdf", "cover_letter.pdf"):                # separate upload items (Supplementary Material, Cover Letter)
+        if not os.path.exists(os.path.join(HERE, f)):
+            sys.exit(f + " missing: build it first (tools/build_all.sh)")
     flat = inline(os.path.join(HERE, "main.tex"))
-    flat = re.sub(r"(?m)^[ \t]*% src:.*\n", "", flat)                 # internal provenance notes
+    flat = re.sub(r"(?m)^[ \t]*% src\b.*\n", "", flat)                # internal provenance notes ("% src:" and "% src (...):")
     figs = []
 
     def fig(m):

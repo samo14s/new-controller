@@ -33,7 +33,7 @@ def labels_from_aux(aux):
     """label -> printed number, from \\newlabel{key}{{num}{page}...}."""
     out = {}
     for m in re.finditer(r"\\newlabel\{([^}]+)\}\{\{((?:[^{}]|\{[^{}]*\})*)\}", read(aux)):
-        out[m.group(1)] = re.sub(r"\\[a-zA-Z]+\s*", "", m.group(2)).replace("{", "").replace("}", "")
+        out[m.group(1)] = re.sub(r"\\[a-zA-Z]+\s*", "", m.group(2)).replace("{", "").replace("}", "").replace(" ~", "~")
     return out
 
 
@@ -108,7 +108,7 @@ def main():
     # front matter
     title = braced(main_tex, main_tex.index(r"\title{") + len(r"\title"))[0]
     hl = main_tex[main_tex.index(r"\begin{highlights}") + 18:main_tex.index(r"\end{highlights}")]
-    kw = main_tex[main_tex.index(r"\begin{keyword}") + 15:main_tex.index(r"\end{keyword}")].replace(r"\sep", ";")
+    kw = main_tex[main_tex.index(r"\begin{keyword}") + 15:main_tex.index(r"\end{keyword}")].replace(r" \sep", ";")
     body = main_tex[main_tex.index(r"\linenumbers") + len(r"\linenumbers"):main_tex.index(r"\bibliographystyle")]
     body = inline(body)
     abstract = inline(read(os.path.join(HERE, "sections", "s0_abstract.tex")))
@@ -181,7 +181,7 @@ def main():
         if m.group(2) or not k:
             out.append(body[m.start():end]); pos = end; continue
         n = lab.get(k.group(1), "")
-        prefix = ("Appendix %s. " % n) if k.group(1).startswith("app:") else ("%s " % n)
+        prefix = ("%s. " % n.replace(" ~", "~")) if k.group(1).startswith("app:") else ("%s " % n)
         out.append(r"\%s*{%s%s}" % (m.group(1), prefix, t))
         pos = end + k.end()
     out.append(body[pos:])
@@ -189,7 +189,9 @@ def main():
     body = body.replace(r"\appendix", "")
     body = re.sub(r"(?m)^[ \t]*%.*\n", "", body)                          # comment lines
     body = re.sub(r"\{\\rpm\}", "{rpm}", body)                            # siunitx unit pandoc does not know
+    body = re.sub(r"\\parbox\{[^{}]*\}\{", "{", body)                      # pandoc fails on \parbox (Table 3 note) and then drops Table 2
     body = re.sub(r"\\[Bb]igg?[lr](?=[^a-zA-Z])", "", body)              # texmath rejects \Bigl( in some places
+    body = re.sub(r"\\SI\{(-?)e(\d+)\}", r"\\SI{\g<1>1e\2}", body)          # \SI{-e5}: pandoc needs a mantissa
     body = body.replace(r"\lvert", "|").replace(r"\rvert", "|").replace(r"\lVert", r"\|").replace(r"\rVert", r"\|")
     body = re.sub(r"_\{\\(lim|max|min)\}", r"_{\\mathrm{\1}}", body)       # a_{\lim}: an operator in OMML
     body = re.sub(r"\\tag\{([^}]*)\}", r"\\qquad(\1)", body)                 # Word shows no \tag
