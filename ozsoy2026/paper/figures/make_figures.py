@@ -63,7 +63,7 @@ C2C = "#E69F00"         # certificate C2 (averaged model)
 C3C = "#009E73"         # certificate C3 (periodic model)
 STEP = "#D55E00"        # simulated step entry
 FACE = "#CC79A7"        # simulated face entry; describing-function estimate (Fig. 5)
-LIGHT = "#E3E3E3"       # bistable band (fill)
+LIGHT = "#E3E3E3"       # unsafe band (fill)
 STEP_FILL = "#F6D3BD"   # step entry ends in chatter (fill; STEP lightened, opaque)
 
 plt.rcParams.update({
@@ -305,7 +305,7 @@ def fig03():
 
 # =============================================================== Fig. 4 ====
 def fig04():
-    """Entry limits and the bistable band over 251 speeds (C1)."""
+    """Entry limits and the unsafe band over 251 speeds (C1)."""
     d, bd = load("c1_map.npz"), load("c1_band.npz")
     n, al = d["rpm"], d["a_lim"]
     lowb = bd["a_band_low"]
@@ -314,14 +314,14 @@ def fig04():
                            gridspec_kw={"height_ratios": [2.3, 1]})
     a = ax[0]
     a.fill_between(bd["rpm"], lowb, al_b, where=np.isfinite(lowb), color=LIGHT, lw=0, interpolate=False,
-                   label="Bistable band")
+                   label="Unsafe band")
     a.fill_between(n, d["a_step_clip"], al, where=d["a_step_clip"] < al, color=STEP_FILL, lw=0,
                    label="Step entry ends in chatter")
     a.plot(n, d["a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
     a.plot(n, al, color=K, lw=1.02, label=r"$a_{\mathrm{lim}}(g)$, linear")
     a.plot(n, d["a_edge_clip"], "--", color=FACE, lw=0.85, label=r"Face entry, $|V|\leq9$ V")
     a.plot(n, d["a_step_clip"], color=STEP, lw=0.85, label=r"Step entry, $|V|\leq9$ V")
-    a.plot(bd["rpm"], lowb, "o", color=K, ms=1.98, mew=0, label="Lower edge of the bistable band")
+    a.plot(bd["rpm"], lowb, "o", color=K, ms=1.98, mew=0, label="Lower edge of the unsafe band")
     a.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 33), xlim=(480, 3020))
     b = ax[1]
     b.axhline(1.0, color=K, lw=0.68)

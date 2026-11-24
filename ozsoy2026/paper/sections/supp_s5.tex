@@ -2,6 +2,13 @@
 
 This section gives the details of the certificates of Section~\ref{M-sec:certificates} that are not needed to follow the argument: the vertex conditions and the enclosure of the periodic certificate C3, the validation protocols, the effect of the validity bound, what C3 gains over the averaged certificate C2 and how it converges in the number of segments, the results at low radial immersion and the straight-tooth counterexample to averaging.
 
+\subsection{Circle criterion}\label{supp:circle}
+
+The condition of Proposition~\ref{M-prop:circle} was evaluated on a frequency grid of \SI{0.01}{\hertz} over 0.1--\SI{60}{\hertz}, \SI{0.002}{\hertz} over 60--\SI{600}{\hertz} and \SI{0.5}{\hertz} over 600--\SI{5000}{\hertz}, above which $\lvert L\rvert<0.02$. Near $\alim(0)$ the dip of $\operatorname{Re}[1+L(i\omega)]$ is as narrow as the decay rate of the critical root, so the minimum was refined around the eight lowest local minima of $\operatorname{Re}[1+L]$ and the eight highest local maxima of $\lvert L\rvert$ on the grid by three nested zooms of 2001 points each; at 12 test points (four speeds, three depths up to $0.99\alim(0)$) the refinement changed $\mu$ by less than $10^{-6}$. The depth $a_{\mathrm{circ}}$ was found by a scan of 40 depths in $(0,\alim(0))$ followed by bisection to a relative $10^{-6}$. At no speed did a depth pass after a failing one, so the set of depths at which the condition holds is an interval, and at two speeds it extends to $\alim(0)$ itself. The condition always fails near the structural mode, at 124--\SI{129}{\hertz}, where the critical root of the uncontrolled cut approaches the imaginary axis. The forced orbit was checked on 2000 depths up to $a_{\mathrm{circ}}$; where the scheduled gain brings the steady command to the clip, Eq.~\eqref{M-eq:feas} holding with equality, the dense check finds it above \SI{9}{\volt} by at most \SI{5}{\milli\volt}, and the depth at which this first happens bounds $a_{\mathrm{circ}}$. With $g=\SI{1500}{\volt\second\per\metre}$ at every speed instead of the scheduled gains, the condition alone holds up to $0.954\,\alim(0)$ at the median speed, but the forced orbit is clipped below that depth at 57 speeds (1530--\SI{2090}{\rpm}), down to $0.07\,\alim(0)$ at \SI{1950}{\rpm}.
+
+At the four speeds of Section~\ref{M-sec:bistab-basin}, $a_{\mathrm{circ}}/\alim(0)$ falls slowly with the gain, from 0.986 at $g=\SI{250}{\volt\second\per\metre}$ to 0.862 at $g=\SI{3000}{\volt\second\per\metre}$ at \SI{1420}{\rpm}, and by at most \SI{2}{\percent} over the same range at 1090, 2500 and \SI{2870}{\rpm}. The lower edge of the unsafe band lies above $a_{\mathrm{circ}}$ at all 109 speeds where it was found, by a factor of at least 1.11. The criterion admits any time variation of the sector gain $\varphi(t,y)/y$ in $[0,1]$, whereas in the clipped loop it varies only through $b(t)$ and the deviation itself; this is the source of its conservatism where it fails well below $\alim(0)$. The Popov criterion, which would use more of the structure, requires a time-invariant nonlinearity and does not apply while $b(t)\neq0$.
+% src: verification/paper/circle_criterion.py (F_HZ grid, mu, _zoom, a_circ, first_clipped_depth, add_orbit_limit), circle_criterion.json (g_best: orbit_peak_V_up_to_a_circ - 9 V <= 0.0046 V; g1500: ratio_median 0.9537, n_orbit_limited 57, rpm 1530-2090, ratio_eff_min 0.0724 at 1950 rpm; refinement_check: |mu_grid - mu_refined| < 1e-6 at 12 points; g_best: n_nonmonotone 0, n_reached_a0 2, f_fail_hz 123.7-128.7; gain_sweep: 1420 rpm 0.9856 at g = 250 to 0.8617 at g = 3000; 1090 rpm 0.9978-0.9780, 2500 rpm 0.9991-0.9898, 2870 rpm 0.99996-0.99951; band: edge_over_a_circ_min 1.1085, all_edges_above_a_circ true)
+
 \subsection{Vertex conditions and enclosure of the periodic certificate}\label{supp:cert-vertex}
 
 On segment $k$, with $W(s)$ and $Y(s)$ from Eq.~\eqref{M-eq:Wt}, the decrease condition~\eqref{M-eq:lmi-per} is imposed at the six vertices of Proposition~\ref{M-prop:c3}, $(s,\sigma)=(0,0)$, $(\tfrac12,0)$ or $(1,1)$ and $r=\pm\varepsilon_k$, as
@@ -16,6 +23,17 @@ with $M_0$ the matrix at $r=0$. Condition~\eqref{eq:app-merged} merges the verti
 
 The line $c_{0,k}+c_{1,k}s$ is fitted by least squares to $aH$ at the midpoints of 2048 equal cells of segment $k$, and $\varepsilon_k$ is the largest residual plus $(L+\lvert c_{1,k}\rvert/\tau_s)\,\tau_s/4096$, where $L\ge\lvert\mathrm d(aH)/\mathrm dt\rvert$ holds because each tooth contributes to $\mathrm d(aH)/\mathrm dt$ only through the two ends of its engaged interval in $z$.
 % src: src/c3_periodic.py (enclosure: N_ENC 2048; aH_rate_bound; corners; lmi: merged block, P_SCALE 10; check); README §14.2, §14.9
+
+\subsection{Certified kick over the gain map}\label{supp:cert-surface}
+
+Figure~\ref{fig:surf} shows the certified kick of the averaged model over the gain map of Section~\ref{M-sec:feasibility} and the step-entry certificate at the four speeds of Section~\ref{M-sec:cert-c2}.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig07_certified_surface.pdf}
+\caption{(a) Certified kick of the averaged model (C2) over spindle speed and depth on the gain map of Section~\ref{M-sec:feasibility}: 42 speeds and the seven computed depths 0.5, 0.6, 0.7, 0.8, 0.9, 0.95 and $0.98\alim$, drawn as rows of equal height (the vertical axis is not to scale in $a/\alim$), with colour bins in a 1--2--5 sequence. Not certified (7 of 294 points): cross-hatched, the forced orbit itself reaches the clip ($u_0\le0$, three points); hatched, no candidate passed the check (four points). Open circles: depths above the simulated step-entry limit of Section~\ref{M-sec:bistability}, at which the step entry from rest ends in chatter. (b)--(e) Step-entry certificate $\beta$ at the four speeds of Fig.~\ref{M-fig:cert}; $\beta\ge1$ (shaded) certifies the entry at rest on a fresh surface at the entry phase of the simulator; dashed: simulated step-entry limit. Command bound corrected as in Section~\ref{M-sec:cert-lmi}.}
+\label{fig:surf}
+\end{figure}
 
 \subsection{Validation protocols}\label{supp:cert-protocol}
 
