@@ -1,0 +1,784 @@
+{
+ "note": "Basin-aware gain scheduling of clipped DVF: the deepest cut with a certified kick basin.\n\nPurpose.  The authority-only schedule of Section 3 (Eq. feas) picks, per speed, the largest\ngain whose steady forced command fits the 9 V clip up to 0.9 a_lim; its checked depth a_chk\nrests on one simulated step entry and lies inside the bistable band (Sections 3-4).  The\nmanuscript left open \"a gain map that keeps a certified kick at every depth up to kappa a_lim\"\n(Section 7).  This script computes it: per speed n, the largest depth a_rob(n; beta_req)\nthat some DVF gain g keeps robust, and that gain g*.\n\nDefinitions.  A grid depth a in {2, 4, ..., 32} mm is admissible for (n, g, beta_req) if\n  (L) a < a_lim(n, g)                         ZOA linear limit (zoa.a_lim);\n  (V) bbar(n, a, g) <= (1 - rho) Vmax         rho = 0.1, Vmax = 9 V: the rigorous bound on the\n                                              forced command (c3_periodic.orbit, largest of its\n                                              16 segment bounds, harmonics above the 40th\n                                              included), i.e. 10 % of the voltage kept free;\n  (P) a <= a_phys = 32 mm                     twice the cutter diameter;\n  (C) beta(n, a, g) >= beta_req               certified kick of the averaged collocated model\n                                              (c2_certificate.certify_kick: e = unit velocity,\n                                              delta = 0.5, the 9 V clip), rescaled to the\n                                              rigorous bound as in the manuscript:\n                                              beta = beta_c2 min(1, (9 - bbar) / (9 - bmax_c2)).\na_rob(n, g; beta_req) is the largest grid depth such that every grid depth from 2 mm up to it\nis admissible (0 if 2 mm is not); a_rob(n; beta_req) = max over the candidate gains, g* the\nmaximiser (ties: the larger smallest certified kick over the depths up to a_rob, then the\nsmaller gain).  beta_req = 1, 2 and 5 mm/s.  The binding constraint is the one that fails at\nthe next grid depth a_rob + 2 mm ('a_phys' when a_rob = 32 mm).\n\nProtocol (damping of every stored result: params.set_damping(gainmap_main.npz zeta), 1.34 %).\n  speeds   the 21 speeds 500:125:3000 rpm and the C1 basin speeds 1090, 1420, 2870 (2500 is\n           on the grid).\n  compare  per speed: a_lim(n, 0); the authority-only design of the manuscript, g_auth =\n           feas_g1500.npz g_best and a_chk = feas_cert_g1500.npz a_cert (off the stored 10 rpm\n           grid recomputed with feasibility.edge_gain(g_hi = 1500) and the step-entry check of\n           src/run_feas_certify.py; also at two stored speeds, as a check); the same with\n           g <= 3000 (feas_g3000 / feas_cert_g3000); the published-condition depth\n           gainmap_main.npz a_best (off grid: the two neighbouring stored speeds, flagged).\n  scan     candidate gains: G_COARSE = 0:250:3000 V s/m, then, for each beta_req, +-125 and\n           then +-62.5 V s/m around the best gain so far.  Branch and bound: a_cheap(n, g),\n           the largest grid depth up to which (L), (V) and (P) hold (closed form), bounds\n           a_rob(n, g; beta_req) from above for every beta_req; coarse gains are taken in\n           decreasing order of a_cheap and skipped when a_cheap cannot exceed the best a_rob\n           found so far for any beta_req, refinement gains when it cannot exceed that\n           beta_req's best (so ties with the best are not explored).  g_auth is always\n           evaluated, for the comparison.  One gain: depths upward from 2 mm until a depth\n           is not admissible for beta_req = 1 mm/s (at a (V) failure with bbar < 9 V the\n           certificate is still computed, for the report).  Certificates with the reduced\n           order N_red = nodes_for(n) - 8 (24 at 500-625 rpm, 20 at 750-875, 16 at 1000-1875,\n           12 at 2000-3000; basin_aware_nconv.json: its linear limit is within 1.2e-4 of the\n           ZOA limit, where N = 10-14 fails at low speed) and the solver defaults (c2.FAST).\n  recert   per speed and beta_req, with the default order N = nodes_for(n): the design point\n           (n, g*, a_rob), every lower grid depth whose reduced-order kick is below\n           MARGIN = 1.15 beta_req, and the failing depth a_rob + 2 mm.  Each default-order\n           certificate is computed with c2.FAST and, if below the threshold in question, also\n           with c2.TIGHT; the larger is kept (every candidate is checked by c2.check whatever\n           the solver settings).  If one falls below beta_req, a_rob is lowered to the grid\n           depth below it and the check repeated; if g* then falls below another gain's\n           reduced-order a_rob, that gain is re-certified the same way and the larger\n           corrected a_rob wins.  A pass at the failing depth is flagged ('could be one step\n           higher'), not applied.\n  validate at VAL_SPEEDS, per beta_req: the simulated critical kick (c1_unsafe_zone.\n           _critical_kick: face entry, full surface memory, |V| <= 9 V, kick at revolution\n           100, 300-revolution window, D1 classifier) at the kick phases 0, 4, 8, 12 of 16 at\n           the design point, and at the phases 0 and 8 at the failing depth a_rob + 2 mm;\n           kicks of exactly beta_req at all 16 phases at the design point; the critical kick\n           (same 4 phases) of the authority-only design at its checked depth a_chk.  At every\n           speed and design point: one step entry from rest and one face entry with the 9 V\n           clip and the full surface memory (tdboundary.classify), which the certificate does\n           not cover (it certifies kicks on the settled cut).\n  assemble basin_aware.json (numbers; every quoted value has a key) and basin_aware.npz\n           (arrays for the 'basin-aware stability chart': depth against speed for a_lim(0),\n           a_lim(g_auth), a_chk, the published-condition depth, a_lim(g*) and a_rob for the\n           three beta_req; plus the dense stored curves over 251 speeds and, per speed and\n           coarse gain, bbar and the reduced-order kick on the depth grid).\n\nHow to run (from the repository root ozsoy2026/; about 2 h with 2 workers):\n    OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 nohup python3 verification/paper/basin_aware.py         all --workers 2 > verification/paper/basin_aware.log 2>&1 &\n  Stages: scan (includes compare and recert), validate, assemble; 'all' runs them in order.\n  Every unit of work is appended to verification/paper/basin_aware_cache/<protocol hash>/ as\n  it finishes, so an interrupted run resumes where it stopped.\n",
+ "protocol": {
+  "zeta": 0.0134,
+  "vmax_V": 9.0,
+  "rho": 0.1,
+  "vlim_V": 8.1,
+  "a_phys_mm": 32.0,
+  "depth_grid_mm": [
+   2.0,
+   4.0,
+   6.0,
+   8.0,
+   10.0,
+   12.0,
+   14.0,
+   16.0,
+   18.0,
+   20.0,
+   22.0,
+   24.0,
+   26.0,
+   28.0,
+   30.0,
+   32.0
+  ],
+  "beta_req_mmps": [
+   1.0,
+   2.0,
+   5.0
+  ],
+  "coarse_gains": [
+   0.0,
+   250.0,
+   500.0,
+   750.0,
+   1000.0,
+   1250.0,
+   1500.0,
+   1750.0,
+   2000.0,
+   2250.0,
+   2500.0,
+   2750.0,
+   3000.0
+  ],
+  "refine_steps": [
+   125.0,
+   62.5
+  ],
+  "margin": 1.15,
+  "n_red": "nodes_for(rpm) - 8",
+  "scan_settings": "c2.FAST",
+  "val_speeds": [],
+  "val_phases": [
+   0,
+   4,
+   8,
+   12
+  ],
+  "cache": "050bc4a99e"
+ },
+ "summary": {
+  "1": {
+   "a_rob_mm_grid21": {
+    "mean": 14.0,
+    "min": 14.0,
+    "max": 14.0,
+    "min_at_rpm": 2500.0
+   },
+   "a_chk_mm_grid21_mean": 13.009262572915192,
+   "a_rob_over_a_chk_grid21": {
+    "mean": 1.0761563095165354,
+    "min": 1.0761563095165354,
+    "max": 1.0761563095165354,
+    "median": 1.0761563095165354
+   },
+   "a_chk_minus_a_rob_mm_grid21": {
+    "mean": -0.9907374270848077,
+    "max": -0.9907374270848077,
+    "min": -0.9907374270848077
+   },
+   "a_rob_below_a_chk_speeds": 0,
+   "a_rob_over_a_lim0_grid21_median": 11.306598869891255,
+   "a_rob_over_a_lim_auth_grid21_median": 0.8122590947263684,
+   "primary_binding_counts_grid21": {
+    "a_phys": 0,
+    "linear limit": 1,
+    "voltage margin": 0,
+    "certificate": 0,
+    "none": 0
+   },
+   "primary_binding_by_rpm": {
+    "2500": "linear limit"
+   },
+   "g_star_by_rpm": {
+    "2500": 1250.0
+   },
+   "g_star_over_g_auth_grid21": {
+    "median": 0.8333333333333334,
+    "min": 0.8333333333333334,
+    "max": 0.8333333333333334
+   },
+   "g_star_below_g_auth_speeds": 1,
+   "g_star_above_g_auth_speeds": 0,
+   "corrected_down_speeds": [],
+   "upward_possible_speeds": [],
+   "voltage_violated_between_grid_depths_speeds": [],
+   "a_rob_auth_gain_grid21_mean": 4.0,
+   "gain_limited_by_primary_grid21": {
+    "a_phys": 0,
+    "linear limit": 0,
+    "voltage margin": 1,
+    "certificate": 0,
+    "none": 0
+   },
+   "gain_limited_by_by_rpm": {
+    "2500": [
+     "voltage margin"
+    ]
+   },
+   "step_entry_chatters_at_design_rpm": [
+    2500.0
+   ],
+   "face_entry_chatters_at_design_rpm": [],
+   "a_rob_over_a_lim_at_g_star_grid21": {
+    "median": 0.9918423601802522,
+    "min": 0.9918423601802522,
+    "max": 0.9918423601802522
+   }
+  },
+  "2": {
+   "a_rob_mm_grid21": {
+    "mean": 14.0,
+    "min": 14.0,
+    "max": 14.0,
+    "min_at_rpm": 2500.0
+   },
+   "a_chk_mm_grid21_mean": 13.009262572915192,
+   "a_rob_over_a_chk_grid21": {
+    "mean": 1.0761563095165354,
+    "min": 1.0761563095165354,
+    "max": 1.0761563095165354,
+    "median": 1.0761563095165354
+   },
+   "a_chk_minus_a_rob_mm_grid21": {
+    "mean": -0.9907374270848077,
+    "max": -0.9907374270848077,
+    "min": -0.9907374270848077
+   },
+   "a_rob_below_a_chk_speeds": 0,
+   "a_rob_over_a_lim0_grid21_median": 11.306598869891255,
+   "a_rob_over_a_lim_auth_grid21_median": 0.8122590947263684,
+   "primary_binding_counts_grid21": {
+    "a_phys": 0,
+    "linear limit": 1,
+    "voltage margin": 0,
+    "certificate": 0,
+    "none": 0
+   },
+   "primary_binding_by_rpm": {
+    "2500": "linear limit"
+   },
+   "g_star_by_rpm": {
+    "2500": 1250.0
+   },
+   "g_star_over_g_auth_grid21": {
+    "median": 0.8333333333333334,
+    "min": 0.8333333333333334,
+    "max": 0.8333333333333334
+   },
+   "g_star_below_g_auth_speeds": 1,
+   "g_star_above_g_auth_speeds": 0,
+   "corrected_down_speeds": [],
+   "upward_possible_speeds": [],
+   "voltage_violated_between_grid_depths_speeds": [],
+   "a_rob_auth_gain_grid21_mean": 4.0,
+   "gain_limited_by_primary_grid21": {
+    "a_phys": 0,
+    "linear limit": 0,
+    "voltage margin": 1,
+    "certificate": 0,
+    "none": 0
+   },
+   "gain_limited_by_by_rpm": {
+    "2500": [
+     "voltage margin",
+     "certificate"
+    ]
+   },
+   "step_entry_chatters_at_design_rpm": [
+    2500.0
+   ],
+   "face_entry_chatters_at_design_rpm": [],
+   "a_rob_over_a_lim_at_g_star_grid21": {
+    "median": 0.9918423601802522,
+    "min": 0.9918423601802522,
+    "max": 0.9918423601802522
+   }
+  },
+  "5": {
+   "a_rob_mm_grid21": {
+    "mean": 10.0,
+    "min": 10.0,
+    "max": 10.0,
+    "min_at_rpm": 2500.0
+   },
+   "a_chk_mm_grid21_mean": 13.009262572915192,
+   "a_rob_over_a_chk_grid21": {
+    "mean": 0.7686830782260966,
+    "min": 0.7686830782260966,
+    "max": 0.7686830782260966,
+    "median": 0.7686830782260966
+   },
+   "a_chk_minus_a_rob_mm_grid21": {
+    "mean": 3.0092625729151923,
+    "max": 3.0092625729151923,
+    "min": 3.0092625729151923
+   },
+   "a_rob_below_a_chk_speeds": 1,
+   "a_rob_over_a_lim0_grid21_median": 8.076142049922325,
+   "a_rob_over_a_lim_auth_grid21_median": 0.5801850676616916,
+   "primary_binding_counts_grid21": {
+    "a_phys": 0,
+    "linear limit": 1,
+    "voltage margin": 0,
+    "certificate": 0,
+    "none": 0
+   },
+   "primary_binding_by_rpm": {
+    "2500": "linear limit"
+   },
+   "g_star_by_rpm": {
+    "2500": 1000.0
+   },
+   "g_star_over_g_auth_grid21": {
+    "median": 0.6666666666666666,
+    "min": 0.6666666666666666,
+    "max": 0.6666666666666666
+   },
+   "g_star_below_g_auth_speeds": 1,
+   "g_star_above_g_auth_speeds": 0,
+   "corrected_down_speeds": [],
+   "upward_possible_speeds": [],
+   "voltage_violated_between_grid_depths_speeds": [],
+   "a_rob_auth_gain_grid21_mean": 4.0,
+   "gain_limited_by_primary_grid21": {
+    "a_phys": 0,
+    "linear limit": 0,
+    "voltage margin": 0,
+    "certificate": 1,
+    "none": 0
+   },
+   "gain_limited_by_by_rpm": {
+    "2500": [
+     "certificate"
+    ]
+   },
+   "step_entry_chatters_at_design_rpm": [],
+   "face_entry_chatters_at_design_rpm": [],
+   "a_rob_over_a_lim_at_g_star_grid21": {
+    "median": 0.894277042559071,
+    "min": 0.894277042559071,
+    "max": 0.894277042559071
+   }
+  }
+ },
+ "nred_vs_default": {
+  "points": 13,
+  "ratio_reduced_over_default": {
+   "min": 0.994078429038927,
+   "max": 1.0442726275245005,
+   "median": 1.0254407188799117,
+   "above_1p10": 0,
+   "above_1p15": 0,
+   "below_1": 1
+  },
+  "worst": [
+   {
+    "rpm": 2500.0,
+    "d_mm": 2.0,
+    "g": 1500.0,
+    "ratio": 1.0442726275245005
+   },
+   {
+    "rpm": 2500.0,
+    "d_mm": 2.0,
+    "g": 1000.0,
+    "ratio": 1.0439623918322487
+   },
+   {
+    "rpm": 2500.0,
+    "d_mm": 2.0,
+    "g": 2000.0,
+    "ratio": 1.0420983546069877
+   },
+   {
+    "rpm": 2500.0,
+    "d_mm": 2.0,
+    "g": 500.0,
+    "ratio": 1.037489861385863
+   },
+   {
+    "rpm": 2500.0,
+    "d_mm": 2.0,
+    "g": 3000.0,
+    "ratio": 1.0363414534508724
+   }
+  ],
+  "default_recomputed_over_stored": {
+   "points": 1,
+   "min": 1.0,
+   "max": 1.0
+  },
+  "note": "ratio of the reduced-order (N = nodes_for - 8) c2.FAST kick to results/c4_gainmap.npz kick_dvf (default N, c2.FAST), both before the rescaling to the rigorous bound"
+ },
+ "per_speed": {
+  "2500": {
+   "rpm": 2500.0,
+   "on_grid_125": true,
+   "c1_speed": true,
+   "n_red": 12,
+   "n_default": 20,
+   "a_lim0_mm": 1.2382149717260333,
+   "auth_g1500": {
+    "g": 1500.0,
+    "a_lim_mm": 17.23587964837289,
+    "a_chk_mm": 13.009262572915192,
+    "kappa_a_lim_mm": 15.5122916835356,
+    "source": "stored",
+    "recomputed": {
+     "g": 1500.0,
+     "a_lim": 17.23587964837289,
+     "a_chk": 13.009262572915192,
+     "a_td": 13.009262572915192
+    },
+    "g_edge": 1500.0
+   },
+   "auth_g3000": {
+    "g": 1599.79248046875,
+    "a_lim_mm": 18.534667685899496,
+    "a_chk_mm": 13.045162895733997,
+    "source": "stored"
+   },
+   "published": {
+    "g": 535.6222505157538,
+    "a": 6.21988304363085,
+    "source": "stored"
+   },
+   "designs": {
+    "1": {
+     "g": 1250.0,
+     "a_rob_mm": 14.0,
+     "a_rob_reduced_order_mm": 14.0,
+     "corrected_down": false,
+     "a_lim_at_g_mm": 14.115146279349991,
+     "a_rob_over_a_lim_at_g": 0.9918423601802522,
+     "binding": [
+      "linear limit"
+     ],
+     "upward_possible": false,
+     "beta_default_N_at_a_rob_mmps": 6.549913496361546,
+     "beta_reduced_N_at_a_rob_mmps": 6.63548401152367,
+     "min_beta_up_to_a_rob_mmps": 3.70924719303995,
+     "bbar_at_a_rob_V": 2.9554323161156355,
+     "bbar_max_fine_0p25mm_V": 7.407271800293595,
+     "bbar_max_fine_depth_mm": 6.0,
+     "voltage_margin_violated_between_grid_depths": false,
+     "next_depth": {
+      "d_mm": 16.0,
+      "linear_ok": false,
+      "bbar_V": 5.984381704945737,
+      "beta_reduced_N_mmps": null,
+      "beta_default_N_mmps": null
+     },
+     "gains_tied_at_reduced_order": [
+      1250.0
+     ],
+     "default_N_checks": {
+      "14.0": {
+       "beta_mmps": 6.549913496361546,
+       "fast_mmps": 6.549913496361546,
+       "tight_mmps": null,
+       "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.960421578765"
+      }
+     },
+     "candidates_recertified": [
+      {
+       "g": 1250.0,
+       "a_rob_red": 14.0,
+       "a_rob": 14.0
+      }
+     ],
+     "next_higher_evaluated_gain": {
+      "g": 1500.0,
+      "a_lim_mm": 17.23587964837289,
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 5.13769384724602,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "voltage margin"
+      ],
+      "fail_bbar_V": 8.570895112021594,
+      "fail_beta_mmps": 1.0389971789013839
+     },
+     "gain_limited_by": [
+      "voltage margin"
+     ],
+     "entries_9V": {
+      "step": {
+       "stable": false,
+       "max_x_mm": 0.3938215226256439,
+       "max_v_V": 9.0
+      },
+      "face": {
+       "stable": true,
+       "max_x_mm": 0.022178520217952604,
+       "max_v_V": 3.9073704648057337
+      }
+     }
+    },
+    "2": {
+     "g": 1250.0,
+     "a_rob_mm": 14.0,
+     "a_rob_reduced_order_mm": 14.0,
+     "corrected_down": false,
+     "a_lim_at_g_mm": 14.115146279349991,
+     "a_rob_over_a_lim_at_g": 0.9918423601802522,
+     "binding": [
+      "linear limit"
+     ],
+     "upward_possible": false,
+     "beta_default_N_at_a_rob_mmps": 6.549913496361546,
+     "beta_reduced_N_at_a_rob_mmps": 6.63548401152367,
+     "min_beta_up_to_a_rob_mmps": 3.70924719303995,
+     "bbar_at_a_rob_V": 2.9554323161156355,
+     "bbar_max_fine_0p25mm_V": 7.407271800293595,
+     "bbar_max_fine_depth_mm": 6.0,
+     "voltage_margin_violated_between_grid_depths": false,
+     "next_depth": {
+      "d_mm": 16.0,
+      "linear_ok": false,
+      "bbar_V": 5.984381704945737,
+      "beta_reduced_N_mmps": null,
+      "beta_default_N_mmps": null
+     },
+     "gains_tied_at_reduced_order": [
+      1250.0
+     ],
+     "default_N_checks": {
+      "14.0": {
+       "beta_mmps": 6.549913496361546,
+       "fast_mmps": 6.549913496361546,
+       "tight_mmps": null,
+       "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.960421578765"
+      }
+     },
+     "candidates_recertified": [
+      {
+       "g": 1250.0,
+       "a_rob_red": 14.0,
+       "a_rob": 14.0
+      }
+     ],
+     "next_higher_evaluated_gain": {
+      "g": 1500.0,
+      "a_lim_mm": 17.23587964837289,
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 5.13769384724602,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "voltage margin",
+       "certificate"
+      ],
+      "fail_bbar_V": 8.570895112021594,
+      "fail_beta_mmps": 1.0389971789013839
+     },
+     "gain_limited_by": [
+      "voltage margin",
+      "certificate"
+     ],
+     "entries_9V": {
+      "step": {
+       "stable": false,
+       "max_x_mm": 0.3938215226256439,
+       "max_v_V": 9.0
+      },
+      "face": {
+       "stable": true,
+       "max_x_mm": 0.022178520217952604,
+       "max_v_V": 3.9073704648057337
+      }
+     }
+    },
+    "5": {
+     "g": 1000.0,
+     "a_rob_mm": 10.0,
+     "a_rob_reduced_order_mm": 10.0,
+     "corrected_down": false,
+     "a_lim_at_g_mm": 11.182217058132133,
+     "a_rob_over_a_lim_at_g": 0.894277042559071,
+     "binding": [
+      "linear limit"
+     ],
+     "upward_possible": false,
+     "beta_default_N_at_a_rob_mmps": 7.2038973063899245,
+     "beta_reduced_N_at_a_rob_mmps": 7.161238917293853,
+     "min_beta_up_to_a_rob_mmps": 5.761229333413526,
+     "bbar_at_a_rob_V": 4.028792856503455,
+     "bbar_max_fine_0p25mm_V": 6.124265846504431,
+     "bbar_max_fine_depth_mm": 6.0,
+     "voltage_margin_violated_between_grid_depths": false,
+     "next_depth": {
+      "d_mm": 12.0,
+      "linear_ok": false,
+      "bbar_V": 1.0220076864630274,
+      "beta_reduced_N_mmps": null,
+      "beta_default_N_mmps": null
+     },
+     "gains_tied_at_reduced_order": [
+      1000.0
+     ],
+     "default_N_checks": {
+      "10.0": {
+       "beta_mmps": 7.2038973063899245,
+       "fast_mmps": 7.2038973063899245,
+       "tight_mmps": null,
+       "note": "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.980698353235"
+      }
+     },
+     "candidates_recertified": [
+      {
+       "g": 1000.0,
+       "a_rob_red": 10.0,
+       "a_rob": 10.0
+      }
+     ],
+     "next_higher_evaluated_gain": {
+      "g": 1125.0,
+      "a_lim_mm": 12.625404444299418,
+      "a_rob_mm": 6.0,
+      "min_beta_mmps": 5.1588621591249115,
+      "fail_depth_mm": 8.0,
+      "binding": [
+       "certificate"
+      ],
+      "fail_bbar_V": 6.387569758091672,
+      "fail_beta_mmps": 4.769886610319351
+     },
+     "gain_limited_by": [
+      "certificate"
+     ],
+     "entries_9V": {
+      "step": {
+       "stable": true,
+       "max_x_mm": 0.02921497578226301,
+       "max_v_V": 9.0
+      },
+      "face": {
+       "stable": true,
+       "max_x_mm": 0.01803003829717552,
+       "max_v_V": 5.323195430197325
+      }
+     }
+    }
+   },
+   "auth_under_basin_criteria": {
+    "1": {
+     "a_rob_mm": 4.0,
+     "binding": [
+      "voltage margin"
+     ],
+     "min_beta_mmps": 5.13769384724602,
+     "note": "reduced order, not re-certified"
+    },
+    "2": {
+     "a_rob_mm": 4.0,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ],
+     "min_beta_mmps": 5.13769384724602,
+     "note": "reduced order, not re-certified"
+    },
+    "5": {
+     "a_rob_mm": 4.0,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ],
+     "min_beta_mmps": 5.13769384724602,
+     "note": "reduced order, not re-certified"
+    }
+   },
+   "skipped_by_bound": [
+    0.0,
+    250.0,
+    500.0,
+    750.0,
+    875.0,
+    937.5,
+    1062.5,
+    1187.5,
+    1312.5,
+    1375.0,
+    1750.0,
+    2000.0,
+    2250.0,
+    2500.0,
+    2750.0,
+    3000.0
+   ],
+   "a_cheap_mm": {
+    "0.0": 0.0,
+    "250.0": 2.0,
+    "500.0": 4.0,
+    "750.0": 8.0,
+    "875.0": 8.0,
+    "937.5": 10.0,
+    "1000.0": 10.0,
+    "1062.5": 10.0,
+    "1125.0": 12.0,
+    "1187.5": 12.0,
+    "1250.0": 14.0,
+    "1312.5": 14.0,
+    "1375.0": 14.0,
+    "1500.0": 4.0,
+    "1750.0": 2.0,
+    "2000.0": 2.0,
+    "2250.0": 2.0,
+    "2500.0": 2.0,
+    "2750.0": 2.0,
+    "3000.0": 2.0
+   },
+   "evaluated": {
+    "1000.0": {
+     "a_lim_mm": 11.182217058132133,
+     "beta_1": {
+      "a_rob_mm": 10.0,
+      "min_beta_mmps": 5.761229333413526,
+      "fail_depth_mm": 12.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 1.0220076864630274,
+      "fail_beta_mmps": null
+     },
+     "beta_2": {
+      "a_rob_mm": 10.0,
+      "min_beta_mmps": 5.761229333413526,
+      "fail_depth_mm": 12.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 1.0220076864630274,
+      "fail_beta_mmps": null
+     },
+     "beta_5": {
+      "a_rob_mm": 10.0,
+      "min_beta_mmps": 5.761229333413526,
+      "fail_depth_mm": 12.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 1.0220076864630274,
+      "fail_beta_mmps": null
+     }
+    },
+    "1125.0": {
+     "a_lim_mm": 12.625404444299418,
+     "beta_1": {
+      "a_rob_mm": 12.0,
+      "min_beta_mmps": 4.769886610319351,
+      "fail_depth_mm": 14.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 2.7134344836517545,
+      "fail_beta_mmps": null
+     },
+     "beta_2": {
+      "a_rob_mm": 12.0,
+      "min_beta_mmps": 4.769886610319351,
+      "fail_depth_mm": 14.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 2.7134344836517545,
+      "fail_beta_mmps": null
+     },
+     "beta_5": {
+      "a_rob_mm": 6.0,
+      "min_beta_mmps": 5.1588621591249115,
+      "fail_depth_mm": 8.0,
+      "binding": [
+       "certificate"
+      ],
+      "fail_bbar_V": 6.387569758091672,
+      "fail_beta_mmps": 4.769886610319351
+     }
+    },
+    "1250.0": {
+     "a_lim_mm": 14.115146279349991,
+     "beta_1": {
+      "a_rob_mm": 14.0,
+      "min_beta_mmps": 3.70924719303995,
+      "fail_depth_mm": 16.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 5.984381704945737,
+      "fail_beta_mmps": null
+     },
+     "beta_2": {
+      "a_rob_mm": 14.0,
+      "min_beta_mmps": 3.70924719303995,
+      "fail_depth_mm": 16.0,
+      "binding": [
+       "linear limit"
+      ],
+      "fail_bbar_V": 5.984381704945737,
+      "fail_beta_mmps": null
+     },
+     "beta_5": {
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 7.988399857515156,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "certificate"
+      ],
+      "fail_bbar_V": 7.407271800293595,
+      "fail_beta_mmps": 3.8074482901827613
+     }
+    },
+    "1500.0": {
+     "a_lim_mm": 17.23587964837289,
+     "beta_1": {
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 5.13769384724602,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "voltage margin"
+      ],
+      "fail_bbar_V": 8.570895112021594,
+      "fail_beta_mmps": 1.0389971789013839
+     },
+     "beta_2": {
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 5.13769384724602,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "voltage margin",
+       "certificate"
+      ],
+      "fail_bbar_V": 8.570895112021594,
+      "fail_beta_mmps": 1.0389971789013839
+     },
+     "beta_5": {
+      "a_rob_mm": 4.0,
+      "min_beta_mmps": 5.13769384724602,
+      "fail_depth_mm": 6.0,
+      "binding": [
+       "voltage margin",
+       "certificate"
+      ],
+      "fail_bbar_V": 8.570895112021594,
+      "fail_beta_mmps": 1.0389971789013839
+     }
+    }
+   }
+  }
+ },
+ "validation": {},
+ "validation_summary": {},
+ "nconv_file": "basin_aware_nconv.json",
+ "runtime": {
+  "scan_recert_s_by_rpm": {
+   "2500": [
+    0.0,
+    0.1
+   ]
+  }
+ }
+}

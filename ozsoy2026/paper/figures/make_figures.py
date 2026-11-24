@@ -857,8 +857,165 @@ def fig10():
         a_lim_nominal_mm={name: [r(x, 1) for x in R["a_lim"][:, lab.index(key)]] for key, _, _, name in designs})
 
 
+# ====================================================== basin-aware chart ====
+VER = os.path.join(ROOT, "verification", "paper")
+BA_COL = {1e-3: "#F0A35E", 2e-3: "#D55E00", 5e-3: "#7A2E00"}       # beta_req 1, 2, 5 mm/s (light to dark vermillion)
+BIND_MK = {0: "D", 1: "o", 2: "s", 3: "^"}                           # a_phys, linear limit, voltage margin, certificate
+
+
+def fig_ba():
+    """Basin-aware stability chart: depths against speed (verification/paper/basin_aware.npz,
+    circle_criterion.json)."""
+    B = np.load(os.path.join(VER, "basin_aware.npz"), allow_pickle=True)
+    C = json.load(open(os.path.join(VER, "circle_criterion.json")))
+    n = B["rpm"]
+    fig, ax = plt.subplots(2, 1, figsize=(W2, 120 * MM), sharex=True, layout="constrained",
+                           gridspec_kw={"height_ratios": [2.4, 1]})
+    a = ax[0]
+    dn = B["dense_rpm"]
+    a.plot(dn, B["dense_a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
+    rows = C["g_best"]["rows"]
+    a.plot([q["rpm"] for q in rows], [q["a_circ_eff_mm"] for q in rows], ":", color=C3C, lw=1.0,
+           label=r"$a_{\mathrm{circ}}$: every disturbance (Prop. 1)")
+    a.plot(dn, B["dense_a_lim_auth"], color=K, lw=1.0, label=r"$a_{\mathrm{lim}}(g^\star)$, authority schedule")
+    a.plot(dn, B["dense_a_chk"], color=BLUE, lw=0.85, label=r"$a_{\mathrm{chk}}$, checked depth")
+    a.plot(dn, B["dense_a_pub"], color=GREY, lw=0.85, label="Published condition, Eq. (2)")
+    a.axhline(float(B["a_phys"]), color=K, lw=0.6, ls="-.")
+    a.text(dn[-1], float(B["a_phys"]) + 0.4, r"$a_{\mathrm{phys}}=2D$", ha="right", va="bottom", fontsize=7.5)
+    hb = []
+    for j, br in enumerate(B["beta_req"]):
+        col = BA_COL[round(float(br), 6)]
+        y = B["a_rob"][:, j]
+        hb += a.plot(n, y, "-", color=col, lw=0.85, label=rf"$a_{{\mathrm{{rob}}}}$, $\beta_{{\mathrm{{req}}}}={br*1e3:.0f}$ mm/s")
+        for code, mk in BIND_MK.items():
+            w = B["binding"][:, j] == code
+            a.plot(n[w], y[w], mk, color=col, ms=3.0, mfc="white" if j == 0 else col, mew=0.7)
+    a.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 35), xlim=(480, 3020))
+    h, lab = a.get_legend_handles_labels()
+    mk_h = [Line2D([], [], color=K, marker=BIND_MK[c], ls="none", ms=3.0, mfc="white") for c in (1, 2, 3, 0)]
+    mk_l = ["next depth: linear limit", "voltage margin", "certificate", r"$a_{\mathrm{phys}}$"]
+    a.legend(h + mk_h, lab + mk_l, loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=3, borderaxespad=0.0,
+             columnspacing=1.0, handlelength=1.8)
+    b = ax[1]
+    b.plot(dn, B["dense_g_auth"], color=BLUE, lw=0.85, label=r"$g^\star$, authority schedule")
+    for j, br in enumerate(B["beta_req"]):
+        col = BA_COL[round(float(br), 6)]
+        b.plot(n, B["g_star"][:, j], "o-", color=col, ms=2.6, lw=0.7, mfc="white" if j == 0 else col)
+    b.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"Gain (V s/m)", ylim=(-100, 3200))
+    fig.align_ylabels(ax)
+    letter(a, "a")
+    letter(b, "b")
+    save(fig, "fig_basin_aware")
+    NUM["fig_ba"] = dict(speeds=[float(x) for x in n], beta_req_mmps=[float(x) * 1e3 for x in B["beta_req"]],
+                         a_rob_mm={f"{br*1e3:.0f}": [r(x, 1) for x in B["a_rob"][:, j]] for j, br in enumerate(B["beta_req"])},
+                         g_star={f"{br*1e3:.0f}": [r(x, 1) for x in B["g_star"][:, j]] for j, br in enumerate(B["beta_req"])})
+
+
+# ============================================================ attractors ====
+IC_STYLE = {"face": (K, "o", 3.0, "face entry"), "kick0.03": (BLUE_L, "v", 3.2, r"kick of 0.03 m/s"),
+            "kick0.3": (STEP, "^", 3.2, r"kick of 0.3 m/s"), "step": (FACE, "s", 2.8, "step entry")}
+
+
+def fig_attr():
+    """What lies beyond the basin: bifurcation-type diagrams against depth (attractors_bifurcation.npz),
+    a Poincare section and spectra at 2500 rpm, 0.9 a_lim, and the approach to the chatter attractor
+    (attractors_kick.npz; one pair of simulations for the spectra)."""
+    from tdsim import simulate
+    from c1_unsafe_zone import NREG, KICK_REV, N_PHASE, SPR, ND
+    Bf = np.load(os.path.join(VER, "attractors_bifurcation.npz"), allow_pickle=True)
+    Kk = np.load(os.path.join(VER, "attractors_kick.npz"), allow_pickle=True)
+    ics = list(Bf["ics"])
+    fig = plt.figure(figsize=(W2, 128 * MM), layout="constrained")
+    gs = fig.add_gridspec(2, 12, height_ratios=[1.0, 1.0])
+    top = [fig.add_subplot(gs[0, 3 * i:3 * i + 3]) for i in range(4)]
+    bif = {}
+    for i, a_ in enumerate(top):
+        n, al, al0 = float(Bf["rpm"][i]), float(Bf["a_lim"][i]), float(Bf["a_lim0"][i])
+        x = Bf["depths"][i] / al
+        lo, hi = float(Bf["refine_lo"][i]) / al, float(Bf["refine_hi"][i]) / al
+        st = Bf["state"][i]
+        forced_top = np.max(np.where((st == "forced").any(axis=1), x, -np.inf))
+        a_.axvspan(hi, forced_top, color=LIGHT, lw=0, zorder=0)
+        fo = (st == "forced")
+        ylow = np.nanmax(np.where(fo, Bf["pp_x"][i], np.nan), axis=1) * 1e6        # all starts reach the same orbit
+        a_.plot(x[fo.any(axis=1)], ylow[fo.any(axis=1)], "o", color=K, ms=2.8, mfc="white", mew=0.7, ls="none", zorder=3)
+        for j, ic in enumerate(ics):
+            col, mk, ms, _ = IC_STYLE[ic]
+            y = Bf["pp_x"][i, :, j] * 1e6
+            ch = st[:, j] == "chatter"
+            a_.plot(x[ch], y[ch], mk, color=col, ms=ms, mew=0.0, ls="none", zorder=4)
+        a_.axvline(1.0, color=K, lw=0.6, ls="--")
+        a_.axvline(al0 / al, color=GREY, lw=0.6, ls=":")
+        a_.set_yscale("log")
+        a_.set(ylim=(0.02, 8000), xlim=(0.0, 1.08))
+        frac_ticks(a_)
+        a_.set_xlabel(r"$a\,/\,a_{\mathrm{lim}}$ (–)")
+        if i:
+            a_.tick_params(labelleft=False)
+        letter(a_, "abcd"[i], f"{n:.0f} rpm")
+        bif[f"{n:.0f}"] = dict(a_lim_mm=r(al * 1e3), a_lim0_mm=r(al0 * 1e3), high_branch_from=r(lo, 3),
+                               high_branch_from_refined_hi=r(hi, 3), low_branch_top=r(forced_top, 3),
+                               chatter_pp_mm=[r(np.nanmin(Bf["pp_x"][i][st == "chatter"]) * 1e3, 3),
+                                              r(np.nanmax(Bf["pp_x"][i][st == "chatter"]) * 1e3, 3)],
+                               n_diverged=int(np.sum(np.isfinite(Bf["diverged_rev"][i]))))
+    top[0].set_ylabel(r"Peak-to-peak $x$ (µm)")
+    hd = [Line2D([], [], color=K, marker="o", ls="none", ms=3.0, mfc="white", mew=0.7)]
+    hd += [Line2D([], [], color=c, marker=m, ls="none", ms=s_, mew=0.0) for c, m, s_, _ in (IC_STYLE[k] for k in ics)]
+    hd += [Patch(color=LIGHT, lw=0)]
+    fig.legend(hd, ["forced orbit (every start)"] + ["chatter after " + IC_STYLE[k][3] for k in ics] + ["both attractors coexist"],
+               loc="outside upper center", ncol=3, columnspacing=1.0, handletextpad=0.3)
+    # (e) Poincare section and (f) spectra at 2500 rpm, 0.9 a_lim; (g) approach to the attractor
+    pe = fig.add_subplot(gs[1, 0:4])
+    pf = fig.add_subplot(gs[1, 4:8])
+    pg = fig.add_subplot(gs[1, 8:12])
+    w = np.nonzero((Kk["rpm"] == 2500.0) & np.isclose(Kk["frac"], 0.9))[0][0]
+    for k_, (col, lab, ms_) in enumerate(((STEP, r"after $2\Delta v^*$", 3.2), (FACE, r"$2.5\Delta v^*$", 2.2), (BLUE, r"$3\Delta v^*$", 1.2))):
+        pe.plot(Kk["poincare_x"][w, k_] * 1e3, Kk["poincare_v"][w, k_] * 1e3, "o", color=col, ms=ms_, mew=0, label=lab)
+    pe.plot(Kk["pre_kick_xv"][w, 0] * 1e3, Kk["pre_kick_xv"][w, 1] * 1e3, "o", color=K, ms=4.0, mfc="white", mew=0.9,
+            label="forced orbit", zorder=5)
+    pe.set_xticks((-0.4, 0.0, 0.4, 0.8))
+    pe.set(xlabel=r"$x$ (mm), once per tooth", ylabel=r"$\dot x$ (mm/s)", xlim=(-0.45, 1.3), ylim=(-380, 380))
+    pe.legend(loc="center right", handletextpad=0.2, fontsize=7, title="chatter", title_fontsize=7, borderaxespad=0.2)
+    from zoa import a_lim
+    rpm, g = 2500.0, 1500.0
+    a = 0.9 * a_lim(rpm, g)
+    ph = int(Kk["worst_phase"][w])
+    ks = KICK_REV * SPR + ph * ND // N_PHASE
+    dv = 2.0 * float(Kk["dv_star"][w])
+    nrev = KICK_REV + 1000
+    o0 = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=nrev, edge=True, nreg=NREG)
+    o1 = simulate(rpm, a, g, vmax=VMAX, store=True, nrev=nrev, edge=True, kick_step=ks, kick_dv=dv, nreg=NREG)
+    last = 500 * SPR
+    fs = SPR * rpm / 60.0
+    spec = {}
+    for o, col, lab, lw_, z in ((o1, STEP, "clipped chatter", 0.55, 2), (o0, K, "forced orbit", 0.8, 3)):
+        xx = o["x"][-last:] - np.mean(o["x"][-last:])
+        A = 2.0 * np.abs(np.fft.rfft(xx * np.hanning(last))) / (0.5 * last)
+        f = np.fft.rfftfreq(last, 1.0 / fs)
+        m = f <= 700
+        pf.semilogy(f[m], A[m] * 1e6, color=col, lw=lw_, label=lab, zorder=z)
+        spec[lab] = dict(peak_hz=r(float(f[m][np.argmax(A[m])]), 1), peak_um=r(float(A[m].max() * 1e6), 3))
+    fT = 4 * rpm / 60.0
+    for k_ in range(1, 5):
+        pf.axvline(k_ * fT, color=GREY, lw=0.5, ls=":")
+    pf.set(xlabel="Frequency (Hz)", ylabel=r"Amplitude of $x$ (µm)", xlim=(0, 700), ylim=(1e-3, 2e3))
+    pf.legend(loc="upper right", fontsize=7)
+    for i_, (n_, col, mk) in enumerate(((1090.0, K, "-"), (1420.0, BLUE, "-"), (2500.0, STEP, "-"), (2870.0, C3C, "-"))):
+        r_ = np.nonzero((Kk["rpm"] == n_) & np.isclose(Kk["frac"], 0.9))[0][0]
+        pg.semilogy(np.arange(1, Kk["pp_rev_after_kick"].shape[2] + 1), Kk["pp_rev_after_kick"][r_, 0] * 1e6, mk,
+                    color=col, lw=0.6, label=f"{n_:.0f} rpm")
+    pg.set(xlabel="Revolutions after the kick", ylabel=r"Peak-to-peak $x$ (µm)", xlim=(1, 2000), ylim=(1, 5000))
+    pg.set_xscale("log")
+    pg.legend(loc="lower right", fontsize=7, title=r"$0.9\,a_{\mathrm{lim}}$, $2\Delta v^*$", title_fontsize=7)
+    letter(pe, "e", r"2500 rpm, $0.9\,a_{\mathrm{lim}}$")
+    letter(pf, "f")
+    letter(pg, "g")
+    save(fig, "fig_attractors")
+    NUM["fig_attr"] = dict(bifurcation=bif, spectra_2500_09=spec, kick_2500_09_mm_s=r(dv * 1e3, 2), worst_phase=ph)
+
+
 FIGS = dict(fig02=fig02, fig03=fig03, fig04=fig04, fig05=fig05, fig06=fig06, fig07=fig07, fig08=fig08,
-            fig09=fig09, fig10=fig10)
+            fig09=fig09, fig10=fig10, fig_ba=fig_ba, fig_attr=fig_attr)
 
 
 def main(argv):

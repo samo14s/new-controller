@@ -34,9 +34,6 @@
 \newcommand{\Vmax}{V_{\max}}
 \newcommand{\bmax}{b_{\max}}
 %% DRAFT-PLACEHOLDERS-BEGIN
-\newcommand{\NEWMC}{\textbf{[MC results]}}
-\newcommand{\NEWCLIP}{\textbf{[clip results]}}
-\newcommand{\NEWBIF}{\textbf{[bifurcation]}}
 \newcommand{\NEWCHECKS}{\textbf{[protocol checks]}}
 \newcommand{\NEWBA}{\textbf{[basin-aware results]}}
 \newcommand{\PEND}[1]{\textbf{[#1]}}
@@ -46,7 +43,7 @@
 
 \begin{frontmatter}
 
-\title{Actuator saturation and bistability in active chatter control of milling: basins of attraction, certified inner estimates and delayed feedback}
+\title{Beyond linear stability lobes: saturation-induced finite-amplitude instability and basin-aware gain scheduling in actively damped milling}
 
 %% Authors and affiliations: to be completed by the authors.
 \author[a]{[Author name]\corref{cor1}}
@@ -61,15 +58,15 @@
 \end{abstract}
 
 \begin{highlights}
-\item Clipping the actuator command shrinks the basin of linearly stable milling cuts.
-\item A step entry from rest chatters below 0.97 of the linear limit at 157 of 251 speeds.
-\item At four speeds near the limit, kicks of 2--11\,\% of a tooth's impulse cause chatter.
-\item LMIs on collocation models give basin estimates that no simulated kick violated.
-\item A published delayed term raises the linear limit but hardly the step-entry limit.
+\item Actuator saturation makes linearly stable milling cuts bistable with clipped chatter
+\item Step entries from rest chatter below 0.97 of the linear limit at 157 of 251 speeds
+\item Residual actuator authority sets the basin of the forced orbit near the limit
+\item A circle criterion and LMIs bound the basin; no simulated perturbation violated them
+\item Basin-aware gain scheduling certifies depths against a required disturbance
 \end{highlights}
 
 \begin{keyword}
-Milling chatter \sep Active damping \sep Actuator saturation \sep Bistability \sep Basin of attraction \sep Linear matrix inequalities
+Milling chatter \sep Active damping \sep Actuator saturation \sep Finite-amplitude instability \sep Basin of attraction \sep Linear matrix inequalities \sep Gain scheduling
 \end{keyword}
 
 \end{frontmatter}

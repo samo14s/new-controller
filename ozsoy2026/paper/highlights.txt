@@ -1,7 +1,5 @@
-Highlights
-
-- Clipping the actuator command shrinks the basin of linearly stable milling cuts.
-- A step entry from rest chatters below 0.97 of the linear limit at 157 of 251 speeds.
-- At four speeds near the limit, kicks of 2–11 % of a tooth's impulse cause chatter.
-- LMIs on collocation models give basin estimates that no simulated kick violated.
-- A published delayed term raises the linear limit but hardly the step-entry limit.
+Actuator saturation makes linearly stable milling cuts bistable with clipped chatter
+Step entries from rest chatter below 0.97 of the linear limit at 157 of 251 speeds
+Residual actuator authority sets the basin of the forced orbit near the limit
+A circle criterion and LMIs bound the basin; no simulated perturbation violated them
+Basin-aware gain scheduling certifies depths against a required disturbance

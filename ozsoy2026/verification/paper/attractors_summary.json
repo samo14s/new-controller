@@ -1,0 +1,1228 @@
+{
+ "note": "What lies outside the basin of the forced orbit: comparison with the\nmanuscript's band edge and the terminology the runs support (no simulation).\n\nPurpose.  Collect, per basin speed (1090, 1420, 2500, 2870 rpm, g = 1500 V s/m,\n9 V clip), what attractors_kick.py (long runs after kicks of 2-3 dv* at the 48\nbasin points) and attractors_bifurcation.py (depth sweep from a_lim(0) to\n1.05 a_lim from four initial conditions) found, and compare it with the stored\nC1 results the manuscript quotes:\n  results/c1_band.npz   lower edge of the 'bistable band' (every 20 rpm; at 1090\n                        and 2870 rpm, off that grid, the two neighbouring speeds\n                        and the linear interpolation are given)\n  results/c1_map.npz    step-entry and face-entry limits (D1, 300 revolutions)\n  results/c1_basin.npz  smallest of the 12 depths with a finite critical kick\nTerminology test, per speed: 'bistable' is demonstrated at a depth where the\nface entry ends on the forced orbit and some other initial condition ends in\nbounded, stationary chatter (a second bounded attractor); 'divergent' where some\ninitial condition reached the 1 cm abort; 'loss of attraction only' where some\ninitial condition left the forced orbit but none ended in bounded chatter.\nThe high branch is the clipped chatter (clipped fraction of the command >= 0.5);\nbounded chatter with the command unclipped (clipped fraction < 0.5) is listed\napart as 'small_unclipped_chatter'.  Also collected: the twin-run test of\nattractors_chaos.py, the band spot check of attractors_band_spot.py and its\ndiverged runs rerun with a 10 cm abort (attractors_abort.py).\n\nRun (after the two campaigns, a few seconds):\n    OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 verification/paper/attractors_summary.py\nWrites verification/paper/attractors_summary.json.\n",
+ "zeta": 0.0134,
+ "sources": {
+  "kick": "verification/paper/attractors_kick.json",
+  "bifurcation": "verification/paper/attractors_bifurcation.json",
+  "band": "results/c1_band.npz",
+  "map": "results/c1_map.npz",
+  "basin": "results/c1_basin.npz",
+  "chaos": "verification/paper/attractors_chaos.json",
+  "band_spot": "verification/paper/attractors_band_spot.json",
+  "abort": "verification/paper/attractors_abort.json"
+ },
+ "build_kick": "09c87373c43f",
+ "build_bifurcation": "09c87373c43f",
+ "speeds": {
+  "1090": {
+   "a_lim0_mm": 1.2635962725394003,
+   "a_lim_mm": 20.98681159792267,
+   "a_lim0_over_alim": 0.060209063517989284,
+   "band_edge_c1_band": {
+    "on_grid": false,
+    "neighbours": {
+     "1080": 5.311881758847109,
+     "1100": 5.348643589076141
+    },
+    "g_neighbours": [
+     1500.0,
+     1500.0
+    ],
+    "value_mm": 5.3302626739616255
+   },
+   "band_edge_over_alim": 0.25398153736174145,
+   "high_branch_end_grid_mm": 5.879719807045935,
+   "high_branch_end_grid_below_mm": 5.110365884628179,
+   "high_branch_end_refined_bracket_mm": [
+    5.230577435005954,
+    5.254619745081509
+   ],
+   "high_branch_end_refined_mm": 5.242598590043732,
+   "high_branch_end_over_alim": 0.24980443387420784,
+   "high_branch_end_over_alim0": 4.148950660884656,
+   "high_branch_end_minus_band_edge_mm": -0.08766408391789327,
+   "high_branch_end_over_band_edge": 0.983553515224281,
+   "high_branch_holes_mm": [],
+   "high_branch_pp_x_at_end_mm": 0.17552237065576942,
+   "high_branch_end_reached_by": "kick0.3000000000000001",
+   "bistable_range_refined_mm": [
+    5.254619745081509,
+    20.497444332983292
+   ],
+   "bistable_range_refined_over_alim": [
+    0.2503772295550423,
+    0.9766821528531844
+   ],
+   "basin_first_finite_frac": 0.25,
+   "basin_first_finite_mm": 5.246702899480668,
+   "basin_last_infinite_frac_below": 0.2,
+   "step_entry_limit_c1_map_mm": 18.78377384424627,
+   "step_entry_bracket_bifurcation_mm": [
+    18.189382565730025,
+    18.958736488147782
+   ],
+   "face_entry_limit_c1_map_mm": 20.96592709275488,
+   "face_low_branch_bracket_bifurcation_mm": [
+    20.497444332983292,
+    21.266798255401046
+   ],
+   "bistable_demonstrated_grid_mm": [
+    5.879719807045935,
+    6.649073729463691,
+    7.418427651881446,
+    8.187781574299201,
+    8.957135496716957,
+    9.726489419134714,
+    10.495843341552469,
+    11.265197263970226,
+    12.034551186387983,
+    12.803905108805736,
+    13.573259031223493,
+    14.342612953641247,
+    15.111966876059004,
+    15.88132079847676,
+    16.650674720894514,
+    17.420028643312268,
+    18.189382565730025,
+    18.958736488147782,
+    19.728090410565535,
+    20.497444332983292
+   ],
+   "bistable_demonstrated_range_mm": [
+    5.879719807045935,
+    20.497444332983292
+   ],
+   "bistable_demonstrated_range_over_alim": [
+    0.2801626049584361,
+    0.9766821528531844
+   ],
+   "depths_where_some_ic_left_forced_orbit_mm": [
+    5.879719807045935,
+    6.649073729463691,
+    7.418427651881446,
+    8.187781574299201,
+    8.957135496716957,
+    9.726489419134714,
+    10.495843341552469,
+    11.265197263970226,
+    12.034551186387983,
+    12.803905108805736,
+    13.573259031223493,
+    14.342612953641247,
+    15.111966876059004,
+    15.88132079847676,
+    16.650674720894514,
+    17.420028643312268,
+    18.189382565730025,
+    18.958736488147782,
+    19.728090410565535,
+    20.497444332983292,
+    21.266798255401046,
+    22.036152177818806
+   ],
+   "loss_of_attraction_only_mm": [],
+   "diverged_depths_mm": [],
+   "diverged_detail": {},
+   "transient_detail": {},
+   "small_unclipped_chatter": [],
+   "high_branch_pp_x_mm": [
+    0.27002611768119544,
+    2.5546568494478366
+   ],
+   "high_branch_rms_V": [
+    8.892132812487274,
+    8.978555267131723
+   ],
+   "high_branch_clip_frac": [
+    0.9642513020833333,
+    0.9927799479166667
+   ],
+   "high_branch_f_chatter_hz": [
+    132.6627787384224,
+    133.4316353657936
+   ],
+   "d1_vs_final_disagreements": [],
+   "kick_outcomes_by_frac": {
+    "0.15": "skipped",
+    "0.20": "skipped",
+    "0.25": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.30": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.40": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.50": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.60": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.70": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.80": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.90": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.95": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.98": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ]
+   },
+   "kick_bounded_Q4_pp_x_mm": [
+    0.1717589326814283,
+    1.9929227053341239
+   ],
+   "kick_bounded_Q4_rms_V": [
+    8.82354230570867,
+    8.976424546875693
+   ],
+   "kick_bounded_Q4_clip_frac": [
+    0.94168359375,
+    0.99212890625
+   ],
+   "kick_bounded_Q4_f_chatter_hz": [
+    132.69773306402627,
+    133.42131900678163
+   ]
+  },
+  "1420": {
+   "a_lim0_mm": 5.9888169883445395,
+   "a_lim_mm": 17.779154101354408,
+   "a_lim0_over_alim": 0.33684487766987264,
+   "band_edge_c1_band": {
+    "on_grid": true,
+    "value_mm": 13.289917690762419,
+    "g": 1500.0
+   },
+   "band_edge_over_alim": 0.7474999999999999,
+   "high_branch_end_grid_mm": 13.502473176834963,
+   "high_branch_end_grid_below_mm": 13.03286966505431,
+   "high_branch_end_refined_bracket_mm": [
+    13.179620762485765,
+    13.19429587222891
+   ],
+   "high_branch_end_refined_mm": 13.186958317357337,
+   "high_branch_end_over_alim": 0.7417089835760386,
+   "high_branch_end_over_alim0": 2.201930421821513,
+   "high_branch_end_minus_band_edge_mm": -0.10295937340508132,
+   "high_branch_end_over_band_edge": 0.99225282083751,
+   "high_branch_holes_mm": [],
+   "high_branch_pp_x_at_end_mm": 0.051999998711740505,
+   "high_branch_end_reached_by": "kick0.03000000000000001",
+   "bistable_range_refined_mm": [
+    13.19429587222891,
+    17.728904782860823
+   ],
+   "bistable_range_refined_over_alim": [
+    0.7421216890866464,
+    0.9971736946422127
+   ],
+   "basin_first_finite_frac": 0.8,
+   "basin_first_finite_mm": 14.223323281083527,
+   "basin_last_infinite_frac_below": 0.7,
+   "step_entry_limit_c1_map_mm": 15.874763147916047,
+   "step_entry_bracket_bifurcation_mm": [
+    15.850490735738223,
+    16.320094247518874
+   ],
+   "face_entry_limit_c1_map_mm": 17.78979443542574,
+   "face_low_branch_bracket_bifurcation_mm": [
+    17.728904782860823,
+    18.198508294641478
+   ],
+   "bistable_demonstrated_grid_mm": [
+    13.502473176834963,
+    13.972076688615614,
+    14.441680200396267,
+    14.911283712176918,
+    15.380887223957568,
+    15.850490735738223,
+    16.320094247518874,
+    16.789697759299525,
+    17.259301271080172,
+    17.728904782860823
+   ],
+   "bistable_demonstrated_range_mm": [
+    13.502473176834963,
+    17.728904782860823
+   ],
+   "bistable_demonstrated_range_over_alim": [
+    0.7594553205321704,
+    0.9971736946422127
+   ],
+   "depths_where_some_ic_left_forced_orbit_mm": [
+    13.502473176834963,
+    13.972076688615614,
+    14.441680200396267,
+    14.911283712176918,
+    15.380887223957568,
+    15.850490735738223,
+    16.320094247518874,
+    16.789697759299525,
+    17.259301271080172,
+    17.728904782860823,
+    18.198508294641478,
+    18.66811180642213
+   ],
+   "loss_of_attraction_only_mm": [],
+   "diverged_depths_mm": [],
+   "diverged_detail": {},
+   "transient_detail": {},
+   "small_unclipped_chatter": [],
+   "high_branch_pp_x_mm": [
+    0.06382358925432512,
+    0.14995002392776063
+   ],
+   "high_branch_rms_V": [
+    8.589053817275099,
+    8.81797259838995
+   ],
+   "high_branch_clip_frac": [
+    0.8656575520833333,
+    0.9398697916666666
+   ],
+   "high_branch_f_chatter_hz": [
+    152.85951222661183,
+    153.25665373657836
+   ],
+   "d1_vs_final_disagreements": [],
+   "kick_outcomes_by_frac": {
+    "0.15": "skipped",
+    "0.20": "skipped",
+    "0.25": "skipped",
+    "0.30": "skipped",
+    "0.40": "skipped",
+    "0.50": "skipped",
+    "0.60": "skipped",
+    "0.70": "skipped",
+    "0.80": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.90": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.95": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.98": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ]
+   },
+   "kick_bounded_Q4_pp_x_mm": [
+    0.08086751172826755,
+    0.13359155838211217
+   ],
+   "kick_bounded_Q4_rms_V": [
+    8.66830473405314,
+    8.793378461463377
+   ],
+   "kick_bounded_Q4_clip_frac": [
+    0.89119140625,
+    0.93180078125
+   ],
+   "kick_bounded_Q4_f_chatter_hz": [
+    152.90716428160525,
+    153.0922355917274
+   ]
+  },
+  "2500": {
+   "a_lim0_mm": 1.2382149717260333,
+   "a_lim_mm": 17.23587964837289,
+   "a_lim0_over_alim": 0.07183938371505882,
+   "band_edge_c1_band": {
+    "on_grid": true,
+    "value_mm": 5.37005375294618,
+    "g": 1500.0
+   },
+   "band_edge_over_alim": 0.3115625000000001,
+   "high_branch_end_grid_mm": 5.609185735187459,
+   "high_branch_end_grid_below_mm": 4.984761340407255,
+   "high_branch_end_refined_bracket_mm": [
+    5.355513324808001,
+    5.375026587144883
+   ],
+   "high_branch_end_refined_mm": 5.3652699559764425,
+   "high_branch_end_over_alim": 0.31128495124314337,
+   "high_branch_end_over_alim0": 4.333068230064625,
+   "high_branch_end_minus_band_edge_mm": -0.004783796969737075,
+   "high_branch_end_over_band_edge": 0.9991091714925363,
+   "high_branch_holes_mm": [],
+   "high_branch_pp_x_at_end_mm": 0.14228677354410968,
+   "high_branch_end_reached_by": "kick0.3000000000000001",
+   "bistable_range_refined_mm": [
+    5.375026587144883,
+    16.848824841231124
+   ],
+   "bistable_range_refined_over_alim": [
+    0.31185101641460455,
+    0.9775436580529672
+   ],
+   "basin_first_finite_frac": 0.4,
+   "basin_first_finite_mm": 6.894351859349157,
+   "basin_last_infinite_frac_below": 0.3,
+   "step_entry_limit_c1_map_mm": 13.00432662412355,
+   "step_entry_bracket_bifurcation_mm": [
+    12.477854077769699,
+    13.102278472549902
+   ],
+   "face_entry_limit_c1_map_mm": 17.246194847646514,
+   "face_low_branch_bracket_bifurcation_mm": [
+    16.848824841231124,
+    17.47324923601133
+   ],
+   "bistable_demonstrated_grid_mm": [
+    5.609185735187459,
+    6.233610129967663,
+    6.8580345247478665,
+    7.48245891952807,
+    8.106883314308273,
+    8.731307709088478,
+    9.35573210386868,
+    9.980156498648885,
+    10.604580893429087,
+    11.229005288209292,
+    11.853429682989495,
+    12.477854077769699,
+    13.102278472549902,
+    13.726702867330106,
+    14.35112726211031,
+    14.975551656890515,
+    15.599976051670717,
+    16.22440044645092,
+    16.848824841231124
+   ],
+   "bistable_demonstrated_range_mm": [
+    5.609185735187459,
+    16.848824841231124
+   ],
+   "bistable_demonstrated_range_over_alim": [
+    0.3254365805296732,
+    0.9775436580529672
+   ],
+   "depths_where_some_ic_left_forced_orbit_mm": [
+    5.609185735187459,
+    6.233610129967663,
+    6.8580345247478665,
+    7.48245891952807,
+    8.106883314308273,
+    8.731307709088478,
+    9.35573210386868,
+    9.980156498648885,
+    10.604580893429087,
+    11.229005288209292,
+    11.853429682989495,
+    12.477854077769699,
+    13.102278472549902,
+    13.726702867330106,
+    14.35112726211031,
+    14.975551656890515,
+    15.599976051670717,
+    16.22440044645092,
+    16.848824841231124,
+    17.47324923601133,
+    18.097673630791537
+   ],
+   "loss_of_attraction_only_mm": [],
+   "diverged_depths_mm": [],
+   "diverged_detail": {},
+   "transient_detail": {},
+   "small_unclipped_chatter": [],
+   "high_branch_pp_x_mm": [
+    0.19290348110708985,
+    0.8565304396524284
+   ],
+   "high_branch_rms_V": [
+    8.84760737736511,
+    8.968695079575644
+   ],
+   "high_branch_clip_frac": [
+    0.9498502604166666,
+    0.9896223958333333
+   ],
+   "high_branch_f_chatter_hz": [
+    133.4250140485725,
+    134.88654386769173
+   ],
+   "d1_vs_final_disagreements": [],
+   "kick_outcomes_by_frac": {
+    "0.15": "skipped",
+    "0.20": "skipped",
+    "0.25": "skipped",
+    "0.30": "skipped",
+    "0.40": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.50": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.60": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.70": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.80": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.90": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.95": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.98": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ]
+   },
+   "kick_bounded_Q4_pp_x_mm": [
+    0.30515120681154223,
+    0.8078880027623333
+   ],
+   "kick_bounded_Q4_rms_V": [
+    8.90693256023999,
+    8.966752212556544
+   ],
+   "kick_bounded_Q4_clip_frac": [
+    0.969046875,
+    0.98891796875
+   ],
+   "kick_bounded_Q4_f_chatter_hz": [
+    133.49166253574873,
+    134.74937227981601
+   ]
+  },
+  "2870": {
+   "a_lim0_mm": 1.3151541210711375,
+   "a_lim_mm": 15.395598601891539,
+   "a_lim0_over_alim": 0.08542403287323655,
+   "band_edge_c1_band": {
+    "on_grid": false,
+    "neighbours": {
+     "2860": 6.809980320863565,
+     "2880": 7.0348676888407375
+    },
+    "g_neighbours": [
+     1500.0,
+     1500.0
+    ],
+    "value_mm": 6.922424004852152
+   },
+   "band_edge_over_alim": 0.44963656067271374,
+   "high_branch_end_grid_mm": 6.815237236224832,
+   "high_branch_end_grid_below_mm": 6.265228924709463,
+   "high_branch_end_refined_bracket_mm": [
+    6.763673957020266,
+    6.780861716755122
+   ],
+   "high_branch_end_refined_mm": 6.7722678368876945,
+   "high_branch_end_over_alim": 0.4398833726449349,
+   "high_branch_end_over_alim0": 5.149410041290041,
+   "high_branch_end_minus_band_edge_mm": -0.1501561679644574,
+   "high_branch_end_over_band_edge": 0.9783087300258972,
+   "high_branch_holes_mm": [],
+   "high_branch_pp_x_at_end_mm": 0.10186121820935062,
+   "high_branch_end_reached_by": "kick0.3000000000000001",
+   "bistable_range_refined_mm": [
+    6.780861716755122,
+    15.065361908955378
+   ],
+   "bistable_range_refined_over_alim": [
+    0.4404415763296147,
+    0.9785499283609805
+   ],
+   "basin_first_finite_frac": 0.5,
+   "basin_first_finite_mm": 7.6977993009457695,
+   "basin_last_infinite_frac_below": 0.4,
+   "step_entry_limit_c1_map_mm": 12.636688215699362,
+   "step_entry_bracket_bifurcation_mm": [
+    12.315320351378528,
+    12.865328662893898
+   ],
+   "face_entry_limit_c1_map_mm": 15.4048124436423,
+   "face_low_branch_bracket_bifurcation_mm": [
+    15.065361908955378,
+    15.615370220470746
+   ],
+   "bistable_demonstrated_grid_mm": [
+    6.815237236224832,
+    7.365245547740202,
+    7.9152538592555715,
+    8.465262170770941,
+    9.015270482286311,
+    9.565278793801681,
+    10.115287105317051,
+    10.665295416832421,
+    11.21530372834779,
+    11.76531203986316,
+    12.315320351378528,
+    12.865328662893898,
+    13.415336974409268,
+    13.965345285924636,
+    14.515353597440008,
+    15.065361908955378
+   ],
+   "bistable_demonstrated_range_mm": [
+    6.815237236224832,
+    15.065361908955378
+   ],
+   "bistable_demonstrated_range_over_alim": [
+    0.44267439106833406,
+    0.9785499283609805
+   ],
+   "depths_where_some_ic_left_forced_orbit_mm": [
+    6.815237236224832,
+    7.365245547740202,
+    7.9152538592555715,
+    8.465262170770941,
+    9.015270482286311,
+    9.565278793801681,
+    10.115287105317051,
+    10.665295416832421,
+    11.21530372834779,
+    11.76531203986316,
+    12.315320351378528,
+    12.865328662893898,
+    13.415336974409268,
+    13.965345285924636,
+    14.515353597440008,
+    15.065361908955378,
+    15.615370220470746,
+    16.165378531986114
+   ],
+   "loss_of_attraction_only_mm": [],
+   "diverged_depths_mm": [],
+   "diverged_detail": {},
+   "transient_detail": {},
+   "small_unclipped_chatter": [
+    {
+     "a_mm": 15.615370220470746,
+     "a_over_alim": 1.0142749641804902,
+     "ic": "face",
+     "pp_x_um": 9.41053212284472,
+     "clip_frac": 0.0,
+     "f_chatter": 147.34314077284097,
+     "res_tooth_um": 3.234259527222097
+    }
+   ],
+   "high_branch_pp_x_mm": [
+    0.10883885188667419,
+    0.4132412418966009
+   ],
+   "high_branch_rms_V": [
+    8.734839535709462,
+    8.936885755382896
+   ],
+   "high_branch_clip_frac": [
+    0.91283203125,
+    0.9792903645833333
+   ],
+   "high_branch_f_chatter_hz": [
+    137.34339493518254,
+    138.91549526931072
+   ],
+   "d1_vs_final_disagreements": [],
+   "kick_outcomes_by_frac": {
+    "0.15": "skipped",
+    "0.20": "skipped",
+    "0.25": "skipped",
+    "0.30": "skipped",
+    "0.40": "skipped",
+    "0.50": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.60": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.70": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.80": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.90": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.95": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ],
+    "0.98": [
+     "bounded_stationary",
+     "bounded_stationary",
+     "bounded_stationary"
+    ]
+   },
+   "kick_bounded_Q4_pp_x_mm": [
+    0.16480977619170717,
+    0.3845155504328241
+   ],
+   "kick_bounded_Q4_rms_V": [
+    8.831879249687354,
+    8.932199762857165
+   ],
+   "kick_bounded_Q4_clip_frac": [
+    0.94437890625,
+    0.97747265625
+   ],
+   "kick_bounded_Q4_f_chatter_hz": [
+    137.33309560191802,
+    138.7282548615601
+   ]
+  }
+ },
+ "overall": {
+  "kick_outcome_counts": {
+   "bounded_stationary": 87
+  },
+  "kick_runs": 87,
+  "kick_points_run": 29,
+  "kick_points_skipped": 19,
+  "kick_d1_chatter_300rev": 87,
+  "kick_bounded_Q4_pp_x_mm": [
+   0.08086751172826755,
+   1.9929227053341239
+  ],
+  "kick_bounded_Q4_clip_frac": [
+   0.89119140625,
+   0.99212890625
+  ],
+  "kick_bounded_Q4_f_chatter_hz": [
+   132.69773306402627,
+   153.0922355917274
+  ],
+  "kick_transient_peak_mm": [
+   0.06053049316938902,
+   3.285986866718581
+  ],
+  "long_runs": [
+   {
+    "rpm": 1090.0,
+    "frac": 0.9,
+    "outcome": "bounded_stationary",
+    "rel_change_rms_x": 0.0012920620529639493,
+    "rel_change_rms_V": -3.4797073324321914e-05,
+    "change_f_chatter_hz": 0.00013903255003810955
+   },
+   {
+    "rpm": 1420.0,
+    "frac": 0.9,
+    "outcome": "bounded_stationary",
+    "rel_change_rms_x": 7.478089760093454e-06,
+    "rel_change_rms_V": -5.6600783480020844e-05,
+    "change_f_chatter_hz": 0.0006173383998770987
+   },
+   {
+    "rpm": 2500.0,
+    "frac": 0.9,
+    "outcome": "bounded_stationary",
+    "rel_change_rms_x": 2.4671024219546922e-05,
+    "rel_change_rms_V": -5.966402924273417e-06,
+    "change_f_chatter_hz": -9.134406835187292e-05
+   },
+   {
+    "rpm": 2870.0,
+    "frac": 0.9,
+    "outcome": "bounded_stationary",
+    "rel_change_rms_x": -4.6447476428346235e-05,
+    "rel_change_rms_V": 1.4500699454522703e-06,
+    "change_f_chatter_hz": 0.002047542592691798
+   }
+  ],
+  "bifurcation_state_counts": {
+   "chatter": 174,
+   "forced": 274
+  },
+  "bifurcation_small_unclipped_chatter": {
+   "2870": [
+    {
+     "a_mm": 15.615370220470746,
+     "a_over_alim": 1.0142749641804902,
+     "ic": "face",
+     "pp_x_um": 9.41053212284472,
+     "clip_frac": 0.0,
+     "f_chatter": 147.34314077284097,
+     "res_tooth_um": 3.234259527222097
+    }
+   ]
+  },
+  "bifurcation_max_x_mm": 4.410394661455154,
+  "any_divergence_bifurcation": false,
+  "any_divergence_kick": false,
+  "high_branch_end_over_band_edge": [
+   0.983553515224281,
+   0.99225282083751,
+   0.9991091714925363,
+   0.9783087300258972
+  ],
+  "bistable_range_over_alim": {
+   "1090": [
+    0.2801626049584361,
+    0.9766821528531844
+   ],
+   "1420": [
+    0.7594553205321704,
+    0.9971736946422127
+   ],
+   "2500": [
+    0.3254365805296732,
+    0.9775436580529672
+   ],
+   "2870": [
+    0.44267439106833406,
+    0.9785499283609805
+   ]
+  },
+  "chaos_verdicts": [
+   {
+    "kind": "kick",
+    "rpm": 1090.0,
+    "g": 1500.0,
+    "a_mm": 18.888130438130403,
+    "verdict": "regular",
+    "sep_final_over_pp": 1.344603935982861e-09
+   },
+   {
+    "kind": "kick",
+    "rpm": 1420.0,
+    "g": 1500.0,
+    "a_mm": 16.001238691218965,
+    "verdict": "regular",
+    "sep_final_over_pp": 6.015005028422321e-10
+   },
+   {
+    "kind": "kick",
+    "rpm": 2500.0,
+    "g": 1500.0,
+    "a_mm": 15.5122916835356,
+    "verdict": "regular",
+    "sep_final_over_pp": 1.0580827618667738e-09
+   },
+   {
+    "kind": "kick",
+    "rpm": 2870.0,
+    "g": 1500.0,
+    "a_mm": 13.856038741702385,
+    "verdict": "regular",
+    "sep_final_over_pp": 9.28430407004217e-10
+   },
+   {
+    "kind": "step",
+    "rpm": 1090.0,
+    "g": 1500.0,
+    "a_mm": 22.036152177818806,
+    "verdict": "regular",
+    "sep_final_over_pp": 4.868519576666137e-07
+   },
+   {
+    "kind": "step",
+    "rpm": 1420.0,
+    "g": 1500.0,
+    "a_mm": 18.66811180642213,
+    "verdict": "regular",
+    "sep_final_over_pp": 4.589558727540844e-07
+   },
+   {
+    "kind": "step",
+    "rpm": 2500.0,
+    "g": 1500.0,
+    "a_mm": 18.097673630791537,
+    "verdict": "regular",
+    "sep_final_over_pp": 2.2843684018882019e-07
+   },
+   {
+    "kind": "step",
+    "rpm": 2870.0,
+    "g": 1500.0,
+    "a_mm": 16.165378531986114,
+    "verdict": "regular",
+    "sep_final_over_pp": 2.7344641445087973e-07
+   },
+   {
+    "kind": "step",
+    "rpm": 2350.0,
+    "g": 1217.0,
+    "a_mm": 14.406480442240989,
+    "verdict": "regular",
+    "sep_final_over_pp": 1.640017584857176e-07
+   },
+   {
+    "kind": "step",
+    "rpm": 2500.0,
+    "g": 1500.0,
+    "a_mm": 15.0,
+    "verdict": "regular",
+    "sep_final_over_pp": 2.067276905615899e-07
+   }
+  ],
+  "band_spot_summary": {
+   "n_speeds": 14,
+   "n_runs": 78,
+   "state_counts": {
+    "forced": 34,
+    "diverged": 21,
+    "chatter": 23
+   },
+   "speeds_with_divergence": [
+    700.0,
+    1020.0,
+    1040.0,
+    1050.0,
+    1060.0
+   ],
+   "speeds_bounded_only": [
+    960.0,
+    980.0,
+    1080.0,
+    1620.0,
+    1640.0,
+    1980.0
+   ],
+   "bounded_pp_x_mm": [
+    0.04391246219560915,
+    2.937243338052074
+   ]
+  },
+  "band_spot_by_speed": {
+   "700": {
+    "g": 1500.0,
+    "a_lim_mm": 21.349568244680178,
+    "band_edge_mm": 5.410781202011133,
+    "states": {
+     "19.215 mm step": "forced",
+     "19.215 mm kick0.03": "forced",
+     "19.215 mm kick0.3": "forced",
+     "20.923 mm step": "diverged",
+     "20.923 mm kick0.03": "diverged",
+     "20.923 mm kick0.3": "diverged"
+    }
+   },
+   "960": {
+    "g": 1500.0,
+    "a_lim_mm": 21.143954287633207,
+    "band_edge_mm": 18.877586687427524,
+    "states": {
+     "19.030 mm step": "forced",
+     "19.030 mm kick0.03": "chatter",
+     "19.030 mm kick0.3": "chatter",
+     "20.721 mm step": "chatter",
+     "20.721 mm kick0.03": "chatter",
+     "20.721 mm kick0.3": "chatter"
+    }
+   },
+   "980": {
+    "g": 1500.0,
+    "a_lim_mm": 22.30922305915233,
+    "band_edge_mm": 17.000325134294677,
+    "states": {
+     "20.078 mm step": "forced",
+     "20.078 mm kick0.03": "forced",
+     "20.078 mm kick0.3": "forced",
+     "21.863 mm step": "chatter",
+     "21.863 mm kick0.03": "chatter",
+     "21.863 mm kick0.3": "chatter"
+    }
+   },
+   "1000": {
+    "g": 1500.0,
+    "a_lim_mm": 23.53853492905551,
+    "band_edge_mm": 8.359857795897373,
+    "states": {
+     "21.185 mm step": "forced",
+     "21.185 mm kick0.03": "forced",
+     "21.185 mm kick0.3": "forced",
+     "23.068 mm step": "forced",
+     "23.068 mm kick0.03": "forced",
+     "23.068 mm kick0.3": "forced"
+    }
+   },
+   "1020": {
+    "g": 1500.0,
+    "a_lim_mm": 24.826888124658765,
+    "band_edge_mm": 6.292064459093206,
+    "states": {
+     "22.344 mm step": "forced",
+     "22.344 mm kick0.03": "forced",
+     "22.344 mm kick0.3": "forced",
+     "24.330 mm step": "diverged",
+     "24.330 mm kick0.03": "diverged",
+     "24.330 mm kick0.3": "diverged"
+    }
+   },
+   "1040": {
+    "g": 1500.0,
+    "a_lim_mm": 26.170181701046516,
+    "band_edge_mm": 5.871934519172313,
+    "states": {
+     "23.553 mm step": "diverged",
+     "23.553 mm kick0.03": "diverged",
+     "23.553 mm kick0.3": "diverged",
+     "25.647 mm step": "diverged",
+     "25.647 mm kick0.03": "diverged",
+     "25.647 mm kick0.3": "diverged"
+    }
+   },
+   "1050": {
+    "g": 1500.0,
+    "a_lim_mm": 26.861347082147667,
+    "band_edge_mm": 5.871934519172313,
+    "states": {
+     "24.175 mm step": "diverged",
+     "24.175 mm kick0.03": "diverged",
+     "24.175 mm kick0.3": "diverged",
+     "26.324 mm step": "diverged",
+     "26.324 mm kick0.03": "diverged",
+     "26.324 mm kick0.3": "diverged"
+    }
+   },
+   "1060": {
+    "g": 1500.0,
+    "a_lim_mm": 25.671259029156715,
+    "band_edge_mm": 5.386953261899604,
+    "states": {
+     "23.104 mm step": "forced",
+     "23.104 mm kick0.03": "forced",
+     "23.104 mm kick0.3": "forced",
+     "25.158 mm step": "diverged",
+     "25.158 mm kick0.03": "diverged",
+     "25.158 mm kick0.3": "diverged"
+    }
+   },
+   "1080": {
+    "g": 1500.0,
+    "a_lim_mm": 22.23416825155101,
+    "band_edge_mm": 5.311881758847109,
+    "states": {
+     "20.011 mm step": "chatter",
+     "20.011 mm kick0.03": "chatter",
+     "20.011 mm kick0.3": "chatter",
+     "21.789 mm step": "chatter",
+     "21.789 mm kick0.03": "chatter",
+     "21.789 mm kick0.3": "chatter"
+    }
+   },
+   "1620": {
+    "g": 1125.8106789029182,
+    "a_lim_mm": 21.067315301749222,
+    "band_edge_mm": 20.03370014475715,
+    "states": {
+     "20.646 mm step": "chatter",
+     "20.646 mm kick0.03": "chatter",
+     "20.646 mm kick0.3": "forced",
+     "20.857 mm step": "chatter",
+     "20.857 mm kick0.03": "chatter",
+     "20.857 mm kick0.3": "forced"
+    }
+   },
+   "1640": {
+    "g": 1051.6902366485745,
+    "a_lim_mm": 21.29476735460041,
+    "band_edge_mm": 20.868872007508404,
+    "states": {
+     "21.082 mm step": "chatter",
+     "21.082 mm kick0.03": "chatter",
+     "21.082 mm kick0.3": "forced"
+    }
+   },
+   "1820": {
+    "g": 433.0123563339305,
+    "a_lim_mm": 25.052678129037645,
+    "band_edge_mm": 24.55162456645689,
+    "states": {
+     "24.802 mm step": "forced",
+     "24.802 mm kick0.03": "forced",
+     "24.802 mm kick0.3": "forced"
+    }
+   },
+   "1960": {
+    "g": 155.12512769323942,
+    "a_lim_mm": 30.467860074546284,
+    "band_edge_mm": 27.202086322805854,
+    "states": {
+     "27.421 mm step": "forced",
+     "27.421 mm kick0.03": "forced",
+     "27.421 mm kick0.3": "forced",
+     "29.859 mm step": "forced",
+     "29.859 mm kick0.03": "forced",
+     "29.859 mm kick0.3": "forced"
+    }
+   },
+   "1980": {
+    "g": 198.84017786866858,
+    "a_lim_mm": 23.748871570852927,
+    "band_edge_mm": 16.026777549142782,
+    "states": {
+     "21.374 mm step": "chatter",
+     "21.374 mm kick0.03": "forced",
+     "21.374 mm kick0.3": "chatter",
+     "23.274 mm step": "forced",
+     "23.274 mm kick0.03": "forced",
+     "23.274 mm kick0.3": "chatter"
+    }
+   }
+  },
+  "abort_10cm_summary": {
+   "n_runs": 21,
+   "state_counts": {
+    "forced": 21
+   },
+   "max_x_mm_range": [
+    12.513755705329896,
+    30.324849844968533
+   ],
+   "back_on_forced_orbit_rev_range": [
+    18.25,
+    59.25
+   ],
+   "d1_chatter_300rev_count": 0
+  },
+  "abort_10cm_outcomes": {
+   "700 rpm 20.92 mm step": {
+    "state": "forced",
+    "max_x_mm": 14.721791299078358
+   },
+   "700 rpm 20.92 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 14.69834118940119
+   },
+   "700 rpm 20.92 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 14.077068497276407
+   },
+   "1020 rpm 24.33 mm step": {
+    "state": "forced",
+    "max_x_mm": 12.701462492321204
+   },
+   "1020 rpm 24.33 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 12.707670987928491
+   },
+   "1020 rpm 24.33 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 12.513755705329896
+   },
+   "1040 rpm 23.55 mm step": {
+    "state": "forced",
+    "max_x_mm": 13.217449954667725
+   },
+   "1040 rpm 23.55 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 13.210731080870472
+   },
+   "1040 rpm 23.55 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 12.824518888621178
+   },
+   "1040 rpm 25.65 mm step": {
+    "state": "forced",
+    "max_x_mm": 24.946664793385352
+   },
+   "1040 rpm 25.65 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 24.946089985913304
+   },
+   "1040 rpm 25.65 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 24.351412914741516
+   },
+   "1050 rpm 24.18 mm step": {
+    "state": "forced",
+    "max_x_mm": 14.94081488438107
+   },
+   "1050 rpm 24.18 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 14.944741311106627
+   },
+   "1050 rpm 24.18 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 14.471672589373952
+   },
+   "1050 rpm 26.32 mm step": {
+    "state": "forced",
+    "max_x_mm": 30.3134209329842
+   },
+   "1050 rpm 26.32 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 30.324849844968533
+   },
+   "1050 rpm 26.32 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 29.391068982695337
+   },
+   "1060 rpm 25.16 mm step": {
+    "state": "forced",
+    "max_x_mm": 17.531476764906536
+   },
+   "1060 rpm 25.16 mm kick0.03": {
+    "state": "forced",
+    "max_x_mm": 17.542676629337507
+   },
+   "1060 rpm 25.16 mm kick0.3": {
+    "state": "forced",
+    "max_x_mm": 16.91349850238995
+   }
+  }
+ }
+}

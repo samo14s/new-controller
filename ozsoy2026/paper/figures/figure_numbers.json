@@ -668,5 +668,101 @@
     58.2
    ]
   }
+ },
+ "fig_attr": {
+  "bifurcation": {
+   "1090": {
+    "a_lim_mm": 20.99,
+    "a_lim0_mm": 1.26,
+    "high_branch_from": 0.249,
+    "high_branch_from_refined_hi": 0.25,
+    "low_branch_top": 0.977,
+    "chatter_pp_mm": [
+     0.27,
+     2.555
+    ],
+    "n_diverged": 0
+   },
+   "1420": {
+    "a_lim_mm": 17.78,
+    "a_lim0_mm": 5.99,
+    "high_branch_from": 0.741,
+    "high_branch_from_refined_hi": 0.742,
+    "low_branch_top": 0.997,
+    "chatter_pp_mm": [
+     0.064,
+     0.15
+    ],
+    "n_diverged": 0
+   },
+   "2500": {
+    "a_lim_mm": 17.24,
+    "a_lim0_mm": 1.24,
+    "high_branch_from": 0.311,
+    "high_branch_from_refined_hi": 0.312,
+    "low_branch_top": 0.978,
+    "chatter_pp_mm": [
+     0.193,
+     0.857
+    ],
+    "n_diverged": 0
+   },
+   "2870": {
+    "a_lim_mm": 15.4,
+    "a_lim0_mm": 1.32,
+    "high_branch_from": 0.439,
+    "high_branch_from_refined_hi": 0.44,
+    "low_branch_top": 0.979,
+    "chatter_pp_mm": [
+     0.009,
+     0.413
+    ],
+    "n_diverged": 0
+   }
+  },
+  "spectra_2500_09": {
+   "clipped chatter": {
+    "peak_hz": 134.6,
+    "peak_um": 368.324
+   },
+   "forced orbit": {
+    "peak_hz": 166.7,
+    "peak_um": 3.676
+   }
+  },
+  "kick_2500_09_mm_s": 14.42,
+  "worst_phase": 15
+ },
+ "fig_ba": {
+  "speeds": [
+   2500.0
+  ],
+  "beta_req_mmps": [
+   1.0,
+   2.0,
+   5.0
+  ],
+  "a_rob_mm": {
+   "1": [
+    14.0
+   ],
+   "2": [
+    14.0
+   ],
+   "5": [
+    10.0
+   ]
+  },
+  "g_star": {
+   "1": [
+    1250.0
+   ],
+   "2": [
+    1250.0
+   ],
+   "5": [
+    1000.0
+   ]
+  }
  }
 }

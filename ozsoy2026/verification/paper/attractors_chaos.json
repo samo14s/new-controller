@@ -1,0 +1,229 @@
+{
+ "note": "Is the bounded clipped chatter chaotic?  Twin runs with a perturbed kick.\n\nPurpose.  Appendix A of the manuscript states that clipped chatter 'is\nchaotic and separates pointwise'.  attractors_kick.py finds the chatter that a\nkick releases bounded and statistically stationary; this script tests whether\nit is chaotic (sensitive to initial conditions) or regular (periodic or\nquasi-periodic), by following two runs whose kicks differ by a relative 1e-9.\nOn a regular attractor the separation of the two runs stays at the size of\nthe initial difference (or grows at most linearly, along the neutral phase of\na torus); on a chaotic one it grows exponentially until it is as large as the\nattractor.\n\nProtocol.  Same model and kick protocol as attractors_kick.py (face entry, kick\nat revolution 100 at the worst phase of results/c1_basin.npz, full surface\nmemory, 9 V clip, g = 1500 V s/m, damping 1.34 %), at the four points at\n0.9 a_lim(1500) with the 2x kick, 2000 revolutions after the kick; as the\ndeepest cuts of attractors_bifurcation.py, the step entry at 1.05 a_lim(1500) at\nthe four speeds (perturbation: depth a (1 + 1e-9)), 1600 revolutions; and the two\nbounded clipped-chatter cases of verification/tdsim/check9_full_memory.json on\nwhich the statement rests (step entry, 2350 rpm, g = 1217 V s/m, 14.406 mm, and\n2500 rpm, g = 1500, 15 mm), 1600 revolutions.  Stored:\nthe per-revolution maximum of |x1 - x2|, the separation at the end, its ratio\nto the peak-to-peak of x over the last 300 revolutions, and the\ngrowth rate per revolution fitted to log separation while it is between 1e3\ntimes its first value and 1e-2 of the peak-to-peak (none if never).\n'chaotic' if the final separation exceeds 10 % of the peak-to-peak, 'regular'\nif it stays below 1e-4 of it, else 'undecided'.\n\nRun (2 worker processes, about 3 min):\n    OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 verification/paper/attractors_chaos.py --workers 2\nWrites verification/paper/attractors_chaos.json and attractors_chaos.npz\n(per-revolution separation).\n",
+ "zeta": 0.0134,
+ "build": "09c87373c43f",
+ "cases": [
+  {
+   "kind": "kick",
+   "rpm": 1090.0,
+   "g": 1500.0,
+   "a_mm": 18.888130438130403,
+   "phase": 3,
+   "kick_m_s": 0.030115762986247206,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 1.7552732257796533,
+   "res_tooth_last300_m": 0.0008416268648393106,
+   "sep_first_m": 5.954616140446678e-13,
+   "sep_final_m": 2.360147288108655e-12,
+   "sep_final_over_pp": 1.344603935982861e-09,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 19.2
+  },
+  {
+   "kind": "kick",
+   "rpm": 1420.0,
+   "g": 1500.0,
+   "a_mm": 16.001238691218965,
+   "phase": 15,
+   "kick_m_s": 0.025051444789445116,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.11252039070609593,
+   "res_tooth_last300_m": 9.276413131552605e-05,
+   "sep_first_m": 1.0529227026400724e-13,
+   "sep_final_m": 6.768107158972112e-14,
+   "sep_final_over_pp": 6.015005028422321e-10,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 16.4
+  },
+  {
+   "kind": "kick",
+   "rpm": 2500.0,
+   "g": 1500.0,
+   "a_mm": 15.5122916835356,
+   "phase": 15,
+   "kick_m_s": 0.014419476718185496,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.7493922725669033,
+   "res_tooth_last300_m": 0.00042874640155107747,
+   "sep_first_m": 1.3049228310326594e-13,
+   "sep_final_m": 7.929190454792072e-13,
+   "sep_final_over_pp": 1.0580827618667738e-09,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 18.8
+  },
+  {
+   "kind": "kick",
+   "rpm": 2870.0,
+   "g": 1500.0,
+   "a_mm": 13.856038741702385,
+   "phase": 13,
+   "kick_m_s": 0.02297227616003976,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.3507804548785477,
+   "res_tooth_last300_m": 0.0002668079720672992,
+   "sep_first_m": 9.546301195286627e-14,
+   "sep_final_m": 3.256752404920144e-13,
+   "sep_final_over_pp": 9.28430407004217e-10,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 17.3
+  },
+  {
+   "kind": "step",
+   "rpm": 1090.0,
+   "g": 1500.0,
+   "a_mm": 22.036152177818806,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 2.5520002341292725,
+   "res_tooth_last300_m": 0.001201964536661461,
+   "sep_first_m": 1.5879700711925876e-12,
+   "sep_final_m": 1.2424463099514928e-09,
+   "sep_final_over_pp": 4.868519576666137e-07,
+   "growth_rate_per_rev": -5.497645452193543e-05,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 12.4
+  },
+  {
+   "kind": "step",
+   "rpm": 1420.0,
+   "g": 1500.0,
+   "a_mm": 18.66811180642213,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.14995002392776063,
+   "res_tooth_last300_m": 0.00012324418703919335,
+   "sep_first_m": 5.044682119953459e-13,
+   "sep_final_m": 6.882044410126123e-11,
+   "sep_final_over_pp": 4.589558727540844e-07,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 11.0
+  },
+  {
+   "kind": "step",
+   "rpm": 2500.0,
+   "g": 1500.0,
+   "a_mm": 18.097673630791537,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.8565277468619799,
+   "res_tooth_last300_m": 0.00048582930637604683,
+   "sep_first_m": 6.490661144404469e-13,
+   "sep_final_m": 1.9566249202720033e-10,
+   "sep_final_over_pp": 2.2843684018882019e-07,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 12.8
+  },
+  {
+   "kind": "step",
+   "rpm": 2870.0,
+   "g": 1500.0,
+   "a_mm": 16.165378531986114,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.4132412418966009,
+   "res_tooth_last300_m": 0.00031132204808825056,
+   "sep_first_m": 4.0739894097141516e-13,
+   "sep_final_m": 1.1299933589985418e-10,
+   "sep_final_over_pp": 2.7344641445087973e-07,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 11.9
+  },
+  {
+   "kind": "step",
+   "rpm": 2350.0,
+   "g": 1217.0,
+   "a_mm": 14.406480442240989,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.9194860043708776,
+   "res_tooth_last300_m": 0.0004215388870343447,
+   "sep_first_m": 4.2273812488752283e-13,
+   "sep_final_m": 1.5079732161983015e-10,
+   "sep_final_over_pp": 1.640017584857176e-07,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 12.5
+  },
+  {
+   "kind": "step",
+   "rpm": 2500.0,
+   "g": 1500.0,
+   "a_mm": 15.0,
+   "phase": -1,
+   "kick_m_s": 0.0,
+   "eps": 1e-09,
+   "diverged": [
+    false,
+    false
+   ],
+   "pp_x_last300_mm": 0.7271610383124428,
+   "res_tooth_last300_m": 0.0004168681497417743,
+   "sep_first_m": 5.345015472975681e-13,
+   "sep_final_m": 1.503243221166991e-10,
+   "sep_final_over_pp": 2.067276905615899e-07,
+   "growth_rate_per_rev": null,
+   "e_folding_revs": null,
+   "verdict": "regular",
+   "runtime_s": 12.4
+  }
+ ],
+ "runtime_s": 72.8,
+ "workers": 2
+}

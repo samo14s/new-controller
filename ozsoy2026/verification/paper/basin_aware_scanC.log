@@ -1,0 +1,3 @@
+  1000 rpm (N_red 16): beta 1: g* 2562.5 a_rob 32 mm (a_phys); beta 2: g* 2000.0 a_rob 26 mm (linear limit); beta 5: g* 1312.5 a_rob 20 mm (certificate)  [scan 0 s, recert 0 s, 12 gains]
+  2500 rpm (N_red 12): beta 1: g* 1250.0 a_rob 14 mm (linear limit); beta 2: g* 1250.0 a_rob 14 mm (linear limit); beta 5: g* 1000.0 a_rob 10 mm (linear limit)  [scan 0 s, recert 0 s, 4 gains]
+scan + recert done in 0 s

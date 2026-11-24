@@ -1,0 +1,11 @@
+  1125 rpm (N_red 16): beta 1: g* 2500.0 a_rob 32 mm (a_phys); beta 2: g* 2125.0 a_rob 28 mm (linear limit); beta 5: g* 1500.0 a_rob 16 mm (certificate)  [scan 350 s, recert 79 s, 8 gains]
+  1250 rpm (N_red 16): beta 1: g* 2250.0 a_rob 24 mm (linear limit); beta 2: g* 1750.0 a_rob 18 mm (linear limit); beta 5: g* 1500.0 a_rob 14 mm (linear limit)  [scan 179 s, recert 52 s, 6 gains]
+  1375 rpm (N_red 16): beta 1: g* 1750.0 a_rob 18 mm (linear limit); beta 2: g* 1437.5 a_rob 16 mm (linear limit); beta 5: g* 1437.5 a_rob 14 mm (certificate)  [scan 166 s, recert 53 s, 5 gains]
+  1500 rpm (N_red 16): beta 1: g* 1312.5 a_rob 18 mm (linear limit); beta 2: g* 1125.0 a_rob 16 mm (linear limit); beta 5: g* 1125.0 a_rob 16 mm (linear limit)  [scan 124 s, recert 36 s, 5 gains]
+  1625 rpm (N_red 16): beta 1: g* 750.0 a_rob 18 mm (linear limit); beta 2: g* 750.0 a_rob 18 mm (linear limit); beta 5: g* 750.0 a_rob 18 mm (linear limit)  [scan 63 s, recert 7 s, 2 gains]
+  2375 rpm (N_red 12): beta 1: g* 1000.0 a_rob 12 mm (linear limit); beta 2: g* 1000.0 a_rob 12 mm (linear limit); beta 5: g* 875.0 a_rob 10 mm (linear limit)  [scan 52 s, recert 11 s, 4 gains]
+  2625 rpm (N_red 12): beta 1: g* 1500.0 a_rob 16 mm (linear limit); beta 2: g* 1500.0 a_rob 16 mm (linear limit); beta 5: g* 1250.0 a_rob 12 mm (linear limit)  [scan 58 s, recert 36 s, 3 gains]
+  2750 rpm (N_red 12): beta 1: g* 1750.0 a_rob 18 mm (linear limit); beta 2: g* 1750.0 a_rob 16 mm (certificate); beta 5: g* 1375.0 a_rob 14 mm (linear limit)  [scan 65 s, recert 44 s, 6 gains]
+  2875 rpm (N_red 12): beta 1: g* 2000.0 a_rob 20 mm (linear limit); beta 2: g* 1562.5 a_rob 16 mm (linear limit); beta 5: g* 1500.0 a_rob 14 mm (linear limit)  [scan 118 s, recert 41 s, 8 gains]
+  3000 rpm (N_red 12): beta 1: g* 2312.5 a_rob 24 mm (linear limit); beta 2: g* 1750.0 a_rob 18 mm (linear limit); beta 5: g* 1500.0 a_rob 14 mm (linear limit)  [scan 102 s, recert 52 s, 8 gains]
+scan + recert done in 1688 s

@@ -1,0 +1,5 @@
+checks: {"alim_max_abs_rel": 4.815674072289333e-05, "zoa_max_abs_rel": 0.0, "zeros_all_agree": true, "zeros_at_alim_ok": true, "orbit_max_abs_diff_V": 6.217248937900877e-15} {"alim_max_abs_rel": 5.45017723103669e-05, "zoa_max_abs_rel": 0.0, "zeros_all_agree": true, "zeros_at_alim_ok": true, "orbit_max_abs_diff_V": 5.329070518200751e-15} {"n_pairs": 200, "max_underestimate_V": 0.015153687321981302, "median_V": 0.00036380772039623643, "p99_V": 0.012353112089202038}
+checks done in 71 s
+level pm10: 209 s
+level pm20: 125 s
+done in 406 s -> /home/user/new-controller/ozsoy2026/verification/paper/mc_closed_form.json

@@ -1,11 +1,13 @@
-# Figures of the manuscript (Figs. 2-10)
+# Figures of the manuscript and of the Supplementary Material
 
-All nine data figures are drawn by `make_figures.py` from the stored results of
-the repository; nothing outside `paper/figures/` is written.
+All data figures are drawn by `make_figures.py` from the stored results of the
+repository (`../../results`, `../../verification`); nothing outside `paper/figures/`
+is written. In the second revision `fig_attractors` and `fig_basin_aware` were
+added; `fig07`, `fig09` and `fig10` moved to the Supplementary Material.
 
 ```bash
 cd paper/figures
-OMP_NUM_THREADS=1 python make_figures.py            # all nine, about 30 s
+OMP_NUM_THREADS=1 python make_figures.py            # all, about 1 min
 OMP_NUM_THREADS=1 python make_figures.py fig03 fig07   # selected figures
 ```
 
@@ -45,6 +47,8 @@ Every figure is drawn at the preprint text width, 390 pt (137.2 mm), so it is pl
 | 8 (`fig:dlim`) | `fig08_delayed_limits` | `results/c4_limits.npz` (`feas_a_lim`, `feas_g1`, `feas_names`, `feas_g2`), `results/c4_entry.npz` (`a_entry`, designs `feas_dvf` and `feas_d2000`) | nothing |
 | 9 (`fig:dbasin`) | `fig09_delayed_basin` | `results/c4_gainmap.npz` (`kick`, `kick_dvf`, `bmax`, `bmax_dvf`), `results/c4_validate.npz` and `results/c4_validate2.npz` (`td_min`, `cert`, kinds `dvf`, `dvf_fine`, `comb`, `same_g1`) | gain-map certificates rescaled as in `src/c3_summary.margin_errata` (factors 0.59-1, below 0.99 only where the margin is almost nil); the validation statistics and the same-depth pairs of `src/c4_summary.py` |
 | 10 (`fig:robust`) | `fig10_robustness` | `results/c4_robust.npz` (`eps_a_lim`, `eps_cmd`, `runout_cmd`, `tau_a_lim`, `a_lim`, `mode2`) | the runout at which the worst command reaches 9 V (linear interpolation, as `src/figures_c4.py`); the worst-case ratio a_lim(τ)/a_lim(0) over the four speeds and the three assumed modes |
+| Attractors (`fig:attr`, Sec. 4.5) | `fig_attractors` | `verification/paper/attractors_bifurcation.npz` (steady peak-to-peak and final state per depth and start), `verification/paper/attractors_kick.npz` (Poincare samples, per-revolution peak-to-peak after the kick) | two simulations at 2500 rpm, 0.9 a_lim (unkicked and kicked with twice the critical kick at the worst phase, 1100 revolutions) for the spectra |
+| Basin-aware chart (`fig:ba`, Sec. 6) | `fig_basin_aware` | `verification/paper/basin_aware.npz` (a_rob, g*, binding constraint; dense authority-schedule curves), `verification/paper/circle_criterion.json` (a_circ with the orbit unclipped) | nothing |
 
 Kick search, depth ladders, classifier and the models behind each file are those
 of the campaign scripts (`src/c1_unsafe_zone.py`, `src/c2_certificate.py`,
