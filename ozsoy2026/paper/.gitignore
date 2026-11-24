@@ -1,0 +1,12 @@
+# LaTeX build artefacts (the PDFs, the DOCX and submission.zip are kept)
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.blg
+*.bbl
+*.spl
+*.synctex.gz
+*.toc
+/submission/

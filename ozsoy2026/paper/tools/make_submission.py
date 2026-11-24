@@ -67,6 +67,9 @@ def main():
     bad = re.findall(r"(?:Reference|Citation) `[^']+' on page \d+ undefined", log)
     if bad:
         sys.exit("undefined references in the flat build: " + "; ".join(sorted(set(bad))[:10]))
+    for f in ("supplementary.pdf", "cover_letter.pdf"):                # separate upload items
+        if os.path.exists(os.path.join(HERE, f)):
+            shutil.copy(os.path.join(HERE, f), OUT)
     for f in os.listdir(OUT):                                           # keep sources + PDF only
         if f.split(".")[-1] in ("aux", "log", "out", "spl", "fls", "fdb_latexmk", "blg"):
             os.remove(os.path.join(OUT, f))
