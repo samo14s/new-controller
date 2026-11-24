@@ -1,0 +1,27 @@
+{
+ "note": "Extra node counts for the N-convergence of the C2 certified kick at a point where the 2 N solve failed.",
+ "points": {
+  "2500_0.98": {
+   "rpm": 2500.0,
+   "frac": 0.98,
+   "a_mm": 16.89116205540543,
+   "runs": {
+    "24": {
+     "beta_mmps": 1.1331470038181455,
+     "note": "AlmostSolved; pass 2, lam 0.2 sigma; ok",
+     "seconds": 145.7
+    },
+    "30": {
+     "beta_mmps": 1.1329268102114796,
+     "note": "AlmostSolved; pass 2, lam 0.2 sigma; ok, shrunk by 0.999999999514",
+     "seconds": 372.1
+    },
+    "36": {
+     "beta_mmps": 1.1326615557485955,
+     "note": "AlmostSolved; pass 2, lam 0.2 sigma; ok",
+     "seconds": 761.7
+    }
+   }
+  }
+ }
+}

@@ -879,7 +879,7 @@ def fig_ba():
            label=r"$a_{\mathrm{circ}}$: every disturbance (Prop. 1)")
     a.plot(dn, B["dense_a_lim_auth"], color=K, lw=1.0, label=r"$a_{\mathrm{lim}}(g^\star)$, authority schedule")
     a.plot(dn, B["dense_a_chk"], color=BLUE, lw=0.85, label=r"$a_{\mathrm{chk}}$, checked depth")
-    a.plot(dn, B["dense_a_pub"], color=GREY, lw=0.85, label="Published condition, Eq. (2)")
+    a.plot(dn, B["dense_a_pub"], color=GREY, lw=0.85, label="Published condition, Eq. (13)")
     a.axhline(float(B["a_phys"]), color=K, lw=0.6, ls="-.")
     a.text(dn[-1], float(B["a_phys"]) + 0.4, r"$a_{\mathrm{phys}}=2D$", ha="right", va="bottom", fontsize=7.5)
     hb = []

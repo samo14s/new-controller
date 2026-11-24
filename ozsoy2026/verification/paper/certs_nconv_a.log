@@ -1,3 +1,9 @@
 nconv 1090 rpm 0.5 a_lim N 24: 8.9287 mm/s (83 s) Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.995340333332
 nconv 1090 rpm 0.5 a_lim N 48: 8.4856 mm/s (1831 s) Solved; pass 1, lam 0.05 sigma; ok
 nconv 1090 rpm 0.98 a_lim N 24: 4.8459 mm/s (55 s) Solved; pass 2, lam 0.05 sigma; ok
+nconv 1090 rpm 0.98 a_lim N 48: 4.7639 mm/s (1860 s) Solved; pass 1, lam 0.05 sigma; ok
+nconv 2500 rpm 0.5 a_lim N 20: 2.5869 mm/s (42 s) Solved; pass 2, lam 0.05 sigma; ok
+nconv 2500 rpm 0.5 a_lim N 40: 2.5853 mm/s (781 s) AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999991373
+nconv 2500 rpm 0.98 a_lim N 20: 1.1397 mm/s (48 s) AlmostSolved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999988463851
+nconv 2500 rpm 0.98 a_lim N 40: 0.0000 mm/s (1554 s) no candidate passed the check
+nconv summary {"n_points": 4, "max_abs_rel_change": 1.0, "rel_2N_range": [-1.0, -0.0006192385362776047], "per_point": [{"rpm": 1090.0, "frac": 0.5, "rel_2N": -0.04962873964682785, "max_abs_rel": 0.04962873964682785}, {"rpm": 1090.0, "frac": 0.98, "rel_2N": -0.01692474751265459, "max_abs_rel": 0.01692474751265459}, {"rpm": 2500.0, "frac": 0.5, "rel_2N": -0.0006192385362776047, "max_abs_rel": 0.0006192385362776047}, {"rpm": 2500.0, "frac": 0.98, "rel_2N": -1.0, "max_abs_rel": 1.0}]}

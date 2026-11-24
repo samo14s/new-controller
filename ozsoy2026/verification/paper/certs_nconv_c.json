@@ -1,0 +1,69 @@
+{
+ "note": "C2 certified kick (mm/s, command bound of the C2 solve) at N and 2 N; g = 1500 V s/m; N = c2.nodes_for(rpm)",
+ "points": {
+  "2870_0.5": {
+   "rpm": 2870.0,
+   "frac": 0.5,
+   "a_mm": 7.6977993009457695,
+   "N": [
+    20,
+    40
+   ],
+   "beta_mmps": [
+    5.512869184185697,
+    5.547822207668595
+   ],
+   "notes": [
+    "Solved; pass 1, lam 0.05 sigma; ok",
+    "Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.984565314206"
+   ],
+   "seconds": [
+    22.2,
+    466.6
+   ]
+  },
+  "2870_0.98": {
+   "rpm": 2870.0,
+   "frac": 0.98,
+   "a_mm": 15.087686629853707,
+   "N": [
+    20,
+    40
+   ],
+   "beta_mmps": [
+    4.82660823005976,
+    4.816893809382942
+   ],
+   "notes": [
+    "Solved; pass 2, lam 0.05 sigma; ok",
+    "Solved; pass 2, lam 0.05 sigma; ok"
+   ],
+   "seconds": [
+    22.8,
+    186.6
+   ]
+  }
+ },
+ "summary": {
+  "n_points": 2,
+  "max_abs_rel_change": 0.006340259910967028,
+  "rel_2N_range": [
+   -0.002012680585160591,
+   0.006340259910967028
+  ],
+  "per_point": [
+   {
+    "rpm": 2870.0,
+    "frac": 0.5,
+    "rel_2N": 0.006340259910967028,
+    "max_abs_rel": 0.006340259910967028
+   },
+   {
+    "rpm": 2870.0,
+    "frac": 0.98,
+    "rel_2N": -0.002012680585160591,
+    "max_abs_rel": 0.002012680585160591
+   }
+  ]
+ }
+}

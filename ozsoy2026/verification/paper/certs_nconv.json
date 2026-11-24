@@ -1,0 +1,236 @@
+{
+ "note": "Merge the N-convergence runs of the C2 certified kick into one table (certs_nconv.json).",
+ "points": [
+  {
+   "key": "1090_0.5",
+   "rpm": 1090.0,
+   "frac": 0.5,
+   "N": [
+    24,
+    48
+   ],
+   "beta_mmps": [
+    8.928713039030766,
+    8.485592264235471
+   ],
+   "rel_2N": -0.04962873964682785,
+   "failed_N": [],
+   "largest_passing_N": 48,
+   "rel_largest_passing": -0.04962873964682785,
+   "source": "certs_nconv_a.json"
+  },
+  {
+   "key": "1090_0.9",
+   "rpm": 1090.0,
+   "frac": 0.9,
+   "N": [
+    24,
+    36,
+    48
+   ],
+   "beta_mmps": [
+    6.19606176681556,
+    6.144741467801255,
+    6.097519170264921
+   ],
+   "rel_2N": -0.01590406943300759,
+   "failed_N": [],
+   "largest_passing_N": 48,
+   "rel_largest_passing": -0.01590406943300759,
+   "source": "revision_runs.json beta_vs_N"
+  },
+  {
+   "key": "1090_0.98",
+   "rpm": 1090.0,
+   "frac": 0.98,
+   "N": [
+    24,
+    48
+   ],
+   "beta_mmps": [
+    4.845934727810773,
+    4.763918506079771
+   ],
+   "rel_2N": -0.01692474751265459,
+   "failed_N": [],
+   "largest_passing_N": 48,
+   "rel_largest_passing": -0.01692474751265459,
+   "source": "certs_nconv_a.json"
+  },
+  {
+   "key": "1420_0.5",
+   "rpm": 1420.0,
+   "frac": 0.5,
+   "N": [
+    24,
+    48
+   ],
+   "beta_mmps": [
+    8.312161461829563,
+    8.24157459704371
+   ],
+   "rel_2N": -0.008491998755076596,
+   "failed_N": [],
+   "largest_passing_N": 48,
+   "rel_largest_passing": -0.008491998755076596,
+   "source": "certs_nconv_b.json"
+  },
+  {
+   "key": "1420_0.98",
+   "rpm": 1420.0,
+   "frac": 0.98,
+   "N": [
+    24,
+    48
+   ],
+   "beta_mmps": [
+    2.0828443183661953,
+    2.0817579277552483
+   ],
+   "rel_2N": -0.0005215899245889099,
+   "failed_N": [],
+   "largest_passing_N": 48,
+   "rel_largest_passing": -0.0005215899245889099,
+   "source": "certs_nconv_b.json"
+  },
+  {
+   "key": "2500_0.5",
+   "rpm": 2500.0,
+   "frac": 0.5,
+   "N": [
+    20,
+    40
+   ],
+   "beta_mmps": [
+    2.5869355398991996,
+    2.585333609722028
+   ],
+   "rel_2N": -0.0006192385362776047,
+   "failed_N": [],
+   "largest_passing_N": 40,
+   "rel_largest_passing": -0.0006192385362776047,
+   "source": "certs_nconv_a.json"
+  },
+  {
+   "key": "2500_0.9",
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "N": [
+    20,
+    30,
+    40
+   ],
+   "beta_mmps": [
+    3.0579045522928014,
+    3.056753492114562,
+    3.057759971860405
+   ],
+   "rel_2N": -4.72808846463527e-05,
+   "failed_N": [],
+   "largest_passing_N": 40,
+   "rel_largest_passing": -4.72808846463527e-05,
+   "source": "revision_runs.json beta_vs_N"
+  },
+  {
+   "key": "2500_0.98",
+   "rpm": 2500.0,
+   "frac": 0.98,
+   "N": [
+    20,
+    24,
+    30,
+    36,
+    40
+   ],
+   "beta_mmps": [
+    1.1397124133616727,
+    1.1331470038181455,
+    1.1329268102114796,
+    1.1326615557485955,
+    0.0
+   ],
+   "rel_2N": null,
+   "failed_N": [
+    40
+   ],
+   "largest_passing_N": 36,
+   "rel_largest_passing": -0.006186523486464585,
+   "source": "certs_nconv_a.json + certs_nconv_extra.json"
+  },
+  {
+   "key": "2870_0.3",
+   "rpm": 2870.0,
+   "frac": 0.3,
+   "N": [
+    20,
+    30,
+    40
+   ],
+   "beta_mmps": [
+    8.742926478253384,
+    8.608898129701794,
+    8.60764644147417
+   ],
+   "rel_2N": -0.01547308411156166,
+   "failed_N": [],
+   "largest_passing_N": 40,
+   "rel_largest_passing": -0.01547308411156166,
+   "source": "revision_runs.json beta_vs_N"
+  },
+  {
+   "key": "2870_0.5",
+   "rpm": 2870.0,
+   "frac": 0.5,
+   "N": [
+    20,
+    40
+   ],
+   "beta_mmps": [
+    5.512869184185697,
+    5.547822207668595
+   ],
+   "rel_2N": 0.006340259910967028,
+   "failed_N": [],
+   "largest_passing_N": 40,
+   "rel_largest_passing": 0.006340259910967028,
+   "source": "certs_nconv_c.json"
+  },
+  {
+   "key": "2870_0.98",
+   "rpm": 2870.0,
+   "frac": 0.98,
+   "N": [
+    20,
+    40
+   ],
+   "beta_mmps": [
+    4.82660823005976,
+    4.816893809382942
+   ],
+   "rel_2N": -0.002012680585160591,
+   "failed_N": [],
+   "largest_passing_N": 40,
+   "rel_largest_passing": -0.002012680585160591,
+   "source": "certs_nconv_c.json"
+  }
+ ],
+ "summary": {
+  "n_points": 11,
+  "n_with_2N": 10,
+  "rel_2N_min": -0.04962873964682785,
+  "rel_2N_max": 0.006340259910967028,
+  "largest_drop": "1090_0.5",
+  "largest_rise": "2870_0.5",
+  "n_drop_over_1pct": 4,
+  "points_with_failed_check": [
+   {
+    "key": "2500_0.98",
+    "failed_N": [
+     40
+    ],
+    "largest_passing_N": 36,
+    "rel_largest_passing": -0.006186523486464585
+   }
+  ]
+ }
+}

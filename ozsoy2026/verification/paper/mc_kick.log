@@ -91,3 +91,16 @@ sample 21 1090 rpm: worst4 16.963029032444698 mm/s (exact), u0 3.778233755125461
 sample 21 1420 rpm: worst4 10.763474115247538 mm/s (exact), u0 1.9049039636464373, a_lim 17.30 mm, runs 42, 66 s
 sample 21 2500 rpm: worst4 7.209738359092748 mm/s (exact), u0 1.4300069587298507, a_lim 17.93 mm, runs 44, 72 s
 sample 21 2870 rpm: worst4 7.610925536017415 mm/s (exact), u0 2.287309892945638, a_lim 15.37 mm, runs 51, 81 s
+sample 22 1090 rpm: worst4 12.939382861461763 mm/s (exact), u0 3.5429403337125738, a_lim 21.60 mm, runs 57, 100 s
+sample 22 1420 rpm: worst4 6.756129141507564 mm/s (exact), u0 1.6876829215393485, a_lim 16.73 mm, runs 45, 71 s
+sample 22 2500 rpm: worst4 4.333617750198059 mm/s (exact), u0 1.3166350625079186, a_lim 16.86 mm, runs 37, 57 s
+sample 22 2870 rpm: worst4 8.121926126027095 mm/s (exact), u0 4.287828567895718, a_lim 14.72 mm, runs 53, 82 s
+sample 23 1090 rpm: worst4 17.906939808490378 mm/s (exact), u0 4.69456294940142, a_lim 23.18 mm, runs 50, 77 s
+sample 23 1420 rpm: worst4 9.149525365708605 mm/s (exact), u0 3.049381390645114, a_lim 16.46 mm, runs 49, 76 s
+sample 23 2500 rpm: worst4 6.331059284441441 mm/s (exact), u0 2.272124214737131, a_lim 17.07 mm, runs 34, 49 s
+sample 23 2870 rpm: worst4 9.451687334012785 mm/s (exact), u0 5.646263918579304, a_lim 14.61 mm, runs 45, 68 s
+sample 24 1090 rpm: worst4 17.906939808490378 mm/s (exact), u0 3.467215959346775, a_lim 26.24 mm, runs 50, 77 s
+sample 24 1420 rpm: worst4 15.895779994540602 mm/s (exact), u0 1.45382022604067, a_lim 19.11 mm, runs 51, 81 s
+sample 24 2500 rpm: worst4 9.149525365708605 mm/s (exact), u0 1.3973068745563282, a_lim 20.14 mm, runs 46, 76 s
+sample 24 2870 rpm: worst4 8.953469904245187 mm/s (exact), u0 1.9258569233524137, a_lim 17.39 mm, runs 44, 66 s
+done in 4860 s

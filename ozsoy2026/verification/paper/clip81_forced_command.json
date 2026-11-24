@@ -1,0 +1,45 @@
+{
+ "note": "Where the forced command of the g = 1500 V s/m design exceeds a clip of 8.1 V (Section 7.2).",
+ "g": 1500.0,
+ "clip_V": 8.1,
+ "n_depths": 400,
+ "speeds": {
+  "1090": {
+   "a_lim_mm": 20.98681159792267,
+   "max_V": 5.314691095899114,
+   "at_frac": 0.165,
+   "V_at_a_lim": 5.077766747205198,
+   "intervals_above_clip_frac": []
+  },
+  "1420": {
+   "a_lim_mm": 17.779154101354408,
+   "max_V": 7.424739199917241,
+   "at_frac": 0.38,
+   "V_at_a_lim": 7.338760601470384,
+   "intervals_above_clip_frac": []
+  },
+  "2500": {
+   "a_lim_mm": 17.23587964837289,
+   "max_V": 8.569697065183588,
+   "at_frac": 0.34750000000000003,
+   "V_at_a_lim": 8.132513634637409,
+   "intervals_above_clip_frac": [
+    [
+     0.27,
+     0.46
+    ],
+    [
+     0.9974999999999998,
+     1.0
+    ]
+   ]
+  },
+  "2870": {
+   "a_lim_mm": 15.395598601891539,
+   "max_V": 5.92965577340911,
+   "at_frac": 0.43749999999999994,
+   "V_at_a_lim": 4.311885157608226,
+   "intervals_above_clip_frac": []
+  }
+ }
+}

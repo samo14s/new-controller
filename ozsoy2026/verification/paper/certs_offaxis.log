@@ -13,3 +13,10 @@ offaxis 2870 rpm 0.9: C3 7.2197 mm/s (stored 7.2192) in 217 s; Solved; pass 0, l
 offaxis 1090 rpm 0.98: C3 4.6016 mm/s (stored 4.6012) in 442 s; Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.99998806649; min eig ratio 1.1e-09
    nreg 0: 0 of 72 chattered (67 s)
    nreg 4: 0 of 72 chattered (59 s)
+offaxis 1420 rpm 0.98: C3 2.0465 mm/s (stored 2.0464) in 1611 s; Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 2.5e-10
+   nreg 0: 0 of 72 chattered (69 s)
+   nreg 4: 0 of 72 chattered (60 s)
+offaxis 2870 rpm 0.98: C3 1.7036 mm/s (stored 1.7002) in 1540 s; AlmostSolved; pass 0, lam 0.05 sigma, corners; ok, shrunk by 0.997538740454; min eig ratio 9.0e-08
+   nreg 0: 0 of 72 chattered (68 s)
+   nreg 4: 0 of 72 chattered (58 s)
+offaxis summary {'n_points': 7, 'runs_nreg0': 504, 'chatter_nreg0': 0, 'runs_nreg4': 504, 'chatter_nreg4': 0, 'max_abs_rel_to_stored': 0.0019802218320519316}

@@ -130,6 +130,66 @@
     "max_abs_x_mm": 0.03560274834540496,
     "seconds": 58.9
    }
+  },
+  "1420_0.98": {
+   "rpm": 1420.0,
+   "frac": 0.98,
+   "a_mm": 17.423571019327316,
+   "size_mmps": 2.0465184227838322,
+   "stored_mmps": 2.046363737166951,
+   "rel_to_stored": 7.559047986993583e-05,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 2.5e-10",
+   "solve_s": 1611.5,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03417613167913778,
+    "seconds": 69.4
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03417631172955993,
+    "seconds": 59.7
+   }
+  },
+  "2870_0.98": {
+   "rpm": 2870.0,
+   "frac": 0.98,
+   "a_mm": 15.087686629853707,
+   "size_mmps": 1.703568211997053,
+   "stored_mmps": 1.7002014359946105,
+   "rel_to_stored": 0.0019802218320519316,
+   "note": "AlmostSolved; pass 0, lam 0.05 sigma, corners; ok, shrunk by 0.997538740454; min eig ratio 9.0e-08",
+   "solve_s": 1540.2,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.024875044268730825,
+    "seconds": 67.7
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.02487496758450247,
+    "seconds": 58.2
+   }
   }
+ },
+ "summary": {
+  "n_points": 7,
+  "runs_nreg0": 504,
+  "chatter_nreg0": 0,
+  "runs_nreg4": 504,
+  "chatter_nreg4": 0,
+  "max_abs_rel_to_stored": 0.0019802218320519316
  }
 }

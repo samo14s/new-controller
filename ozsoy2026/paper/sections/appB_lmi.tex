@@ -11,26 +11,34 @@ A_0=\begin{bmatrix}
 \hat{\bm d}_0&\bm 0&\bm 0&\bm 0&\hat D
 \end{bmatrix},
 \end{equation}
-$B=[0,\ K_a/m,\ 0,\ 1,\ \bm 0]^\top$, where $\hat{\bm d}_0\in\mathbb R^N$ and $\hat D\in\mathbb R^{N\times N}$ are column 0 and columns $1,\dots,N$ of rows $1,\dots,N$ of $(2/T)D_N$, $D_N$ being the Chebyshev differentiation matrix on the points $\cos(\pi j/N)$, $j=0,\dots,N$ \citep{trefethen2000spectral}: the last $N$ rows state $\tfrac{\mathrm d}{\mathrm dt}\tilde x(t+\vartheta_j)=\tfrac2T\sum_{l=0}^{N}(D_N)_{jl}\,\tilde x(t+\vartheta_l)$. The last of these rows, $d_N^\top=e_{4+N}^\top A_0$, is the derivative of the interpolant at $\vartheta=-T$ used in Section~\ref{sec:delayed}. Table~\ref{tab:nconv} gives the certified kick for $N$, $1.5N$ and $2N$ nodes, $N$ being the default of Section~\ref{sec:cert-model}, which reproduces the stored C2 certificates.
-% src: src/c2_certificate.py (cheb, model, history_nodes); src/c3_periodic.py (model); src/c4_comb.py (model: x'(t - T) from row N of (2/T) D_N); verification/paper/revision_runs.json (beta_vs_N; values at the default N equal results/c2_validate.npz cert at the three C2 points)
+$B=[0,\ K_a/m,\ 0,\ 1,\ \bm 0]^\top$, where $\hat{\bm d}_0\in\mathbb R^N$ and $\hat D\in\mathbb R^{N\times N}$ are column 0 and columns $1,\dots,N$ of rows $1,\dots,N$ of $(2/T)D_N$, $D_N$ being the Chebyshev differentiation matrix on the points $\cos(\pi j/N)$, $j=0,\dots,N$ \citep{trefethen2000spectral}: the last $N$ rows state $\tfrac{\mathrm d}{\mathrm dt}\tilde x(t+\vartheta_j)=\tfrac2T\sum_{l=0}^{N}(D_N)_{jl}\,\tilde x(t+\vartheta_l)$. The last of these rows, $d_N^\top=e_{4+N}^\top A_0$, is the derivative of the interpolant at $\vartheta=-T$ used in Section~\ref{sec:delayed}. Table~\ref{tab:nconv} gives the certified kick for $N$ and $2N$ nodes, and for $1.5N$ at some points, $N$ being the default of Section~\ref{sec:cert-model}, which reproduces the stored C2 certificates.
+% src: src/c2_certificate.py (cheb, model, history_nodes); src/c3_periodic.py (model); src/c4_comb.py (model: x'(t - T) from row N of (2/T) D_N); verification/paper/certs_nconv_summary.py/certs_nconv.json (merged from certs_nconv_a/b/c.json, certs_nconv_extra.json and revision_runs.json beta_vs_N); values at the default N equal results/c2_validate.npz cert at all 11 C2 points
 
 \begin{table}[!tbp]
 \centering
-\caption{Certified kick $\beta$ (\si{\milli\metre\per\second}) against the number $N$ of collocation nodes, with the command bound of the original C2 solves (before the rescaling to $\bar b$); DVF\,+\,D: $g_1=500$, $g_2=\SI{4000}{\volt\second\per\metre}$ (Section~\ref{sec:delayed}).}
+\caption{Certified kick $\beta$ (\si{\milli\metre\per\second}) of C2 against the number $N$ of collocation nodes, with the command bound of the original C2 solves (before the rescaling to $\bar b$); --: not computed; ${}^{\dagger}$no candidate passed the independent check (with 24 and 36 nodes, $\beta=1.133$). DVF\,+\,D: $g_1=500$, $g_2=\SI{4000}{\volt\second\per\metre}$ (Section~\ref{sec:delayed}).}
 \label{tab:nconv}
 \small
-\begin{tabular}{@{}llcccc@{}}
+\begin{tabular}{@{}llccccr@{}}
 \toprule
-Model & Point & $N$ & $\beta$ at $N$ & at $1.5N$ & at $2N$\\
+Model & Point & $N$ & $\beta$ at $N$ & at $1.5N$ & at $2N$ & Change at $2N$\\
 \midrule
-C2 & \SI{2500}{\rpm}, $0.9\alim$ & 20 & 3.06 & 3.06 & 3.06\\
-C2 & \SI{1090}{\rpm}, $0.9\alim$ & 24 & 6.20 & 6.14 & 6.10\\
-C2 & \SI{2870}{\rpm}, $0.3\alim$ & 20 & 8.74 & 8.61 & 8.61\\
-DVF\,+\,D & \SI{2500}{\rpm}, \SI{22}{\milli\metre} & 20 & 3.56 & 3.54 & 3.53\\
+C2 & \SI{1090}{\rpm}, $0.5\alim$ & 24 & 8.93 & -- & 8.49 & $-5.0$\,\%\\
+C2 & \SI{1090}{\rpm}, $0.9\alim$ & 24 & 6.20 & 6.14 & 6.10 & $-1.6$\,\%\\
+C2 & \SI{1090}{\rpm}, $0.98\alim$ & 24 & 4.85 & -- & 4.76 & $-1.7$\,\%\\
+C2 & \SI{1420}{\rpm}, $0.5\alim$ & 24 & 8.31 & -- & 8.24 & $-0.8$\,\%\\
+C2 & \SI{1420}{\rpm}, $0.98\alim$ & 24 & 2.08 & -- & 2.08 & $-0.05$\,\%\\
+C2 & \SI{2500}{\rpm}, $0.5\alim$ & 20 & 2.59 & -- & 2.59 & $-0.06$\,\%\\
+C2 & \SI{2500}{\rpm}, $0.9\alim$ & 20 & 3.06 & 3.06 & 3.06 & $0.0$\,\%\\
+C2 & \SI{2500}{\rpm}, $0.98\alim$ & 20 & 1.14 & 1.13 & ${}^{\dagger}$ & --\\
+C2 & \SI{2870}{\rpm}, $0.3\alim$ & 20 & 8.74 & 8.61 & 8.61 & $-1.5$\,\%\\
+C2 & \SI{2870}{\rpm}, $0.5\alim$ & 20 & 5.51 & -- & 5.55 & $+0.6$\,\%\\
+C2 & \SI{2870}{\rpm}, $0.98\alim$ & 20 & 4.83 & -- & 4.82 & $-0.2$\,\%\\
+DVF\,+\,D & \SI{2500}{\rpm}, \SI{22}{\milli\metre} & 20 & 3.56 & 3.54 & 3.53 & $-0.9$\,\%\\
 \bottomrule
 \end{tabular}
 \end{table}
-% src: verification/paper/revision_runs.json (beta_vs_N: 3.0579/3.0568/3.0578; 6.1961/6.1447/6.0975; 8.7429/8.6089/8.6076; 3.5616/3.5413/3.5296 mm/s at N = 20/30/40, 24/36/48, 20/30/40, 20/30/40)
+% src: verification/paper/certs_nconv.json (points: 1090_0.5 8.9287/8.4856; 1090_0.9 6.1961/6.1447/6.0975; 1090_0.98 4.8459/4.7639; 1420_0.5 8.3122/8.2416; 1420_0.98 2.0828/2.0818; 2500_0.5 2.5869/2.5853; 2500_0.9 3.0579/3.0568/3.0578; 2500_0.98 1.1397 (N 20), 1.1331 (24), 1.1329 (30), 1.1327 (36), check failed at 40; 2870_0.3 8.7429/8.6089/8.6076; 2870_0.5 5.5129/5.5478; 2870_0.98 4.8266/4.8169); verification/paper/revision_runs.json (beta_vs_N nconv_comb: 3.5616/3.5413/3.5296 mm/s at N = 20/30/40)
 
 \paragraph{Conditions of C2}
 The program maximises $\beta$ subject to Eqs.~\eqref{eq:lmi-dec}--\eqref{eq:lmi-size}, with the left side of Eq.~\eqref{eq:lmi-dec} reduced by $\varepsilon I$, $S\ge\varepsilon$, $\varepsilon=10^{-9}$, and $\beta\ge0$. It has $n_\xi(n_\xi+1)/2+n_\xi+2$ unknowns, 326--704 for $n_\xi=4+N=24$--36, in four LMI blocks of order at most $n_\xi+1$. The decay margin is $\lambda=0.05\lambda_0$, $\lambda_0=-\max\operatorname{Re}\operatorname{eig}\mathcal A$ with $aH=\overline{aH}$, and $0.2\lambda_0$ when no candidate passed the check. The first solve uses coordinates scaled by the peak response of each state to a \SI{1}{\milli\metre\per\second} kick, the next two coordinates whitened by the previous $W$ (re-centring); at all 48 points of Section~\ref{sec:cert-c2} the kept candidate came from a re-centred solve, five of them with the solver status `almost solved', which the check does not rely on.
@@ -45,7 +53,7 @@ with $W_M=W_0$ and $Y_M=Y_0$, so that $\mathcal V(t,\xi)=\xi^\top W(t)^{-1}\xi$ 
 \begin{equation}\label{eq:lmi-per}
 \begin{bmatrix}\Delta_kW-\mathcal A(t)W(t)-W(t)\mathcal A(t)^\top-2\lambda W(t) & BS_k-Y(t)^\top\\ S_kB^\top-Y(t) & 2S_k\end{bmatrix}\succ0,
 \end{equation}
-with $\Delta_kW=(W_{k+1}-W_k)/\tau_s$, the derivative of $W(t)$ on segment $k$. On each segment, $aH(t)$ is enclosed by a line and a residual bound, and the sector condition uses the segment level $u_{0,k}=\Vmax-\bar b_k$, with $\bar b_k\ge\lvert b(t)\rvert$ there (\ref{app:lmi}).
+with $\Delta_kW=(W_{k+1}-W_k)/\tau_s$, the derivative of $W(t)$ on segment $k$. On each segment, $aH(t)$ is enclosed by a line and a residual bound, and the sector condition uses the segment level $u_{0,k}=\Vmax-\bar b_k$, with $\bar b_k\ge\lvert b(t)\rvert$ there (see \emph{Enclosure and command bound} below).
 % src: README §14.1, §14.2; src/c3_periodic.py (aH, orbit, enclosure); |b| range re-evaluated in closed form with c3_periodic.orbit (0.031-7.870 V at 2500 rpm, 0.98 a_lim)
 
 \begin{proposition}[Periodic model, C3]\label{prop:c3}
@@ -79,7 +87,7 @@ Fallbacks & $\lambda=0.2\lambda_0$ if no candidate passes at $0.05\lambda_0$ (us
 Strictness & $\varepsilon=10^{-9}$ & $\varepsilon=10^{-9}$\\
 Discretisation & $N=16+4\lceil T\omega_n/2\pi\rceil=20$--32 & as C2; $M=16$ (8 and 32 in the Supplementary Material)\\
 Solves & three: scaled, then two re-centred & one, in the coordinates of the C2 certificate\\
-Size & 326--704 unknowns & 7009 unknowns at $N=24$\\
+Size & 326--704 unknowns & 7009 scalar unknowns at $N=24$, multipliers included\\
 Time, memory & about \SI{2}{\hour} for the campaign, including its simulations, on four cores & 4--\SI{10}{\minute} per certificate, 2--5\,GB (4.7\,GB with separate vertices at $N=24$; about twice with $M=32$, 5.2\,GB at $N=20$); about \SI{8}{\hour} for the campaign on four cores\\
 \bottomrule
 \end{tabular}

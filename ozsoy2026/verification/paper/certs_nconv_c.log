@@ -1,0 +1,5 @@
+nconv 2870 rpm 0.5 a_lim N 20: 5.5129 mm/s (22 s) Solved; pass 1, lam 0.05 sigma; ok
+nconv 2870 rpm 0.5 a_lim N 40: 5.5478 mm/s (467 s) Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.984565314206
+nconv 2870 rpm 0.98 a_lim N 20: 4.8266 mm/s (23 s) Solved; pass 2, lam 0.05 sigma; ok
+nconv 2870 rpm 0.98 a_lim N 40: 4.8169 mm/s (187 s) Solved; pass 2, lam 0.05 sigma; ok
+nconv summary {"n_points": 2, "max_abs_rel_change": 0.006340259910967028, "rel_2N_range": [-0.002012680585160591, 0.006340259910967028], "per_point": [{"rpm": 2870.0, "frac": 0.5, "rel_2N": 0.006340259910967028, "max_abs_rel": 0.006340259910967028}, {"rpm": 2870.0, "frac": 0.98, "rel_2N": -0.002012680585160591, "max_abs_rel": 0.002012680585160591}]}

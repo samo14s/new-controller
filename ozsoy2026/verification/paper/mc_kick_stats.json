@@ -1,0 +1,156 @@
+{
+ "note": "Statistics of verification/paper/mc_kick.json; not a robustness guarantee. finite = samples with a finite worst-phase critical kick (4 phases); margin = closed-form a_lim of the sample minus the depth (0.9 nominal a_lim).",
+ "speeds": {
+  "1090": {
+   "n": 25,
+   "a_mm": 18.888130438130403,
+   "nominal_mmps": 15.057881493123602,
+   "unsettled": 2,
+   "unsettled_reasons": [
+    "linearly unstable (closed form)",
+    "linearly unstable (closed form)"
+   ],
+   "unsettled_pre_kick_clipped": [
+    true,
+    true
+   ],
+   "inf": 1,
+   "finite": 22,
+   "finite_min_mmps": 9.34987388275613,
+   "finite_max_mmps": 30.775212325189184,
+   "finite_median_mmps": 17.434984420467536,
+   "ratio_min": 0.6209289060367412,
+   "ratio_max": 2.043794297308232,
+   "ratio_median": 1.1578643668054813,
+   "below_nominal": 7,
+   "below_half_nominal": 0,
+   "spearman_kick_vs_alim_margin": 0.8790282610593932,
+   "spearman_kick_vs_u0_worst_psi": 0.2093629858606455,
+   "n_u0_worst_psi": 21,
+   "spearman_kick_vs_u0_sample_psi": 0.2249676804589545,
+   "n_u0_sample_psi": 21,
+   "cp95_upper_unsettled": 0.2310399339581441,
+   "cf_unstable_but_settled": [
+    11
+   ]
+  },
+  "1420": {
+   "n": 25,
+   "a_mm": 16.001238691218965,
+   "nominal_mmps": 12.939382861461763,
+   "unsettled": 2,
+   "unsettled_reasons": [
+    "linearly unstable (closed form)",
+    "linearly unstable (closed form)"
+   ],
+   "unsettled_pre_kick_clipped": [
+    true,
+    true
+   ],
+   "inf": 0,
+   "finite": 23,
+   "finite_min_mmps": 4.988814080761082,
+   "finite_max_mmps": 23.730932801067325,
+   "finite_median_mmps": 10.532835060185366,
+   "ratio_min": 0.3855527063519856,
+   "ratio_max": 1.8340080864093422,
+   "ratio_median": 0.8140137109286735,
+   "below_nominal": 14,
+   "below_half_nominal": 2,
+   "spearman_kick_vs_alim_margin": 0.9043736376905941,
+   "spearman_kick_vs_u0_worst_psi": 0.41626660795767184,
+   "n_u0_worst_psi": 22,
+   "spearman_kick_vs_u0_sample_psi": 0.4569330879752463,
+   "n_u0_sample_psi": 22,
+   "cp95_upper_unsettled": 0.2310399339581441,
+   "cf_unstable_but_settled": [
+    14
+   ]
+  },
+  "2500": {
+   "n": 25,
+   "a_mm": 15.5122916835356,
+   "nominal_mmps": 7.288247262442827,
+   "unsettled": 1,
+   "unsettled_reasons": [
+    "linearly unstable (closed form)"
+   ],
+   "unsettled_pre_kick_clipped": [
+    false
+   ],
+   "inf": 0,
+   "finite": 24,
+   "finite_min_mmps": 3.5276242665850903,
+   "finite_max_mmps": 13.08028350277269,
+   "finite_median_mmps": 6.684920157859008,
+   "ratio_min": 0.48401544837307353,
+   "ratio_max": 1.7947090750031067,
+   "ratio_median": 0.9172191772783516,
+   "below_nominal": 14,
+   "below_half_nominal": 1,
+   "spearman_kick_vs_alim_margin": 0.6414275710394449,
+   "spearman_kick_vs_u0_worst_psi": 0.4321150461615799,
+   "n_u0_worst_psi": 24,
+   "spearman_kick_vs_u0_sample_psi": 0.41818988858134776,
+   "n_u0_sample_psi": 24,
+   "cp95_upper_unsettled": 0.176120710604518,
+   "cf_unstable_but_settled": []
+  },
+  "2870": {
+   "n": 25,
+   "a_mm": 13.856038741702385,
+   "nominal_mmps": 11.611213923202547,
+   "unsettled": 2,
+   "unsettled_reasons": [
+    "forced command at the clip (closed form)",
+    "forced command at the clip (closed form)"
+   ],
+   "unsettled_pre_kick_clipped": [
+    true,
+    true
+   ],
+   "inf": 0,
+   "finite": 23,
+   "finite_min_mmps": 5.868825876509892,
+   "finite_max_mmps": 13.808138211291134,
+   "finite_median_mmps": 9.34987388275613,
+   "ratio_min": 0.5054446430258501,
+   "ratio_max": 1.1892071150027217,
+   "ratio_median": 0.8052451659746266,
+   "below_nominal": 21,
+   "below_half_nominal": 0,
+   "spearman_kick_vs_alim_margin": 0.6725970059545894,
+   "spearman_kick_vs_u0_worst_psi": 0.7353595480238272,
+   "n_u0_worst_psi": 23,
+   "spearman_kick_vs_u0_sample_psi": 0.738818900736305,
+   "n_u0_sample_psi": 23,
+   "cp95_upper_unsettled": 0.2310399339581441,
+   "cf_unstable_but_settled": []
+  }
+ },
+ "all": {
+  "n": 100,
+  "unsettled": 7,
+  "inf": 1,
+  "finite": 92,
+  "below_half": 3,
+  "ratio_min": 0.3855527063519856,
+  "ratio_max": 2.043794297308232,
+  "ratio_median_range": [
+   0.8052451659746266,
+   1.1578643668054813
+  ],
+  "spearman_margin_range": [
+   0.6414275710394449,
+   0.9043736376905941
+  ],
+  "spearman_u0_worst_range": [
+   0.2093629858606455,
+   0.7353595480238272
+  ],
+  "cp95_upper_unsettled_range": [
+   0.176120710604518,
+   0.2310399339581441
+  ]
+ }
+}

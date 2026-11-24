@@ -1,0 +1,250 @@
+{
+ "note": "Orbit limit for the gain sweep of circle_criterion.json (Proposition 1 needs an unclipped forced orbit).",
+ "gain_sweep": [
+  {
+   "rpm": 1090.0,
+   "g": 250.0,
+   "ratio": 0.9978317251609496,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2608564485349354,
+   "ratio_eff": 0.9978317251609496
+  },
+  {
+   "rpm": 1090.0,
+   "g": 500.0,
+   "ratio": 0.9957344046882015,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2582062822032503,
+   "ratio_eff": 0.9957344046882015
+  },
+  {
+   "rpm": 1090.0,
+   "g": 1000.0,
+   "ratio": 0.99174270562912,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2531623861510959,
+   "ratio_eff": 0.99174270562912
+  },
+  {
+   "rpm": 1090.0,
+   "g": 1500.0,
+   "ratio": 0.9880004877612306,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2484337336022004,
+   "ratio_eff": 0.9880004877612306
+  },
+  {
+   "rpm": 1090.0,
+   "g": 2000.0,
+   "ratio": 0.9844825740835875,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2439885109920152,
+   "ratio_eff": 0.9844825740835875
+  },
+  {
+   "rpm": 1090.0,
+   "g": 3000.0,
+   "ratio": 0.9780410765385134,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.235849058704488,
+   "ratio_eff": 0.9780410765385135
+  },
+  {
+   "rpm": 1420.0,
+   "g": 250.0,
+   "ratio": 0.9856086726713564,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 5.902629962753932,
+   "ratio_eff": 0.9856086726713564
+  },
+  {
+   "rpm": 1420.0,
+   "g": 500.0,
+   "ratio": 0.9718605041503909,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 5.82029469755695,
+   "ratio_eff": 0.9718605041503908
+  },
+  {
+   "rpm": 1420.0,
+   "g": 1000.0,
+   "ratio": 0.9461219787597658,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 5.666151379442637,
+   "ratio_eff": 0.9461219787597658
+  },
+  {
+   "rpm": 1420.0,
+   "g": 1500.0,
+   "ratio": 0.922474670410156,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 5.524531977469872,
+   "ratio_eff": 0.922474670410156
+  },
+  {
+   "rpm": 1420.0,
+   "g": 2000.0,
+   "ratio": 0.9006637573242187,
+   "first_clipped_depth_mm": 5.3264865305163855,
+   "a_circ_eff_mm": 5.3264865305163855,
+   "ratio_eff": 0.8894054603576659
+  },
+  {
+   "rpm": 1420.0,
+   "g": 3000.0,
+   "ratio": 0.861726379394531,
+   "first_clipped_depth_mm": 2.404896256383731,
+   "a_circ_eff_mm": 2.404896256383731,
+   "ratio_eff": 0.40156449279785145
+  },
+  {
+   "rpm": 2500.0,
+   "g": 250.0,
+   "ratio": 0.9991149892697753,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2371191381897308,
+   "ratio_eff": 0.9991149892697753
+  },
+  {
+   "rpm": 2500.0,
+   "g": 500.0,
+   "ratio": 0.998236845994354,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2360318080387838,
+   "ratio_eff": 0.998236845994354
+  },
+  {
+   "rpm": 2500.0,
+   "g": 1000.0,
+   "ratio": 0.9964981070502318,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2338788754462484,
+   "ratio_eff": 0.9964981070502317
+  },
+  {
+   "rpm": 2500.0,
+   "g": 1500.0,
+   "ratio": 0.9947845451070556,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2317571173932278,
+   "ratio_eff": 0.9947845451070556
+  },
+  {
+   "rpm": 2500.0,
+   "g": 2000.0,
+   "ratio": 0.9930938713465575,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2296636998306745,
+   "ratio_eff": 0.9930938713465574
+  },
+  {
+   "rpm": 2500.0,
+   "g": 3000.0,
+   "ratio": 0.9897827142524416,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.2255637755430033,
+   "ratio_eff": 0.9897827142524415
+  },
+  {
+   "rpm": 2870.0,
+   "g": 250.0,
+   "ratio": 0.9999580373317565,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.315098933695066,
+   "ratio_eff": 0.9999580373317566
+  },
+  {
+   "rpm": 2870.0,
+   "g": 500.0,
+   "ratio": 0.9999160756635131,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.3150437476341488,
+   "ratio_eff": 0.9999160756635133
+  },
+  {
+   "rpm": 2870.0,
+   "g": 1000.0,
+   "ratio": 0.9998329152664488,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.3149343788952397,
+   "ratio_eff": 0.9998329152664489
+  },
+  {
+   "rpm": 2870.0,
+   "g": 1500.0,
+   "ratio": 0.9997505178088072,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.3148260135392564,
+   "ratio_eff": 0.9997505178088072
+  },
+  {
+   "rpm": 2870.0,
+   "g": 2000.0,
+   "ratio": 0.9996681203511658,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.3147176481832734,
+   "ratio_eff": 0.9996681203511657
+  },
+  {
+   "rpm": 2870.0,
+   "g": 3000.0,
+   "ratio": 0.9995063771935728,
+   "first_clipped_depth_mm": null,
+   "a_circ_eff_mm": 1.3145049310030101,
+   "ratio_eff": 0.9995063771935728
+  }
+ ],
+ "f_fail": {
+  "all_min_hz": 123.70956356493386,
+  "all_max_hz": 195.52227835106163,
+  "median_hz": 131.74168747373565,
+  "ratio_below_0p9_n": 37,
+  "ratio_below_0p9_rpm": [
+   500.0,
+   570.0,
+   580.0,
+   590.0,
+   600.0,
+   610.0,
+   620.0,
+   630.0,
+   640.0,
+   650.0,
+   660.0,
+   670.0,
+   820.0,
+   830.0,
+   840.0,
+   850.0,
+   860.0,
+   870.0,
+   880.0,
+   890.0,
+   900.0,
+   910.0,
+   920.0,
+   930.0,
+   940.0,
+   950.0,
+   960.0,
+   970.0,
+   980.0,
+   990.0,
+   1000.0,
+   1010.0,
+   1020.0,
+   1950.0,
+   1960.0,
+   1970.0,
+   1980.0
+  ],
+  "ratio_below_0p9_f_min_hz": 123.70956356493386,
+  "ratio_below_0p9_f_max_hz": 159.9143164940661,
+  "at_four_speeds": {
+   "1090": 130.08362312538165,
+   "1420": 147.01170516318635,
+   "2500": 130.33467611060595,
+   "2870": 131.83669196797578
+  }
+ }
+}
