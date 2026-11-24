@@ -1,0 +1,135 @@
+{
+ "note": "C3 re-solved (stored settings, M = 16) and its off-axis test in the simulator with nreg = 0 (full memory) and nreg = 4 (stored campaign); g = 1500 V s/m, 9 V clip",
+ "points": {
+  "1090_0.9": {
+   "rpm": 1090.0,
+   "frac": 0.9,
+   "a_mm": 18.888130438130403,
+   "size_mmps": 6.298701191299917,
+   "stored_mmps": 6.2987488978701895,
+   "rel_to_stored": -7.573975569830083e-06,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999983485582; min eig ratio 1.1e-08",
+   "solve_s": 722.5,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03581731420231721,
+    "seconds": 74.0
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03573887501524319,
+    "seconds": 60.1
+   }
+  },
+  "1420_0.9": {
+   "rpm": 1420.0,
+   "frac": 0.9,
+   "a_mm": 16.001238691218965,
+   "size_mmps": 4.1154410376882185,
+   "stored_mmps": 4.115582014773265,
+   "rel_to_stored": -3.425447106664148e-05,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999891391423; min eig ratio 8.0e-09",
+   "solve_s": 448.0,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03189935552495522,
+    "seconds": 71.2
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03185630920082319,
+    "seconds": 63.9
+   }
+  },
+  "2500_0.9": {
+   "rpm": 2500.0,
+   "frac": 0.9,
+   "a_mm": 15.5122916835356,
+   "size_mmps": 3.425894381779466,
+   "stored_mmps": 3.4281955169538043,
+   "rel_to_stored": -0.0006712380209816793,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 2.8e-09",
+   "solve_s": 201.6,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.027435655650922947,
+    "seconds": 72.0
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.02744357601690633,
+    "seconds": 59.7
+   }
+  },
+  "2870_0.9": {
+   "rpm": 2870.0,
+   "frac": 0.9,
+   "a_mm": 13.856038741702385,
+   "size_mmps": 7.219680874623748,
+   "stored_mmps": 7.219180976948147,
+   "rel_to_stored": 6.924576031508423e-05,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999785922475; min eig ratio 2.1e-08",
+   "solve_s": 216.8,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.026196126720166087,
+    "seconds": 69.2
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.026196126720166087,
+    "seconds": 58.7
+   }
+  },
+  "1090_0.98": {
+   "rpm": 1090.0,
+   "frac": 0.98,
+   "a_mm": 20.567075365964218,
+   "size_mmps": 4.601630033705304,
+   "stored_mmps": 4.601197131723751,
+   "rel_to_stored": 9.408464127069749e-05,
+   "note": "Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.99998806649; min eig ratio 1.1e-09",
+   "solve_s": 442.1,
+   "stored_offaxis": [
+    0,
+    72
+   ],
+   "nreg0": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03560564145938091,
+    "seconds": 67.3
+   },
+   "nreg4": {
+    "chatter": 0,
+    "runs": 72,
+    "max_abs_x_mm": 0.03560274834540496,
+    "seconds": 58.9
+   }
+  }
+ }
+}

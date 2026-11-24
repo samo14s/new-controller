@@ -1,0 +1,26 @@
+{
+ "note": "C2 certified kick (mm/s, command bound of the C2 solve) at N and 2 N; g = 1500 V s/m; N = c2.nodes_for(rpm)",
+ "points": {
+  "1420_0.5": {
+   "rpm": 1420.0,
+   "frac": 0.5,
+   "a_mm": 8.889577050677204,
+   "N": [
+    24,
+    48
+   ],
+   "beta_mmps": [
+    8.312161461829563,
+    8.24157459704371
+   ],
+   "notes": [
+    "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.96391259301",
+    "Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.996329698696"
+   ],
+   "seconds": [
+    79.8,
+    3047.5
+   ]
+  }
+ }
+}

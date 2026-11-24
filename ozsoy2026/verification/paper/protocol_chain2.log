@@ -1,1 +1,9 @@
 19:53:17 start protocol_kick_timing
+20:05:57 end protocol_kick_timing (0)
+20:05:57 start protocol_clip_level
+20:20:05 end protocol_clip_level (0)
+20:20:05 start protocol_window
+20:24:00 end protocol_window (0)
+20:24:00 start protocol_phases --pass32
+20:41:39 end protocol_phases (0)
+20:41:39 start protocol_band_holes

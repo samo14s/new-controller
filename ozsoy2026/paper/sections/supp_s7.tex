@@ -2,6 +2,13 @@
 
 This section collects the details and secondary results of Section~\ref{M-sec:delayed}.
 
+\subsection{Monte Carlo of the residual authority}\label{supp:mc}
+
+\paragraph{Closed form} The cutting coefficients $K_{tc}$ and $K_{rc}$ were drawn independently and uniformly within $\pm\SI{10}{\percent}$ (and, with the same uniform draws, within $\pm\SI{20}{\percent}$) of their nominal values, the natural frequency within $\pm\SI{5}{\percent}$ with the stiffness fixed, the damping ratio within $\pm\SI{20}{\percent}$, the actuator constant $K_a$ within $\pm\SI{10}{\percent}$, the eccentric runout within 0--\SI{5}{\micro\metre}, the clip within 8.1--\SI{9}{\volt} and the loop delay within 0--\SI{300}{\micro\second}, 4000 samples per case. For each sample the linear limit of the delayed DVF loop of the $g=1500$ design was computed in the zero-order model, and the forced command at the fixed depth as the worst over eight runout phases; with 32 phases the command rises by at most \SI{15}{\milli\volt}. The nominal sample reproduces the stored limits, free voltages and runout tolerances. With the runout set to zero, the probability that the forced orbit reaches the clip at half the limit falls from 69 to \SI{33}{\percent} at \SI{2500}{\rpm} and from 50 to \SI{0.03}{\percent} at \SI{2870}{\rpm}.
+% src: verification/paper/mc_closed_form.py, mc_common.py (ranges, seed, caches restored), mc_closed_form.json (levels.pm10.speeds.2500.fracs.0.5.no_runout.p_saturated 0.328, 2870 0.00025; checks.nominal reproduces the stored a_lim, free voltage and runout tolerance; n_psi_8_vs_32 max_underestimate_V 0.0152)
+
+\PEND{simulated MC}
+
 \subsection{The law, its properties and prior work}\label{supp:delayed-prior}
 
 In the notation of Section~\ref{M-sec:delayed-law}, $K(s)=g_1+g_2E(s)$ and $E(s)=1-e^{-sT}$; the law with $g_2=0$ and $k_d\neq0$ is denoted DVF\,+\,P.

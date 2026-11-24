@@ -3,10 +3,11 @@
 (1) nconv: collocation convergence of the averaged certificate C2 at more points.
     The certified kick of c2_certificate.certify_kick (e = unit velocity, the
     command bound of the C2 solve, as for verification/paper/revision_runs.json
-    beta_vs_N) at N = nodes_for(rpm), round(1.5 N) and 2 N, at 1090, 1420, 2500
-    and 2870 rpm, g = 1500 V s/m and a = 0.5, 0.9 and 0.98 a_lim(rpm, 1500).  The
-    two points already in revision_runs.json (2500 and 1090 rpm at 0.9 a_lim)
-    are reused, not recomputed.
+    beta_vs_N) at N = nodes_for(rpm) and 2 N, at 1090, 1420, 2500 and 2870 rpm,
+    g = 1500 V s/m and a = 0.5 and 0.98 a_lim(rpm, 1500) (0.9 a_lim at 2500 and
+    1090 rpm, with 1.5 N as well, is in revision_runs.json beta_vs_N).  The 2 N
+    solves take 10-20 minutes each; the speeds can be split over processes
+    (arguments: comma-separated speeds and a tag for the output file).
 (2) offaxis: the off-axis validation of the periodic certificate C3 with the
     full surface memory.  The stored C3 campaign (src/c3_periodic.td_offaxis)
     applied the boundary points of the certified tube in the simulator with the
@@ -22,7 +23,7 @@
 Damping of every stored result (params.set_damping(gainmap_main.npz zeta), 1.34 %).
 Nothing in src/ is modified; td_offaxis is copied here with the memory as a parameter.
 
-    cd ozsoy2026 && OMP_NUM_THREADS=1 python3 verification/paper/certs_checks.py nconv
+    cd ozsoy2026 && OMP_NUM_THREADS=1 python3 verification/paper/certs_checks.py nconv [speeds tag]
     cd ozsoy2026 && OMP_NUM_THREADS=1 python3 verification/paper/certs_checks.py offaxis
 
 Each part writes its own JSON after every unit (certs_nconv.json, certs_offaxis.json)
@@ -50,7 +51,7 @@ from zoa import a_lim  # noqa: E402
 
 G = 1500.0
 SPEEDS = (1090.0, 1420.0, 2500.0, 2870.0)
-NCONV_FRACS = (0.5, 0.9, 0.98)
+NCONV_FRACS = (0.5, 0.98)            # 0.9 a_lim: 2500 and 1090 rpm are in revision_runs.json beta_vs_N
 OFFAXIS = [(n, 0.9) for n in SPEEDS] + [(1090.0, 0.98), (1420.0, 0.98), (2870.0, 0.98)]
 
 
@@ -68,20 +69,20 @@ def _save(path, d):
     os.replace(tmp, path)
 
 
-def run_nconv():
-    path = os.path.join(HERE, "certs_nconv.json")
+def run_nconv(speeds=SPEEDS, tag=""):
+    path = os.path.join(HERE, f"certs_nconv{tag}.json")
     out = _load(path)
-    out.setdefault("note", "C2 certified kick (mm/s, command bound of the C2 solve) at N, round(1.5 N), 2 N; "
+    out.setdefault("note", "C2 certified kick (mm/s, command bound of the C2 solve) at N and 2 N; "
                            "g = 1500 V s/m; N = c2.nodes_for(rpm)")
     pts = out.setdefault("points", {})
     rr = _load(os.path.join(HERE, "revision_runs.json")).get("beta_vs_N", {})
-    for n in SPEEDS:
+    for n in speeds:
         al = a_lim(n, G)
         N0 = c2.nodes_for(n)
-        Ns = [N0, int(round(1.5 * N0)), 2 * N0]
+        Ns = [N0, 2 * N0]
         for fr in NCONV_FRACS:
             key = f"{n:.0f}_{fr}"
-            if key in pts and len(pts[key].get("beta_mmps", [])) == 3:
+            if key in pts and len(pts[key].get("beta_mmps", [])) == len(Ns):
                 continue
             stored = {}
             for v in (rr if isinstance(rr, list) else []):
@@ -106,8 +107,8 @@ def run_nconv():
     for v in pts.values():
         b = v["beta_mmps"]
         if b[0] > 0:
-            ch.append(dict(rpm=v["rpm"], frac=v["frac"], rel_2N=(b[2] - b[0]) / b[0], rel_15N=(b[1] - b[0]) / b[0],
-                           max_abs_rel=max(abs(b[1] - b[0]), abs(b[2] - b[0])) / b[0]))
+            ch.append(dict(rpm=v["rpm"], frac=v["frac"], rel_2N=(b[-1] - b[0]) / b[0],
+                           max_abs_rel=max(abs(x - b[0]) for x in b[1:]) / b[0]))
     out["summary"] = dict(n_points=len(pts), max_abs_rel_change=max(c["max_abs_rel"] for c in ch) if ch else None,
                           rel_2N_range=[min(c["rel_2N"] for c in ch), max(c["rel_2N"] for c in ch)] if ch else None,
                           per_point=ch)
@@ -188,6 +189,7 @@ def run_offaxis():
 if __name__ == "__main__":
     what = sys.argv[1] if len(sys.argv) > 1 else "all"
     if what in ("nconv", "all"):
-        run_nconv()
+        sp = tuple(float(x) for x in sys.argv[2].split(",")) if len(sys.argv) > 2 else SPEEDS
+        run_nconv(sp, tag=("_" + sys.argv[3]) if len(sys.argv) > 3 else "")
     if what in ("offaxis", "all"):
         run_offaxis()

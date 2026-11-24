@@ -36,6 +36,23 @@ DVF\,+\,D & \SI{2500}{\rpm}, \SI{22}{\milli\metre} & 20 & 3.56 & 3.54 & 3.53\\
 The program maximises $\beta$ subject to Eqs.~\eqref{eq:lmi-dec}--\eqref{eq:lmi-size}, with the left side of Eq.~\eqref{eq:lmi-dec} reduced by $\varepsilon I$, $S\ge\varepsilon$, $\varepsilon=10^{-9}$, and $\beta\ge0$. It has $n_\xi(n_\xi+1)/2+n_\xi+2$ unknowns, 326--704 for $n_\xi=4+N=24$--36, in four LMI blocks of order at most $n_\xi+1$. The decay margin is $\lambda=0.05\lambda_0$, $\lambda_0=-\max\operatorname{Re}\operatorname{eig}\mathcal A$ with $aH=\overline{aH}$, and $0.2\lambda_0$ when no candidate passed the check. The first solve uses coordinates scaled by the peak response of each state to a \SI{1}{\milli\metre\per\second} kick, the next two coordinates whitened by the previous $W$ (re-centring); at all 48 points of Section~\ref{sec:cert-c2} the kept candidate came from a re-centred solve, five of them with the solver status `almost solved', which the check does not rely on.
 % src: src/c2_certificate.py (lmi: eps 1e-9, blocks M1-M4; LAM_FRAC (0.05, 0.2); scaling; certify: N_PASS 3); results/c2_validate.npz (msg: pass 1 or 2 at all 48 points; AlmostSolved at 5); unknowns n_xi(n_xi+1)/2+n_xi+2 evaluated for n_xi = 24 and 36
 
+\paragraph{Periodic certificate (C3)}
+The tooth period is divided into $M$ segments of length $\tau_s=T/M$, with nodes $t_k=k\tau_s$. On segment $k$, with $s=(t-t_k)/\tau_s\in[0,1]$,
+\begin{equation}\label{eq:Wt}
+W(t)=(1-s)W_k+sW_{k+1},\qquad Y(t)=(1-s)Y_k+sY_{k+1},\qquad S(t)=S_k,
+\end{equation}
+with $W_M=W_0$ and $Y_M=Y_0$, so that $\mathcal V(t,\xi)=\xi^\top W(t)^{-1}\xi$ is continuous and $T$-periodic. As $\mathrm d(W^{-1})/\mathrm dt=-W^{-1}\dot WW^{-1}$, the decrease condition becomes
+\begin{equation}\label{eq:lmi-per}
+\begin{bmatrix}\Delta_kW-\mathcal A(t)W(t)-W(t)\mathcal A(t)^\top-2\lambda W(t) & BS_k-Y(t)^\top\\ S_kB^\top-Y(t) & 2S_k\end{bmatrix}\succ0,
+\end{equation}
+with $\Delta_kW=(W_{k+1}-W_k)/\tau_s$, the derivative of $W(t)$ on segment $k$. On each segment, $aH(t)$ is enclosed by a line and a residual bound, and the sector condition uses the segment level $u_{0,k}=\Vmax-\bar b_k$, with $\bar b_k\ge\lvert b(t)\rvert$ there (\ref{app:lmi}).
+% src: README §14.1, §14.2; src/c3_periodic.py (aH, orbit, enclosure); |b| range re-evaluated in closed form with c3_periodic.orbit (0.031-7.870 V at 2500 rpm, 0.98 a_lim)
+
+\begin{proposition}[Periodic model, C3]\label{prop:c3}
+Let $\mathcal A(t)$ be $T$-periodic and, on segment $k$, $aH(t)=c_{0,k}+c_{1,k}s+r(t)$ with $\lvert r(t)\rvert\le\varepsilon_k$, and $u_{0,k}>0$. Let $W$, $Y$ and $S$ follow Eq.~\eqref{eq:Wt} with $W_k\succ0$. If, for every $k$, the matrix of Eq.~\eqref{eq:lmi-per} with $\lambda=0$, the enclosure in place of $aH(t)$ and $\sigma$ in place of $s^2$, is positive definite at the six vertices $(s,\sigma)\in\{(0,0),(\tfrac12,0),(1,1)\}$, $r=\pm\varepsilon_k$, and Eqs.~\eqref{eq:lmi-incl} and~\eqref{eq:lmi-valid} hold at every node with $W_k$, $Y_k$ and the level $\min(u_{0,k-1},u_{0,k})$ (indices modulo $M$), then the conclusions of Proposition~\ref{prop:c2} hold for the tube $\{(t,\xi):\xi^\top W(t)^{-1}\xi\le1\}$. If Eq.~\eqref{eq:lmi-size} holds at both nodes of a segment, $\beta e\in\mathcal E\big(W(t)^{-1}\big)$ on that segment.
+\end{proposition}
+The proof, which reduces the periodic decrease condition on each segment to its six vertices by convexity, is in the Supplementary Material.
+
 \paragraph{Conditions of C3}
 On each segment the decrease condition~\eqref{eq:lmi-per} is imposed at the six vertices of Proposition~\ref{prop:c3}, the two vertices $r=\pm\varepsilon_k$ of each $(s,\sigma)$ being merged into one LMI by Petersen's lemma, exact for a scalar uncertainty \citep{petersen1987stabilization} (Supplementary Material). With $M=16$ there are $M[n_\xi(n_\xi+1)/2+n_\xi+1]+1$ unknowns and $3M$ multipliers, 7009 scalars at $N=24$. The decay margin is $0.05$, 0.02 or 0.01 times the Floquet decay rate, the next being tried when no candidate passes. The single solve starts in the coordinates of the C2 certificate; a second, re-centred pass added only 0.4\,\% at \SI{2500}{\rpm} and $0.9\alim$. Merging made the solves 3--4 times faster; the merged problem needed balanced multiplier blocks to start, and with the fallbacks 47 points were certified, the one at \SI{2870}{\rpm} and $0.98\alim$ only with separate vertices.
 % src: src/c3_periodic.py (corners, lmi: merged block, P_SCALE 10; LAM_FRAC (0.05, 0.02, 0.01)); README §14.2, §14.9; unknowns 16 x 435 + 1 + 48 = 7009 for n = 28

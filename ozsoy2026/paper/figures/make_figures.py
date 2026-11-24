@@ -875,7 +875,7 @@ def fig_ba():
     dn = B["dense_rpm"]
     a.plot(dn, B["dense_a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
     rows = C["g_best"]["rows"]
-    a.plot([q["rpm"] for q in rows], [q["a_circ_eff_mm"] for q in rows], ":", color=C3C, lw=1.0,
+    a.plot([q["rpm"] for q in rows], [q["a_circ_eff_mm"] for q in rows], "o", color=C3C, ms=1.3, mew=0,
            label=r"$a_{\mathrm{circ}}$: every disturbance (Prop. 1)")
     a.plot(dn, B["dense_a_lim_auth"], color=K, lw=1.0, label=r"$a_{\mathrm{lim}}(g^\star)$, authority schedule")
     a.plot(dn, B["dense_a_chk"], color=BLUE, lw=0.85, label=r"$a_{\mathrm{chk}}$, checked depth")

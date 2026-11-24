@@ -1,0 +1,2 @@
+nconv 1420 rpm 0.5 a_lim N 24: 8.3122 mm/s (80 s) Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.96391259301
+nconv 1420 rpm 0.5 a_lim N 48: 8.2416 mm/s (3048 s) Solved; pass 1, lam 0.05 sigma; ok, shrunk by 0.996329698696

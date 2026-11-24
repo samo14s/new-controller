@@ -3256,113 +3256,1805 @@
    "pre_kick_rev_residual_fz": 8.782152793613413e-11,
    "runtime_s": 102.80388760566711,
    "sim_s": 102.75600528717041
+  },
+  {
+   "i": 14,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 719034156.6833472,
+    "K_RC": 179077345.26094198,
+    "FN": 131.7777733941561,
+    "ZETA": 0.013483689855368372,
+    "GA_GAIN": 2.8865583154089625,
+    "runout": 3.988985513314205e-06,
+    "vclip": 8.727942837236467,
+    "tau": 7.523654075707219e-06,
+    "psi": 5.050713353481309
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 21.94663942695707,
+    "stable": true,
+    "bmax_worst_psi_V": 5.259946297010127,
+    "bmax_sample_psi_V": 5.2604342142027845,
+    "u0_worst_psi_V": 3.4679965402263404,
+    "u0_sample_psi_V": 3.467508623033683,
+    "a_lim_sampled_tau_mm": 22.11835604215951,
+    "bmax_worst_psi_sampled_tau_V": 5.257219329576679
+   },
+   "worst4_mmps": 15.895779994540602,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 15.895779994540602,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 15.895779994540602,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 15.895779994540602,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 15.895779994540602,
+     "kind": "lower"
+    }
+   },
+   "runs": 54,
+   "rev_vs_tooth_disagree": 41,
+   "pre_kick_peak_V": 5.431957229025989,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.224252276502095e-10,
+   "runtime_s": 170.47909021377563,
+   "sim_s": 170.24722909927368
+  },
+  {
+   "i": 14,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 719034156.6833472,
+    "K_RC": 179077345.26094198,
+    "FN": 131.7777733941561,
+    "ZETA": 0.013483689855368372,
+    "GA_GAIN": 2.8865583154089625,
+    "runout": 3.988985513314205e-06,
+    "vclip": 8.727942837236467,
+    "tau": 7.523654075707219e-06,
+    "psi": 5.050713353481309
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 15.953021581680927,
+    "stable": false,
+    "bmax_worst_psi_V": 7.383895995463862,
+    "bmax_sample_psi_V": 7.12680278507124,
+    "u0_worst_psi_V": null,
+    "u0_sample_psi_V": null,
+    "a_lim_sampled_tau_mm": 15.941979530681317,
+    "bmax_worst_psi_sampled_tau_V": 7.382877453629786
+   },
+   "worst4_mmps": 5.266417530092693,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 5.266417530092693,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    }
+   },
+   "runs": 40,
+   "rev_vs_tooth_disagree": 34,
+   "pre_kick_peak_V": 7.257088322076508,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.704074802612505e-06,
+   "runtime_s": 99.2927598953247,
+   "sim_s": 99.2254421710968
+  },
+  {
+   "i": 14,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 719034156.6833472,
+    "K_RC": 179077345.26094198,
+    "FN": 131.7777733941561,
+    "ZETA": 0.013483689855368372,
+    "GA_GAIN": 2.8865583154089625,
+    "runout": 3.988985513314205e-06,
+    "vclip": 8.727942837236467,
+    "tau": 7.523654075707219e-06,
+    "psi": 5.050713353481309
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 16.540488885875607,
+    "stable": true,
+    "bmax_worst_psi_V": 7.766484968683299,
+    "bmax_sample_psi_V": 7.6359756994208166,
+    "u0_worst_psi_V": 0.9614578685531683,
+    "u0_sample_psi_V": 1.0919671378156508,
+    "a_lim_sampled_tau_mm": 16.591113510961776,
+    "bmax_worst_psi_sampled_tau_V": 7.787855546262541
+   },
+   "worst4_mmps": 4.333617750198059,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 4.333617750198059,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 4.525483399593906,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 4.525483399593906,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 4.525483399593906,
+     "kind": "lower"
+    }
+   },
+   "runs": 37,
+   "rev_vs_tooth_disagree": 31,
+   "pre_kick_peak_V": 7.682022993868852,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 6.301839787308493e-08,
+   "runtime_s": 104.67502546310425,
+   "sim_s": 104.5596559047699
+  },
+  {
+   "i": 14,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 719034156.6833472,
+    "K_RC": 179077345.26094198,
+    "FN": 131.7777733941561,
+    "ZETA": 0.013483689855368372,
+    "GA_GAIN": 2.8865583154089625,
+    "runout": 3.988985513314205e-06,
+    "vclip": 8.727942837236467,
+    "tau": 7.523654075707219e-06,
+    "psi": 5.050713353481309
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 14.245189922627532,
+    "stable": true,
+    "bmax_worst_psi_V": 5.76978065474791,
+    "bmax_sample_psi_V": 5.122647140753898,
+    "u0_worst_psi_V": 2.9581621824885573,
+    "u0_sample_psi_V": 3.6052956964825693,
+    "a_lim_sampled_tau_mm": 14.262037891713451,
+    "bmax_worst_psi_sampled_tau_V": 5.737470346880931
+   },
+   "worst4_mmps": 7.5289407465618,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 8.210368102904184,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 7.5289407465618,
+     "kind": "exact"
+    },
+    "8": {
+     "value_mmps": 7.610925536017415,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 9.050966799187805,
+     "kind": "lower"
+    }
+   },
+   "runs": 47,
+   "rev_vs_tooth_disagree": 36,
+   "pre_kick_peak_V": 5.587824466656055,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.1609729644275245e-05,
+   "runtime_s": 111.94945287704468,
+   "sim_s": 111.89365005493164
+  },
+  {
+   "i": 15,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 715387668.0007538,
+    "K_RC": 176675809.47491094,
+    "FN": 134.82536802572142,
+    "ZETA": 0.013896370202968814,
+    "GA_GAIN": 2.7993874578164597,
+    "runout": 2.1864489361943204e-06,
+    "vclip": 8.378204612871864,
+    "tau": 5.2861023940146876e-05,
+    "psi": 2.819385132966232
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 24.966144881436765,
+    "stable": true,
+    "bmax_worst_psi_V": 4.907473843666759,
+    "bmax_sample_psi_V": 4.833804317202347,
+    "u0_worst_psi_V": 3.4707307692051046,
+    "u0_sample_psi_V": 3.544400295669517,
+    "a_lim_sampled_tau_mm": 24.608082357692773,
+    "bmax_worst_psi_sampled_tau_V": 4.890697456675802
+   },
+   "worst4_mmps": null,
+   "worst4_kind": "inf",
+   "phases": {
+    "4": {
+     "value_mmps": null,
+     "kind": "inf"
+    },
+    "0": {
+     "value_mmps": null,
+     "kind": "inf"
+    },
+    "8": {
+     "value_mmps": null,
+     "kind": "inf"
+    },
+    "12": {
+     "value_mmps": null,
+     "kind": "inf"
+    }
+   },
+   "runs": 64,
+   "rev_vs_tooth_disagree": 64,
+   "pre_kick_peak_V": 4.957638956381962,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 7.331917191433224e-14,
+   "runtime_s": 182.03285145759583,
+   "sim_s": 181.86112427711487
+  },
+  {
+   "i": 15,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 715387668.0007538,
+    "K_RC": 176675809.47491094,
+    "FN": 134.82536802572142,
+    "ZETA": 0.013896370202968814,
+    "GA_GAIN": 2.7993874578164597,
+    "runout": 2.1864489361943204e-06,
+    "vclip": 8.378204612871864,
+    "tau": 5.2861023940146876e-05,
+    "psi": 2.819385132966232
+   },
+   "tau_sim": 8.252640845070422e-05,
+   "cf": {
+    "a_lim_mm": 15.308642232257387,
+    "stable": false,
+    "bmax_worst_psi_V": 6.891720400701854,
+    "bmax_sample_psi_V": 6.89089312672067,
+    "u0_worst_psi_V": null,
+    "u0_sample_psi_V": null,
+    "a_lim_sampled_tau_mm": 15.355799628659842,
+    "bmax_worst_psi_sampled_tau_V": 6.878129224409086
+   },
+   "worst4_mmps": null,
+   "worst4_kind": "unsettled",
+   "phases": {
+    "0": {
+     "value_mmps": null,
+     "kind": "unsettled"
+    }
+   },
+   "runs": 1,
+   "rev_vs_tooth_disagree": 0,
+   "pre_kick_peak_V": 8.378204612871864,
+   "pre_kick_clipped": true,
+   "pre_kick_rev_residual_fz": 0.04838566478898569,
+   "runtime_s": 4.289262771606445,
+   "sim_s": 4.288578987121582
+  },
+  {
+   "i": 15,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 715387668.0007538,
+    "K_RC": 176675809.47491094,
+    "FN": 134.82536802572142,
+    "ZETA": 0.013896370202968814,
+    "GA_GAIN": 2.7993874578164597,
+    "runout": 2.1864489361943204e-06,
+    "vclip": 8.378204612871864,
+    "tau": 5.2861023940146876e-05,
+    "psi": 2.819385132966232
+   },
+   "tau_sim": 5.2861023940146876e-05,
+   "cf": {
+    "a_lim_mm": 18.007921024021975,
+    "stable": true,
+    "bmax_worst_psi_V": 8.304896384041252,
+    "bmax_sample_psi_V": 8.257283443939368,
+    "u0_worst_psi_V": 0.07330822883061217,
+    "u0_sample_psi_V": 0.1209211689324956,
+    "a_lim_sampled_tau_mm": 18.007921024021975,
+    "bmax_worst_psi_sampled_tau_V": 8.304896384041252
+   },
+   "worst4_mmps": 3.5276242665850903,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 3.5276242665850903,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 4.525483399593906,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 3.805462768008707,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 3.805462768008707,
+     "kind": "lower"
+    }
+   },
+   "runs": 39,
+   "rev_vs_tooth_disagree": 28,
+   "pre_kick_peak_V": 8.299136110655141,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.4825159600374144e-09,
+   "runtime_s": 148.2817668914795,
+   "sim_s": 148.22708344459534
+  },
+  {
+   "i": 15,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 715387668.0007538,
+    "K_RC": 176675809.47491094,
+    "FN": 134.82536802572142,
+    "ZETA": 0.013896370202968814,
+    "GA_GAIN": 2.7993874578164597,
+    "runout": 2.1864489361943204e-06,
+    "vclip": 8.378204612871864,
+    "tau": 5.2861023940146876e-05,
+    "psi": 2.819385132966232
+   },
+   "tau_sim": 5.2861023940146876e-05,
+   "cf": {
+    "a_lim_mm": 14.504020270311514,
+    "stable": true,
+    "bmax_worst_psi_V": 3.8058449740267166,
+    "bmax_sample_psi_V": 3.8080173207175045,
+    "u0_worst_psi_V": 4.572359638845147,
+    "u0_sample_psi_V": 4.570187292154359,
+    "a_lim_sampled_tau_mm": 14.504020270311514,
+    "bmax_worst_psi_sampled_tau_V": 3.8058449740267166
+   },
+   "worst4_mmps": 8.667235500396117,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 9.451687334012785,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 9.87014928261081,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 9.451687334012785,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 8.667235500396117,
+     "kind": "exact"
+    }
+   },
+   "runs": 53,
+   "rev_vs_tooth_disagree": 40,
+   "pre_kick_peak_V": 3.8606129036358476,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 4.7048208636824886e-06,
+   "runtime_s": 212.58710527420044,
+   "sim_s": 212.4631335735321
+  },
+  {
+   "i": 16,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 621676044.0932391,
+    "K_RC": 183739198.5837111,
+    "FN": 131.8128756398067,
+    "ZETA": 0.01594047644831568,
+    "GA_GAIN": 3.189245072133762,
+    "runout": 3.915891089280417e-06,
+    "vclip": 8.807826194786834,
+    "tau": 0.00011967834577295892,
+    "psi": 1.872085388042145
+   },
+   "tau_sim": 0.00011967834577295892,
+   "cf": {
+    "a_lim_mm": 29.257800707354967,
+    "stable": true,
+    "bmax_worst_psi_V": 4.484875430989087,
+    "bmax_sample_psi_V": 4.4830444941565535,
+    "u0_worst_psi_V": 4.322950763797747,
+    "u0_sample_psi_V": 4.324781700630281,
+    "a_lim_sampled_tau_mm": 29.257800707354967,
+    "bmax_worst_psi_sampled_tau_V": 4.484875430989087
+   },
+   "worst4_mmps": 24.781590956701365,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 25.05144478944512,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 25.05144478944512,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 24.781590956701365,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 25.6,
+     "kind": "lower"
+    }
+   },
+   "runs": 53,
+   "rev_vs_tooth_disagree": 47,
+   "pre_kick_peak_V": 4.624546298433572,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 6.098637220230962e-16,
+   "runtime_s": 259.91360235214233,
+   "sim_s": 259.7026584148407
+  },
+  {
+   "i": 16,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 621676044.0932391,
+    "K_RC": 183739198.5837111,
+    "FN": 131.8128756398067,
+    "ZETA": 0.01594047644831568,
+    "GA_GAIN": 3.189245072133762,
+    "runout": 3.915891089280417e-06,
+    "vclip": 8.807826194786834,
+    "tau": 0.00011967834577295892,
+    "psi": 1.872085388042145
+   },
+   "tau_sim": 0.00011967834577295892,
+   "cf": {
+    "a_lim_mm": 18.992760076092406,
+    "stable": true,
+    "bmax_worst_psi_V": 6.451626756240645,
+    "bmax_sample_psi_V": 6.240740840628641,
+    "u0_worst_psi_V": 2.356199438546189,
+    "u0_sample_psi_V": 2.567085354158193,
+    "a_lim_sampled_tau_mm": 18.992760076092406,
+    "bmax_worst_psi_sampled_tau_V": 6.451626756240645
+   },
+   "worst4_mmps": 16.59954629953293,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 16.59954629953293,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 16.59954629953293,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 18.101933598375613,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 16.59954629953293,
+     "kind": "lower"
+    }
+   },
+   "runs": 49,
+   "rev_vs_tooth_disagree": 41,
+   "pre_kick_peak_V": 6.349490832039761,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.4462311516704194e-14,
+   "runtime_s": 943.209489107132,
+   "sim_s": 943.1373281478882
+  },
+  {
+   "i": 16,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 621676044.0932391,
+    "K_RC": 183739198.5837111,
+    "FN": 131.8128756398067,
+    "ZETA": 0.01594047644831568,
+    "GA_GAIN": 3.189245072133762,
+    "runout": 3.915891089280417e-06,
+    "vclip": 8.807826194786834,
+    "tau": 0.00011967834577295892,
+    "psi": 1.872085388042145
+   },
+   "tau_sim": 0.00011967834577295892,
+   "cf": {
+    "a_lim_mm": 21.874322372463084,
+    "stable": true,
+    "bmax_worst_psi_V": 6.9306292772833835,
+    "bmax_sample_psi_V": 6.77097569124583,
+    "u0_worst_psi_V": 1.8771969175034506,
+    "u0_sample_psi_V": 2.036850503541004,
+    "a_lim_sampled_tau_mm": 21.874322372463084,
+    "bmax_worst_psi_sampled_tau_V": 6.9306292772833835
+   },
+   "worst4_mmps": 11.865466400533661,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 11.865466400533661,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 12.8,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 12.8,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 11.994672858305913,
+     "kind": "lower"
+    }
+   },
+   "runs": 43,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 6.868604971396834,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.5423792343143006e-11,
+   "runtime_s": 68.03946280479431,
+   "sim_s": 68.005300283432
+  },
+  {
+   "i": 16,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 621676044.0932391,
+    "K_RC": 183739198.5837111,
+    "FN": 131.8128756398067,
+    "ZETA": 0.01594047644831568,
+    "GA_GAIN": 3.189245072133762,
+    "runout": 3.915891089280417e-06,
+    "vclip": 8.807826194786834,
+    "tau": 0.00011967834577295892,
+    "psi": 1.872085388042145
+   },
+   "tau_sim": 0.00011967834577295892,
+   "cf": {
+    "a_lim_mm": 18.002238245068064,
+    "stable": true,
+    "bmax_worst_psi_V": 4.793688389072216,
+    "bmax_sample_psi_V": 4.645377156413056,
+    "u0_worst_psi_V": 4.014137805714618,
+    "u0_sample_psi_V": 4.162449038373778,
+    "a_lim_sampled_tau_mm": 18.002238245068064,
+    "bmax_worst_psi_sampled_tau_V": 4.793688389072216
+   },
+   "worst4_mmps": 12.257321992941737,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 13.808138211291134,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 12.257321992941737,
+     "kind": "exact"
+    }
+   },
+   "runs": 51,
+   "rev_vs_tooth_disagree": 40,
+   "pre_kick_peak_V": 4.81437972619083,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.000400120815953e-10,
+   "runtime_s": 84.96720957756042,
+   "sim_s": 84.92760920524597
+  },
+  {
+   "i": 17,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 686683912.3918921,
+    "K_RC": 185487916.73205274,
+    "FN": 134.92831216788466,
+    "ZETA": 0.015895297476108093,
+    "GA_GAIN": 2.9946058241110807,
+    "runout": 6.829954585390186e-07,
+    "vclip": 8.158848063230497,
+    "tau": 0.000274548651819501,
+    "psi": 3.494488732199434
+   },
+   "tau_sim": 0.000274548651819501,
+   "cf": {
+    "a_lim_mm": 23.75976550521213,
+    "stable": true,
+    "bmax_worst_psi_V": 4.376822118657181,
+    "bmax_sample_psi_V": 4.376770406871816,
+    "u0_worst_psi_V": 3.7820259445733164,
+    "u0_sample_psi_V": 3.7820776563586813,
+    "a_lim_sampled_tau_mm": 23.75976550521213,
+    "bmax_worst_psi_sampled_tau_V": 4.376822118657181
+   },
+   "worst4_mmps": 27.616276422582267,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 27.616276422582267,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 27.916997956230595,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 27.616276422582267,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 27.916997956230595,
+     "kind": "lower"
+    }
+   },
+   "runs": 58,
+   "rev_vs_tooth_disagree": 42,
+   "pre_kick_peak_V": 4.466151230222218,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 7.453889935837843e-16,
+   "runtime_s": 98.67273926734924,
+   "sim_s": 98.62426280975342
+  },
+  {
+   "i": 17,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 686683912.3918921,
+    "K_RC": 185487916.73205274,
+    "FN": 134.92831216788466,
+    "ZETA": 0.015895297476108093,
+    "GA_GAIN": 2.9946058241110807,
+    "runout": 6.829954585390186e-07,
+    "vclip": 8.158848063230497,
+    "tau": 0.000274548651819501,
+    "psi": 3.494488732199434
+   },
+   "tau_sim": 0.000274548651819501,
+   "cf": {
+    "a_lim_mm": 16.135092156984577,
+    "stable": true,
+    "bmax_worst_psi_V": 6.358257626542135,
+    "bmax_sample_psi_V": 6.296996038347449,
+    "u0_worst_psi_V": 1.8005904366883625,
+    "u0_sample_psi_V": 1.8618520248830484,
+    "a_lim_sampled_tau_mm": 16.135092156984577,
+    "bmax_worst_psi_sampled_tau_V": 6.358257626542135
+   },
+   "worst4_mmps": 4.988814080761082,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 4.988814080761082,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 5.043138704345241,
+     "kind": "exact"
+    }
+   },
+   "runs": 44,
+   "rev_vs_tooth_disagree": 33,
+   "pre_kick_peak_V": 6.311882856325221,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 6.302664487215653e-05,
+   "runtime_s": 70.57858610153198,
+   "sim_s": 70.53553509712219
+  },
+  {
+   "i": 17,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 686683912.3918921,
+    "K_RC": 185487916.73205274,
+    "FN": 134.92831216788466,
+    "ZETA": 0.015895297476108093,
+    "GA_GAIN": 2.9946058241110807,
+    "runout": 6.829954585390186e-07,
+    "vclip": 8.158848063230497,
+    "tau": 0.000274548651819501,
+    "psi": 3.494488732199434
+   },
+   "tau_sim": 0.000274548651819501,
+   "cf": {
+    "a_lim_mm": 22.271498699491705,
+    "stable": true,
+    "bmax_worst_psi_V": 8.509213955764489,
+    "bmax_sample_psi_V": 8.509216648241658,
+    "u0_worst_psi_V": -0.35036589253399164,
+    "u0_sample_psi_V": -0.35036858501116086,
+    "a_lim_sampled_tau_mm": 22.271498699491705,
+    "bmax_worst_psi_sampled_tau_V": 8.509213955764489
+   },
+   "worst4_mmps": 5.620006913194554,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 5.620006913194554,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 6.4,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 6.4,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 5.868825876509892,
+     "kind": "lower"
+    }
+   },
+   "runs": 37,
+   "rev_vs_tooth_disagree": 33,
+   "pre_kick_peak_V": 8.158848063230497,
+   "pre_kick_clipped": true,
+   "pre_kick_rev_residual_fz": 6.834139645254395e-11,
+   "runtime_s": 61.614344358444214,
+   "sim_s": 61.581931829452515
+  },
+  {
+   "i": 17,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 686683912.3918921,
+    "K_RC": 185487916.73205274,
+    "FN": 134.92831216788466,
+    "ZETA": 0.015895297476108093,
+    "GA_GAIN": 2.9946058241110807,
+    "runout": 6.829954585390186e-07,
+    "vclip": 8.158848063230497,
+    "tau": 0.000274548651819501,
+    "psi": 3.494488732199434
+   },
+   "tau_sim": 0.000274548651819501,
+   "cf": {
+    "a_lim_mm": 16.400528863216053,
+    "stable": true,
+    "bmax_worst_psi_V": 3.0605699855767146,
+    "bmax_sample_psi_V": 3.059226695223974,
+    "u0_worst_psi_V": 5.098278077653783,
+    "u0_sample_psi_V": 5.099621368006523,
+    "a_lim_sampled_tau_mm": 16.400528863216053,
+    "bmax_worst_psi_sampled_tau_V": 3.0605699855767146
+   },
+   "worst4_mmps": 11.118936545751712,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 14.419476718185498,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 25.6,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 11.118936545751712,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 12.8,
+     "kind": "lower"
+    }
+   },
+   "runs": 46,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 3.072550417725056,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 3.7507764092965107e-10,
+   "runtime_s": 79.53420567512512,
+   "sim_s": 79.49684834480286
+  },
+  {
+   "i": 18,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 649261783.5767872,
+    "K_RC": 186406334.75483415,
+    "FN": 133.6099295967874,
+    "ZETA": 0.014742383760044237,
+    "GA_GAIN": 2.890554358666476,
+    "runout": 2.5403082430573035e-06,
+    "vclip": 8.12647122794913,
+    "tau": 5.3166646185842545e-05,
+    "psi": 0.6688229517817142
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 27.073837181624302,
+    "stable": true,
+    "bmax_worst_psi_V": 4.524707164454758,
+    "bmax_sample_psi_V": 4.509174034563158,
+    "u0_worst_psi_V": 3.6017640634943726,
+    "u0_sample_psi_V": 3.617297193385972,
+    "a_lim_sampled_tau_mm": 26.877422588266167,
+    "bmax_worst_psi_sampled_tau_V": 4.507952281018647
+   },
+   "worst4_mmps": 19.740298565221643,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 19.740298565221643,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 19.740298565221643,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 19.740298565221643,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 19.740298565221643,
+     "kind": "lower"
+    }
+   },
+   "runs": 51,
+   "rev_vs_tooth_disagree": 42,
+   "pre_kick_peak_V": 4.613957909991689,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.111307226797642e-14,
+   "runtime_s": 88.02903890609741,
+   "sim_s": 87.98565626144409
+  },
+  {
+   "i": 18,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 649261783.5767872,
+    "K_RC": 186406334.75483415,
+    "FN": 133.6099295967874,
+    "ZETA": 0.014742383760044237,
+    "GA_GAIN": 2.890554358666476,
+    "runout": 2.5403082430573035e-06,
+    "vclip": 8.12647122794913,
+    "tau": 5.3166646185842545e-05,
+    "psi": 0.6688229517817142
+   },
+   "tau_sim": 8.252640845070422e-05,
+   "cf": {
+    "a_lim_mm": 16.74796153302103,
+    "stable": true,
+    "bmax_worst_psi_V": 6.38867970122539,
+    "bmax_sample_psi_V": 6.320968113330144,
+    "u0_worst_psi_V": 1.7377915267237398,
+    "u0_sample_psi_V": 1.8055031146189862,
+    "a_lim_sampled_tau_mm": 16.802039392904096,
+    "bmax_worst_psi_sampled_tau_V": 6.386019467454929
+   },
+   "worst4_mmps": 7.947889997270299,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 7.947889997270299,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 8.299773149766464,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 8.299773149766464,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 7.947889997270299,
+     "kind": "lower"
+    }
+   },
+   "runs": 48,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 6.430931762617681,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 5.392747541381991e-09,
+   "runtime_s": 77.0751600265503,
+   "sim_s": 77.03594827651978
+  },
+  {
+   "i": 18,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 649261783.5767872,
+    "K_RC": 186406334.75483415,
+    "FN": 133.6099295967874,
+    "ZETA": 0.014742383760044237,
+    "GA_GAIN": 2.890554358666476,
+    "runout": 2.5403082430573035e-06,
+    "vclip": 8.12647122794913,
+    "tau": 5.3166646185842545e-05,
+    "psi": 0.6688229517817142
+   },
+   "tau_sim": 5.3166646185842545e-05,
+   "cf": {
+    "a_lim_mm": 19.12397158158833,
+    "stable": true,
+    "bmax_worst_psi_V": 7.288287602812885,
+    "bmax_sample_psi_V": 7.285698219982457,
+    "u0_worst_psi_V": 0.8381836251362449,
+    "u0_sample_psi_V": 0.8407730079666731,
+    "a_lim_sampled_tau_mm": 19.12397158158833,
+    "bmax_worst_psi_sampled_tau_V": 7.288287602812885
+   },
+   "worst4_mmps": 6.262861197361278,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 6.262861197361278,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 6.4,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 6.4,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 6.4,
+     "kind": "lower"
+    }
+   },
+   "runs": 34,
+   "rev_vs_tooth_disagree": 32,
+   "pre_kick_peak_V": 7.249843719718683,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.026827870035136e-11,
+   "runtime_s": 57.185853242874146,
+   "sim_s": 57.154704332351685
+  },
+  {
+   "i": 18,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 649261783.5767872,
+    "K_RC": 186406334.75483415,
+    "FN": 133.6099295967874,
+    "ZETA": 0.014742383760044237,
+    "GA_GAIN": 2.890554358666476,
+    "runout": 2.5403082430573035e-06,
+    "vclip": 8.12647122794913,
+    "tau": 5.3166646185842545e-05,
+    "psi": 0.6688229517817142
+   },
+   "tau_sim": 5.3166646185842545e-05,
+   "cf": {
+    "a_lim_mm": 15.705019106580638,
+    "stable": true,
+    "bmax_worst_psi_V": 3.889183494196189,
+    "bmax_sample_psi_V": 3.5232709189856575,
+    "u0_worst_psi_V": 4.237287733752941,
+    "u0_sample_psi_V": 4.603200308963473,
+    "a_lim_sampled_tau_mm": 15.705019106580638,
+    "bmax_worst_psi_sampled_tau_V": 3.889183494196189
+   },
+   "worst4_mmps": 9.451687334012785,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 9.451687334012785,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 10.763474115247538,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 10.763474115247538,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 10.763474115247538,
+     "kind": "lower"
+    }
+   },
+   "runs": 44,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 3.4636610714551455,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 7.090706670366716e-09,
+   "runtime_s": 71.413902759552,
+   "sim_s": 71.37895131111145
+  },
+  {
+   "i": 19,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 669689696.1010591,
+    "K_RC": 188838214.07722557,
+    "FN": 124.93631140549545,
+    "ZETA": 0.011760127519551078,
+    "GA_GAIN": 3.0378845787328768,
+    "runout": 4.066041822068469e-06,
+    "vclip": 8.66958839699934,
+    "tau": 3.428247833348072e-05,
+    "psi": 3.645676048694737
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 16.76322175392745,
+    "stable": false,
+    "bmax_worst_psi_V": 5.096075879383232,
+    "bmax_sample_psi_V": 5.083193339640841,
+    "u0_worst_psi_V": null,
+    "u0_sample_psi_V": null,
+    "a_lim_sampled_tau_mm": 17.06699879359348,
+    "bmax_worst_psi_sampled_tau_V": 5.081153400190033
+   },
+   "worst4_mmps": null,
+   "worst4_kind": "unsettled",
+   "phases": {
+    "4": {
+     "value_mmps": null,
+     "kind": "unsettled"
+    }
+   },
+   "runs": 1,
+   "rev_vs_tooth_disagree": 0,
+   "pre_kick_peak_V": 8.66958839699934,
+   "pre_kick_clipped": true,
+   "pre_kick_rev_residual_fz": 8.726752973864457,
+   "runtime_s": 2.0692100524902344,
+   "sim_s": 2.0685067176818848
+  },
+  {
+   "i": 19,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 669689696.1010591,
+    "K_RC": 188838214.07722557,
+    "FN": 124.93631140549545,
+    "ZETA": 0.011760127519551078,
+    "GA_GAIN": 3.0378845787328768,
+    "runout": 4.066041822068469e-06,
+    "vclip": 8.66958839699934,
+    "tau": 3.428247833348072e-05,
+    "psi": 3.645676048694737
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 18.176343591568493,
+    "stable": true,
+    "bmax_worst_psi_V": 7.274948193936077,
+    "bmax_sample_psi_V": 7.185394750043861,
+    "u0_worst_psi_V": 1.394640203063262,
+    "u0_sample_psi_V": 1.484193646955478,
+    "a_lim_sampled_tau_mm": 18.0801539559756,
+    "bmax_worst_psi_sampled_tau_V": 7.2404138940718585
+   },
+   "worst4_mmps": 14.264150305227425,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 14.264150305227425,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    }
+   },
+   "runs": 48,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 7.287709728189113,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.812149384884277e-14,
+   "runtime_s": 76.67060279846191,
+   "sim_s": 76.63656759262085
+  },
+  {
+   "i": 19,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 669689696.1010591,
+    "K_RC": 188838214.07722557,
+    "FN": 124.93631140549545,
+    "ZETA": 0.011760127519551078,
+    "GA_GAIN": 3.0378845787328768,
+    "runout": 4.066041822068469e-06,
+    "vclip": 8.66958839699934,
+    "tau": 3.428247833348072e-05,
+    "psi": 3.645676048694737
+   },
+   "tau_sim": 4.6875e-05,
+   "cf": {
+    "a_lim_mm": 15.540343876163849,
+    "stable": true,
+    "bmax_worst_psi_V": 6.265425252064123,
+    "bmax_sample_psi_V": 6.011599842252906,
+    "u0_worst_psi_V": 2.4041631449352163,
+    "u0_sample_psi_V": 2.6579885547464333,
+    "a_lim_sampled_tau_mm": 15.491136168893703,
+    "bmax_worst_psi_sampled_tau_V": 6.24214963579973
+   },
+   "worst4_mmps": 5.266417530092693,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 5.266417530092693,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 5.3817370576237735,
+     "kind": "lower"
+    }
+   },
+   "runs": 40,
+   "rev_vs_tooth_disagree": 34,
+   "pre_kick_peak_V": 6.064062880029427,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 7.85925563324063e-06,
+   "runtime_s": 66.35051655769348,
+   "sim_s": 66.31470775604248
+  },
+  {
+   "i": 19,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 669689696.1010591,
+    "K_RC": 188838214.07722557,
+    "FN": 124.93631140549545,
+    "ZETA": 0.011760127519551078,
+    "GA_GAIN": 3.0378845787328768,
+    "runout": 4.066041822068469e-06,
+    "vclip": 8.66958839699934,
+    "tau": 3.428247833348072e-05,
+    "psi": 3.645676048694737
+   },
+   "tau_sim": 4.083188153310105e-05,
+   "cf": {
+    "a_lim_mm": 14.660413927858302,
+    "stable": true,
+    "bmax_worst_psi_V": 23.131680798853086,
+    "bmax_sample_psi_V": 23.114868630758146,
+    "u0_worst_psi_V": -14.462092401853747,
+    "u0_sample_psi_V": -14.445280233758806,
+    "a_lim_sampled_tau_mm": 14.6541454089659,
+    "bmax_worst_psi_sampled_tau_V": 23.534862288013837
+   },
+   "worst4_mmps": null,
+   "worst4_kind": "unsettled",
+   "phases": {
+    "0": {
+     "value_mmps": null,
+     "kind": "unsettled"
+    }
+   },
+   "runs": 1,
+   "rev_vs_tooth_disagree": 0,
+   "pre_kick_peak_V": 8.66958839699934,
+   "pre_kick_clipped": true,
+   "pre_kick_rev_residual_fz": 3.454543235232285,
+   "runtime_s": 2.0503580570220947,
+   "sim_s": 2.0496230125427246
+  },
+  {
+   "i": 20,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 622228288.8853112,
+    "K_RC": 193090469.87325126,
+    "FN": 127.75087415872495,
+    "ZETA": 0.013511211853171449,
+    "GA_GAIN": 3.136581967900268,
+    "runout": 9.437192201148632e-07,
+    "vclip": 8.627686008541804,
+    "tau": 0.00017382399940756702,
+    "psi": 6.019570555097592
+   },
+   "tau_sim": 0.00017382399940756702,
+   "cf": {
+    "a_lim_mm": 23.847700863487418,
+    "stable": true,
+    "bmax_worst_psi_V": 4.154099883402376,
+    "bmax_sample_psi_V": 4.130728021335065,
+    "u0_worst_psi_V": 4.473586125139429,
+    "u0_sample_psi_V": 4.49695798720674,
+    "a_lim_sampled_tau_mm": 23.847700863487418,
+    "bmax_worst_psi_sampled_tau_V": 4.154099883402376
+   },
+   "worst4_mmps": 16.78030350751699,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 16.78030350751699,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 16.963029032444698,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 16.963029032444698,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 17.334471000792234,
+     "kind": "lower"
+    }
+   },
+   "runs": 57,
+   "rev_vs_tooth_disagree": 43,
+   "pre_kick_peak_V": 4.194023226962733,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 3.5561831257524545e-13,
+   "runtime_s": 95.2982428073883,
+   "sim_s": 95.2520477771759
+  },
+  {
+   "i": 20,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 622228288.8853112,
+    "K_RC": 193090469.87325126,
+    "FN": 127.75087415872495,
+    "ZETA": 0.013511211853171449,
+    "GA_GAIN": 3.136581967900268,
+    "runout": 9.437192201148632e-07,
+    "vclip": 8.627686008541804,
+    "tau": 0.00017382399940756702,
+    "psi": 6.019570555097592
+   },
+   "tau_sim": 0.00017382399940756702,
+   "cf": {
+    "a_lim_mm": 18.432531413889443,
+    "stable": true,
+    "bmax_worst_psi_V": 5.920073591412366,
+    "bmax_sample_psi_V": 5.9133437598826335,
+    "u0_worst_psi_V": 2.7076124171294387,
+    "u0_sample_psi_V": 2.714342248659171,
+    "a_lim_sampled_tau_mm": 18.432531413889443,
+    "bmax_worst_psi_sampled_tau_V": 5.920073591412366
+   },
+   "worst4_mmps": 14.419476718185498,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 14.419476718185498,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 15.221851072034832,
+     "kind": "lower"
+    }
+   },
+   "runs": 48,
+   "rev_vs_tooth_disagree": 37,
+   "pre_kick_peak_V": 5.94450458957914,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 6.2341624917916505e-15,
+   "runtime_s": 74.31633067131042,
+   "sim_s": 74.27485990524292
+  },
+  {
+   "i": 20,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 622228288.8853112,
+    "K_RC": 193090469.87325126,
+    "FN": 127.75087415872495,
+    "ZETA": 0.013511211853171449,
+    "GA_GAIN": 3.136581967900268,
+    "runout": 9.437192201148632e-07,
+    "vclip": 8.627686008541804,
+    "tau": 0.00017382399940756702,
+    "psi": 6.019570555097592
+   },
+   "tau_sim": 0.00017382399940756702,
+   "cf": {
+    "a_lim_mm": 18.78728402471161,
+    "stable": true,
+    "bmax_worst_psi_V": 6.065817838114205,
+    "bmax_sample_psi_V": 6.045998830522294,
+    "u0_worst_psi_V": 2.5618681704275996,
+    "u0_sample_psi_V": 2.5816871780195108,
+    "a_lim_sampled_tau_mm": 18.78728402471161,
+    "bmax_worst_psi_sampled_tau_V": 6.065817838114205
+   },
+   "worst4_mmps": 8.481514516222347,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 8.481514516222347,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 9.050966799187805,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 9.050966799187805,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 9.050966799187805,
+     "kind": "lower"
+    }
+   },
+   "runs": 41,
+   "rev_vs_tooth_disagree": 34,
+   "pre_kick_peak_V": 6.080585250336503,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.847975490421345e-11,
+   "runtime_s": 66.29059147834778,
+   "sim_s": 66.26022553443909
+  },
+  {
+   "i": 20,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 622228288.8853112,
+    "K_RC": 193090469.87325126,
+    "FN": 127.75087415872495,
+    "ZETA": 0.013511211853171449,
+    "GA_GAIN": 3.136581967900268,
+    "runout": 9.437192201148632e-07,
+    "vclip": 8.627686008541804,
+    "tau": 0.00017382399940756702,
+    "psi": 6.019570555097592
+   },
+   "tau_sim": 0.00017382399940756702,
+   "cf": {
+    "a_lim_mm": 16.428903409119652,
+    "stable": true,
+    "bmax_worst_psi_V": 2.8082504588634905,
+    "bmax_sample_psi_V": 2.761503171146658,
+    "u0_worst_psi_V": 5.819435549678314,
+    "u0_sample_psi_V": 5.866182837395146,
+    "a_lim_sampled_tau_mm": 16.428903409119652,
+    "bmax_worst_psi_sampled_tau_V": 2.8082504588634905
+   },
+   "worst4_mmps": 10.880680663798543,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 10.880680663798543,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 11.24001382638911,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 11.737651753019785,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 11.737651753019785,
+     "kind": "lower"
+    }
+   },
+   "runs": 48,
+   "rev_vs_tooth_disagree": 39,
+   "pre_kick_peak_V": 2.8192776149996686,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 7.317454612078625e-10,
+   "runtime_s": 78.72748184204102,
+   "sim_s": 78.69561529159546
+  },
+  {
+   "i": 21,
+   "rpm": 1090.0,
+   "a_mm": 18.888130438130403,
+   "params": {
+    "K_TC": 614369063.2982697,
+    "K_RC": 189662562.5164037,
+    "FN": 131.43839531165395,
+    "ZETA": 0.014300549534577357,
+    "GA_GAIN": 2.8173053737726215,
+    "runout": 4.615430330786929e-06,
+    "vclip": 8.420346650004335,
+    "tau": 2.4695476087523645e-05,
+    "psi": 4.462110691795115
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 22.994295841014605,
+    "stable": true,
+    "bmax_worst_psi_V": 4.642112894878874,
+    "bmax_sample_psi_V": 4.523280096113418,
+    "u0_worst_psi_V": 3.778233755125461,
+    "u0_sample_psi_V": 3.897066553890917,
+    "a_lim_sampled_tau_mm": 23.555896396829066,
+    "bmax_worst_psi_sampled_tau_V": 4.634198043506921
+   },
+   "worst4_mmps": 16.963029032444698,
+   "worst4_kind": "exact",
+   "phases": {
+    "4": {
+     "value_mmps": 16.963029032444698,
+     "kind": "exact"
+    },
+    "0": {
+     "value_mmps": 16.963029032444698,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 16.963029032444698,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 17.334471000792234,
+     "kind": "lower"
+    }
+   },
+   "runs": 56,
+   "rev_vs_tooth_disagree": 44,
+   "pre_kick_peak_V": 4.681868954580303,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 6.1352968061881286e-12,
+   "runtime_s": 89.59707546234131,
+   "sim_s": 89.5593330860138
+  },
+  {
+   "i": 21,
+   "rpm": 1420.0,
+   "a_mm": 16.001238691218965,
+   "params": {
+    "K_TC": 614369063.2982697,
+    "K_RC": 189662562.5164037,
+    "FN": 131.43839531165395,
+    "ZETA": 0.014300549534577357,
+    "GA_GAIN": 2.8173053737726215,
+    "runout": 4.615430330786929e-06,
+    "vclip": 8.420346650004335,
+    "tau": 2.4695476087523645e-05,
+    "psi": 4.462110691795115
+   },
+   "tau_sim": 0.0,
+   "cf": {
+    "a_lim_mm": 17.298923242931814,
+    "stable": true,
+    "bmax_worst_psi_V": 6.515442686357898,
+    "bmax_sample_psi_V": 6.4940588840079485,
+    "u0_worst_psi_V": 1.9049039636464373,
+    "u0_sample_psi_V": 1.9262877659963866,
+    "a_lim_sampled_tau_mm": 17.254716940145535,
+    "bmax_worst_psi_sampled_tau_V": 6.511008550126085
+   },
+   "worst4_mmps": 10.763474115247538,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 10.763474115247538,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 12.8,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 10.763474115247538,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 10.763474115247538,
+     "kind": "lower"
+    }
+   },
+   "runs": 42,
+   "rev_vs_tooth_disagree": 38,
+   "pre_kick_peak_V": 6.623013438712336,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.4244115829491486e-12,
+   "runtime_s": 65.56311106681824,
+   "sim_s": 65.52161312103271
+  },
+  {
+   "i": 21,
+   "rpm": 2500.0,
+   "a_mm": 15.5122916835356,
+   "params": {
+    "K_TC": 614369063.2982697,
+    "K_RC": 189662562.5164037,
+    "FN": 131.43839531165395,
+    "ZETA": 0.014300549534577357,
+    "GA_GAIN": 2.8173053737726215,
+    "runout": 4.615430330786929e-06,
+    "vclip": 8.420346650004335,
+    "tau": 2.4695476087523645e-05,
+    "psi": 4.462110691795115
+   },
+   "tau_sim": 4.6875e-05,
+   "cf": {
+    "a_lim_mm": 17.934707308319073,
+    "stable": true,
+    "bmax_worst_psi_V": 6.990339691274484,
+    "bmax_sample_psi_V": 6.989754506865923,
+    "u0_worst_psi_V": 1.4300069587298507,
+    "u0_sample_psi_V": 1.430592143138412,
+    "a_lim_sampled_tau_mm": 17.788214880105812,
+    "bmax_worst_psi_sampled_tau_V": 6.93665666658677
+   },
+   "worst4_mmps": 7.209738359092748,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 7.209738359092748,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 7.610925536017415,
+     "kind": "lower"
+    },
+    "8": {
+     "value_mmps": 7.610925536017415,
+     "kind": "lower"
+    },
+    "12": {
+     "value_mmps": 7.610925536017415,
+     "kind": "lower"
+    }
+   },
+   "runs": 44,
+   "rev_vs_tooth_disagree": 33,
+   "pre_kick_peak_V": 7.0810094525885034,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 1.3426427667145163e-10,
+   "runtime_s": 71.85478186607361,
+   "sim_s": 71.82284903526306
+  },
+  {
+   "i": 21,
+   "rpm": 2870.0,
+   "a_mm": 13.856038741702385,
+   "params": {
+    "K_TC": 614369063.2982697,
+    "K_RC": 189662562.5164037,
+    "FN": 131.43839531165395,
+    "ZETA": 0.014300549534577357,
+    "GA_GAIN": 2.8173053737726215,
+    "runout": 4.615430330786929e-06,
+    "vclip": 8.420346650004335,
+    "tau": 2.4695476087523645e-05,
+    "psi": 4.462110691795115
+   },
+   "tau_sim": 4.083188153310105e-05,
+   "cf": {
+    "a_lim_mm": 15.37104396598877,
+    "stable": true,
+    "bmax_worst_psi_V": 6.133036757058697,
+    "bmax_sample_psi_V": 6.131934729546581,
+    "u0_worst_psi_V": 2.287309892945638,
+    "u0_sample_psi_V": 2.2884119204577544,
+    "a_lim_sampled_tau_mm": 15.339692935116634,
+    "bmax_worst_psi_sampled_tau_V": 6.243596907267021
+   },
+   "worst4_mmps": 7.610925536017415,
+   "worst4_kind": "exact",
+   "phases": {
+    "0": {
+     "value_mmps": 10.999163507983852,
+     "kind": "exact"
+    },
+    "4": {
+     "value_mmps": 8.034436844958025,
+     "kind": "exact"
+    },
+    "8": {
+     "value_mmps": 7.610925536017415,
+     "kind": "exact"
+    },
+    "12": {
+     "value_mmps": 9.050966799187805,
+     "kind": "lower"
+    }
+   },
+   "runs": 51,
+   "rev_vs_tooth_disagree": 38,
+   "pre_kick_peak_V": 6.382375743115375,
+   "pre_kick_clipped": false,
+   "pre_kick_rev_residual_fz": 2.5114481756174575e-08,
+   "runtime_s": 81.4232063293457,
+   "sim_s": 81.38328456878662
   }
  ],
- "runtime_s": 3253.3906257152557,
+ "runtime_s": 7020.249151229858,
  "summary": {
   "1090": {
-   "n": 14,
+   "n": 22,
    "nominal_worst4_rev_mmps": 15.057881493123602,
    "nominal_worst4_tooth_mmps": 15.057881493123602,
-   "median_mmps": 14.440624100349087,
+   "median_mmps": 16.871666269980842,
    "min_mmps": 0.0,
-   "max_mmps": 30.775212325189184,
+   "max_mmps": null,
    "p10_mmps": 9.34987388275613,
    "p90_mmps": 28.22099413268073,
-   "ratio_to_nominal_median": 0.9590076869009498,
+   "ratio_to_nominal_median": 1.1204541806020676,
    "ratio_to_nominal_min": 0.0,
-   "n_unsettled": 1,
-   "n_inf": 0,
-   "n_below_nominal": 7,
-   "n_below_half_nominal": 1,
-   "frac_below_nominal": 0.5,
-   "cp95_upper_unsettled": 0.29673423894887463,
-   "cp95_upper_below_half_nominal": 0.29673423894887463,
-   "n_closed_form_unstable": 2,
+   "n_unsettled": 2,
+   "n_inf": 1,
+   "n_below_nominal": 8,
+   "n_below_half_nominal": 2,
+   "frac_below_nominal": 0.36363636363636365,
+   "cp95_upper_unsettled": 0.2594665322284372,
+   "cp95_upper_below_half_nominal": 0.2594665322284372,
+   "n_closed_form_unstable": 3,
    "n_closed_form_saturated": 0,
-   "n_pre_kick_clipped": 1,
-   "spearman_kick_vs_u0_worst_psi": 0.2657342657342658,
-   "spearman_kick_vs_u0_sample_psi": 0.2657342657342658,
-   "spearman_kick_vs_alim_margin": 0.9340659340659341,
-   "finite_median_mmps": 14.440624100349087
+   "n_pre_kick_clipped": 2,
+   "spearman_kick_vs_u0_worst_psi": 0.008771929824561405,
+   "spearman_kick_vs_u0_sample_psi": 0.02456140350877193,
+   "spearman_kick_vs_alim_margin": 0.8765885692677159,
+   "finite_median_mmps": 16.78030350751699
   },
   "1420": {
-   "n": 14,
+   "n": 22,
    "nominal_worst4_rev_mmps": 12.939382861461763,
    "nominal_worst4_tooth_mmps": 12.939382861461763,
    "median_mmps": 9.791900929686586,
    "min_mmps": 0.0,
    "max_mmps": 23.730932801067325,
-   "p10_mmps": 6.904069105645566,
-   "p90_mmps": 16.963029032444698,
+   "p10_mmps": 4.988814080761082,
+   "p90_mmps": 16.59954629953293,
    "ratio_to_nominal_median": 0.7567517735989144,
    "ratio_to_nominal_min": 0.0,
-   "n_unsettled": 1,
+   "n_unsettled": 2,
    "n_inf": 0,
-   "n_below_nominal": 9,
-   "n_below_half_nominal": 1,
-   "frac_below_nominal": 0.6428571428571429,
-   "cp95_upper_unsettled": 0.29673423894887463,
-   "cp95_upper_below_half_nominal": 0.29673423894887463,
-   "n_closed_form_unstable": 1,
+   "n_below_nominal": 14,
+   "n_below_half_nominal": 4,
+   "frac_below_nominal": 0.6363636363636364,
+   "cp95_upper_unsettled": 0.2594665322284372,
+   "cp95_upper_below_half_nominal": 0.36909113432556817,
+   "n_closed_form_unstable": 3,
    "n_closed_form_saturated": 0,
-   "n_pre_kick_clipped": 1,
-   "spearman_kick_vs_u0_worst_psi": 0.6134806353870134,
-   "spearman_kick_vs_u0_sample_psi": 0.6850075256115081,
-   "spearman_kick_vs_alim_margin": 0.926293189782574,
+   "n_pre_kick_clipped": 2,
+   "spearman_kick_vs_u0_worst_psi": 0.5809566158221482,
+   "spearman_kick_vs_u0_sample_psi": 0.6160597346029426,
+   "spearman_kick_vs_alim_margin": 0.9525425249038593,
    "finite_median_mmps": 9.791900929686586
   },
   "2500": {
-   "n": 14,
+   "n": 22,
    "nominal_worst4_rev_mmps": 7.288247262442827,
    "nominal_worst4_tooth_mmps": 7.288247262442827,
-   "median_mmps": 7.09865481801538,
+   "median_mmps": 6.684920157859008,
    "min_mmps": 0.0,
    "max_mmps": 13.08028350277269,
    "p10_mmps": 3.7644703732808997,
    "p90_mmps": 9.149525365708605,
-   "ratio_to_nominal_median": 0.9739865515534251,
-   "ratio_to_nominal_min": 0.0,
-   "n_unsettled": 1,
-   "n_inf": 0,
-   "n_below_nominal": 7,
-   "n_below_half_nominal": 1,
-   "frac_below_nominal": 0.5,
-   "cp95_upper_unsettled": 0.29673423894887463,
-   "cp95_upper_below_half_nominal": 0.29673423894887463,
-   "n_closed_form_unstable": 1,
-   "n_closed_form_saturated": 1,
-   "n_pre_kick_clipped": 1,
-   "spearman_kick_vs_u0_worst_psi": 0.40771504570809236,
-   "spearman_kick_vs_u0_sample_psi": 0.3636377434693797,
-   "spearman_kick_vs_alim_margin": 0.7444951980828783,
-   "finite_median_mmps": 7.09865481801538
-  },
-  "2870": {
-   "n": 14,
-   "nominal_worst4_rev_mmps": 11.611213923202547,
-   "nominal_worst4_tooth_mmps": 11.611213923202547,
-   "median_mmps": 8.692155363857077,
-   "min_mmps": 0.0,
-   "max_mmps": 13.808138211291134,
-   "p10_mmps": 5.868825876509892,
-   "p90_mmps": 11.362409552169728,
-   "ratio_to_nominal_median": 0.7486000534782715,
+   "ratio_to_nominal_median": 0.9172191772783516,
    "ratio_to_nominal_min": 0.0,
    "n_unsettled": 1,
    "n_inf": 0,
    "n_below_nominal": 13,
-   "n_below_half_nominal": 1,
-   "frac_below_nominal": 0.9285714285714286,
-   "cp95_upper_unsettled": 0.29673423894887463,
-   "cp95_upper_below_half_nominal": 0.29673423894887463,
+   "n_below_half_nominal": 2,
+   "frac_below_nominal": 0.5909090909090909,
+   "cp95_upper_unsettled": 0.19812213163688158,
+   "cp95_upper_below_half_nominal": 0.2594665322284372,
+   "n_closed_form_unstable": 1,
+   "n_closed_form_saturated": 2,
+   "n_pre_kick_clipped": 2,
+   "spearman_kick_vs_u0_worst_psi": 0.491228173874799,
+   "spearman_kick_vs_u0_sample_psi": 0.44639385641797213,
+   "spearman_kick_vs_alim_margin": 0.642372983876446,
+   "finite_median_mmps": 6.684920157859008
+  },
+  "2870": {
+   "n": 22,
+   "nominal_worst4_rev_mmps": 11.611213923202547,
+   "nominal_worst4_tooth_mmps": 11.611213923202547,
+   "median_mmps": 9.008554691576123,
+   "min_mmps": 0.0,
+   "max_mmps": 13.808138211291134,
+   "p10_mmps": 5.868825876509892,
+   "p90_mmps": 11.362409552169728,
+   "ratio_to_nominal_median": 0.7758495150601298,
+   "ratio_to_nominal_min": 0.0,
+   "n_unsettled": 2,
+   "n_inf": 0,
+   "n_below_nominal": 20,
+   "n_below_half_nominal": 2,
+   "frac_below_nominal": 0.9090909090909091,
+   "cp95_upper_unsettled": 0.2594665322284372,
+   "cp95_upper_below_half_nominal": 0.2594665322284372,
    "n_closed_form_unstable": 0,
-   "n_closed_form_saturated": 1,
-   "n_pre_kick_clipped": 1,
-   "spearman_kick_vs_u0_worst_psi": 0.8505494505494505,
-   "spearman_kick_vs_u0_sample_psi": 0.8373626373626375,
-   "spearman_kick_vs_alim_margin": 0.7802197802197802,
-   "finite_median_mmps": 8.692155363857077
+   "n_closed_form_saturated": 2,
+   "n_pre_kick_clipped": 2,
+   "spearman_kick_vs_u0_worst_psi": 0.8314035914704111,
+   "spearman_kick_vs_u0_sample_psi": 0.8280147181356132,
+   "spearman_kick_vs_alim_margin": 0.7783112425585778,
+   "finite_median_mmps": 9.008554691576123
   }
  }
 }

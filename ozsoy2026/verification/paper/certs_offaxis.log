@@ -1,0 +1,15 @@
+offaxis 1090 rpm 0.9: C3 6.2987 mm/s (stored 6.2987) in 723 s; Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999983485582; min eig ratio 1.1e-08
+   nreg 0: 0 of 72 chattered (74 s)
+   nreg 4: 0 of 72 chattered (60 s)
+offaxis 1420 rpm 0.9: C3 4.1154 mm/s (stored 4.1156) in 448 s; Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999891391423; min eig ratio 8.0e-09
+   nreg 0: 0 of 72 chattered (71 s)
+   nreg 4: 0 of 72 chattered (64 s)
+offaxis 2500 rpm 0.9: C3 3.4259 mm/s (stored 3.4282) in 202 s; Solved; pass 0, lam 0.05 sigma, merged; ok; min eig ratio 2.8e-09
+   nreg 0: 0 of 72 chattered (72 s)
+   nreg 4: 0 of 72 chattered (60 s)
+offaxis 2870 rpm 0.9: C3 7.2197 mm/s (stored 7.2192) in 217 s; Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.999785922475; min eig ratio 2.1e-08
+   nreg 0: 0 of 72 chattered (69 s)
+   nreg 4: 0 of 72 chattered (59 s)
+offaxis 1090 rpm 0.98: C3 4.6016 mm/s (stored 4.6012) in 442 s; Solved; pass 0, lam 0.05 sigma, merged; ok, shrunk by 0.99998806649; min eig ratio 1.1e-09
+   nreg 0: 0 of 72 chattered (67 s)
+   nreg 4: 0 of 72 chattered (59 s)

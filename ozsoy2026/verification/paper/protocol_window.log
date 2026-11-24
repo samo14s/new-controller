@@ -1,0 +1,5 @@
+window900_1090: 10.8807 mm/s (stored 10.8807), 0 disagreeing runs (69.6 s)
+window900_1420: 5.0431 mm/s (stored 5.0431), 0 disagreeing runs (52.2 s)
+window900_2500: 2.3375 mm/s (stored 2.3375), 0 disagreeing runs (53.2 s)
+window900_2870: 8.1219 mm/s (stored 8.1219), 0 disagreeing runs (59.4 s)
+{'n_points': 4, 'ratio_min': 1.0, 'ratio_max': 1.0, 'max_abs_rel_change': 0.0, 'n_disagreeing_runs': 0, 'n_runs': 53, 'by_rpm': {'1090': {'phase': 0, 'w900_mmps': 10.880680663798543, 'w300_stored_mmps': 10.880680663798543, 'ratio': 1.0}, '1420': {'phase': 1, 'w900_mmps': 5.043138704345241, 'w300_stored_mmps': 5.043138704345241, 'ratio': 1.0}, '2500': {'phase': 1, 'w900_mmps': 2.3374684706890365, 'w300_stored_mmps': 2.3374684706890365, 'ratio': 1.0}, '2870': {'phase': 0, 'w900_mmps': 8.121926126027095, 'w300_stored_mmps': 8.121926126027095, 'ratio': 1.0}}}

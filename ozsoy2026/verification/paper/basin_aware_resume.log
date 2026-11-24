@@ -10,3 +10,541 @@
   1750 rpm (N_red 16): beta 1: g* 500.0 a_rob 22 mm (linear limit); beta 2: g* 500.0 a_rob 22 mm (linear limit); beta 5: g* 500.0 a_rob 22 mm (linear limit)  [scan 37 s, recert 10 s, 2 gains]
   1875 rpm (N_red 16): beta 1: g* 0.0 a_rob 24 mm (linear limit); beta 2: g* 0.0 a_rob 24 mm (linear limit); beta 5: g* 0.0 a_rob 24 mm (linear limit)  [scan 73 s, recert 14 s, 2 gains]
   2000 rpm (N_red 12): beta 1: g* 187.5 a_rob 14 mm (linear limit); beta 2: g* 187.5 a_rob 14 mm (linear limit); beta 5: g* 187.5 a_rob 14 mm (linear limit)  [scan 53 s, recert 12 s, 4 gains]
+  2125 rpm (N_red 12): beta 1: g* 500.0 a_rob 10 mm (linear limit); beta 2: g* 500.0 a_rob 10 mm (linear limit); beta 5: g* 500.0 a_rob 10 mm (linear limit)  [scan 93 s, recert 6 s, 2 gains]
+  2250 rpm (N_red 12): beta 1: g* 812.5 a_rob 12 mm (linear limit); beta 2: g* 812.5 a_rob 12 mm (linear limit); beta 5: g* 687.5 a_rob 10 mm (linear limit)  [scan 54 s, recert 16 s, 6 gains]
+  2375 rpm (N_red 12): beta 1: g* 1000.0 a_rob 12 mm (linear limit); beta 2: g* 1000.0 a_rob 12 mm (linear limit); beta 5: g* 875.0 a_rob 10 mm (linear limit)  [scan 0 s, recert 0 s, 4 gains]
+  2500 rpm (N_red 12): beta 1: g* 1250.0 a_rob 14 mm (linear limit); beta 2: g* 1250.0 a_rob 14 mm (linear limit); beta 5: g* 1000.0 a_rob 10 mm (linear limit)  [scan 0 s, recert 0 s, 4 gains]
+  2625 rpm (N_red 12): beta 1: g* 1500.0 a_rob 16 mm (linear limit); beta 2: g* 1500.0 a_rob 16 mm (linear limit); beta 5: g* 1250.0 a_rob 12 mm (linear limit)  [scan 0 s, recert 0 s, 3 gains]
+  2750 rpm (N_red 12): beta 1: g* 1750.0 a_rob 18 mm (linear limit); beta 2: g* 1750.0 a_rob 16 mm (certificate); beta 5: g* 1375.0 a_rob 14 mm (linear limit)  [scan 0 s, recert 0 s, 6 gains]
+  2875 rpm (N_red 12): beta 1: g* 2000.0 a_rob 20 mm (linear limit); beta 2: g* 1562.5 a_rob 16 mm (linear limit); beta 5: g* 1500.0 a_rob 14 mm (linear limit)  [scan 0 s, recert 0 s, 8 gains]
+  3000 rpm (N_red 12): beta 1: g* 2312.5 a_rob 24 mm (linear limit); beta 2: g* 1750.0 a_rob 18 mm (linear limit); beta 5: g* 1500.0 a_rob 14 mm (linear limit)  [scan 0 s, recert 0 s, 8 gains]
+   875 rpm (N_red 20): beta 1: g* 3000.0 a_rob 32 mm (a_phys); beta 2: g* 2500.0 a_rob 26 mm (linear limit); beta 5: g* 1750.0 a_rob 18 mm (linear limit)  [scan 713 s, recert 525 s, 9 gains]
+scan + recert done in 1239 s
+validate: 462 jobs, 86 cached
+  [1/376] crit 750 rpm a 32.00 mm g 2500.0 phase 0: 7.368 mm/s (39 s)
+  [2/376] crit 750 rpm a 32.00 mm g 2500.0 phase 4: 8.122 mm/s (42 s)
+  [3/376] crit 750 rpm a 32.00 mm g 2500.0 phase 8: 7.948 mm/s (48 s)
+  [4/376] crit 750 rpm a 32.00 mm g 2500.0 phase 12: 8.034 mm/s (45 s)
+  [5/376] crit 750 rpm a 20.00 mm g 1937.5 phase 0: 14.896 mm/s (65 s)
+  [6/376] crit 750 rpm a 20.00 mm g 1937.5 phase 4: 16.069 mm/s (66 s)
+  [7/376] crit 750 rpm a 20.00 mm g 1937.5 phase 8: 14.735 mm/s (75 s)
+  [8/376] crit 750 rpm a 20.00 mm g 1937.5 phase 12: 15.555 mm/s (74 s)
+  [9/376] crit 750 rpm a 22.00 mm g 1937.5 phase 0: 12.526 mm/s (50 s)
+  [10/376] crit 750 rpm a 22.00 mm g 1937.5 phase 8: 12.662 mm/s (50 s)
+  [11/376] crit 750 rpm a 14.87 mm g 1500.0 phase 0: 17.714 mm/s (45 s)
+  [12/376] crit 750 rpm a 14.87 mm g 1500.0 phase 4: 19.528 mm/s (50 s)
+  [13/376] crit 750 rpm a 14.87 mm g 1500.0 phase 8: 18.498 mm/s (50 s)
+  [14/376] crit 750 rpm a 14.87 mm g 1500.0 phase 12: 19.740 mm/s (47 s)
+  [15/376] crit 2000 rpm a 14.00 mm g 187.5 phase 0: 120.463 mm/s (36 s)
+  [16/376] crit 2000 rpm a 14.00 mm g 187.5 phase 4: 127.166 mm/s (34 s)
+  [17/376] crit 2000 rpm a 14.00 mm g 187.5 phase 8: 121.775 mm/s (26 s)
+  [18/376] crit 2000 rpm a 14.00 mm g 187.5 phase 12: 115.356 mm/s (27 s)
+  [19/376] crit 2000 rpm a 16.19 mm g 250.9 phase 0: 58.941 mm/s (27 s)
+  [20/376] crit 2000 rpm a 16.19 mm g 250.9 phase 4: 74.799 mm/s (28 s)
+  [21/376] crit 2000 rpm a 16.19 mm g 250.9 phase 8: 71.628 mm/s (27 s)
+  [22/376] crit 2000 rpm a 16.19 mm g 250.9 phase 12: 60.887 mm/s (26 s)
+  [290/376] step entry 500 rpm a 32 mm g 3000.0: {'stable': False, 'max_x_mm': 9.723037173211527, 'max_v_V': 9.0}
+  [292/376] step entry 500 rpm a 26 mm g 2625.0: {'stable': False, 'max_x_mm': 9.824036327998682, 'max_v_V': 9.0}
+  [293/376] face entry 500 rpm a 26 mm g 2625.0: {'stable': True, 'max_x_mm': 0.03949411744124723, 'max_v_V': 5.070776662609277}
+  [294/376] face entry 500 rpm a 32 mm g 3000.0: {'stable': True, 'max_x_mm': 0.051645410513703936, 'max_v_V': 7.1096771844987785}
+  [295/376] step entry 625 rpm a 32 mm g 3000.0: {'stable': False, 'max_x_mm': 0.551440931858468, 'max_v_V': 9.0}
+  [296/376] face entry 625 rpm a 32 mm g 3000.0: {'stable': True, 'max_x_mm': 0.05178286726824449, 'max_v_V': 8.401398560091671}
+  [297/376] step entry 625 rpm a 20 mm g 2125.0: {'stable': False, 'max_x_mm': 0.17135581441127823, 'max_v_V': 9.0}
+  [298/376] step entry 750 rpm a 32 mm g 2500.0: {'stable': False, 'max_x_mm': 9.735554741111736, 'max_v_V': 9.0}
+  [299/376] face entry 625 rpm a 20 mm g 2125.0: {'stable': True, 'max_x_mm': 0.034187611254754564, 'max_v_V': 5.705786031007345}
+  [300/376] face entry 750 rpm a 32 mm g 2500.0: {'stable': True, 'max_x_mm': 0.051800846756272466, 'max_v_V': 8.174331778288677}
+  [301/376] step entry 750 rpm a 20 mm g 1937.5: {'stable': False, 'max_x_mm': 1.402894888746302, 'max_v_V': 9.0}
+  [302/376] face entry 750 rpm a 20 mm g 1937.5: {'stable': True, 'max_x_mm': 0.034304218627716765, 'max_v_V': 5.89108022772041}
+  [303/376] face entry 875 rpm a 32 mm g 3000.0: {'stable': True, 'max_x_mm': 0.051589633279806736, 'max_v_V': 9.0}
+  [304/376] step entry 875 rpm a 32 mm g 3000.0: {'stable': False, 'max_x_mm': 0.38379173821518114, 'max_v_V': 9.0}
+  [305/376] face entry 875 rpm a 26 mm g 2500.0: {'stable': True, 'max_x_mm': 0.039545557527385714, 'max_v_V': 4.858045817751078}
+  [306/376] step entry 875 rpm a 26 mm g 2500.0: {'stable': False, 'max_x_mm': 0.2361090655126071, 'max_v_V': 9.0}
+  [307/376] step entry 875 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.03476459914369987, 'max_v_V': 9.0}
+  [308/376] step entry 1000 rpm a 32 mm g 2562.5: {'stable': False, 'max_x_mm': 9.919128285495875, 'max_v_V': 9.0}
+  [309/376] face entry 875 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.03166195277481253, 'max_v_V': 6.329487954576673}
+  [310/376] step entry 1000 rpm a 26 mm g 2000.0: {'stable': True, 'max_x_mm': 7.282174714255282, 'max_v_V': 9.0}
+  [311/376] face entry 1000 rpm a 32 mm g 2562.5: {'stable': True, 'max_x_mm': 0.05162665237649298, 'max_v_V': 9.0}
+  [312/376] face entry 1000 rpm a 26 mm g 2000.0: {'stable': True, 'max_x_mm': 0.03972853772705284, 'max_v_V': 4.455666246035556}
+  [313/376] step entry 1000 rpm a 20 mm g 1312.5: {'stable': True, 'max_x_mm': 0.03892710915246113, 'max_v_V': 9.0}
+  [314/376] step entry 1125 rpm a 32 mm g 2500.0: {'stable': False, 'max_x_mm': 9.815026741165434, 'max_v_V': 9.0}
+  [315/376] face entry 1000 rpm a 20 mm g 1312.5: {'stable': True, 'max_x_mm': 0.033576700843069074, 'max_v_V': 6.805344527446698}
+  [316/376] face entry 1125 rpm a 32 mm g 2500.0: {'stable': True, 'max_x_mm': 0.05195892007521945, 'max_v_V': 9.0}
+  [317/376] step entry 1125 rpm a 28 mm g 2125.0: {'stable': False, 'max_x_mm': 6.646217719664388, 'max_v_V': 9.0}
+  [318/376] face entry 1125 rpm a 28 mm g 2125.0: {'stable': True, 'max_x_mm': 0.04583376726760514, 'max_v_V': 9.0}
+  [319/376] face entry 1125 rpm a 16 mm g 1500.0: {'stable': True, 'max_x_mm': 0.029511711697606486, 'max_v_V': 8.36286522121243}
+  [320/376] step entry 1125 rpm a 16 mm g 1500.0: {'stable': False, 'max_x_mm': 0.8939759325537624, 'max_v_V': 9.0}
+  [321/376] step entry 1250 rpm a 24 mm g 2250.0: {'stable': False, 'max_x_mm': 0.5485958511275425, 'max_v_V': 9.0}
+  [322/376] face entry 1250 rpm a 24 mm g 2250.0: {'stable': True, 'max_x_mm': 0.03607240439293581, 'max_v_V': 5.177450408582956}
+  [323/376] step entry 1250 rpm a 18 mm g 1750.0: {'stable': False, 'max_x_mm': 0.2990085839993478, 'max_v_V': 9.0}
+  [324/376] face entry 1250 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.03318120588514164, 'max_v_V': 9.0}
+  [325/376] step entry 1250 rpm a 14 mm g 1500.0: {'stable': True, 'max_x_mm': 0.031146227557895773, 'max_v_V': 9.0}
+  [326/376] face entry 1250 rpm a 14 mm g 1500.0: {'stable': True, 'max_x_mm': 0.023347387284719582, 'max_v_V': 4.283564955443792}
+  [327/376] step entry 1375 rpm a 18 mm g 1750.0: {'stable': False, 'max_x_mm': 0.12966014209353646, 'max_v_V': 9.0}
+  [328/376] face entry 1375 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.033911195673277786, 'max_v_V': 9.0}
+  [329/376] step entry 1375 rpm a 16 mm g 1437.5: {'stable': False, 'max_x_mm': 0.10362602055252156, 'max_v_V': 9.0}
+  [330/376] face entry 1375 rpm a 16 mm g 1437.5: {'stable': True, 'max_x_mm': 0.029855628149881488, 'max_v_V': 8.222762125239106}
+  [331/376] step entry 1375 rpm a 14 mm g 1437.5: {'stable': True, 'max_x_mm': 0.030236382212504846, 'max_v_V': 9.0}
+  [332/376] face entry 1375 rpm a 14 mm g 1437.5: {'stable': True, 'max_x_mm': 0.023482001900844762, 'max_v_V': 4.230388040081512}
+  [333/376] step entry 1500 rpm a 18 mm g 1312.5: {'stable': False, 'max_x_mm': 0.06971444494489014, 'max_v_V': 9.0}
+  [334/376] face entry 1500 rpm a 18 mm g 1312.5: {'stable': True, 'max_x_mm': 0.035541204518451004, 'max_v_V': 9.0}
+  [335/376] step entry 1500 rpm a 16 mm g 1125.0: {'stable': True, 'max_x_mm': 0.037009078554433465, 'max_v_V': 9.0}
+  [336/376] face entry 1500 rpm a 16 mm g 1125.0: {'stable': True, 'max_x_mm': 0.030997338134607515, 'max_v_V': 7.802443770164115}
+  [337/376] step entry 1625 rpm a 18 mm g 750.0: {'stable': True, 'max_x_mm': 0.0419774634209853, 'max_v_V': 9.0}
+  [338/376] face entry 1625 rpm a 18 mm g 750.0: {'stable': True, 'max_x_mm': 0.039373026567495285, 'max_v_V': 9.0}
+  [339/376] step entry 1750 rpm a 22 mm g 500.0: {'stable': True, 'max_x_mm': 0.0482352108759808, 'max_v_V': 9.0}
+  [340/376] face entry 1750 rpm a 22 mm g 500.0: {'stable': True, 'max_x_mm': 0.045596194932967495, 'max_v_V': 7.095235976707946}
+  [341/376] step entry 1875 rpm a 24 mm g 0.0: {'stable': True, 'max_x_mm': 0.05151610715267484, 'max_v_V': 0.0}
+  [342/376] face entry 1875 rpm a 24 mm g 0.0: {'stable': True, 'max_x_mm': 0.052013056214604385, 'max_v_V': 0.0}
+  [343/376] step entry 2000 rpm a 14 mm g 187.5: {'stable': True, 'max_x_mm': 0.05853926679830884, 'max_v_V': 5.930847318613691}
+  [344/376] face entry 2000 rpm a 14 mm g 187.5: {'stable': True, 'max_x_mm': 0.040514393353982915, 'max_v_V': 3.8957138709473322}
+  [345/376] step entry 2125 rpm a 10 mm g 500.0: {'stable': True, 'max_x_mm': 0.040973233161913813, 'max_v_V': 9.0}
+  [346/376] face entry 2125 rpm a 10 mm g 500.0: {'stable': True, 'max_x_mm': 0.026583825416446608, 'max_v_V': 6.791331120415683}
+  [347/376] step entry 2250 rpm a 12 mm g 812.5: {'stable': True, 'max_x_mm': 0.028916044231014095, 'max_v_V': 8.791088105317202}
+  [348/376] face entry 2250 rpm a 12 mm g 812.5: {'stable': True, 'max_x_mm': 0.018863081482407985, 'max_v_V': 1.6464329882426427}
+  [349/376] step entry 2250 rpm a 10 mm g 687.5: {'stable': True, 'max_x_mm': 0.03555782158575336, 'max_v_V': 9.0}
+  [350/376] face entry 2250 rpm a 10 mm g 687.5: {'stable': True, 'max_x_mm': 0.021164571400337246, 'max_v_V': 6.0552908969883195}
+  [351/376] step entry 2375 rpm a 12 mm g 1000.0: {'stable': True, 'max_x_mm': 0.0281349745130901, 'max_v_V': 9.0}
+  [352/376] step entry 2375 rpm a 10 mm g 875.0: {'stable': True, 'max_x_mm': 0.031700729854369725, 'max_v_V': 9.0}
+  [353/376] face entry 2375 rpm a 12 mm g 1000.0: {'stable': True, 'max_x_mm': 0.018428437276182923, 'max_v_V': 1.5454522924873706}
+  [354/376] face entry 2375 rpm a 10 mm g 875.0: {'stable': True, 'max_x_mm': 0.019105962083255185, 'max_v_V': 5.750883209875275}
+  [355/376] step entry 2625 rpm a 16 mm g 1500.0: {'stable': False, 'max_x_mm': 0.3574888035766642, 'max_v_V': 9.0}
+  [356/376] face entry 2625 rpm a 16 mm g 1500.0: {'stable': True, 'max_x_mm': 0.02648700777112912, 'max_v_V': 8.223477048448418}
+  [357/376] step entry 2625 rpm a 12 mm g 1250.0: {'stable': True, 'max_x_mm': 0.027554880416643855, 'max_v_V': 9.0}
+  [358/376] face entry 2625 rpm a 12 mm g 1250.0: {'stable': True, 'max_x_mm': 0.01801891551351604, 'max_v_V': 1.3587307873575494}
+  [359/376] step entry 2750 rpm a 18 mm g 1750.0: {'stable': False, 'max_x_mm': 0.32840593116894495, 'max_v_V': 9.0}
+  [360/376] face entry 2750 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.029661566598401405, 'max_v_V': 9.0}
+  [361/376] step entry 2750 rpm a 16 mm g 1750.0: {'stable': False, 'max_x_mm': 0.2851445547107432, 'max_v_V': 9.0}
+  [362/376] face entry 2750 rpm a 16 mm g 1750.0: {'stable': True, 'max_x_mm': 0.025891737603229853, 'max_v_V': 8.307052017521825}
+  [363/376] step entry 2750 rpm a 14 mm g 1375.0: {'stable': False, 'max_x_mm': 0.24490090112481452, 'max_v_V': 9.0}
+  [364/376] face entry 2750 rpm a 14 mm g 1375.0: {'stable': True, 'max_x_mm': 0.02156608461925486, 'max_v_V': 3.2635651697427686}
+  [365/376] step entry 2875 rpm a 20 mm g 2000.0: {'stable': False, 'max_x_mm': 0.29783700250722295, 'max_v_V': 9.0}
+  [366/376] face entry 2875 rpm a 20 mm g 2000.0: {'stable': True, 'max_x_mm': 0.03198696514504711, 'max_v_V': 9.0}
+  [367/376] face entry 2875 rpm a 16 mm g 1562.5: {'stable': True, 'max_x_mm': 0.025560031022388734, 'max_v_V': 6.757377850822773}
+  [368/376] step entry 2875 rpm a 16 mm g 1562.5: {'stable': False, 'max_x_mm': 0.22696553865827487, 'max_v_V': 9.0}
+  [369/376] step entry 2875 rpm a 14 mm g 1500.0: {'stable': False, 'max_x_mm': 0.1940815258141502, 'max_v_V': 9.0}
+  [370/376] face entry 2875 rpm a 14 mm g 1500.0: {'stable': True, 'max_x_mm': 0.021366492961608214, 'max_v_V': 3.179289087429395}
+  [371/376] face entry 3000 rpm a 24 mm g 2312.5: {'stable': True, 'max_x_mm': 0.03546869303967933, 'max_v_V': 3.6283174824865414}
+  [372/376] step entry 3000 rpm a 24 mm g 2312.5: {'stable': False, 'max_x_mm': 0.29470709349259394, 'max_v_V': 9.0}
+  [373/376] step entry 3000 rpm a 18 mm g 1750.0: {'stable': False, 'max_x_mm': 0.20941868068789074, 'max_v_V': 9.0}
+  [374/376] face entry 3000 rpm a 18 mm g 1750.0: {'stable': True, 'max_x_mm': 0.028770064102387957, 'max_v_V': 8.598196982986822}
+  [375/376] step entry 3000 rpm a 14 mm g 1500.0: {'stable': False, 'max_x_mm': 0.16069324649024386, 'max_v_V': 9.0}
+  [376/376] face entry 3000 rpm a 14 mm g 1500.0: {'stable': True, 'max_x_mm': 0.02122317042945691, 'max_v_V': 2.899175298746489}
+validate done at 1974 s
+validate: 462 jobs, 462 cached
+{
+ "1": {
+  "a_rob_mm_grid21": {
+   "mean": 21.714285714285715,
+   "min": 10.0,
+   "max": 32.0,
+   "min_at_rpm": 2125.0
+  },
+  "a_chk_mm_grid21_mean": 15.498831479261888,
+  "a_rob_over_a_chk_grid21": {
+   "mean": 1.4212296258851191,
+   "min": 0.7954404499425913,
+   "max": 2.185926854358984,
+   "median": 1.2576900450720518
+  },
+  "a_chk_minus_a_rob_mm_grid21": {
+   "mean": -6.2154542350238255,
+   "max": 2.5716513419976597,
+   "min": -17.360900829692262
+  },
+  "a_rob_below_a_chk_speeds": 6,
+  "a_rob_over_a_lim0_grid21_median": 8.90439068397742,
+  "a_rob_over_a_lim_auth_grid21_median": 1.0709088937506237,
+  "primary_binding_counts_grid21": {
+   "a_phys": 6,
+   "linear limit": 15,
+   "voltage margin": 0,
+   "certificate": 0,
+   "none": 0
+  },
+  "primary_binding_by_rpm": {
+   "500": "a_phys",
+   "625": "a_phys",
+   "750": "a_phys",
+   "875": "a_phys",
+   "1000": "a_phys",
+   "1125": "a_phys",
+   "1250": "linear limit",
+   "1375": "linear limit",
+   "1500": "linear limit",
+   "1625": "linear limit",
+   "1750": "linear limit",
+   "1875": "linear limit",
+   "2000": "linear limit",
+   "2125": "linear limit",
+   "2250": "linear limit",
+   "2375": "linear limit",
+   "2500": "linear limit",
+   "2625": "linear limit",
+   "2750": "linear limit",
+   "2875": "linear limit",
+   "3000": "linear limit"
+  },
+  "g_star_by_rpm": {
+   "500": 3000.0,
+   "625": 3000.0,
+   "750": 2500.0,
+   "875": 3000.0,
+   "1000": 2562.5,
+   "1125": 2500.0,
+   "1250": 2250.0,
+   "1375": 1750.0,
+   "1500": 1312.5,
+   "1625": 750.0,
+   "1750": 500.0,
+   "1875": 0.0,
+   "2000": 187.5,
+   "2125": 500.0,
+   "2250": 812.5,
+   "2375": 1000.0,
+   "2500": 1250.0,
+   "2625": 1500.0,
+   "2750": 1750.0,
+   "2875": 2000.0,
+   "3000": 2312.5
+  },
+  "g_star_over_g_auth_grid21": {
+   "median": 1.1666666666666667,
+   "min": 0.0,
+   "max": 2.0
+  },
+  "g_star_below_g_auth_speeds": 9,
+  "g_star_above_g_auth_speeds": 11,
+  "corrected_down_speeds": [],
+  "upward_possible_speeds": [],
+  "voltage_violated_between_grid_depths_speeds": [],
+  "a_rob_auth_gain_grid21_mean": 10.857142857142858,
+  "gain_limited_by_primary_grid21": {
+   "a_phys": 1,
+   "linear limit": 11,
+   "voltage margin": 4,
+   "certificate": 2,
+   "none": 3
+  },
+  "gain_limited_by_by_rpm": {
+   "500": [
+    "none"
+   ],
+   "625": [
+    "none"
+   ],
+   "750": [
+    "a_phys"
+   ],
+   "875": [
+    "none"
+   ],
+   "1000": [
+    "certificate"
+   ],
+   "1125": [
+    "voltage margin"
+   ],
+   "1250": [
+    "linear limit"
+   ],
+   "1375": [
+    "linear limit"
+   ],
+   "1500": [
+    "linear limit"
+   ],
+   "1625": [
+    "linear limit"
+   ],
+   "1750": [
+    "linear limit"
+   ],
+   "1875": [
+    "linear limit"
+   ],
+   "2000": [
+    "voltage margin"
+   ],
+   "2125": [
+    "voltage margin"
+   ],
+   "2250": [
+    "voltage margin"
+   ],
+   "2375": [
+    "linear limit"
+   ],
+   "2500": [
+    "linear limit"
+   ],
+   "2625": [
+    "linear limit"
+   ],
+   "2750": [
+    "linear limit"
+   ],
+   "2875": [
+    "linear limit"
+   ],
+   "3000": [
+    "certificate"
+   ]
+  },
+  "step_entry_chatters_at_design_rpm": [
+   500.0,
+   625.0,
+   750.0,
+   875.0,
+   1000.0,
+   1125.0,
+   1250.0,
+   1375.0,
+   1500.0,
+   2500.0,
+   2625.0,
+   2750.0,
+   2875.0,
+   3000.0
+  ],
+  "face_entry_chatters_at_design_rpm": [],
+  "a_rob_over_a_lim_at_g_star_grid21": {
+   "median": 0.9731353593474256,
+   "min": 0.8503228906151078,
+   "max": 0.997180602671455
+  }
+ },
+ "2": {
+  "a_rob_mm_grid21": {
+   "mean": 19.904761904761905,
+   "min": 10.0,
+   "max": 32.0,
+   "min_at_rpm": 2125.0
+  },
+  "a_chk_mm_grid21_mean": 15.498831479261888,
+  "a_rob_over_a_chk_grid21": {
+   "mean": 1.2988074231344675,
+   "min": 0.7954404499425913,
+   "max": 2.1679087246087687,
+   "median": 1.2273019105037417
+  },
+  "a_chk_minus_a_rob_mm_grid21": {
+   "mean": -4.405930425500017,
+   "max": 2.5716513419976597,
+   "min": -17.239230952504755
+  },
+  "a_rob_below_a_chk_speeds": 7,
+  "a_rob_over_a_lim0_grid21_median": 7.455112517735674,
+  "a_rob_over_a_lim_auth_grid21_median": 0.9961346793016519,
+  "primary_binding_counts_grid21": {
+   "a_phys": 3,
+   "linear limit": 17,
+   "voltage margin": 0,
+   "certificate": 1,
+   "none": 0
+  },
+  "primary_binding_by_rpm": {
+   "500": "a_phys",
+   "625": "a_phys",
+   "750": "a_phys",
+   "875": "linear limit",
+   "1000": "linear limit",
+   "1125": "linear limit",
+   "1250": "linear limit",
+   "1375": "linear limit",
+   "1500": "linear limit",
+   "1625": "linear limit",
+   "1750": "linear limit",
+   "1875": "linear limit",
+   "2000": "linear limit",
+   "2125": "linear limit",
+   "2250": "linear limit",
+   "2375": "linear limit",
+   "2500": "linear limit",
+   "2625": "linear limit",
+   "2750": "certificate",
+   "2875": "linear limit",
+   "3000": "linear limit"
+  },
+  "g_star_by_rpm": {
+   "500": 3000.0,
+   "625": 3000.0,
+   "750": 2500.0,
+   "875": 2500.0,
+   "1000": 2000.0,
+   "1125": 2125.0,
+   "1250": 1750.0,
+   "1375": 1437.5,
+   "1500": 1125.0,
+   "1625": 750.0,
+   "1750": 500.0,
+   "1875": 0.0,
+   "2000": 187.5,
+   "2125": 500.0,
+   "2250": 812.5,
+   "2375": 1000.0,
+   "2500": 1250.0,
+   "2625": 1500.0,
+   "2750": 1750.0,
+   "2875": 1562.5,
+   "3000": 1750.0
+  },
+  "g_star_over_g_auth_grid21": {
+   "median": 1.0,
+   "min": 0.0,
+   "max": 2.0
+  },
+  "g_star_below_g_auth_speeds": 10,
+  "g_star_above_g_auth_speeds": 10,
+  "corrected_down_speeds": [],
+  "upward_possible_speeds": [],
+  "voltage_violated_between_grid_depths_speeds": [],
+  "a_rob_auth_gain_grid21_mean": 10.857142857142858,
+  "gain_limited_by_primary_grid21": {
+   "a_phys": 1,
+   "linear limit": 14,
+   "voltage margin": 3,
+   "certificate": 1,
+   "none": 2
+  },
+  "gain_limited_by_by_rpm": {
+   "500": [
+    "none"
+   ],
+   "625": [
+    "none"
+   ],
+   "750": [
+    "a_phys"
+   ],
+   "875": [
+    "linear limit"
+   ],
+   "1000": [
+    "linear limit"
+   ],
+   "1125": [
+    "linear limit"
+   ],
+   "1250": [
+    "linear limit"
+   ],
+   "1375": [
+    "linear limit"
+   ],
+   "1500": [
+    "linear limit"
+   ],
+   "1625": [
+    "linear limit"
+   ],
+   "1750": [
+    "linear limit"
+   ],
+   "1875": [
+    "linear limit"
+   ],
+   "2000": [
+    "voltage margin"
+   ],
+   "2125": [
+    "voltage margin"
+   ],
+   "2250": [
+    "voltage margin"
+   ],
+   "2375": [
+    "linear limit"
+   ],
+   "2500": [
+    "linear limit"
+   ],
+   "2625": [
+    "linear limit"
+   ],
+   "2750": [
+    "certificate"
+   ],
+   "2875": [
+    "linear limit"
+   ],
+   "3000": [
+    "linear limit"
+   ]
+  },
+  "step_entry_chatters_at_design_rpm": [
+   500.0,
+   625.0,
+   750.0,
+   875.0,
+   1125.0,
+   1250.0,
+   1375.0,
+   2500.0,
+   2625.0,
+   2750.0,
+   2875.0,
+   3000.0
+  ],
+  "face_entry_chatters_at_design_rpm": [],
+  "a_rob_over_a_lim_at_g_star_grid21": {
+   "median": 0.9696910148368206,
+   "min": 0.8503228906151078,
+   "max": 0.9964599177979226
+  }
+ },
+ "5": {
+  "a_rob_mm_grid21": {
+   "mean": 16.0,
+   "min": 10.0,
+   "max": 26.0,
+   "min_at_rpm": 2125.0
+  },
+  "a_chk_mm_grid21_mean": 15.498831479261888,
+  "a_rob_over_a_chk_grid21": {
+   "mean": 1.0315516865332728,
+   "min": 0.7521348992067354,
+   "max": 1.7116578313449515,
+   "median": 0.996949888579104
+  },
+  "a_chk_minus_a_rob_mm_grid21": {
+   "mean": -0.5011685207381124,
+   "max": 3.295487299614523,
+   "min": -10.810048174423827
+  },
+  "a_rob_below_a_chk_speeds": 11,
+  "a_rob_over_a_lim0_grid21_median": 6.156544385374675,
+  "a_rob_over_a_lim_auth_grid21_median": 0.8846215905190018,
+  "primary_binding_counts_grid21": {
+   "a_phys": 0,
+   "linear limit": 15,
+   "voltage margin": 0,
+   "certificate": 6,
+   "none": 0
+  },
+  "primary_binding_by_rpm": {
+   "500": "certificate",
+   "625": "certificate",
+   "750": "certificate",
+   "875": "linear limit",
+   "1000": "certificate",
+   "1125": "certificate",
+   "1250": "linear limit",
+   "1375": "certificate",
+   "1500": "linear limit",
+   "1625": "linear limit",
+   "1750": "linear limit",
+   "1875": "linear limit",
+   "2000": "linear limit",
+   "2125": "linear limit",
+   "2250": "linear limit",
+   "2375": "linear limit",
+   "2500": "linear limit",
+   "2625": "linear limit",
+   "
+750
+1125
+1375
+2000
+2500
+2875
+assemble done at 2070 s

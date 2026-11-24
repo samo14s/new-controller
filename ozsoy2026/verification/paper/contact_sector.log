@@ -1,0 +1,90 @@
+[     98 s] 1090 rpm 0.90 a_lim (18.89 mm): theta 0.1855 (circle 0.243); beta1 6.1961 (stored 6.1961), beta2 5.2744 mm/s, ratio 0.8512465781711449  [Solved; pass 2, lam 0.05 sigma; ok] (47 + 50 s)
+[    165 s] 1090 rpm 0.98 a_lim (20.57 mm): theta 0.1704 (circle 0.047); beta1 4.8459 (stored 4.8459), beta2 0.0000 mm/s, ratio 0.0  [no candidate passed the check] (49 + 18 s)
+[    275 s] 1420 rpm 0.50 a_lim (8.89 mm): theta 0.1971 (circle 1.701); beta1 8.3122 (stored 8.3122), beta2 7.2982 mm/s, ratio 0.8780142406060295  [Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.99316579421] (57 + 53 s)
+[    372 s] 1420 rpm 0.90 a_lim (16.00 mm): theta 0.2180 (circle 0.422); beta1 3.8434 (stored 3.8434), beta2 3.3699 mm/s, ratio 0.8768160217975881  [Solved; pass 2, lam 0.05 sigma; ok] (46 + 49 s)
+[    463 s] 1420 rpm 0.98 a_lim (17.42 mm): theta 0.2011 (circle 0.089); beta1 2.0828 (stored 2.0828), beta2 0.0000 mm/s, ratio 0.0  [no candidate passed the check] (77 + 13 s)
+[    549 s] 2500 rpm 0.50 a_lim (8.62 mm): theta 0.2033 (circle 2.093); beta1 2.5869 (stored 2.5869), beta2 2.4242 mm/s, ratio 0.9370882541546689  [Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.999999999235] (42 + 44 s)
+[    617 s] 2500 rpm 0.90 a_lim (15.51 mm): theta 0.2185 (circle 0.405); beta1 3.0579 (stored 3.0579), beta2 2.7577 mm/s, ratio 0.9018294641769707  [Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.99999999875] (23 + 44 s)
+[    672 s] 2500 rpm 0.98 a_lim (16.89 mm): theta 0.2075 (circle 0.081); beta1 1.1397 (stored 1.1397), beta2 0.0000 mm/s, ratio 0.0  [no candidate passed the check] (47 + 8 s)
+[    715 s] 2870 rpm 0.50 a_lim (7.70 mm): theta 0.2276 (circle 1.919); beta1 5.5129 (stored 5.5129), beta2 5.1281 mm/s, ratio 0.9302082584911744  [Solved; pass 2, lam 0.05 sigma; ok, shrunk by 0.992169315096] (21 + 22 s)
+[    752 s] 2870 rpm 0.90 a_lim (13.86 mm): theta 0.1859 (circle 0.380); beta1 6.8915 (stored 6.8915), beta2 6.4075 mm/s, ratio 0.9297567013895771  [Solved; pass 2, lam 0.05 sigma; ok] (18 + 19 s)
+[    776 s] 2870 rpm 0.98 a_lim (15.09 mm): theta 0.2147 (circle 0.077); beta1 4.8266 (stored 4.8266), beta2 0.0000 mm/s, ratio 0.0  [no candidate passed the check] (17 + 7 s)
+[    902 s] trade-off 1090 rpm 0.9 a_lim: theta_bar 0.1394 -> beta2 5.5263; delta 1: theta 0.3994 beta2 0.0000 vs beta1 6.3653 mm/s; delta 0.5: beta1 6.19606176681556 beta2 5.274376377138804
+[   1126 s] trade-off 1420 rpm 0.9 a_lim: theta_bar 0.1394 -> beta2 3.5425; delta 1: theta 0.3996 beta2 2.8814 vs beta1 3.8725 mm/s; delta 0.5: beta1 3.8433615999879023 beta2 3.3699210284310057
+[   1205 s] trade-off 2500 rpm 0.9 a_lim: theta_bar 0.1394 -> beta2 2.8697; delta 1: theta 0.3906 beta2 0.0049 vs beta1 3.0712 mm/s; delta 0.5: beta1 3.0579045522928014 beta2 2.7577084238985368
+[   1298 s] trade-off 2870 rpm 0.9 a_lim: theta_bar 0.1394 -> beta2 6.5378; delta 1: theta 0.3472 beta2 5.9685 vs beta1 7.1085 mm/s; delta 0.5: beta1 6.891544586837618 beta2 6.40745976253734
+{
+ "points_done": 12,
+ "certified_with_contact": 8,
+ "not_certified": [
+  {
+   "rpm": 1090.0,
+   "frac": 0.98,
+   "theta": 0.1703781397771859,
+   "circle": 0.046633504476245806,
+   "note": "no candidate passed the check"
+  },
+  {
+   "rpm": 1420.0,
+   "frac": 0.98,
+   "theta": 0.20111721286199674,
+   "circle": 0.08867075866785497,
+   "note": "no candidate passed the check"
+  },
+  {
+   "rpm": 2500.0,
+   "frac": 0.98,
+   "theta": 0.20745642188595176,
+   "circle": 0.08098229506995976,
+   "note": "no candidate passed the check"
+  },
+  {
+   "rpm": 2870.0,
+   "frac": 0.98,
+   "theta": 0.21472054122288492,
+   "circle": 0.07698292192571474,
+   "note": "no candidate passed the check"
+  }
+ ],
+ "ratio_min": 0.0,
+ "ratio_max": 0.9372974575661847,
+ "ratio_median": 0.8774151312018088,
+ "worst_point": {
+  "rpm": 1090.0,
+  "frac": 0.98,
+  "a_mm": 20.567075365964218,
+  "theta": 0.1703781397771859,
+  "beta1_mmps": 4.845934727810773,
+  "beta2_mmps": 0.0,
+  "ratio": 0.0
+ },
+ "beta2_le_beta1_all": true,
+ "beta1_vs_stored_rel_max": 0.002000405201669442,
+ "ratio_certified_min": 0.8512465781711449,
+ "ratio_certified_max": 0.9372974575661847,
+ "ratio_certified_median": 0.9157930827832739,
+ "beta2_range_mmps": [
+  2.4241869086948067,
+  8.35211891968388
+ ],
+ "ratio_by_depth": {
+  "0.50": [
+   0.9373,
+   0.878,
+   0.9371,
+   0.9302
+  ],
+  "0.90": [
+   0.8512,
+   0.8768,
+   0.9018,
+   0.9298
+  ],
+  "0.98": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ }
+}

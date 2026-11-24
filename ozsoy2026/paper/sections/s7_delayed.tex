@@ -66,4 +66,5 @@ The residual authority of the nominal design was sampled under errors in the mod
 \end{table}
 % src: verification/paper/mc_closed_form.json (nominal.<rpm>.u0_9V; levels.pm10/pm20.speeds.<rpm>.fracs.<frac>: u0_stable_median_V, p_unstable, p_saturated)
 
-\PEND{clip level 8.1 V against 9 V: critical kick and free voltage}
+The clip level itself is a design choice (Section~\ref{sec:model-loop}). Lowering it from 9 to \SI{8.1}{\volt}, which keeps the force within \SI{27}{\newton} in step entries, reduces the residual authority at $0.9\,\alim$ to 0.68--0.87 of its value and the worst-phase critical kick there to 0.76--0.88 of its value at the four speeds, close to the ratios of 0.78--0.89 that the describing function of Eq.~\eqref{eq:dfbasin} predicts; at \SI{2500}{\rpm} the forced command at $\alim$ alone exceeds \SI{8.1}{\volt}, so the basin closes before the limit. A force limit enforced by lowering the clip is thus paid for in tolerated disturbance.
+% src: verification/paper/protocol_clip_level.json (summary: ratio_of_minima 0.850/0.763/0.763/0.878 at 1090/1420/2500/2870 rpm, 0.9 a_lim, phases 0, 4, 8, 12; df_ratio_prediction 0.845/0.801/0.778/0.892; free_voltage_ratio_at_0p9alim 0.808/0.690/0.677/0.866; free_voltage_ratio_at_alim at 2500 rpm -0.038); verification/paper/support_runs.json (26.6 N at 8.1 V)
