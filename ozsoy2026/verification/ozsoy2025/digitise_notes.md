@@ -1,7 +1,7 @@
 # Digitisation of Ozsoy, Sims & Ozturk 2025 (Mech. Syst. Signal Process. 224, 111942)
 
-The article is open access under CC BY 4.0. Two of its figures were digitised; the PDF itself is not
-stored in this repository.
+The article is open access under CC BY 4.0. Two groups of its tests, in three figures (Fig. 6, and Figs. 10 and 12),
+were digitised; the PDF itself is not stored in this repository.
 
 ## Method
 
@@ -25,8 +25,8 @@ step was planned for any disagreement and was not needed.
   graphics, Fig. 12 an embedded raster of 1521 x 842 pixels at 300 ppi; both rendered at 600 dpi. 56 annotated test points: the measured amplitude of the command in N (36) or
   'Sat' (20), with the outcome '(chatter)' (5) or '(marginal)' (3) where given. The labels are
   MATLAB text, left-aligned at the test speed and vertically centred on the test depth (two-line 'Sat /
-  (outcome)' labels centred as a block); every label centre lies within 0.061 mm of a round depth (largest: 1900 rpm, 0.5 mm, centred at 0.439 mm)
-  (0.5, 1.5, 2, 3, 5, 10, 15, 20 and 22 mm). Every value read in Fig. 10 equals the value at the same
+  (outcome)' labels centred as a block); every label centre lies within 0.061 mm of a round depth
+  (0.5, 1.5, 2, 3, 5, 10, 15, 20 and 22 mm; largest deviation at 1900 rpm and 0.5 mm, centred at 0.439 mm). Every value read in Fig. 10 equals the value at the same
   place in Fig. 12 where Fig. 12 shows it (52 of 56; Fig. 12 masks the region above its controlled
   limit). The two digitisations agree on all 56 values and outcomes, on the stability curves to
   0.08 mm and on the three ellipses of predicted saturation.

@@ -165,8 +165,8 @@ points and its caption says that only the grid depths are certified.
 ## 5 Second validation on Ozsoy et al. 2025
 
 Done (`../../verification/ozsoy2025/`; Sec. 2.6, new Fig. 2, Supplement S6 with Table S12 and Fig. S4).
-The article turned out to use the same rig: its Table 2 and Eq. (2) give the structure, actuator, tool and
-cutting constants of our Table 1, including the damping ratio of 1.34 % that we had inferred from the 2026
+The article turned out to use the same rig: its Table 2, Eq. (2) and Sec. 3.2 give the structure, actuator, tool
+and cutting constants of our Table 1, including the damping ratio of 1.34 % that we had inferred from the 2026
 article's curves (its table says 1.45 %). It is therefore a second data set on the same rig, not a second
 machine, and the manuscript says so; generality across machines remains untested.
 
@@ -177,9 +177,11 @@ cuts, 1 loss of contact, 4 simulated saturation onsets) and its Figs. 10/12 (56 
 the command or 'Sat', and the outcome). The two digitisations agree on every item.
 
 *Results, in the order of the review's table.*
+
 - FRF and linear stability: with the article's modal parameters the model reproduces its uncontrolled
-  and controlled stability charts to 0.04 and 0.14 mm RMS (first structure) and 0.06 and 0.07 mm
-  (re-clamped structure); the gain of the saturation tests, not stated, is put by a fit of the chart at
+  and controlled stability charts, outside the steep flanks of the lobes, to 0.04 and 0.14 mm RMS (first
+  structure) and 0.06 and 0.07 mm (re-clamped structure), and with all points to 0.04, 0.15, 0.08 and
+  0.07 mm; the gain of the saturation tests, not stated, is put by a fit of the chart at
   251 V s/m, within 1 % of the 253 V s/m of the first group, which the comparisons use. Of the 39 controlled cuts, the model and the
   article's own chart classify the same 26 as measured; 9 of the 13 others are stable cuts at
   700-1100 rpm above the predicted limit (cutting speed 0.6-0.9 m/s, where process damping, not
@@ -194,19 +196,22 @@ the command or 'Sat', and the outcome). The two digitisations agree on every ite
   simulated chatter above the controlled limit.
 - Residual authority and the mechanism: relative to the linear limits, all 37 tests below the uncontrolled
   limit settled (10 saturated); between the uncontrolled and the controlled limit, 5 of the 7 saturated
-  tests chattered or were marginal and none of the 6 unsaturated ones (one-sided Fisher exact p = 0.016);
+  tests chattered (2) or were marginal (3) and none of the 6 unsaturated ones (one-sided Fisher exact
+  p = 0.016; for chatter alone, 2 of 7 against 0 of 6, p = 0.27);
   above the controlled limit the 3 saturated tests chattered, while 3 unsaturated tests (1700-1800 rpm,
   20-22 mm) were stable. This agrees qualitatively with the mechanism of Sec. 4 (saturation matters only
   between the two limits), and the article itself reports chatter and marginal cuts with saturation
-  between its two charts. Because chatter under DVF also drives the command to the clip, and 'Sat' marks
-  saturation at any time of a test, the association does not show that saturation caused these losses,
+  between its two charts. Because chatter under DVF also drives the command to the clip, and the article does
+  not say when during a test the command saturated, the association does not show that saturation caused
+  these losses,
   and the model does not predict them (next item).
 - Basins at selected points: at the 13 tests between the limits, with kicks at four phases, the
   simulated basin is finite at two (critical kicks 0.14 and 0.40 m/s, both measured marginal); at the
   other 11, including the two chatter tests at 2050 and 2100 rpm, no kick up to 3 m/s ends in chatter.
   The model therefore does NOT predict these losses of stability: at four of the five it predicts an
   unsaturated settled command (12-19 N) where the measurements saturated, and at the fifth (1950 rpm,
-  20 mm) a forced orbit on the clip (33 N) that still settles, with a critical kick of 0.40 m/s. The
+  20 mm) a forced orbit on the clip (33 N) that still settles, with a critical kick of 0.40 m/s; the two
+  finite critical kicks carry 1.7 and 2.3 times the cutting impulse of one tooth period. The
   article reports disagreement with its own frequency-domain model at 2050-2200 rpm, which it relates to
   actuator loss of contact or other nonlinearities; its time-domain simulation for the first structure
   (its Fig. 6) places the onset of saturation at 4.5 mm at 2100 rpm, where our forced demand for that
