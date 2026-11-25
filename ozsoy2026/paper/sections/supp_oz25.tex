@@ -19,15 +19,16 @@ With the structure of Table~\ref{M-tab:case}, the uncontrolled and controlled ($
 
 \subsection{Forced command, saturation and outcome of the saturation tests}\label{supp:oz25-sat}
 
-For every test of Figs.~10 and 12 (Table~\ref{tab:oz25}), the settled forced demand $F_p=K_ag\max\lvert\dot x_p\rvert$ was computed from 40 tooth-passing harmonics of the helical force applied to the controlled receptance, which is the forced command of Section~\ref{M-sec:model-orbit} in force units ($F_p>\SI{27}{\newton}$: the forced orbit reaches the \SI{9}{\volt} clip); the alternative readings of a measured `amplitude', the amplitude of the tooth-passing harmonic and $\sqrt2$ times the RMS value, differ from $F_p$ by less than \SI{2}{\percent} median ratio. Each test was simulated with the face and the step entry, the \SI{9}{\volt} clip, the full surface memory and loss of contact, and classified by D1 over the 300 revolutions after full engagement; whether the command reached the clip at any time of the run was recorded. Between the two linear limits the critical kick was computed at the phases 0, 4, 8 and 12 of 16 with the protocol of Section~\ref{M-sec:bistab-prot}.
+For every test of Figs.~10 and 12 (Table~\ref{tab:oz25}), the settled forced demand $F_p=K_ag\max\lvert\dot x_p\rvert$ was computed from 40 tooth-passing harmonics of the helical force applied to the controlled receptance, which is the forced command of Section~\ref{M-sec:model-orbit} in force units ($F_p>\SI{27}{\newton}$: the forced orbit reaches the \SI{9}{\volt} clip); the alternative readings of a measured `amplitude', the amplitude of the tooth-passing harmonic and $\sqrt2$ times the RMS value, differ from $F_p$ by less than \SI{2}{\percent} median ratio. Each test was simulated with the face and the step entry, the \SI{9}{\volt} clip, the full surface memory and loss of contact, and classified by D1 over the 300 revolutions after full engagement; whether the command reached the clip at any time of the run was recorded. Between the two linear limits the critical kick was computed at the phases 0, 4, 8 and 12 of 16 with the protocol of Section~\ref{M-sec:bistab-prot}. In Table~\ref{tab:oz25}, Meas.\ is the measured amplitude of the command, or Sat where it saturated; Out.\ the measured outcome (C chatter, M marginal, otherwise stable); Pos.\ the depth relative to the limits of the model (B below $\alim(0)$, W between $\alim(0)$ and $\alim(g)$, A above $\alim(g)$); $F_p$ the predicted settled forced demand; Face and Step the simulated outcome with each entry (S settles, C chatters; $^*$: the command reaches the clip during the run); and $\Delta v^*$ the smallest critical kick over the four phases, for the tests between the limits ($\infty$: no chatter up to \SI{3}{\metre\per\second}).
 
 \begin{table}[!htbp]
   \centering
-  \caption{Saturation tests of \citet{ozsoy2025frequency} (Figs.~10 and 12) against the model. Meas.: measured amplitude of the command, or saturated; Out.: C chatter, M marginal (otherwise stable); Pos.: depth below $\alim(0)$ (B), between $\alim(0)$ and $\alim(g)$ (W), above $\alim(g)$ (A), model limits; $F_p$: predicted settled forced demand; Face, Step: simulated entry settles (S) or chatters (C), $^*$ the command reaches the clip during the run; $\Delta v^*$: smallest critical kick over four phases, for the tests between the limits ($\infty$: no chatter up to \SI{3}{\metre\per\second}).}
+  \caption{Saturation tests of \citet{ozsoy2025frequency} (Figs.~10 and 12) against the model (columns defined in Section~\ref{supp:oz25-sat}).}
   \label{tab:oz25}
   \scriptsize
-  \setlength{\tabcolsep}{2.5pt}
-  \begin{tabular}[t]{@{}rrrcrrccr@{}}
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{0.84}
+  \begin{tabular}{@{}rrrcrrccr@{}}
     \toprule
     $n$ & $a$ & Meas. & Out. & Pos. & $F_p$ & Face & Step & $\Delta v^*$\\
     (rpm) & (mm) & (N) & & & (N) & & & (mm/s)\\
@@ -60,13 +61,6 @@ For every test of Figs.~10 and 12 (Table~\ref{tab:oz25}), the settled forced dem
 1900 & 0.5 & 5 &  & B & 4.5 & S & S & \\
 1900 & 1.5 & 12 &  & B & 13.2 & S & S & \\
 1900 & 3 & Sat &  & B & 24.5 & S* & S & \\
-    \bottomrule
-  \end{tabular}\hfill
-  \begin{tabular}[t]{@{}rrrcrrccr@{}}
-    \toprule
-    $n$ & $a$ & Meas. & Out. & Pos. & $F_p$ & Face & Step & $\Delta v^*$\\
-    (rpm) & (mm) & (N) & & & (N) & & & (mm/s)\\
-    \midrule
 1900 & 5 & Sat &  & B & 33.8 & S* & S* & \\
 1900 & 10 & Sat &  & B & 21.5 & S* & S & \\
 1900 & 15 & 8 &  & B & 20.6 & S* & S & \\
@@ -103,7 +97,7 @@ For every test of Figs.~10 and 12 (Table~\ref{tab:oz25}), the settled forced dem
 Of the 36 numerical values, the predicted $F_p$ is 0.90 times the measured one (median; interquartile range 0.83--1.02; correlation 0.66): 0.92 (0.82--1.10) at the 16 tests of up to \SI{5}{\milli\metre} below \SI{2000}{\rpm}, with absolute errors of at most \SI{2.5}{\newton}, 0.81 (0.43--0.92) at the 8 tests of up to \SI{5}{\milli\metre} from \SI{2050}{\rpm}, 0.80 at \SI{10}{\milli\metre}, 2.05 (1.23--2.64) at \SI{15}{\milli\metre} and 0.89 at 20--\SI{22}{\milli\metre}. The settled forced orbit is predicted to saturate at 4 of the 20 saturated tests (1900 and \SI{1950}{\rpm}, 5 and \SI{20}{\milli\metre}), the command reaches the clip during the simulated face entry at 14 of them and at 2 unsaturated ones (1900 and \SI{1950}{\rpm}, \SI{15}{\milli\metre}). The simulated face entry chatters exactly at the six tests above the controlled limit, of which three were measured stable; it settles at all 13 tests between the limits, of which five lost stability.
 % src: verification/ozsoy2025/compare2025.json (fig10.amplitude_peak; demand_over_measured; abs_error_depth_le5_rpm_le2000_N max 2.46; saturation_settled_closed_form both 4; saturation_any_time_face_entry both 14, pred_only 2; outcome_face both 3, pred_only 3, meas_only 5)
 
-\paragraph{Helix angle} The measured command is smallest near \SI{15}{\milli\metre} at 1700--\SI{1950}{\rpm}, while the tooth-passing force of the \SI{45}{\degree} helix is most nearly constant at the axial pitch, $\pi D/(N\tan45^\circ)$, which is \SI{12.6}{\milli\metre}. Recomputed with helix angles of 36--\SI{46}{\degree}, everything else unchanged, the mean absolute logarithmic ratio of predicted to measured command at the 36 tests falls from 0.24 at \SI{45}{\degree} to 0.16 at \SI{42}{\degree} (axial pitch \SI{14.0}{\milli\metre}). This only locates the discrepancy, in the distribution of the force, or of the mode, over the depth; the model keeps the \SI{45}{\degree} of the article.
+\paragraph{Helix angle} From 1700 to \SI{1950}{\rpm} the measured command is smallest near a depth of \SI{15}{\milli\metre}, while the tooth-passing force of the \SI{45}{\degree} helix is most nearly constant at the axial pitch, $\pi D/(N\tan45^\circ)$, which is \SI{12.6}{\milli\metre}. Recomputed with helix angles of 36--\SI{46}{\degree}, everything else unchanged, the mean absolute logarithmic ratio of predicted to measured command at the 36 tests falls from 0.24 at \SI{45}{\degree} to 0.16 at \SI{42}{\degree} (axial pitch \SI{14.0}{\milli\metre}). This only locates the discrepancy, in the distribution of the force, or of the mode, over the depth; the model keeps the \SI{45}{\degree} of the article.
 % src: verification/ozsoy2025/helix2025.py/.json (mean_abs_log 0.240 at 45, 0.159 at 42 (best), 0.164 at 43; pitch_mm 12.57 and 13.96)
 
 \paragraph{Onset of saturation in the article's simulation} The four squares of Fig.~6, the article's time-domain onsets of saturation at 1900, 2000, 2100 and \SI{2200}{\rpm}, lie at 3.6, 3.6, 4.5 and \SI{5.3}{\milli\metre}; the forced demand of the model reaches \SI{27}{\newton} at 4.2 and \SI{5.9}{\milli\metre} at the first two speeds and not below the controlled limit at the others (\SI{13.5}{\newton} at \SI{2100}{\rpm} and \SI{4.5}{\milli\metre}; at \SI{2200}{\rpm} the square lies above the model's controlled limit of \SI{5.3}{\milli\metre}). The details of that simulation are not given.
