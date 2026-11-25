@@ -1,0 +1,54 @@
+% Supplementary Material of the standard-length version (main_std.tex).
+%% Supplementary Material for the manuscript (Mechanical Systems and Signal Processing).
+%% Build: latexmk -pdf supplementary.tex   (after main.tex, whose labels it cites via xr)
+\documentclass[preprint,12pt]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{flafter}
+\usepackage{siunitx}
+\sisetup{detect-all, range-phrase={--}, range-units=single, per-mode=symbol, group-minimum-digits=5}
+\DeclareSIUnit\rpm{rpm}
+\usepackage{xr-hyper}
+\externaldocument[M-]{main_std}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../}}
+\biboptions{numbers,sort&compress}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\alim}{a_{\lim}}
+\newcommand{\achk}{a_{\mathrm{chk}}}
+\newcommand{\Vmax}{V_{\max}}
+\newcommand{\bmax}{b_{\max}}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\begin{document}
+\begin{frontmatter}
+\title{Supplementary Material for ``Beyond linear stability lobes: saturation-induced finite-amplitude instability and basin-aware gain scheduling in actively damped milling''}
+\end{frontmatter}
+This document collects the numerical details, sensitivity checks and secondary results that support the article but are not needed to follow it. Section, equation, figure and table numbers without the prefix S refer to the article.
+
+\input{sections/supp_model}
+\input{sections/supp_oz25}
+\input{sections/supp_s3}
+\input{sections/moved_s3}
+\input{sections/supp_s4}
+\input{sections/moved_s4}
+\input{sections/supp_s5}
+\input{sections/moved_s5}
+\input{sections/supp_s6}
+\input{sections/moved_s6}
+\input{sections/supp_s7}
+\input{sections/supp_appA}
+\input{sections/supp_appB}
+\input{sections/supp_appC}
+
+\bibliographystyle{elsarticle-num-names}
+\bibliography{../refs}
+\end{document}

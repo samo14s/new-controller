@@ -1,0 +1,148 @@
+\section{Supplement to Section 6: basin-aware gain scheduling}\label{supp:ba}
+
+This section gives the protocol of the basin-aware scan of Section~\ref{M-sec:basin-aware} and its secondary results.
+
+\subsection{Protocol of the scan}\label{supp:ba-protocol}
+
+\paragraph{Grid} The depths are $\mathcal A=\{2,4,\dots,32\}$\,\si{\milli\metre}; the speeds are 500--\SI{3000}{\rpm} in steps of \SI{125}{\rpm} (21 speeds), among which 1125, 1375, 2500 and \SI{2875}{\rpm} stand for the speeds 1090, 1420, 2500 and \SI{2870}{\rpm} of Section~\ref{M-sec:bistab-basin}. The gains are first those of $\{0,250,\dots,3000\}$\,\si{\volt\second\per\metre}, then, for each $\beta_{\mathrm{req}}$, gains $\pm125$ and then $\pm62.5$\,\si{\volt\second\per\metre} around the best gain so far.
+
+\paragraph{Conditions} Linear stability uses the zero-order limit $\alim(n,g)$. The voltage margin uses the rigorous bound $\bar b$ of \ref{M-app:lmi} (the largest of its 16 segment bounds, harmonics above the 40th included), $\bar b\le0.9\Vmax=\SI{8.1}{\volt}$; between grid depths it was also checked on a \SI{0.25}{\milli\metre} grid. The certified kick is that of C2 with $e=e_2$, the validity bound $\delta=0.5$ and the \SI{9}{\volt} clip, rescaled to $\bar b$ as in Section~\ref{M-sec:cert-lmi}. The binding constraint reported for a speed is the one that fails at the next grid depth, $a_{\mathrm{rob}}+\SI{2}{\milli\metre}$.
+
+\paragraph{Cost} For each gain the depths are taken upwards from \SI{2}{\milli\metre} until one is not admissible for $\beta_{\mathrm{req}}=\SI{1}{\milli\metre\per\second}$. The closed-form conditions bound $a_{\mathrm{rob}}(n,g)$ from above before any certificate is computed, so gains that cannot improve on the best depth found are skipped (branch and bound). The scan uses the collocation order $N_{\mathrm{red}}=N-8$, whose linear limit is within $1.2\times10^{-4}$ of the zero-order limit, and the solver defaults. Every selected design point, every lower grid depth whose reduced-order kick is below $1.15\,\beta_{\mathrm{req}}$ and the failing depth were then certified again with the default order $N$ (Section~\ref{M-sec:cert-model}), with the default and, where needed, the strict solver settings, the larger certificate being kept; $a_{\mathrm{rob}}$ is lowered where a default-order certificate falls below $\beta_{\mathrm{req}}$.
+
+\paragraph{Validation} At 750, 1125, 1375, 2000, 2500 and \SI{2875}{\rpm}, the simulated critical kick of the design point (face entry, full surface memory, \SI{9}{\volt} clip, kick at revolution 100, classifier window of 300 revolutions) was computed at four phases, 0, 4, 8 and 12 of 16, and kicks of exactly $\beta_{\mathrm{req}}$ were applied at all 16 phases.
+% src: verification/paper/basin_aware.py (docstring: DEPTHS, GRID_RPM, C1_RPM, G_COARSE, REFINE, MARGIN 1.15, N_red = nodes_for - 8, c2.FAST/TIGHT, VAL_SPEEDS, VAL_PHASES; recert); verification/paper/basin_aware_nconv.json (reduced order within 1.2e-4 of the ZOA limit)
+
+\subsection{The chart by speed}\label{supp:ba-table}
+
+Table~\ref{tab:supp-ba} lists the basin-aware gains and depths of Fig.~\ref{M-fig:ba} with the authority schedule of Section~\ref{M-sec:feasibility}. The reduced collocation order overstated the default-order certificate by at most \SI{7.0}{\percent} (median \SI{0.3}{\percent}) at the 64 re-certified points, below the margin of \SI{15}{\percent} used to select them, and by at most \SI{4.4}{\percent} at the 13 points shared with the stored gain map; after the default-order re-certification no design point had to be lowered and none could be raised.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Basin-aware gains $g_{\mathrm{rob}}$ (\si{\volt\second\per\metre}) and depths $a_{\mathrm{rob}}$ (\si{\milli\metre}) for $\beta_{\mathrm{req}}=1$, 2 and \SI{5}{\milli\metre\per\second}, with the condition that fails at the next grid depth (L linear limit, D depth cap $a_{\mathrm{cap}}$, C certificate); authority schedule of Section~\ref{M-sec:feasibility}: gain $g^\star$ and checked depth $\achk$ (\si{\milli\metre}); uncontrolled limit $\alim(0)$ (\si{\milli\metre}).}
+  \label{tab:supp-ba}
+  \small
+  \begin{tabular}{@{}rrrrrrrrrr@{}}
+    \toprule
+    $n$ & $g^\star$ & $\achk$ & $\alim(0)$ & \multicolumn{2}{c}{1 mm/s} & \multicolumn{2}{c}{2 mm/s} & \multicolumn{2}{c}{5 mm/s}\\
+    \cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+    (rpm) & & & & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$ & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$ & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$\\
+    \midrule
+    500 & 1500 & 15.19 & 1.99 & 3000 & 32\,D & 3000 & 32\,D & 2625 & 26\,C\\
+    625 & 1500 & 14.76 & 6.68 & 3000 & 32\,D & 3000 & 32\,D & 2125 & 20\,C\\
+    750 & 1500 & 14.87 & 1.50 & 2500 & 32\,D & 2500 & 32\,D & 1937.5 & 20\,C\\
+    875 & 1500 & 15.37 & 6.87 & 3000 & 32\,D & 2500 & 26\,L & 1750 & 18\,L\\
+    1000 & 1500 & 21.18 & 3.49 & 2562.5 & 32\,D & 2000 & 26\,L & 1312.5 & 20\,C\\
+    1125 & 1500 & 14.64 & 1.21 & 2500 & 32\,D & 2125 & 28\,L & 1500 & 16\,C\\
+    1250 & 1500 & 13.86 & 1.94 & 2250 & 24\,L & 1750 & 18\,L & 1500 & 14\,L\\
+    1375 & 1500 & 15.13 & 4.59 & 1750 & 18\,L & 1437.5 & 16\,L & 1437.5 & 14\,C\\
+    1500 & 1500 & 17.42 & 8.81 & 1312.5 & 18\,L & 1125 & 16\,L & 1125 & 16\,L\\
+    1625 & 1107.1 & 19.01 & 13.81 & 750 & 18\,L & 750 & 18\,L & 750 & 18\,L\\
+    1750 & 663.3 & 20.93 & 19.34 & 500 & 22\,L & 500 & 22\,L & 500 & 22\,L\\
+    1875 & 264.4 & 24.07 & 25.34 & 0 & 24\,L & 0 & 24\,L & 0 & 24\,L\\
+    2000 & 250.9 & 16.19 & 6.60 & 187.5 & 14\,L & 187.5 & 14\,L & 187.5 & 14\,L\\
+    2125 & 604.8 & 12.57 & 2.39 & 500 & 10\,L & 500 & 10\,L & 500 & 10\,L\\
+    2250 & 950.7 & 13.23 & 1.62 & 812.5 & 12\,L & 812.5 & 12\,L & 687.5 & 10\,L\\
+    2375 & 1282.1 & 13.30 & 1.35 & 1000 & 12\,L & 1000 & 12\,L & 875 & 10\,L\\
+    2500 & 1500 & 13.01 & 1.24 & 1250 & 14\,L & 1250 & 14\,L & 1000 & 10\,L\\
+    2625 & 1500 & 12.72 & 1.21 & 1500 & 16\,L & 1500 & 16\,L & 1250 & 12\,L\\
+    2750 & 1500 & 12.60 & 1.24 & 1750 & 18\,L & 1750 & 16\,C & 1375 & 14\,L\\
+    2875 & 1500 & 12.64 & 1.32 & 2000 & 20\,L & 1562.5 & 16\,L & 1500 & 14\,L\\
+    3000 & 1500 & 12.80 & 1.44 & 2312.5 & 24\,L & 1750 & 18\,L & 1500 & 14\,L\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% src: verification/paper/basin_aware.json (per_speed.<rpm>: auth_g1500.g, auth_g1500.a_chk_mm, a_lim0_mm, designs.<1|2|5>.g, a_rob_mm, binding; nred_vs_default.ratio_reduced_over_default max 1.044, median 1.025, 13 points; recert_points 64, recert_ratio_reduced_over_default_fast max 1.070 (2625 rpm, 12 mm), median 1.003; summary.*.corrected_down_speeds [], upward_possible_speeds [])
+
+\subsection{Reference schedules at equal gain range}\label{supp:ba-refs}
+
+\paragraph{Designs} At the 21 speeds of the chart, the published condition and the authority rule without and with the \SI{10}{\percent} voltage margin were given the gain range $0\le g\le\SI{3000}{\volt\second\per\metre}$, and the former reference of Section~\ref{M-sec:feasibility} ($g\le\SI{1500}{\volt\second\per\metre}$) was kept for continuity; all operate at the depth of Section~\ref{M-sec:feasibility}, the checked depth $\achk=\min\{0.9\,\alim(g),a_{\mathrm{TD}}(g)\}$, where $a_{\mathrm{TD}}$ is the step-entry limit with the \SI{9}{\volt} clip and the full surface memory, found on a ladder of depths from $0.225\,\alim$ in steps of \SI{8}{\percent} and bisected. The published condition, Eq.~\eqref{M-eq:pub}, was reproduced with the step-entry demand at $\alim$ on a scan of the gain in steps of \SI{20}{\volt\second\per\metre} with bisection on the edges of its feasible pockets, as in Section~\ref{M-sec:feas-pub}; the authority rule, Eq.~\eqref{M-eq:feas}, was solved by bisection with the steady command limited to \SI{9}{\volt} (no margin) or \SI{8.1}{\volt} (the \SI{10}{\percent} margin of the chart).
+
+\paragraph{The reference gains under the chart's conditions} For each reference gain the upward depth scan of the chart (reduced collocation order, default solver settings, stopped at the first depth not admissible for \SI{1}{\milli\metre\per\second}) gives the largest grid depth up to which every grid depth is linearly stable, keeps $\bar b\le\SI{8.1}{\volt}$ and has a certified kick of at least $\beta_{\mathrm{req}}$; rows of the chart's own scan were reused where the same speed and gain had been scanned. For the authority rule with the \SI{10}{\percent} margin the voltage test was also applied with a tolerance of \SI{10}{\milli\volt}: that rule sets its steady command, sampled on 80 depths with 40 harmonics, to \SI{8.1}{\volt}, and at 1250, 1375, 1500, 2375 and \SI{2500}{\rpm} the rigorous bound then exceeds \SI{8.1}{\volt} by 0.5--\SI{2.3}{\milli\volt} at one grid depth (4 or \SI{6}{\milli\metre}), where the strict scan stops; continued with the tolerance, the scans there stay admissible for \SI{1}{\milli\metre\per\second} up to 14--\SI{24}{\milli\metre}. No scanned gain of the chart has $8.1<\bar b\le\SI{8.11}{\volt}$, so the tolerance changes none of its results, and the other reference gains are unchanged. These depths are reduced-order values, not certified again with the default order: at the operating depths of the references, where both orders were computed, the reduced order overstates the default-order kick by up to \SI{12}{\percent} (median \SI{0.8}{\percent}), against at most \SI{7}{\percent} at the re-certified points of the chart.
+
+\paragraph{Depth margin} The chart with $a\le0.9\,\alim(n,g)$ added to Eq.~\eqref{M-eq:admissible} was computed with the search and the default-order re-certification of the chart unchanged, the first grid depth above $0.9\,\alim$ of each scan being made inadmissible; with the margin set to 1 the procedure reduces to that of the chart, and run so at 750 and \SI{2500}{\rpm} it reproduced the stored designs exactly.
+
+\paragraph{Metrics at the operating depth} At each design's operating depth the rigorous bound $\bar b$, the certified kick of C2 with the default collocation order (default solver settings; for the references also the strict settings where the default ones gave less than \SI{5}{\milli\metre\per\second}, the larger being kept; for the chart, the values of its re-certification, which used the strict settings only below $\beta_{\mathrm{req}}$; where both were computed, the strict settings changed the kick by at most \SI{0.4}{\percent}), the smallest reduced-order certificate over the grid depths below it and at the operating depth itself (for the chart, its stored minimum, with the default order where re-certified), the simulated critical kick at the phases 0, 4, 8 and 12 of 16, and the step and face entries were computed with the protocols of the chart's validation; results already stored with the same arguments were reused after two of them had been recomputed bit for bit.
+
+\paragraph{Entries} With the gain of each design point, the step and the face entry were simulated at every grid depth from \SI{2}{\milli\metre} to $a_{\mathrm{rob}}$, one run per depth at the nominal parameters, and judged by the classifier D1 over the 300 revolutions after full engagement; the entry depth is the largest grid depth up to which every run settles. A run that settles after a transient of some millimetres counts as settled; a secondary indicator that also requires the peak displacement to stay below \SI{1}{\milli\metre} is reported in the stored results.
+% src: verification/paper/fair_designs.py, ref_under_ba.py, ba_kappa.py (docstrings; kappa 1.0 check: stored designs reproduced at 2500 and 750 rpm), fair_compare.py, ba_entry.py (docstrings)
+
+\subsection{Sensitivity to the depth cap}\label{supp:ba-cap}
+
+\paragraph{Protocol} The chart was computed again with the cap $a_{\mathrm{cap}}$ of Eq.~\eqref{M-eq:admissible} set to 10, 16 and \SI{32}{\milli\metre} and everything else unchanged, except that every coarse gain (0:250:\SI{3000}{\volt\second\per\metre}) was evaluated rather than skipped by the bound of the branch-and-bound search: with a cap the maximal depth is often reached by several gains, and the tie-break (the larger smallest certified kick, then the smaller gain) can prefer gains the original search skipped. The refinements of $\pm125$ and $\pm\SI{62.5}{\volt\second\per\metre}$ around the best gain so far follow for each cap separately. The reference designs are capped as $\min\{\achk,a_{\mathrm{cap}}\}$.
+
+\paragraph{Reproduction} With $a_{\mathrm{cap}}=\SI{32}{\milli\metre}$ the repetition returns the stored depth at 62 of the 63 design points and the stored gain at 56 of them. Of the seven differences, four (500, 625, 1000 and \SI{1375}{\rpm}, \SI{5}{\milli\metre\per\second}) reach the stored depth with a gain the original search had skipped and a larger smallest certified kick, as the tie-break requires. At the other three the refinement of the repetition, centred on a different best coarse gain, did not visit the stored gain: at 1375 and \SI{1500}{\rpm} for \SI{2}{\milli\metre\per\second} it reaches the same depth with a smaller kick (4.0 and 4.8 instead of 4.1 and \SI{5.5}{\milli\metre\per\second}), and at \SI{1500}{\rpm} for \SI{5}{\milli\metre\per\second} it returns \SI{14}{\milli\metre} instead of 16. The stored designs, certified again with the default order, stand; the differences show that the refinement, like any search on a grid, finds a grid optimum and not necessarily the best gain.
+
+\paragraph{Results} Table~\ref{tab:ba-cap} summarises the depths. At equal depth the certified kicks differ: the ratio of the smallest certified kick over the grid depths up to the cap, chart over reference gain, at the speeds where the chart reaches the cap and the reference gain meets the chart's conditions up to it, is given in the last three rows of Table~\ref{tab:ba-cap}. The reference gains are judged with their reduced-order scans, with the voltage test of the authority gain taken with the tolerance of \SI{10}{\milli\volt} (Section~\ref{supp:ba-refs}; strictly, its ratios are 2.09 at 16 speeds and 1.38 at 13), and the chart with its default-order re-certification where available, so ratios within about \SI{12}{\percent} of one are ties.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Basin-aware chart and reference designs for three depth caps: mean depth (\si{\milli\metre}) over the 21 speeds, number of speeds at the cap for the chart, and the median ratio of the smallest certified kick up to the cap, chart (\SI{1}{\milli\metre\per\second}) over reference gain, with the number of speeds where both reach the cap. For $a_{\mathrm{cap}}=\SI{32}{\milli\metre}$ the chart's depths are those of the repetition; the stored chart of Table~\ref{M-tab:ba} has 21.7, 19.9 and \SI{16.0}{\milli\metre}.}
+  \label{tab:ba-cap}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    & $a_{\mathrm{cap}}=\SI{10}{\milli\metre}$ & \SI{16}{\milli\metre} & \SI{32}{\milli\metre}\\
+    \midrule
+    Chart, 1 / 2 / \SI{5}{\milli\metre\per\second} & 10.0 / 10.0 / 10.0 & 15.1 / 15.1 / 14.0 & 21.7 / 19.9 / 15.9\\
+    Speeds at the cap & 21 / 21 / 21 & 16 / 16 / 9 & 6 / 3 / 0\\
+    Authority rule, \SI{10}{\percent} margin & 10.0 & 14.5 & 16.8\\
+    Authority rule, no margin & 10.0 & 14.8 & 17.1\\
+    Former reference, $g\le1500$ & 10.0 & 14.4 & 15.5\\
+    Published condition & 8.9 & 10.7 & 11.3\\
+    \addlinespace
+    Kick ratio, authority \SI{10}{\percent} & 2.30 (21) & 1.52 (16) & 1.00 (5)\\
+    Kick ratio, former reference & 1.24 (12) & 1.00 (8) & -- (0)\\
+    Kick ratio, published gain & 1.02 (12) & 1.03 (3) & -- (0)\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% src: verification/paper/ba_cap.py/.json (summary.per_cap.<cap>.<b>.mean_a_rob_mm, n_at_cap; per_cap.<cap>.ref_capped_mean_mm; reproduction_cap32: points 63, identical 56, same_a_rob 62, differences[rpm 1500, beta 5]: stored g 1125 a_rob 16, here g 750 a_rob 14, here_g skipped by basin_aware); verification/paper/cap_kicks.py/.json and cap_kicks_tol.json (caps.<cap>.paired_both_at_cap.<ref>_vs_ba_1: median_ratio_ba_over_ref, n; authority row from cap_kicks_tol.json: 2.298 (21), 1.523 (16), 1.000 (5); strict 2.093 (16), 1.378 (13)); verification/paper/ref_under_ba_tol.py/.json. The 32 mm row is the repetition (15.9 for 5 mm/s), the stored chart has 16.0.
+
+\subsection{Monte Carlo against the reference}\label{supp:ba-mc}
+
+\paragraph{Protocol} At the six validation speeds (750, 1125, 1375, 2000, 2500 and \SI{2875}{\rpm}) the first 30 samples of the $\pm\SI{10}{\percent}$ draw of Section~\ref{M-sec:delayed-robust} (cutting coefficients $\pm\SI{10}{\percent}$, natural frequency $\pm\SI{5}{\percent}$ with the stiffness fixed, damping ratio $\pm\SI{20}{\percent}$, actuator constant $\pm\SI{10}{\percent}$, runout 0--\SI{5}{\micro\metre} with its phase, clip 8.1--\SI{9}{\volt}, loop delay 0--\SI{300}{\micro\second}) were applied, in the same order, to the reference design (the authority rule with the \SI{10}{\percent} margin, at its checked depth $\achk$) and to the chart with the depth margin (at its own depth $a_{\mathrm{rob}}$, for each $\beta_{\mathrm{req}}$), and to both designs at the common depth $\min\{\achk,a_{\mathrm{rob}}\}$, each with its own gain; the chart without the depth margin was run at its own depth as well. One run is the face entry with the full surface memory and the sample's clip, runout and loop delay, one kick at revolution 100 at one of the phases 0, 4, 8 and 12 of 16, and the classifier D1 applied once per spindle revolution over the 300 revolutions after the kick; a sampled delay shorter than one time step of the simulator (41--\SI{156}{\micro\second} at these speeds) is simulated as zero below half a step and as one step above (at \SI{750}{\rpm}, 11 of the 30 delays are simulated as zero and 4 as one step). Each sample is run with a kick of \SI{0.1}{\milli\metre\per\second} and then, if it settled, with a kick of exactly $\beta_{\mathrm{req}}$, at these phases in turn, stopping at the first run that ends in chatter. A sample fails if the cut does not settle before the kick (it chatters already, or after a kick of \SI{0.1}{\milli\metre\per\second} at one of the phases) or if a kick of $\beta_{\mathrm{req}}$ ends in chatter at one of the phases: if the outcome is monotone in the kick size, this is the event $\Delta v^*\le\beta_{\mathrm{req}}$, with $\Delta v^*$ the smallest critical kick over the four phases, which was not itself computed for the samples. The probabilities carry Clopper--Pearson intervals at \SI{95}{\percent}. The paired designs are compared by the exact McNemar test of the discordant pairs at each speed and, pooled over the speeds, by the same test and pooled intervals, which are approximate because the speeds share the samples; and, valid under this dependence, by an exact sign test, over the samples, of the difference between the number of speeds at which only the reference fails and the number at which only the chart fails (samples without a difference dropped). The estimates hold under the sampled distribution only and certify nothing for a perturbed model.
+% src: verification/paper/mc_designs.py (docstring: speeds, designs ref = auth10 at a_chk, BA(b), common depth, samples = first N of mc_common.draw(N, 0.1) with mc_common.SEED, one run = mc_kick.make_runner, verdicts unsettled/kick(b)/failure(b), statistics), run_mc_chain.sh (--n 30, --ba-source kappa --kinds own,common; --ba-source chart --kinds own)
+
+\paragraph{Results} Table~\ref{tab:ba-mc} lists the failures per speed and requirement. Pooled over the six speeds (30 samples at six speeds, 180 sample--speed pairs), the failures of the reference at its own depth are 12 for each requirement, all at \SI{2000}{\rpm} and all cuts that do not settle; those of the chart with the depth margin are 30, 21 and 18 for 1, 2 and \SI{5}{\milli\metre\per\second} (of which 1, 1 and 2 after a settled cut was kicked), and without the margin 71, 71 and 19 (1, 0 and 2 after the kick). At the common depth the reference fails 11 times and the chart with the margin 13, 13 and 17 times. In no sample did the reference fail where the chart did not. Of the chart's failures with the margin, 21, 20 and 14 are cuts whose averaged model with the sample's parameters and simulated delay (the closed form of Section~\ref{M-sec:delayed-robust}) is linearly unstable, as are all 12 of the reference; the others lie at \SI{2875}{\rpm}, and one at \SI{750}{\rpm}, where that model is stable, and at \SI{2875}{\rpm} for \SI{1}{\milli\metre\per\second} the command of the settled cut was on the sample's clip before the kick in 18 of the 30 samples, so that saturation rather than the linear limit is the likely cause there. The closed form also calls 4, 6 and 2 settled cuts of the chart unstable (none of the reference): it indicates the cause of a failure but does not predict the outcome.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Monte Carlo against the reference: failures out of 30 samples (the cut does not settle, or a kick of $\beta_{\mathrm{req}}$ at one of the phases 0, 4, 8, 12 of 16 ends in chatter) for the reference (authority rule, \SI{10}{\percent} voltage margin, at $\achk$), the chart with the depth margin and the chart without it, each at its own depth, given in \si{\milli\metre} with the ratio to its nominal linear limit, and for the reference and the chart with the margin at the common depth $\min\{\achk,a_{\mathrm{rob}}\}$.}
+  \label{tab:ba-mc}
+  \footnotesize
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}rcccccccccc@{}}
+    \toprule
+    Speed & $\beta_{\mathrm{req}}$ & \multicolumn{2}{c}{Reference} & \multicolumn{2}{c}{Chart, margin} & \multicolumn{2}{c}{Chart, no margin} & \multicolumn{2}{c}{Common depth}\\
+    \cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+    (rpm) & (\si{\milli\metre\per\second}) & $a$ ($a/\alim$) & fail & $a$ ($a/\alim$) & fail & $a$ ($a/\alim$) & fail & $a$ & ref / chart\\
+    \midrule
+    750 & 1 & 19.5 (0.51) & 0 & 32.0 (0.90) & 4 & 32.0 (0.99) & 15 & 19.5 & 0 / 0\\
+     & 2 & 19.5 (0.51) & 0 & 32.0 (0.90) & 5 & 32.0 (0.99) & 15 & 19.5 & 0 / 0\\
+     & 5 & 19.5 (0.51) & 0 & 20.0 (0.81) & 0 & 20.0 (0.88) & 0 & 19.5 & 0 / 0\\
+    \addlinespace
+    1125 & 1 & 19.2 (0.54) & 0 & 30.0 (0.85) & 1 & 32.0 (0.91) & 3 & 19.2 & 0 / 0\\
+     & 2 & 19.2 (0.54) & 0 & 26.0 (0.85) & 0 & 28.0 (0.99) & 7 & 19.2 & 0 / 0\\
+     & 5 & 19.2 (0.54) & 0 & 16.0 (0.88) & 1 & 16.0 (0.88) & 1 & 16.0 & 0 / 1\\
+    \addlinespace
+    1375 & 1 & 15.7 (0.77) & 0 & 16.0 (0.89) & 3 & 18.0 (0.94) & 12 & 15.7 & 0 / 1\\
+     & 2 & 15.7 (0.77) & 0 & 16.0 (0.89) & 3 & 16.0 (0.98) & 14 & 15.7 & 0 / 1\\
+     & 5 & 15.7 (0.77) & 0 & 14.0 (0.83) & 0 & 14.0 (0.86) & 0 & 14.0 & 0 / 0\\
+    \addlinespace
+    2000 & 1 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+     & 2 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+     & 5 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+    \addlinespace
+    2500 & 1 & 12.9 (0.81) & 0 & 14.0 (0.89) & 1 & 14.0 (0.99) & 10 & 12.9 & 0 / 0\\
+     & 2 & 12.9 (0.81) & 0 & 14.0 (0.89) & 1 & 14.0 (0.99) & 10 & 12.9 & 0 / 0\\
+     & 5 & 12.9 (0.81) & 0 & 10.0 (0.89) & 1 & 10.0 (0.89) & 1 & 10.0 & 0 / 1\\
+    \addlinespace
+    2875 & 1 & 12.9 (0.56) & 0 & 18.0 (0.86) & 9 & 20.0 (0.96) & 19 & 12.9 & 0 / 0\\
+     & 2 & 12.9 (0.56) & 0 & 16.0 (0.88) & 0 & 16.0 (0.996) & 13 & 12.9 & 0 / 0\\
+     & 5 & 12.9 (0.56) & 0 & 14.0 (0.87) & 4 & 14.0 (0.91) & 5 & 12.9 & 0 / 3\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% src: verification/paper/mc_designs_table.py/.json (rows; pooled.<b>.own_kappa/common/own_chart: ref 12 (own) and 11 (common) of 180, unsettled 12; chart with margin 30/21/18, kick 1/1/2, per_speed sums of unsettled_and_cf_unstable 21/20/14 and failed_but_cf_stable 9 (2875)/1 (750)/4 (2875), settled_pre_kick_clipped 18 at 2875 rpm for 1 mm/s (mc_designs_kappa.json per_speed.<rpm>.b.<b>.own.BA), ref 12 unsettled_and_cf_unstable at 2000 rpm; common 13/13/17; chart without margin 71/71/19; paired ref_fails_BA_passes 0)

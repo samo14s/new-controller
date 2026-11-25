@@ -1,0 +1,105 @@
+% Standard-length version of the article (about 30 pages); the full version is ../main.tex.
+% Build from paper/standard/: see tools/build_std.sh
+%% Manuscript for Mechanical Systems and Signal Processing (Elsevier).
+%% Build: latexmk -pdf main.tex
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{siunitx}
+\sisetup{detect-all, range-phrase={--}, range-units=single, per-mode=symbol, group-minimum-digits=5}
+\DeclareSIUnit\rpm{rpm}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{xcolor}
+\usepackage{xr-hyper}
+\externaldocument[S-]{supplementary_std}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../}}
+\pdfstringdefDisableCommands{\def\corref#1{}}
+\usepackage{lineno}
+\usepackage{flafter}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.12}
+\renewcommand{\floatpagefraction}{0.75}
+\setcounter{topnumber}{3}
+\setcounter{totalnumber}{4}
+
+\biboptions{numbers,sort&compress}
+\journal{Mechanical Systems and Signal Processing}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+\hyphenation{bi-stable bi-stab-il-ity}
+\newcommand{\sat}{\operatorname{sat}}
+\newcommand{\alim}{a_{\lim}}
+\newcommand{\achk}{a_{\mathrm{chk}}}
+\newcommand{\Vmax}{V_{\max}}
+\newcommand{\bmax}{b_{\max}}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Beyond linear stability lobes: saturation-induced finite-amplitude instability and basin-aware gain scheduling in actively damped milling}
+
+%% Authors and affiliations: to be completed by the authors.
+\author[a]{[Author name]\corref{cor1}}
+\ead{[corresponding e-mail]}
+\cortext[cor1]{Corresponding author.}
+\affiliation[a]{organization={[Department, Institution]},
+            city={[City]},
+            country={[Country]}}
+
+\begin{abstract}
+\input{sections/s0_abstract}
+\end{abstract}
+
+\begin{keyword}
+Milling chatter \sep Active damping \sep Actuator saturation \sep Finite-amplitude instability \sep Basin of attraction \sep Linear matrix inequalities \sep Gain scheduling
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
+
+\input{sections/s1_intro}
+\input{sections/s2_model}
+\input{sections/s3_feasibility}
+\input{sections/s4_bistability}
+\input{sections/s5_certificates}
+\input{sections/s6_basinaware}
+\input{sections/s7_delayed}
+\input{sections/s8_conclusions}
+
+\section*{CRediT authorship contribution statement}
+\textbf{[Author name]:} Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Writing -- original draft, Writing -- review \& editing, Visualization. [To be completed by the authors.]
+
+\section*{Declaration of competing interest}
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Funding}
+[To be completed by the authors: the funding sources, or ``This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.'']
+
+\section*{Data availability}
+The simulator, the scripts and the stored results that produce the numbers and figures of this article are available at [repository URL] [to be completed by the authors].
+
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work the author(s) used Claude Code (Anthropic), an AI coding assistant, in order to draft and edit the text, the figures and the code that produces them. After using this tool, the author(s) reviewed and edited the content as needed and take(s) full responsibility for the content of the published article. The use of the same tool in the research itself, for writing and running the simulation and analysis code, is described in Section~\ref{S-app:software} of the Supplementary Material. [Authors: add any other AI tool used, e.g. for reviewing drafts, and check this statement against the journal's current policy before submission.]
+
+\section*{Acknowledgements}
+[To be completed by the authors.]
+
+
+\bibliographystyle{elsarticle-num-names}
+\bibliography{../refs}
+
+\end{document}
