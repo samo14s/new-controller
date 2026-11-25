@@ -42,15 +42,23 @@ All of them are in the new Table 6.
 - With g <= 3000 V s/m the authority rule reaches 17.1 mm (no margin) and 16.8 mm (10 % margin) on
   average, instead of 15.5 mm with g <= 1500: part of the former gap was the gain range, as the review
   suspected.
-- Judged by the chart's own conditions, the reference gains certify less: the authority gain with the
-  same margin keeps every grid depth admissible up to 17.9, 15.5 and 9.2 mm for 1, 2 and 5 mm/s, against
-  21.7, 19.9 and 16.0 mm for the basin-aware gain; the other reference gains reach at most about 11 mm.
+- Judged by the chart's own conditions, the reference gains certify less, by an amount that depends on
+  the requirement. The authority gain with the same voltage margin keeps every grid depth admissible up
+  to 21.2, 18.2 and 9.8 mm for 1, 2 and 5 mm/s, against 21.7, 19.9 and 16.0 mm for the basin-aware gain;
+  the other reference gains reach at most about 11 mm. These depths take the voltage test with a
+  tolerance of 10 mV (`ref_under_ba_tol.py`): the authority rule sets its sampled steady command to
+  8.1 V, and at five speeds its rigorous bound exceeds 8.1 V by 0.5-2.3 mV at one grid depth, a numerical
+  tie that stopped the strict scan at 2-4 mm (strictly 17.9, 15.5 and 9.2 mm). No gain of the chart has
+  such a tie, so its results do not change. (The final internal audit found this; the first version of
+  this response used the strict values and overstated the chart's advantage for 1 and 2 mm/s.)
 - The chart had no depth margin below the linear limit (median a_rob / a_lim 0.97, 0.97, 0.91), the
   references had 0.9. With a <= 0.9 a_lim added to the chart (`ba_kappa.py`; binding at 10-13 speeds) the
-  chart gives 19.7, 18.8 and 15.1 mm, against 16.6, 14.6 and 8.9 mm for the authority gain under the
-  same conditions: 3-6 mm of certified depth come from the choice of the gain. Against the authority
-  rule's own operating depth (16.8 mm), the chart with the margin is 2.9 and 2.0 mm deeper for 1 and
-  2 mm/s and 1.6 mm shallower for 5 mm/s.
+  chart gives 19.7, 18.8 and 15.1 mm, against 19.6, 17.1 and 9.4 mm for the authority gain under the
+  same conditions: the choice of the gain matters little for 1 mm/s (0.1 mm), somewhat for 2 mm/s
+  (1.6 mm) and much for 5 mm/s (5.7 mm), i.e. when the required disturbance is large. For a small
+  requirement the chart's deeper operating points come from leaving out the entry check that the
+  authority rule contains. Against the authority rule's own operating depth (16.8 mm), the chart with the
+  margin is 2.9 and 2.0 mm deeper for 1 and 2 mm/s and 1.6 mm shallower for 5 mm/s.
 - At their own, shallower depths the references keep larger certified kicks (authority rule with the
   margin: 7.9 mm/s median, against 4.3 and 5.0 mm/s for the chart for 1 and 2 mm/s; similar for 5 mm/s).
   What the authority rule does not check is the shallower depths its gain passes through: there its
@@ -110,8 +118,9 @@ Sec. 6.1, Fig. 8, Supplement). The chart was recomputed for a_cap = 10, 16 and 3
 - 16 mm: mean depth 15.1, 15.1 and 14.0 mm, against 14.5 mm for the authority rule with the same margin
   and 10.7 mm for the published condition, capped the same way.
 - 10 mm: every design except the published condition (8.9 mm) reaches the cap at every speed.
-- At equal depth the chart's gain certifies larger kicks than the authority gain: median ratio 2.1 at
-  10 mm and 1.4 at 16 mm; against the former reference 1.24 and 1.00; against the published gain 1.02.
+- At equal depth the chart's gain certifies larger kicks than the authority gain: median ratio 2.3 at
+  10 mm (21 speeds) and 1.5 at 16 mm (16 speeds), with the same 10 mV tolerance; against the former
+  reference 1.24 and 1.00; against the published gain 1.02.
 The manuscript now says that most of the depth advantage lies in deep cuts that depend on the assumed
 cap, and that below a cap of about 16 mm the advantage over the authority gain is in the certified
 disturbance, not in depth (against the published and former reference gains the kicks are tied within
