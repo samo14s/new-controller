@@ -1,0 +1,662 @@
+{
+ "source": "Ozsoy, Sims & Ozturk 2025, Mech. Syst. Signal Process. 224, 111942, Fig. 10 (cross-checked with Fig. 12); digitised, see digitise_notes.md",
+ "provisional": true,
+ "points": [
+  {
+   "rpm": 1700.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.949,
+   "value": "13",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1700.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.943,
+   "value": "5",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1700.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.949,
+   "value": "10",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1700.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "12",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1700.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.947,
+   "value": "9",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.949,
+   "value": "16",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.954,
+   "value": "4",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.949,
+   "value": "9",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "14",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "12",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1750.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "9",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 22.0,
+   "depth_measured_mm": 21.955,
+   "value": "19",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.949,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.954,
+   "value": "6",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.949,
+   "value": "15",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.943,
+   "value": "19",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "13",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 1.5,
+   "depth_measured_mm": 1.453,
+   "value": "8",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1800.0,
+   "depth_mm": 0.5,
+   "depth_measured_mm": 0.45,
+   "value": "3",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.949,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.954,
+   "value": "6",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.947,
+   "value": "20",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1850.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "15",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.949,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.954,
+   "value": "8",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 1.5,
+   "depth_measured_mm": 1.453,
+   "value": "12",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1900.0,
+   "depth_mm": 0.5,
+   "depth_measured_mm": 0.439,
+   "value": "5",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 20.0,
+   "depth_measured_mm": 19.959,
+   "value": "Sat",
+   "outcome": "marginal",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 15.0,
+   "depth_measured_mm": 14.954,
+   "value": "16",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "19",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "marginal",
+   "g": 253.0
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.954,
+   "value": "Sat",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "19",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "14",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2050.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "chatter",
+   "g": 253.0
+  },
+  {
+   "rpm": 2050.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.943,
+   "value": "Sat",
+   "outcome": "chatter",
+   "g": 253.0
+  },
+  {
+   "rpm": 2050.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "16",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2050.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "12",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 10.0,
+   "depth_measured_mm": 9.959,
+   "value": "Sat",
+   "outcome": "chatter",
+   "g": 253.0
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.964,
+   "value": "Sat",
+   "outcome": "chatter",
+   "g": 253.0
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.947,
+   "value": "13",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.955,
+   "value": "10",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.964,
+   "value": "Sat",
+   "outcome": "marginal",
+   "g": 253.0
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "11",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.944,
+   "value": "7",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2200.0,
+   "depth_mm": 5.0,
+   "depth_measured_mm": 4.964,
+   "value": "Sat",
+   "outcome": "chatter",
+   "g": 253.0
+  },
+  {
+   "rpm": 2200.0,
+   "depth_mm": 3.0,
+   "depth_measured_mm": 2.958,
+   "value": "18",
+   "outcome": "none",
+   "g": 253.0
+  },
+  {
+   "rpm": 2200.0,
+   "depth_mm": 2.0,
+   "depth_measured_mm": 1.944,
+   "value": "7",
+   "outcome": "none",
+   "g": 253.0
+  }
+ ],
+ "controlled_sld": [
+  [
+   1700,
+   16.44
+  ],
+  [
+   1725,
+   17.38
+  ],
+  [
+   1750,
+   18.34
+  ],
+  [
+   1775,
+   19.32
+  ],
+  [
+   1800,
+   20.32
+  ],
+  [
+   1825,
+   21.33
+  ],
+  [
+   1850,
+   22.36
+  ],
+  [
+   1875,
+   23.41
+  ],
+  [
+   1900,
+   24.47
+  ],
+  [
+   1925,
+   25.55
+  ],
+  [
+   1950,
+   26.64
+  ],
+  [
+   1975,
+   20.72
+  ],
+  [
+   2000,
+   14.41
+  ],
+  [
+   2025,
+   11.15
+  ],
+  [
+   2050,
+   9.17
+  ],
+  [
+   2075,
+   7.85
+  ],
+  [
+   2100,
+   6.9
+  ],
+  [
+   2125,
+   6.2
+  ],
+  [
+   2150,
+   5.65
+  ],
+  [
+   2175,
+   5.22
+  ],
+  [
+   2200,
+   4.88
+  ],
+  [
+   2225,
+   4.6
+  ],
+  [
+   2250,
+   4.37
+  ]
+ ],
+ "uncontrolled_sld": [
+  [
+   1700,
+   15
+  ],
+  [
+   1725,
+   15.96
+  ],
+  [
+   1750,
+   17.01
+  ],
+  [
+   1775,
+   17.94
+  ],
+  [
+   1800,
+   18.93
+  ],
+  [
+   1825,
+   19.98
+  ],
+  [
+   1850,
+   21.04
+  ],
+  [
+   1875,
+   22.09
+  ],
+  [
+   1900,
+   23.15
+  ],
+  [
+   1925,
+   24.25
+  ],
+  [
+   1950,
+   12.94
+  ],
+  [
+   1975,
+   7
+  ],
+  [
+   2000,
+   4.78
+  ],
+  [
+   2025,
+   3.69
+  ],
+  [
+   2050,
+   3.03
+  ],
+  [
+   2075,
+   2.6
+  ],
+  [
+   2100,
+   2.28
+  ],
+  [
+   2125,
+   2.05
+  ],
+  [
+   2150,
+   1.87
+  ],
+  [
+   2175,
+   1.73
+  ],
+  [
+   2200,
+   1.62
+  ],
+  [
+   2225,
+   1.53
+  ],
+  [
+   2250,
+   1.46
+  ]
+ ],
+ "islands": [
+  {
+   "center_rpm": 1894.75,
+   "center_mm": 19.813,
+   "half_rpm": 104.96,
+   "half_mm": 2.315
+  },
+  {
+   "center_rpm": 1934.95,
+   "center_mm": 7.18,
+   "half_rpm": 119.68,
+   "half_mm": 4.833
+  },
+  {
+   "center_rpm": 2140.79,
+   "center_mm": 4.954,
+   "half_rpm": 104.92,
+   "half_mm": 1.697
+  }
+ ]
+}

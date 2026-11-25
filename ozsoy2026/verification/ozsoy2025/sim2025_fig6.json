@@ -1,0 +1,1973 @@
+{
+ "note": "Simulated outcome of the cutting tests of Ozsoy et al. 2025 with the clipped DVF model of this repository.",
+ "protocol": "sim2025-v1",
+ "structure": {
+  "fn": 129.3,
+  "zeta": 0.0134,
+  "k": 13400000.0
+ },
+ "vmax_V": 9.0,
+ "settled_revs": 50,
+ "points": [
+  {
+   "type": "uncontrolled_stable",
+   "rpm": 700.0,
+   "depth_mm": 0.5,
+   "rpm_measured": 699.3,
+   "depth_measured_mm": 0.516,
+   "label": "",
+   "g": 0.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 1.2660907202060605,
+    "demand_N": 0.0,
+    "h1_N": 0.0,
+    "rms2_N": 0.0,
+    "residual_authority_N": 27.0
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.002835678133089005,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.0029047256400138474,
+    "diverged": false
+   }
+  },
+  {
+   "type": "uncontrolled_chatter",
+   "rpm": 700.0,
+   "depth_mm": 1.5,
+   "rpm_measured": 699.2,
+   "depth_measured_mm": 1.479,
+   "label": "",
+   "g": 0.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 1.2660907202060605,
+    "demand_N": 0.0,
+    "h1_N": 0.0,
+    "rms2_N": 0.0,
+    "residual_authority_N": 27.0
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999922007698124,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03001977215490878,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000084343283056,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.030019563445928286,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 700.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 699.7,
+   "depth_measured_mm": 4.009,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 3.7978153757562363,
+    "demand_N": 1.6275980023647911,
+    "h1_N": 0.9090234887691527,
+    "rms2_N": 1.1722990424912239,
+    "residual_authority_N": 25.372401997635208
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.000250364926564,
+    "settled_peak_demand_N": 8.049802514309084,
+    "entry_peak_demand_N": 2.3222333144466307,
+    "run_peak_demand_N": 8.049802514309084,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.020309794968998846,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.000000228019296,
+    "settled_peak_demand_N": 8.049710943573361,
+    "entry_peak_demand_N": 1.8098571585750296,
+    "run_peak_demand_N": 8.049745643015747,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.020310444728332613,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 700.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 699.9,
+   "depth_measured_mm": 4.999,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 3.7978153757562363,
+    "demand_N": 2.274123122369206,
+    "h1_N": 1.025168217382825,
+    "rms2_N": 1.3448306642698011,
+    "residual_authority_N": 24.725876877630792
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999968581981826,
+    "settled_peak_demand_N": 28.937014280819767,
+    "entry_peak_demand_N": 2.9735957325714946,
+    "run_peak_demand_N": 28.94159603952367,
+    "settled_clip_fraction": 0.07870786297410258,
+    "run_clipped": true,
+    "max_x_mm": 0.05159131470850306,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.000003173013469,
+    "settled_peak_demand_N": 28.941583050171012,
+    "entry_peak_demand_N": 3.900824876330756,
+    "run_peak_demand_N": 28.941619072191617,
+    "settled_clip_fraction": 0.0793718995351744,
+    "run_clipped": true,
+    "max_x_mm": 0.05159142831127307,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 700.0,
+   "depth_mm": 7.0,
+   "rpm_measured": 699.7,
+   "depth_measured_mm": 6.996,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 3.7978153757562363,
+    "demand_N": 2.410115112179266,
+    "h1_N": 1.062979418751279,
+    "rms2_N": 1.5442604007376788,
+    "residual_authority_N": 24.589884887820734
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999992587852162,
+    "settled_peak_demand_N": 127.82250433845931,
+    "entry_peak_demand_N": 171.13579555549583,
+    "run_peak_demand_N": 171.13579555549583,
+    "settled_clip_fraction": 0.8571540174211945,
+    "run_clipped": true,
+    "max_x_mm": 0.27577943574201036,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999979397541894,
+    "settled_peak_demand_N": 127.8205349722537,
+    "entry_peak_demand_N": 7.1545819902931385,
+    "run_peak_demand_N": 167.76506467999832,
+    "settled_clip_fraction": 0.8575055661888208,
+    "run_clipped": true,
+    "max_x_mm": 0.26861932988799153,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_marginal",
+   "rpm": 700.0,
+   "depth_mm": 9.0,
+   "rpm_measured": 699.8,
+   "depth_measured_mm": 9.0,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 3.7978153757562363,
+    "demand_N": 1.4139847925932523,
+    "h1_N": 0.8405361857061487,
+    "rms2_N": 1.2690764039781868,
+    "residual_authority_N": 25.58601520740675
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.0000026010715177,
+    "settled_peak_demand_N": 183.15407673241697,
+    "entry_peak_demand_N": 293.09647616383063,
+    "run_peak_demand_N": 293.09647616383063,
+    "settled_clip_fraction": 0.9005898207101285,
+    "run_clipped": true,
+    "max_x_mm": 0.47122819463915916,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.00000644055556,
+    "settled_peak_demand_N": 183.29177772684824,
+    "entry_peak_demand_N": 7.800037613437517,
+    "run_peak_demand_N": 320.3157033650162,
+    "settled_clip_fraction": 0.8999648451232374,
+    "run_clipped": true,
+    "max_x_mm": 0.5156881848762349,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 700.0,
+   "depth_mm": 12.0,
+   "rpm_measured": 699.2,
+   "depth_measured_mm": 12.001,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2660907202060605,
+    "a_lim_g_mm": 3.7978153757562363,
+    "demand_N": 0.7356795016088218,
+    "h1_N": 0.15244899037249376,
+    "rms2_N": 0.5908868050615343,
+    "residual_authority_N": 26.26432049839118
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999462869226168,
+    "settled_peak_demand_N": 403.4699382363807,
+    "entry_peak_demand_N": 498.54817926534946,
+    "run_peak_demand_N": 498.54817926534946,
+    "settled_clip_fraction": 0.9193781492910433,
+    "run_clipped": true,
+    "max_x_mm": 0.7981194437399456,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999574667026776,
+    "settled_peak_demand_N": 402.01720060146715,
+    "entry_peak_demand_N": 13.947660571683885,
+    "run_peak_demand_N": 716.0799379574834,
+    "settled_clip_fraction": 0.9194953322135854,
+    "run_clipped": true,
+    "max_x_mm": 1.1389244930761404,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 800.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 799.7,
+   "depth_measured_mm": 5.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 2.9318352955776392,
+    "a_lim_g_mm": 4.791604465326652,
+    "demand_N": 2.3623397430148656,
+    "h1_N": 1.2277168707419537,
+    "rms2_N": 1.4913099856592886,
+    "residual_authority_N": 24.637660256985136
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.0000062185105258,
+    "settled_peak_demand_N": 5.246503388544477,
+    "entry_peak_demand_N": 2.6673427158804377,
+    "run_peak_demand_N": 5.247118585713008,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01655537668274594,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000099019665478,
+    "settled_peak_demand_N": 5.24613032362567,
+    "entry_peak_demand_N": 3.0006034628658043,
+    "run_peak_demand_N": 5.24714335740145,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.016555434896797495,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 800.0,
+   "depth_mm": 7.0,
+   "rpm_measured": 799.5,
+   "depth_measured_mm": 7.001,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 2.9318352955776392,
+    "a_lim_g_mm": 4.791604465326652,
+    "demand_N": 2.1728039584122785,
+    "h1_N": 1.2729986586826518,
+    "rms2_N": 1.4249772765011972,
+    "residual_authority_N": 24.827196041587722
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.000001521048437,
+    "settled_peak_demand_N": 22.95608481282852,
+    "entry_peak_demand_N": 19.231731029994336,
+    "run_peak_demand_N": 22.956324575669015,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.04406906642947884,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999954461421742,
+    "settled_peak_demand_N": 22.95536678418318,
+    "entry_peak_demand_N": 5.097876080966987,
+    "run_peak_demand_N": 22.956333150080912,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.04406906290626446,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 900.0,
+   "depth_mm": 10.0,
+   "rpm_measured": 899.5,
+   "depth_measured_mm": 9.999,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 8.423537443266808,
+    "a_lim_g_mm": 9.732116068017978,
+    "demand_N": 3.6975501444726673,
+    "h1_N": 0.9209978988155839,
+    "rms2_N": 3.1489458952649274,
+    "residual_authority_N": 23.302449855527332
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.0000079426436592,
+    "settled_peak_demand_N": 6.107815874894025,
+    "entry_peak_demand_N": 6.144808597156871,
+    "run_peak_demand_N": 6.144808597156871,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.024696192499299434,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000075950936647,
+    "settled_peak_demand_N": 6.108126143027479,
+    "entry_peak_demand_N": 6.279259680765032,
+    "run_peak_demand_N": 6.410685780713278,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02514462686662059,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 900.0,
+   "depth_mm": 12.0,
+   "rpm_measured": 899.7,
+   "depth_measured_mm": 12.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 8.423537443266808,
+    "a_lim_g_mm": 9.732116068017978,
+    "demand_N": 1.062338251108052,
+    "h1_N": 0.21717173002023613,
+    "rms2_N": 0.9114096344112839,
+    "residual_authority_N": 25.937661748891948
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999961352837288,
+    "settled_peak_demand_N": 14.41255897658932,
+    "entry_peak_demand_N": 4.39438541277138,
+    "run_peak_demand_N": 14.421937617625312,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.036975494045590675,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999857050250345,
+    "settled_peak_demand_N": 14.428646549481618,
+    "entry_peak_demand_N": 8.74536587911026,
+    "run_peak_demand_N": 14.431045869965248,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03698492176976501,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 900.0,
+   "depth_mm": 15.0,
+   "rpm_measured": 899.9,
+   "depth_measured_mm": 15.008,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 8.423537443266808,
+    "a_lim_g_mm": 9.732116068017978,
+    "demand_N": 3.5826503064734254,
+    "h1_N": 0.8795844197462325,
+    "rms2_N": 3.0758907029227642,
+    "residual_authority_N": 23.417349693526575
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999908922491465,
+    "settled_peak_demand_N": 27.758512450417538,
+    "entry_peak_demand_N": 27.78330374947663,
+    "run_peak_demand_N": 27.78330374947663,
+    "settled_clip_fraction": 0.011796414202570212,
+    "run_clipped": true,
+    "max_x_mm": 0.0614270664219868,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999917698833227,
+    "settled_peak_demand_N": 27.759038762122934,
+    "entry_peak_demand_N": 17.5572779309619,
+    "run_peak_demand_N": 28.682436364862212,
+    "settled_clip_fraction": 0.011874536150931604,
+    "run_clipped": true,
+    "max_x_mm": 0.06278379999889724,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1000.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 999.6,
+   "depth_measured_mm": 5.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 3.4875395828226785,
+    "a_lim_g_mm": 10.581928103403891,
+    "demand_N": 4.758847328219923,
+    "h1_N": 1.7337737921983998,
+    "rms2_N": 3.6626997504384664,
+    "residual_authority_N": 22.24115267178008
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 4.7618585312004935,
+    "entry_peak_demand_N": 8.301544457239988,
+    "run_peak_demand_N": 8.301544457239988,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01911250374090151,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 4.76185853120048,
+    "entry_peak_demand_N": 5.025420533065064,
+    "run_peak_demand_N": 6.07079825929436,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.019906266462463733,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1000.0,
+   "depth_mm": 8.0,
+   "rpm_measured": 1000.0,
+   "depth_measured_mm": 7.999,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 3.4875395828226785,
+    "a_lim_g_mm": 10.581928103403891,
+    "demand_N": 5.50191340490706,
+    "h1_N": 1.661266174170823,
+    "rms2_N": 4.401806587477577,
+    "residual_authority_N": 21.49808659509294
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 5.534212745872516,
+    "entry_peak_demand_N": 10.219409106564076,
+    "run_peak_demand_N": 10.219409106564076,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02425727584246407,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 5.534212745872515,
+    "entry_peak_demand_N": 8.233777648764184,
+    "run_peak_demand_N": 9.882263676233489,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.026329699709812616,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1000.0,
+   "depth_mm": 12.0,
+   "rpm_measured": 999.7,
+   "depth_measured_mm": 12.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 3.4875395828226785,
+    "a_lim_g_mm": 10.581928103403891,
+    "demand_N": 1.7330081071911083,
+    "h1_N": 0.2578231159269686,
+    "rms2_N": 1.5306191112238705,
+    "residual_authority_N": 25.266991892808893
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999645059154016,
+    "settled_peak_demand_N": 357.59234301110996,
+    "entry_peak_demand_N": 3.6165699434317773,
+    "run_peak_demand_N": 497.1486276206654,
+    "settled_clip_fraction": 0.9508612944806843,
+    "run_clipped": true,
+    "max_x_mm": 0.8102657365760993,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000110702568419,
+    "settled_peak_demand_N": 356.80447619799645,
+    "entry_peak_demand_N": 8.71744953769928,
+    "run_peak_demand_N": 497.1210490294689,
+    "settled_clip_fraction": 0.9507050505839616,
+    "run_clipped": true,
+    "max_x_mm": 0.810842705074784,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1000.0,
+   "depth_mm": 15.0,
+   "rpm_measured": 999.9,
+   "depth_measured_mm": 15.008,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 3.4875395828226785,
+    "a_lim_g_mm": 10.581928103403891,
+    "demand_N": 5.881913753025332,
+    "h1_N": 1.0442298166462878,
+    "rms2_N": 5.163069904698798,
+    "residual_authority_N": 21.11808624697467
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9998987880144646,
+    "settled_peak_demand_N": 631.0194752219672,
+    "entry_peak_demand_N": 12.158724673049122,
+    "run_peak_demand_N": 894.3457062710553,
+    "settled_clip_fraction": 0.9630873793992423,
+    "run_clipped": true,
+    "max_x_mm": 1.4404443172799632,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000261910402612,
+    "settled_peak_demand_N": 629.9793569878176,
+    "entry_peak_demand_N": 12.96275621827124,
+    "run_peak_demand_N": 892.6360370709003,
+    "settled_clip_fraction": 0.9626967696574352,
+    "run_clipped": true,
+    "max_x_mm": 1.4370166358732241,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1100.0,
+   "depth_mm": 2.0,
+   "rpm_measured": 1099.8,
+   "depth_measured_mm": 2.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2355554329289737,
+    "a_lim_g_mm": 3.5709098360908027,
+    "demand_N": 2.4995469167647673,
+    "h1_N": 1.0423118239933362,
+    "rms2_N": 1.9612249482173334,
+    "residual_authority_N": 24.500453083235232
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.499472106118179,
+    "entry_peak_demand_N": 4.107676618589568,
+    "run_peak_demand_N": 4.107676618589568,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.008734686022366041,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.499472106118179,
+    "entry_peak_demand_N": 3.8596383011121267,
+    "run_peak_demand_N": 3.8596383011121267,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.010189627713316643,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1100.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 1099.7,
+   "depth_measured_mm": 4.0,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2355554329289737,
+    "a_lim_g_mm": 3.5709098360908027,
+    "demand_N": 3.488455589362143,
+    "h1_N": 1.8294293615773982,
+    "rms2_N": 2.5541398867041765,
+    "residual_authority_N": 23.511544410637857
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999932005474365,
+    "settled_peak_demand_N": 14.775740743127825,
+    "entry_peak_demand_N": 5.20067387018532,
+    "run_peak_demand_N": 14.77798907131967,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.030434767662806034,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.000007107108354,
+    "settled_peak_demand_N": 14.77800675664339,
+    "entry_peak_demand_N": 5.901872719147729,
+    "run_peak_demand_N": 14.77800675664339,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.030435351778509104,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 1100.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 1099.6,
+   "depth_measured_mm": 5.008,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2355554329289737,
+    "a_lim_g_mm": 3.5709098360908027,
+    "demand_N": 3.228743210963366,
+    "h1_N": 2.063173130955672,
+    "rms2_N": 2.3766047142959064,
+    "residual_authority_N": 23.771256789036634
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999964772573552,
+    "settled_peak_demand_N": 36.16120540796548,
+    "entry_peak_demand_N": 4.256307229462512,
+    "run_peak_demand_N": 36.1639191614778,
+    "settled_clip_fraction": 0.3731885473223702,
+    "run_clipped": true,
+    "max_x_mm": 0.0636924700737937,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999992220305033,
+    "settled_peak_demand_N": 36.162765488704984,
+    "entry_peak_demand_N": 5.308844743126795,
+    "run_peak_demand_N": 36.163015623082956,
+    "settled_clip_fraction": 0.3733057302449123,
+    "run_clipped": true,
+    "max_x_mm": 0.06369243984005364,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1200.0,
+   "depth_mm": 2.0,
+   "rpm_measured": 1199.8,
+   "depth_measured_mm": 2.018,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.470797753980272,
+    "a_lim_g_mm": 3.608279271616686,
+    "demand_N": 2.087176711223263,
+    "h1_N": 1.2488545473469057,
+    "rms2_N": 1.607681830561847,
+    "residual_authority_N": 24.912823288776735
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.0863749030854355,
+    "entry_peak_demand_N": 3.042048761434065,
+    "run_peak_demand_N": 3.042048761434065,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.007888064800076193,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.0863749030854355,
+    "entry_peak_demand_N": 2.892208846537018,
+    "run_peak_demand_N": 2.892208846537018,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.008497077316739859,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1200.0,
+   "depth_mm": 3.0,
+   "rpm_measured": 1199.7,
+   "depth_measured_mm": 2.994,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.470797753980272,
+    "a_lim_g_mm": 3.608279271616686,
+    "demand_N": 2.79892852884412,
+    "h1_N": 1.7755993299427124,
+    "rms2_N": 2.1370346923977883,
+    "residual_authority_N": 24.20107147115588
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.7990417422960787,
+    "entry_peak_demand_N": 3.932237458929828,
+    "run_peak_demand_N": 3.932237458929828,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.011110949178203055,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.799041742296077,
+    "entry_peak_demand_N": 4.168667409780278,
+    "run_peak_demand_N": 4.168667409780278,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01195439634276403,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 1200.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 1199.8,
+   "depth_measured_mm": 3.998,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.470797753980272,
+    "a_lim_g_mm": 3.608279271616686,
+    "demand_N": 3.1726733999441046,
+    "h1_N": 2.191945946178278,
+    "rms2_N": 2.4430539645044433,
+    "residual_authority_N": 23.827326600055894
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999964064559662,
+    "settled_peak_demand_N": 10.096393414147162,
+    "entry_peak_demand_N": 4.185633549454561,
+    "run_peak_demand_N": 10.096393414147162,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.022798987887402106,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999982071420169,
+    "settled_peak_demand_N": 10.096358355898397,
+    "entry_peak_demand_N": 4.93920487638563,
+    "run_peak_demand_N": 10.096358355898397,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.022799013069083676,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 1300.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 1299.8,
+   "depth_measured_mm": 3.999,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 2.74613029747915,
+    "a_lim_g_mm": 4.976164486452915,
+    "demand_N": 3.355650819739184,
+    "h1_N": 2.658257129956811,
+    "rms2_N": 2.7718116159023842,
+    "residual_authority_N": 23.644349180260818
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 3.357928667903308,
+    "entry_peak_demand_N": 4.185795894541631,
+    "run_peak_demand_N": 4.185795894541631,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.014029863371899496,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 3.3579286679033093,
+    "entry_peak_demand_N": 4.538519444042061,
+    "run_peak_demand_N": 4.538519444042061,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.014293614148257085,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 1300.0,
+   "depth_mm": 6.0,
+   "rpm_measured": 1300.3,
+   "depth_measured_mm": 5.989,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 2.74613029747915,
+    "a_lim_g_mm": 4.976164486452915,
+    "demand_N": 3.3605679121283045,
+    "h1_N": 3.151146276115211,
+    "rms2_N": 3.156862140091451,
+    "residual_authority_N": 23.639432087871697
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999991782798384,
+    "settled_peak_demand_N": 13.883820246687305,
+    "entry_peak_demand_N": 4.599507924214319,
+    "run_peak_demand_N": 13.883820246687305,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03102671851939013,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.000000234308591,
+    "settled_peak_demand_N": 13.883790394077877,
+    "entry_peak_demand_N": 4.014857589119176,
+    "run_peak_demand_N": 13.883819157026933,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03102671041844112,
+    "diverged": false
+   }
+  },
+  {
+   "type": "saturation_onset_sim",
+   "rpm": 1900.0,
+   "depth_mm": 3.6,
+   "rpm_measured": 1899.8,
+   "depth_measured_mm": 3.61,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 26.597057041121623,
+    "a_lim_g_mm": 27.928284936141743,
+    "demand_N": 24.760355109317107,
+    "h1_N": 24.449112290380047,
+    "rms2_N": 24.451609875041747,
+    "residual_authority_N": 2.239644890682893
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 24.76988145219832,
+    "entry_peak_demand_N": 35.30212460763754,
+    "run_peak_demand_N": 35.30212460763754,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.06259489450936158,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 24.7698814521983,
+    "entry_peak_demand_N": 15.648884069300736,
+    "run_peak_demand_N": 24.770172961668145,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.04586520372791012,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2000.0,
+   "depth_mm": 2.0,
+   "rpm_measured": 1999.8,
+   "depth_measured_mm": 2.017,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 6.598942437973107,
+    "a_lim_g_mm": 18.93720614301933,
+    "demand_N": 12.953657247195746,
+    "h1_N": 12.996558781444017,
+    "rms2_N": 12.999753484942778,
+    "residual_authority_N": 14.046342752804254
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 12.952529555000439,
+    "entry_peak_demand_N": 18.77749672188842,
+    "run_peak_demand_N": 18.77749672188842,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.031721937412243516,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 12.952529555000439,
+    "entry_peak_demand_N": 10.503022162476373,
+    "run_peak_demand_N": 14.423536368317412,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.025565824283951093,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2000.0,
+   "depth_mm": 3.0,
+   "rpm_measured": 1999.8,
+   "depth_measured_mm": 2.977,
+   "label": "",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 6.598942437973107,
+    "a_lim_g_mm": 18.93720614301933,
+    "demand_N": 18.503082030529253,
+    "h1_N": 18.478277644836773,
+    "rms2_N": 18.481268545443246,
+    "residual_authority_N": 8.496917969470747
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 18.500147619574495,
+    "entry_peak_demand_N": 26.787894427773722,
+    "run_peak_demand_N": 26.787894427773722,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.045321210592146235,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 18.50014761957453,
+    "entry_peak_demand_N": 15.171397280486078,
+    "run_peak_demand_N": 21.143285681594406,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03764248487759197,
+    "diverged": false
+   }
+  },
+  {
+   "type": "saturation_onset_sim",
+   "rpm": 2000.0,
+   "depth_mm": 3.6,
+   "rpm_measured": 2000.3,
+   "depth_measured_mm": 3.608,
+   "label": "",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 6.598942437973107,
+    "a_lim_g_mm": 18.93720614301933,
+    "demand_N": 21.292086264905233,
+    "h1_N": 21.234901786208724,
+    "rms2_N": 21.237330461625493,
+    "residual_authority_N": 5.707913735094767
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 21.300048220639358,
+    "entry_peak_demand_N": 31.706480584308345,
+    "run_peak_demand_N": 31.706480584308345,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.05361724686079836,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 21.300048220639315,
+    "entry_peak_demand_N": 17.59606687887723,
+    "run_peak_demand_N": 24.78755563537597,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.044303299941612535,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2000.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 1999.7,
+   "depth_measured_mm": 4.028,
+   "label": "",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 6.598942437973107,
+    "a_lim_g_mm": 18.93720614301933,
+    "demand_N": 22.880779741096983,
+    "h1_N": 22.811106702356913,
+    "rms2_N": 22.813067229142803,
+    "residual_authority_N": 4.119220258903017
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 22.893055801817468,
+    "entry_peak_demand_N": 34.98495085223253,
+    "run_peak_demand_N": 34.98495085223253,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.05914378137298016,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 22.893055801817642,
+    "entry_peak_demand_N": 19.016570278834383,
+    "run_peak_demand_N": 27.019752484118353,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.04840482296842988,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2000.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 1999.9,
+   "depth_measured_mm": 4.997,
+   "label": "F",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 6.598942437973107,
+    "a_lim_g_mm": 18.93720614301933,
+    "demand_N": 25.794477250247095,
+    "h1_N": 25.72565162892435,
+    "rms2_N": 25.72645676912995,
+    "residual_authority_N": 1.2055227497529053
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 25.803539302748707,
+    "entry_peak_demand_N": 41.476164328215795,
+    "run_peak_demand_N": 41.476164328215795,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.07032050854226538,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 25.80353990821172,
+    "entry_peak_demand_N": 21.72403301031221,
+    "run_peak_demand_N": 32.41586271346711,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.05837648714190161,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2100.0,
+   "depth_mm": 2.5,
+   "rpm_measured": 2100.2,
+   "depth_measured_mm": 2.492,
+   "label": "",
+   "g": 253.0,
+   "confidence": "low",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 7.780912359679,
+    "demand_N": 8.957769469449905,
+    "h1_N": 8.655413647686554,
+    "rms2_N": 8.660506471096685,
+    "residual_authority_N": 18.042230530550093
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 8.960457644942347,
+    "entry_peak_demand_N": 12.50964130242215,
+    "run_peak_demand_N": 12.50964130242215,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.021144260348119184,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 8.960457642555252,
+    "entry_peak_demand_N": 12.606159205716617,
+    "run_peak_demand_N": 13.452496532024341,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02383620434649976,
+    "diverged": false
+   }
+  },
+  {
+   "type": "uncontrolled_chatter",
+   "rpm": 2100.0,
+   "depth_mm": 2.5,
+   "rpm_measured": 2099.3,
+   "depth_measured_mm": 2.49,
+   "label": "",
+   "g": 0.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 2.6938235179736036,
+    "demand_N": 0.0,
+    "h1_N": 0.0,
+    "rms2_N": 0.0,
+    "residual_authority_N": 27.0
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.9950401834653544,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02339526158627732,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.9950289245072821,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.034117964970610336,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2100.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 2099.8,
+   "depth_measured_mm": 4.005,
+   "label": "",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 7.780912359679,
+    "demand_N": 12.668944910366372,
+    "h1_N": 12.447980503200258,
+    "rms2_N": 12.451063034946852,
+    "residual_authority_N": 14.331055089633628
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 12.675657710098577,
+    "entry_peak_demand_N": 17.92218028737558,
+    "run_peak_demand_N": 17.92218028737558,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.030946829554790393,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 12.67565771010536,
+    "entry_peak_demand_N": 18.379867025850064,
+    "run_peak_demand_N": 21.0969731753579,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03817202487517175,
+    "diverged": false
+   }
+  },
+  {
+   "type": "saturation_onset_sim",
+   "rpm": 2100.0,
+   "depth_mm": 4.5,
+   "rpm_measured": 2099.0,
+   "depth_measured_mm": 4.479,
+   "label": "",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 7.780912359679,
+    "demand_N": 13.516162151283824,
+    "h1_N": 13.347351985736044,
+    "rms2_N": 13.349481778951533,
+    "residual_authority_N": 13.483837848716176
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 13.527322786134633,
+    "entry_peak_demand_N": 19.201187572237714,
+    "run_peak_demand_N": 19.201187572237714,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03345980684687636,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 13.527322646230221,
+    "entry_peak_demand_N": 19.627044558832317,
+    "run_peak_demand_N": 23.376767992589347,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.04252421953355293,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_marginal",
+   "rpm": 2100.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 2100.3,
+   "depth_measured_mm": 4.996,
+   "label": "G",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 7.780912359679,
+    "demand_N": 14.14864082353611,
+    "h1_N": 14.03844250467185,
+    "rms2_N": 14.039711532255774,
+    "residual_authority_N": 12.85135917646389
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 14.14981337392073,
+    "entry_peak_demand_N": 20.189992406128862,
+    "run_peak_demand_N": 20.189992406128862,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.035519336888417456,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 14.149813763758297,
+    "entry_peak_demand_N": 20.932596271815363,
+    "run_peak_demand_N": 25.400068397574174,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.046487372118473466,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 2100.0,
+   "depth_mm": 6.0,
+   "rpm_measured": 2099.2,
+   "depth_measured_mm": 5.991,
+   "label": "H",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 2.6938235179736036,
+    "a_lim_g_mm": 7.780912359679,
+    "demand_N": 14.744816824757145,
+    "h1_N": 14.75606214529425,
+    "rms2_N": 14.756317707671291,
+    "residual_authority_N": 12.255183175242855
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 14.744037300846484,
+    "entry_peak_demand_N": 21.204372245208504,
+    "run_peak_demand_N": 21.204372245208504,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03824679828426598,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 14.744037292671907,
+    "entry_peak_demand_N": 22.52133297491121,
+    "run_peak_demand_N": 28.57494723186799,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": true,
+    "max_x_mm": 0.05308228838580394,
+    "diverged": false
+   }
+  },
+  {
+   "type": "saturation_onset_sim",
+   "rpm": 2200.0,
+   "depth_mm": 5.3,
+   "rpm_measured": 2199.6,
+   "depth_measured_mm": 5.292,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.8321134540543285,
+    "a_lim_g_mm": 5.280026853622087,
+    "demand_N": 9.633003184460598,
+    "h1_N": 9.56549702217847,
+    "rms2_N": 9.566605504534284,
+    "residual_authority_N": 17.3669968155394
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.000221591234505,
+    "settled_peak_demand_N": 9.635499644150856,
+    "entry_peak_demand_N": 13.576929223658762,
+    "run_peak_demand_N": 13.576929223658762,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02522676887324356,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.9992077686665868,
+    "settled_peak_demand_N": 11.348122223224415,
+    "entry_peak_demand_N": 20.549284604994938,
+    "run_peak_demand_N": 21.45066274854356,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.040460172762202505,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2700.0,
+   "depth_mm": 2.0,
+   "rpm_measured": 2699.9,
+   "depth_measured_mm": 2.017,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2254008135827024,
+    "a_lim_g_mm": 3.3834437364381804,
+    "demand_N": 2.095720251142809,
+    "h1_N": 1.8386965260615946,
+    "rms2_N": 1.8483902581622902,
+    "residual_authority_N": 24.904279748857192
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.0959631219837602,
+    "entry_peak_demand_N": 2.700411819974174,
+    "run_peak_demand_N": 2.700411819974174,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.005316089215750512,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.0959631219837602,
+    "entry_peak_demand_N": 4.337306123653997,
+    "run_peak_demand_N": 4.337306123653997,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.009067724726782668,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2700.0,
+   "depth_mm": 3.0,
+   "rpm_measured": 2700.0,
+   "depth_measured_mm": 2.984,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2254008135827024,
+    "a_lim_g_mm": 3.3834437364381804,
+    "demand_N": 2.858755063388182,
+    "h1_N": 2.6142262336144353,
+    "rms2_N": 2.623228037920339,
+    "residual_authority_N": 24.14124493661182
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.858308667759994,
+    "entry_peak_demand_N": 3.751384012207904,
+    "run_peak_demand_N": 3.751384012207904,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.007759732407710045,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.8583088034199746,
+    "entry_peak_demand_N": 6.538564057415963,
+    "run_peak_demand_N": 6.538564057415963,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01378630042487157,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 2700.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 2700.4,
+   "depth_measured_mm": 3.998,
+   "label": "E",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.2254008135827024,
+    "a_lim_g_mm": 3.3834437364381804,
+    "demand_N": 3.4034091427892594,
+    "h1_N": 3.2272160157601255,
+    "rms2_N": 3.2330981064165294,
+    "residual_authority_N": 23.596590857210742
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.999999565027955,
+    "settled_peak_demand_N": 15.01016048736337,
+    "entry_peak_demand_N": 4.557599817905926,
+    "run_peak_demand_N": 15.010772757329317,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02814937622751469,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999942154566934,
+    "settled_peak_demand_N": 15.008489389253523,
+    "entry_peak_demand_N": 8.588578118729448,
+    "run_peak_demand_N": 15.011479915126582,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.028148700376027642,
+    "diverged": false
+   }
+  },
+  {
+   "type": "uncontrolled_stable",
+   "rpm": 2800.0,
+   "depth_mm": 0.5,
+   "rpm_measured": 2799.5,
+   "depth_measured_mm": 0.517,
+   "label": "A",
+   "g": 0.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 1.268307055071504,
+    "a_lim_g_mm": 1.268307055071504,
+    "demand_N": 0.0,
+    "h1_N": 0.0,
+    "rms2_N": 0.0,
+    "residual_authority_N": 27.0
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.0012680413666502095,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.0021821904859353775,
+    "diverged": false
+   }
+  },
+  {
+   "type": "uncontrolled_chatter",
+   "rpm": 2800.0,
+   "depth_mm": 1.5,
+   "rpm_measured": 2799.4,
+   "depth_measured_mm": 1.481,
+   "label": "B",
+   "g": 0.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 1.268307055071504,
+    "a_lim_g_mm": 1.268307055071504,
+    "demand_N": 0.0,
+    "h1_N": 0.0,
+    "rms2_N": 0.0,
+    "residual_authority_N": 27.0
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.0013760353741905,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.019661740225391064,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 1.0000065743452091,
+    "settled_peak_demand_N": 0.0,
+    "entry_peak_demand_N": 0.0,
+    "run_peak_demand_N": 0.0,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01972373316846025,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2800.0,
+   "depth_mm": 2.5,
+   "rpm_measured": 2800.2,
+   "depth_measured_mm": 2.497,
+   "label": "C",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 1.268307055071504,
+    "a_lim_g_mm": 3.45101125021022,
+    "demand_N": 2.26381029679512,
+    "h1_N": 2.015784905569683,
+    "rms2_N": 2.025697197562206,
+    "residual_authority_N": 24.73618970320488
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.2649394820225344,
+    "entry_peak_demand_N": 2.9338598502827677,
+    "run_peak_demand_N": 2.9338598502827677,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.006111978988280463,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.2649394760465174,
+    "entry_peak_demand_N": 5.029266057222288,
+    "run_peak_demand_N": 5.029266057222288,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.010518219550013195,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2800.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 2800.0,
+   "depth_measured_mm": 4.003,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.268307055071504,
+    "a_lim_g_mm": 3.45101125021022,
+    "demand_N": 3.067002289928509,
+    "h1_N": 2.899047027045735,
+    "rms2_N": 2.9050122054299914,
+    "residual_authority_N": 23.93299771007149
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.0000161125091516,
+    "settled_peak_demand_N": 12.497663988460307,
+    "entry_peak_demand_N": 4.092352670195549,
+    "run_peak_demand_N": 12.497945297902621,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02419023818780956,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999999149079455,
+    "settled_peak_demand_N": 12.497743166487068,
+    "entry_peak_demand_N": 8.042807265556329,
+    "run_peak_demand_N": 12.498046917101977,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.02419027732051429,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_loss_of_contact",
+   "rpm": 2800.0,
+   "depth_mm": 5.5,
+   "rpm_measured": 2800.1,
+   "depth_measured_mm": 5.484,
+   "label": "D",
+   "g": 253.0,
+   "confidence": "medium",
+   "closed_form": {
+    "a_lim0_mm": 1.268307055071504,
+    "a_lim_g_mm": 3.45101125021022,
+    "demand_N": 3.405953275156476,
+    "h1_N": 3.3793858043269003,
+    "rms2_N": 3.380621723656042,
+    "residual_authority_N": 23.594046724843523
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999961728502628,
+    "settled_peak_demand_N": 30.513228326208914,
+    "entry_peak_demand_N": 4.692663713126062,
+    "run_peak_demand_N": 30.51577188053278,
+    "settled_clip_fraction": 0.08722315534549431,
+    "run_clipped": true,
+    "max_x_mm": 0.05308009349660519,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999963490843835,
+    "settled_peak_demand_N": 30.515846834797763,
+    "entry_peak_demand_N": 10.524547499028802,
+    "run_peak_demand_N": 30.515846834797763,
+    "settled_clip_fraction": 0.08714503339713292,
+    "run_clipped": true,
+    "max_x_mm": 0.05307917763322406,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 2900.0,
+   "depth_mm": 5.0,
+   "rpm_measured": 2899.9,
+   "depth_measured_mm": 5.002,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.3394452145985765,
+    "a_lim_g_mm": 3.581525837581198,
+    "demand_N": 3.045731013156136,
+    "h1_N": 2.9737052342253683,
+    "rms2_N": 2.9762057913145714,
+    "residual_authority_N": 23.954268986843864
+   },
+   "face": {
+    "chatter": true,
+    "mu": 0.9999916760043371,
+    "settled_peak_demand_N": 21.296814815651306,
+    "entry_peak_demand_N": 4.138514521770213,
+    "run_peak_demand_N": 21.29742715554857,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.038592787609107025,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.999991415345231,
+    "settled_peak_demand_N": 21.29746336269258,
+    "entry_peak_demand_N": 9.172812224573594,
+    "run_peak_demand_N": 21.29746336269258,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.03859261923973822,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 3000.0,
+   "depth_mm": 2.0,
+   "rpm_measured": 2999.9,
+   "depth_measured_mm": 2.016,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.4393398087843035,
+    "a_lim_g_mm": 3.7693875406666035,
+    "demand_N": 1.6058595615810278,
+    "h1_N": 1.380023687644914,
+    "rms2_N": 1.3899482362225504,
+    "residual_authority_N": 25.394140438418972
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 1.6064426519451604,
+    "entry_peak_demand_N": 2.047183276181523,
+    "run_peak_demand_N": 2.047183276181523,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.004431968109621889,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 1.6064426519451667,
+    "entry_peak_demand_N": 3.7837160981547284,
+    "run_peak_demand_N": 3.7837160981547284,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.007269216379697314,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_stable",
+   "rpm": 3000.0,
+   "depth_mm": 3.0,
+   "rpm_measured": 3000.0,
+   "depth_measured_mm": 2.994,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.4393398087843035,
+    "a_lim_g_mm": 3.7693875406666035,
+    "demand_N": 2.1763005420385273,
+    "h1_N": 1.9620932960471653,
+    "rms2_N": 1.9712937340873122,
+    "residual_authority_N": 24.823699457961474
+   },
+   "face": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.1758080022572117,
+    "entry_peak_demand_N": 2.8270972574015145,
+    "run_peak_demand_N": 2.8270972574015145,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.006502152152996854,
+    "diverged": false
+   },
+   "step": {
+    "chatter": false,
+    "mu": 0.0,
+    "settled_peak_demand_N": 2.175808002257616,
+    "entry_peak_demand_N": 5.393304321686648,
+    "run_peak_demand_N": 5.393304321686648,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.010587077798368857,
+    "diverged": false
+   }
+  },
+  {
+   "type": "controlled_chatter",
+   "rpm": 3000.0,
+   "depth_mm": 4.0,
+   "rpm_measured": 3000.1,
+   "depth_measured_mm": 3.994,
+   "label": "",
+   "g": 253.0,
+   "confidence": "high",
+   "closed_form": {
+    "a_lim0_mm": 1.4393398087843035,
+    "a_lim_g_mm": 3.7693875406666035,
+    "demand_N": 2.5759589044469777,
+    "h1_N": 2.4221694465456465,
+    "rms2_N": 2.4281778649729584,
+    "residual_authority_N": 24.424041095553022
+   },
+   "face": {
+    "chatter": true,
+    "mu": 1.005996386875808,
+    "settled_peak_demand_N": 4.115239279814651,
+    "entry_peak_demand_N": 3.4197878600422222,
+    "run_peak_demand_N": 4.115239279814651,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.010846299483737422,
+    "diverged": false
+   },
+   "step": {
+    "chatter": true,
+    "mu": 0.9999968626287988,
+    "settled_peak_demand_N": 5.980949452381085,
+    "entry_peak_demand_N": 6.8384715655425365,
+    "run_peak_demand_N": 7.053341027112171,
+    "settled_clip_fraction": 0.0,
+    "run_clipped": false,
+    "max_x_mm": 0.01549549606620769,
+    "diverged": false
+   }
+  }
+ ]
+}
