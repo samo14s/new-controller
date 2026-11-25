@@ -23,20 +23,23 @@ verification and comparison.
 
 ## 4.1 Fairness of the comparison in Table 6
 
-*Designs.* At the 21 speeds of the chart, every reference was recomputed with the gain range of the
-chart, 0 <= g <= 3000 V s/m, and the operating depth of Sec. 3, the checked depth
+*Designs.* At the 21 speeds of the chart, the published condition and the authority rule with and without
+the voltage margin were recomputed with the gain range of the chart, 0 <= g <= 3000 V s/m, and the former
+reference (g <= 1500 V s/m) was kept for continuity; all operate at the depth of Sec. 3, the checked depth
 a_chk = min{0.9 a_lim, a_TD} (`fair_designs.py`):
-- the published condition, Eq. (13), reproduced as in Sec. 3.3 (its original constraint);
+- the published condition, Eq. (13), reproduced as in Sec. 3.1 (step-entry demand at a_lim, its original constraint);
 - the authority rule, Eq. (14), with no voltage margin (steady command up to 9 V);
 - the authority rule with the 10 % margin of the chart (8.1 V);
 - the former reference of the manuscript (g <= 1500 V s/m), kept for continuity;
 - the basin-aware chart for 1, 2 and 5 mm/s.
 
 *Same metrics for all* (`fair_compare.py`, `table6.py`): operating depth, step-entry depth, the depth up
-to which the design's own gain meets the chart's conditions (`ref_under_ba.py`), the rigorous bound on the
-forced command, the certified kick (C2, default collocation order) at the operating depth and the
-simulated critical kick (smallest of four phases) at the operating depth, and the step and face entries.
-All of them are in the new Table 6.
+to which the design's own gain meets the chart's conditions (`ref_under_ba.py`; `ref_under_ba_tol.py` for
+the authority gain with the 10 mV tolerance), the rigorous bound on the forced command, the certified kick
+(C2, default collocation order) at the operating depth, the simulated critical kick (smallest of four
+phases) at the operating depth and the step entry; these are in the new Table 6. The face entry settles at
+the operating depth of every design at all 21 speeds (`fair_compare.json`); the manuscript reports it for
+the chart.
 
 *Results.*
 - With g <= 3000 V s/m the authority rule reaches 17.1 mm (no margin) and 16.8 mm (10 % margin) on
@@ -64,8 +67,9 @@ All of them are in the new Table 6.
   What the authority rule does not check is the shallower depths its gain passes through: there its
   smallest certified kick is 2.3 mm/s (median) and reaches 5 mm/s at only 5 of 21 speeds. The simulated
   critical kick of the chart exceeds its requirement at all 21 speeds at least 1.97 times.
-- The chart is a grid optimum: at four speeds between 1625 and 2125 rpm the authority gain, which lies
-  between the gains the chart evaluated, is certifiable 2 mm deeper. The manuscript says so.
+- The chart is a grid optimum: at five speeds between 1625 and 2375 rpm the authority gain, which lies
+  between the gains the chart evaluated, is certifiable 2 mm deeper for some requirements (with the depth
+  margin at 1375, 1625 and 2625 rpm). The manuscript says so.
 - The phrase "certifies none" was removed everywhere; the references now have their own certificates.
 
 ## 4.2 Monte Carlo of the new design
@@ -77,7 +81,7 @@ the six validation speeds to the authority rule with the 10 % margin at its chec
 chart, with and without the depth margin, each at its own depth, and to the reference and the chart with
 the margin at the common depth min{a_chk, a_rob}. A sample fails if the cut does not settle, or a kick of
 beta_req at one of four phases ends in chatter (the event dv* <= beta_req if the outcome is monotone in
-the kick). Pooled over 180 paired samples:
+the kick). Pooled over the 180 sample-speed pairs (30 samples at six speeds):
 
 | Requirement | Reference, own depth | Chart with margin, own depth | Chart without margin, own depth | Common depth: reference / chart |
 |---|---|---|---|---|
@@ -85,16 +89,21 @@ the kick). Pooled over 180 paired samples:
 | 2 mm/s | 6.7 % | 11.7 % | 39 % | 6.1 % / 7.2 % |
 | 5 mm/s | 6.7 % | 10.0 % | 11 % | 6.1 % / 9.4 % |
 
-No sample failed for the reference and not for the chart (McNemar p <= 0.031 at the own depths; with the
-margin, exact sign test over the samples p = 0.002, 0.03, 0.13). Nearly all failures are cuts that do not
-settle in the sampled model (linearly unstable, or saturated at 2875 rpm); a settled cut chattered after
-the kick in only 1, 1 and 2 of 180 samples. The answer to the review's question is therefore negative:
-under these errors the chart is not more robust than the reference; its deeper operating points spend
-the margin to the linear limit, which the reference keeps through its step-entry check (0.51-0.90 a_lim
-against 0.81-0.90 for the chart with the margin and 0.86-0.996 without it). At the common depth the rates
-are close. The manuscript states that the chart needs a depth margin that covers the errors of the
-model, which its nominal certificate does not provide, and that these probabilities are estimates
-under the sampled distribution, not guarantees.
+No sample failed for the reference and not for the chart (McNemar p <= 0.031 at the own depths,
+approximate because the speeds share the samples; with the margin, exact sign test over the 30 samples
+p = 0.002, 0.03, 0.13). Of the 69 failures of the chart with the margin, 55 are cuts whose sampled averaged
+model is linearly unstable and 10 cuts that do not settle at 2875 rpm, where runout and a lower clip put
+the forced command on the clip; a settled cut chattered after the kick in only 1, 1 and 2 of the 180
+pairs. The answer to the review's question is therefore negative: under these errors the chart is not
+more robust than the reference. Its operating points sit nearer their own linear limit (0.81-0.90 a_lim
+with the depth margin, 0.86-0.996 without it, against 0.51-0.81 for the reference where its step-entry
+check binds and 0.90 at 2000 rpm, where its depth margin binds and where alone it fails), and they lose the
+margin to the linear limit and, at 2875 rpm, the voltage margin. For 5 mm/s the chart is on average even
+shallower than the reference (14.7 against 15.9 mm at these speeds) and still fails more often. At the
+common depth the rates are close. The manuscript states that the chart needs margins that cover the
+errors of the model, below the linear limit and, where runout and a lower clip consume the margin of the
+forced command, in the voltage, which its nominal certificate does not provide, and that these
+probabilities are estimates under the sampled distribution, not guarantees.
 
 ## 4.3 Entry
 
@@ -104,8 +113,9 @@ rest also settles with the same gain (`ba_entry.py`). The caption states that th
 the simulator, not certified. The face entry settles at every grid depth up to a_rob at all 21 speeds;
 the step entry only up to 16.1, 15.8 and 15.1 mm on average (below a_rob at 14, 12 and 7 speeds), and with
 the depth margin up to 15.7, 15.4 and 14.4 mm. Sec. 6.4 says plainly that the chart certifies the
-settled cut, not the entry, and that with an abrupt entry the usable depth is similar to that of the
-authority rule (16.8 mm), whose checked depth contains the same entry check. Fig. 8b compares the
+settled cut, not the entry, and that with an abrupt entry the usable depth is set by saturation during
+the entry: the chart's step entry settles only up to 15.1-16.1 mm (14.4-15.7 mm with the depth margin),
+below the 16.8 mm of the authority rule, whose checked depth contains the same entry check. Fig. 8b compares the
 step-entry depths of the chart with the checked depths of the references.
 
 ## 4.4 Depth cap
@@ -123,8 +133,9 @@ Sec. 6.1, Fig. 8, Supplement). The chart was recomputed for a_cap = 10, 16 and 3
   reference 1.24 and 1.00; against the published gain 1.02.
 The manuscript now says that most of the depth advantage lies in deep cuts that depend on the assumed
 cap, and that below a cap of about 16 mm the advantage over the authority gain is in the certified
-disturbance, not in depth (against the published and former reference gains the kicks are tied within
-the 12 % difference between the collocation orders).
+disturbance, not in depth (against the published gain the kicks are tied within the 12 % difference between the collocation
+orders, 1.02 at 10 mm and 1.03 at 16 mm; against the former reference they are tied at 16 mm, 1.00, but
+1.24 times larger at 10 mm).
 
 ## 4.5 Rigour of the circle criterion and of Eq. (32)
 
@@ -136,15 +147,15 @@ scheduled gains, for every depth up to (1 - 1e-3) a_mu, where a_mu is the depth 
 condition stops holding (a_mu = a_circ except at 44 speeds, 1530-1990 rpm, where the forced orbit reaches
 the clip first and sets a_circ); above 5 kHz an analytic bound |L| <= 0.0071 applies. The condition is
 proved at all 251 speeds (785-5500 box evaluations to positivity, 1200-30 000 with the tightening; no
-undecided box; smallest certified lower bound 0.00098, at 950 rpm; median 0.043). At (1 + 1e-3) a_mu the
+undecided box; smallest certified lower bound 0.00098, at 950 rpm; median 0.043). At the smaller of (1 + 1e-3) a_mu and the midpoint between a_mu and a_lim(0) (the midpoint at 42 speeds) the
 enclosures show it failing at the 249 speeds where a_mu < a_lim(0), so the depth where it stops holding
 is located to within 1e-3. The second hypothesis, an unclipped forced orbit, rests on the closed-form
 command on a dense depth grid (2000 depths), and the manuscript now says so wherever the result is
-quoted (Sec. 4.3, 5 and 8; the abstract attributes the proof to the frequency condition only).
+quoted (Sec. 1, 4.3, 5 and 8; the abstract attributes the proof to the frequency condition only).
 
 Sec. 6.1 states that Eq. (32) is a grid optimum: the best among the gains evaluated by the search (a
 250 V s/m grid refined by +-125 and +-62.5 V s/m around the best gain), for depths on the 2 mm grid, not a
-continuous optimum; Sec. 6.3 gives the four speeds at which a gain between the evaluated ones does better,
+continuous optimum; Sec. 6.3 gives the speeds at which a gain between the evaluated ones does better,
 and Supplement S4.4 shows that a repeated search can return a different gain. Fig. 8 marks the grid
 points and its caption says that only the grid depths are certified.
 
@@ -164,7 +175,7 @@ can supply the PDF (or allow its download) to have this done.
 
 | Place | Change |
 |---|---|
-| Abstract | "This computational study ..."; "computed at 21 speeds"; the comparison stated with equal gain range and margins; no "certifies none" |
+| Abstract | "This computational study ..."; "searched on grids at 21 speeds"; the comparison stated with equal gain range and margins; no "certifies none" |
 | Highlights | the guarantees restricted to their models: "Circle criterion and LMIs bound the basin of the averaged and collocation models"; "A basin-aware gain schedule certifies model depths against a required disturbance" |
 | Figure 8 | grid points as markers, lines only guide the eye, caption: only the grid depths are certified; step-entry crosses; a_cap marked as assumed |
 | Section 6 | restructured: 6.1 formulation, 6.2 chart, 6.3 comparison with the references (Table 6), 6.4 validation, entry and robustness |
