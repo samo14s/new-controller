@@ -20,7 +20,9 @@ step was planned for any disagreement and was not needed.
   0.5 mm; the simulation squares at multiples of 0.1 mm); the lettered points A-H reproduce the values
   given in the article's text. One controlled-stable circle at 2100 rpm / 2.5 mm is almost hidden under
   an uncontrolled-chatter diamond and was found by both digitisations (low confidence). Both
-  digitisations agree on all 49 markers; the stability curves were sampled every 25 rpm.
+  digitisations agree on all 49 markers; the stability curves were sampled every 25 rpm, and the two
+  readings of them agree to 0.09 mm (controlled; largest at 1975 rpm) and 0.23 mm (uncontrolled, on the
+  narrow lobes below 700 rpm; at most 0.06 mm from 700 rpm up).
 - **Figs. 10 and 12** (saturation tests at 1700-2200 rpm, re-clamped structure, DVF): Fig. 10 is vector
   graphics, Fig. 12 an embedded raster of 1521 x 842 pixels at 300 ppi; both rendered at 600 dpi. 56 annotated test points: the measured amplitude of the command in N (36) or
   'Sat' (20), with the outcome '(chatter)' (5) or '(marginal)' (3) where given. The labels are

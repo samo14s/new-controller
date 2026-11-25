@@ -211,7 +211,8 @@ the command or 'Sat', and the outcome). The two digitisations agree on every ite
   The model therefore does NOT predict these losses of stability: at four of the five it predicts an
   unsaturated settled command (12-19 N) where the measurements saturated, and at the fifth (1950 rpm,
   20 mm) a forced orbit on the clip (33 N) that still settles, with a critical kick of 0.40 m/s; the two
-  finite critical kicks carry 1.7 and 2.3 times the cutting impulse of one tooth period. The
+  finite critical kicks carry 1.7 and 2.3 times the cutting impulse of one tooth period (with the modal
+  mass of the re-clamped structure, 17.4 kg). The
   article reports disagreement with its own frequency-domain model at 2050-2200 rpm, which it relates to
   actuator loss of contact or other nonlinearities; its time-domain simulation for the first structure
   (its Fig. 6) places the onset of saturation at 4.5 mm at 2100 rpm, where our forced demand for that
