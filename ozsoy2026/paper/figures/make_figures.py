@@ -876,7 +876,7 @@ def fig_ba():
     n = B["rpm"]
     keys = [f"{x:.0f}" for x in n]
     labs = ["1", "2", "5"]
-    fig, ax = plt.subplots(3, 1, figsize=(W2, 165 * MM), sharex=True, layout="constrained",
+    fig, ax = plt.subplots(3, 1, figsize=(W2, 150 * MM), sharex=True, layout="constrained",
                            gridspec_kw={"height_ratios": [2.2, 2.0, 1.0]})
     # (a) the chart and its abrupt-entry depth
     a = ax[0]
