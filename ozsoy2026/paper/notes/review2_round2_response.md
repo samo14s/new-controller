@@ -179,8 +179,8 @@ the command or 'Sat', and the outcome). The two digitisations agree on every ite
 *Results, in the order of the review's table.*
 - FRF and linear stability: with the article's modal parameters the model reproduces its uncontrolled
   and controlled stability charts to 0.04 and 0.14 mm RMS (first structure) and 0.06 and 0.07 mm
-  (re-clamped structure); the gain of the saturation tests, not stated, is fixed by the chart at
-  251 V s/m, i.e. the 253 V s/m of the first group. Of the 39 controlled cuts, the model and the
+  (re-clamped structure); the gain of the saturation tests, not stated, is put by a fit of the chart at
+  251 V s/m, within 1 % of the 253 V s/m of the first group, which the comparisons use. Of the 39 controlled cuts, the model and the
   article's own chart classify the same 26 as measured; 9 of the 13 others are stable cuts at
   700-1100 rpm above the predicted limit (cutting speed 0.6-0.9 m/s, where process damping, not
   modelled, may act).
