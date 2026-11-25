@@ -19,7 +19,7 @@ Table~\ref{tab:supp-ba} lists the basin-aware gains and depths of Fig.~\ref{M-fi
 
 \begin{table}[!htbp]
   \centering
-  \caption{Basin-aware gains $g_{\mathrm{rob}}$ (\si{\volt\second\per\metre}) and depths $a_{\mathrm{rob}}$ (\si{\milli\metre}) for $\beta_{\mathrm{req}}=1$, 2 and \SI{5}{\milli\metre\per\second}, with the condition that fails at the next grid depth (L linear limit, P $a_{\mathrm{phys}}$, C certificate); authority schedule of Section~\ref{M-sec:feasibility}: gain $g^\star$ and checked depth $\achk$ (\si{\milli\metre}); uncontrolled limit $\alim(0)$ (\si{\milli\metre}).}
+  \caption{Basin-aware gains $g_{\mathrm{rob}}$ (\si{\volt\second\per\metre}) and depths $a_{\mathrm{rob}}$ (\si{\milli\metre}) for $\beta_{\mathrm{req}}=1$, 2 and \SI{5}{\milli\metre\per\second}, with the condition that fails at the next grid depth (L linear limit, D depth cap $a_{\mathrm{cap}}$, C certificate); authority schedule of Section~\ref{M-sec:feasibility}: gain $g^\star$ and checked depth $\achk$ (\si{\milli\metre}); uncontrolled limit $\alim(0)$ (\si{\milli\metre}).}
   \label{tab:supp-ba}
   \small
   \begin{tabular}{@{}rrrrrrrrrr@{}}
@@ -28,12 +28,12 @@ Table~\ref{tab:supp-ba} lists the basin-aware gains and depths of Fig.~\ref{M-fi
     \cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
     (rpm) & & & & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$ & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$ & $g_{\mathrm{rob}}$ & $a_{\mathrm{rob}}$\\
     \midrule
-    500 & 1500 & 15.19 & 1.99 & 3000 & 32\,P & 3000 & 32\,P & 2625 & 26\,C\\
-    625 & 1500 & 14.76 & 6.68 & 3000 & 32\,P & 3000 & 32\,P & 2125 & 20\,C\\
-    750 & 1500 & 14.87 & 1.50 & 2500 & 32\,P & 2500 & 32\,P & 1937.5 & 20\,C\\
-    875 & 1500 & 15.37 & 6.87 & 3000 & 32\,P & 2500 & 26\,L & 1750 & 18\,L\\
-    1000 & 1500 & 21.18 & 3.49 & 2562.5 & 32\,P & 2000 & 26\,L & 1312.5 & 20\,C\\
-    1125 & 1500 & 14.64 & 1.21 & 2500 & 32\,P & 2125 & 28\,L & 1500 & 16\,C\\
+    500 & 1500 & 15.19 & 1.99 & 3000 & 32\,D & 3000 & 32\,D & 2625 & 26\,C\\
+    625 & 1500 & 14.76 & 6.68 & 3000 & 32\,D & 3000 & 32\,D & 2125 & 20\,C\\
+    750 & 1500 & 14.87 & 1.50 & 2500 & 32\,D & 2500 & 32\,D & 1937.5 & 20\,C\\
+    875 & 1500 & 15.37 & 6.87 & 3000 & 32\,D & 2500 & 26\,L & 1750 & 18\,L\\
+    1000 & 1500 & 21.18 & 3.49 & 2562.5 & 32\,D & 2000 & 26\,L & 1312.5 & 20\,C\\
+    1125 & 1500 & 14.64 & 1.21 & 2500 & 32\,D & 2125 & 28\,L & 1500 & 16\,C\\
     1250 & 1500 & 13.86 & 1.94 & 2250 & 24\,L & 1750 & 18\,L & 1500 & 14\,L\\
     1375 & 1500 & 15.13 & 4.59 & 1750 & 18\,L & 1437.5 & 16\,L & 1437.5 & 14\,C\\
     1500 & 1500 & 17.42 & 8.81 & 1312.5 & 18\,L & 1125 & 16\,L & 1125 & 16\,L\\
@@ -53,3 +53,16 @@ Table~\ref{tab:supp-ba} lists the basin-aware gains and depths of Fig.~\ref{M-fi
   \end{tabular}
 \end{table}
 % src: verification/paper/basin_aware.json (per_speed.<rpm>: auth_g1500.g, auth_g1500.a_chk_mm, a_lim0_mm, designs.<1|2|5>.g, a_rob_mm, binding; nred_vs_default.ratio_reduced_over_default max 1.044, median 1.025, 13 points; recert_points 64, recert_ratio_reduced_over_default_fast max 1.070 (2625 rpm, 12 mm), median 1.003; summary.*.corrected_down_speeds [], upward_possible_speeds [])
+
+\subsection{Reference schedules at equal gain range}\label{supp:ba-refs}
+
+\paragraph{Designs} At the 21 speeds of the chart, every reference design was given the gain range $0\le g\le\SI{3000}{\volt\second\per\metre}$ and the operating depth of Section~\ref{M-sec:feasibility}, the checked depth $\achk=\min\{0.9\,\alim(g),a_{\mathrm{TD}}(g)\}$, where $a_{\mathrm{TD}}$ is the step-entry limit with the \SI{9}{\volt} clip and the full surface memory, found on a ladder of depths from $0.225\,\alim$ in steps of \SI{8}{\percent} and bisected. The published condition, Eq.~\eqref{M-eq:pub}, was reproduced with the step-entry demand at $\alim$ on a scan of the gain in steps of \SI{20}{\volt\second\per\metre} with bisection on the edges of its feasible pockets, as in Section~\ref{M-sec:feas-pub}; the authority rule, Eq.~\eqref{M-eq:feas}, was solved by bisection with the steady command limited to \SI{9}{\volt} (no margin) or \SI{8.1}{\volt} (the \SI{10}{\percent} margin of the chart).
+
+\paragraph{The reference gains under the chart's conditions} For each reference gain the upward depth scan of the chart (reduced collocation order, default solver settings, stopped at the first depth not admissible for \SI{1}{\milli\metre\per\second}) gives the largest grid depth up to which every grid depth is linearly stable, keeps $\bar b\le\SI{8.1}{\volt}$ and has a certified kick of at least $\beta_{\mathrm{req}}$; rows of the chart's own scan were reused where the same speed and gain had been scanned. These depths are reduced-order values, not certified again with the default order, which lowers such certificates by at most \SI{7}{\percent}.
+
+\paragraph{Depth margin} The chart with $a\le0.9\,\alim(n,g)$ added to Eq.~\eqref{M-eq:admissible} was computed with the search and the default-order re-certification of the chart unchanged, the first grid depth above $0.9\,\alim$ of each scan being made inadmissible; with the margin set to 1 this procedure reproduces the stored chart exactly.
+
+\paragraph{Metrics at the operating depth} At each design's operating depth the rigorous bound $\bar b$, the certified kick of C2 with the default collocation order (default solver settings, and strict settings where this gave less than \SI{5}{\milli\metre\per\second}, the larger being kept), the smallest reduced-order certificate over the grid depths up to it, the simulated critical kick at the phases 0, 4, 8 and 12 of 16, and the step and face entries were computed with the protocols of the chart's validation; results already stored with the same arguments were reused after two of them had been recomputed bit for bit.
+
+\paragraph{Entries} With the gain of each design point, the step and the face entry were simulated at every grid depth from \SI{2}{\milli\metre} to $a_{\mathrm{rob}}$, one run per depth at the nominal parameters, and judged by the classifier D1 over the 300 revolutions after full engagement; the entry depth is the largest grid depth up to which every run settles. A run that settles after a transient of some millimetres counts as settled; a secondary indicator that also requires the peak displacement to stay below \SI{1}{\milli\metre} is reported in the stored results.
+% src: verification/paper/fair_designs.py, ref_under_ba.py, ba_kappa.py (docstrings; kappa 1.0 check: stored designs reproduced at 2500 and 750 rpm), fair_compare.py, ba_entry.py (docstrings)
