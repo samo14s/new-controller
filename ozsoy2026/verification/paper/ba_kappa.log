@@ -1,0 +1,59 @@
+500 rpm: 1 mm/s g 2875.0 a_rob 28.0 ['depth margin'], 2 mm/s g 2875.0 a_rob 28.0 ['depth margin'], 5 mm/s g 2875.0 a_rob 26.0 ['certificate'] (4 gains, 434.0 s)
+625 rpm: 1 mm/s g 3000.0 a_rob 28.0 ['depth margin'], 2 mm/s g 3000.0 a_rob 28.0 ['depth margin'], 5 mm/s g 2312.5 a_rob 20.0 ['certificate'] (8 gains, 749.2 s)
+875 rpm: 1 mm/s g 3000.0 a_rob 28.0 ['depth margin'], 2 mm/s g 2500.0 a_rob 24.0 ['depth margin'], 5 mm/s g 1750.0 a_rob 16.0 ['depth margin'] (8 gains, 47.7 s)
+750 rpm: 1 mm/s g 2750.0 a_rob 32.0 ['a_phys'], 2 mm/s g 2750.0 a_rob 32.0 ['a_phys'], 5 mm/s g 2062.5 a_rob 20.0 ['certificate'] (9 gains, 370.7 s)
+1000 rpm: 1 mm/s g 2500.0 a_rob 28.0 ['depth margin'], 2 mm/s g 2250.0 a_rob 26.0 ['depth margin'], 5 mm/s g 1500.0 a_rob 20.0 ['depth margin'] (5 gains, 96.2 s)
+1125 rpm: 1 mm/s g 2500.0 a_rob 30.0 ['depth margin'], 2 mm/s g 2250.0 a_rob 26.0 ['depth margin'], 5 mm/s g 1500.0 a_rob 16.0 ['depth margin'] (7 gains, 320.3 s)
+1375 rpm: 1 mm/s g 1625.0 a_rob 16.0 ['linear limit'], 2 mm/s g 1625.0 a_rob 16.0 ['linear limit'], 5 mm/s g 1500.0 a_rob 14.0 ['depth margin'] (3 gains, 42.7 s)
+1250 rpm: 1 mm/s g 2312.5 a_rob 22.0 ['depth margin'], 2 mm/s g 2000.0 a_rob 18.0 ['depth margin'], 5 mm/s g 1750.0 a_rob 14.0 ['certificate'] (8 gains, 295.8 s)
+1500 rpm: 1 mm/s g 1250.0 a_rob 16.0 ['linear limit'], 2 mm/s g 1250.0 a_rob 16.0 ['linear limit'], 5 mm/s g 1250.0 a_rob 14.0 ['certificate'] (4 gains, 26.2 s)
+1625 rpm: 1 mm/s g 750.0 a_rob 16.0 ['depth margin'], 2 mm/s g 750.0 a_rob 16.0 ['depth margin'], 5 mm/s g 750.0 a_rob 16.0 ['depth margin'] (2 gains, 16.6 s)
+1750 rpm: 1 mm/s g 500.0 a_rob 20.0 ['depth margin'], 2 mm/s g 500.0 a_rob 20.0 ['depth margin'], 5 mm/s g 500.0 a_rob 20.0 ['depth margin'] (2 gains, 16.2 s)
+1875 rpm: 1 mm/s g 0.0 a_rob 22.0 ['depth margin'], 2 mm/s g 0.0 a_rob 22.0 ['depth margin'], 5 mm/s g 0.0 a_rob 22.0 ['depth margin'] (2 gains, 18.0 s)
+2125 rpm: 1 mm/s g 500.0 a_rob 10.0 ['linear limit'], 2 mm/s g 500.0 a_rob 10.0 ['linear limit'], 5 mm/s g 500.0 a_rob 10.0 ['linear limit'] (2 gains, 0.1 s)
+2000 rpm: 1 mm/s g 188.425411 a_rob 14.0 ['linear limit'], 2 mm/s g 188.425411 a_rob 14.0 ['linear limit'], 5 mm/s g 188.425411 a_rob 14.0 ['linear limit'] (3 gains, 24.1 s)
+2250 rpm: 1 mm/s g 750.0 a_rob 10.0 ['linear limit'], 2 mm/s g 750.0 a_rob 10.0 ['linear limit'], 5 mm/s g 625.0 a_rob 8.0 ['linear limit'] (4 gains, 11.5 s)
+2500 rpm: 1 mm/s g 1375.0 a_rob 14.0 ['linear limit'], 2 mm/s g 1375.0 a_rob 14.0 ['linear limit'], 5 mm/s g 1000.0 a_rob 10.0 ['linear limit'] (4 gains, 5.4 s)
+2375 rpm: 1 mm/s g 1062.5 a_rob 12.0 ['linear limit'], 2 mm/s g 1062.5 a_rob 12.0 ['linear limit'], 5 mm/s g 750.0 a_rob 8.0 ['linear limit'] (4 gains, 22.0 s)
+2750 rpm: 1 mm/s g 1750.0 a_rob 16.0 ['depth margin'], 2 mm/s g 1750.0 a_rob 16.0 ['depth margin'], 5 mm/s g 1375.0 a_rob 12.0 ['depth margin'] (4 gains, 5.8 s)
+2625 rpm: 1 mm/s g 1500.0 a_rob 14.0 ['depth margin'], 2 mm/s g 1500.0 a_rob 14.0 ['depth margin'], 5 mm/s g 1250.0 a_rob 10.0 ['depth margin'] (4 gains, 23.5 s)
+2875 rpm: 1 mm/s g 2000.0 a_rob 18.0 ['depth margin'], 2 mm/s g 1750.0 a_rob 16.0 ['depth margin'], 5 mm/s g 1562.5 a_rob 14.0 ['depth margin'] (6 gains, 63.4 s)
+3000 rpm: 1 mm/s g 2250.0 a_rob 20.0 ['depth margin'], 2 mm/s g 1750.0 a_rob 16.0 ['depth margin'], 5 mm/s g 1750.0 a_rob 14.0 ['certificate'] (7 gains, 88.1 s)
+{
+ "1": {
+  "mean_a_rob_mm": 19.714285714285715,
+  "mean_a_rob_kappa1_mm": 21.714285714285715,
+  "median_a_rob_over_a_lim": 0.8727495504174448,
+  "binding_counts": {
+   "a_phys": 1,
+   "depth margin": 13,
+   "linear limit": 7
+  },
+  "corrected_down": [],
+  "upward_possible": []
+ },
+ "2": {
+  "mean_a_rob_mm": 18.761904761904763,
+  "mean_a_rob_kappa1_mm": 19.904761904761905,
+  "median_a_rob_over_a_lim": 0.8824948482617841,
+  "binding_counts": {
+   "a_phys": 1,
+   "depth margin": 13,
+   "linear limit": 7
+  },
+  "corrected_down": [],
+  "upward_possible": []
+ },
+ "5": {
+  "mean_a_rob_mm": 15.142857142857142,
+  "mean_a_rob_kappa1_mm": 16.0,
+  "median_a_rob_over_a_lim": 0.8466172939222494,
+  "binding_counts": {
+   "certificate": 6,
+   "depth margin": 10,
+   "linear limit": 5
+  },
+  "corrected_down": [],
+  "upward_possible": []
+ }
+}

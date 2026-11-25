@@ -147,11 +147,16 @@ def lab(b):
 
 
 # ------------------------------------------------------------------ designs ----
+BA_SOURCE = "chart"                                      # 'chart': basin_aware.json; 'kappa': ba_kappa.json (a <= 0.9 a_lim)
+BAK_JSON = os.path.join(HERE, "ba_kappa.json")
+
+
 def load_designs(speeds):
     """Per speed: the reference design (auth10) and BA(b) for every b."""
     ba = json.load(open(BA_JSON))
     fd = json.load(open(FD_JSON))
     assert np.allclose(ba["protocol"]["beta_req_mmps"], [b * 1e3 for b in B_REQ]), "b values differ from basin_aware"
+    bak = json.load(open(BAK_JSON)) if BA_SOURCE == "kappa" else None
     D = {}
     for n in speeds:
         k = f"{n:.0f}"
@@ -162,6 +167,15 @@ def load_designs(speeds):
                    a_over_a_lim=float(r["a_chk"]) / float(r["a_lim"]), source=f"fair_designs.json speeds[{k}].{REF}")
         bad = {}
         for b in B_REQ:
+            if bak is not None:                            # the basin-aware chart with the depth margin kappa
+                zk = bak["speeds"][k]["designs"][str(b)]
+                g, a, al = zk.get("g"), float(zk.get("a_rob") or 0.0), zk.get("a_lim")
+                bad[lab(b)] = dict(g=None if g is None else float(g), a_mm=a, a_lim_mm=al,
+                                   a_over_a_lim=(a / al) if (g is not None and al) else None, binding=zk.get("binding"),
+                                   beta_cert_mmps=None if zk.get("beta_ref_at_a_rob") is None
+                                   else float(zk["beta_ref_at_a_rob"]) * 1e3,
+                                   source=f"ba_kappa.json speeds[{k}].designs[{b}] (kappa {bak['kappa']})")
+                continue
             z = ps["designs"][lab(b)]
             g = z.get("g")
             a = float(z.get("a_rob_mm") or 0.0)
@@ -172,6 +186,9 @@ def load_designs(speeds):
                                source=f"basin_aware.json per_speed[{k}].designs[{lab(b)}]")
         D[float(n)] = dict(ref=ref, ba=bad)
     return D
+
+
+KINDS = ("own", "common")
 
 
 def plan(D):
@@ -190,6 +207,8 @@ def plan(D):
                 continue                                   # no basin-aware design at this speed and b
             ac = min(ar, z["a_mm"])
             for kind, pr, pb in (("own", (n, gr, ar), (n, z["g"], z["a_mm"])), ("common", (n, gr, ac), (n, z["g"], ac))):
+                if kind not in KINDS:
+                    continue
                 comps.append(dict(rpm=n, b=b, kind=kind, ref=pr, ba=pb))
                 add(pr, b, f"ref {kind} b={lab(b)}")
                 add(pb, b, f"BA({lab(b)}) {kind}")
@@ -603,7 +622,9 @@ def assemble(D, comps, points, samples, n, idx, cfs, meta):
         speeds_rpm=sorted(D), n_samples=n, level=LEVEL, seed=MC.SEED,
         ranges={k: list(v) for k, v in MC.ranges(LEVEL).items()}, b_mmps=[b * 1e3 for b in B_REQ],
         designs=dict(ref=f"fair_designs.json speeds[n].{REF}: g, a_ref = a_chk",
-                     BA="basin_aware.json per_speed[n].designs[b]: g (g_rob), a_rob_mm"),
+                     BA=("basin_aware.json per_speed[n].designs[b]: g (g_rob), a_rob_mm" if BA_SOURCE == "chart" else
+                         "ba_kappa.json speeds[n].designs[b]: g, a_rob (basin-aware chart with a <= 0.9 a_lim)"),
+                     ba_source=BA_SOURCE, kinds=list(KINDS)),
         comparisons=dict(own="ref at (g_ref, a_ref) vs BA(b) at (g*(b), a_rob(b))",
                          common="both at a_c = min(a_ref, a_rob(b)), each with its own gain"),
         unsettled=("the kick of DV_LO = 1e-4 m/s ends in chatter at one of the phases 0, 4, 8, 12 (run in this order, "
@@ -695,9 +716,16 @@ def main():
     ap.add_argument("--plan", action="store_true", help="print the runs needed and the estimate only")
     ap.add_argument("--assemble", action="store_true", help="no simulation: the JSON from the cache")
     ap.add_argument("--write-every", type=float, default=600.0, help="seconds between partial JSON writes")
+    ap.add_argument("--ba-source", choices=("chart", "kappa"), default="chart",
+                    help="BA(b) from basin_aware.json (chart) or from ba_kappa.json (kappa: a <= 0.9 a_lim)")
+    ap.add_argument("--kinds", default="own,common", help="comparisons to run: own, common or both")
+    ap.add_argument("--cache", default=None, help="cache path (default <out>_cache.jsonl); share it between variants")
     a = ap.parse_args()
+    global BA_SOURCE, KINDS
+    BA_SOURCE = a.ba_source
+    KINDS = tuple(x.strip() for x in a.kinds.split(",") if x.strip())
     out_path = os.path.join(HERE, "mc_designs_smoke.json") if a.smoke else os.path.abspath(a.out)
-    cpath = cache_path(out_path)
+    cpath = os.path.abspath(a.cache) if a.cache else cache_path(out_path)
     speeds = tuple(float(x) for x in a.speeds.split(",") if x.strip())
     t_start = time.time()
     MC.restore_nominal()

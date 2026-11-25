@@ -1,0 +1,4 @@
+mc_designs: 6 speeds, 32 design-depth points, 60 samples + nominal = 1952 units; protocol 69b6967c66, cache verification/paper/mc_designs_cache.jsonl
+  cache: 0 runs, 0 closed-form records (0 unreadable lines, 0 of another protocol); 0 units resolved
+  to run: 1952 units, at most 20984 simulator runs (every cut settles and no kick of b chatters), at least 1952
+  estimate at 1.73 s per run (mean simulation time per run of mc_kick.json (4394 runs)): at most 10.09 CPU-h, 2.52 h with 4 workers
