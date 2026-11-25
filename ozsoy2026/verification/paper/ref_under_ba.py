@@ -63,6 +63,9 @@ def job(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=2)
+    ap.add_argument("--kappa", type=float, default=None,
+                    help="also require a <= kappa a_lim (ba_kappa.kappa_rows on the cached scans); writes "
+                         "ref_under_ba_kappa<kappa>.json and compares with ba_kappa.json")
     a = ap.parse_args()
     fd = json.load(open(os.path.join(HERE, "fair_designs.json")))
     ba = json.load(open(os.path.join(HERE, "basin_aware.json")))
@@ -84,21 +87,30 @@ def main():
                 print(f"{r['rpm']:.0f} rpm g {r['g']:.1f}: {len(r['scan']['rows'])} rows ({r['source']}, {r['seconds']} s)",
                       flush=True)
     import basin_aware as BA
-    out = dict(note=__doc__.split("\n\n")[0] + " " + __doc__.split("\n\n")[1], speeds={})
+    out = dict(note=__doc__.split("\n\n")[0] + " " + __doc__.split("\n\n")[1], speeds={}, kappa=a.kappa)
+    if a.kappa is not None:
+        import ba_kappa as BK
+        bk = json.load(open(os.path.join(HERE, "ba_kappa.json")))
     for k, v in fd["speeds"].items():
         n = float(k)
         rec = {}
         for d in DESIGNS:
             g = float(v[d]["g"])
             sc = cache[(n, g)]["scan"]
+            if a.kappa is not None:
+                sc = BK.kappa_rows(sc, a.kappa)
             r = dict(g=g, a_lim_mm=sc["a_lim"], a_chk_mm=v[d]["a_chk"])
             for b in BETAS:
                 a_rob, mins, fail = BA.evaluate(sc["rows"], b * 1e-3)
                 r[f"beta_{b:g}"] = dict(a_rob_mm=a_rob, min_beta_mmps=float(mins) * 1e3,
                                         binding=BA.binding(fail, b * 1e-3, a_rob) if fail is not None else ["a_phys"])
             rec[d] = r
-        rec["ba"] = {f"beta_{b:g}": dict(g=ba["per_speed"][k]["designs"][f"{b:g}"]["g"],
-                                         a_rob_mm=ba["per_speed"][k]["designs"][f"{b:g}"]["a_rob_mm"]) for b in BETAS}
+        if a.kappa is None:
+            rec["ba"] = {f"beta_{b:g}": dict(g=ba["per_speed"][k]["designs"][f"{b:g}"]["g"],
+                                             a_rob_mm=ba["per_speed"][k]["designs"][f"{b:g}"]["a_rob_mm"]) for b in BETAS}
+        else:
+            rec["ba"] = {f"beta_{b:g}": dict(g=bk["speeds"][k]["designs"][str(b * 1e-3)]["g"],
+                                             a_rob_mm=bk["speeds"][k]["designs"][str(b * 1e-3)]["a_rob"]) for b in BETAS}
         out["speeds"][k] = rec
     import numpy as np
     summ = {}
@@ -107,7 +119,7 @@ def main():
                                                                    for k in out["speeds"]])))
                    for b in BETAS}
     out["summary"] = summ
-    with open(OUT, "w") as fh:
+    with open(OUT if a.kappa is None else os.path.join(HERE, f"ref_under_ba_kappa{a.kappa:g}.json"), "w") as fh:
         json.dump(out, fh, indent=1)
     print(json.dumps(summ, indent=1))
 

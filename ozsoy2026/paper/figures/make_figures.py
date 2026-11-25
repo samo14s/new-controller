@@ -864,50 +864,86 @@ BIND_MK = {0: "D", 1: "o", 2: "s", 3: "^"}                           # a_phys, l
 
 
 def fig_ba():
-    """Basin-aware stability chart: depths against speed (verification/paper/basin_aware.npz,
-    circle_criterion.json)."""
+    """Basin-aware stability chart (verification/paper: basin_aware.npz, ba_entry.json, ba_kappa.json,
+    ba_entry_kappa.json, fair_designs.json, circle_criterion.json).  Depths are grid values at the 21 chart
+    speeds (markers); the thin lines only guide the eye."""
     B = np.load(os.path.join(VER, "basin_aware.npz"), allow_pickle=True)
     C = json.load(open(os.path.join(VER, "circle_criterion.json")))
+    E = json.load(open(os.path.join(VER, "ba_entry.json")))["chart"]
+    BK = json.load(open(os.path.join(VER, "ba_kappa.json")))
+    EK = json.load(open(os.path.join(VER, "ba_entry_kappa.json")))["chart"]
+    FD = json.load(open(os.path.join(VER, "fair_designs.json")))["speeds"]
     n = B["rpm"]
-    fig, ax = plt.subplots(2, 1, figsize=(W2, 120 * MM), sharex=True, layout="constrained",
-                           gridspec_kw={"height_ratios": [2.4, 1]})
+    keys = [f"{x:.0f}" for x in n]
+    labs = ["1", "2", "5"]
+    fig, ax = plt.subplots(3, 1, figsize=(W2, 165 * MM), sharex=True, layout="constrained",
+                           gridspec_kw={"height_ratios": [2.2, 2.0, 1.0]})
+    # (a) the chart and its abrupt-entry depth
     a = ax[0]
     dn = B["dense_rpm"]
     a.plot(dn, B["dense_a_lim0"], "--", color=GREY, lw=0.85, label=r"$a_{\mathrm{lim}}(0)$, uncontrolled")
     rows = C["g_best"]["rows"]
     a.plot([q["rpm"] for q in rows], [q["a_circ_eff_mm"] for q in rows], "o", color=C3C, ms=1.3, mew=0,
-           label=r"$a_{\mathrm{circ}}$: every disturbance (Prop. 1)")
-    a.plot(dn, B["dense_a_lim_auth"], color=K, lw=1.0, label=r"$a_{\mathrm{lim}}(g^\star)$, authority schedule")
-    a.plot(dn, B["dense_a_chk"], color=BLUE, lw=0.85, label=r"$a_{\mathrm{chk}}$, checked depth")
-    a.plot(dn, B["dense_a_pub"], color=GREY, lw=0.85, label="Published condition, Eq. (13)")
-    a.axhline(float(B["a_phys"]), color=K, lw=0.6, ls="-.")
-    a.text(dn[-1], float(B["a_phys"]) + 0.4, r"$a_{\mathrm{phys}}=2D$", ha="right", va="bottom", fontsize=7.5)
-    hb = []
+           label=r"$a_{\mathrm{circ}}$ (Prop. 1)")
+    cap = float(B["a_phys"])
+    a.axhline(cap, color=K, lw=0.6, ls="-.")
+    a.text(dn[-1], cap + 0.4, r"$a_{\mathrm{cap}}=32$ mm (assumed)", ha="right", va="bottom", fontsize=7.5)
     for j, br in enumerate(B["beta_req"]):
         col = BA_COL[round(float(br), 6)]
         y = B["a_rob"][:, j]
-        hb += a.plot(n, y, "-", color=col, lw=0.85, label=rf"$a_{{\mathrm{{rob}}}}$, $\beta_{{\mathrm{{req}}}}={br*1e3:.0f}$ mm/s")
+        a.plot(n, y, "-", color=col, lw=0.6, label=rf"$a_{{\mathrm{{rob}}}}$, $\beta_{{\mathrm{{req}}}}={br*1e3:.0f}$ mm/s")
         for code, mk in BIND_MK.items():
             w = B["binding"][:, j] == code
             a.plot(n[w], y[w], mk, color=col, ms=3.0, mfc="white" if j == 0 else col, mew=0.7)
-    a.set(ylabel="Axial depth of cut $a$ (mm)", ylim=(0, 35), xlim=(480, 3020))
+        ys = np.array(E["a_step_mm"][labs[j]], float)
+        a.plot(n, ys, ":", color=col, lw=0.8, marker="x", ms=3.0, mew=0.8,
+               label=rf"step entry also settles, {br*1e3:.0f} mm/s")
+    a.set(ylabel="Depth $a$ (mm)", ylim=(0, 35), xlim=(480, 3020))
     h, lab = a.get_legend_handles_labels()
     mk_h = [Line2D([], [], color=K, marker=BIND_MK[c], ls="none", ms=3.0, mfc="white") for c in (1, 2, 3, 0)]
-    mk_l = ["next depth: linear limit", "voltage margin", "certificate", r"$a_{\mathrm{phys}}$"]
+    mk_l = ["next depth: linear limit", "voltage margin", "certificate", r"$a_{\mathrm{cap}}$"]
     a.legend(h + mk_h, lab + mk_l, loc="lower left", bbox_to_anchor=(0.0, 1.01), ncol=3, borderaxespad=0.0,
-             columnspacing=1.0, handlelength=1.8)
+             columnspacing=0.9, handlelength=1.8, fontsize=6.6)
+    # (b) like-for-like: same gain range, voltage margin and depth margin
     b = ax[1]
-    b.plot(dn, B["dense_g_auth"], color=BLUE, lw=0.85, label=r"$g^\star$, authority schedule")
+    ref = np.array([FD[k]["auth10"]["a_chk"] for k in keys])
+    pub = np.array([FD[k]["pub"]["a_chk"] for k in keys])
+    b.plot(n, ref, "s-", color=K, ms=2.8, lw=0.8, label=r"authority rule, $a_{\mathrm{chk}}$ (step entry checked)")
+    b.plot(n, pub, "^-", color=GREY, ms=2.8, lw=0.7, label=r"published condition, $a_{\mathrm{chk}}$")
     for j, br in enumerate(B["beta_req"]):
         col = BA_COL[round(float(br), 6)]
-        b.plot(n, B["g_star"][:, j], "o-", color=col, ms=2.6, lw=0.7, mfc="white" if j == 0 else col)
-    b.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"Gain (V s/m)", ylim=(-100, 3200))
+        yk = np.array([BK["speeds"][k]["designs"][str(float(br))]["a_rob"] for k in keys], float)
+        ysk = np.array(EK["a_step_mm"][labs[j]], float)
+        b.plot(n, yk, "o-", color=col, ms=2.8, lw=0.6, mfc="white" if j == 0 else col, mew=0.7,
+               label=rf"basin-aware, {br*1e3:.0f} mm/s")
+        b.plot(n, ysk, ":", color=col, lw=0.8, marker="x", ms=3.0, mew=0.8)
+    b.set(ylabel="Depth $a$ (mm)", ylim=(0, 35))
+    hb, lb = b.get_legend_handles_labels()
+    hb.append(Line2D([], [], color=K, ls=":", marker="x", ms=3.0, mew=0.8, lw=0.8))
+    lb.append("basin-aware, step entry also settles")
+    b.legend(hb, lb, loc="upper right", ncol=2, fontsize=6.6, handlelength=1.8, columnspacing=0.9)
+    # (c) gains
+    c = ax[2]
+    c.plot(n, [FD[k]["auth10"]["g"] for k in keys], "s-", color=K, ms=2.4, lw=0.7, label="authority rule")
+    c.plot(n, [FD[k]["pub"]["g"] for k in keys], "^-", color=GREY, ms=2.4, lw=0.7, label="published condition")
+    for j, br in enumerate(B["beta_req"]):
+        col = BA_COL[round(float(br), 6)]
+        c.plot(n, B["g_star"][:, j], "o-", color=col, ms=2.4, lw=0.6, mfc="white" if j == 0 else col,
+               label=rf"$g_{{\mathrm{{rob}}}}$, {br*1e3:.0f} mm/s")
+    c.set(xlabel="Spindle speed $n$ (rpm)", ylabel=r"Gain (V s/m)", ylim=(-100, 4300))
+    c.legend(loc="upper center", ncol=5, fontsize=6.4, handlelength=1.6, columnspacing=0.8, borderaxespad=0.2)
     fig.align_ylabels(ax)
     letter(a, "a")
     letter(b, "b")
+    letter(c, "c")
     save(fig, "fig_basin_aware")
     NUM["fig_ba"] = dict(speeds=[float(x) for x in n], beta_req_mmps=[float(x) * 1e3 for x in B["beta_req"]],
                          a_rob_mm={f"{br*1e3:.0f}": [r(x, 1) for x in B["a_rob"][:, j]] for j, br in enumerate(B["beta_req"])},
+                         a_step_mm={l: E["a_step_mm"][l] for l in labs},
+                         a_rob_kappa_mm={l: [BK["speeds"][k]["designs"][str(float(b_) * 1e-3)]["a_rob"] for k in keys]
+                                         for l, b_ in zip(labs, (1, 2, 5))},
+                         a_step_kappa_mm={l: EK["a_step_mm"][l] for l in labs},
+                         a_chk_auth10_mm=[r(x, 2) for x in ref], a_chk_pub_mm=[r(x, 2) for x in pub],
                          g_star={f"{br*1e3:.0f}": [r(x, 1) for x in B["g_star"][:, j]] for j, br in enumerate(B["beta_req"])})
 
 

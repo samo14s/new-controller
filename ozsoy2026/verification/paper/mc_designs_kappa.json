@@ -89,8 +89,8 @@
  "complete": false,
  "progress": {
   "units": 1952,
-  "resolved": 69,
-  "missing": 1883
+  "resolved": 114,
+  "missing": 1838
  },
  "designs": {
   "750": {
@@ -388,12 +388,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -401,12 +401,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 3,
-     "P_fail": 0.42857142857142855,
+     "P_fail": 0.2,
      "cp95": [
-      0.09898827844250786,
-      0.8159484323599169
+      0.0433120051058366,
+      0.48089113380685305
      ],
      "unsettled": 3,
      "kick": 0,
@@ -414,21 +414,21 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 4,
+     "both_pass": 12,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 2,
      "mcnemar_exact_p_pooled": 0.5
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 1,
-     "ties": 0,
+     "ties": 1,
      "p_exact_two_sided": 1.0
     },
-    "P_fail_BA_minus_ref": 0.2857142857142857,
+    "P_fail_BA_minus_ref": 0.13333333333333336,
     "speeds_BA_fails_more": [
      2500.0,
      2875.0
@@ -451,12 +451,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -464,12 +464,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -477,18 +477,18 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 6,
+     "both_pass": 14,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 0,
      "mcnemar_exact_p_pooled": 1.0
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 0,
-     "ties": 1,
+     "ties": 2,
      "p_exact_two_sided": 1.0
     },
     "P_fail_BA_minus_ref": 0.0,
@@ -515,12 +515,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -528,12 +528,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 2,
-     "P_fail": 0.2857142857142857,
+     "P_fail": 0.13333333333333333,
      "cp95": [
-      0.03669256617608555,
-      0.7095791362626572
+      0.016575913440083623,
+      0.40460269660337206
      ],
      "unsettled": 2,
      "kick": 0,
@@ -541,21 +541,21 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 5,
+     "both_pass": 13,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 1,
      "mcnemar_exact_p_pooled": 1.0
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 1,
-     "ties": 0,
+     "ties": 1,
      "p_exact_two_sided": 1.0
     },
-    "P_fail_BA_minus_ref": 0.14285714285714285,
+    "P_fail_BA_minus_ref": 0.06666666666666667,
     "speeds_BA_fails_more": [
      2500.0
     ],
@@ -578,12 +578,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -591,12 +591,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -604,18 +604,18 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 6,
+     "both_pass": 14,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 0,
      "mcnemar_exact_p_pooled": 1.0
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 0,
-     "ties": 1,
+     "ties": 2,
      "p_exact_two_sided": 1.0
     },
     "P_fail_BA_minus_ref": 0.0,
@@ -642,12 +642,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -655,12 +655,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 4,
-     "P_fail": 0.5714285714285714,
+     "P_fail": 0.26666666666666666,
      "cp95": [
-      0.184051567640083,
-      0.9010117215574921
+      0.07787154629104358,
+      0.5510032410369705
      ],
      "unsettled": 4,
      "kick": 0,
@@ -668,21 +668,21 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 3,
+     "both_pass": 11,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 3,
      "mcnemar_exact_p_pooled": 0.25
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 1,
-     "ties": 0,
+     "ties": 1,
      "p_exact_two_sided": 1.0
     },
-    "P_fail_BA_minus_ref": 0.42857142857142855,
+    "P_fail_BA_minus_ref": 0.2,
     "speeds_BA_fails_more": [
      1125.0,
      2500.0,
@@ -705,12 +705,12 @@
      2875.0
     ],
     "ref": {
-     "n": 7,
+     "n": 15,
      "failures": 1,
-     "P_fail": 0.14285714285714285,
+     "P_fail": 0.06666666666666667,
      "cp95": [
-      0.0036102968619005833,
-      0.5787231970431952
+      0.0016864302413527013,
+      0.3194845665783034
      ],
      "unsettled": 1,
      "kick": 0,
@@ -718,12 +718,12 @@
      "nominal_fail_rpm": []
     },
     "BA": {
-     "n": 7,
+     "n": 15,
      "failures": 4,
-     "P_fail": 0.5714285714285714,
+     "P_fail": 0.26666666666666666,
      "cp95": [
-      0.184051567640083,
-      0.9010117215574921
+      0.07787154629104358,
+      0.5510032410369705
      ],
      "unsettled": 4,
      "kick": 0,
@@ -731,21 +731,21 @@
      "nominal_fail_rpm": []
     },
     "paired": {
-     "n": 7,
+     "n": 15,
      "both_fail": 1,
-     "both_pass": 3,
+     "both_pass": 11,
      "ref_fails_BA_passes": 0,
      "BA_fails_ref_passes": 3,
      "mcnemar_exact_p_pooled": 0.25
     },
     "sign_test_over_samples": {
-     "samples": 1,
+     "samples": 2,
      "ref_fails_at_more_speeds": 0,
      "BA_fails_at_more_speeds": 1,
-     "ties": 0,
+     "ties": 1,
      "p_exact_two_sided": 1.0
     },
-    "P_fail_BA_minus_ref": 0.42857142857142855,
+    "P_fail_BA_minus_ref": 0.2,
     "speeds_BA_fails_more": [
      1125.0,
      2500.0,
@@ -821,12 +821,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -847,12 +847,12 @@
       "BA": {
        "g": 2750.0,
        "a_mm": 32.0,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -871,9 +871,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -881,7 +881,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      },
      "common": {
@@ -896,12 +897,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -922,12 +923,12 @@
       "BA": {
        "g": 2750.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -946,9 +947,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -956,7 +957,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      }
     },
@@ -973,12 +975,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -999,12 +1001,12 @@
       "BA": {
        "g": 2750.0,
        "a_mm": 32.0,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1023,9 +1025,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -1033,7 +1035,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      },
      "common": {
@@ -1048,12 +1051,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1074,12 +1077,12 @@
       "BA": {
        "g": 2750.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1098,9 +1101,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -1108,7 +1111,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      }
     },
@@ -1125,12 +1129,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1151,12 +1155,12 @@
       "BA": {
        "g": 2062.5,
        "a_mm": 20.0,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1175,9 +1179,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -1185,7 +1189,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      },
      "common": {
@@ -1200,12 +1205,12 @@
       "ref": {
        "g": 3000.0,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1226,12 +1231,12 @@
       "BA": {
        "g": 2062.5,
        "a_mm": 19.466449705209786,
-       "n": 2,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.841886116991581
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1250,9 +1255,9 @@
        }
       },
       "paired": {
-       "n": 2,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 2,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
@@ -1260,7 +1265,8 @@
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
        0,
-       1
+       1,
+       2
       ]
      }
     }
@@ -1326,12 +1332,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1352,12 +1358,12 @@
       "BA": {
        "g": 2500.0,
        "a_mm": 30.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1376,16 +1382,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -1400,12 +1408,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1426,12 +1434,12 @@
       "BA": {
        "g": 2500.0,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1450,16 +1458,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     },
@@ -1476,12 +1486,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1502,12 +1512,12 @@
       "BA": {
        "g": 2250.0,
        "a_mm": 26.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1526,16 +1536,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -1550,12 +1562,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1576,12 +1588,12 @@
       "BA": {
        "g": 2250.0,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1600,16 +1612,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     },
@@ -1626,12 +1640,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 19.21466477096522,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1652,12 +1666,12 @@
       "BA": {
        "g": 1500.0,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 3,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.3333333333333333,
        "cp95": [
-        0.025,
-        1.0
+        0.008403758659612636,
+        0.9057006759497539
        ],
        "unsettled": 1,
        "kick": 0,
@@ -1676,16 +1690,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.3333333333333333,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -1700,12 +1716,12 @@
       "ref": {
        "g": 2512.39013671875,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1726,12 +1742,12 @@
       "BA": {
        "g": 1500.0,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 3,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.3333333333333333,
        "cp95": [
-        0.025,
-        1.0
+        0.008403758659612636,
+        0.9057006759497539
        ],
        "unsettled": 1,
        "kick": 0,
@@ -1750,16 +1766,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.3333333333333333,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     }
@@ -1825,12 +1843,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1851,12 +1869,12 @@
       "BA": {
        "g": 1625.0,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1875,16 +1893,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -1899,12 +1919,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1925,12 +1945,12 @@
       "BA": {
        "g": 1625.0,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -1949,16 +1969,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     },
@@ -1975,12 +1997,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2001,12 +2023,12 @@
       "BA": {
        "g": 1625.0,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2025,16 +2047,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -2049,12 +2073,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2075,12 +2099,12 @@
       "BA": {
        "g": 1625.0,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2099,16 +2123,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     },
@@ -2125,12 +2151,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 15.6532646765716,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2151,12 +2177,12 @@
       "BA": {
        "g": 1500.0,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2175,16 +2201,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      },
      "common": {
@@ -2199,12 +2227,12 @@
       "ref": {
        "g": 1860.16845703125,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2225,12 +2253,12 @@
       "BA": {
        "g": 1500.0,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 3,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.7075982261787133
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2249,16 +2277,18 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 3,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 3,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1,
+       2
       ]
      }
     }
@@ -2324,12 +2354,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 15.247173767237566,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2350,12 +2380,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2374,16 +2404,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -2398,12 +2429,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2424,12 +2455,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2448,16 +2479,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -2474,12 +2506,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 15.247173767237566,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2500,12 +2532,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2524,16 +2556,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -2548,12 +2581,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2574,12 +2607,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2598,16 +2631,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -2624,12 +2658,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 15.247173767237566,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2650,12 +2684,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2674,16 +2708,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -2698,12 +2733,12 @@
       "ref": {
        "g": 213.68408203125,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2724,12 +2759,12 @@
       "BA": {
        "g": 188.425411,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2748,16 +2783,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 1,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     }
@@ -2823,12 +2859,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2849,12 +2885,12 @@
       "BA": {
        "g": 1375.0,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -2873,16 +2909,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -2897,12 +2934,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2923,12 +2960,12 @@
       "BA": {
        "g": 1375.0,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2947,16 +2984,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -2973,12 +3011,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -2999,12 +3037,12 @@
       "BA": {
        "g": 1375.0,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3023,16 +3061,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -3047,12 +3086,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3073,12 +3112,12 @@
       "BA": {
        "g": 1375.0,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3097,16 +3136,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -3123,12 +3163,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 12.940411910865691,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3149,12 +3189,12 @@
       "BA": {
        "g": 1000.0,
        "a_mm": 10.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3173,16 +3213,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -3197,12 +3238,12 @@
       "ref": {
        "g": 1395.81298828125,
        "a_mm": 10.0,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3223,12 +3264,12 @@
       "BA": {
        "g": 1000.0,
        "a_mm": 10.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3247,16 +3288,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     }
@@ -3322,12 +3364,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3348,12 +3390,12 @@
       "BA": {
        "g": 2000.0,
        "a_mm": 18.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3362,7 +3404,7 @@
        "unsettled_and_cf_unstable": 0,
        "settled_but_cf_unstable": 0,
        "failed_but_cf_stable": 1,
-       "settled_pre_kick_clipped": 0,
+       "settled_pre_kick_clipped": 1,
        "nominal": {
         "unsettled": false,
         "fail": false,
@@ -3372,16 +3414,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -3396,12 +3439,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3422,12 +3465,12 @@
       "BA": {
        "g": 2000.0,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3446,16 +3489,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -3472,12 +3516,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3498,12 +3542,12 @@
       "BA": {
        "g": 1750.0,
        "a_mm": 16.0,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3522,16 +3566,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -3546,12 +3591,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3572,12 +3617,12 @@
       "BA": {
        "g": 1750.0,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3596,16 +3641,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 1,
+       "both_pass": 2,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 0,
        "mcnemar_exact_p": 1.0
       },
       "P_fail_BA_minus_ref": 0.0,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     },
@@ -3622,12 +3668,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3648,12 +3694,12 @@
       "BA": {
        "g": 1562.5,
        "a_mm": 14.0,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3672,16 +3718,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      },
      "common": {
@@ -3696,12 +3743,12 @@
       "ref": {
        "g": 2174.37744140625,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 0,
        "P_fail": 0.0,
        "cp95": [
         0.0,
-        0.975
+        0.841886116991581
        ],
        "unsettled": 0,
        "kick": 0,
@@ -3722,12 +3769,12 @@
       "BA": {
        "g": 1562.5,
        "a_mm": 12.898626886748936,
-       "n": 1,
+       "n": 2,
        "failures": 1,
-       "P_fail": 1.0,
+       "P_fail": 0.5,
        "cp95": [
-        0.025,
-        1.0
+        0.01257911709342505,
+        0.9874208829065749
        ],
        "unsettled": 1,
        "kick": 0,
@@ -3746,16 +3793,17 @@
        }
       },
       "paired": {
-       "n": 1,
+       "n": 2,
        "both_fail": 0,
-       "both_pass": 0,
+       "both_pass": 1,
        "ref_fails_BA_passes": 0,
        "BA_fails_ref_passes": 1,
        "mcnemar_exact_p": 1.0
       },
-      "P_fail_BA_minus_ref": 1.0,
+      "P_fail_BA_minus_ref": 0.5,
       "samples_used": [
-       0
+       0,
+       1
       ]
      }
     }
@@ -3806,7 +3854,7 @@
    "unsettled": [
     0,
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -3869,7 +3917,7 @@
     "1": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -3931,7 +3979,7 @@
     "2": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -3993,7 +4041,7 @@
     "5": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -4056,7 +4104,7 @@
    "cf_stable": [
     1,
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -4118,7 +4166,7 @@
    "cf_a_lim_mm": [
     34.8828135631233,
     36.03381629933442,
-    null,
+    41.554203819178746,
     null,
     null,
     null,
@@ -4271,7 +4319,7 @@
    "unsettled": [
     0,
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -4334,7 +4382,7 @@
     "1": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -4396,7 +4444,7 @@
     "2": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -4459,7 +4507,7 @@
    "cf_stable": [
     1,
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -4521,7 +4569,7 @@
    "cf_a_lim_mm": [
     32.77646215504126,
     33.28014579636376,
-    null,
+    38.81772475076806,
     null,
     null,
     null,
@@ -4674,7 +4722,7 @@
    "unsettled": [
     0,
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -4737,7 +4785,7 @@
     "1": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -4799,7 +4847,7 @@
     "2": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -4862,7 +4910,7 @@
    "cf_stable": [
     1,
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -4924,7 +4972,7 @@
    "cf_a_lim_mm": [
     32.77646215504126,
     33.28014579636376,
-    null,
+    38.81772475076806,
     null,
     null,
     null,
@@ -5068,7 +5116,7 @@
    "unsettled": [
     0,
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -5131,7 +5179,7 @@
     "5": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -5194,7 +5242,7 @@
    "cf_stable": [
     1,
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -5256,7 +5304,7 @@
    "cf_a_lim_mm": [
     21.33976517119471,
     27.067659933129764,
-    null,
+    27.353070795852684,
     null,
     null,
     null,
@@ -5400,7 +5448,7 @@
    "unsettled": [
     0,
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -5463,7 +5511,7 @@
     "5": [
      0,
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -5526,7 +5574,7 @@
    "cf_stable": [
     1,
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -5588,7 +5636,7 @@
    "cf_a_lim_mm": [
     21.33976517119471,
     27.067659933129764,
-    null,
+    27.353070795852684,
     null,
     null,
     null,
@@ -5751,8 +5799,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -5814,8 +5862,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -5876,8 +5924,8 @@
     ],
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -5938,8 +5986,8 @@
     ],
     "5": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -6001,8 +6049,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -6063,8 +6111,8 @@
    ],
    "cf_a_lim_mm": [
     30.191757424748214,
-    null,
-    null,
+    35.89123026543486,
+    41.67303623608908,
     null,
     null,
     null,
@@ -6207,8 +6255,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -6270,8 +6318,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -6333,8 +6381,8 @@
    },
    "cf_stable": [
     0,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -6395,8 +6443,8 @@
    ],
    "cf_a_lim_mm": [
     29.97023229966353,
-    null,
-    null,
+    35.78999971167861,
+    41.55575652215776,
     null,
     null,
     null,
@@ -6539,8 +6587,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -6602,8 +6650,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -6665,8 +6713,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -6727,8 +6775,8 @@
    ],
    "cf_a_lim_mm": [
     29.97023229966353,
-    null,
-    null,
+    35.78999971167861,
+    41.55575652215776,
     null,
     null,
     null,
@@ -6871,8 +6919,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -6934,8 +6982,8 @@
    "fail": {
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -6997,8 +7045,8 @@
    },
    "cf_stable": [
     0,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -7059,8 +7107,8 @@
    ],
    "cf_a_lim_mm": [
     25.69990089234527,
-    null,
-    null,
+    33.84998775889358,
+    37.6533590861625,
     null,
     null,
     null,
@@ -7203,8 +7251,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -7266,8 +7314,8 @@
    "fail": {
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -7329,8 +7377,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -7391,8 +7439,8 @@
    ],
    "cf_a_lim_mm": [
     25.69990089234527,
-    null,
-    null,
+    33.84998775889358,
+    37.6533590861625,
     null,
     null,
     null,
@@ -7536,8 +7584,8 @@
    },
    "unsettled": [
     1,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -7599,8 +7647,8 @@
    "fail": {
     "5": [
      1,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -7662,8 +7710,8 @@
    },
    "cf_stable": [
     0,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -7724,8 +7772,8 @@
    ],
    "cf_a_lim_mm": [
     15.012804441898327,
-    null,
-    null,
+    20.930427776865326,
+    21.03537470624464,
     null,
     null,
     null,
@@ -7868,8 +7916,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -7931,8 +7979,8 @@
    "fail": {
     "5": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -7994,8 +8042,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -8056,8 +8104,8 @@
    ],
    "cf_a_lim_mm": [
     30.191757424748214,
-    null,
-    null,
+    35.89123026543486,
+    41.67303623608908,
     null,
     null,
     null,
@@ -8220,8 +8268,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -8283,8 +8331,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -8345,8 +8393,8 @@
     ],
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -8407,8 +8455,8 @@
     ],
     "5": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -8470,8 +8518,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -8532,8 +8580,8 @@
    ],
    "cf_a_lim_mm": [
     18.739021132097662,
-    null,
-    null,
+    19.857267679006377,
+    22.117121388653537,
     null,
     null,
     null,
@@ -8685,8 +8733,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -8748,8 +8796,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -8810,8 +8858,8 @@
     ],
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -8873,8 +8921,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -8935,8 +8983,8 @@
    ],
    "cf_a_lim_mm": [
     16.798129611347633,
-    null,
-    null,
+    17.380915620154287,
+    19.50641990506872,
     null,
     null,
     null,
@@ -9088,8 +9136,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -9151,8 +9199,8 @@
    "fail": {
     "1": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -9213,8 +9261,8 @@
     ],
     "2": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -9276,8 +9324,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -9338,8 +9386,8 @@
    ],
    "cf_a_lim_mm": [
     16.798129611347633,
-    null,
-    null,
+    17.380915620154287,
+    19.50641990506872,
     null,
     null,
     null,
@@ -9483,8 +9531,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -9546,8 +9594,8 @@
    "fail": {
     "5": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -9609,8 +9657,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -9671,8 +9719,8 @@
    ],
    "cf_a_lim_mm": [
     15.813809809761278,
-    null,
-    null,
+    16.15109862926644,
+    18.187203466670425,
     null,
     null,
     null,
@@ -9815,8 +9863,8 @@
    },
    "unsettled": [
     0,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -9878,8 +9926,8 @@
    "fail": {
     "5": [
      0,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -9941,8 +9989,8 @@
    },
    "cf_stable": [
     1,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -10003,8 +10051,8 @@
    ],
    "cf_a_lim_mm": [
     18.739021132097662,
-    null,
-    null,
+    19.857267679006377,
+    22.117121388653537,
     null,
     null,
     null,
@@ -10165,7 +10213,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -10228,7 +10276,7 @@
    "fail": {
     "1": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -10290,7 +10338,7 @@
     ],
     "2": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -10352,7 +10400,7 @@
     ],
     "5": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -10415,7 +10463,7 @@
    },
    "cf_stable": [
     0,
-    null,
+    1,
     null,
     null,
     null,
@@ -10477,7 +10525,7 @@
    ],
    "cf_a_lim_mm": [
     7.117806957240898,
-    null,
+    15.544890446320128,
     null,
     null,
     null,
@@ -10642,8 +10690,8 @@
    },
    "unsettled": [
     1,
-    null,
-    null,
+    0,
+    0,
     null,
     null,
     null,
@@ -10705,8 +10753,8 @@
    "fail": {
     "1": [
      1,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -10767,8 +10815,8 @@
     ],
     "2": [
      1,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -10829,8 +10877,8 @@
     ],
     "5": [
      1,
-     null,
-     null,
+     0,
+     0,
      null,
      null,
      null,
@@ -10892,8 +10940,8 @@
    },
    "cf_stable": [
     0,
-    null,
-    null,
+    1,
+    1,
     null,
     null,
     null,
@@ -10954,8 +11002,8 @@
    ],
    "cf_a_lim_mm": [
     6.55303309327222,
-    null,
-    null,
+    14.036713723506072,
+    14.529063271584636,
     null,
     null,
     null,
@@ -11116,7 +11164,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -11179,7 +11227,7 @@
    "fail": {
     "1": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -11241,7 +11289,7 @@
     ],
     "2": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -11303,7 +11351,7 @@
     ],
     "5": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -11366,7 +11414,7 @@
    },
    "cf_stable": [
     0,
-    null,
+    1,
     null,
     null,
     null,
@@ -11428,7 +11476,7 @@
    ],
    "cf_a_lim_mm": [
     7.117806957240898,
-    null,
+    15.544890446320128,
     null,
     null,
     null,
@@ -11592,7 +11640,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -11655,7 +11703,7 @@
    "fail": {
     "1": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -11717,7 +11765,7 @@
     ],
     "2": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -11779,7 +11827,7 @@
     ],
     "5": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -11842,7 +11890,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -11904,7 +11952,7 @@
    ],
    "cf_a_lim_mm": [
     13.67686593435378,
-    null,
+    16.97247777614437,
     null,
     null,
     null,
@@ -12057,7 +12105,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -12120,7 +12168,7 @@
    "fail": {
     "1": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -12182,7 +12230,7 @@
     ],
     "2": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -12245,7 +12293,7 @@
    },
    "cf_stable": [
     0,
-    null,
+    1,
     null,
     null,
     null,
@@ -12307,7 +12355,7 @@
    ],
    "cf_a_lim_mm": [
     13.449602615509624,
-    null,
+    16.6581476098483,
     null,
     null,
     null,
@@ -12460,7 +12508,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -12523,7 +12571,7 @@
    "fail": {
     "1": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -12585,7 +12633,7 @@
     ],
     "2": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -12648,7 +12696,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -12710,7 +12758,7 @@
    ],
    "cf_a_lim_mm": [
     13.449602615509624,
-    null,
+    16.6581476098483,
     null,
     null,
     null,
@@ -12855,7 +12903,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -12918,7 +12966,7 @@
    "fail": {
     "5": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -12981,7 +13029,7 @@
    },
    "cf_stable": [
     0,
-    null,
+    1,
     null,
     null,
     null,
@@ -13043,7 +13091,7 @@
    ],
    "cf_a_lim_mm": [
     9.576266853512184,
-    null,
+    11.442583654041089,
     null,
     null,
     null,
@@ -13187,7 +13235,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -13250,7 +13298,7 @@
    "fail": {
     "5": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -13313,7 +13361,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -13375,7 +13423,7 @@
    ],
    "cf_a_lim_mm": [
     13.67686593435378,
-    null,
+    16.97247777614437,
     null,
     null,
     null,
@@ -13540,7 +13588,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -13603,7 +13651,7 @@
    "fail": {
     "1": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -13665,7 +13713,7 @@
     ],
     "2": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -13727,7 +13775,7 @@
     ],
     "5": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -13790,7 +13838,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -13852,7 +13900,7 @@
    ],
    "cf_a_lim_mm": [
     20.643470930234905,
-    null,
+    24.241123266406763,
     null,
     null,
     null,
@@ -13996,7 +14044,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -14059,7 +14107,7 @@
    "fail": {
     "1": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -14122,7 +14170,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -14184,7 +14232,7 @@
    ],
    "cf_a_lim_mm": [
     18.80480007873771,
-    null,
+    21.83325936686708,
     null,
     null,
     null,
@@ -14328,7 +14376,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -14391,7 +14439,7 @@
    "fail": {
     "1": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -14454,7 +14502,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -14516,7 +14564,7 @@
    ],
    "cf_a_lim_mm": [
     18.80480007873771,
-    null,
+    21.83325936686708,
     null,
     null,
     null,
@@ -14660,7 +14708,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -14723,7 +14771,7 @@
    "fail": {
     "2": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -14786,7 +14834,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -14848,7 +14896,7 @@
    ],
    "cf_a_lim_mm": [
     16.280063466556076,
-    null,
+    18.59633802430289,
     null,
     null,
     null,
@@ -14992,7 +15040,7 @@
    },
    "unsettled": [
     0,
-    null,
+    0,
     null,
     null,
     null,
@@ -15055,7 +15103,7 @@
    "fail": {
     "2": [
      0,
-     null,
+     0,
      null,
      null,
      null,
@@ -15118,7 +15166,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -15180,7 +15228,7 @@
    ],
    "cf_a_lim_mm": [
     16.280063466556076,
-    null,
+    18.59633802430289,
     null,
     null,
     null,
@@ -15324,7 +15372,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -15387,7 +15435,7 @@
    "fail": {
     "5": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -15450,7 +15498,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -15512,7 +15560,7 @@
    ],
    "cf_a_lim_mm": [
     14.467998117521027,
-    null,
+    16.3231452211499,
     null,
     null,
     null,
@@ -15656,7 +15704,7 @@
    },
    "unsettled": [
     1,
-    null,
+    0,
     null,
     null,
     null,
@@ -15719,7 +15767,7 @@
    "fail": {
     "5": [
      1,
-     null,
+     0,
      null,
      null,
      null,
@@ -15782,7 +15830,7 @@
    },
    "cf_stable": [
     1,
-    null,
+    1,
     null,
     null,
     null,
@@ -15844,7 +15892,7 @@
    ],
    "cf_a_lim_mm": [
     14.467998117521027,
-    null,
+    16.3231452211499,
     null,
     null,
     null,
@@ -17520,21 +17568,21 @@
    "agree": 344
   },
   "samples_rev_vs_tooth": {
-   "runs": 309,
-   "agree": 9,
+   "runs": 789,
+   "agree": 12,
    "note": "information: with runout the per-tooth classifier calls the settled spindle-periodic orbit chatter (mc_kick.py); the verdict is per revolution"
   }
  },
  "runs": {
-  "records": 653,
-  "cpu_s": 845.143,
-  "wall_s": 2339.982,
-  "mean_cpu_s_per_run": 1.2942465543644717,
-  "mean_wall_s_per_run": 3.5834333843797856,
+  "records": 1133,
+  "cpu_s": 1502.001,
+  "wall_s": 4657.47,
+  "mean_cpu_s_per_run": 1.325684907325684,
+  "mean_wall_s_per_run": 4.1107413945278015,
   "chatter_rev": 9,
-  "session_new_runs": 653,
-  "session_cpu_s": 846.794581022,
+  "session_new_runs": 1133,
+  "session_cpu_s": 1504.8002218409993,
   "restored_after_every_unit": true,
-  "runtime_s": 601.8706457614899
+  "runtime_s": 1209.984491109848
  }
 }

@@ -1,0 +1,2629 @@
+{
+ "note": "The reference gains judged by the criteria of the basin-aware chart (review round 2, 4.1). Purpose.  The basin-aware chart chooses, per speed, the gain that maximises the depth up to which\nevery grid depth is admissible (linear limit, forced-command bound <= 8.1 V, certified kick\n>= beta_req; Section 6).  The reference schedules choose their gain by other rules (fair_designs.py:\nthe published condition 'pub', the authority condition with a voltage margin of 0 or 10 % and\ng <= 3000, 'auth0' and 'auth10', and the manuscript's g <= 1500 schedule 'auth1500').  Judging the\nreference gains by the chart's own criteria separates the effect of the selection rule from the\neffect of the gain range: a_rob(n, g_ref; beta_req) is the depth that the reference gain could\ncertify, to be compared with a_rob(n; beta_req) = max over g.",
+ "speeds": {
+  "500": {
+   "pub": {
+    "g": 828.59375,
+    "a_lim_mm": 12.068324732424216,
+    "a_chk_mm": 10.861492259181796,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 13.529758786930909,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 13.529758786930909,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 13.529758786930909,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 3000.0,
+    "a_lim_mm": 32.883400744433814,
+    "a_chk_mm": 20.373380510019025,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 4.219591637297305,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 4.219591637297305,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 26.0,
+     "min_beta_mmps": 5.1918386384242305,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 3000.0,
+    "a_lim_mm": 32.883400744433814,
+    "a_chk_mm": 20.373380510019025,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 4.219591637297305,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 4.219591637297305,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 26.0,
+     "min_beta_mmps": 5.1918386384242305,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 16.877724250640192,
+    "a_chk_mm": 15.189951825576173,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 10.328185890067553,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 10.328185890067553,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 10.328185890067553,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2875.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_2": {
+     "g": 2875.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_5": {
+     "g": 2875.0,
+     "a_rob_mm": 26.0
+    }
+   }
+  },
+  "625": {
+   "pub": {
+    "g": 888.75,
+    "a_lim_mm": 11.652891721700936,
+    "a_chk_mm": 10.487602549530841,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 12.443094841142926,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 12.443094841142926,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 12.443094841142926,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 3000.0,
+    "a_lim_mm": 33.00020265257893,
+    "a_chk_mm": 20.344780149290262,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 3.17951425363256,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 3.17951425363256,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 5.31408606895101,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 3000.0,
+    "a_lim_mm": 33.00020265257893,
+    "a_chk_mm": 20.344780149290262,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 3.17951425363256,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 3.17951425363256,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 5.31408606895101,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 16.400854497216937,
+    "a_chk_mm": 14.760769047495243,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 9.320621540440017,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 9.320621540440017,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 9.320621540440017,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 3000.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_2": {
+     "g": 3000.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_5": {
+     "g": 2312.5,
+     "a_rob_mm": 20.0
+    }
+   }
+  },
+  "750": {
+   "pub": {
+    "g": 1030.9375,
+    "a_lim_mm": 10.834112818761175,
+    "a_chk_mm": 9.750701536885058,
+    "beta_1": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 11.230005095093505,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 11.230005095093505,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 11.230005095093505,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 3000.0,
+    "a_lim_mm": 37.98518268385968,
+    "a_chk_mm": 19.466449705209786,
+    "beta_1": {
+     "a_rob_mm": 32.0,
+     "min_beta_mmps": 2.261895442079131,
+     "binding": [
+      "a_phys"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 32.0,
+     "min_beta_mmps": 2.261895442079131,
+     "binding": [
+      "a_phys"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 6.930221373763161,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 3000.0,
+    "a_lim_mm": 37.98518268385968,
+    "a_chk_mm": 19.466449705209786,
+    "beta_1": {
+     "a_rob_mm": 32.0,
+     "min_beta_mmps": 2.261895442079131,
+     "binding": [
+      "a_phys"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 32.0,
+     "min_beta_mmps": 2.261895442079131,
+     "binding": [
+      "a_phys"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 6.930221373763161,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 16.51780193165502,
+    "a_chk_mm": 14.866021738489518,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.933825860362518,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.933825860362518,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.933825860362518,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2750.0,
+     "a_rob_mm": 32.0
+    },
+    "beta_2": {
+     "g": 2750.0,
+     "a_rob_mm": 32.0
+    },
+    "beta_5": {
+     "g": 2062.5,
+     "a_rob_mm": 20.0
+    }
+   }
+  },
+  "875": {
+   "pub": {
+    "g": 838.4375,
+    "a_lim_mm": 11.986238151889498,
+    "a_chk_mm": 10.787614336700548,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 11.881923246730587,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 11.881923246730587,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 11.881923246730587,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 3000.0,
+    "a_lim_mm": 32.84473324917042,
+    "a_chk_mm": 19.586436438489006,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 1.0396619896653188,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 3.69645083436955,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 7.7516711391593,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 3000.0,
+    "a_lim_mm": 32.84473324917042,
+    "a_chk_mm": 19.586436438489006,
+    "beta_1": {
+     "a_rob_mm": 28.0,
+     "min_beta_mmps": 1.0396619896653188,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 3.69645083436955,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 7.7516711391593,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 17.08266007601678,
+    "a_chk_mm": 15.374394068415102,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.69618829187846,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.69618829187846,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 8.69618829187846,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 3000.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_2": {
+     "g": 2500.0,
+     "a_rob_mm": 24.0
+    },
+    "beta_5": {
+     "g": 1750.0,
+     "a_rob_mm": 16.0
+    }
+   }
+  },
+  "1000": {
+   "pub": {
+    "g": 629.6875,
+    "a_lim_mm": 18.15541446513132,
+    "a_chk_mm": 16.339873018618185,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 12.467698374494974,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 12.467698374494974,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 12.467698374494974,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 3000.0,
+    "a_lim_mm": 36.585766219578346,
+    "a_chk_mm": 28.201665741909057,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.684968153118445,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.684968153118445,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.684968153118445,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 2641.66259765625,
+    "a_lim_mm": 33.03101184878859,
+    "a_chk_mm": 28.254658964535608,
+    "beta_1": {
+     "a_rob_mm": 26.0,
+     "min_beta_mmps": 1.155306348055917,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 4.5916687673160625,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 6.466276800610173,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 23.53853492905551,
+    "a_chk_mm": 21.184681436149962,
+    "beta_1": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 6.862855667679008,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 6.862855667679008,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 6.862855667679008,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2500.0,
+     "a_rob_mm": 28.0
+    },
+    "beta_2": {
+     "g": 2250.0,
+     "a_rob_mm": 26.0
+    },
+    "beta_5": {
+     "g": 1500.0,
+     "a_rob_mm": 20.0
+    }
+   }
+  },
+  "1125": {
+   "pub": {
+    "g": 978.75,
+    "a_lim_mm": 11.08441174860527,
+    "a_chk_mm": 9.975970573744743,
+    "beta_1": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 9.667825876351861,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 9.667825876351861,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 9.667825876351861,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2878.41796875,
+    "a_lim_mm": 43.00495382767825,
+    "a_chk_mm": 19.297823348106625,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.37100765407326,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.37100765407326,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.37100765407326,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 2512.39013671875,
+    "a_lim_mm": 35.473082026091454,
+    "a_chk_mm": 19.21466477096522,
+    "beta_1": {
+     "a_rob_mm": 30.0,
+     "min_beta_mmps": 1.2344379239727092,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 2.9736647510205767,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.09209357588347,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 18.086829635949652,
+    "a_chk_mm": 14.639099170307736,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 5.241764678359711,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 5.241764678359711,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 5.241764678359711,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2500.0,
+     "a_rob_mm": 30.0
+    },
+    "beta_2": {
+     "g": 2250.0,
+     "a_rob_mm": 26.0
+    },
+    "beta_5": {
+     "g": 1500.0,
+     "a_rob_mm": 16.0
+    }
+   }
+  },
+  "1250": {
+   "pub": {
+    "g": 1032.03125,
+    "a_lim_mm": 10.789520520368415,
+    "a_chk_mm": 9.710568468331575,
+    "beta_1": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 8.834783962268068,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 8.834783962268068,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 8.0,
+     "min_beta_mmps": 8.834783962268068,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2614.74609375,
+    "a_lim_mm": 28.897567432206408,
+    "a_chk_mm": 14.809275703733308,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.600299596966902,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.600299596966902,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.600299596966902,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 2333.67919921875,
+    "a_lim_mm": 25.1396461268869,
+    "a_chk_mm": 14.742362772219415,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.946832061501773,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.946832061501773,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.946832061501773,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 15.396784199862052,
+    "a_chk_mm": 13.857105779875848,
+    "beta_1": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.905470267221235,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.905470267221235,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.905470267221235,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2312.5,
+     "a_rob_mm": 22.0
+    },
+    "beta_2": {
+     "g": 2000.0,
+     "a_rob_mm": 18.0
+    },
+    "beta_5": {
+     "g": 1750.0,
+     "a_rob_mm": 14.0
+    }
+   }
+  },
+  "1375": {
+   "pub": {
+    "g": 890.46875,
+    "a_lim_mm": 11.62857514080583,
+    "a_chk_mm": 10.465717626725247,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 10.370131937343332,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 10.370131937343332,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 10.370131937343332,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2155.517578125,
+    "a_lim_mm": 23.200510905098863,
+    "a_chk_mm": 15.984119115033911,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.247413819085791,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.247413819085791,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.247413819085791,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1860.16845703125,
+    "a_lim_mm": 20.20580981890862,
+    "a_chk_mm": 15.6532646765716,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.05078382349388,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.05078382349388,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.05078382349388,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 16.808152500217776,
+    "a_chk_mm": 15.127337250195998,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 7.194758587770126,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 7.194758587770126,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 7.194758587770126,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1625.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_2": {
+     "g": 1625.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 1500.0,
+     "a_rob_mm": 14.0
+    }
+   }
+  },
+  "1500": {
+   "pub": {
+    "g": 675.3125,
+    "a_lim_mm": 13.554425845316501,
+    "a_chk_mm": 12.19898326078485,
+    "beta_1": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 12.562696529909768,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 12.562696529909768,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 12.562696529909768,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 1598.5107421875,
+    "a_lim_mm": 20.755069184010733,
+    "a_chk_mm": 17.53785960077767,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.026188078168271,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.026188078168271,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.026188078168271,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1385.19287109375,
+    "a_lim_mm": 18.974698116618313,
+    "a_chk_mm": 17.077228304956485,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.321834292219487,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.321834292219487,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.321834292219487,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 19.92331914131547,
+    "a_chk_mm": 17.415556326258347,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.221311838474207,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.221311838474207,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.221311838474207,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1250.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_2": {
+     "g": 1250.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 1250.0,
+     "a_rob_mm": 14.0
+    }
+   }
+  },
+  "1625": {
+   "pub": {
+    "g": 606.71875,
+    "a_lim_mm": 17.633951524675357,
+    "a_chk_mm": 15.87055637220782,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 13.139698876369938,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 13.139698876369938,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 13.139698876369938,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 1107.0556640625,
+    "a_lim_mm": 21.119239192928827,
+    "a_chk_mm": 19.007315274047798,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 961.3037109375,
+    "a_lim_mm": 20.0678028556548,
+    "a_chk_mm": 18.061022570089317,
+    "beta_1": {
+     "a_rob_mm": 18.0,
+     "min_beta_mmps": 2.3623975722659734,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 18.0,
+     "min_beta_mmps": 2.3623975722659734,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 9.15405724130223,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1107.0556640625,
+    "a_lim_mm": 21.119239192928827,
+    "a_chk_mm": 19.007315274047798,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.260739568015916,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_2": {
+     "g": 750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 750.0,
+     "a_rob_mm": 16.0
+    }
+   }
+  },
+  "1750": {
+   "pub": {
+    "g": 490.625,
+    "a_lim_mm": 22.17529852396745,
+    "a_chk_mm": 19.957768671570705,
+    "beta_1": {
+     "a_rob_mm": 18.0,
+     "min_beta_mmps": 13.493863222411727,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 18.0,
+     "min_beta_mmps": 13.493863222411727,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 18.0,
+     "min_beta_mmps": 13.493863222411727,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 663.2080078125,
+    "a_lim_mm": 23.2530123187502,
+    "a_chk_mm": 20.927711086875178,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.389082377698688,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.389082377698688,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.389082377698688,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 574.951171875,
+    "a_lim_mm": 22.696473395661027,
+    "a_chk_mm": 20.426826056094924,
+    "beta_1": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 8.97254999291891,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 8.97254999291891,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 20.0,
+     "min_beta_mmps": 8.97254999291891,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 663.3284858662472,
+    "a_lim_mm": 23.253779897131597,
+    "a_chk_mm": 20.92840190665148,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.380284063448837,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.380284063448837,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.380284063448837,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 500.0,
+     "a_rob_mm": 20.0
+    },
+    "beta_2": {
+     "g": 500.0,
+     "a_rob_mm": 20.0
+    },
+    "beta_5": {
+     "g": 500.0,
+     "a_rob_mm": 20.0
+    }
+   }
+  },
+  "1875": {
+   "pub": {
+    "g": 359.0625,
+    "a_lim_mm": 27.278292414444508,
+    "a_chk_mm": 24.55046317300006,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 13.949819653746953,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 13.949819653746953,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 13.949819653746953,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 264.404296875,
+    "a_lim_mm": 26.748251815707075,
+    "a_chk_mm": 24.073426633514984,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 225.9521484375,
+    "a_lim_mm": 26.53699837935109,
+    "a_chk_mm": 23.883298541415982,
+    "beta_1": {
+     "a_rob_mm": 22.0,
+     "min_beta_mmps": 14.293781798139012,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 22.0,
+     "min_beta_mmps": 14.293781798139012,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 22.0,
+     "min_beta_mmps": 14.293781798139012,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 264.404296875,
+    "a_lim_mm": 26.748251815707075,
+    "a_chk_mm": 24.073426633514984,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 13.328570833703175,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 0.0,
+     "a_rob_mm": 22.0
+    },
+    "beta_2": {
+     "g": 0.0,
+     "a_rob_mm": 22.0
+    },
+    "beta_5": {
+     "g": 0.0,
+     "a_rob_mm": 22.0
+    }
+   }
+  },
+  "2000": {
+   "pub": {
+    "g": 382.96875,
+    "a_lim_mm": 25.736780085529453,
+    "a_chk_mm": 16.772397977205753,
+    "beta_1": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 14.638234128684502,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 14.638234128684502,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 14.638234128684502,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 250.8544921875,
+    "a_lim_mm": 18.827551150116633,
+    "a_chk_mm": 16.18341823272818,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 14.882984965451573,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 14.882984965451573,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 14.882984965451573,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 213.68408203125,
+    "a_lim_mm": 16.94130418581952,
+    "a_chk_mm": 15.247173767237566,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 14.543405930538237,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 14.543405930538237,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 14.543405930538237,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 250.92541142117915,
+    "a_lim_mm": 18.831174383006843,
+    "a_chk_mm": 16.18653263889754,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 15.054984442045658,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 15.054984442045658,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 15.054984442045658,
+     "binding": [
+      "voltage margin"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 188.425411,
+     "a_rob_mm": 14.0
+    },
+    "beta_2": {
+     "g": 188.425411,
+     "a_rob_mm": 14.0
+    },
+    "beta_5": {
+     "g": 188.425411,
+     "a_rob_mm": 14.0
+    }
+   }
+  },
+  "2125": {
+   "pub": {
+    "g": 585.9375,
+    "a_lim_mm": 13.564905621055182,
+    "a_chk_mm": 12.208415058949663,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.332637438160418,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.332637438160418,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.332637438160418,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 604.79736328125,
+    "a_lim_mm": 13.968501485070105,
+    "a_chk_mm": 12.57165134199766,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 524.23095703125,
+    "a_lim_mm": 12.263370231583622,
+    "a_chk_mm": 11.03703320842526,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 4.825591225921137,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 4.825591225921137,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.876392300988705,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 604.79736328125,
+    "a_lim_mm": 13.968501485070105,
+    "a_chk_mm": 12.57165134199766,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 10.641266025803878,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 500.0,
+     "a_rob_mm": 10.0
+    },
+    "beta_2": {
+     "g": 500.0,
+     "a_rob_mm": 10.0
+    },
+    "beta_5": {
+     "g": 500.0,
+     "a_rob_mm": 10.0
+    }
+   }
+  },
+  "2250": {
+   "pub": {
+    "g": 797.8125,
+    "a_lim_mm": 12.299216409706792,
+    "a_chk_mm": 11.069294768736114,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 3.7833160748082277,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 3.7833160748082277,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 9.706116869245427,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 950.68359375,
+    "a_lim_mm": 14.703156642285956,
+    "a_chk_mm": 13.23284097805736,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.096799778529379,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.096799778529379,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.096799778529379,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 827.2705078125,
+    "a_lim_mm": 12.753455143009832,
+    "a_chk_mm": 11.478109628708848,
+    "beta_1": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 3.037509701564498,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 10.0,
+     "min_beta_mmps": 3.037509701564498,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 9.000694726796869,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 950.7415033780693,
+    "a_lim_mm": 14.704089185517965,
+    "a_chk_mm": 13.233680272445646,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.080505971402091,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.080505971402091,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.080505971402091,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 750.0,
+     "a_rob_mm": 10.0
+    },
+    "beta_2": {
+     "g": 750.0,
+     "a_rob_mm": 10.0
+    },
+    "beta_5": {
+     "g": 625.0,
+     "a_rob_mm": 8.0
+    }
+   }
+  },
+  "2375": {
+   "pub": {
+    "g": 457.03125,
+    "a_lim_mm": 6.024984543977854,
+    "a_chk_mm": 5.422486089580069,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.739219892294123,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.739219892294123,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.739219892294123,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 1282.1044921875,
+    "a_lim_mm": 16.387758263226097,
+    "a_chk_mm": 13.295487299614523,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 4.634339125272941,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 4.634339125272941,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 12.521225270426264,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1117.49267578125,
+    "a_lim_mm": 14.118963349696532,
+    "a_chk_mm": 12.707067014726878,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 7.232115200237231,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 7.232115200237231,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 7.232115200237231,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1282.1044921875,
+    "a_lim_mm": 16.387758263226097,
+    "a_chk_mm": 13.295487299614523,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 4.634339125272941,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 4.634339125272941,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 12.521225270426264,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1062.5,
+     "a_rob_mm": 12.0
+    },
+    "beta_2": {
+     "g": 1062.5,
+     "a_rob_mm": 12.0
+    },
+    "beta_5": {
+     "g": 750.0,
+     "a_rob_mm": 8.0
+    }
+   }
+  },
+  "2500": {
+   "pub": {
+    "g": 535.46875,
+    "a_lim_mm": 6.218344518585611,
+    "a_chk_mm": 5.59651006672705,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.149020504688572,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.149020504688572,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 12.149020504688572,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 1599.79248046875,
+    "a_lim_mm": 18.534667685899496,
+    "a_chk_mm": 13.045162895733997,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.9107977965784,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.9107977965784,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.898174380997,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1395.81298828125,
+    "a_lim_mm": 15.912302825043238,
+    "a_chk_mm": 12.940411910865691,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.396742008832023,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.396742008832023,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.396742008832023,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 17.23587964837289,
+    "a_chk_mm": 13.009262572915192,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 5.13769384724602,
+     "binding": [
+      "voltage margin"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 5.13769384724602,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 5.13769384724602,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1375.0,
+     "a_rob_mm": 14.0
+    },
+    "beta_2": {
+     "g": 1375.0,
+     "a_rob_mm": 14.0
+    },
+    "beta_5": {
+     "g": 1000.0,
+     "a_rob_mm": 10.0
+    }
+   }
+  },
+  "2625": {
+   "pub": {
+    "g": 605.46875,
+    "a_lim_mm": 6.604940977828692,
+    "a_chk_mm": 5.944446880045823,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.724620670321466,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.724620670321466,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 11.724620670321466,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 1905.3955078125,
+    "a_lim_mm": 21.00704270994245,
+    "a_chk_mm": 12.886667977485766,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.5673205584366903,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.5673205584366903,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.446295859099994,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1664.0625,
+    "a_lim_mm": 18.01199423576323,
+    "a_chk_mm": 12.826086752977153,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0593202350289905,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0593202350289905,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.027955282129985,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 16.062085110034445,
+    "a_chk_mm": 12.721735424949934,
+    "beta_1": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 3.4099442846568744,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 14.0,
+     "min_beta_mmps": 3.4099442846568744,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 7.57952308600856,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1500.0,
+     "a_rob_mm": 14.0
+    },
+    "beta_2": {
+     "g": 1500.0,
+     "a_rob_mm": 14.0
+    },
+    "beta_5": {
+     "g": 1250.0,
+     "a_rob_mm": 10.0
+    }
+   }
+  },
+  "2750": {
+   "pub": {
+    "g": 658.75,
+    "a_lim_mm": 7.043247937192214,
+    "a_chk_mm": 6.338923143472992,
+    "beta_1": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.556909654704103,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.556909654704103,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.556909654704103,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2200.74462890625,
+    "a_lim_mm": 23.74964000620409,
+    "a_chk_mm": 12.864441009514318,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.4350167087902106,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.4350167087902106,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 11.121070042211354,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 1923.33984375,
+    "a_lim_mm": 20.360951137558573,
+    "a_chk_mm": 12.801805708614149,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0339420334531417,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0339420334531417,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 5.934018029618258,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 15.526160568289537,
+    "a_chk_mm": 12.596467881602083,
+    "beta_1": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 4.633454108666066,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 4.633454108666066,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 5.241784435575461,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 1750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_2": {
+     "g": 1750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 1375.0,
+     "a_rob_mm": 12.0
+    }
+   }
+  },
+  "2875": {
+   "pub": {
+    "g": 682.5,
+    "a_lim_mm": 7.3849912722510975,
+    "a_chk_mm": 6.646492145025987,
+    "beta_1": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.70800280734695,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.70800280734695,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.70800280734695,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2487.3046875,
+    "a_lim_mm": 26.73181939768696,
+    "a_chk_mm": 12.955140122305666,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.451035817786126,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.451035817786126,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.89143213477584,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 2174.37744140625,
+    "a_lim_mm": 22.924630844728892,
+    "a_chk_mm": 12.898626886748936,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0752030303616755,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.0752030303616755,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.061852095776726,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 15.396472201644409,
+    "a_chk_mm": 12.639603074903121,
+    "beta_1": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 5.608742574176697,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 5.608742574176697,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 5.608742574176697,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2000.0,
+     "a_rob_mm": 18.0
+    },
+    "beta_2": {
+     "g": 1750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 1562.5,
+     "a_rob_mm": 14.0
+    }
+   }
+  },
+  "3000": {
+   "pub": {
+    "g": 711.40625,
+    "a_lim_mm": 7.925567521151571,
+    "a_chk_mm": 7.133010769036414,
+    "beta_1": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.807536558275993,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.807536558275993,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 6.0,
+     "min_beta_mmps": 10.807536558275993,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "auth0": {
+    "g": 2765.80810546875,
+    "a_lim_mm": 29.92821864985192,
+    "a_chk_mm": 13.118238866469722,
+    "beta_1": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.6060566905959615,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 3.6060566905959615,
+     "binding": [
+      "voltage margin",
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 2.0,
+     "min_beta_mmps": 10.730363657271843,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth10": {
+    "g": 2418.8232421875,
+    "a_lim_mm": 25.691951870476384,
+    "a_chk_mm": 13.104078070049072,
+    "beta_1": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.171824759259214,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 16.0,
+     "min_beta_mmps": 2.171824759259214,
+     "binding": [
+      "certificate"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 4.0,
+     "min_beta_mmps": 6.385500323290463,
+     "binding": [
+      "certificate"
+     ]
+    }
+   },
+   "auth1500": {
+    "g": 1500.0,
+    "a_lim_mm": 15.55166902863416,
+    "a_chk_mm": 12.796980100195753,
+    "beta_1": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.482429476754997,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_2": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.482429476754997,
+     "binding": [
+      "linear limit"
+     ]
+    },
+    "beta_5": {
+     "a_rob_mm": 12.0,
+     "min_beta_mmps": 6.482429476754997,
+     "binding": [
+      "linear limit"
+     ]
+    }
+   },
+   "ba": {
+    "beta_1": {
+     "g": 2250.0,
+     "a_rob_mm": 20.0
+    },
+    "beta_2": {
+     "g": 1750.0,
+     "a_rob_mm": 16.0
+    },
+    "beta_5": {
+     "g": 1750.0,
+     "a_rob_mm": 14.0
+    }
+   }
+  }
+ },
+ "kappa": 0.9,
+ "summary": {
+  "pub": {
+   "beta_1": {
+    "mean_a_rob_mm": 8.19047619047619
+   },
+   "beta_2": {
+    "mean_a_rob_mm": 8.19047619047619
+   },
+   "beta_5": {
+    "mean_a_rob_mm": 7.904761904761905
+   }
+  },
+  "auth0": {
+   "beta_1": {
+    "mean_a_rob_mm": 8.380952380952381
+   },
+   "beta_2": {
+    "mean_a_rob_mm": 7.714285714285714
+   },
+   "beta_5": {
+    "mean_a_rob_mm": 5.238095238095238
+   }
+  },
+  "auth10": {
+   "beta_1": {
+    "mean_a_rob_mm": 16.571428571428573
+   },
+   "beta_2": {
+    "mean_a_rob_mm": 14.571428571428571
+   },
+   "beta_5": {
+    "mean_a_rob_mm": 8.857142857142858
+   }
+  },
+  "auth1500": {
+   "beta_1": {
+    "mean_a_rob_mm": 9.714285714285714
+   },
+   "beta_2": {
+    "mean_a_rob_mm": 9.714285714285714
+   },
+   "beta_5": {
+    "mean_a_rob_mm": 8.857142857142858
+   }
+  },
+  "ba": {
+   "beta_1": {
+    "mean_a_rob_mm": 19.714285714285715
+   },
+   "beta_2": {
+    "mean_a_rob_mm": 18.761904761904763
+   },
+   "beta_5": {
+    "mean_a_rob_mm": 15.142857142857142
+   }
+  }
+ }
+}
