@@ -27,6 +27,7 @@ verification and comparison.
 the voltage margin were recomputed with the gain range of the chart, 0 <= g <= 3000 V s/m, and the former
 reference (g <= 1500 V s/m) was kept for continuity; all operate at the depth of Sec. 3, the checked depth
 a_chk = min{0.9 a_lim, a_TD} (`fair_designs.py`):
+
 - the published condition, Eq. (13), reproduced as in Sec. 3.1 (step-entry demand at a_lim, its original constraint);
 - the authority rule, Eq. (14), with no voltage margin (steady command up to 9 V);
 - the authority rule with the 10 % margin of the chart (8.1 V);
@@ -42,6 +43,7 @@ the operating depth of every design at all 21 speeds (`fair_compare.json`); the 
 the chart.
 
 *Results.*
+
 - With g <= 3000 V s/m the authority rule reaches 17.1 mm (no margin) and 16.8 mm (10 % margin) on
   average, instead of 15.5 mm with g <= 1500: part of the former gap was the gain range, as the review
   suspected.
@@ -123,6 +125,7 @@ step-entry depths of the chart with the checked depths of the references.
 a_phys is renamed a_cap and called an assumed axial-depth cap throughout (Eq. (31), nomenclature,
 Sec. 6.1, Fig. 8, Supplement). The chart was recomputed for a_cap = 10, 16 and 32 mm (`ba_cap.py`,
 `cap_kicks.py`; 10 mm is the deepest published test):
+
 - 32 mm: the stored depths are reproduced at 62 of 63 design points (the one difference is a grid
   effect of the refinement, explained in Supplement S4.4).
 - 16 mm: mean depth 15.1, 15.1 and 14.0 mm, against 14.5 mm for the authority rule with the same margin
