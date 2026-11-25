@@ -102,6 +102,27 @@ def fig10():
         mech[k][r["measured_outcome"] if r["measured_outcome"] in ("chatter", "marginal") else "stable"] += 1
         mech[k]["sat"] += int(is_sat(r))
     out["by_position"] = mech
+    # between the limits: measured saturation against measured outcome, one-sided Fisher exact test
+    bt = [r for r in rows if r["position"].startswith("between")]
+    sat_u = sum(1 for r in bt if is_sat(r) and unstable(r)); sat_s = sum(1 for r in bt if is_sat(r) and not unstable(r))
+    uns_u = sum(1 for r in bt if not is_sat(r) and unstable(r)); uns_s = sum(1 for r in bt if not is_sat(r) and not unstable(r))
+    from math import comb
+    N, K, n = len(bt), sat_u + uns_u, sat_u + sat_s
+    p_one = sum(comb(K, k) * comb(N - K, n - k) for k in range(sat_u, min(K, n) + 1)) / comb(N, n)
+    out["between_sat_vs_outcome"] = dict(sat_unstable=sat_u, sat_stable=sat_s, unsat_unstable=uns_u, unsat_stable=uns_s,
+                                         fisher_one_sided_p=p_one)
+    # agreement of the forced demand by region
+    def ratios(sel):
+        rr = [r["demand_N"] / float(r["measured"]) for r in rows if not is_sat(r) and sel(r)]
+        return dict(n=len(rr), median=float(np.median(rr)) if rr else None, min=float(min(rr)) if rr else None,
+                    max=float(max(rr)) if rr else None)
+    out["demand_over_measured"] = dict(
+        depth_le5_rpm_le2000=ratios(lambda r: r["depth_mm"] <= 5 and r["rpm"] <= 2000),
+        depth_le5_rpm_ge2050=ratios(lambda r: r["depth_mm"] <= 5 and r["rpm"] >= 2050),
+        depth_10=ratios(lambda r: abs(r["depth_mm"] - 10) < 0.01), depth_15=ratios(lambda r: abs(r["depth_mm"] - 15) < 0.01),
+        depth_ge20=ratios(lambda r: r["depth_mm"] >= 20))
+    abs_err = [abs(r["demand_N"] - float(r["measured"])) for r in rows if not is_sat(r) and r["depth_mm"] <= 5 and r["rpm"] <= 2000]
+    out["abs_error_depth_le5_rpm_le2000_N"] = dict(n=len(abs_err), median=float(np.median(abs_err)), max=float(max(abs_err)))
     return out
 
 
@@ -136,7 +157,7 @@ def main():
     f10 = out["fig10"]
     for k in ("amplitude_peak", "amplitude_h1", "amplitude_rms2", "amplitude_peak_stable_only", "peak_ratio_by_depth",
               "saturation_settled_closed_form", "saturation_any_time_face_entry", "outcome_face", "outcome_step",
-              "outcome_linear", "by_position"):
+              "outcome_linear", "by_position", "between_sat_vs_outcome", "demand_over_measured", "abs_error_depth_le5_rpm_le2000_N"):
         print(k, json.dumps(f10.get(k)))
     if out["fig6"]:
         print("fig6 by type", json.dumps(out["fig6"]["by_type"], indent=1))

@@ -1,0 +1,219 @@
+{
+ "note": "Critical kicks of the model at the saturation tests of Ozsoy et al. 2025 that lie between the two linear limits.",
+ "phases": [
+  0,
+  4,
+  8,
+  12
+ ],
+ "rows": [
+  {
+   "rpm": 1800.0,
+   "depth_mm": 20.0,
+   "measured": "Sat",
+   "measured_outcome": "none",
+   "demand_N": 19.02853060585472,
+   "residual_authority_N": 7.971469394145281,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 20.0,
+   "measured": "Sat",
+   "measured_outcome": "marginal",
+   "demand_N": 33.011034805673,
+   "residual_authority_N": -6.011034805672999,
+   "crit_by_phase_mmps": [
+    396.5054553072219,
+    554.7030720253513,
+    536.9697122405435,
+    414.0602515667765
+   ],
+   "crit_mmps": 396.5054553072219,
+   "crit_inf": false
+  },
+  {
+   "rpm": 1950.0,
+   "depth_mm": 15.0,
+   "measured": "16",
+   "measured_outcome": "none",
+   "demand_N": 19.71660373456312,
+   "residual_authority_N": 7.283396265436881,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 10.0,
+   "measured": "Sat",
+   "measured_outcome": "marginal",
+   "demand_N": 15.745171373914566,
+   "residual_authority_N": 11.254828626085434,
+   "crit_by_phase_mmps": [
+    138.6757680063378,
+    146.39240585133774,
+    163.1377562974481,
+    156.22125063624077
+   ],
+   "crit_mmps": 138.6757680063378,
+   "crit_inf": false
+  },
+  {
+   "rpm": 2000.0,
+   "depth_mm": 5.0,
+   "measured": "Sat",
+   "measured_outcome": "none",
+   "demand_N": 24.954750696001298,
+   "residual_authority_N": 2.045249303998702,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2050.0,
+   "depth_mm": 5.0,
+   "measured": "Sat",
+   "measured_outcome": "chatter",
+   "demand_N": 18.815651042932018,
+   "residual_authority_N": 8.184348957067982,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 5.0,
+   "measured": "Sat",
+   "measured_outcome": "chatter",
+   "demand_N": 14.809805785670806,
+   "residual_authority_N": 12.190194214329194,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2100.0,
+   "depth_mm": 3.0,
+   "measured": "13",
+   "measured_outcome": "none",
+   "demand_N": 10.882904380522618,
+   "residual_authority_N": 16.117095619477382,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 5.0,
+   "measured": "Sat",
+   "measured_outcome": "marginal",
+   "demand_N": 12.151981925549757,
+   "residual_authority_N": 14.848018074450243,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 3.0,
+   "measured": "11",
+   "measured_outcome": "none",
+   "demand_N": 8.992179637958685,
+   "residual_authority_N": 18.007820362041315,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2150.0,
+   "depth_mm": 2.0,
+   "measured": "7",
+   "measured_outcome": "none",
+   "demand_N": 6.436952341840142,
+   "residual_authority_N": 20.56304765815986,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2200.0,
+   "depth_mm": 3.0,
+   "measured": "18",
+   "measured_outcome": "none",
+   "demand_N": 7.66482810185871,
+   "residual_authority_N": 19.33517189814129,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  },
+  {
+   "rpm": 2200.0,
+   "depth_mm": 2.0,
+   "measured": "7",
+   "measured_outcome": "none",
+   "demand_N": 5.508171163972825,
+   "residual_authority_N": 21.491828836027175,
+   "crit_by_phase_mmps": [
+    null,
+    null,
+    null,
+    null
+   ],
+   "crit_mmps": null,
+   "crit_inf": true
+  }
+ ]
+}

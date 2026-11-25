@@ -1,6 +1,6 @@
 {
- "source": "Ozsoy, Sims & Ozturk 2025, Mech. Syst. Signal Process. 224, 111942, Fig. 10 (cross-checked with Fig. 12); digitised, see digitise_notes.md",
- "provisional": true,
+ "source": "Ozsoy, Sims & Ozturk 2025, Mech. Syst. Signal Process. 224, 111942 (CC BY 4.0), Fig. 10, cross-checked with Fig. 12: two independent digitisations of the vector graphics agree on all 56 points (value and outcome), on the stability curves to 0.08 mm and on the ellipses; see digitise_notes.md",
+ "provisional": false,
  "points": [
   {
    "rpm": 1700.0,
