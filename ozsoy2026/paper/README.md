@@ -42,12 +42,10 @@ LaTeX source has a `% src:` comment naming its file and key.
    named in both statements (Claude Code, Anthropic). Complete Appendix C with who designed the study and
    which steps were checked by hand, add any other tool used, and check the journal's current policy.
 4. Suggested reviewers in the cover letter (choose experts without conflicts; verify affiliations).
-5. **Second benchmark (review round 1 point 3.1, round 2 item 5).** The published measurements of Ozsoy et al. 2025 (MSSP
-   224:111942, open access) could not be retrieved in the environment used for this work. With the PDF,
-   rebuild that set-up from its own parameters, digitise its Figs. 6, 10 and 12, and compare the
-   predicted saturation zones, the actuator force and any chatter below the linear limit with the
-   residual authority computed here. Also state in Section 4.6 whether its frequency-domain model already
-   contains the forced command and a threshold amplitude.
+5. **Second benchmark (done).** Ozsoy et al. 2025 (MSSP 224:111942) turned out to use the same rig; its
+   Figs. 6 and 10/12 were digitised and compared with the model (Section 2.6, Supplement S6,
+   `../verification/ozsoy2025/`). A data set from a different machine would still be needed to test
+   generality.
 6. **Journal.** MSSP states in its scope that theoretical nonlinear dynamics without experimental
    validation is out of scope, and this study is computational (validated only against published
    cutting tests): a desk rejection there is a real risk. Journal of Sound and Vibration, Nonlinear

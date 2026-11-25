@@ -10,12 +10,12 @@ verification and comparison.
 
 | Item | Request | Status | Where |
 |---|---|---|---|
-| 4.1 | Like-for-like comparison: same gain range, same metrics, certificates for the references too | Done | Sec. 6.3, Table 6, Fig. 8b; Supplement S4.3 |
+| 4.1 | Like-for-like comparison: same gain range, same metrics, certificates for the references too | Done | Sec. 6.3, Table 6, Fig. 9b; Supplement S4.3 |
 | 4.2 | Monte Carlo of the new design against the reference on the same samples | Done | Sec. 6.4; Supplement S4.5, Table S6 |
-| 4.3 | Abrupt-entry curve in Fig. 8 | Done | Fig. 8a, b; Sec. 6.4 |
+| 4.3 | Abrupt-entry curve in Fig. 8 (now Fig. 9) | Done | Fig. 9a, b; Sec. 6.4 |
 | 4.4 | a_phys renamed a_cap (assumed axial-depth cap); sensitivity to 10, 16, 32 mm | Done | Eq. (31), Sec. 6.1, 6.3; Supplement S4.4, Table S5 |
 | 4.5 | Circle criterion on the continuous frequency axis; grid optimum of Eq. (32) | Done | Sec. 5.1; Supplement S3.1; Sec. 6.1 |
-| 5 | Second validation on Ozsoy et al. 2025 | **Not done**: the PDF could not be obtained from this computing environment | Sec. 8 (Limitations) |
+| 5 | Second validation on Ozsoy et al. 2025 | Done, with the PDF supplied by the authors; it is a second data set on the same rig | Sec. 2.6, Fig. 2 (new), Sec. 4.6, 8; Supplement S6, Table S12, Fig. S4 |
 | 6 | Editorial items | Done, except the authors' own data | see below |
 | 7 | No further contributions | Followed | — |
 | 3.3 | Keep "bifurcation-type diagrams" | Kept | Sec. 4.5 |
@@ -109,7 +109,7 @@ probabilities are estimates under the sampled distribution, not guarantees.
 
 ## 4.3 Entry
 
-Fig. 8a now shows, for each speed and requirement, the basin-aware depth (markers by the condition that
+Fig. 9a now shows, for each speed and requirement, the basin-aware depth (markers by the condition that
 binds at the next grid depth) and, as crosses, the largest grid depth up to which the step entry from
 rest also settles with the same gain (`ba_entry.py`). The caption states that this curve is verified in
 the simulator, not certified. The face entry settles at every grid depth up to a_rob at all 21 speeds;
@@ -117,13 +117,13 @@ the step entry only up to 16.1, 15.8 and 15.1 mm on average (below a_rob at 14, 
 the depth margin up to 15.7, 15.4 and 14.4 mm. Sec. 6.4 says plainly that the chart certifies the
 settled cut, not the entry, and that with an abrupt entry the usable depth is set by saturation during
 the entry: the chart's step entry settles only up to 15.1-16.1 mm (14.4-15.7 mm with the depth margin),
-below the 16.8 mm of the authority rule, whose checked depth contains the same entry check. Fig. 8b compares the
+below the 16.8 mm of the authority rule, whose checked depth contains the same entry check. Fig. 9b compares the
 step-entry depths of the chart with the checked depths of the references.
 
 ## 4.4 Depth cap
 
 a_phys is renamed a_cap and called an assumed axial-depth cap throughout (Eq. (31), nomenclature,
-Sec. 6.1, Fig. 8, Supplement). The chart was recomputed for a_cap = 10, 16 and 32 mm (`ba_cap.py`,
+Sec. 6.1, Fig. 9, Supplement). The chart was recomputed for a_cap = 10, 16 and 32 mm (`ba_cap.py`,
 `cap_kicks.py`; 10 mm is the deepest published test):
 
 - 32 mm: the stored depths are reproduced at 62 of 63 design points (the one difference is a grid
@@ -159,20 +159,53 @@ quoted (Sec. 1, 4.3, 5 and 8; the abstract attributes the proof to the frequency
 Sec. 6.1 states that Eq. (32) is a grid optimum: the best among the gains evaluated by the search (a
 250 V s/m grid refined by +-125 and +-62.5 V s/m around the best gain), for depths on the 2 mm grid, not a
 continuous optimum; Sec. 6.3 gives the speeds at which a gain between the evaluated ones does better,
-and Supplement S4.4 shows that a repeated search can return a different gain. Fig. 8 marks the grid
+and Supplement S4.4 shows that a repeated search can return a different gain. Fig. 9 marks the grid
 points and its caption says that only the grid depths are certified.
 
 ## 5 Second validation on Ozsoy et al. 2025
 
-Not done. The open-access PDF linked in the review could not be retrieved from this computing
-environment (the download was refused by the environment's policy), and only the abstract was
-available. The validation the review lists (FRF of the second set-up, saturation zones, stability
-regions, residual authority, basins at selected points) needs the paper's figures and parameters.
-Limitations (Sec. 8) state that these measurements were not used. With the PDF available, the steps
-are: rebuild the robot-assisted model from its parameters and FRF, compute the forced command and the
-residual authority at the published cutting conditions, compare the predicted saturation zones and
-stability regions with the measured ones, and compute the critical kick at selected points. The authors
-can supply the PDF (or allow its download) to have this done.
+Done (`../../verification/ozsoy2025/`; Sec. 2.6, new Fig. 2, Supplement S6 with Table S12 and Fig. S4).
+The article turned out to use the same rig: its Table 2 gives the structure, actuator, tool and cutting
+constants of our Table 1, including the damping ratio of 1.34 % that we had inferred from the 2026
+article's curves (its table says 1.45 %). It is therefore a second data set on the same rig, not a second
+machine, and the manuscript says so; generality across machines remains untested.
+
+*Data.* Two figures were digitised, each twice and independently, from the pixels (calibrated axes,
+overlay checks): its Fig. 6 (49 markers: 39 controlled cuts with DVF at g = 253 V s/m, 5 uncontrolled
+cuts, 1 loss of contact, 4 simulated saturation onsets) and its Figs. 10/12 (56 saturation tests at
+1700-2200 rpm on the re-clamped workpiece, 128.1 Hz, 1.48 %, 1.13e7 N/m, with the measured amplitude of
+the command or 'Sat', and the outcome). The two digitisations agree on every item.
+
+*Results, in the order of the review's table.*
+- FRF and linear stability: with the article's modal parameters the model reproduces its uncontrolled
+  and controlled stability charts to 0.04 and 0.14 mm RMS (first structure) and 0.06 and 0.07 mm
+  (re-clamped structure); the gain of the saturation tests, not stated, is fixed by the chart at
+  251 V s/m, i.e. the 253 V s/m of the first group. Of the 39 controlled cuts, the model and the
+  article's own chart classify the same 26 as measured; 9 of the 13 others are stable cuts at
+  700-1100 rpm above the predicted limit (cutting speed 0.6-0.9 m/s, where process damping, not
+  modelled, may act).
+- Saturation zones (forced command): at the 36 unsaturated tests the predicted settled forced demand is
+  0.90 times the measured amplitude (median; IQR 0.83-1.02), within 2.5 N at depths up to 5 mm below
+  2000 rpm. At 15 mm it is about twice the measured value, an error shared by the article's own
+  frequency-domain model; a diagnostic with an effective helix of 42 deg removes much of it, which
+  locates the error in the axial distribution of the force or mode. At 2050-2200 rpm the measured command
+  is 1.1-2.3 times the prediction. Settled saturation is predicted at 4 of the 20 saturated tests, and the
+  command reaches the clip during the simulated entry at 14.
+- Residual authority and the mechanism: relative to the linear limits, all 37 tests below the uncontrolled
+  limit settled (10 saturated); between the uncontrolled and the controlled limit, 5 of the 7 saturated
+  tests chattered or were marginal and none of the 6 unsaturated ones (one-sided Fisher exact p = 0.016);
+  above the controlled limit the 3 saturated tests chattered. This is the pattern our paper predicts:
+  losses of stability below the linear limit only where the residual authority is exhausted, and only
+  above the uncontrolled limit.
+- Basins at selected points: at the 13 tests between the limits the simulated basin is finite at two
+  (critical kicks 0.14 and 0.40 m/s, both measured marginal) and unbounded at the other 11, including the
+  two chatter tests at 2050 and 2100 rpm. The model therefore does NOT predict these losses of stability:
+  it predicts their command unsaturated (12-19 N) where the measurements saturated. The article's own
+  time-domain simulation places the onset of saturation at 4.5 mm at 2100 rpm, where our forced demand is
+  13.5 N, and the article reports disagreement with its own frequency-domain model in this speed range.
+
+The abstract, highlights, introduction, Sec. 4.6, the limitations and the conclusions were updated
+accordingly; the limitations state that both data sets come from one rig and what the model misses.
 
 ## 6 Editorial items
 
@@ -180,7 +213,7 @@ can supply the PDF (or allow its download) to have this done.
 |---|---|
 | Abstract | "This computational study ..."; "searched on grids at 21 speeds"; the comparison stated with equal gain range and margins; no "certifies none" |
 | Highlights | the guarantees restricted to their models: "Circle criterion and LMIs bound the basin of the averaged and collocation models"; "A basin-aware gain schedule certifies model depths against a required disturbance" |
-| Figure 8 | grid points as markers, lines only guide the eye, caption: only the grid depths are certified; step-entry crosses; a_cap marked as assumed |
+| Figure 9 (formerly 8) | grid points as markers, lines only guide the eye, caption: only the grid depths are certified; step-entry crosses; a_cap marked as assumed |
 | Section 6 | restructured: 6.1 formulation, 6.2 chart, 6.3 comparison with the references (Table 6), 6.4 validation, entry and robustness |
 | Section 8 | discussion interprets, conclusions state results; numbers no longer repeated in both |
 | Data availability | still a placeholder: the authors must choose the archive (GitHub release or a Zenodo DOI of the repository) |

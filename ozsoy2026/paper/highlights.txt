@@ -1,5 +1,5 @@
 Actuator saturation can make linearly stable cuts bistable with clipped chatter
-Step entries from rest chatter below 0.97 of the linear limit at 157 of 251 speeds
+In published tests, losses of stability below the linear limit came with saturation
 Residual actuator authority sets the basin of the forced orbit near the limit
 Circle criterion and LMIs bound the basin of the averaged and collocation models
 A basin-aware gain schedule certifies model depths against a required disturbance

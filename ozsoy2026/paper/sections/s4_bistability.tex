@@ -102,7 +102,7 @@ Away from these four speeds the picture is not uniform. Of 14 further speeds whe
 
 \subsection{A describing-function prediction}\label{sec:bistab-df}
 
-The size of the basin near the limit can be predicted with a dual-input describing function \citep{gelb1968describing}; \citet{ozsoy2025frequency} also modelled actuator saturation in active damping of milling in the frequency domain, and whether that model contains the forced command and a threshold amplitude was not examined here. Near the limit the deviation from the orbit is dominated by the chatter mode, and the unclipped command is $u=b(t)+A\sin\omega_ct$, with $A$ the amplitude of its chatter component and $\omega_c$ the chatter frequency. For $\omega_c$ incommensurate with $\omega_T$, the clip acts on the chatter component as the gain
+The size of the basin near the limit can be predicted with a dual-input describing function \citep{gelb1968describing}; \citet{ozsoy2025frequency} predicted the saturation of the settled cut in the frequency domain from its forced response, which is the forced command of Section~\ref{sec:model-orbit} (Section~\ref{sec:model-second}); their model has no threshold amplitude for disturbances. Near the limit the deviation from the orbit is dominated by the chatter mode, and the unclipped command is $u=b(t)+A\sin\omega_ct$, with $A$ the amplitude of its chatter component and $\omega_c$ the chatter frequency. For $\omega_c$ incommensurate with $\omega_T$, the clip acts on the chatter component as the gain
 \begin{equation}\label{eq:df}
   \mathcal N(A)=\lim_{\tau_a\to\infty}\frac{2}{A\tau_a}\int_0^{\tau_a}\operatorname{sat}_{V_{\max}}\bigl(b(t)+A\sin\omega_ct\bigr)\sin\omega_ct\,\mathrm dt\ \le 1,
 \end{equation}
