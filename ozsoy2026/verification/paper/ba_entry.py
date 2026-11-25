@@ -177,8 +177,23 @@ def write_json(path, obj):
 
 
 # ------------------------------------------------------------------- designs ----
+SOURCE = "chart"                                     # 'chart': basin_aware.json; 'kappa': ba_kappa.json (a <= 0.9 a_lim)
+BAK_JSON = os.path.join(HERE, "ba_kappa.json")
+
+
 def load_designs(speeds, betas, depth_subset):
     """(speed, beta) -> design and its depth list, from basin_aware.json; checks its protocol."""
+    if SOURCE == "kappa":                           # the chart with the depth margin of ba_kappa.py
+        bak = json.load(open(BAK_JSON))
+        out = {}
+        for n in speeds:
+            for b in betas:
+                dz = bak["speeds"][f"{n:.0f}"]["designs"][str(float(b) * 1e-3)]
+                g, a_rob = dz.get("g"), float(dz.get("a_rob") or 0.0)
+                ds = [] if g is None else [d for d in GRID if d <= a_rob + 1e-9
+                                             and (depth_subset is None or d in depth_subset)]
+                out[(n, b)] = dict(g=None if g is None else float(g), a_rob=a_rob, depths=ds, stored_entries=None)
+        return out
     ba = json.load(open(BA_JSON))
     pr = ba["protocol"]
     assert pr["cache"] == BA.PROTO, f"basin_aware.json protocol {pr['cache']} != basin_aware.PROTO {BA.PROTO}"
@@ -330,6 +345,10 @@ def main():
     ap.add_argument("--out", default="ba_entry", help="output name: <out>.json and <out>_cache.jsonl here")
     ap.add_argument("--smoke", action="store_true", help="same as --out ba_entry_smoke")
     ap.add_argument("--plan", action="store_true", help="count the runs still to do and exit")
+    ap.add_argument("--source", choices=("chart", "kappa"), default="chart",
+                    help="designs of basin_aware.json (chart) or of ba_kappa.json (kappa, a <= 0.9 a_lim)")
+    ap.add_argument("--cache", default=None, help="cache name here (default <out>_cache.jsonl); entries are keyed "
+                                                    "by (rpm, a, g, kind), so variants can share one cache")
     a = ap.parse_args()
     out_name = "ba_entry_smoke" if a.smoke else a.out
     speeds = tuple(float(x) for x in a.speeds.split(",") if x.strip()) or SPEEDS
@@ -342,7 +361,11 @@ def main():
         sys.exit("a subset run must not write ba_entry.json: use --smoke or --out NAME")
     a.depths = list(dsub) if dsub else None
     out_path = os.path.join(HERE, out_name + ".json")
-    cache = Cache(os.path.join(HERE, out_name + "_cache.jsonl"))
+    global SOURCE
+    SOURCE = a.source
+    if SOURCE != "chart" and out_name == "ba_entry":
+        sys.exit("the kappa variant must not write ba_entry.json: use --out NAME")
+    cache = Cache(os.path.join(HERE, a.cache if a.cache else out_name + "_cache.jsonl"))
     designs = load_designs(speeds, betas, dsub)
     keys = jobs_of(designs)
     todo = [k for k in keys if cache.get(k) is None]

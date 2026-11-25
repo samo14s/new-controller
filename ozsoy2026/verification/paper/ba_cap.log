@@ -20,3 +20,4 @@ plan   2750 rpm (N_red 12, N 20): 10 coarse gains to scan, <= 27 rows; about 8 d
 plan   2875 rpm (N_red 12, N 20): 10 coarse gains to scan, <= 34 rows; about 8 default-order certificates; estimate 2.2 CPU-min
 plan   3000 rpm (N_red 12, N 20): 9 coarse gains to scan, <= 32 rows; about 8 default-order certificates; estimate 2.1 CPU-min
 plan: 21 speeds, caps [10.0, 16.0, 32.0]: estimate 2.19 CPU-h (upper bound on the coarse rows; recert 4 certificates per cap below 32 mm)
+   500 rpm: cap 32: 1: g 3000.0 a_rob 32 (a_cap), 2: g 3000.0 a_rob 32 (a_cap), 5: g 2500.0 a_rob 26 (linear limit); cap 16: 1: g 1500.0 a_rob 16 (a_cap), 2: g 1500.0 a_rob 16 (a_cap), 5: g 1500.0 a_rob 16 (a_cap); cap 10: 1: g 750.0 a_rob 10 (a_cap), 2: g 750.0 a_rob 10 (a_cap), 5: g 750.0 a_rob 10 (a_cap)  [10 coarse gains scanned here; new certificates: 69 reduced (905 s), 4 FAST + 0 TIGHT default (128 s); 1075 s]
