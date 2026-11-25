@@ -7,7 +7,7 @@ cd "$(dirname "$0")/.."
 if grep -n "DRAFT-PLACEHOLDERS\|\\PEND{\|\\NEW[A-Z]*\b" main.tex supplementary.tex sections/*.tex >/dev/null; then
   echo "draft placeholders remain:"; grep -n "DRAFT-PLACEHOLDERS\|\\PEND{\|\\NEW[A-Z]*\b" main.tex supplementary.tex sections/*.tex; exit 1
 fi
-if grep -n "\[basin-aware result\]\|\[contact loss\]" cover_letter.tex >/dev/null; then
+if grep -n "\[basin-aware result\]\|\[contact loss\]\|\\PEND{" cover_letter.tex >/dev/null; then
   echo "cover letter placeholders remain"; exit 1
 fi
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex >/dev/null
