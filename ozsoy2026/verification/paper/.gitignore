@@ -1,0 +1,5 @@
+# transient smoke-test outputs of the campaign scripts
+*_smoke*.json
+*_smoke*.jsonl
+*_smoke*.npz
+*_smoke*.log
