@@ -165,13 +165,13 @@ points and its caption says that only the grid depths are certified.
 ## 5 Second validation on Ozsoy et al. 2025
 
 Done (`../../verification/ozsoy2025/`; Sec. 2.6, new Fig. 2, Supplement S6 with Table S12 and Fig. S4).
-The article turned out to use the same rig: its Table 2 gives the structure, actuator, tool and cutting
-constants of our Table 1, including the damping ratio of 1.34 % that we had inferred from the 2026
+The article turned out to use the same rig: its Table 2 and Eq. (2) give the structure, actuator, tool and
+cutting constants of our Table 1, including the damping ratio of 1.34 % that we had inferred from the 2026
 article's curves (its table says 1.45 %). It is therefore a second data set on the same rig, not a second
 machine, and the manuscript says so; generality across machines remains untested.
 
-*Data.* Two figures were digitised, each twice and independently, from the pixels (calibrated axes,
-overlay checks): its Fig. 6 (49 markers: 39 controlled cuts with DVF at g = 253 V s/m, 5 uncontrolled
+*Data.* Two groups of tests, in three figures, were digitised, each figure twice and independently, from
+the pixels (calibrated axes, overlay checks): its Fig. 6 (49 markers: 39 controlled cuts with DVF at g = 253 V s/m, 5 uncontrolled
 cuts, 1 loss of contact, 4 simulated saturation onsets) and its Figs. 10/12 (56 saturation tests at
 1700-2200 rpm on the re-clamped workpiece, 128.1 Hz, 1.48 %, 1.13e7 N/m, with the measured amplitude of
 the command or 'Sat', and the outcome). The two digitisations agree on every item.
@@ -185,24 +185,32 @@ the command or 'Sat', and the outcome). The two digitisations agree on every ite
   700-1100 rpm above the predicted limit (cutting speed 0.6-0.9 m/s, where process damping, not
   modelled, may act).
 - Saturation zones (forced command): at the 36 unsaturated tests the predicted settled forced demand is
-  0.90 times the measured amplitude (median; IQR 0.83-1.02), within 2.5 N at depths up to 5 mm below
-  2000 rpm. At 15 mm it is about twice the measured value, an error shared by the article's own
+  0.90 times the measured amplitude (median; IQR 0.83-1.02), within 2.5 N at depths up to 5 mm at
+  1700-2000 rpm. At 15 mm it is about twice the measured value, an error shared by the article's own
   frequency-domain model; a diagnostic with an effective helix of 42 deg removes much of it, which
   locates the error in the axial distribution of the force or mode. At 2050-2200 rpm the measured command
-  is 1.1-2.3 times the prediction. Settled saturation is predicted at 4 of the 20 saturated tests, and the
-  command reaches the clip during the simulated entry at 14.
+  is 1.1-2.3 times the prediction. Settled saturation is predicted at 4 of the 20 saturated tests; the
+  command reaches the clip during the simulated face entry at 12 of them, and later at 2 more, through
+  simulated chatter above the controlled limit.
 - Residual authority and the mechanism: relative to the linear limits, all 37 tests below the uncontrolled
   limit settled (10 saturated); between the uncontrolled and the controlled limit, 5 of the 7 saturated
   tests chattered or were marginal and none of the 6 unsaturated ones (one-sided Fisher exact p = 0.016);
-  above the controlled limit the 3 saturated tests chattered. This is the pattern our paper predicts:
-  losses of stability below the linear limit only where the residual authority is exhausted, and only
-  above the uncontrolled limit.
-- Basins at selected points: at the 13 tests between the limits the simulated basin is finite at two
-  (critical kicks 0.14 and 0.40 m/s, both measured marginal) and unbounded at the other 11, including the
-  two chatter tests at 2050 and 2100 rpm. The model therefore does NOT predict these losses of stability:
-  it predicts their command unsaturated (12-19 N) where the measurements saturated. The article's own
-  time-domain simulation places the onset of saturation at 4.5 mm at 2100 rpm, where our forced demand is
-  13.5 N, and the article reports disagreement with its own frequency-domain model in this speed range.
+  above the controlled limit the 3 saturated tests chattered, while 3 unsaturated tests (1700-1800 rpm,
+  20-22 mm) were stable. This agrees qualitatively with the mechanism of Sec. 4 (saturation matters only
+  between the two limits), and the article itself reports chatter and marginal cuts with saturation
+  between its two charts. Because chatter under DVF also drives the command to the clip, and 'Sat' marks
+  saturation at any time of a test, the association does not show that saturation caused these losses,
+  and the model does not predict them (next item).
+- Basins at selected points: at the 13 tests between the limits, with kicks at four phases, the
+  simulated basin is finite at two (critical kicks 0.14 and 0.40 m/s, both measured marginal); at the
+  other 11, including the two chatter tests at 2050 and 2100 rpm, no kick up to 3 m/s ends in chatter.
+  The model therefore does NOT predict these losses of stability: at four of the five it predicts an
+  unsaturated settled command (12-19 N) where the measurements saturated, and at the fifth (1950 rpm,
+  20 mm) a forced orbit on the clip (33 N) that still settles, with a critical kick of 0.40 m/s. The
+  article reports disagreement with its own frequency-domain model at 2050-2200 rpm, which it relates to
+  actuator loss of contact or other nonlinearities; its time-domain simulation for the first structure
+  (its Fig. 6) places the onset of saturation at 4.5 mm at 2100 rpm, where our forced demand for that
+  structure is 13.5 N (14.2 N for the re-clamped one).
 
 The abstract, highlights, introduction, Sec. 4.6, the limitations and the conclusions were updated
 accordingly; the limitations state that both data sets come from one rig and what the model misses.

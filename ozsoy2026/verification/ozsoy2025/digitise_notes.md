@@ -21,11 +21,11 @@ step was planned for any disagreement and was not needed.
   given in the article's text. One controlled-stable circle at 2100 rpm / 2.5 mm is almost hidden under
   an uncontrolled-chatter diamond and was found by both digitisations (low confidence). Both
   digitisations agree on all 49 markers; the stability curves were sampled every 25 rpm.
-- **Figs. 10 and 12** (saturation tests at 1700-2200 rpm, re-clamped structure, DVF): vector graphics,
-  rendered at 600 dpi. 56 annotated test points: the measured amplitude of the command in N (36) or
+- **Figs. 10 and 12** (saturation tests at 1700-2200 rpm, re-clamped structure, DVF): Fig. 10 is vector
+  graphics, Fig. 12 an embedded raster of 1521 x 842 pixels at 300 ppi; both rendered at 600 dpi. 56 annotated test points: the measured amplitude of the command in N (36) or
   'Sat' (20), with the outcome '(chatter)' (5) or '(marginal)' (3) where given. The labels are
   MATLAB text, left-aligned at the test speed and vertically centred on the test depth (two-line 'Sat /
-  (outcome)' labels centred as a block); every label centre lies within 0.06 mm of a round depth
+  (outcome)' labels centred as a block); every label centre lies within 0.061 mm of a round depth (largest: 1900 rpm, 0.5 mm, centred at 0.439 mm)
   (0.5, 1.5, 2, 3, 5, 10, 15, 20 and 22 mm). Every value read in Fig. 10 equals the value at the same
   place in Fig. 12 where Fig. 12 shows it (52 of 56; Fig. 12 masks the region above its controlled
   limit). The two digitisations agree on all 56 values and outcomes, on the stability curves to

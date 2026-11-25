@@ -1134,9 +1134,10 @@ def fig_oz25_sld():
         mk, fc = sty[r["type"]]
         meas_uns = r["type"] in ("controlled_chatter", "controlled_marginal", "controlled_loss_of_contact", "uncontrolled_chatter")
         pred_uns = r["linear_unstable_uncontrolled"] if r["type"].startswith("uncontrolled") else r["linear_unstable"]
-        mis = (r["type"] != "saturation_onset_sim") and (meas_uns != pred_uns)
-        nmis += int(mis and r["type"] != "controlled_loss_of_contact")
-        col = STEP if mis else K
+        # the loss-of-contact cut (D in the article: stable apart from broadband vibration) is not classified
+        mis = (r["type"] not in ("saturation_onset_sim", "controlled_loss_of_contact")) and (meas_uns != pred_uns)
+        nmis += int(mis)
+        col = GREY if r["type"] == "controlled_loss_of_contact" else STEP if mis else K
         kw = dict(ls="none", ms=(3.6 if mk != "*" else 5.5), mew=0.8, color=col, zorder=5)
         if fc is not None:
             kw.update(mfc=fc, mec=col)
@@ -1151,7 +1152,7 @@ def fig_oz25_sld():
             Line2D([], [], marker="o", ls="none", mec=K, mfc="white", ms=3.6, label="controlled, stable"),
             Line2D([], [], marker=">", ls="none", mec=K, mfc="white", ms=3.6, label="controlled, marginal"),
             Line2D([], [], marker="x", ls="none", color=K, ms=3.6, label="controlled, chatter"),
-            Line2D([], [], marker="*", ls="none", color=K, ms=5.5, label="controlled, loss of contact"),
+            Line2D([], [], marker="*", ls="none", color=GREY, ms=5.5, label="controlled, loss of contact"),
             Line2D([], [], marker="+", ls="none", color=K, ms=3.6, label="uncontrolled, stable"),
             Line2D([], [], marker="D", ls="none", mec=K, mfc="white", ms=3.6, label="uncontrolled, chatter"),
             Line2D([], [], marker="s", ls="none", mec=K, mfc="white", ms=3.6, label="saturation onset (their simulation)"),
