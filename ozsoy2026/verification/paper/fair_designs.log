@@ -1,0 +1,64 @@
+42 jobs to run, 0 cached
+pub 625 rpm: g 888.8, a_lim 11.65, a_chk 10.49 mm (23.8 s)
+pub 750 rpm: g 1030.9, a_lim 10.83, a_chk 9.75 mm (24.1 s)
+pub 875 rpm: g 838.4, a_lim 11.99, a_chk 10.79 mm (24.1 s)
+pub 500 rpm: g 828.6, a_lim 12.07, a_chk 10.86 mm (24.3 s)
+pub 1000 rpm: g 629.7, a_lim 18.16, a_chk 16.34 mm (23.7 s)
+pub 1125 rpm: g 978.8, a_lim 11.08, a_chk 9.98 mm (23.6 s)
+pub 1375 rpm: g 890.5, a_lim 11.63, a_chk 10.47 mm (23.6 s)
+pub 1250 rpm: g 1032.0, a_lim 10.79, a_chk 9.71 mm (23.9 s)
+pub 1750 rpm: g 490.6, a_lim 22.18, a_chk 19.96 mm (22.9 s)
+pub 1875 rpm: g 359.1, a_lim 27.28, a_chk 24.55 mm (22.9 s)
+pub 1625 rpm: g 606.7, a_lim 17.63, a_chk 15.87 mm (23.3 s)
+pub 1500 rpm: g 675.3, a_lim 13.55, a_chk 12.20 mm (23.8 s)
+pub 2250 rpm: g 797.8, a_lim 12.30, a_chk 11.07 mm (23.5 s)
+pub 2000 rpm: g 383.0, a_lim 25.74, a_chk 16.77 mm (24.0 s)
+pub 2375 rpm: g 457.0, a_lim 6.02, a_chk 5.42 mm (23.5 s)
+pub 2125 rpm: g 585.9, a_lim 13.56, a_chk 12.21 mm (24.1 s)
+pub 2500 rpm: g 535.5, a_lim 6.22, a_chk 5.60 mm (23.3 s)
+pub 2625 rpm: g 605.5, a_lim 6.60, a_chk 5.94 mm (23.5 s)
+pub 2750 rpm: g 658.8, a_lim 7.04, a_chk 6.34 mm (23.7 s)
+pub 2875 rpm: g 682.5, a_lim 7.38, a_chk 6.65 mm (23.8 s)
+auth10 500 rpm: g 3000.0, a_lim 32.88, a_chk 20.37 mm (13.5 s)
+auth10 750 rpm: g 3000.0, a_lim 37.99, a_chk 19.47 mm (15.0 s)
+auth10 625 rpm: g 3000.0, a_lim 33.00, a_chk 20.34 mm (17.4 s)
+pub 3000 rpm: g 711.4, a_lim 7.93, a_chk 7.13 mm (23.0 s)
+auth10 875 rpm: g 3000.0, a_lim 32.84, a_chk 19.59 mm (16.5 s)
+auth10 1125 rpm: g 2512.4, a_lim 35.47, a_chk 19.21 mm (16.1 s)
+auth10 1000 rpm: g 2641.7, a_lim 33.03, a_chk 28.25 mm (18.4 s)
+auth10 1250 rpm: g 2333.7, a_lim 25.14, a_chk 14.74 mm (16.3 s)
+auth10 1375 rpm: g 1860.2, a_lim 20.21, a_chk 15.65 mm (20.5 s)
+auth10 1500 rpm: g 1385.2, a_lim 18.97, a_chk 17.08 mm (16.9 s)
+auth10 1625 rpm: g 961.3, a_lim 20.07, a_chk 18.06 mm (16.8 s)
+auth10 1750 rpm: g 575.0, a_lim 22.70, a_chk 20.43 mm (17.0 s)
+auth10 1875 rpm: g 226.0, a_lim 26.54, a_chk 23.88 mm (16.7 s)
+auth10 2125 rpm: g 524.2, a_lim 12.26, a_chk 11.04 mm (16.8 s)
+auth10 2000 rpm: g 213.7, a_lim 16.94, a_chk 15.25 mm (16.9 s)
+auth10 2250 rpm: g 827.3, a_lim 12.75, a_chk 11.48 mm (16.8 s)
+auth10 2375 rpm: g 1117.5, a_lim 14.12, a_chk 12.71 mm (17.0 s)
+auth10 2625 rpm: g 1664.1, a_lim 18.01, a_chk 12.83 mm (18.0 s)
+auth10 2500 rpm: g 1395.8, a_lim 15.91, a_chk 12.94 mm (20.2 s)
+auth10 2750 rpm: g 1923.3, a_lim 20.36, a_chk 12.80 mm (17.5 s)
+auth10 2875 rpm: g 2174.4, a_lim 22.92, a_chk 12.90 mm (15.6 s)
+auth10 3000 rpm: g 2418.8, a_lim 25.69, a_chk 13.10 mm (15.4 s)
+{
+ "n_speeds_complete": 21,
+ "mean_a_chk_mm": {
+  "pub": 11.337585178383872,
+  "auth0": 17.13158533480542,
+  "auth10": 16.767846019438583,
+  "auth1500": 15.498831479261888
+ },
+ "mean_a_lim_mm": {
+  "pub": 12.93544935692233,
+  "auth0": 25.910297439273005,
+  "auth10": 23.705617415318258,
+  "auth1500": 17.87703437984264
+ },
+ "mean_g": {
+  "pub": 698.4151785714286,
+  "auth0": 1920.445033482143,
+  "auth10": 1750.209263392857,
+  "auth1500": 1243.9693912891307
+ }
+}
