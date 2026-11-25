@@ -1,0 +1,1480 @@
+{
+ "note": "Tables of the Monte Carlo comparison of the basin-aware chart with the reference (review round 2, 4.2).",
+ "rows": [
+  {
+   "rpm": 750.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 3000.0,
+    "a_mm": 19.466449705209786,
+    "a_over_a_lim": 0.5124748212276281,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2750.0,
+    "a_mm": 32.0,
+    "a_over_a_lim": 0.898649995274839,
+    "fail": 4,
+    "unsettled": 4,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 2500.0,
+    "a_mm": 32.0,
+    "a_over_a_lim": 0.9935171517213405,
+    "fail": 15,
+    "unsettled": 15,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 19.466449705209786,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 26,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 4,
+    "mcnemar_exact_p": 0.125
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 15,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 15,
+    "mcnemar_exact_p": 6.103515625e-05
+   }
+  },
+  {
+   "rpm": 750.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 3000.0,
+    "a_mm": 19.466449705209786,
+    "a_over_a_lim": 0.5124748212276281,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2750.0,
+    "a_mm": 32.0,
+    "a_over_a_lim": 0.898649995274839,
+    "fail": 5,
+    "unsettled": 4,
+    "kick": 1
+   },
+   "ba_chart": {
+    "g": 2500.0,
+    "a_mm": 32.0,
+    "a_over_a_lim": 0.9935171517213405,
+    "fail": 15,
+    "unsettled": 15,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 19.466449705209786,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 25,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 5,
+    "mcnemar_exact_p": 0.0625
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 15,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 15,
+    "mcnemar_exact_p": 6.103515625e-05
+   }
+  },
+  {
+   "rpm": 750.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 3000.0,
+    "a_mm": 19.466449705209786,
+    "a_over_a_lim": 0.5124748212276281,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2062.5,
+    "a_mm": 20.0,
+    "a_over_a_lim": 0.8085446859142419,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1937.5,
+    "a_mm": 20.0,
+    "a_over_a_lim": 0.8781517090011349,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 19.466449705209786,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 1125.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 2512.39013671875,
+    "a_mm": 19.21466477096522,
+    "a_over_a_lim": 0.5416688845032493,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2500.0,
+    "a_mm": 30.0,
+    "a_over_a_lim": 0.8515537666846748,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 2500.0,
+    "a_mm": 32.0,
+    "a_over_a_lim": 0.9083240177969865,
+    "fail": 3,
+    "unsettled": 3,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 19.21466477096522,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 27,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 3,
+    "mcnemar_exact_p": 0.25
+   }
+  },
+  {
+   "rpm": 1125.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 2512.39013671875,
+    "a_mm": 19.21466477096522,
+    "a_over_a_lim": 0.5416688845032493,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2250.0,
+    "a_mm": 26.0,
+    "a_over_a_lim": 0.8529733989928052,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 2125.0,
+    "a_mm": 28.0,
+    "a_over_a_lim": 0.9920832450895866,
+    "fail": 7,
+    "unsettled": 7,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 19.21466477096522,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 23,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 7,
+    "mcnemar_exact_p": 0.015625
+   }
+  },
+  {
+   "rpm": 1125.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 2512.39013671875,
+    "a_mm": 19.21466477096522,
+    "a_over_a_lim": 0.5416688845032493,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1500.0,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.8846215905190018,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1500.0,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.8846215905190018,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 16.0,
+    "ref_fail": 0,
+    "ba_fail": 1,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 1375.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 1860.16845703125,
+    "a_mm": 15.6532646765716,
+    "a_over_a_lim": 0.7746912802239313,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1625.0,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.8910304870020875,
+    "fail": 3,
+    "unsettled": 3,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1750.0,
+    "a_mm": 18.0,
+    "a_over_a_lim": 0.9405568925271354,
+    "fail": 12,
+    "unsettled": 11,
+    "kick": 1
+   },
+   "common": {
+    "a_mm": 15.6532646765716,
+    "ref_fail": 0,
+    "ba_fail": 1,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 27,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 3,
+    "mcnemar_exact_p": 0.25
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 12,
+    "mcnemar_exact_p": 0.00048828125
+   }
+  },
+  {
+   "rpm": 1375.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 1860.16845703125,
+    "a_mm": 15.6532646765716,
+    "a_over_a_lim": 0.7746912802239313,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1625.0,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.8910304870020875,
+    "fail": 3,
+    "unsettled": 3,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1437.5,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.9848791521522238,
+    "fail": 14,
+    "unsettled": 14,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 15.6532646765716,
+    "ref_fail": 0,
+    "ba_fail": 1,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 27,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 3,
+    "mcnemar_exact_p": 0.25
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 16,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 14,
+    "mcnemar_exact_p": 0.0001220703125
+   }
+  },
+  {
+   "rpm": 1375.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 1860.16845703125,
+    "a_mm": 15.6532646765716,
+    "a_over_a_lim": 0.7746912802239313,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1500.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8329291395838185,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1437.5,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8617692581331958,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 14.0,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 2000.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 213.68408203125,
+    "a_mm": 15.247173767237566,
+    "a_over_a_lim": 0.8999999999999999,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 188.425411,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8931918816260411,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 187.5,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.895832387790187,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 14.0,
+    "ref_fail": 11,
+    "ba_fail": 12,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 11,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 2000.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 213.68408203125,
+    "a_mm": 15.247173767237566,
+    "a_over_a_lim": 0.8999999999999999,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 188.425411,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8931918816260411,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 187.5,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.895832387790187,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 14.0,
+    "ref_fail": 11,
+    "ba_fail": 12,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 11,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 2000.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 213.68408203125,
+    "a_mm": 15.247173767237566,
+    "a_over_a_lim": 0.8999999999999999,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 188.425411,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8931918816260411,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 187.5,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.895832387790187,
+    "fail": 12,
+    "unsettled": 12,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 14.0,
+    "ref_fail": 11,
+    "ba_fail": 12,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 11,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 12,
+    "both_pass": 18,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 2500.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 1395.81298828125,
+    "a_mm": 12.940411910865691,
+    "a_over_a_lim": 0.8132331349614401,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1375.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8944629753857377,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1250.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.9918423601802522,
+    "fail": 10,
+    "unsettled": 10,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 12.940411910865691,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 20,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 10,
+    "mcnemar_exact_p": 0.001953125
+   }
+  },
+  {
+   "rpm": 2500.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 1395.81298828125,
+    "a_mm": 12.940411910865691,
+    "a_over_a_lim": 0.8132331349614401,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1375.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8944629753857377,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1250.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.9918423601802522,
+    "fail": 10,
+    "unsettled": 10,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 12.940411910865691,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 20,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 10,
+    "mcnemar_exact_p": 0.001953125
+   }
+  },
+  {
+   "rpm": 2500.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 1395.81298828125,
+    "a_mm": 12.940411910865691,
+    "a_over_a_lim": 0.8132331349614401,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1000.0,
+    "a_mm": 10.0,
+    "a_over_a_lim": 0.894277042559071,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1000.0,
+    "a_mm": 10.0,
+    "a_over_a_lim": 0.894277042559071,
+    "fail": 1,
+    "unsettled": 1,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 10.0,
+    "ref_fail": 0,
+    "ba_fail": 1,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 29,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 1,
+    "mcnemar_exact_p": 1.0
+   }
+  },
+  {
+   "rpm": 2875.0,
+   "beta_req": 1.0,
+   "n": 30,
+   "ref": {
+    "g": 2174.37744140625,
+    "a_mm": 12.898626886748936,
+    "a_over_a_lim": 0.5626536354767406,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 2000.0,
+    "a_mm": 18.0,
+    "a_over_a_lim": 0.8616107478224697,
+    "fail": 9,
+    "unsettled": 8,
+    "kick": 1
+   },
+   "ba_chart": {
+    "g": 2000.0,
+    "a_mm": 20.0,
+    "a_over_a_lim": 0.9573452753582996,
+    "fail": 19,
+    "unsettled": 19,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 12.898626886748936,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 21,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 9,
+    "mcnemar_exact_p": 0.00390625
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 11,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 19,
+    "mcnemar_exact_p": 3.814697265625e-06
+   }
+  },
+  {
+   "rpm": 2875.0,
+   "beta_req": 2.0,
+   "n": 30,
+   "ref": {
+    "g": 2174.37744140625,
+    "a_mm": 12.898626886748936,
+    "a_over_a_lim": 0.5626536354767406,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1750.0,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.8848240798710569,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_chart": {
+    "g": 1562.5,
+    "a_mm": 16.0,
+    "a_over_a_lim": 0.9964599177979226,
+    "fail": 13,
+    "unsettled": 13,
+    "kick": 0
+   },
+   "common": {
+    "a_mm": 12.898626886748936,
+    "ref_fail": 0,
+    "ba_fail": 0,
+    "ref_kick": 0,
+    "ba_kick": 0
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 30,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 0,
+    "mcnemar_exact_p": 1.0
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 17,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 13,
+    "mcnemar_exact_p": 0.000244140625
+   }
+  },
+  {
+   "rpm": 2875.0,
+   "beta_req": 5.0,
+   "n": 30,
+   "ref": {
+    "g": 2174.37744140625,
+    "a_mm": 12.898626886748936,
+    "a_over_a_lim": 0.5626536354767406,
+    "fail": 0,
+    "unsettled": 0,
+    "kick": 0
+   },
+   "ba_kappa": {
+    "g": 1562.5,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.8719024280731823,
+    "fail": 4,
+    "unsettled": 2,
+    "kick": 2
+   },
+   "ba_chart": {
+    "g": 1500.0,
+    "a_mm": 14.0,
+    "a_over_a_lim": 0.9092992093672433,
+    "fail": 5,
+    "unsettled": 3,
+    "kick": 2
+   },
+   "common": {
+    "a_mm": 12.898626886748936,
+    "ref_fail": 0,
+    "ba_fail": 3,
+    "ref_kick": 0,
+    "ba_kick": 2
+   },
+   "paired_own_kappa": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 26,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 4,
+    "mcnemar_exact_p": 0.125
+   },
+   "paired_common": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 27,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 3,
+    "mcnemar_exact_p": 0.25
+   },
+   "paired_own_chart": {
+    "n": 30,
+    "both_fail": 0,
+    "both_pass": 25,
+    "ref_fails_BA_passes": 0,
+    "BA_fails_ref_passes": 5,
+    "mcnemar_exact_p": 0.0625
+   }
+  }
+ ],
+ "pooled": {
+  "1": {
+   "own_kappa": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 30,
+     "P_fail": 0.16666666666666666,
+     "cp95": [
+      0.11536398484624553,
+      0.2292982198901109
+     ],
+     "unsettled": 29,
+     "kick": 1,
+     "cf_linearly_unstable": 25,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 150,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 18,
+     "mcnemar_exact_p_pooled": 7.62939453125e-06
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 10,
+     "ties": 20,
+     "p_exact_two_sided": 0.001953125
+    }
+   },
+   "common": {
+    "ref": {
+     "n": 180,
+     "failures": 11,
+     "P_fail": 0.06111111111111111,
+     "cp95": [
+      0.030898116686811538,
+      0.1067123034661487
+     ],
+     "unsettled": 11,
+     "kick": 0,
+     "cf_linearly_unstable": 11,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 13,
+     "P_fail": 0.07222222222222222,
+     "cp95": [
+      0.03901366587191258,
+      0.12033578349506084
+     ],
+     "unsettled": 13,
+     "kick": 0,
+     "cf_linearly_unstable": 13,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 11,
+     "both_pass": 167,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 2,
+     "mcnemar_exact_p_pooled": 0.5
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 2,
+     "ties": 28,
+     "p_exact_two_sided": 0.5
+    }
+   },
+   "own_chart": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 71,
+     "P_fail": 0.39444444444444443,
+     "cp95": [
+      0.3225482716438832,
+      0.4698775361403437
+     ],
+     "unsettled": 70,
+     "kick": 1,
+     "cf_linearly_unstable": 62,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 109,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 59,
+     "mcnemar_exact_p_pooled": 3.469446951953614e-18
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 22,
+     "ties": 8,
+     "p_exact_two_sided": 4.76837158203125e-07
+    }
+   }
+  },
+  "2": {
+   "own_kappa": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 21,
+     "P_fail": 0.11666666666666667,
+     "cp95": [
+      0.07368781838051704,
+      0.1727956875759456
+     ],
+     "unsettled": 20,
+     "kick": 1,
+     "cf_linearly_unstable": 26,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 159,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 9,
+     "mcnemar_exact_p_pooled": 0.00390625
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 6,
+     "ties": 24,
+     "p_exact_two_sided": 0.03125
+    }
+   },
+   "common": {
+    "ref": {
+     "n": 180,
+     "failures": 11,
+     "P_fail": 0.06111111111111111,
+     "cp95": [
+      0.030898116686811538,
+      0.1067123034661487
+     ],
+     "unsettled": 11,
+     "kick": 0,
+     "cf_linearly_unstable": 11,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 13,
+     "P_fail": 0.07222222222222222,
+     "cp95": [
+      0.03901366587191258,
+      0.12033578349506084
+     ],
+     "unsettled": 13,
+     "kick": 0,
+     "cf_linearly_unstable": 13,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 11,
+     "both_pass": 167,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 2,
+     "mcnemar_exact_p_pooled": 0.5
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 2,
+     "ties": 28,
+     "p_exact_two_sided": 0.5
+    }
+   },
+   "own_chart": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 71,
+     "P_fail": 0.39444444444444443,
+     "cp95": [
+      0.3225482716438832,
+      0.4698775361403437
+     ],
+     "unsettled": 71,
+     "kick": 0,
+     "cf_linearly_unstable": 80,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 109,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 59,
+     "mcnemar_exact_p_pooled": 3.469446951953614e-18
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 18,
+     "ties": 12,
+     "p_exact_two_sided": 7.62939453125e-06
+    }
+   }
+  },
+  "5": {
+   "own_kappa": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 18,
+     "P_fail": 0.1,
+     "cp95": [
+      0.060350401780463234,
+      0.15343503165283467
+     ],
+     "unsettled": 16,
+     "kick": 2,
+     "cf_linearly_unstable": 16,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 162,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 6,
+     "mcnemar_exact_p_pooled": 0.03125
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 4,
+     "ties": 26,
+     "p_exact_two_sided": 0.125
+    }
+   },
+   "common": {
+    "ref": {
+     "n": 180,
+     "failures": 11,
+     "P_fail": 0.06111111111111111,
+     "cp95": [
+      0.030898116686811538,
+      0.1067123034661487
+     ],
+     "unsettled": 11,
+     "kick": 0,
+     "cf_linearly_unstable": 11,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 17,
+     "P_fail": 0.09444444444444444,
+     "cp95": [
+      0.05598437740285833,
+      0.14690664854286756
+     ],
+     "unsettled": 15,
+     "kick": 2,
+     "cf_linearly_unstable": 16,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 11,
+     "both_pass": 163,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 6,
+     "mcnemar_exact_p_pooled": 0.03125
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 4,
+     "ties": 26,
+     "p_exact_two_sided": 0.125
+    }
+   },
+   "own_chart": {
+    "ref": {
+     "n": 180,
+     "failures": 12,
+     "P_fail": 0.06666666666666667,
+     "cp95": [
+      0.0349193989864205,
+      0.1135570435846251
+     ],
+     "unsettled": 12,
+     "kick": 0,
+     "cf_linearly_unstable": 12,
+     "nominal_fail_rpm": []
+    },
+    "BA": {
+     "n": 180,
+     "failures": 19,
+     "P_fail": 0.10555555555555556,
+     "cp95": [
+      0.06475820056632853,
+      0.1599243224702297
+     ],
+     "unsettled": 17,
+     "kick": 2,
+     "cf_linearly_unstable": 23,
+     "nominal_fail_rpm": []
+    },
+    "paired": {
+     "n": 180,
+     "both_fail": 12,
+     "both_pass": 161,
+     "ref_fails_BA_passes": 0,
+     "BA_fails_ref_passes": 7,
+     "mcnemar_exact_p_pooled": 0.015625
+    },
+    "sign": {
+     "samples": 30,
+     "ref_fails_at_more_speeds": 0,
+     "BA_fails_at_more_speeds": 5,
+     "ties": 25,
+     "p_exact_two_sided": 0.0625
+    }
+   }
+  }
+ }
+}

@@ -103,3 +103,45 @@ Table~\ref{tab:supp-ba} lists the basin-aware gains and depths of Fig.~\ref{M-fi
 
 \paragraph{Protocol} At the six validation speeds (750, 1125, 1375, 2000, 2500 and \SI{2875}{\rpm}) the first 30 samples of the $\pm\SI{10}{\percent}$ draw of Section~\ref{M-sec:delayed-robust} (cutting coefficients $\pm\SI{10}{\percent}$, natural frequency $\pm\SI{5}{\percent}$ with the stiffness fixed, damping ratio $\pm\SI{20}{\percent}$, actuator constant $\pm\SI{10}{\percent}$, runout 0--\SI{5}{\micro\metre} with its phase, clip 8.1--\SI{9}{\volt}, loop delay 0--\SI{300}{\micro\second}) were applied, in the same order, to the reference design (the authority rule with the \SI{10}{\percent} margin, at its checked depth $\achk$) and to the chart with the depth margin (at its own depth $a_{\mathrm{rob}}$, for each $\beta_{\mathrm{req}}$), and to both designs at the common depth $\min\{\achk,a_{\mathrm{rob}}\}$, each with its own gain; the chart without the depth margin was run at its own depth as well. One run is the face entry with the full surface memory and the sample's clip, runout and loop delay, a kick of exactly $\beta_{\mathrm{req}}$ at revolution 100 at the phases 0, 4, 8 and 12 of 16, and the classifier D1 applied once per spindle revolution over the 300 revolutions after the kick. A sample fails if the cut does not settle before the kick (it chatters already, or after a kick of \SI{0.1}{\milli\metre\per\second} at one of the phases) or if a kick of $\beta_{\mathrm{req}}$ ends in chatter at one of the phases: this is the event $\Delta v^*<\beta_{\mathrm{req}}$, with $\Delta v^*$ the smallest critical kick over the four phases. The probabilities carry Clopper--Pearson intervals at \SI{95}{\percent}; the paired designs are compared by the exact McNemar test of the discordant pairs, pooled over the speeds, and, because the speeds share the samples, by an exact sign test over the samples of the number of speeds at which only one design fails. The estimates hold under the sampled distribution only and certify nothing for a perturbed model.
 % src: verification/paper/mc_designs.py (docstring: speeds, designs ref = auth10 at a_chk, BA(b), common depth, samples = first N of mc_common.draw(N, 0.1) with mc_common.SEED, one run = mc_kick.make_runner, verdicts unsettled/kick(b)/failure(b), statistics), run_mc_chain.sh (--n 30, --ba-source kappa --kinds own,common; --ba-source chart --kinds own)
+
+\paragraph{Results} Table~\ref{tab:ba-mc} lists the failures per speed and requirement. Pooled over the six speeds (180 samples), the failures of the reference at its own depth are 12 for each requirement, all at \SI{2000}{\rpm} and all cuts that do not settle; those of the chart with the depth margin are 30, 21 and 18 for 1, 2 and \SI{5}{\milli\metre\per\second} (of which 1, 1 and 2 after a settled cut was kicked), and without the margin 71, 71 and 19. At the common depth the reference fails 11 times and the chart with the margin 13, 13 and 17 times. In no sample did the reference fail where the chart did not. Of the chart's failures with the margin, 21, 20 and 14 are cuts whose averaged model with the sample's parameters and delay (the closed form of Section~\ref{M-sec:delayed-robust}) is linearly unstable, as are all 12 of the reference; the others lie at \SI{2875}{\rpm}, and one at \SI{750}{\rpm}, where that model is stable, and at \SI{2875}{\rpm} for \SI{1}{\milli\metre\per\second} the command of the settled cut was on the sample's clip before the kick in 18 of the 30 samples, so that saturation rather than the linear limit is the likely cause there.
+
+\begin{table}[!htbp]
+  \centering
+  \caption{Monte Carlo against the reference: failures out of 30 samples (the cut does not settle, or a kick of $\beta_{\mathrm{req}}$ at one of the phases 0, 4, 8, 12 of 16 ends in chatter) for the reference (authority rule, \SI{10}{\percent} voltage margin, at $\achk$), the chart with the depth margin and the chart without it, each at its own depth, given in \si{\milli\metre} with the ratio to its nominal linear limit, and for the reference and the chart with the margin at the common depth $\min\{\achk,a_{\mathrm{rob}}\}$.}
+  \label{tab:ba-mc}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}rcccccccccc@{}}
+    \toprule
+    Speed & $\beta_{\mathrm{req}}$ & \multicolumn{2}{c}{Reference} & \multicolumn{2}{c}{Chart, margin} & \multicolumn{2}{c}{Chart, no margin} & \multicolumn{2}{c}{Common depth}\\
+    \cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+    (rpm) & (\si{\milli\metre\per\second}) & $a$ ($a/\alim$) & fail & $a$ ($a/\alim$) & fail & $a$ ($a/\alim$) & fail & $a$ & ref / chart\\
+    \midrule
+    750 & 1 & 19.5 (0.51) & 0 & 32.0 (0.90) & 4 & 32.0 (0.99) & 15 & 19.5 & 0 / 0\\
+     & 2 & 19.5 (0.51) & 0 & 32.0 (0.90) & 5 & 32.0 (0.99) & 15 & 19.5 & 0 / 0\\
+     & 5 & 19.5 (0.51) & 0 & 20.0 (0.81) & 0 & 20.0 (0.88) & 0 & 19.5 & 0 / 0\\
+    \addlinespace
+    1125 & 1 & 19.2 (0.54) & 0 & 30.0 (0.85) & 1 & 32.0 (0.91) & 3 & 19.2 & 0 / 0\\
+     & 2 & 19.2 (0.54) & 0 & 26.0 (0.85) & 0 & 28.0 (0.99) & 7 & 19.2 & 0 / 0\\
+     & 5 & 19.2 (0.54) & 0 & 16.0 (0.88) & 1 & 16.0 (0.88) & 1 & 16.0 & 0 / 1\\
+    \addlinespace
+    1375 & 1 & 15.7 (0.77) & 0 & 16.0 (0.89) & 3 & 18.0 (0.94) & 12 & 15.7 & 0 / 1\\
+     & 2 & 15.7 (0.77) & 0 & 16.0 (0.89) & 3 & 16.0 (0.98) & 14 & 15.7 & 0 / 1\\
+     & 5 & 15.7 (0.77) & 0 & 14.0 (0.83) & 0 & 14.0 (0.86) & 0 & 14.0 & 0 / 0\\
+    \addlinespace
+    2000 & 1 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+     & 2 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+     & 5 & 15.2 (0.90) & 12 & 14.0 (0.89) & 12 & 14.0 (0.90) & 12 & 14.0 & 11 / 12\\
+    \addlinespace
+    2500 & 1 & 12.9 (0.81) & 0 & 14.0 (0.89) & 1 & 14.0 (0.99) & 10 & 12.9 & 0 / 0\\
+     & 2 & 12.9 (0.81) & 0 & 14.0 (0.89) & 1 & 14.0 (0.99) & 10 & 12.9 & 0 / 0\\
+     & 5 & 12.9 (0.81) & 0 & 10.0 (0.89) & 1 & 10.0 (0.89) & 1 & 10.0 & 0 / 1\\
+    \addlinespace
+    2875 & 1 & 12.9 (0.56) & 0 & 18.0 (0.86) & 9 & 20.0 (0.96) & 19 & 12.9 & 0 / 0\\
+     & 2 & 12.9 (0.56) & 0 & 16.0 (0.88) & 0 & 16.0 (0.996) & 13 & 12.9 & 0 / 0\\
+     & 5 & 12.9 (0.56) & 0 & 14.0 (0.87) & 4 & 14.0 (0.91) & 5 & 12.9 & 0 / 3\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+% src: verification/paper/mc_designs_table.py/.json (rows; pooled.<b>.own_kappa/common/own_chart: ref 12 (own) and 11 (common) of 180, unsettled 12; chart with margin 30/21/18, kick 1/1/2, per_speed sums of unsettled_and_cf_unstable 21/20/14 and failed_but_cf_stable 9 (2875)/1 (750)/4 (2875), settled_pre_kick_clipped 18 at 2875 rpm for 1 mm/s (mc_designs_kappa.json per_speed.<rpm>.b.<b>.own.BA), ref 12 unsettled_and_cf_unstable at 2000 rpm; common 13/13/17; chart without margin 71/71/19; paired ref_fails_BA_passes 0)
