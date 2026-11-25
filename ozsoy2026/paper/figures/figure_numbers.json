@@ -1163,5 +1163,47 @@
     1500.0
    ]
   }
+ },
+ "fig_oz25": {
+  "n_points": 56,
+  "n_numeric": 36,
+  "amplitude": {
+   "n": 36,
+   "median_ratio_pred_over_meas": 0.9026512746141142,
+   "ratio_q25_q75": [
+    0.8318453130409531,
+    1.0211738394246082
+   ],
+   "corr": 0.6562551753908046,
+   "rms_error_N": 3.818860827126248,
+   "median_abs_error_N": 1.60006117136869
+  },
+  "by_position": {
+   "above a_lim(g)": {
+    "n": 6,
+    "chatter": 3,
+    "marginal": 0,
+    "stable": 3,
+    "sat": 3
+   },
+   "below a_lim(0)": {
+    "n": 37,
+    "chatter": 0,
+    "marginal": 0,
+    "stable": 37,
+    "sat": 10
+   },
+   "between a_lim(0) and a_lim(g)": {
+    "n": 13,
+    "chatter": 2,
+    "marginal": 3,
+    "stable": 8,
+    "sat": 7
+   }
+  }
+ },
+ "fig_oz25_sld": {
+  "n_markers": 49,
+  "n_mismatch": 14
  }
 }

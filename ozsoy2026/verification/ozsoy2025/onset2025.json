@@ -1,0 +1,37 @@
+{
+ "note": "Onset of saturation: the article's time-domain simulation (open squares of its Fig. 6) against the model.",
+ "rows": [
+  {
+   "rpm": 1900.0,
+   "article_onset_mm": 3.6,
+   "demand_at_article_onset_N": 24.760355109317103,
+   "model_onset_mm": 4.150000000000001,
+   "a_lim_g_mm": 27.928284936141743,
+   "a_lim0_mm": 26.597057041121623
+  },
+  {
+   "rpm": 2000.0,
+   "article_onset_mm": 3.6,
+   "demand_at_article_onset_N": 21.29208626490523,
+   "model_onset_mm": 5.900000000000001,
+   "a_lim_g_mm": 18.93720614301933,
+   "a_lim0_mm": 6.598942437973107
+  },
+  {
+   "rpm": 2100.0,
+   "article_onset_mm": 4.5,
+   "demand_at_article_onset_N": 13.51616215128382,
+   "model_onset_mm": null,
+   "a_lim_g_mm": 7.780912359679,
+   "a_lim0_mm": 2.6938235179736036
+  },
+  {
+   "rpm": 2200.0,
+   "article_onset_mm": 5.3,
+   "demand_at_article_onset_N": 9.633003184460597,
+   "model_onset_mm": null,
+   "a_lim_g_mm": 5.280026853622087,
+   "a_lim0_mm": 1.8321134540543285
+  }
+ ]
+}

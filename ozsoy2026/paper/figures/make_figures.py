@@ -1050,8 +1050,120 @@ def fig_attr():
     NUM["fig_attr"] = dict(bifurcation=bif, spectra_2500_09=spec, kick_2500_09_mm_s=r(dv * 1e3, 2), worst_phase=ph)
 
 
+def fig_oz25():
+    """Second data set: the saturation tests of Ozsoy et al. 2025 (its Figs. 10, 12) against the model."""
+    OZ = os.path.join(ROOT, "verification", "ozsoy2025")
+    M = np.load(os.path.join(OZ, "forced_map_reclamped_g253.npz"))
+    C = json.load(open(os.path.join(OZ, "compare2025.json")))["fig10"]
+    rpm, dep = M["rpm"], M["depth_mm"]
+    dem, al0, alg = M["demand_N"], M["a_lim0_mm"], M["a_lim_g_mm"]
+    fig, (a, b) = plt.subplots(1, 2, figsize=(W2, 58 * MM), constrained_layout=True,
+                               gridspec_kw=dict(width_ratios=[1.45, 1.0]))
+    # (a) speed-depth map
+    Z = np.where(dep[None, :] < alg[:, None], dem, np.nan)
+    a.contourf(rpm, dep, (Z > P.F_MAX).T.astype(float), levels=[0.5, 1.5], colors=[STEP_FILL])
+    a.contour(rpm, dep, np.nan_to_num(Z, nan=0.0).T, levels=[P.F_MAX], colors=[STEP], linewidths=0.6)
+    a.plot(rpm, alg, color=K, lw=0.9)
+    a.plot(rpm, al0, color=GREY, lw=0.9, ls="--")
+    sty = dict(none=("o", "none"), marginal=(">", "none"), chatter=("x", None))
+    for r in C["rows"]:
+        mk, _ = sty[r["measured_outcome"] if r["measured_outcome"] in sty else "none"]
+        sat = str(r["measured"]).strip().lower() == "sat"
+        col = K
+        if mk == "x":
+            a.plot(r["rpm"], r["depth_mm"], marker="x", ls="none", color=col, ms=4.2, mew=0.9, zorder=5)
+        else:
+            a.plot(r["rpm"], r["depth_mm"], marker=mk, ls="none", ms=4.0, mew=0.7, mec=col,
+                   mfc=(col if sat else "white"), zorder=5)
+    a.set_xlim(1690, 2260)
+    a.set_ylim(0, 28)
+    a.set_xlabel("Spindle speed (rpm)")
+    a.set_ylabel("Depth of cut (mm)")
+    a.xaxis.set_major_locator(ticker.MultipleLocator(100))
+    letter(a, "a")
+    hand = [Line2D([], [], color=K, lw=0.9, label=r"$a_{\lim}(g)$, $g=253$ V s/m"),
+            Line2D([], [], color=GREY, lw=0.9, ls="--", label=r"$a_{\lim}(0)$"),
+            Patch(fc=STEP_FILL, ec=STEP, lw=0.6, label="forced demand > 27 N"),
+            Line2D([], [], marker="o", ls="none", mec=K, mfc="white", ms=4.0, label="stable"),
+            Line2D([], [], marker=">", ls="none", mec=K, mfc="white", ms=4.0, label="marginal"),
+            Line2D([], [], marker="x", ls="none", color=K, ms=4.2, label="chatter"),
+            Line2D([], [], marker="o", ls="none", mec=K, mfc=K, ms=4.0, label="saturated (filled)")]
+    a.legend(handles=hand, loc="upper right", fontsize=7, handlelength=1.6, borderaxespad=0.2)
+    # (b) measured against predicted command amplitude
+    num = [r for r in C["rows"] if str(r["measured"]).strip().lower() != "sat"]
+    meas = np.array([float(r["measured"]) for r in num])
+    pred = np.array([r["demand_N"] for r in num])
+    dd = np.array([r["depth_mm"] for r in num])
+    groups = [(dd <= 5.0, "o", "depth 0.5-5 mm"), ((dd > 5.0) & (dd <= 15.0), "s", "10-15 mm"), (dd > 15.0, "^", "20-22 mm")]
+    for msk, mk, lab in groups:
+        b.plot(meas[msk], pred[msk], marker=mk, ls="none", mec=K, mfc="white", ms=3.6, mew=0.7, label=lab)
+    lim = 30
+    b.plot([0, lim], [0, lim], color=GREY, lw=0.7)
+    b.axhline(P.F_MAX, color=STEP, lw=0.6, ls=":")
+    b.set_xlim(0, lim)
+    b.set_ylim(0, 36)
+    b.set_xlabel("Measured command (N)")
+    b.set_ylabel("Predicted forced demand (N)")
+    b.legend(loc="upper left", fontsize=7, handlelength=1.0, borderaxespad=0.3, bbox_to_anchor=(0.0, 0.9))
+    letter(b, "b")
+    save(fig, "fig_oz25")
+    amp = C.get("amplitude_peak", {})
+    NUM["fig_oz25"] = dict(n_points=C["n_points"], n_numeric=int(len(num)), amplitude=amp,
+                           by_position=C["by_position"])
+
+
+def fig_oz25_sld():
+    """Supplement: the cuts of Ozsoy et al. 2025, Fig. 6 (nominal structure, DVF g = 253 V s/m), on the model's chart."""
+    OZ = os.path.join(ROOT, "verification", "ozsoy2025")
+    sys.path.insert(0, OZ)
+    import setup2025 as S
+    import zoa
+    S.apply_structure(**S.NOMINAL)
+    C = json.load(open(os.path.join(OZ, "compare2025.json")))["fig6"]
+    n = np.arange(400.0, 3100.1, 2.0)
+    a0 = np.array([zoa.a_lim(x, 0.0) for x in n]) * 1e3
+    ag = np.array([zoa.a_lim(x, S.G_FIG6) for x in n]) * 1e3
+    fig, ax = plt.subplots(figsize=(W2, 62 * MM), constrained_layout=True)
+    ax.plot(n, ag, color=K, lw=0.85)
+    ax.plot(n, a0, color=GREY, lw=0.85, ls="--")
+    sty = dict(controlled_stable=("o", "white"), controlled_marginal=(">", "white"), controlled_chatter=("x", None),
+               controlled_loss_of_contact=("*", None), uncontrolled_stable=("+", None), uncontrolled_chatter=("D", "white"),
+               saturation_onset_sim=("s", "white"))
+    nmis = 0
+    for r in C["rows"]:
+        mk, fc = sty[r["type"]]
+        meas_uns = r["type"] in ("controlled_chatter", "controlled_marginal", "controlled_loss_of_contact", "uncontrolled_chatter")
+        pred_uns = r["linear_unstable_uncontrolled"] if r["type"].startswith("uncontrolled") else r["linear_unstable"]
+        mis = (r["type"] != "saturation_onset_sim") and (meas_uns != pred_uns)
+        nmis += int(mis and r["type"] != "controlled_loss_of_contact")
+        col = STEP if mis else K
+        kw = dict(ls="none", ms=(3.6 if mk != "*" else 5.5), mew=0.8, color=col, zorder=5)
+        if fc is not None:
+            kw.update(mfc=fc, mec=col)
+        ax.plot(r["rpm"], r["depth_mm"], marker=mk, **kw)
+    ax.set_xlim(400, 3100)
+    ax.set_ylim(0, 44)
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(5))
+    ax.set_xlabel("Spindle speed (rpm)")
+    ax.set_ylabel("Depth of cut (mm)")
+    hand = [Line2D([], [], color=K, lw=0.85, label=r"$a_{\lim}(g)$, $g=253$ V s/m"),
+            Line2D([], [], color=GREY, lw=0.85, ls="--", label=r"$a_{\lim}(0)$"),
+            Line2D([], [], marker="o", ls="none", mec=K, mfc="white", ms=3.6, label="controlled, stable"),
+            Line2D([], [], marker=">", ls="none", mec=K, mfc="white", ms=3.6, label="controlled, marginal"),
+            Line2D([], [], marker="x", ls="none", color=K, ms=3.6, label="controlled, chatter"),
+            Line2D([], [], marker="*", ls="none", color=K, ms=5.5, label="controlled, loss of contact"),
+            Line2D([], [], marker="+", ls="none", color=K, ms=3.6, label="uncontrolled, stable"),
+            Line2D([], [], marker="D", ls="none", mec=K, mfc="white", ms=3.6, label="uncontrolled, chatter"),
+            Line2D([], [], marker="s", ls="none", mec=K, mfc="white", ms=3.6, label="saturation onset (their simulation)"),
+            Line2D([], [], marker="o", ls="none", mec=STEP, mfc="white", ms=3.6, label="outcome not predicted by the linear limit")]
+    ax.legend(handles=hand, loc="upper center", fontsize=7, ncol=3, handlelength=1.4, columnspacing=1.0)
+    save(fig, "fig_oz25_sld")
+    NUM["fig_oz25_sld"] = dict(n_markers=len(C["rows"]), n_mismatch=nmis)
+    S.apply_structure(**S.NOMINAL)
+
+
 FIGS = dict(fig02=fig02, fig03=fig03, fig04=fig04, fig05=fig05, fig06=fig06, fig07=fig07, fig08=fig08,
-            fig09=fig09, fig10=fig10, fig_ba=fig_ba, fig_attr=fig_attr)
+            fig09=fig09, fig10=fig10, fig_ba=fig_ba, fig_attr=fig_attr, fig_oz25=fig_oz25, fig_oz25_sld=fig_oz25_sld)
 
 
 def main(argv):
