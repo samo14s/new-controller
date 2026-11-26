@@ -24,7 +24,7 @@ The proof (Supplementary Material, Section~\ref{S-supp:std-proofs}) applies the 
 
 \subsection{Collocation model and LMI conditions}\label{sec:cert-model}\label{sec:cert-lmi}
 
-For $\lvert b(t)\rvert<\Vmax$, the deviation $\tilde x=x-x_p$ from the forced orbit of Section~\ref{sec:model-orbit} obeys
+For $\lvert b(t)\rvert<\Vmax$, the deviation $\tilde x$ obeys
 \begin{equation}\label{eq:dev}
 \begin{aligned}
 &m\ddot{\tilde x}+c\dot{\tilde x}+k\tilde x=aH(t)\,\big[\tilde x(t)-\tilde x(t-T)\big]+K_a\ddot{\tilde q},\\
@@ -76,7 +76,7 @@ Both proofs are in Supplementary Material, Section~\ref{S-supp:std-proofs}. The 
 \begin{figure}[!tbp]
 \centering
 \includegraphics[width=\textwidth]{figures/fig06_certificates.pdf}
-\caption{Certified kick on the averaged model (C2, squares; command bound corrected as in Supplementary Material, Section~\ref{S-supp:std-bound}) and on the periodic model (C3, diamonds; valid at every phase) against the simulated critical kick $\Delta v^*$ (circles; minimum over 16 phases), at (a) 1090, (b) 1420, (c) 2500 and (d) \SI{2870}{\rpm}, 12 depths from 0.15 to $0.98\alim$, $g=\SI{1500}{\volt\second\per\metre}$. Triangles: no chatter for any kick up to \SI{3}{\metre\per\second}. C3 is missing at \SI{2500}{\rpm} and $0.98\alim$, where no candidate passed the check.}
+\caption{Certified kick on the averaged model (C2, squares; command bound corrected as in Supplementary Material, Section~\ref{S-supp:std-bound}) and on the periodic model (C3, diamonds; valid at every phase) against the simulated critical kick $\Delta v^*$ (circles; minimum over 16 phases) at the speeds, depths and gain of Fig.~\ref{fig:basin}. Triangles: no chatter for any kick up to \SI{3}{\metre\per\second}. C3 is missing at \SI{2500}{\rpm} and $0.98\alim$, where no candidate passed the check.}
 \label{fig:cert}
 \end{figure}
 % src: README §12.4; results/c2_validate.npz, c2_summary.json (validate)
