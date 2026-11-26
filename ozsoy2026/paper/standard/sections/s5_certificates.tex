@@ -35,7 +35,7 @@ where $\tilde q$ is the deviation of the actuator coordinate of Eq.~\eqref{eq:eo
 \begin{equation}\label{eq:coll}
 \dot\xi=\mathcal A(t)\,\xi-B\,\psi(k^\top\xi,t),\qquad \mathcal A(t)=A_0+Bk^\top+aH(t)\,E_r,
 \end{equation}
-with $k^\top=-g\,e_2^\top$, $E_r=\big(e_2e_1^\top-e_2e_{4+N}^\top\big)/m$, $e_i$ the unit vectors, and $A_0$, $B$ in Supplementary Material, Eq.~\eqref{S-eq:app-A0}. The clip enters only through the dead zone
+with the feedback row $k^\top=-g\,e_2^\top$ ($k$ is not the stiffness here), $E_r=\big(e_2e_1^\top-e_2e_{4+N}^\top\big)/m$, $e_i$ the unit vectors, and $A_0$, $B$ in Supplementary Material, Eq.~\eqref{S-eq:app-A0}. The clip enters only through the dead zone
 \begin{equation}\label{eq:deadzone}
 \psi(w,t)=w-\sat_{\Vmax}\!\big(b(t)+w\big)+b(t),
 \end{equation}
@@ -67,7 +67,7 @@ Both proofs are in Supplementary Material, Section~\ref{S-supp:std-proofs}. The 
 
 \subsection{Results}\label{sec:cert-c2}
 
-\label{sec:cert-check}Every candidate $(W,Y,S)$ returned by the solver was checked independently at $\lambda=0$, in floating point rather than by interval arithmetic (Supplementary Material, Section~\ref{S-app:lmi}). C2 was computed at the 48 clipped points of Section~\ref{sec:bistability} (Fig.~\ref{fig:cert}); all 48 passed the check. Wherever the simulated critical kick is finite (29 points), $\beta$ lies below it, by factors $\Delta v^*/\beta$ of 1.5--28 and with a median of 2.3 from $0.7\alim$ upwards. Boundary points of the ellipsoid in 18 sampled directions, applied in the simulator, never ended in chatter (3456 runs; Table~\ref{S-tab:cert}). The critical kick of the averaged collocation model is itself 0.62--0.99 times $\Delta v^*$ (median 0.92), so the gap lies mainly between the certificate and its own model. Doubling $N$ changes $\beta$ by $-5.0$ to $+0.6$\,\% at ten of eleven points (Table~\ref{S-tab:nconv}). The step entry is certified only at $0.3\alim$ at three of the four speeds, never at productive depths.
+\label{sec:cert-check}Every candidate $(W,Y,S)$ returned by the solver was checked independently at $\lambda=0$, in floating point rather than by interval arithmetic (Supplementary Material, Section~\ref{S-app:lmi}). C2 was computed at the 48 clipped points of Section~\ref{sec:bistability} (Fig.~\ref{fig:cert}); all 48 passed the check. Wherever the simulated critical kick is finite (29 points), $\beta$ lies below it, by factors $\Delta v^*/\beta$ of 1.5--28 and with a median of 2.3 from $0.7\alim$ upwards. Boundary points of the ellipsoid in 18 sampled directions (off-axis runs), applied in the simulator, never ended in chatter (3456 runs; Table~\ref{S-tab:cert}). The critical kick of the averaged collocation model is itself 0.62--0.99 times $\Delta v^*$ (median 0.92), so the gap lies mainly between the certificate and its own model. Doubling $N$ changes $\beta$ by $-5.0$ to $+0.6$\,\% at ten of eleven points (Table~\ref{S-tab:nconv}). The step entry is certified only at $0.3\alim$ at three of the four speeds, never at productive depths.
 % src: src/c2_certificate.py (scaling, lmi, check, certify); src/c3_periodic.py (check); README §12.3
 % src: README §12.4; results/c2_validate.npz, c2_summary.json (validate), c3_summary.json (errata.c2_validate: 1.48-27.59, median 2.34 from 0.7 a_lim); results/c2_validate.npz recomputed: td_min infinite at 19 points; model/TD 0.620-0.989, median 0.92; offaxis 0/3456
 % src: verification/paper/certs_nconv_summary.py/certs_nconv.json (summary: n_points 11, n_with_2N 10, rel_2N_min -0.0496 at 1090 rpm 0.5 a_lim, rel_2N_max +0.0063 at 2870 rpm 0.5 a_lim)
@@ -81,7 +81,7 @@ Both proofs are in Supplementary Material, Section~\ref{S-supp:std-proofs}. The 
 \end{figure}
 % src: README §12.4; results/c2_validate.npz, c2_summary.json (validate)
 
-\label{sec:cert-periodic}\label{sec:cert-c3}The periodic certificate C3, with $W(t)$ and $Y(t)$ linear in time on $M=16$ segments of the tooth period (Supplementary Material, Proposition~\ref{S-prop:c3}), passed the check at 47 of the 48 points and lies below the simulated and the model critical kicks in all 448 and 688 phase-wise cases; no off-axis run from its boundary ended in chatter. As the critical kick of the periodic model is 0.97--1.05 times that of the averaged model, the factor of about 2.3 between the certificates and the simulated basin near the limit is not caused by averaging (Supplementary Material, Section~\ref{S-supp:std-c3}).
+\label{sec:cert-periodic}\label{sec:cert-c3}The periodic certificate C3, with $W(t)$ and $Y(t)$ linear in time on $M=16$ segments of the tooth period (Supplementary Material, Proposition~\ref{S-prop:c3}), passed the check at 47 of the 48 points; no off-axis run from its boundary ended in chatter. As the critical kick of the periodic model is 0.97--1.05 times that of the averaged model, the factor of about 2.3 between the certificates and the simulated basin near the limit is not caused by averaging (Supplementary Material, Section~\ref{S-supp:std-c3}).
 % src: README §14.1, §14.2; src/c3_periodic.py (aH, orbit, enclosure)
 % src: README §14.5, §14.6; results/c3_basin.npz, c3_summary.json (basin)
 % src: README §14.5, §14.7, §14.10; results/c3_basin.npz, c3_summary.json (basin: phase_cert_below_td 448/448, phase_cert_below_model 688/688, offaxis 0/3384, td_over_cert_from_07, periodic_over_averaged_model 0.9727-1.0516)
