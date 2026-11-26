@@ -1,0 +1,53 @@
+% Moved from Section 3 of the long version (sections/s3_feasibility.tex) to keep the article at standard length.
+% Text copied verbatim; only references are adapted (M- = main article; no prefix = Supplementary Material).
+% The displayed equations eq:pub, eq:feas and eq:achk stay in the article; here they are cited with the prefix M-.
+
+\subsection{The published condition: full text}\label{supp:std-feas-pub}
+
+\citet{ozsoy2026robust} schedule $g$ over the spindle speed by maximising $\alim(\Omega,g)$ subject to an authority condition. Section~\ref{M-sec:feasibility} shows that the published form of that condition, as reproduced here, measures the entry transient, and replaces it by a condition on the steady forced command, which is the part of the authority that the forced orbit takes; the rest, $\Vmax-\bmax$, is what Sections~\ref{M-sec:bistability}--\ref{M-sec:basin-aware} are about.
+
+The published condition, Eq.~(2) of \citet{ozsoy2026robust}, simulates the cut at $a=\alim(\Omega,g)$ and accepts $g$ if the peak demand stays within the actuator rating [Eq.~\eqref{M-eq:pub}], with $g^\star(\Omega)=\arg\max_{g\in\mathcal G}J(g)$. The demand, written there as $g\lvert\dot x\rvert$ and compared with \SI{27}{\newton}, is read here as the force of Eq.~\eqref{M-eq:pub}; read as a voltage, it would make the gains 2--3 times larger. Neither the start of the simulation nor the search interval is stated. A step entry from rest (full engagement at $t=0$, zero history) reproduces the published gains at \SIrange{2320}{3000}{\rpm} (median ratio 0.97) and was used; elsewhere the reproduced gains are 0.27--1.9 times the published ones (Fig.~\ref{fig:feas}a; Section~\ref{supp:feas-pub}). With this start the peak demand is that of the entry transient: at \SI{2500}{\rpm} and $g=536$ the peak per revolution falls from \SI{27}{\newton} in the first revolution to \SI{16}{\newton} in the fiftieth, and with a feed ramp or a face entry (Section~\ref{M-sec:bistab-prot}) the optimum becomes 2900--\SI{3000}{\volt\second\per\metre} ($\alim=38$--\SI{40}{\milli\metre}) instead of 536. As the depth moves with $g$ and the forced response oscillates in the depth [Eq.~\eqref{M-eq:Fm}], the demand is not monotone in $g$, and the feasible set of the reproduced condition fragments into pockets, which hold the optimum throughout 2060--\SI{2310}{\rpm}.
+% src: src/objective.py (demand K_a g max|x'|), src/gainmap.py, src/run_gain_map.py; README §2, §4.6 (start not stated; demand read as a force), §5.2 (gain ratio 0.97 at 2320-3000 rpm); results/paper_vs_ours.json (p04: band medians 0.74, 0.88, 1.83, 0.97; band_1870_2050_range 0.27-1.3); recomputed from gainmap_main.npz g_best and fig8_gain_map.csv: range 1.19-1.91 at 2060-2310 rpm; verification/claim_audit/claim_audit.json (27.0 N in rev 0 -> 16.0 N in rev 49 at 2500 rpm, g = 536); verification/paper/support_runs.json (Eq. 2 optimum at 2500 rpm: feed ramp 1 rev 2900 V s/m, 38.29 mm; 10 rev 3000, 40.03 mm; face entry 2950, 39.15 mm); README §5.2 (pockets at all of 2060-2310 rpm), §8.1
+
+\subsection{A steady-state authority condition: full text}\label{supp:std-feas-new}
+
+The reformulated condition requires that, once the cut has settled, the command stays inside the clip at every depth the gain admits, up to a margin $\kappa<1$ below the stability limit. Below $\alim$ the settled motion is the forced orbit of Eq.~\eqref{M-eq:xp}, so the condition has a closed form [Eq.~\eqref{M-eq:feas}], with $\kappa=0.9$ and $\mathcal G=[0,g_{\max}]$, $g_{\max}=1500$ or \SI{3000}{\volt\second\per\metre}. On a grid of gains the feasible set was one interval $[0,g_b]$ at every speed, and $g^\star=g_b$ was found by bisection. The maximum over the depth was taken over 80 evenly spaced depths; a search over 2000 depths finds it larger by at most \SI{0.12}{\percent} (\SI{14}{\milli\newton}), which would lower the gain by at most \SI{0.44}{\volt\second\per\metre} and the linear limit by at most \SI{0.015}{\milli\metre} at the 94 speeds where the authority binds. The closed form matches the simulator's settled demand to within the latter's axial quadrature error (Section~\ref{supp:feas-new}).
+% src: src/feasibility.py (KAPPA = 0.9, N_DEPTH = 80, demand_envelope, edge_gain); README §8.2; verification/paper/feas_monotone.json (251 speeds x 151 gains: all_one_interval true); results/feas_g1500.npz (cert_demand_td vs cert_demand_cf), verification/feasibility/cf_vs_td_layers.json; dense check: verification/paper/protocol_eq14_sampling.json (underestimate.total_rel_max 1.16e-3 at 660 rpm, total_abs_max_N 0.0139 at 1850 rpm; gains.linearised_drop_max_Vspm 0.437, linearised_alim_drop_max_mm 0.0149; n_binding 94; top-speed bisection changes <= 0.37 V s/m)
+
+The steady condition cannot see the entry. Each scheduled gain was therefore checked by step entries from rest with the clipped command and the full surface memory (Section~\ref{M-sec:bistab-prot}), on a ladder of depths from $0.225\alim$ in steps of \SI{8}{\percent} up to $\kappa\alim$. The clipped limit $a_{\mathrm{TD}}(g^\star)$ found in this way defines the checked depth $\achk$ of Eq.~\eqref{M-eq:achk}, which rests on the simulation of one entry and is not a certificate.
+% src: src/run_feas_certify.py (a_lo = 0.25 kappa a_lim, growth 1.08, nreg = 0); src/tdboundary.py (boundary); README §8.3
+
+\subsection{Results: full text}\label{supp:std-feas-res}
+
+The reformulated map, with $\mathcal G=[0,1500]$, has no jumps (Fig.~\ref{fig:feas}a). Its gain sits at this chosen bound at 157 of the 251 speeds; elsewhere (1530--\SI{2460}{\rpm}) the steady demand binds, and the gain dips to \SI{135}{\volt\second\per\metre} at \SI{1940}{\rpm}, where the tooth-passing frequency matches the natural frequency. The entry check binds at 112 speeds. Averaged over all speeds (Table~\ref{tab:feas}, Fig.~\ref{fig:feas}b), $\achk=\SI{15.87}{\milli\metre}$, against \SI{12.75}{\milli\metre} for $\alim$ at the gains of Eq.~\eqref{M-eq:pub}, which carries no margin, and \SI{5.85}{\milli\metre} without control; only at 1500--\SI{2050}{\rpm}, near the forced resonance, is the mean $\achk$ below the depth of Eq.~\eqref{M-eq:pub}.
+% src: results/feas_g1500.npz (at_bound: 157; g_best < 1500 over 1530-2460 rpm, minimum 134.9 V s/m at 1940 rpm); results/feas_cert_g1500.npz (a_cert < a_op_linear at 112 speeds; mean 15.87 mm), results/feas_g1500.npz (a_unc: mean 5.85 mm), results/gainmap_main.npz (a_best: mean 12.75 mm); README §8.3, §8.4
+
+\begin{table}[!tbp]
+  \centering
+  \caption{Mean depths (\si{\milli\metre}) by speed range: checked depth $a_{\mathrm{chk}}$ of the reformulated condition [Eqs.~\eqref{M-eq:feas}--\eqref{M-eq:achk}, $\mathcal G=[0,1500]$, $\kappa=0.9$], $a_{\lim}$ at the gains of Eq.~\eqref{M-eq:pub} (no margin), and the uncontrolled limit $a_{\lim}(0)$.}
+  \label{tab:feas}
+  \begin{tabular}{@{}lrrrr@{}}
+    \toprule
+    Speeds (rpm) & Number & $a_{\mathrm{chk}}$ & $a_{\lim}$, Eq.~\eqref{M-eq:pub} & $a_{\lim}(0)$\\
+    \midrule
+    500--1150  & 66  & 16.75 & 12.36 & 4.02\\
+    1160--1490 & 34  & 14.89 & 11.49 & 3.87\\
+    1500--2050 & 56  & 20.51 & 21.24 & 16.58\\
+    2060--3000 & 95  & 12.87 & 8.47  & 1.51\\
+    All        & 251 & 15.87 & 12.75 & 5.85\\
+    \bottomrule
+  \end{tabular}
+  \par\smallskip
+  \parbox{0.9\linewidth}{\footnotesize Sensitivity (Section~\ref{supp:feas-res}): with $\kappa=0.95$ the gains change by at most \SI{0.53}{\volt\second\per\metre}; a guard of $0.85F_{\max}$ lowers the gain at 116 speeds; with $g_{\max}=3000$ the mean $\achk$ is \SI{17.1}{\milli\metre} and the entry check binds at 184 speeds.}
+\end{table}
+% src: results/feas_cert_g1500.npz (a_cert), results/gainmap_main.npz (a_best), results/feas_g1500.npz (a_unc); README §8.4; note: results/feas_k095.npz (gains within 0.53 V s/m), results/feas_guard085.npz (116 speeds lowered), results/feas_cert_g3000.npz (mean a_cert 17.13 mm; a_cert < a_op_linear at 184 speeds); README §8.5
+
+The reformulated condition does not depend on the entry, but it gives up what the published one provides for a specified entry: keeping that entry inside the linear range at $a=\alim$. Nor does it say how large a disturbance the settled cut tolerates: $\achk$ lies inside the band of depths at which a kick can tip the settled cut into chatter at 104 of the 109 speeds where that band was found (Section~\ref{M-sec:bistab-map}), so a checked depth is not a safe depth. Sections~\ref{M-sec:bistability} and~\ref{M-sec:certificates} measure and bound the tolerated disturbance, and Section~\ref{M-sec:basin-aware} puts it into the schedule.
+% src: results/c1_band.npz vs results/feas_cert_g1500.npz (104/109)
+
+\begin{figure}[!tbp]
+  \centering
+  \includegraphics[width=0.86\textwidth]{figures/fig02_feasibility.pdf}
+  \caption{Gain scheduling under the two authority conditions over \SIrange{500}{3000}{\rpm}. (a)~Gain maps: the published condition, Eq.~\eqref{M-eq:pub}, reproduced with a step entry, the reformulated condition, Eq.~\eqref{M-eq:feas} with $\mathcal G=[0,1500]$, and the published map of \citet{ozsoy2026robust} (dotted where it is a straight line between optimised speeds: 500--550, 560--740 and 1410--\SI{1860}{\rpm}). (b)~Depths: uncontrolled limit $a_{\lim}(0)$, $a_{\lim}$ at the gains of Eq.~\eqref{M-eq:pub}, $\kappa a_{\lim}$ and the checked depth $a_{\mathrm{chk}}$ of Eq.~\eqref{M-eq:achk} at the reformulated gains.}
+  \label{fig:feas}
+\end{figure}

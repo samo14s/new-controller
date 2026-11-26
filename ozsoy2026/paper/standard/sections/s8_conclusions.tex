@@ -1,0 +1,25 @@
+\section{Discussion and conclusions}\label{sec:discussion}
+
+\paragraph{The linear limit is not the attainable depth}
+For a cutting force linear in the chip thickness, clipping the DVF command at the actuator capacity makes the stability of a cut near its linear limit depend on a basin of attraction far smaller than that of the unclipped loop: $\alim(g)$ is an upper bound that a cut reaches only if it enters gently and is not disturbed (Section~\ref{sec:bistability}). The authority spent on the forced vibration therefore has to be budgeted (Section~\ref{sec:basin-aware}).
+
+\paragraph{What the estimates guarantee, and for which model}
+Three levels must be kept apart: the circle criterion applies to the delay equation of the averaged, linear-force model; the LMIs give numerically verified inner estimates for finite-dimensional collocation models; no simulated perturbation inside the estimates ended in chatter. The describing function is a design estimate without guarantee.
+
+\paragraph{Linear margin is not tolerance of disturbances}
+The delayed difference term of Section~\ref{sec:delayed-law} raises the linear limit by a median factor of 1.78, but the step-entry limit by only 1.03.
+
+\paragraph{Limitations}
+The results are predictions of a model that classifies 17 of the 19 published cutting tests of \citet{ozsoy2026robust} as measured. At the two exceptions, controlled cuts that chattered at 0.76 and 0.80 of the predicted limit, the clipped model settles after either entry: the finite-amplitude instability cannot explain the cut at \SI{2800}{\rpm}, and explains the one at \SI{1300}{\rpm} only with a perturbation of about \SI{25}{\milli\metre\per\second} (Section~\ref{sec:model-case}). A second data set on the same rig \citep{ozsoy2025frequency} supports the forced command at depths of up to \SI{5}{\milli\metre} at 1700--\SI{2000}{\rpm}; but, like the article's own chart, the model classifies only 26 of its 39 controlled cuts as measured, and in its saturation tests it predicts neither the five losses of stability between the limits nor the stable outcome of three unsaturated cuts above the controlled limit, nor the command at 2050--\SI{2200}{\rpm} and at \SI{15}{\milli\metre} (Section~\ref{sec:model-second}); both data sets come from one rig. The model has one mode, uniform over the depth, a rigid tool, a cutting force linear in the chip thickness without edge forces or process damping \citep{altintas2012book,budak2010process}, and an actuator limited only by a hard clip on the voltage, without amplifier dynamics or sensor noise. The attribution of the bistability to the clip holds for this force law, since a nonlinear force law can itself make the cut subcritical \citep{kalmarnagy2001subcritical,dombovari2008estimates}. Edge forces would add to the forced command, so the residual authority is likely overestimated. All results are computational; command pulses at controlled phases on a hardware-in-the-loop rig \citep{sahu2021bistability} would measure the critical pulse against the depth (Supplementary Material, Section~\ref{S-supp:std-validation}).
+% src: results/cuts_main.json, verification/targets/experimental_points.csv; verification/paper/revision_runs.json (published_cuts)
+
+\paragraph{Conclusions}
+On the case study of \citet{ozsoy2026robust} and, in item 2, on published tests on the same rig, the following was found.
+\begin{enumerate}
+\item A step entry from rest chatters below $0.97\,\alim$ at 157 of 251 speeds, whereas a face entry reaches at least $0.985\,\alim$; near the limit, worst-phase kicks of 2.4--\SI{10.8}{\percent} of one tooth's cutting impulse end in chatter.
+\item Of 56 saturation tests \citep{ozsoy2025frequency}, 13 lie between the two linear limits: losses of stability (2 chatter, 3 marginal) occurred in 5 of the 7 whose command saturated and in none of the 6 that did not.
+\item The residual authority $\Vmax-\bmax$ governs the basin near the limit, which a describing function predicts at 0.95--$0.98\,\alim$ to within 0.88--1.13.
+\item Up to $(1-10^{-3})\,a_{\mathrm{circ}}$, whose median is $0.967\,\alim(0)$, the forced orbit of the averaged delay model attracts every solution; above it, the LMI estimates of the basin are 1.5 to 28 times smaller than the simulated critical kicks.
+\item Over 21 speeds, the basin-aware depth for a certified kick of 1, 2 or \SI{5}{\milli\metre\per\second}, with an assumed \SI{32}{\milli\metre} depth cap, averages 21.7, 19.9 and \SI{16.0}{\milli\metre}, against 21.2, 18.2 and \SI{9.8}{\milli\metre} for the authority rule under the same conditions; with an abrupt entry 15.1--\SI{16.1}{\milli\metre} against \SI{16.8}{\milli\metre}, and with a cap of \SI{16}{\milli\metre} the depths differ by less than \SI{1}{\milli\metre}.
+\item Under sampled model errors a cut at $0.9\,\alim$ is linearly unstable in 8--\SI{20}{\percent} of the samples, and at six speeds the design points of the chart fail in 17, 12 and \SI{10}{\percent} of the samples with the depth margin, against \SI{7}{\percent} for the authority rule.
+\end{enumerate}

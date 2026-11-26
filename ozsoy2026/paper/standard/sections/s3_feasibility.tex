@@ -1,0 +1,36 @@
+\section{Actuator authority and the forced orbit}\label{sec:feasibility}
+
+\subsection{The published condition}\label{sec:feas-pub}
+
+The published condition, Eq.~(2) of \citet{ozsoy2026robust}, simulates the cut at $a=\alim(\Omega,g)$ and accepts $g$ if the peak demand stays within the actuator rating:
+\begin{equation}\label{eq:pub}
+  J(g)=\begin{cases}\alim(\Omega,g) & \text{if }\max_tK_ag\lvert\dot x(t)\rvert\le F_{\max},\\[2pt] 0 & \text{otherwise,}\end{cases}
+\end{equation}
+with $g^\star(\Omega)=\arg\max_{g\in\mathcal G}J(g)$. The start of the simulation is not stated. A step entry from rest reproduces the published gains at \SIrange{2320}{3000}{\rpm} (median ratio 0.97) and was used; elsewhere the reproduced gains are 0.27--1.9 times the published ones. With this start the peak demand is that of the entry transient: at \SI{2500}{\rpm} and $g=536$ the peak per revolution falls from \SI{27}{\newton} in the first revolution to \SI{16}{\newton} in the fiftieth, and with a feed ramp (Supplementary Material, Section~\ref{S-supp:std-bistab-prot}) or a face entry (Section~\ref{sec:bistab-prot}) the optimum becomes 2900--\SI{3000}{\volt\second\per\metre} instead of 536 (Supplementary Material, Section~\ref{S-supp:std-feas-pub}).
+% src: src/objective.py (demand K_a g max|x'|), src/gainmap.py, src/run_gain_map.py; README §2, §4.6 (start not stated; demand read as a force), §5.2 (gain ratio 0.97 at 2320-3000 rpm); results/paper_vs_ours.json (p04: band medians 0.74, 0.88, 1.83, 0.97; band_1870_2050_range 0.27-1.3); recomputed from gainmap_main.npz g_best and fig8_gain_map.csv: range 1.19-1.91 at 2060-2310 rpm; verification/claim_audit/claim_audit.json (27.0 N in rev 0 -> 16.0 N in rev 49 at 2500 rpm, g = 536); verification/paper/support_runs.json (Eq. 2 optimum at 2500 rpm: feed ramp 1 rev 2900 V s/m, 38.29 mm; 10 rev 3000, 40.03 mm; face entry 2950, 39.15 mm); README §8.1
+
+\subsection{A steady-state authority condition}\label{sec:feas-new}
+
+The reformulated condition requires that, once the cut has settled, the command stays inside the clip at every depth the gain admits, up to a margin $\kappa<1$ below the stability limit. Below $\alim$ the settled motion is the forced orbit of Eq.~\eqref{eq:xp}, so the condition has a closed form:
+\begin{equation}\label{eq:feas}
+  \begin{aligned}
+    F_{\mathrm{ss}}(\Omega,g)&=\max_{0<a\le\kappa\,\alim(\Omega,g)}K_a\,\bmax(a)\le F_{\max},\\
+    g^\star(\Omega)&=\max\bigl\{g\in\mathcal G:\ F_{\mathrm{ss}}(\Omega,g)\le F_{\max}\bigr\},
+  \end{aligned}
+\end{equation}
+with $\kappa=0.9$ and $\mathcal G=[0,g_{\max}]$, $g_{\max}=1500$ or \SI{3000}{\volt\second\per\metre} (details: Section~\ref{S-supp:std-feas-new}).
+% src: src/feasibility.py (KAPPA = 0.9, N_DEPTH = 80, demand_envelope, edge_gain); README §8.2
+
+The steady condition cannot see the entry. Each scheduled gain was therefore checked by step entries from rest with the clipped command (Section~\ref{sec:bistab-prot}). The clipped limit $a_{\mathrm{TD}}(g^\star)$ found in this way defines the checked depth
+\begin{equation}\label{eq:achk}
+  \achk=\min\bigl\{\kappa\,\alim(g^\star),\ a_{\mathrm{TD}}(g^\star)\bigr\},
+\end{equation}
+which rests on the simulation of one entry and is not a certificate.
+% src: src/run_feas_certify.py (a_lo = 0.25 kappa a_lim, growth 1.08, nreg = 0); src/tdboundary.py (boundary); README §8.3
+
+\subsection{Results}\label{sec:feas-res}
+
+With $\mathcal G=[0,1500]$ the gain sits at this chosen bound at 157 of the 251 speeds; elsewhere (1530--\SI{2460}{\rpm}) the steady demand binds. Averaged over all speeds, $\achk=\SI{15.87}{\milli\metre}$, against \SI{12.75}{\milli\metre} for $\alim$ at the gains of Eq.~\eqref{eq:pub}, which carries no margin, and \SI{5.85}{\milli\metre} without control; only at 1500--\SI{2050}{\rpm}, near the forced resonance, is the mean $\achk$ below the depth of Eq.~\eqref{eq:pub} (Table~\ref{S-tab:feas}, Fig.~\ref{S-fig:feas}). The reformulated condition does not say how large a disturbance the settled cut tolerates: $\achk$ lies inside the band of depths at which a kick can tip the settled cut into chatter at 104 of the 109 speeds where that band was found (Section~\ref{sec:bistab-map}), so a checked depth is not a safe depth.
+% src: results/feas_g1500.npz (at_bound: 157; g_best < 1500 over 1530-2460 rpm); results/feas_cert_g1500.npz (mean 15.87 mm), results/feas_g1500.npz (a_unc: mean 5.85 mm), results/gainmap_main.npz (a_best: mean 12.75 mm); README §8.3, §8.4
+% src: results/feas_cert_g1500.npz (a_cert), results/gainmap_main.npz (a_best), results/feas_g1500.npz (a_unc); README §8.4
+% src: results/c1_band.npz vs results/feas_cert_g1500.npz (104/109)

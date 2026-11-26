@@ -21,7 +21,7 @@ With $\theta=0$ the extended conditions reproduce C2: they give 3.0579 against \
 
 \subsection{Proof of the periodic certificate and details of the C2 results}\label{supp:proof-c3}
 
-\paragraph{Proof of Proposition~\ref{M-prop:c3}} As $\mathcal A(t)W(t)$ contains $s$, $s^2$ and $rs$, the matrix of Eq.~\eqref{M-eq:lmi-per}, with $\sigma$ for $s^2$, is affine in $(s,\sigma)$ for fixed $r$ and in $r$ for fixed $(s,\sigma)$; since $(s,s^2)$, $s\in[0,1]$, lies in the triangle spanned by the three points, its value at any $t$ of the segment is a convex combination of the six vertex values. Equations~\eqref{M-eq:lmi-incl}--\eqref{M-eq:lmi-size} are affine in $(W,Y)$, so they hold on segment $k$ with the level $u_{0,k}\le\Vmax-\lvert b(t)\rvert$. The proof of Proposition~\ref{M-prop:c2} then applies on each segment, $\Delta_kW$ accounting for the variation of $W$, and $\mathcal V$ is continuous across the nodes.
+\paragraph{Proof of Proposition~\ref{prop:c3}} As $\mathcal A(t)W(t)$ contains $s$, $s^2$ and $rs$, the matrix of Eq.~\eqref{eq:lmi-per}, with $\sigma$ for $s^2$, is affine in $(s,\sigma)$ for fixed $r$ and in $r$ for fixed $(s,\sigma)$; since $(s,s^2)$, $s\in[0,1]$, lies in the triangle spanned by the three points, its value at any $t$ of the segment is a convex combination of the six vertex values. Equations~\eqref{M-eq:lmi-incl}--\eqref{M-eq:lmi-size} are affine in $(W,Y)$, so they hold on segment $k$ with the level $u_{0,k}\le\Vmax-\lvert b(t)\rvert$. The proof of Proposition~\ref{M-prop:c2} then applies on each segment, $\Delta_kW$ accounting for the variation of $W$, and $\mathcal V$ is continuous across the nodes.
 
 
 \paragraph{Step entry and gain map} The step entry is certified only at $0.3\alim$ at 1090, 1420 and \SI{2870}{\rpm} ($\beta=1.04$--1.61), never at \SI{2500}{\rpm}, and always below the simulated step-entry limits (0.75--$0.90\alim$); at 0.5--$0.9\alim$, $\beta=0.16$--0.72, so no productive depth is certified. Over the gain map of Section~\ref{M-sec:feasibility} (42 speeds, seven depths from 0.5 to $0.98\alim$), 287 of 294 points were certified, with certified kicks of 0--\SI{16}{\milli\metre\per\second} (median 6.6) at $0.9\alim$; the other seven lie at 1520--\SI{2000}{\rpm}, where the gain sits at or near the authority limit and the forced orbit itself saturates ($u_0\le0$, three points) or leaves $u_0=0.04$--\SI{0.38}{\volt}, too little for any candidate to pass the check (Fig.~\ref{fig:surf}).
@@ -29,7 +29,7 @@ With $\theta=0$ the extended conditions reproduce C2: they give 3.0579 against \
 
 \subsection{Vertex conditions and enclosure of the periodic certificate}\label{supp:cert-vertex}
 
-On segment $k$, with $W(s)$ and $Y(s)$ from Eq.~\eqref{M-eq:Wt}, the decrease condition~\eqref{M-eq:lmi-per} is imposed at the six vertices of Proposition~\ref{M-prop:c3}, $(s,\sigma)=(0,0)$, $(\tfrac12,0)$ or $(1,1)$ and $r=\pm\varepsilon_k$, as
+On segment $k$, with $W(s)$ and $Y(s)$ from Eq.~\eqref{eq:Wt}, the decrease condition~\eqref{eq:lmi-per} is imposed at the six vertices of Proposition~\ref{prop:c3}, $(s,\sigma)=(0,0)$, $(\tfrac12,0)$ or $(1,1)$ and $r=\pm\varepsilon_k$, as
 \begin{equation}\label{eq:app-per}
 \begin{bmatrix}\Delta_kW-\Lambda-\Lambda^\top-2\lambda W(s) & BS_k-Y(s)^\top\\ S_kB^\top-Y(s) & 2S_k\end{bmatrix}\succ0,
 \end{equation}
@@ -55,7 +55,7 @@ Figure~\ref{fig:surf} shows the certified kick of the averaged model over the ga
 
 \subsection{Validation protocols}\label{supp:cert-protocol}
 
-The off-axis test used boundary points of the certified ellipsoid (for C3, of the ellipsoid at the phase of application) in 18 directions: both signs of the points that maximise $\tilde x$, $\dot{\tilde x}$, $\tilde q$, $\dot{\tilde q}$, $\tilde x(t-T)$ and $\tilde x-\tilde x(t-T)$ on it, and six random points. They were applied in the simulator as full-state deviations at four phases a quarter of a tooth period apart, with the protocol of \ref{M-app:lmi}. These directions were sampled, not searched for the worst case.
+The off-axis test used boundary points of the certified ellipsoid (for C3, of the ellipsoid at the phase of application) in 18 directions: both signs of the points that maximise $\tilde x$, $\dot{\tilde x}$, $\tilde q$, $\dot{\tilde q}$, $\tilde x(t-T)$ and $\tilde x-\tilde x(t-T)$ on it, and six random points. They were applied in the simulator as full-state deviations at four phases a quarter of a tooth period apart, with the protocol of Section~\ref{app:lmi}. These directions were sampled, not searched for the worst case.
 
 The sampled check followed 48 trajectories per point of the collocated model with the true dead zone over 40 tooth periods, started at 0.999 of the boundary in random directions and phases. $\mathcal V$ never exceeded its initial value 0.998 for C2 and stayed below 0.997 after the first step for C3 (2256 starts). This is only a consistency check, as ellipsoids that are too large can pass it; the certificates rest on the independent check of Section~\ref{M-sec:cert-check}.
 
